@@ -2,7 +2,7 @@ import React from 'react';
 
 import cls from './SimpleSelect.module.css';
 
-const SimpleSelect = ({ name, state, setState, property, disabled }) => {
+const SimpleSelect = ({ name, state, setState, property, disabled, options }) => {
 	return (
 		<>
 			<p className={cls.label}>{name}:</p>
@@ -13,15 +13,11 @@ const SimpleSelect = ({ name, state, setState, property, disabled }) => {
 				onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
 				disabled={disabled}
 			>
-				<option className={cls.option} value="mixed">
-					mixed
-				</option>
-				<option className={cls.option} value="TT">
-					TT
-				</option>
-				<option className={cls.option} value="mountain">
-					mountain
-				</option>
+				{options.map(element => (
+					<option className={cls.option} value={element.name} key={element.id}>
+						{element.name}
+					</option>
+				))}
 			</select>
 		</>
 	);

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
+import SimpleSelect from '../SimpleSelect/SimpleSelect';
 
 import cls from './FormEditSeries.module.css';
 
@@ -22,20 +23,24 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 				property="dateStart"
 				type="number"
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Тип серии"
 				state={series}
 				setState={setSeries}
 				property="type"
-				type="text"
+				options={[
+					{ name: 'series', id: '1' },
+					{ name: 'tour', id: '2' },
+				]}
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Организатор"
 				state={series}
 				setState={setSeries}
 				property="organizer"
-				type="text"
+				options={[{ name: 'KOM-on', id: '1' }]}
 			/>
+
 			<div className={cls.box__checkbox}>
 				<SimpleCheckbox
 					state={series}

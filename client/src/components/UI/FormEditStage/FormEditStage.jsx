@@ -60,8 +60,17 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				property="ascent"
 				type="text"
 			/>
-			<SimpleSelect name="Тип этапа" state={stage} setState={setStage} property="type" />
-
+			<SimpleSelect
+				name="Тип этапа"
+				state={stage}
+				setState={setStage}
+				property="type"
+				options={[
+					{ name: 'mixed', id: '1' },
+					{ name: 'TT', id: '2' },
+					{ name: 'mountain', id: '3' },
+				]}
+			/>
 			<SimpleInput
 				name="Количество спринт-участков"
 				state={stage}

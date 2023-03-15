@@ -32,6 +32,10 @@ const EditSeries = () => {
 		});
 	};
 
+	const addStage = seriesId => {
+		console.log('adding a stage');
+	};
+
 	return (
 		<>
 			{series?.name ? (
@@ -45,7 +49,7 @@ const EditSeries = () => {
 					<section className={cls.block}>
 						<TableStagesForEdit seriesId={seriesId} />
 						<div className={cls.right}>
-							<Button>добавить</Button>
+							<Button getClick={() => addStage(series._id)}>добавить</Button>
 						</div>
 						<Button getClick={getClick}>назад</Button>
 					</section>
