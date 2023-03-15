@@ -12,7 +12,7 @@ import EditUsers from './Pages/EditUsers';
 import Download from './Pages/Download';
 import EditSeriesMain from './Pages/EditSeries/EditSeriesMain';
 import EditSeries from './Pages/EditSeries/EditSeries';
-import EditStageParams from './Pages/EditSeries/EditStageParams';
+import EditStageParams from './Pages/EditStages/EditStageParams';
 import Authorization from './Pages/Auth/Authorization';
 // import Registration from './Pages/Auth/Registration';
 import Message from './Pages/Message/Message';

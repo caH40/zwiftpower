@@ -1,11 +1,13 @@
 import React from 'react';
 
+import cls from './SimpleInput.module.css';
+
 const SimpleInput = ({ name, state, setState, property, type }) => {
 	return (
 		<>
-			<p style={{ paddingBottom: '5px' }}>{name}:</p>
+			<label className={cls.label}>{name}:</label>
 			<input
-				className="simpleInput"
+				className={cls.input}
 				type={type}
 				placeholder={name}
 				value={state[property]}

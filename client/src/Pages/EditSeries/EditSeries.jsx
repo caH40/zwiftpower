@@ -37,7 +37,7 @@ const EditSeries = () => {
 			{series?.name ? (
 				<>
 					<section className={cls.block}>
-						<h3 className={cls.title}>Редактирование "{series.name}"</h3>
+						<h3 className={cls.title}>Редактирование серии "{series.name}"</h3>
 						<FormEditSeries series={series} setSeries={setSeries} />
 						<div className={cls.right}>
 							<Button getClick={sendForm}>сохранить</Button>
