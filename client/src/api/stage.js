@@ -55,3 +55,18 @@ export async function postStage(stageChanged) {
 		throw error;
 	}
 }
+
+export async function postDeleteStage(stageId) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage`,
+			method: 'delete',
+			data: {
+				stageId,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}

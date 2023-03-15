@@ -99,8 +99,4 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 	);
 };
 
-// hasResults: false;
-// quantityMountains: 1;
-// quantitySprints: 1;
-
 export default FormEditStage;

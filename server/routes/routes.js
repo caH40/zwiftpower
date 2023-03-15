@@ -13,6 +13,7 @@ import {
 	postSeries,
 	postZpStage,
 	postZpStageChanged,
+	deleteStage,
 } from '../controllers/controllers.js';
 import { authAdmin } from '../middleware/authRole.js';
 
@@ -29,4 +30,5 @@ router.post('/stage/penalty', authAdmin, postZpPenalty);
 router.post('/stage/change-category', authAdmin, postZpCategory);
 router.post('/stage/points', authAdmin, postZpPoints);
 router.post('/stage', authAdmin, postZpStage);
+router.delete('/stage', authAdmin, deleteStage);
 router.post('/stage-changed', authAdmin, postZpStageChanged);

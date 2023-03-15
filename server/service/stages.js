@@ -177,3 +177,14 @@ async function changeMountains(stageId, quantityMountainsNew, quantityMountainsO
 		);
 	}
 }
+
+export async function deleteStageService(stageId) {
+	try {
+		const stageDB = await Stage.findOneAndDelete({ _id: stageId });
+		const stagesDB = await Stage.find({ seriesId: stageDB.seriesId });
+
+		return { message: `Этап №${stageDB.number} удалён!`, stages: stagesDB };
+	} catch (error) {
+		throw error;
+	}
+}

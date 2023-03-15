@@ -3,7 +3,6 @@ import React from 'react';
 import cls from './SimpleSelect.module.css';
 
 const SimpleSelect = ({ name, state, setState, property, disabled }) => {
-	console.log(state[property]);
 	return (
 		<>
 			<p className={cls.label}>{name}:</p>
