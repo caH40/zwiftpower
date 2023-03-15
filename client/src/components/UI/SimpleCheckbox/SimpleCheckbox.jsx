@@ -2,7 +2,7 @@ import React from 'react';
 
 import cls from './SimpleCheckbox.module.css';
 
-const SimpleCheckbox = ({ state, property, setState, title }) => {
+const SimpleCheckbox = ({ state, property, setState, title, disabled }) => {
 	return (
 		<label className={cls.label}>
 			<span>{title}</span>
@@ -11,6 +11,7 @@ const SimpleCheckbox = ({ state, property, setState, title }) => {
 				checked={state[property]}
 				type="checkbox"
 				onChange={e => setState(prev => ({ ...prev, [property]: e.target.checked }))}
+				disabled={disabled}
 			/>
 		</label>
 	);

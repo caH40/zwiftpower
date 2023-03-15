@@ -37,6 +37,6 @@ export async function postSeriesService({
 		return { message: `Изменения в ${name} сохранены!` };
 	} catch (error) {
 		console.log(error);
-		throw 'Непредвиденная ошибка на сервере';
+		throw error;
 	}
 }

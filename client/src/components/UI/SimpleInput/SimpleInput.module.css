@@ -19,3 +19,6 @@
 .label {
 	color: var(--color-text-minor);
 }
+.input:disabled {
+	background-color: var(--color-bg-minor);
+}

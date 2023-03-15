@@ -23,7 +23,7 @@ const EditStageParams = () => {
 	const sendForm = () => {
 		postStage(stage).then(data => {
 			setUpdate(prev => !prev);
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }));
+			dispatch(getAlert({ message: data.data.message, type: data.type, isOpened: true }));
 		});
 	};
 
@@ -33,10 +33,7 @@ const EditStageParams = () => {
 				<>
 					<section className="page__block">
 						<h3 className="titlePage-3">Редактирование параметров этапа "{stage?.seriesId?.name}"</h3>
-						<FormEditStage stage={stage} setStage={setStage} />
-						<div className="align-right">
-							<Button getClick={sendForm}>сохранить</Button>
-						</div>
+						<FormEditStage stage={stage} setStage={setStage} sendForm={sendForm} />
 						<Button getClick={getClick}>назад</Button>
 					</section>
 				</>

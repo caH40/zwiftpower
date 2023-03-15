@@ -128,8 +128,7 @@ export async function postSeries(req, res) {
 	try {
 		const { seriesChanged } = req.body;
 		const series = await postSeriesService(seriesChanged);
-		if (series.status) throw series.message;
-		return res.status(201).json({ message: series.message });
+		return res.status(201).json(series);
 	} catch (error) {
 		console.log(error);
 		return res
