@@ -10,6 +10,7 @@
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
+	user-select: none;
 }
 .button:hover {
 	background-color: var(--color-blue-4);

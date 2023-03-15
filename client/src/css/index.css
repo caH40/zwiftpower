@@ -35,6 +35,7 @@ h5 {
 :root {
 	--gradient-main: linear-gradient(90deg, var(--color-blue-3) -0.39%, var(--color-blue-4) 100%);
 	--color-text-main: #ffffff;
+	--color-text-dark: #000000;
 
 	--color-blue-main: #0f4fa8;
 	--color-yellow-main: #ffbb00;

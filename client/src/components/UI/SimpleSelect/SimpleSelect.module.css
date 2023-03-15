@@ -1,8 +1,13 @@
-.input {
+.select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
 	display: block;
 	width: 100%;
 	padding: 0.5rem 0.75rem;
 	margin-bottom: 0.75rem;
+	font-family: 'Roboto';
 	font-size: 14px;
 	font-weight: 700;
 	color: var(--color-text-dark);
@@ -12,13 +17,21 @@
 	border-radius: 0.25rem;
 	overflow: hidden;
 }
-.input:focus {
+.select:focus {
 	outline: none;
 	box-shadow: 0 0 2px 2px var(--color-orange-main);
 }
 .label {
+	padding: 0;
+	margin: 0;
 	color: var(--color-text-minor);
 }
 .input:disabled {
 	background-color: var(--color-bg-minor);
+}
+.option {
+	font-size: inherit;
+	font-weight: inherit;
+	color: inherit;
+	background: var(--color-bg-minor);
 }

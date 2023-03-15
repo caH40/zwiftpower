@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
+import SimpleSelect from '../SimpleSelect/SimpleSelect';
 import cls from './FormEditStage.module.css';
 
 const FormEditStage = ({ stage, setStage, sendForm }) => {
@@ -59,13 +60,8 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				property="ascent"
 				type="text"
 			/>
-			<SimpleInput
-				name="Тип этапа"
-				state={stage}
-				setState={setStage}
-				property="type"
-				type="text"
-			/>
+			<SimpleSelect name="Тип этапа" state={stage} setState={setStage} property="type" />
+
 			<SimpleInput
 				name="Количество спринт-участков"
 				state={stage}
