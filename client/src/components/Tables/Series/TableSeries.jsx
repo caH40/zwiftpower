@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getSeries } from '../../../api/series';
+import ClearTbody from '../ClearTbody/ClearTbody';
 import cls from '../Table.module.css';
 
 const TableSeries = ({ target }) => {
@@ -13,7 +14,7 @@ const TableSeries = ({ target }) => {
 	};
 
 	useEffect(() => {
-		getSeries().then(data => setSeries(data));
+		getSeries().then(data => setSeries(data.data.series));
 	}, []);
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
@@ -28,18 +29,22 @@ const TableSeries = ({ target }) => {
 					<th scope="col">Тип</th>
 				</tr>
 			</thead>
-			<tbody>
-				{series.map((seriesOne, index) => (
-					<tr className={cls.trLink} key={seriesOne._id} onClick={() => myLink(seriesOne._id)}>
-						<th scope="row">{index + 1}</th>
-						<td>{seriesOne.name}</td>
-						<td>{seriesOne.organizer}</td>
-						<td>{new Date(seriesOne.dateStart).toLocaleDateString()}</td>
-						<td>{seriesOne.isFinished.toString()}</td>
-						<td>{seriesOne.type}</td>
-					</tr>
-				))}
-			</tbody>
+			{series?.length ? (
+				<tbody>
+					{series.map((seriesOne, index) => (
+						<tr className={cls.trLink} key={seriesOne._id} onClick={() => myLink(seriesOne._id)}>
+							<th scope="row">{index + 1}</th>
+							<td>{seriesOne.name}</td>
+							<td>{seriesOne.organizer}</td>
+							<td>{new Date(seriesOne.dateStart).toLocaleDateString()}</td>
+							<td>{seriesOne.isFinished.toString()}</td>
+							<td>{seriesOne.type}</td>
+						</tr>
+					))}
+				</tbody>
+			) : (
+				<ClearTbody quantityTd={6} />
+			)}
 		</table>
 	);
 };

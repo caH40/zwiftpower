@@ -1,3 +1,4 @@
+import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
 
 export async function getStages(series) {
@@ -12,13 +13,16 @@ export async function getStages(series) {
 	}
 }
 
-export async function getStage(stageId) {
+export async function getStageService(stageId) {
 	try {
-		const stageDB = await Stage.findOne({ _id: stageId });
-		return { message: `Получены данные по этапу №${stageDB.number}`, data: stageDB };
+		const stageDB = await Stage.findOne({ _id: stageId }).populate({
+			path: 'seriesId',
+			select: 'name',
+		});
+
+		return { message: `Получены данные по этапу №${stageDB.number}`, stage: stageDB };
 	} catch (error) {
-		console.log(error);
-		throw 'Непредвиденная ошибка на сервере';
+		throw error;
 	}
 }
 

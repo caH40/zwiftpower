@@ -3,9 +3,9 @@
 	border-radius: 6px;
 	background-color: var(--color-blue-main);
 	font-weight: 700;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 1.5;
-	padding: 0.375em 0.75em;
+	padding: 0.375em 1em;
 	color: var(--color-text-main);
 	cursor: pointer;
 	text-transform: uppercase;
@@ -19,4 +19,13 @@
 }
 .w_full {
 	width: 100%;
+}
+.danger {
+	background-color: var(--color-error);
+}
+.danger:hover {
+	background-color: var(--color-error-hover);
+}
+.td {
+	font-size: 11px;
 }

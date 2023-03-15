@@ -4,7 +4,7 @@ import {
 	postSeries,
 	postSeriesOne,
 	postStages,
-	postStage,
+	getStage,
 	postZpDisqualification,
 	postZpUnderChecking,
 	postZpPenalty,
@@ -21,7 +21,7 @@ export const router = new Router();
 router.post('/series', authAdmin, postSeries);
 router.post('/seriesone', authAdmin, postSeriesOne);
 router.post('/stages', authAdmin, postStages);
-router.post('/stage', authAdmin, postStage);
+router.get('/stage/:stageId', authAdmin, getStage);
 router.post('/disqualification', authAdmin, postZpDisqualification);
 router.post('/underchecking', authAdmin, postZpUnderChecking);
 router.post('/stage/penalty', authAdmin, postZpPenalty);

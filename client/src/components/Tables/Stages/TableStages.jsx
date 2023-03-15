@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getStages } from '../../../api/stage';
 
-import { getStages } from '../../../api/stages';
 import cls from '../Table.module.css';
 
 const TableStages = ({ seriesId }) => {
@@ -14,7 +14,9 @@ const TableStages = ({ seriesId }) => {
 	};
 
 	useEffect(() => {
-		getStages(seriesId).then(data => setStages(data));
+		getStages(seriesId).then(data => {
+			setStages(data.data.stages);
+		});
 	}, [seriesId]);
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
@@ -66,14 +68,3 @@ const TableStages = ({ seriesId }) => {
 };
 
 export default TableStages;
-// {stages.map(stage => (
-//   <ul key={stage._id}>
-//     {stage.hasResults ? (
-//       <Link
-//         to={`${stage._id}`}
-//       >{`Этап: ${stage.number}, ${stage.world}, ${stage.route};`}</Link>
-//     ) : (
-//       <p>{`Этап: ${stage.number}, ${stage.world}, ${stage.route} - Нет результатов;`}</p>
-//     )}
-//   </ul>
-// ))}

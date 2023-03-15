@@ -1,5 +1,18 @@
 import { myAxios } from './axios';
 
+export async function getStages(series) {
+	try {
+		const response = await myAxios({
+			url: '/api/stages',
+			method: 'post',
+			data: { series },
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+
 export async function getResultStage(seriesId, stageId) {
 	try {
 		const response = await myAxios({
@@ -16,13 +29,12 @@ export async function getResultStage(seriesId, stageId) {
 export async function getStage(stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage`,
-			method: 'post',
+			url: `/api/stage/${stageId}`,
+			method: 'get',
 			data: {
 				stageId,
 			},
 		});
-
 		return response;
 	} catch (error) {
 		throw error;

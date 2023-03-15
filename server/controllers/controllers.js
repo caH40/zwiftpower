@@ -1,12 +1,11 @@
 import path from 'path';
 
-// import { getResultsStage } from '../../preparation_data/results-stage.js';
 import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
 import { changeSeries, getSeries, getSeriesOne } from '../service/series.js';
-import { getStage, getStages, postStageChanged } from '../service/stages.js';
+import { getStageService, getStages, postStageChanged } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
@@ -43,15 +42,13 @@ export async function postStages(req, res) {
 	}
 }
 
-export async function postStage(req, res) {
+export async function getStage(req, res) {
 	try {
-		const { seriesId, stageId } = req.body;
-
-		// const stage = await getResultsStage(`T${stageId}`);
-
-		// return res.status(200).json({ message: `Результаты этапа id="${stageId}"`, stage });
+		const { stageId } = req.params;
+		const stage = await getStageService(stageId);
+		return res.status(200).json(stage);
 	} catch (error) {
-		// res.status(400).json({ message: `Ошибка при получении результатов этапа id="${stageId}"` });
+		res.status(400).json(error);
 		console.log(error);
 	}
 }
