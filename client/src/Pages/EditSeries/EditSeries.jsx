@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getSeriesOne, postSeries } from '../../api/series';
 import TableStagesForEdit from '../../components/Tables/Stages/TableStagesForEdit';
 import Button from '../../components/UI/Button/Button';
+import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -32,10 +33,6 @@ const EditSeries = () => {
 		});
 	};
 
-	const addStage = seriesId => {
-		console.log('adding a stage');
-	};
-
 	return (
 		<>
 			{series?.name ? (
@@ -49,7 +46,7 @@ const EditSeries = () => {
 					<section className={cls.block}>
 						<TableStagesForEdit seriesId={seriesId} />
 						<div className={cls.right}>
-							<Button getClick={() => addStage(series._id)}>добавить</Button>
+							<ButtonLink to="stage-add">Добавить</ButtonLink>
 						</div>
 						<Button getClick={getClick}>назад</Button>
 					</section>

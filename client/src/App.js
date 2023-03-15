@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAuth } from './redux/features/authSlice';
 import { checkAuth } from './api/auth-check';
+import AddStage from './Pages/EditSeries/AddStage';
 
 function App() {
 	const dispatch = useDispatch();
@@ -53,6 +54,7 @@ function App() {
 				<Route path="/edit/download" element={<Download />}></Route>
 				<Route path="/edit/series" element={<EditSeriesMain />} />
 				<Route path="/edit/series/:seriesId" element={<EditSeries />} />
+				<Route path="/edit/series/:seriesId/stage-add" element={<AddStage />} />
 				<Route path="/edit/series/:seriesId/stage-edit/:stageId" element={<EditStageParams />} />
 				<Route path="/edit/stage" element={<EditSeriesList />} />
 				<Route path="/edit/stage/:seriesId" element={<EditStageList />} />
