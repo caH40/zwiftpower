@@ -28,7 +28,7 @@ const EditSeries = () => {
 	const sendForm = () => {
 		postSeries(series).then(data => {
 			setUpdate(prev => !prev);
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }));
+			dispatch(getAlert({ message: data.data?.message, type: data.type, isOpened: true }));
 		});
 	};
 
@@ -38,10 +38,7 @@ const EditSeries = () => {
 				<>
 					<section className={cls.block}>
 						<h3 className={cls.title}>Редактирование серии "{series.name}"</h3>
-						<FormEditSeries series={series} setSeries={setSeries} />
-						<div className={cls.right}>
-							<Button getClick={sendForm}>сохранить</Button>
-						</div>
+						<FormEditSeries series={series} setSeries={setSeries} sendForm={sendForm} />
 						<Button getClick={getClick}>назад</Button>
 					</section>
 

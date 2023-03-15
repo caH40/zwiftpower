@@ -1,6 +1,6 @@
 import { Series } from '../Model/Series.js';
 
-export async function getSeries(seriesId) {
+export async function getSeriesService(seriesId) {
 	try {
 		if (seriesId) return await Series.findOne({ _id: seriesId });
 		const seriesDB = await Series.find();
@@ -19,7 +19,7 @@ export async function getSeriesOne(seriesId) {
 	}
 }
 
-export async function changeSeries({
+export async function postSeriesService({
 	_id,
 	name,
 	dateStart,

@@ -3,7 +3,7 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export async function getSeries() {
 	try {
-		const response = await myAxios.post(`${serverExpress}/api/series`);
+		const response = await myAxios.get(`/api/series`);
 		return response;
 	} catch (error) {
 		throw error;
@@ -21,8 +21,12 @@ export async function getSeriesOne(seriesId) {
 
 export async function postSeries(seriesChanged) {
 	try {
-		const response = await myAxios.post(`${serverExpress}/api/series-changed`, {
-			seriesChanged,
+		const response = await myAxios({
+			url: `/api/series`,
+			method: 'post',
+			data: {
+				seriesChanged,
+			},
 		});
 		return response;
 	} catch (error) {

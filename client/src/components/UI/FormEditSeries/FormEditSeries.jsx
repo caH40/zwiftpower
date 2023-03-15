@@ -1,9 +1,11 @@
 import React from 'react';
+import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
+
 import cls from './FormEditSeries.module.css';
 
-const FormEditSeries = ({ series, setSeries }) => {
+const FormEditSeries = ({ series, setSeries, sendForm }) => {
 	return (
 		<form className={cls.form} name="series">
 			<SimpleInput
@@ -34,7 +36,7 @@ const FormEditSeries = ({ series, setSeries }) => {
 				property="organizer"
 				type="text"
 			/>
-			<div className="block__checkbox">
+			<div className={cls.box__checkbox}>
 				<SimpleCheckbox
 					state={series}
 					setState={setSeries}
@@ -55,6 +57,10 @@ const FormEditSeries = ({ series, setSeries }) => {
 					property="isFinished"
 					title="Серия завершена:"
 				/>
+			</div>
+
+			<div className={cls.right}>
+				<Button getClick={sendForm}>сохранить</Button>
 			</div>
 		</form>
 	);

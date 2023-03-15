@@ -4,15 +4,15 @@ import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
-import { changeSeries, getSeries, getSeriesOne } from '../service/series.js';
+import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
 import { getStageService, getStages, postStageChanged } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
 
-export async function postSeries(req, res) {
+export async function getSeries(req, res) {
 	try {
-		const series = await getSeries();
+		const series = await getSeriesService();
 		return res.status(200).json({ message: `Данные серий заездов`, series });
 	} catch (error) {
 		res.status(400).json({ message: `Ошибка при получении данных серий` });
@@ -124,10 +124,10 @@ export async function postZpPoints(req, res) {
 	}
 }
 
-export async function postZpSeriesChanged(req, res) {
+export async function postSeries(req, res) {
 	try {
 		const { seriesChanged } = req.body;
-		const series = await changeSeries(seriesChanged);
+		const series = await postSeriesService(seriesChanged);
 		if (series.status) throw series.message;
 		return res.status(201).json({ message: series.message });
 	} catch (error) {

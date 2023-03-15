@@ -31,13 +31,6 @@ select {
 	font-size: inherit;
 }
 
-.block__checkbox {
-	display: flex;
-
-	justify-content: flex-start;
-	margin-right: 10px;
-}
-
 .align-right {
 	text-align: right;
 	margin-bottom: 5px;
