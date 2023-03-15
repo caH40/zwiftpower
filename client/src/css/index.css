@@ -1,0 +1,65 @@
+@import-normalize;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html {
+	box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+	box-sizing: inherit;
+}
+body {
+	font-family: 'Roboto', sans-serif;
+	color: rgb(7, 7, 7);
+	font-size: 14px;
+	line-height: 1.2;
+	margin: 0;
+	padding: 0;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--gradient-main: linear-gradient(90deg, var(--color-blue-3) -0.39%, var(--color-blue-4) 100%);
+	--color-text-main: #ffffff;
+
+	--color-blue-main: #0f4fa8;
+	--color-yellow-main: #ffbb00;
+	--color-orange-main: #ff7c00;
+
+	--color-blue-2: #284c7e;
+	--color-yellow-2: #bf9930;
+	--color-orange-2: #bf7630;
+
+	--color-blue-3: #05316d;
+	--color-yellow-3: #a67a00;
+	--color-orange-3: #a65100;
+
+	--color-blue-4: #4380d3;
+	--color-yellow-4: #ffcc40;
+	--color-orange-4: #ff9d40;
+
+	--color-blue-5: #6996d3;
+	--color-yellow-5: #ffda73;
+	--color-orange-5: #ffb773;
+
+	--color-error: #d74444;
+
+	--color-text-minor: #444444;
+	--color-bg-minor: #f6f8fa;
+	--color-border-minor: #cecece;
+	--color-bg: #ffffff;
+}

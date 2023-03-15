@@ -1,0 +1,16 @@
+.wrapper {
+	text-align: center;
+}
+.text {
+	font-size: 20px;
+}
+.title {
+	font-size: 34px;
+}
+.text__wrong {
+	color: red;
+}
+.text__link {
+	color: #ff7b31;
+	text-decoration: underline;
+}

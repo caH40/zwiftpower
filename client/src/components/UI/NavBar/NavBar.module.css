@@ -1,0 +1,25 @@
+.list {
+	display: flex;
+	justify-content: flex-start;
+	margin: 0px 0px 0px 5px;
+}
+.item {
+	margin-right: 15px;
+}
+
+.link {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: var(--color-text-main);
+	text-decoration: none;
+	cursor: pointer;
+}
+.link:hover {
+	text-decoration: underline;
+}
+.link:active {
+	color: var(--color-yellow-main);
+}

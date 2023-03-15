@@ -1,0 +1,22 @@
+.button {
+	border: 1px solid var(--color-border-minor);
+	border-radius: 6px;
+	background-color: var(--color-blue-main);
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 1.5;
+	padding: 0.375em 0.75em;
+	color: var(--color-text-main);
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+.button:hover {
+	background-color: var(--color-blue-4);
+}
+.button:active {
+	background-color: var(--color-yellow-main);
+}
+.w_full {
+	width: 100%;
+}
