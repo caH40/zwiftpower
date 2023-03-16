@@ -12,10 +12,10 @@ export async function getSeriesService(seriesId) {
 
 export async function getSeriesOne(seriesId) {
 	try {
-		const seriesDB = await Series.findOne({ _id: seriesId });
+		const seriesDB = await Series.findOne({ _id: seriesId }).catch(e => true);
 		return seriesDB;
 	} catch (error) {
-		console.log(error);
+		throw error;
 	}
 }
 
@@ -36,7 +36,6 @@ export async function postSeriesService({
 		);
 		return { message: `Изменения в ${name} сохранены!` };
 	} catch (error) {
-		console.log(error);
 		throw error;
 	}
 }

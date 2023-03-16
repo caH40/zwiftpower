@@ -38,7 +38,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 				state={series}
 				setState={setSeries}
 				property="organizer"
-				options={[{ name: 'KOM-on', id: '1' }]}
+				options={[{ name: 'KOM-ON', id: '1' }]}
 			/>
 
 			<div className={cls.box__checkbox}>

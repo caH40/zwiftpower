@@ -16,10 +16,12 @@ export async function getStages(series) {
 
 export async function getStageService(stageId) {
 	try {
-		const stageDB = await Stage.findOne({ _id: stageId }).populate({
-			path: 'seriesId',
-			select: 'name',
-		});
+		const stageDB = await Stage.findOne({ _id: stageId })
+			.populate({
+				path: 'seriesId',
+				select: 'name',
+			})
+			.catch(e => true);
 
 		return { message: `Получены данные по этапу №${stageDB.number}`, stage: stageDB };
 	} catch (error) {
@@ -177,13 +179,22 @@ async function changeMountains(stageId, quantityMountainsNew, quantityMountainsO
 		);
 	}
 }
-
 export async function deleteStageService(stageId) {
 	try {
 		const stageDB = await Stage.findOneAndDelete({ _id: stageId });
 		const stagesDB = await Stage.find({ seriesId: stageDB.seriesId });
 
 		return { message: `Этап №${stageDB.number} удалён!`, stages: stagesDB };
+	} catch (error) {
+		throw error;
+	}
+}
+export async function postStageService(stageNew) {
+	try {
+		delete stageNew._id;
+		const stageDB = await Stage.create(stageNew);
+
+		return { message: `Данные по новому этапу сохранены!`, stage: stageDB };
 	} catch (error) {
 		throw error;
 	}

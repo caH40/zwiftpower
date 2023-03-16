@@ -13,6 +13,7 @@ const SimpleSelect = ({ name, state, setState, property, disabled, options }) =>
 				onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
 				disabled={disabled}
 			>
+				<option className={cls.option} value=""></option>
 				{options.map(element => (
 					<option className={cls.option} value={element.name} key={element.id}>
 						{element.name}

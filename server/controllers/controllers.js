@@ -10,6 +10,7 @@ import {
 	getStages,
 	putStageService,
 	deleteStageService,
+	postStageService,
 } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
@@ -169,8 +170,9 @@ export async function deleteStage(req, res) {
 export async function postStage(req, res) {
 	try {
 		const { stageNew } = req.body;
-		console.log({ stageNew });
-		return res.status(200).json();
+		const stage = await postStageService(stageNew);
+
+		return res.status(200).json(stage);
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json(error);

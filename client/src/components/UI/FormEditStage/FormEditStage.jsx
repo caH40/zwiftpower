@@ -6,7 +6,6 @@ import SimpleSelect from '../SimpleSelect/SimpleSelect';
 import cls from './FormEditStage.module.css';
 
 const FormEditStage = ({ stage, setStage, sendForm }) => {
-	console.log(stage);
 	return (
 		<form className={cls.form} name="series">
 			<SimpleInput
@@ -30,6 +29,8 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				setState={setStage}
 				property="dateStart"
 				type="date"
+				min="2016-01-01"
+				max="2030-01-01"
 			/>
 			<SimpleInput name="Маршрут" state={stage} setState={setStage} property="route" type="text" />
 			<SimpleInput

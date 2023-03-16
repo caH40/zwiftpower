@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { handlerNewValue, handlerValue } from './service';
 
 import cls from './SimpleInput.module.css';
 
-const SimpleInput = ({ name, state, setState, property, type, disabled }) => {
+const SimpleInput = ({ name, state, setState, property, type, disabled, ...props }) => {
 	return (
 		<>
 			<label className={cls.label}>{name}:</label>
@@ -11,8 +11,9 @@ const SimpleInput = ({ name, state, setState, property, type, disabled }) => {
 				className={cls.input}
 				type={type}
 				value={handlerValue(type, state[property])}
-				onChange={e => setState(prev => ({ ...prev, [property]: handlerNewValue(e) }))}
+				onChange={e => setState(prev => ({ ...prev, [property]: handlerNewValue(type, e) }))}
 				disabled={disabled}
+				{...props}
 			/>
 		</>
 	);
