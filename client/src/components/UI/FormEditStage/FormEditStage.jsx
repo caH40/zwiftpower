@@ -9,7 +9,7 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 	return (
 		<form className={cls.form} name="series">
 			<SimpleInput
-				name="Номер Этапа"
+				name="ID Этапа"
 				state={stage}
 				setState={setStage}
 				property="_id"
@@ -28,7 +28,7 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				state={stage}
 				setState={setStage}
 				property="dateStart"
-				type="text"
+				type="date"
 			/>
 			<SimpleInput name="Маршрут" state={stage} setState={setStage} property="route" type="text" />
 			<SimpleInput
@@ -44,21 +44,21 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				state={stage}
 				setState={setStage}
 				property="laps"
-				type="text"
+				type="number"
 			/>
 			<SimpleInput
 				name="Дистанция, км"
 				state={stage}
 				setState={setStage}
 				property="distance"
-				type="text"
+				type="number"
 			/>
 			<SimpleInput
 				name="Общий набор, м"
 				state={stage}
 				setState={setStage}
 				property="ascent"
-				type="text"
+				type="number"
 			/>
 			<SimpleSelect
 				name="Тип этапа"
@@ -76,14 +76,14 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				state={stage}
 				setState={setStage}
 				property="quantitySprints"
-				type="text"
+				type="number"
 			/>
 			<SimpleInput
 				name="Количество горных участков"
 				state={stage}
 				setState={setStage}
 				property="quantityMountains"
-				type="text"
+				type="number"
 			/>
 			<div className={cls.box__checkbox}>
 				<SimpleCheckbox
