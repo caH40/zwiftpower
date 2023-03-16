@@ -14,7 +14,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 const AddStage = () => {
 	const { seriesId } = useParams();
 	const [stage, setStage] = useState(() => ({ ...stageClear, seriesId }));
-	console.log(seriesId);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const goBack = () => navigate(-1);

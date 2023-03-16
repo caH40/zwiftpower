@@ -13,12 +13,11 @@ export async function getStages(series) {
 	}
 }
 
-export async function getResultStage(seriesId, stageId) {
+export async function getResultStage(stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage`,
-			method: 'post',
-			data: { seriesId, stageId },
+			url: `/api/stage-result/${stageId}`,
+			method: 'get',
 		});
 		return response;
 	} catch (error) {
