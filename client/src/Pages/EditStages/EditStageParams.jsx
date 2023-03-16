@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getStage, postStage } from '../../api/stage';
+import { getStage, putStage } from '../../api/stage';
 import Button from '../../components/UI/Button/Button';
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -21,7 +21,7 @@ const EditStageParams = () => {
 	}, [stageId, update]);
 
 	const sendForm = () => {
-		postStage(stage).then(data => {
+		putStage(stage).then(data => {
 			setUpdate(prev => !prev);
 			dispatch(getAlert({ message: data.data.message, type: data.type, isOpened: true }));
 		});

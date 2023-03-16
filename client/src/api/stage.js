@@ -31,9 +31,6 @@ export async function getStage(stageId) {
 		const response = await myAxios({
 			url: `/api/stage/${stageId}`,
 			method: 'get',
-			data: {
-				stageId,
-			},
 		});
 		return response;
 	} catch (error) {
@@ -41,13 +38,27 @@ export async function getStage(stageId) {
 	}
 }
 
-export async function postStage(stageChanged) {
+export async function putStage(stageChanged) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage-changed`,
-			method: 'post',
+			url: `/api/stage`,
+			method: 'put',
 			data: {
 				stageChanged,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+export async function postStage(stageNew) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage`,
+			method: 'post',
+			data: {
+				stageNew,
 			},
 		});
 		return response;

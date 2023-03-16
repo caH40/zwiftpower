@@ -6,6 +6,7 @@ import SimpleSelect from '../SimpleSelect/SimpleSelect';
 import cls from './FormEditStage.module.css';
 
 const FormEditStage = ({ stage, setStage, sendForm }) => {
+	console.log(stage);
 	return (
 		<form className={cls.form} name="series">
 			<SimpleInput
@@ -21,7 +22,7 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				state={stage}
 				setState={setStage}
 				property="number"
-				type="text"
+				type="number"
 			/>
 			<SimpleInput
 				name="Дата старта"

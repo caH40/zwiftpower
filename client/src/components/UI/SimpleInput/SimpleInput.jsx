@@ -1,5 +1,5 @@
-import React from 'react';
-import { formatDateToString } from '../../../utils/format-date';
+import React, { useState } from 'react';
+import { handlerNewValue, handlerValue } from './service';
 
 import cls from './SimpleInput.module.css';
 
@@ -10,8 +10,8 @@ const SimpleInput = ({ name, state, setState, property, type, disabled }) => {
 			<input
 				className={cls.input}
 				type={type}
-				value={type === 'date' ? formatDateToString(state[property]) : state[property]}
-				onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
+				value={handlerValue(type, state[property])}
+				onChange={e => setState(prev => ({ ...prev, [property]: handlerNewValue(e) }))}
 				disabled={disabled}
 			/>
 		</>

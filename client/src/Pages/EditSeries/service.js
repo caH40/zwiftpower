@@ -1,7 +1,7 @@
 export const stageClear = {
 	_id: 'none',
 	number: '',
-	dateStart: '',
+	dateStart: Date.now(),
 	route: '',
 	routeLink: '',
 	world: '',
