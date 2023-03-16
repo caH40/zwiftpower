@@ -6,6 +6,8 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { backgroundColorSM } from '../../Tables/utils/color';
 import { sprintTable } from '../../Tables/utils/pointsTable';
 
+import cls from './SelectPoints.module.css';
+
 const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplier }) => {
 	const dispatch = useDispatch();
 
@@ -25,6 +27,7 @@ const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplie
 			onChange={changePlace}
 			size="1"
 			defaultValue={result[pointsType][sequenceNumber - 1]?.place}
+			className={cls.select}
 		>
 			{sprintTable.map(elm => {
 				return <option value={elm.place} label={elm.place} key={elm.place} />;

@@ -8,7 +8,7 @@ import {
 	postZpDisqualification,
 	postZpUnderChecking,
 	postZpPenalty,
-	postZpCategory,
+	putCategory,
 	postZpPoints,
 	postSeries,
 	putStage,
@@ -34,7 +34,7 @@ router.post('/stage', authAdmin, postStage);
 router.delete('/stage', authAdmin, deleteStage);
 router.put('/stage', authAdmin, putStage);
 router.post('/stage/penalty', authAdmin, postZpPenalty);
-router.post('/stage/change-category', authAdmin, postZpCategory);
+router.put('/stage/category', authAdmin, putCategory);
 router.post('/stage/points', authAdmin, postZpPoints);
 
 router.get('/stage-result/:stageId', authAdmin, getStageResults);

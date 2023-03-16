@@ -11,7 +11,6 @@ import SelectCategory from '../../UI/SelectCategory/SelectCategory';
 import SelectPoints from '../../UI/SelectPoints/SelectPoints';
 
 const TableEditStageResults = ({ results = [], setUpdate }) => {
-	console.log({ results });
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
 			<caption>{results[0]?.title}</caption>
@@ -76,7 +75,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 							<SelectCategory
 								zwiftId={result.zwiftRiderId}
 								stageId={result.stageId}
-								defaultValue={result.category}
+								value={result.category}
 								setUpdate={setUpdate}
 							/>
 						</td>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { postStagePenalty } from '../../../api/stage-penalty';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+
 import cls from './SelectPenalty.module.css';
 
 const SelectPenalty = ({ result, defaultValue, setUpdate }) => {
@@ -22,7 +23,8 @@ const SelectPenalty = ({ result, defaultValue, setUpdate }) => {
 			name="penalty"
 			size="1"
 			defaultValue={defaultValue}
-			className={defaultValue === 0 ? '' : cls.hasPenalty}
+			className={cls.select}
+			// className={defaultValue === 0 ? cls.hasPenalty : cls.hasPenalty}
 		>
 			<option value="0" label="нет" />
 			<option className={cls.hasPenalty} value="1" label="1 PU" />

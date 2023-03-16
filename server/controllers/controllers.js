@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { changeCategory } from '../service/category.js';
+import { putCategoryService } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
@@ -101,20 +101,15 @@ export async function postZpPenalty(req, res) {
 	}
 }
 
-export async function postZpCategory(req, res) {
+export async function putCategory(req, res) {
 	try {
 		const { newCategory, zwiftId, stageId } = req.body;
 
-		const changedCategory = await changeCategory(newCategory, zwiftId, stageId);
-
-		if (changedCategory.status) throw changedCategory.message;
-
-		return res.status(201).json({ message: changedCategory.message });
+		const changedCategory = await putCategoryService(newCategory, zwiftId, stageId);
+		return res.status(201).json(changedCategory);
 	} catch (error) {
 		console.log(error);
-		return res
-			.status(400)
-			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+		return res.status(400).json(error);
 	}
 }
 export async function postZpPoints(req, res) {

@@ -1,22 +1,19 @@
-import axios from 'axios';
-const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
+import { myAxios } from './axios';
 
-export async function postCategory(newCategory, zwiftId, stageId) {
+export async function putCategory(newCategory, zwiftId, stageId) {
 	try {
-		const response = await axios.post(
-			`${serverExpress}/api/stage/change-category`,
-			{
+		const response = await myAxios({
+			url: `/api/stage/category`,
+			method: 'put',
+			data: {
 				newCategory,
 				zwiftId,
 				stageId,
 			},
-			{
-				'Content-type': 'application/json',
-			}
-		);
+		});
 
-		return { message: response.data.message, type: 'success' };
+		return response;
 	} catch (error) {
-		return { message: error.response?.data?.message, type: 'error' };
+		throw error;
 	}
 }
