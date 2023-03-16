@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getSeriesOne, postSeries } from '../../api/series';
 import TableStagesForEdit from '../../components/Tables/Stages/TableStagesForEdit';
 import Button from '../../components/UI/Button/Button';
+import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -28,7 +29,7 @@ const EditSeries = () => {
 	const sendForm = () => {
 		postSeries(series).then(data => {
 			setUpdate(prev => !prev);
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }));
+			dispatch(getAlert({ message: data.data?.message, type: data.type, isOpened: true }));
 		});
 	};
 
@@ -37,18 +38,15 @@ const EditSeries = () => {
 			{series?.name ? (
 				<>
 					<section className={cls.block}>
-						<h3 className={cls.title}>Редактирование "{series.name}"</h3>
-						<FormEditSeries series={series} setSeries={setSeries} />
-						<div className={cls.right}>
-							<Button getClick={sendForm}>сохранить</Button>
-						</div>
+						<h3 className={cls.title}>Редактирование серии "{series.name}"</h3>
+						<FormEditSeries series={series} setSeries={setSeries} sendForm={sendForm} />
 						<Button getClick={getClick}>назад</Button>
 					</section>
 
 					<section className={cls.block}>
 						<TableStagesForEdit seriesId={seriesId} />
 						<div className={cls.right}>
-							<Button>добавить</Button>
+							<ButtonLink to="stage-add">Добавить</ButtonLink>
 						</div>
 						<Button getClick={getClick}>назад</Button>
 					</section>

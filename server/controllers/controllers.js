@@ -4,15 +4,21 @@ import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
-import { changeSeries, getSeries, getSeriesOne } from '../service/series.js';
-import { getStageService, getStages, postStageChanged } from '../service/stages.js';
+import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
+import {
+	getStageService,
+	getStages,
+	putStageService,
+	deleteStageService,
+	postStageService,
+} from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
 
-export async function postSeries(req, res) {
+export async function getSeries(req, res) {
 	try {
-		const series = await getSeries();
+		const series = await getSeriesService();
 		return res.status(200).json({ message: `Данные серий заездов`, series });
 	} catch (error) {
 		res.status(400).json({ message: `Ошибка при получении данных серий` });
@@ -124,12 +130,11 @@ export async function postZpPoints(req, res) {
 	}
 }
 
-export async function postZpSeriesChanged(req, res) {
+export async function postSeries(req, res) {
 	try {
 		const { seriesChanged } = req.body;
-		const series = await changeSeries(seriesChanged);
-		if (series.status) throw series.message;
-		return res.status(201).json({ message: series.message });
+		const series = await postSeriesService(seriesChanged);
+		return res.status(201).json(series);
 	} catch (error) {
 		console.log(error);
 		return res
@@ -138,24 +143,10 @@ export async function postZpSeriesChanged(req, res) {
 	}
 }
 
-export async function postZpStage(req, res) {
-	try {
-		const { stageId } = req.body;
-		const stage = await getStage(stageId);
-		if (stage.status) throw stage.message;
-		return res.status(201).json({ ...stage });
-	} catch (error) {
-		console.log(error);
-		return res
-			.status(400)
-			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
-	}
-}
-
-export async function postZpStageChanged(req, res) {
+export async function putStage(req, res) {
 	try {
 		const { stageChanged } = req.body;
-		const responseStage = await postStageChanged(stageChanged);
+		const responseStage = await putStageService(stageChanged);
 		if (responseStage.status) throw responseStage.message;
 		return res.status(201).json({ message: responseStage.message });
 	} catch (error) {
@@ -163,5 +154,27 @@ export async function postZpStageChanged(req, res) {
 		return res
 			.status(400)
 			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+	}
+}
+export async function deleteStage(req, res) {
+	try {
+		const { stageId } = req.body;
+		const stages = await deleteStageService(stageId);
+
+		return res.status(200).json(stages);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function postStage(req, res) {
+	try {
+		const { stageNew } = req.body;
+		const stage = await postStageService(stageNew);
+
+		return res.status(200).json(stage);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
 	}
 }

@@ -31,8 +31,34 @@ export async function getStage(stageId) {
 		const response = await myAxios({
 			url: `/api/stage/${stageId}`,
 			method: 'get',
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function putStage(stageChanged) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage`,
+			method: 'put',
 			data: {
-				stageId,
+				stageChanged,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+export async function postStage(stageNew) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage`,
+			method: 'post',
+			data: {
+				stageNew,
 			},
 		});
 		return response;
@@ -41,13 +67,13 @@ export async function getStage(stageId) {
 	}
 }
 
-export async function postStage(stageChanged) {
+export async function postDeleteStage(stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage-changed`,
-			method: 'post',
+			url: `/api/stage`,
+			method: 'delete',
 			data: {
-				stageChanged,
+				stageId,
 			},
 		});
 		return response;

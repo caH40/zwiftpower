@@ -1,15 +1,19 @@
 import React from 'react';
+import { handlerNewValue, handlerValue } from './service';
 
-const SimpleInput = ({ name, state, setState, property, type }) => {
+import cls from './SimpleInput.module.css';
+
+const SimpleInput = ({ name, state, setState, property, type, disabled, ...props }) => {
 	return (
 		<>
-			<p style={{ paddingBottom: '5px' }}>{name}:</p>
+			<label className={cls.label}>{name}:</label>
 			<input
-				className="simpleInput"
+				className={cls.input}
 				type={type}
-				placeholder={name}
-				value={state[property]}
-				onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
+				value={handlerValue(type, state[property])}
+				onChange={e => setState(prev => ({ ...prev, [property]: handlerNewValue(type, e) }))}
+				disabled={disabled}
+				{...props}
 			/>
 		</>
 	);

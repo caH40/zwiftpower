@@ -1,6 +1,6 @@
 import { Series } from '../Model/Series.js';
 
-export async function getSeries(seriesId) {
+export async function getSeriesService(seriesId) {
 	try {
 		if (seriesId) return await Series.findOne({ _id: seriesId });
 		const seriesDB = await Series.find();
@@ -12,14 +12,14 @@ export async function getSeries(seriesId) {
 
 export async function getSeriesOne(seriesId) {
 	try {
-		const seriesDB = await Series.findOne({ _id: seriesId });
+		const seriesDB = await Series.findOne({ _id: seriesId }).catch(e => true);
 		return seriesDB;
 	} catch (error) {
-		console.log(error);
+		throw error;
 	}
 }
 
-export async function changeSeries({
+export async function postSeriesService({
 	_id,
 	name,
 	dateStart,
@@ -36,7 +36,6 @@ export async function changeSeries({
 		);
 		return { message: `Изменения в ${name} сохранены!` };
 	} catch (error) {
-		console.log(error);
-		throw 'Непредвиденная ошибка на сервере';
+		throw error;
 	}
 }

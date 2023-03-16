@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getStages } from '../../../api/stage';
+import { getStages, postDeleteStage } from '../../../api/stage';
+import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../UI/Button/Button';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import cls from '../Table.module.css';
@@ -9,6 +11,7 @@ import cls from '../Table.module.css';
 const TableStagesForEdit = ({ seriesId }) => {
 	const [stages, setStages] = useState([]);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const toLink = (url, needLink) => {
 		if (!needLink) return;
@@ -20,6 +23,38 @@ const TableStagesForEdit = ({ seriesId }) => {
 			setStages(data.data.stages);
 		});
 	}, [seriesId]);
+
+	const deleteStage = stage => {
+		const confirm = window.confirm(`Вы действительно хотите удалить Этап №${stage.number}?`);
+		if (!confirm)
+			return dispatch(
+				getAlert({
+					message: `Отмена удаления Этапа №${stage.number}`,
+					type: 'warning',
+					isOpened: true,
+				})
+			);
+		postDeleteStage(stage._id)
+			.then(data => {
+				setStages(data.data.stages);
+				dispatch(
+					getAlert({
+						message: data.data.message,
+						type: 'success',
+						isOpened: true,
+					})
+				);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({
+						message: `Ошибка при удалении этапа!`,
+						type: 'error',
+						isOpened: true,
+					})
+				)
+			);
+	};
 
 	const seriesName = stages?.length ? stages[0]?.seriesId.name : '';
 	return (
@@ -69,7 +104,9 @@ const TableStagesForEdit = ({ seriesId }) => {
 								</Button>
 							</td>
 							<td>
-								<Button addCls={['danger', 'td']}>удалить</Button>
+								<Button addCls={['danger', 'td']} getClick={() => deleteStage(stage)}>
+									удалить
+								</Button>
 							</td>
 						</tr>
 					))}

@@ -31,10 +31,21 @@ h5 {
 	margin: 0;
 	padding: 0;
 }
+input,
+button,
+select,
+option,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	color: inherit;
+}
 
 :root {
 	--gradient-main: linear-gradient(90deg, var(--color-blue-3) -0.39%, var(--color-blue-4) 100%);
 	--color-text-main: #ffffff;
+	--color-text-dark: #000000;
 
 	--color-blue-main: #0f4fa8;
 	--color-yellow-main: #ffbb00;
