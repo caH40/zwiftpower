@@ -27,7 +27,7 @@ export async function getStageService(stageId) {
 	}
 }
 
-export async function postStageChanged({
+export async function putStageService({
 	_id,
 	number,
 	type,

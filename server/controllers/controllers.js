@@ -8,7 +8,7 @@ import { postSeriesService, getSeriesService, getSeriesOne } from '../service/se
 import {
 	getStageService,
 	getStages,
-	postStageChanged,
+	putStageService,
 	deleteStageService,
 } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
@@ -142,24 +142,10 @@ export async function postSeries(req, res) {
 	}
 }
 
-export async function postZpStage(req, res) {
-	try {
-		const { stageId } = req.body;
-		const stage = await getStage(stageId);
-		if (stage.status) throw stage.message;
-		return res.status(201).json({ ...stage });
-	} catch (error) {
-		console.log(error);
-		return res
-			.status(400)
-			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
-	}
-}
-
-export async function postZpStageChanged(req, res) {
+export async function putStage(req, res) {
 	try {
 		const { stageChanged } = req.body;
-		const responseStage = await postStageChanged(stageChanged);
+		const responseStage = await putStageService(stageChanged);
 		if (responseStage.status) throw responseStage.message;
 		return res.status(201).json({ message: responseStage.message });
 	} catch (error) {
@@ -175,6 +161,16 @@ export async function deleteStage(req, res) {
 		const stages = await deleteStageService(stageId);
 
 		return res.status(200).json(stages);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function postStage(req, res) {
+	try {
+		const { stageNew } = req.body;
+		console.log({ stageNew });
+		return res.status(200).json();
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json(error);
