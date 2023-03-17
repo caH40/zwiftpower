@@ -1,23 +1,38 @@
-import axios from 'axios';
-const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
+import { myAxios } from './axios';
 
-export async function postPoints(pointsType, sequenceNumber, place, resultId, multiplier) {
+export async function putPoints(pointsType, sequenceNumber, place, resultId) {
 	try {
-		const response = await axios.post(
-			`${serverExpress}/api/stage/points`,
-			{
+		const response = await myAxios({
+			url: `/api/stage/points`,
+			method: 'put',
+			data: {
 				pointsType,
 				sequenceNumber,
 				place,
 				resultId,
 			},
-			{
-				'Content-type': 'application/json',
-			}
-		);
+		});
 
-		return { message: response.data.message, type: 'success' };
+		return response;
 	} catch (error) {
-		return { message: error.response?.data?.message, type: 'error' };
+		throw error;
+	}
+}
+export async function putMultiplier(stageId, sequenceNumber, multiplier, pointsType) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage/points-multiplier`,
+			method: 'put',
+			data: {
+				stageId,
+				sequenceNumber,
+				multiplier,
+				pointsType,
+			},
+		});
+
+		return response;
+	} catch (error) {
+		throw error;
 	}
 }

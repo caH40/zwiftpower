@@ -9,6 +9,7 @@ import SelectPenalty from '../../UI/SelectPenalty/SelectPenalty';
 import cls from '../Table.module.css';
 import SelectCategory from '../../UI/SelectCategory/SelectCategory';
 import SelectPoints from '../../UI/SelectPoints/SelectPoints';
+import SelectMultiplier from '../../UI/SelectMultiplier/SelectMultiplier';
 
 const TableEditStageResults = ({ results = [], setUpdate }) => {
 	return (
@@ -24,12 +25,30 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 					<th scope="col">Райдер</th>
 					{results[0]?.pointsSprint?.map((result, index) => (
 						<th scope="col" key={`${result._id}${result.sprint}th-sp`}>
-							Спринт-{result.sprint}
+							<div className={cls.flexBox}>
+								<span>Спр({result.sprint})</span>
+								<SelectMultiplier
+									stageId={results[0].stageId}
+									number={result.sprint}
+									pointsType="pointsSprint"
+									setUpdate={setUpdate}
+									multiplier={result.multiplier}
+								/>
+							</div>
 						</th>
 					))}
 					{results[0]?.pointsMountain?.map((result, index) => (
 						<th scope="col" key={`${result._id}${result.mountain}th-sp`}>
-							Гора-{result.mountain}
+							<div className={cls.flexBox}>
+								<span>Горн({result.mountain})</span>
+								<SelectMultiplier
+									stageId={results[0].stageId}
+									number={result.mountain}
+									pointsType="pointsMountain"
+									setUpdate={setUpdate}
+									multiplier={result.multiplier}
+								/>
+							</div>
 						</th>
 					))}
 					<th scope="col">Время</th>
@@ -39,7 +58,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 					<th scope="col">Рост,см</th>
 					<th scope="col">Вес,кг</th>
 					<th scope="col">ZP-profile</th>
-					<th scope="col">Комментарий</th>
+					{/* <th scope="col">Комментарий</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -78,26 +97,30 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 						<td>{tdRider(result.name, result.imageSrc)}</td>
 						{result.pointsSprint.map(elm => (
 							<td key={`${result._id}${elm.sprint}td-sp`}>
-								<SelectPoints
-									pointsType="pointsSprint"
-									sequenceNumber={elm.sprint}
-									result={result}
-									setUpdate={setUpdate}
-									multiplier={elm.multiplier}
-								/>
-								<span> x {elm.multiplier ?? 1}</span>
+								<div className={cls.flexBox}>
+									<SelectPoints
+										pointsType="pointsSprint"
+										sequenceNumber={elm.sprint}
+										result={result}
+										setUpdate={setUpdate}
+										multiplier={elm.multiplier}
+									/>
+									<span>x{elm.multiplier}</span>
+								</div>
 							</td>
 						))}
 						{result.pointsMountain.map(elm => (
 							<td key={`${result._id}${elm.mountain}td-mn`}>
-								<SelectPoints
-									pointsType="pointsMountain"
-									sequenceNumber={elm.mountain}
-									result={result}
-									setUpdate={setUpdate}
-									multiplier={elm.multiplier}
-								/>
-								<span> x {elm.multiplier ?? 1}</span>
+								<div className={cls.flexBox}>
+									<SelectPoints
+										pointsType="pointsMountain"
+										sequenceNumber={elm.mountain}
+										result={result}
+										setUpdate={setUpdate}
+										multiplier={elm.multiplier}
+									/>
+									<span>x{elm.multiplier}</span>
+								</div>
 							</td>
 						))}
 						<td>{result.time}</td>
@@ -107,7 +130,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 						<td>{result.heightInCentimeters}</td>
 						<td>{result.heightInCentimeters}</td>
 						<td>{tdLinkZP(result.zwiftRiderId)}</td>
-						<td>-</td>
+						{/* <td>-</td> */}
 					</tr>
 				))}
 			</tbody>

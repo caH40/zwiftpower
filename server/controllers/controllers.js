@@ -3,7 +3,7 @@ import path from 'path';
 import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
-import { setPoints } from '../service/points.js';
+import { putMultiplierService, putPointsService } from '../service/points.js';
 import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
 import { getStageResultsService } from '../service/stage-results.js';
 import {
@@ -104,17 +104,24 @@ export async function putCategory(req, res) {
 		return res.status(400).json(error);
 	}
 }
-export async function postZpPoints(req, res) {
+export async function putPoints(req, res) {
 	try {
-		const { pointsType, sequenceNumber, place, resultId, multiplier } = req.body;
-		const points = await setPoints(pointsType, sequenceNumber, place, resultId, multiplier);
-		if (points.status) throw points.message;
-		return res.status(201).json({ message: points.message });
+		const { pointsType, sequenceNumber, place, resultId } = req.body;
+		const points = await putPointsService(pointsType, sequenceNumber, place, resultId);
+		return res.status(201).json(points);
 	} catch (error) {
 		console.log(error);
-		return res
-			.status(400)
-			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+		return res.status(400).json(error);
+	}
+}
+export async function putMultiplier(req, res) {
+	try {
+		const { stageId, sequenceNumber, multiplier, pointsType } = req.body;
+		const points = await putMultiplierService(stageId, sequenceNumber, multiplier, pointsType);
+		return res.status(201).json(points);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
 	}
 }
 

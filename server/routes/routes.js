@@ -9,7 +9,8 @@ import {
 	putUnderChecking,
 	putPenalty,
 	putCategory,
-	postZpPoints,
+	putPoints,
+	putMultiplier,
 	postSeries,
 	putStage,
 	postStage,
@@ -31,7 +32,8 @@ router.post('/stage', authAdmin, postStage);
 router.delete('/stage', authAdmin, deleteStage);
 router.put('/stage', authAdmin, putStage);
 router.put('/stage/category', authAdmin, putCategory);
-router.post('/stage/points', authAdmin, postZpPoints);
+router.put('/stage/points', authAdmin, putPoints);
+router.put('/stage/points-multiplier', authAdmin, putMultiplier);
 
 router.get('/stage-result/:stageId', authAdmin, getStageResults);
 router.put('/penalty', authAdmin, putPenalty);
