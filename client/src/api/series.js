@@ -19,13 +19,27 @@ export async function getSeriesOne(seriesId) {
 	}
 }
 
-export async function postSeries(seriesChanged) {
+export async function putSeries(seriesChanged) {
+	try {
+		const response = await myAxios({
+			url: `/api/series`,
+			method: 'put',
+			data: {
+				seriesChanged,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+export async function postSeries(seriesNew) {
 	try {
 		const response = await myAxios({
 			url: `/api/series`,
 			method: 'post',
 			data: {
-				seriesChanged,
+				seriesNew,
 			},
 		});
 		return response;

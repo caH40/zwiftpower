@@ -33,3 +33,25 @@ export const isValid = stageNew => {
 
 	return true;
 };
+
+export const seriesClear = {
+	name: '',
+	dateStart: '2023-01-01',
+	type: '',
+	organizer: '',
+	hasGeneral: false,
+	hasTeams: false,
+	isFinished: false,
+};
+
+export const isValidSeries = seriesNew => {
+	if (
+		seriesNew.name === '' ||
+		seriesNew.dateStart === '2023-01-01' ||
+		seriesNew.type === '' ||
+		seriesNew.organizer === ''
+	)
+		return false;
+
+	return true;
+};
