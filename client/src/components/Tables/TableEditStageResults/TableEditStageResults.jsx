@@ -65,11 +65,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 							/>
 						</td>
 						<td>
-							<SelectPenalty
-								result={result}
-								setUpdate={setUpdate}
-								defaultValue={result.penalty.powerUp}
-							/>
+							<SelectPenalty result={result} setUpdate={setUpdate} value={result.penalty.powerUp} />
 						</td>
 						<td>
 							<SelectCategory

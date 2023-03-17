@@ -2,7 +2,7 @@ import path from 'path';
 
 import { putCategoryService } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
-import { setPenalty } from '../service/penalty.js';
+import { putPenaltyService } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
 import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
 import { getStageResultsService } from '../service/stage-results.js';
@@ -88,16 +88,14 @@ export async function postZpUnderChecking(req, res) {
 	}
 }
 
-export async function postZpPenalty(req, res) {
+export async function putPenalty(req, res) {
 	try {
 		const { newPenalty, resultId } = req.body;
-
-		const penalty = await setPenalty(newPenalty, resultId);
-
-		return res.status(201).json({ message: penalty.message });
+		const penalty = await putPenaltyService(newPenalty, resultId);
+		return res.status(201).json(penalty);
 	} catch (error) {
 		console.log(error);
-		return res.status(400).json({ message: `Ошибка при начислении штрафных балов` });
+		return res.status(400).json(error);
 	}
 }
 

@@ -1,6 +1,6 @@
 import { Result } from '../Model/Result.js';
 
-export async function setPenalty(newPenalty, resultId) {
+export async function putPenaltyService(newPenalty, resultId) {
 	try {
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
@@ -8,7 +8,7 @@ export async function setPenalty(newPenalty, resultId) {
 			{ returnDocument: 'after' }
 		);
 
-		if (!resultDB) return { message: 'Не найден райдер для пенальти' };
+		if (!resultDB) throw { message: 'Не найден райдер для пенальти' };
 
 		const message =
 			resultDB.penalty.powerUp !== 0
@@ -16,6 +16,6 @@ export async function setPenalty(newPenalty, resultId) {
 				: `"${resultDB.name}" сняты все штрафные баллы`;
 		return { message };
 	} catch (error) {
-		console.log(error);
+		throw error;
 	}
 }

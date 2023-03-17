@@ -1,20 +1,25 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { postStagePenalty } from '../../../api/stage-penalty';
+import { putPenalty } from '../../../api/stage-penalty';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import cls from './SelectPenalty.module.css';
 
-const SelectPenalty = ({ result, defaultValue, setUpdate }) => {
+const SelectPenalty = ({ result, value, setUpdate }) => {
 	const dispatch = useDispatch();
 
 	const changePenalty = e => {
 		const newPenalty = Number(e.target.value);
-
-		postStagePenalty(newPenalty, result._id).then(data => {
-			setUpdate(prev => !prev);
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }));
-		});
+		putPenalty(newPenalty, result._id)
+			.then(data => {
+				dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
+				setUpdate(prev => !prev);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({ message: 'Ошибка при изменении штрафа!', type: 'error', isOpened: true })
+				)
+			);
 	};
 
 	return (
@@ -22,9 +27,8 @@ const SelectPenalty = ({ result, defaultValue, setUpdate }) => {
 			onChange={changePenalty}
 			name="penalty"
 			size="1"
-			defaultValue={defaultValue}
-			className={cls.select}
-			// className={defaultValue === 0 ? cls.hasPenalty : cls.hasPenalty}
+			value={value}
+			className={`${cls.select} ${value === 0 ? '' : cls.hasPenalty}`}
 		>
 			<option value="0" label="нет" />
 			<option className={cls.hasPenalty} value="1" label="1 PU" />
