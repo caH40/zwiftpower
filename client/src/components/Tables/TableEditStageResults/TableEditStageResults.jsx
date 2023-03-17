@@ -2,8 +2,8 @@ import React from 'react';
 
 import { tdLinkZP, tdRider } from '../utils/td';
 import Checkbox from '../../UI/Checkbox/Checkbox';
-import { postDisqualification } from '../../../api/disqualification';
-import { postUnderChecking } from '../../../api/underchecking';
+import { putDisqualification } from '../../../api/disqualification';
+import { putUnderchecking } from '../../../api/underchecking';
 
 import SelectPenalty from '../../UI/SelectPenalty/SelectPenalty';
 import cls from '../Table.module.css';
@@ -49,7 +49,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 						<td>
 							<Checkbox
 								setUpdate={setUpdate}
-								apiRequest={postDisqualification}
+								apiRequest={putDisqualification}
 								state={result.isDisqualification}
 								resultId={result._id}
 								target="DQ"
@@ -58,7 +58,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 						<td>
 							<Checkbox
 								setUpdate={setUpdate}
-								apiRequest={postUnderChecking}
+								apiRequest={putUnderchecking}
 								state={result.isUnderChecking}
 								resultId={result._id}
 								target="UC"

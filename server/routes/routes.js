@@ -6,7 +6,7 @@ import {
 	postStages,
 	getStage,
 	putDisqualification,
-	postZpUnderChecking,
+	putUnderChecking,
 	putPenalty,
 	putCategory,
 	postZpPoints,
@@ -24,8 +24,6 @@ router.get('/series', authAdmin, getSeries);
 router.post('/series', authAdmin, postSeries);
 router.post('/seriesone', authAdmin, postSeriesOne);
 
-router.post('/underchecking', authAdmin, postZpUnderChecking);
-
 router.post('/stages', authAdmin, postStages);
 
 router.get('/stage/:stageId', authAdmin, getStage);
@@ -38,3 +36,4 @@ router.post('/stage/points', authAdmin, postZpPoints);
 router.get('/stage-result/:stageId', authAdmin, getStageResults);
 router.put('/penalty', authAdmin, putPenalty);
 router.put('/disqualification', authAdmin, putDisqualification);
+router.put('/underchecking', authAdmin, putUnderChecking);

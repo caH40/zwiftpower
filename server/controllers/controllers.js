@@ -13,7 +13,7 @@ import {
 	deleteStageService,
 	postStageService,
 } from '../service/stages.js';
-import { setUnderChecking } from '../service/underchecking.js';
+import { putUnderCheckingService } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
 
@@ -71,18 +71,14 @@ export async function putDisqualification(req, res) {
 	}
 }
 
-export async function postZpUnderChecking(req, res) {
+export async function putUnderChecking(req, res) {
 	try {
 		const { isUnderChecking, resultId } = req.body;
-
-		const underChecking = await setUnderChecking(isUnderChecking, resultId);
-
-		return res.status(201).json({ message: underChecking.message });
+		const underChecking = await putUnderCheckingService(isUnderChecking, resultId);
+		return res.status(201).json(underChecking);
 	} catch (error) {
 		console.log(error);
-		return res
-			.status(400)
-			.json({ message: `Ошибка при постановке под наблюдение за превышение категории!` });
+		return res.status(400).json(error);
 	}
 }
 
