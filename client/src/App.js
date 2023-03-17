@@ -15,33 +15,18 @@ import EditStageParams from './Pages/EditStages/EditStageParams';
 import Authorization from './Pages/Auth/Authorization';
 // import Registration from './Pages/Auth/Registration';
 import Message from './Pages/Message/Message';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getAuth } from './redux/features/authSlice';
-import { checkAuth } from './api/auth-check';
+
 import AddStage from './Pages/EditSeries/AddStage';
 import EditResults from './Pages/EditResults/EditResults';
 import AddSeries from './Pages/EditSeries/AddSeries';
+import useFirstAuth from './hook/useFirstAuth';
 
 function App() {
-	const dispatch = useDispatch();
+	useFirstAuth();
 	// const userAuth = useSelector(state => state.checkAuth.value.user);
 
 	// const isAdmin = ['admin'].includes(userAuth.role);
 	// const isModerator = ['admin', 'moderator'].includes(userAuth.role);
-
-	useEffect(() => {
-		checkAuth()
-			.then(response => {
-				if (!response) return;
-				dispatch(getAuth({ status: true, user: response.data.user }));
-				localStorage.setItem('accessToken', response.data.accessToken);
-			})
-			.catch(error => {
-				dispatch(getAuth({ status: false, user: {} }));
-				localStorage.setItem('accessToken', '');
-			});
-	}, [dispatch]);
 
 	return (
 		<Routes>
