@@ -38,30 +38,36 @@ const TableStages = ({ seriesId }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{stages.map(stage => (
-					<tr
-						className={cls.trLink}
-						key={stage._id}
-						onClick={() => myLink(stage._id, stage.hasResults)}
-					>
-						<th scope="row">{stage.number}</th>
-						<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
-						<td>{stage.route}</td>
-						<td>{stage.world}</td>
-						<td>{stage.type}</td>
-						<td>{stage.laps}</td>
-						<td>{stage.distance}</td>
-						<td>{stage.ascent}</td>
-						<td>{stage.quantitySprints}</td>
-						<td>{stage.quantityMountains}</td>
-						<td>{stage.hasResults.toString()}</td>
-						<td>
-							<a href={stage.link} target="_blank" rel="noreferrer">
-								Маршрут
-							</a>
-						</td>
-					</tr>
-				))}
+				{stages.map(stage => {
+					const hasResult = stage.hasResults.toString();
+					const classResult = `${cls.boxValue} ${hasResult === 'true' ? cls.success : cls.error}`;
+					return (
+						<tr
+							className={cls.trLink}
+							key={stage._id}
+							onClick={() => myLink(stage._id, stage.hasResults)}
+						>
+							<th scope="row">{stage.number}</th>
+							<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
+							<td>{stage.route}</td>
+							<td>{stage.world}</td>
+							<td>{stage.type}</td>
+							<td>{stage.laps}</td>
+							<td>{stage.distance}</td>
+							<td>{stage.ascent}</td>
+							<td>{stage.quantitySprints}</td>
+							<td>{stage.quantityMountains}</td>
+							<td>
+								<div className={classResult}>{hasResult}</div>
+							</td>
+							<td>
+								<a href={stage.link} target="_blank" rel="noreferrer">
+									Маршрут
+								</a>
+							</td>
+						</tr>
+					);
+				})}
 			</tbody>
 		</table>
 	);

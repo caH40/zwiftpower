@@ -125,3 +125,17 @@
 .WB {
 	background: #9422ae;
 }
+.boxValue {
+	text-align: center;
+	padding: 4px 5px 2px 5px;
+	width: 50px;
+	min-height: 25px;
+	border: 1px solid var(--color-border-minor);
+	border-radius: 0.25rem;
+}
+.success {
+	background-color: var(--success);
+}
+.error {
+	background-color: var(--error);
+}

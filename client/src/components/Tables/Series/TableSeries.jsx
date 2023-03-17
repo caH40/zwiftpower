@@ -31,16 +31,22 @@ const TableSeries = ({ target }) => {
 			</thead>
 			{series?.length ? (
 				<tbody>
-					{series.map((seriesOne, index) => (
-						<tr className={cls.trLink} key={seriesOne._id} onClick={() => myLink(seriesOne._id)}>
-							<th scope="row">{index + 1}</th>
-							<td>{seriesOne.name}</td>
-							<td>{seriesOne.organizer}</td>
-							<td>{new Date(seriesOne.dateStart).toLocaleDateString()}</td>
-							<td>{seriesOne.isFinished.toString()}</td>
-							<td>{seriesOne.type}</td>
-						</tr>
-					))}
+					{series.map((seriesOne, index) => {
+						const finished = seriesOne.isFinished.toString();
+						const classFinished = `${cls.boxValue} ${finished === 'true' ? cls.success : cls.error}`;
+						return (
+							<tr className={cls.trLink} key={seriesOne._id} onClick={() => myLink(seriesOne._id)}>
+								<th scope="row">{index + 1}</th>
+								<td>{seriesOne.name}</td>
+								<td>{seriesOne.organizer}</td>
+								<td>{new Date(seriesOne.dateStart).toLocaleDateString()}</td>
+								<td>
+									<div className={classFinished}>{finished}</div>
+								</td>
+								<td>{seriesOne.type}</td>
+							</tr>
+						);
+					})}
 				</tbody>
 			) : (
 				<ClearTbody quantityTd={6} />

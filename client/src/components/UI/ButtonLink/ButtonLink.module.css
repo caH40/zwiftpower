@@ -14,9 +14,12 @@
 	letter-spacing: 0.06em;
 	user-select: none;
 	text-decoration: none;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .button:hover {
 	background-color: var(--color-blue-4);
+	transform: translateY(-2px);
+	transition: all 0.3s;
 }
 .button:active {
 	background-color: var(--color-yellow-main);
@@ -25,10 +28,10 @@
 	width: 100%;
 }
 .danger {
-	background-color: var(--color-error);
+	background-color: var(--error);
 }
 .danger:hover {
-	background-color: var(--color-error-hover);
+	background-color: var(--error-hover);
 }
 .danger:active {
 	background-color: var(--color-yellow-main);
