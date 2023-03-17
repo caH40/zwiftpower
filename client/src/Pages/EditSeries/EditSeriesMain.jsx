@@ -8,7 +8,7 @@ import useTitle from '../../hook/useTitle';
 import cls from './Edit.module.css';
 
 const EditSeriesMain = () => {
-	useTitle('Редактирование данных Series');
+	useTitle('Редактирование данных Series, Stage');
 
 	const navigate = useNavigate();
 	const goBack = () => navigate(-1);

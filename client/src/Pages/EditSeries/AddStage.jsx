@@ -19,7 +19,7 @@ const AddStage = () => {
 	const navigate = useNavigate();
 	const goBack = () => navigate(-1);
 
-	useTitle('Редактирование данных Series');
+	useTitle('Редактирование данных Series, Stage');
 
 	const sendForm = () => {
 		if (!isValid(stage))

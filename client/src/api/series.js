@@ -1,5 +1,4 @@
 import { myAxios } from './axios';
-const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export async function getSeries() {
 	try {
@@ -12,7 +11,7 @@ export async function getSeries() {
 
 export async function getSeriesOne(seriesId) {
 	try {
-		const response = await myAxios.post(`${serverExpress}/api/seriesone`, { seriesId });
+		const response = await myAxios({ url: `/api/seriesone`, method: 'post', data: { seriesId } });
 		return response;
 	} catch (error) {
 		throw error;
@@ -40,6 +39,20 @@ export async function postSeries(seriesNew) {
 			method: 'post',
 			data: {
 				seriesNew,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+export async function postDeleteSeries(seriesId) {
+	try {
+		const response = await myAxios({
+			url: `/api/series`,
+			method: 'delete',
+			data: {
+				seriesId,
 			},
 		});
 		return response;

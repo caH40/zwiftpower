@@ -14,7 +14,7 @@ const EditSeriesList = () => {
 	return (
 		<>
 			<h3 className="titlePage-3">Редактирование данных заездов. Выберите Серию</h3>
-			<TableSeries target={'stage'} />
+			<TableSeries target="stage" />
 			<Button getClick={goBack}>назад</Button>
 		</>
 	);

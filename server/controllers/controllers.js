@@ -9,6 +9,7 @@ import {
 	postSeriesService,
 	getSeriesService,
 	getSeriesOne,
+	deleteSeriesService,
 } from '../service/series.js';
 import { getStageResultsService } from '../service/stage-results.js';
 import {
@@ -145,6 +146,16 @@ export async function postSeries(req, res) {
 	try {
 		const { seriesNew } = req.body;
 		const series = await postSeriesService(seriesNew);
+		return res.status(201).json(series);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function deleteSeries(req, res) {
+	try {
+		const { seriesId } = req.body;
+		const series = await deleteSeriesService(seriesId);
 		return res.status(201).json(series);
 	} catch (error) {
 		console.log(error);
