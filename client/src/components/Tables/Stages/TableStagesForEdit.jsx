@@ -80,36 +80,42 @@ const TableStagesForEdit = ({ seriesId }) => {
 			</thead>
 			{stages?.length ? (
 				<tbody>
-					{stages.map(stage => (
-						<tr className={cls.trLinkOff} key={stage._id}>
-							<th scope="row">{stage.number}</th>
-							<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
-							<td>{stage.route}</td>
-							<td>{stage.world}</td>
-							<td>{stage.type}</td>
-							<td>{stage.laps}</td>
-							<td>{stage.distance}</td>
-							<td>{stage.ascent}</td>
-							<td>{stage.quantitySprints}</td>
-							<td>{stage.quantityMountains}</td>
-							<td>{stage.hasResults.toString()}</td>
-							<td>
-								<a href={stage.link} target="_blank" rel="noreferrer">
-									Маршрут
-								</a>
-							</td>
-							<td>
-								<Button getClick={() => toLink(`stage-edit/${stage._id}`, true)} addCls={['td']}>
-									редактировать
-								</Button>
-							</td>
-							<td>
-								<Button addCls={['danger', 'td']} getClick={() => deleteStage(stage)}>
-									удалить
-								</Button>
-							</td>
-						</tr>
-					))}
+					{stages.map(stage => {
+						const hasResult = stage.hasResults.toString();
+						const classResult = `${cls.boxValue} ${hasResult === 'true' ? cls.success : cls.error}`;
+						return (
+							<tr className={cls.trLinkOff} key={stage._id}>
+								<th scope="row">{stage.number}</th>
+								<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
+								<td>{stage.route}</td>
+								<td>{stage.world}</td>
+								<td>{stage.type}</td>
+								<td>{stage.laps}</td>
+								<td>{stage.distance}</td>
+								<td>{stage.ascent}</td>
+								<td>{stage.quantitySprints}</td>
+								<td>{stage.quantityMountains}</td>
+								<td>
+									<div className={classResult}>{hasResult}</div>
+								</td>
+								<td>
+									<a href={stage.link} target="_blank" rel="noreferrer">
+										Маршрут
+									</a>
+								</td>
+								<td>
+									<Button getClick={() => toLink(`stage-edit/${stage._id}`, true)} addCls={['td']}>
+										редактировать
+									</Button>
+								</td>
+								<td>
+									<Button addCls={['danger', 'td']} getClick={() => deleteStage(stage)}>
+										удалить
+									</Button>
+								</td>
+							</tr>
+						);
+					})}
 				</tbody>
 			) : (
 				<ClearTbody quantityTd={14} />

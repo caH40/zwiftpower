@@ -7,7 +7,6 @@ import Home from './Pages/Home';
 import Page404 from './Pages/Page404/Page404';
 import EditStageList from './Pages/EditStageList';
 import StageResults from './Pages/StageResults';
-import EditStage from './Pages/EditStage';
 import EditUsers from './Pages/EditUsers';
 import Download from './Pages/Download';
 import EditSeriesMain from './Pages/EditSeries/EditSeriesMain';
@@ -21,6 +20,7 @@ import { useEffect } from 'react';
 import { getAuth } from './redux/features/authSlice';
 import { checkAuth } from './api/auth-check';
 import AddStage from './Pages/EditSeries/AddStage';
+import EditResults from './Pages/EditResults/EditResults';
 
 function App() {
 	const dispatch = useDispatch();
@@ -58,7 +58,7 @@ function App() {
 				<Route path="/edit/series/:seriesId/stage-edit/:stageId" element={<EditStageParams />} />
 				<Route path="/edit/stage" element={<EditSeriesList />} />
 				<Route path="/edit/stage/:seriesId" element={<EditStageList />} />
-				<Route path="/edit/stage/:seriesId/:stageId" element={<EditStage />} />
+				<Route path="/edit/stage/:seriesId/:stageId" element={<EditResults />} />
 				<Route path="/message/:messageId/:additional" element={<Message />} />
 				<Route path="*" element={<Page404 />} />
 			</Route>

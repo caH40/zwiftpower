@@ -1,10 +1,16 @@
 import { Result } from '../Model/Result.js';
 import { mountainTable, sprintTable } from '../utility/points.js';
 
-export async function setPoints(pointsType, sequenceNumber, place, resultId, multiplier = 1) {
+export async function putPointsService(
+	pointsType,
+	sequenceNumber,
+	place,
+	resultId,
+	multiplier = 1
+) {
 	try {
 		console.log({ pointsType, sequenceNumber, place, resultId });
-
+		console.log({ pointsType });
 		const elementPoints = `${pointsType}.${sequenceNumber - 1}.points`;
 		const elementPlace = `${pointsType}.${sequenceNumber - 1}.place`;
 
@@ -13,9 +19,8 @@ export async function setPoints(pointsType, sequenceNumber, place, resultId, mul
 		if (place !== 'none') {
 			const resultCheckingDB = await Result.findOne({ stageId, [elementPlace]: place });
 			if (resultCheckingDB)
-				return {
+				throw {
 					message: `Внимание!!! Место №${place} уже присвоено райдеру "${resultCheckingDB.name}"`,
-					status: 'false',
 				};
 		}
 
@@ -25,7 +30,7 @@ export async function setPoints(pointsType, sequenceNumber, place, resultId, mul
 		if (pointsType === 'pointsSprint') pointsTable = sprintTable;
 
 		let points = pointsTable.find(point => point.place === place)?.points;
-		points = Math.ceil(points * multiplier);
+		// points = Math.ceil(points * multiplier);
 
 		console.log({ [elementPlace]: place, [elementPoints]: points });
 		const resultDB = await Result.findOneAndUpdate(
@@ -33,7 +38,7 @@ export async function setPoints(pointsType, sequenceNumber, place, resultId, mul
 			{ $set: { [elementPlace]: place, [elementPoints]: points } }
 		);
 
-		if (!resultDB) return console.log('не найден результат для обновления');
+		if (!resultDB) throw console.log('не найден результат для обновления');
 
 		const message = `${resultDB.name} присвоено "${place}" место в "${
 			pointsType === 'pointsSprint' ? 'Спринте-' + sequenceNumber : 'Горе-' + sequenceNumber
@@ -42,6 +47,24 @@ export async function setPoints(pointsType, sequenceNumber, place, resultId, mul
 		return { message };
 	} catch (error) {
 		console.log(error);
-		throw 'Непредвиденная ошибка на сервере';
+		throw error;
+	}
+}
+
+export async function putMultiplierService(stageId, sequenceNumber, multiplier, pointsType) {
+	try {
+		const multiplierPoints = `${pointsType}.${sequenceNumber - 1}.multiplier`;
+		const resultsDB = await Result.updateMany(
+			{ stageId },
+			{ $set: { [multiplierPoints]: multiplier } }
+		);
+		const nameStandings =
+			pointsType === 'pointsMountain' ? 'горного участка №' : 'спринтерского участка №';
+		return {
+			message: `Установлен множитель для очков x${multiplier} для ${nameStandings}${sequenceNumber}`,
+		};
+	} catch (error) {
+		console.log(error);
+		throw error;
 	}
 }

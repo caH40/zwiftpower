@@ -33,7 +33,7 @@
 	font-size: 10px;
 	line-height: 12px;
 
-	color: var(--color-error);
+	color: var(--error);
 }
 .link {
 	font-family: 'Roboto';

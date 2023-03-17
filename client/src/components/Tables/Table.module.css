@@ -43,7 +43,7 @@
 	background-color: rgba(0, 0, 0, 0.05);
 }
 .table thead th {
-	vertical-align: bottom;
+	vertical-align: center;
 	border-bottom: 2px solid #dee2e6;
 }
 .table tr {
@@ -77,9 +77,10 @@
 	border-radius: 50%;
 	font-weight: bold;
 }
-.categoryBox {
+.flexBox {
 	display: flex;
 	align-items: center;
+	gap: 0 5px;
 }
 .underChecking {
 	font-size: 19px;
@@ -123,4 +124,18 @@
 }
 .WB {
 	background: #9422ae;
+}
+.boxValue {
+	text-align: center;
+	padding: 4px 5px 2px 5px;
+	width: 50px;
+	min-height: 25px;
+	border: 1px solid var(--color-border-minor);
+	border-radius: 0.25rem;
+}
+.success {
+	background-color: var(--success);
+}
+.error {
+	background-color: var(--error);
 }

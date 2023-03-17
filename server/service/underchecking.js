@@ -1,13 +1,13 @@
 import { Result } from '../Model/Result.js';
 
-export async function setUnderChecking(isUnderChecking, resultId) {
+export async function putUnderCheckingService(isUnderChecking, resultId) {
 	try {
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
 			{ $set: { isUnderChecking } }
 		);
 
-		if (!resultDB) return { message: 'Не найден райдер для дисквалификации' };
+		if (!resultDB) throw { message: 'Не найден райдер для дисквалификации' };
 
 		const message = `Райдер "${resultDB.name}" ${
 			isUnderChecking
@@ -16,6 +16,6 @@ export async function setUnderChecking(isUnderChecking, resultId) {
 		}`;
 		return { message };
 	} catch (error) {
-		console.log(error);
+		throw error;
 	}
 }

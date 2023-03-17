@@ -1,20 +1,30 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { postPoints } from '../../../api/points';
+import { putPoints } from '../../../api/points';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { backgroundColorSM } from '../../Tables/utils/color';
 import { sprintTable } from '../../Tables/utils/pointsTable';
 
+import cls from './SelectPoints.module.css';
+
 const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplier }) => {
 	const dispatch = useDispatch();
 
 	const changePlace = e => {
-		setUpdate(prev => !prev);
 		const place = e.target.value;
-		postPoints(pointsType, sequenceNumber, place, result._id, multiplier).then(data =>
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }))
-		);
+		putPoints(pointsType, sequenceNumber, place, result._id, multiplier)
+			.then(data => {
+				dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
+			})
+			.catch(error => {
+				console.log(error);
+				const message = error.response?.data?.message
+					? error.response?.data?.message
+					: 'Ошибка при начислении очков!';
+				dispatch(getAlert({ message, type: 'error', isOpened: true }));
+			})
+			.finally(() => setUpdate(prev => !prev));
 	};
 
 	return (
@@ -25,6 +35,7 @@ const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplie
 			onChange={changePlace}
 			size="1"
 			defaultValue={result[pointsType][sequenceNumber - 1]?.place}
+			className={cls.select}
 		>
 			{sprintTable.map(elm => {
 				return <option value={elm.place} label={elm.place} key={elm.place} />;

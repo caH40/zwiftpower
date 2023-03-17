@@ -4,25 +4,32 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import cls from './Checkbox.module.css';
 
-const Checkbox = props => {
-	const [check, setCheck] = useState(() => props.state);
+const Checkbox = ({ state, apiRequest, setUpdate, resultId, target }) => {
+	const [check, setCheck] = useState(() => state);
 
 	const dispatch = useDispatch();
 
-	const viewValue = () => {
+	const changeValue = () => {
 		setCheck(prev => !prev);
-		props.apiRequest(!check, props.resultId).then(data => {
-			props.setUpdate(prev => !prev);
-			dispatch(getAlert({ message: data.message, type: data.type, isOpened: true }));
-		});
+
+		apiRequest(!check, resultId)
+			.then(data => {
+				dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
+				setUpdate(prev => !prev);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({ message: `Ошибка при изменении ${target}!`, type: 'error', isOpened: true })
+				)
+			);
 	};
 
 	return (
 		<input
-			onChange={viewValue}
+			onChange={changeValue}
 			checked={check}
 			type="checkbox"
-			id={`${props.target}-${props.resultId}`}
+			id={`${target}-${resultId}`}
 			className={cls.input}
 		/>
 	);

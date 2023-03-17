@@ -41,7 +41,13 @@ textarea {
 	font-weight: inherit;
 	color: inherit;
 }
-
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+}
 :root {
 	--gradient-main: linear-gradient(90deg, var(--color-blue-3) -0.39%, var(--color-blue-4) 100%);
 	--color-text-main: #ffffff;
@@ -67,11 +73,13 @@ textarea {
 	--color-yellow-5: #ffda73;
 	--color-orange-5: #ffb773;
 
-	--color-error: #d74444;
-	--color-error-hover: #fa0000;
+	--error: #d74444;
+	--error-hover: #fa0000;
 
 	--color-text-minor: #444444;
 	--color-bg-minor: #f6f8fa;
 	--color-border-minor: #cecece;
 	--color-bg: #ffffff;
+
+	--success: #58c34e;
 }
