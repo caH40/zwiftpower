@@ -17,6 +17,7 @@ import {
 	postStage,
 	deleteStage,
 	getStageResults,
+	deleteSeries,
 } from '../controllers/controllers.js';
 import { authAdmin } from '../middleware/authRole.js';
 
@@ -25,6 +26,7 @@ export const router = new Router();
 router.get('/series', authAdmin, getSeries);
 router.put('/series', authAdmin, putSeries);
 router.post('/series', authAdmin, postSeries);
+router.delete('/series', authAdmin, deleteSeries);
 router.post('/seriesone', authAdmin, postSeriesOne);
 
 router.post('/stages', authAdmin, postStages);

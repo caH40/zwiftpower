@@ -1,10 +1,16 @@
+import { Result } from '../Model/Result.js';
 import { Series } from '../Model/Series.js';
+import { Stage } from '../Model/Stage.js';
 
-export async function getSeriesService(seriesId) {
+export async function getSeriesService() {
 	try {
-		if (seriesId) return await Series.findOne({ _id: seriesId });
 		const seriesDB = await Series.find();
-		return seriesDB;
+		const series = seriesDB.map(seriesOne => seriesOne.toObject());
+		for (let seriesOne of series) {
+			const stagesDB = await Stage.find({ seriesId: seriesOne._id });
+			seriesOne.quantityStages = stagesDB.length;
+		}
+		return series;
 	} catch (error) {
 		console.log(error);
 	}
@@ -44,6 +50,20 @@ export async function postSeriesService(seriesNew) {
 	try {
 		await Series.create({ ...seriesNew });
 		return { message: `Создана новая Series!` };
+	} catch (error) {
+		throw error;
+	}
+}
+export async function deleteSeriesService(seriesId) {
+	try {
+		await Series.findOneAndDelete({ _id: seriesId });
+		const stageDB = await Stage.findOne({ seriesId });
+		if (!stageDB) return { message: `Удалена Series, этапы серии не найдены!` };
+
+		await Stage.deleteMany({ seriesId });
+		await Result.deleteMany({ stageId: stageDB._id });
+
+		return { message: `Удалена Series, этапы и результаты этапов!` };
 	} catch (error) {
 		throw error;
 	}

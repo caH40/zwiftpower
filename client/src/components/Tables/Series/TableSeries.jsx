@@ -1,32 +1,82 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getSeries } from '../../../api/series';
+import { getSeries, postDeleteSeries } from '../../../api/series';
+import { getAlert } from '../../../redux/features/alertMessageSlice';
+import Button from '../../UI/Button/Button';
+import ButtonLink from '../../UI/ButtonLink/ButtonLink';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import cls from '../Table.module.css';
 
 const TableSeries = ({ target }) => {
 	const [series, setSeries] = useState([]);
+	const [update, setUpdate] = useState(false);
+
+	const isStage = target === 'stage';
+
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const myLink = url => {
-		navigate(`/edit/${target}/${url}`);
-	};
+	const myLink = url => (isStage ? navigate(`/edit/stage/${url}`) : '');
 
 	useEffect(() => {
 		getSeries().then(data => setSeries(data.data.series));
-	}, []);
+	}, [update]);
+
+	const deleteStage = seriesId => {
+		const confirm = window.confirm(`Вы действительно хотите удалить Series №${seriesId}?`);
+		if (!confirm)
+			return dispatch(
+				getAlert({
+					message: `Отмена удаления Series №${seriesId}`,
+					type: 'warning',
+					isOpened: true,
+				})
+			);
+		postDeleteSeries(seriesId)
+			.then(data => {
+				setSeries(data.data.series);
+				dispatch(
+					getAlert({
+						message: data.data.message,
+						type: 'success',
+						isOpened: true,
+					})
+				);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({
+						message: `Ошибка при удалении Series!`,
+						type: 'error',
+						isOpened: true,
+					})
+				)
+			)
+			.finally(() => setUpdate(prev => !prev));
+	};
+
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
 			<caption>Series</caption>
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Название</th>
-					<th scope="col">Организатор</th>
-					<th scope="col">Начало</th>
-					<th scope="col">Завершилась</th>
-					<th scope="col">Тип</th>
+					<th>#</th>
+					<th>Название</th>
+					<th>Организатор</th>
+					<th>Начало</th>
+					<th>Завершилась</th>
+					<th>Тип</th>
+					<th>Количество этапов</th>
+					{isStage ? (
+						''
+					) : (
+						<>
+							<th>Редактировать</th>
+							<th>Удалить</th>
+						</>
+					)}
 				</tr>
 			</thead>
 			{series?.length ? (
@@ -35,7 +85,11 @@ const TableSeries = ({ target }) => {
 						const finished = seriesOne.isFinished.toString();
 						const classFinished = `${cls.boxValue} ${finished === 'true' ? cls.success : cls.error}`;
 						return (
-							<tr className={cls.trLink} key={seriesOne._id} onClick={() => myLink(seriesOne._id)}>
+							<tr
+								className={isStage ? cls.trLink : ''}
+								key={seriesOne._id}
+								onClick={() => myLink(seriesOne._id)}
+							>
 								<th scope="row">{index + 1}</th>
 								<td>{seriesOne.name}</td>
 								<td>{seriesOne.organizer}</td>
@@ -44,6 +98,23 @@ const TableSeries = ({ target }) => {
 									<div className={classFinished}>{finished}</div>
 								</td>
 								<td>{seriesOne.type}</td>
+								<td>{seriesOne.quantityStages}</td>
+								{isStage ? (
+									''
+								) : (
+									<>
+										<td>
+											<ButtonLink to={`/edit/series/${seriesOne._id}`} addCls={['td']}>
+												редактировать
+											</ButtonLink>
+										</td>
+										<td>
+											<Button addCls={['danger', 'td']} getClick={() => deleteStage(seriesOne._id)}>
+												удалить
+											</Button>
+										</td>
+									</>
+								)}
 							</tr>
 						);
 					})}

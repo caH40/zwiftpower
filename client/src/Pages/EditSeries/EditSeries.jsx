@@ -16,7 +16,7 @@ const EditSeries = () => {
 	const [update, setUpdate] = useState(false);
 
 	const { seriesId } = useParams();
-	useTitle('Редактирование данных Series');
+	useTitle('Редактирование данных Series, Stage');
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

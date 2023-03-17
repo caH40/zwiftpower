@@ -4,12 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getStage, putStage } from '../../api/stage';
 import Button from '../../components/UI/Button/Button';
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
+import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
 const EditStageParams = () => {
 	const [stage, setStage] = useState({});
 	const [update, setUpdate] = useState(false);
 	const { stageId } = useParams();
+	useTitle('Редактирование данных Series, Stage');
 
 	const navigate = useNavigate();
 	const getClick = () => navigate(-1);

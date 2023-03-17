@@ -1,5 +1,6 @@
 .button {
-	border: 1px solid var(--color-border-minor);
+	/* border: 1px solid var(--color-border-minor); */
+	border: none;
 	border-radius: 6px;
 	background-color: var(--color-blue-main);
 	font-family: 'Roboto';
