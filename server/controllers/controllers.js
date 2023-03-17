@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { putCategoryService } from '../service/category.js';
-import { setDisqualification } from '../service/disqualification.js';
+import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
 import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
@@ -60,16 +60,14 @@ export async function getStage(req, res) {
 	}
 }
 
-export async function postZpDisqualification(req, res) {
+export async function putDisqualification(req, res) {
 	try {
 		const { isDisqualification, resultId } = req.body;
-
-		const disqualification = await setDisqualification(isDisqualification, resultId);
-
-		return res.status(201).json({ message: disqualification.message });
+		const disqualification = await putDisqualificationService(isDisqualification, resultId);
+		return res.status(201).json(disqualification);
 	} catch (error) {
 		console.log(error);
-		return res.status(400).json({ message: `Ошибка при дисквалификации` });
+		return res.status(400).json(error);
 	}
 }
 
