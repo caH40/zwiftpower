@@ -19,7 +19,7 @@ export async function getSeriesOne(seriesId) {
 	}
 }
 
-export async function postSeriesService({
+export async function putSeriesService({
 	_id,
 	name,
 	dateStart,
@@ -30,11 +30,20 @@ export async function postSeriesService({
 	isFinished,
 }) {
 	try {
-		const seriesDB = await Series.findOneAndUpdate(
+		await Series.findOneAndUpdate(
 			{ _id },
 			{ $set: { name, dateStart, type, organizer, hasGeneral, hasTeams, isFinished } }
 		);
 		return { message: `Изменения в ${name} сохранены!` };
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function postSeriesService(seriesNew) {
+	try {
+		await Series.create({ ...seriesNew });
+		return { message: `Создана новая Series!` };
 	} catch (error) {
 		throw error;
 	}

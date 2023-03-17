@@ -11,6 +11,7 @@ import {
 	putCategory,
 	putPoints,
 	putMultiplier,
+	putSeries,
 	postSeries,
 	putStage,
 	postStage,
@@ -22,6 +23,7 @@ import { authAdmin } from '../middleware/authRole.js';
 export const router = new Router();
 
 router.get('/series', authAdmin, getSeries);
+router.put('/series', authAdmin, putSeries);
 router.post('/series', authAdmin, postSeries);
 router.post('/seriesone', authAdmin, postSeriesOne);
 

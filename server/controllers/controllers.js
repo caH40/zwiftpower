@@ -4,7 +4,12 @@ import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
-import { postSeriesService, getSeriesService, getSeriesOne } from '../service/series.js';
+import {
+	putSeriesService,
+	postSeriesService,
+	getSeriesService,
+	getSeriesOne,
+} from '../service/series.js';
 import { getStageResultsService } from '../service/stage-results.js';
 import {
 	getStageService,
@@ -125,16 +130,25 @@ export async function putMultiplier(req, res) {
 	}
 }
 
-export async function postSeries(req, res) {
+export async function putSeries(req, res) {
 	try {
 		const { seriesChanged } = req.body;
-		const series = await postSeriesService(seriesChanged);
+		const series = await putSeriesService(seriesChanged);
 		return res.status(201).json(series);
 	} catch (error) {
 		console.log(error);
-		return res
-			.status(400)
-			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+		return res.status(400).json(error);
+	}
+}
+
+export async function postSeries(req, res) {
+	try {
+		const { seriesNew } = req.body;
+		const series = await postSeriesService(seriesNew);
+		return res.status(201).json(series);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
 	}
 }
 

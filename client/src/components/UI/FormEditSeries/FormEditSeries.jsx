@@ -21,7 +21,9 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 				state={series}
 				setState={setSeries}
 				property="dateStart"
-				type="number"
+				type="date"
+				min="2016-01-01"
+				max="2030-01-01"
 			/>
 			<SimpleSelect
 				name="Тип серии"

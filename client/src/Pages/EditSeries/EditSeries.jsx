@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getSeriesOne, postSeries } from '../../api/series';
+import { getSeriesOne, putSeries } from '../../api/series';
 import TableStagesForEdit from '../../components/Tables/Stages/TableStagesForEdit';
 import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
@@ -27,7 +27,7 @@ const EditSeries = () => {
 	}, [seriesId, update]);
 
 	const sendForm = () => {
-		postSeries(series).then(data => {
+		putSeries(series).then(data => {
 			setUpdate(prev => !prev);
 			dispatch(getAlert({ message: data.data?.message, type: data.type, isOpened: true }));
 		});
