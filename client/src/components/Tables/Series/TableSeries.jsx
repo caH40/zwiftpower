@@ -120,7 +120,7 @@ const TableSeries = ({ target }) => {
 					})}
 				</tbody>
 			) : (
-				<ClearTbody quantityTd={6} />
+				<ClearTbody quantityTd={isStage ? 7 : 9} />
 			)}
 		</table>
 	);
