@@ -13,3 +13,15 @@ export async function postSchedule(schedules) {
 		throw error;
 	}
 }
+export async function postResults(results) {
+	try {
+		const response = await myAxios({
+			url: '/api/results',
+			method: 'post',
+			data: { results },
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}

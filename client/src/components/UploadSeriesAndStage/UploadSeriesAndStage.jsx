@@ -8,25 +8,25 @@ import Button from '../UI/Button/Button';
 import InputFile from '../UI/InputFile/InputFile';
 import cls from './UploadSeriesAndStage.module.css';
 
-const UploadSeriesAndStage = ({ file, setFile, saveSchedule }) => {
+const UploadSeriesAndStage = ({ schedule, setSchedule, saveSchedule }) => {
 	const getFile = async event => {
-		const schedule = await uploadSchedule(event.target.files[0]);
-		setFile(schedule);
+		const scheduleNew = await uploadSchedule(event.target.files[0]);
+		setSchedule(scheduleNew);
 	};
 	return (
 		<>
-			{file.fileAttributes ? (
+			{schedule.fileAttributes ? (
 				<>
-					<DlFile file={file.fileAttributes} addCls="mbRem" />
-					<TableSeriesNew series={file.scheduleSeries} />
-					<TableStagesNew stages={file.scheduleStages} />
+					<DlFile file={schedule.fileAttributes} addCls="mbRem" />
+					<TableSeriesNew series={schedule.scheduleSeries} />
+					<TableStagesNew stages={schedule.scheduleStages} />
 				</>
 			) : (
 				''
 			)}
 			<div className={cls.box__buttons}>
 				<InputFile accept={'.xlsx'} getFile={getFile} />
-				{file.fileAttributes ? <Button getClick={saveSchedule}>Сохранить</Button> : ''}
+				{schedule.fileAttributes ? <Button getClick={saveSchedule}>Сохранить</Button> : ''}
 			</div>
 		</>
 	);

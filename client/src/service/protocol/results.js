@@ -1,9 +1,7 @@
-import { secondesToTime, secondesToTimeThousandths } from '../utils/date-convert';
+import { secondesToTime, secondesToTimeThousandths } from '../../utils/date-convert';
 
-export function protocolPrep(fileJson) {
+export function getResults(fileJson) {
 	try {
-		// fileJson = JSON.parse(fileJson);
-
 		fileJson = fileJson.sort(
 			(a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
 		);
