@@ -140,9 +140,3 @@
 .error {
 	background-color: var(--error);
 }
-.titleTd {
-	font-weight: 700;
-}
-.mb10 {
-	margin-bottom: 10px;
-}

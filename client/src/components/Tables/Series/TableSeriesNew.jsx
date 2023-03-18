@@ -13,7 +13,6 @@ const TableSeriesNew = ({ series }) => {
 			<caption>Series</caption>
 			<thead>
 				<tr>
-					<th>#</th>
 					<th>Название</th>
 					<th>Организатор</th>
 					<th>Начало</th>
@@ -25,7 +24,6 @@ const TableSeriesNew = ({ series }) => {
 			{series?.length ? (
 				<tbody>
 					<tr key={series[0]._id}>
-						<th scope="row">{1}</th>
 						<td>{series[0].name}</td>
 						<td>{series[0].organizer}</td>
 						<td>{series[0].dateStart}</td>
@@ -39,7 +37,7 @@ const TableSeriesNew = ({ series }) => {
 					</tr>
 				</tbody>
 			) : (
-				<ClearTbody quantityTd={7} />
+				<ClearTbody quantityTd={6} />
 			)}
 		</table>
 	);

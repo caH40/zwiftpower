@@ -19,7 +19,7 @@ const TableStagesNew = ({ stages = [] }) => {
 					<th scope="col">Набор,м</th>
 					<th scope="col">Спринт</th>
 					<th scope="col">Гора</th>
-					<th scope="col">ZInsider</th>
+					<th scope="col">Zwift</th>
 				</tr>
 			</thead>
 			{stages.length ? (
@@ -28,7 +28,11 @@ const TableStagesNew = ({ stages = [] }) => {
 						<tr key={index}>
 							<th scope="row">{stage.number}</th>
 							<td>{stage.dateStart}</td>
-							<td>{stage.route}</td>
+							<td>
+								<a href={stage.routeLink} target="_blank" rel="noreferrer">
+									{stage.route}
+								</a>
+							</td>
 							<td>{stage.world}</td>
 							<td>{stage.type}</td>
 							<td>{stage.laps}</td>
@@ -37,15 +41,15 @@ const TableStagesNew = ({ stages = [] }) => {
 							<td>{stage.quantitySprints}</td>
 							<td>{stage.quantityMountains}</td>
 							<td>
-								<a href={stage.routeLink} target="_blank" rel="noreferrer">
-									Маршрут
+								<a href={stage.link} target="_blank" rel="noreferrer">
+									Звифт
 								</a>
 							</td>
 						</tr>
 					))}
 				</tbody>
 			) : (
-				<ClearTbody quantityTd={12} />
+				<ClearTbody quantityTd={11} />
 			)}
 		</table>
 	);
