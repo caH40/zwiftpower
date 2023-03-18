@@ -6,7 +6,7 @@ import cls from '../Table.module.css';
 const TableStagesNew = ({ stages = [] }) => {
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
-			<caption>{}:</caption>
+			<caption>Stages</caption>
 			<thead>
 				<tr>
 					<th scope="col">Этап</th>
@@ -19,38 +19,30 @@ const TableStagesNew = ({ stages = [] }) => {
 					<th scope="col">Набор,м</th>
 					<th scope="col">Спринт</th>
 					<th scope="col">Гора</th>
-					<th scope="col">Результат</th>
 					<th scope="col">ZInsider</th>
 				</tr>
 			</thead>
 			{stages.length ? (
 				<tbody>
-					{stages.map(stage => {
-						const hasResult = stage.hasResults.toString();
-						const classResult = `${cls.boxValue} ${hasResult === 'true' ? cls.success : cls.error}`;
-						return (
-							<tr key={stage._id}>
-								<th scope="row">{stage.number}</th>
-								<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
-								<td>{stage.route}</td>
-								<td>{stage.world}</td>
-								<td>{stage.type}</td>
-								<td>{stage.laps}</td>
-								<td>{stage.distance}</td>
-								<td>{stage.ascent}</td>
-								<td>{stage.quantitySprints}</td>
-								<td>{stage.quantityMountains}</td>
-								<td>
-									<div className={classResult}>{hasResult}</div>
-								</td>
-								<td>
-									<a href={stage.link} target="_blank" rel="noreferrer">
-										Маршрут
-									</a>
-								</td>
-							</tr>
-						);
-					})}
+					{stages.map((stage, index) => (
+						<tr key={index}>
+							<th scope="row">{stage.number}</th>
+							<td>{stage.dateStart}</td>
+							<td>{stage.route}</td>
+							<td>{stage.world}</td>
+							<td>{stage.type}</td>
+							<td>{stage.laps}</td>
+							<td>{stage.distance}</td>
+							<td>{stage.ascent}</td>
+							<td>{stage.quantitySprints}</td>
+							<td>{stage.quantityMountains}</td>
+							<td>
+								<a href={stage.routeLink} target="_blank" rel="noreferrer">
+									Маршрут
+								</a>
+							</td>
+						</tr>
+					))}
 				</tbody>
 			) : (
 				<ClearTbody quantityTd={12} />

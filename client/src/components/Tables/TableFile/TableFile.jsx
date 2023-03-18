@@ -5,7 +5,7 @@ import { getStringDate } from '../../../utils/format-date';
 import { convertToKBites } from '../../../utils/format-numbers';
 import cls from '../Table.module.css';
 
-const TableFile = ({ file, addCls = '' }) => {
+const TableFile = ({ file = {}, addCls = '' }) => {
 	const tableClass = addClasses(addCls, cls);
 
 	return (
