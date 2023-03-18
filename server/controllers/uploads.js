@@ -9,7 +9,7 @@ export async function postSchedule(req, res) {
 			seriesSaved.seriesId
 		);
 
-		return res.status(201).json();
+		return res.status(201).json(stagesSaved);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

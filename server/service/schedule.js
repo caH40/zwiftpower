@@ -6,7 +6,7 @@ export async function postScheduleSeriesService(series) {
 	try {
 		series.dateStart = convertDate(series.dateStart);
 		const seriesDB = await Series.create(series);
-		return { message: 'Данные серии сохранены!', seriesId: seriesDB._id };
+		return { seriesId: seriesDB._id };
 	} catch (error) {
 		throw error;
 	}
@@ -17,7 +17,7 @@ export async function postScheduleStagesService(stages, seriesId) {
 			stage.dateStart = convertDate(stage.dateStart);
 			await Stage.create({ ...stage, seriesId });
 		}
-		return { message: 'Данные этапов сохранены!' };
+		return { message: 'Данные серии и этапов сохранены!' };
 	} catch (error) {
 		throw error;
 	}

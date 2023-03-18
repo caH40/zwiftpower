@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { postSchedule } from '../../api/schedule';
 import InputFile from '../../components/UI/InputFile/InputFile';
 import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSeriesAndStage';
 import useTitle from '../../hook/useTitle';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 import cls from './Upload.module.css';
 
 const Upload = () => {
 	const [file, setFile] = useState({});
 
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	useTitle('Загрузка расписаний, протоколов этапов');
 
 	const saveSchedule = () => {
-		postSchedule(file);
+		postSchedule(file)
+			.then(data => {
+				dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+				navigate(`/edit/series/`);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
+				)
+			);
 	};
 
 	return (
