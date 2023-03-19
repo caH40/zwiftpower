@@ -3,8 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import TableStages from '../components/Tables/Stages/TableStages';
 import Button from '../components/UI/Button/Button';
+import useTitle from '../hook/useTitle';
 
 const EditStageList = () => {
+	useTitle('Редактирование данных этапа');
 	const { seriesId } = useParams();
 	const navigate = useNavigate();
 	const goBack = () => navigate(-1);

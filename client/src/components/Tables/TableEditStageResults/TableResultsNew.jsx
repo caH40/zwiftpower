@@ -32,7 +32,7 @@ const TableResultsNew = ({ results = [] }) => {
 						<td>{result.avgHeartRate}</td>
 						<td>{result.heightInCentimeters}</td>
 						<td>{result.heightInCentimeters}</td>
-						<td>{tdLinkZP(result.zwiftRiderId)}</td>
+						<td>{tdLinkZP(result.zwiftId)}</td>
 					</tr>
 				))}
 			</tbody>

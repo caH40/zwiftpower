@@ -25,7 +25,9 @@ const TableSeries = ({ target }) => {
 	}, [update]);
 
 	const deleteStage = seriesId => {
-		const confirm = window.confirm(`Вы действительно хотите удалить Series №${seriesId}?`);
+		const confirm = window.confirm(
+			`Вы действительно хотите удалить Series №${seriesId}? Будут удалены все этапы серии и все результаты соответствующих этапов!`
+		);
 		if (!confirm)
 			return dispatch(
 				getAlert({

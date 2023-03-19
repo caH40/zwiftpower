@@ -28,6 +28,7 @@ export async function prepareResult(result, stage, series) {
 		result.category = category;
 		result.time = time;
 		result.teamCurrent = teamCurrent;
+		result.zwiftRiderId = result.zwiftId;
 
 		return result;
 	} catch (error) {

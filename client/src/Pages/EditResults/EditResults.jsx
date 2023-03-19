@@ -4,10 +4,12 @@ import { getResultStage } from '../../api/stage';
 
 import TableEditStageResults from '../../components/Tables/TableEditStageResults/TableEditStageResults';
 import Button from '../../components/UI/Button/Button';
+import useTitle from '../../hook/useTitle';
 
 const EditResults = () => {
 	const [results, setResults] = useState([]);
 	const [update, setUpdate] = useState(false);
+	useTitle('Редактирование данных этапа');
 
 	const { stageId } = useParams();
 	const navigate = useNavigate();
