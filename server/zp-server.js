@@ -27,8 +27,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
 app.use('/api/auth', routerAuth);
-// app.use(express.static(path.resolve(__dirname, 'build')));
-// app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
+app.use(express.static(path.resolve(__dirname, 'build')));
+app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
 
 const start = async () => {
 	try {
