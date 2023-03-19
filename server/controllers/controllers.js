@@ -4,6 +4,7 @@ import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
+import { getRidersService } from '../service/riders.js';
 import {
 	putSeriesService,
 	postSeriesService,
@@ -204,6 +205,16 @@ export async function getStageResults(req, res) {
 		const stageResults = await getStageResultsService(stageId);
 
 		return res.status(200).json(stageResults);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function getRiders(req, res) {
+	try {
+		const riders = await getRidersService();
+
+		return res.status(200).json(riders);
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json(error);
