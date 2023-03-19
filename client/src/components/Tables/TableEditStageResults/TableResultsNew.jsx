@@ -23,7 +23,7 @@ const TableResultsNew = ({ results = [] }) => {
 			</thead>
 			<tbody>
 				{results.map((result, index) => (
-					<tr key={result.index}>
+					<tr key={result.zwiftId}>
 						<th scope="row">{index + 1}</th>
 						<td>{tdRider(result.name, result.imageSrc)}</td>
 						<td>{secondesToTime(result.time)}</td>

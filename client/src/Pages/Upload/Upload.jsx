@@ -33,15 +33,15 @@ const Upload = () => {
 
 	const saveResults = () => {
 		postResults(results)
-			.then(data => {
-				dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-				navigate(`/edit/stage/`);
+			.then(response => {
+				dispatch(getAlert({ message: response.data?.message, type: 'success', isOpened: true }));
+				navigate(`/edit/stage/${response.data.ids.seriesId}/${response.data.ids.stageId}`);
 			})
-			.catch(error =>
-				dispatch(
-					getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
-				)
-			);
+			.catch(error => {
+				let message = 'Ошибка при сохранении данных!';
+				if (error.response?.data?.message) message = error.response.data.message;
+				dispatch(getAlert({ message, type: 'error', isOpened: true }));
+			});
 	};
 
 	return (
