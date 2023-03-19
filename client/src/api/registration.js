@@ -6,7 +6,7 @@ export async function postRegistration(dataForm) {
 	try {
 		const response = await axios({
 			method: 'post',
-			url: `/api/auth/registration`,
+			url: `${serverExpress}/api/auth/registration`,
 			data: { username: dataForm.username, email: dataForm.email, password: dataForm.password },
 		});
 
