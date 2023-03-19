@@ -23,7 +23,7 @@ export async function mailService(target, token, email, username, password) {
 			subject = 'Подтверждение регистрации на сайте zwiftpower.ru';
 			html = `Здравствуйте!<br>
     ${date} была произведена регистрация на сайте zwiftpower.ru, где был указан данный e-mail: <b>${email}</b>.<br>
-    Для активации учетной записи перейдите по ссылке <a href="${FRONT}/confirm-email/${token}">${FRONT}/confirm-email/${token}</a> <br><br>
+    Для активации учетной записи перейдите по ссылке <a href="${FRONT}/auth/confirm-email/${token}">${FRONT}/auth/confirm-email/${token}</a> <br><br>
     Логин: ${username}<br>
     Пароль: ${password}<br><br>
     <b>Внимание!</b> Ссылка действительна 72 часа. Без активации аккаунт будет удалён.<br><br>С уважением, команда ZwiftPower.ru`;

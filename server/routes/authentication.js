@@ -18,7 +18,7 @@ routerAuth.post('/authorization', authorization);
 routerAuth.post('/logout', logout);
 routerAuth.get('/check', checkAuth);
 routerAuth.post('/refresh', refresh);
-routerAuth.post('/confirm-email', confirmEmail);
+routerAuth.put('/confirm-email', confirmEmail);
 routerAuth.post('/reset-password', resetPassword);
 routerAuth.post('/check-request-password', checkRequestPassword);
 routerAuth.post('/new-password', newPassword);

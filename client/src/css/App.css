@@ -19,3 +19,20 @@
 	text-align: right;
 	margin-bottom: 5px;
 }
+.page404 {
+	text-align: center;
+}
+.page404__text {
+	font-size: 20px;
+}
+.page404__title {
+	font-size: 34px;
+	margin-bottom: 20px;
+}
+.page404__text-wrong {
+	color: red;
+}
+.page404__text-link {
+	color: #ff7b31;
+	text-decoration: underline;
+}
