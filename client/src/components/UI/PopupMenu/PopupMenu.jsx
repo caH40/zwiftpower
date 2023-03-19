@@ -45,7 +45,12 @@ const PopupMenu = () => {
 								<Link to="/edit/upload" className={cls.link}>
 									Загрузка
 								</Link>
-							</li>{' '}
+							</li>
+							<li className={cls.item}>
+								<Link to="/edit/riders" className={cls.link}>
+									Райдеры
+								</Link>
+							</li>
 						</>
 					) : undefined}
 

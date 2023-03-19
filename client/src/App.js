@@ -12,7 +12,7 @@ import EditSeriesMain from './Pages/EditSeries/EditSeriesMain';
 import EditSeries from './Pages/EditSeries/EditSeries';
 import EditStageParams from './Pages/EditStages/EditStageParams';
 import Authorization from './Pages/Auth/Authorization';
-// import Registration from './Pages/Auth/Registration';
+import Registration from './Pages/Auth/Registration';
 import Message from './Pages/Message/Message';
 
 import AddStage from './Pages/EditSeries/AddStage';
@@ -20,6 +20,7 @@ import EditResults from './Pages/EditResults/EditResults';
 import AddSeries from './Pages/EditSeries/AddSeries';
 import useFirstAuth from './hook/useFirstAuth';
 import Upload from './Pages/Upload/Upload';
+import Riders from './Pages/Riders/Riders';
 
 function App() {
 	useFirstAuth();
@@ -33,8 +34,7 @@ function App() {
 			<Route path="/" element={<MainLayer />}>
 				<Route index element={<Home />} />
 				<Route path="/auth/authorization" element={<Authorization />} />
-				{/* <Route path="/auth/registration" element={<Registration />} /> */}
-				{/* <Route path="/results" element={<Auth />}></Route> */}
+				<Route path="/auth/registration" element={<Registration />} />
 				<Route path="/results/stage/:stageId" element={<StageResults />} />
 				<Route path="/edit/users" element={<EditUsers />}></Route>
 				<Route path="/edit/series" element={<EditSeriesMain />} />
@@ -47,6 +47,7 @@ function App() {
 				<Route path="/edit/stage/:seriesId/:stageId" element={<EditResults />} />
 				<Route path="/message/:messageId/:additional" element={<Message />} />
 				<Route path="/edit/upload" element={<Upload />} />
+				<Route path="/edit/riders" element={<Riders />} />
 				<Route path="*" element={<Page404 />} />
 			</Route>
 		</Routes>
