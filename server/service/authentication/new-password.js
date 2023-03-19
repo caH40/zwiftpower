@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { PasswordReset } from '../../Model/Password-reset.js';
 
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';

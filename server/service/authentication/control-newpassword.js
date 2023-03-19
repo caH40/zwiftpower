@@ -5,7 +5,7 @@ export async function controlNewPasswords() {
 		const requestResetPassword = await PasswordReset.find();
 		const dateNow = Date.now();
 
-		const activationPeriod = 3 * 24 * 60 * 60 * 1000;
+		const activationPeriod = 3600;
 
 		for (let i = 0; i < requestResetPassword.length; i++) {
 			let expiration = dateNow - requestResetPassword[i].date;

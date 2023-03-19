@@ -107,22 +107,23 @@ export async function resetPassword(req, res) {
 
 export async function checkRequestPassword(req, res) {
 	try {
-		const { token } = req.body;
+		const { token } = req.params;
 		const response = await checkRequestPasswordService(token);
 		res.status(200).json(response);
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ message: 'Непредвиденная ошибка' });
+		res.status(400).json(error);
 	}
 }
 
 export async function newPassword(req, res) {
 	try {
 		const { userId, newPassword } = req.body;
+
 		const response = await newPasswordService(userId, newPassword);
 		res.status(201).json(response);
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ message: 'Непредвиденная ошибка' });
+		res.status(400).json(error);
 	}
 }

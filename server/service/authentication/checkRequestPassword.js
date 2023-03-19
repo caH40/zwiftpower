@@ -3,8 +3,7 @@ import { PasswordReset } from '../../Model/Password-reset.js';
 export async function checkRequestPasswordService(tokenReset) {
 	try {
 		const resetPasswordDB = await PasswordReset.findOneAndDelete({ tokenReset });
-		if (!resetPasswordDB)
-			return { message: 'Не найден запрос на сброс пароля!', status: 'wrong' };
+		if (!resetPasswordDB) throw { message: 'Не найден запрос на сброс пароля!' };
 		const userId = resetPasswordDB.userId;
 		await PasswordReset.deleteMany({ userId });
 
@@ -13,7 +12,6 @@ export async function checkRequestPasswordService(tokenReset) {
 			userId,
 		};
 	} catch (error) {
-		console.log(error);
-		throw { message: `Ошибка при сбросе пароля` };
+		throw error;
 	}
 }

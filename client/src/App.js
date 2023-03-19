@@ -22,7 +22,8 @@ import useFirstAuth from './hook/useFirstAuth';
 import Upload from './Pages/Upload/Upload';
 import Riders from './Pages/Riders/Riders';
 import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
-import NewPassword from './Pages/NewPassword';
+import NewPassword from './Pages/Auth/NewPassword';
+import ResetPassword from './Pages/Auth/ResetPassword';
 
 function App() {
 	useFirstAuth();
@@ -37,6 +38,7 @@ function App() {
 				<Route index element={<Home />} />
 				<Route path="/auth/authorization" element={<Authorization />} />
 				<Route path="/auth/registration" element={<Registration />} />
+				<Route path="/auth/reset" element={<ResetPassword />} />
 				<Route path="/auth/confirm-email/:token" element={<ConfirmEmail />} />
 				<Route path="/auth/new-password/:token" element={<NewPassword />} />
 				<Route path="/results/stage/:stageId" element={<StageResults />} />

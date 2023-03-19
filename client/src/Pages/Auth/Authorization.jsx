@@ -56,7 +56,7 @@ const Authorization = () => {
 					/>
 					<InputAuth
 						label={'Пароль'}
-						link={{ to: '/auth/remember', text: 'Забыли пароль?' }}
+						link={{ to: '/auth/reset', text: 'Забыли пароль?' }}
 						register={validatePassword(register)}
 						validationText={errors.password ? errors.password.message : ''}
 						input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}

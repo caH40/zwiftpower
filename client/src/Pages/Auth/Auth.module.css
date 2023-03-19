@@ -43,3 +43,7 @@
 .link:active {
 	color: var(--color-yellow-main);
 }
+.text {
+	font-size: 18px;
+	align-self: flex-start;
+}
