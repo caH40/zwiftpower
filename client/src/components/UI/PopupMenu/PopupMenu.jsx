@@ -42,7 +42,7 @@ const PopupMenu = () => {
 								</Link>
 							</li>
 							<li className={cls.item}>
-								<Link to="/edit/download" className={cls.link}>
+								<Link to="/edit/upload" className={cls.link}>
 									Загрузка
 								</Link>
 							</li>{' '}

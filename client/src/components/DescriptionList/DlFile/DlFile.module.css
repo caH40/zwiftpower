@@ -1,0 +1,14 @@
+.dl {
+	margin: 0;
+	padding: 0;
+}
+.mbRem {
+	margin-bottom: 1rem;
+}
+.box {
+	display: flex;
+}
+.title {
+	flex: 0 0 120px;
+	font-weight: 700;
+}

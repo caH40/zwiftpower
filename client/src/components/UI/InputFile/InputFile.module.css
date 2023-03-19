@@ -1,0 +1,9 @@
+.hidden {
+	position: absolute; /* убрать из флекс контейнера */
+	width: 0px;
+	height: 0px;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	line-height: 0px;
+}
