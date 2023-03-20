@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import ButtonClose from '../ButtonClose/ButtonClose';
+import React from 'react';
 
-import SimpleInput from '../SimpleInput/SimpleInput';
+import ButtonClose from '../ButtonClose/ButtonClose';
 
 import cls from './Modal.module.css';
 
-const Modal = ({ isVisibleModal, setIsVisibleModal }) => {
-	const [state, setState] = useState({ fio: '' });
-
+const Modal = ({ isVisibleModal, setIsVisibleModal, box }) => {
 	const getClick = () => setIsVisibleModal(false);
 	window.addEventListener('keydown', keyHandler);
 	function keyHandler(e) {
@@ -26,7 +23,7 @@ const Modal = ({ isVisibleModal, setIsVisibleModal }) => {
 							Выберите райдера результат которого необходимо добавить в протокол. Добавлять результат
 							можно только для зарегистрированных райдеров.
 						</p>
-						<SimpleInput state={state} setState={setState} property="fio" type="text" />
+						{box}
 						<ButtonClose getClick={getClick} />
 					</div>
 				</div>

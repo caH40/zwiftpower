@@ -22,3 +22,7 @@
 .input:disabled {
 	background-color: var(--color-bg-minor);
 }
+.input::placeholder {
+	font-weight: 400;
+	color: var(--color-text-minor);
+}
