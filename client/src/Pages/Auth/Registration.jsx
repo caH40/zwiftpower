@@ -51,18 +51,21 @@ const Registration = () => {
 						register={validateEmail(register)}
 						validationText={errors.email ? errors.email.message : ''}
 						input={{ id: 'email', email: 'username', type: 'text' }}
+						addCls="mb20"
 					/>
 					<InputAuth
 						label={'Логин'}
 						register={validateUsername(register)}
 						validationText={errors.username ? errors.username.message : ''}
 						input={{ id: 'username', autoComplete: 'username', type: 'text' }}
+						addCls="mb20"
 					/>
 					<InputAuth
 						label={'Пароль'}
 						register={validatePassword(register)}
 						validationText={errors.password ? errors.password.message : ''}
 						input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}
+						addCls="mb20"
 					/>
 					<Button type={'submit'} addCls={['w_full']}>
 						Зарегистрироваться

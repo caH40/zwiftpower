@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 
 import cls from './InputAuth.module.css';
 
-const InputAuth = ({ label, register, input, validationText, link }) => {
+const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' }) => {
+	const classBox = addCls
+		.split(' ')
+		.map(elm => cls[elm])
+		.join(' ');
+
 	return (
-		<div className={cls.box}>
+		<div className={`${cls.box} ${classBox}`}>
 			<div className={cls.box__text}>
 				{label ? (
 					<label className={cls.label} htmlFor={input.id}>
