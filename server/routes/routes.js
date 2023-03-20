@@ -19,6 +19,7 @@ import {
 	getStageResults,
 	deleteSeries,
 	getRiders,
+	getRider,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
@@ -30,7 +31,9 @@ router.put('/series', authAdmin, putSeries);
 router.post('/series', authAdmin, postSeries);
 router.delete('/series', authAdmin, deleteSeries);
 router.post('/seriesone', authAdmin, postSeriesOne);
+
 router.get('/riders', authAdmin, getRiders);
+router.get('/rider/:zwiftId', authAdmin, getRider);
 
 router.post('/stages', authAdmin, postStages);
 

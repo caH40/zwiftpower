@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getRiders } from '../../../api/riders';
+import { getRider, getRiders } from '../../../api/riders';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import cls from './BoxRider.module.css';
 
-const BoxRider = () => {
+const BoxRider = ({ setRider, setIsVisibleModal }) => {
 	const [state, setState] = useState({ fio: '' });
 	const [riders, setRiders] = useState([]);
 	const [filteredRiders, setFilteredRiders] = useState([]);
@@ -25,7 +25,11 @@ const BoxRider = () => {
 		);
 	}, [state, riders]);
 
-	const getRider = riderId => console.log(riderId);
+	const getRiderData = riderId =>
+		getRider(riderId).then(response => {
+			// setIsVisibleModalSearch(false);
+			setRider(response.data.rider);
+		});
 
 	return (
 		<form className={cls.form} name="riders">
@@ -39,7 +43,7 @@ const BoxRider = () => {
 			<ul className={cls.list}>
 				{riders.length
 					? filteredRiders.map(rider => (
-							<li className={cls.item} key={rider._id} onClick={() => getRider(rider._id)}>
+							<li className={cls.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
 								{`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
 							</li>
 					  ))

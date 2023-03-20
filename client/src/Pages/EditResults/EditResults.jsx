@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getRiders } from '../../api/riders';
 import { getResultStage } from '../../api/stage';
 
 import TableEditStageResults from '../../components/Tables/TableEditStageResults/TableEditStageResults';
-import BoxRider from '../../components/UI/BoxRider/BoxRider';
 import Button from '../../components/UI/Button/Button';
-import Modal from '../../components/UI/Modal/Modal';
+import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
+
 import cls from './EditResults.module.css';
 
 const EditResults = () => {
 	const [results, setResults] = useState([]);
-
 	const [update, setUpdate] = useState(false);
-	const [isVisibleModal, setIsVisibleModal] = useState(true);
-
 	useTitle('Редактирование данных этапа');
 
 	const { stageId } = useParams();
@@ -31,16 +27,11 @@ const EditResults = () => {
 	return (
 		<>
 			<h3 className="titlePage-3">Редактирование данных заезда</h3>
-			<TableEditStageResults results={results} setUpdate={setUpdate} />
 			<div className={cls.right}>
-				<Button>Добавить</Button>
+				<ButtonLink to={`/edit/stage/${stageId}/rider-add`}>Добавить</ButtonLink>
 			</div>
+			<TableEditStageResults results={results} setUpdate={setUpdate} />
 			<Button getClick={getClick}>назад</Button>
-			<Modal
-				isVisibleModal={isVisibleModal}
-				setIsVisibleModal={setIsVisibleModal}
-				box={<BoxRider />}
-			/>
 		</>
 	);
 };

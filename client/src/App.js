@@ -24,6 +24,7 @@ import Riders from './Pages/Riders/Riders';
 import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
 import NewPassword from './Pages/Auth/NewPassword';
 import ResetPassword from './Pages/Auth/ResetPassword';
+import AddRider from './Pages/AddRider/AddRider';
 
 function App() {
 	useFirstAuth();
@@ -51,6 +52,7 @@ function App() {
 				<Route path="/edit/stage" element={<EditSeriesList />} />
 				<Route path="/edit/stage/:seriesId" element={<EditStageList />} />
 				<Route path="/edit/stage/:seriesId/:stageId" element={<EditResults />} />
+				<Route path="/edit/stage/:stageId/rider-add" element={<AddRider />} />
 				<Route path="/message/:messageId/:additional" element={<Message />} />
 				<Route path="/edit/upload" element={<Upload />} />
 				<Route path="/edit/riders" element={<Riders />} />

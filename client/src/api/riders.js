@@ -11,3 +11,14 @@ export async function getRiders() {
 		throw error;
 	}
 }
+export async function getRider(zwiftId) {
+	try {
+		const response = await myAxios({
+			url: `/api/rider/${zwiftId}`,
+			method: 'get',
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}

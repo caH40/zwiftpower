@@ -4,7 +4,7 @@ import ButtonClose from '../ButtonClose/ButtonClose';
 
 import cls from './Modal.module.css';
 
-const Modal = ({ isVisibleModal, setIsVisibleModal, box }) => {
+const Modal = ({ children, title, box, isVisibleModal, setIsVisibleModal }) => {
 	const getClick = () => setIsVisibleModal(false);
 	window.addEventListener('keydown', keyHandler);
 	function keyHandler(e) {
@@ -18,11 +18,8 @@ const Modal = ({ isVisibleModal, setIsVisibleModal, box }) => {
 			{isVisibleModal ? (
 				<div className={cls.wrapper}>
 					<div className={cls.block}>
-						<h3 className={cls.title}>Добавление результата</h3>
-						<p className={cls.text}>
-							Выберите райдера результат которого необходимо добавить в протокол. Добавлять результат
-							можно только для зарегистрированных райдеров.
-						</p>
+						<h3 className={cls.title}>{title}</h3>
+						<p className={cls.text}>{children}</p>
 						{box}
 						<ButtonClose getClick={getClick} />
 					</div>
