@@ -63,7 +63,7 @@ const Authorization = () => {
 						input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}
 						addCls="mb20"
 					/>
-					<Button type={'submit'} addCls={['w_full']}>
+					<Button type={'submit'} addCls={'w_full'}>
 						Вход
 					</Button>
 				</form>

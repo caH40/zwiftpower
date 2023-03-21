@@ -1,10 +1,12 @@
 import React from 'react';
 import Button from '../Button/Button';
 import SimpleInput from '../SimpleInput/SimpleInput';
+import SimpleSelect from '../SimpleSelect/SimpleSelect';
+import cls from './FormRiderResult.module.css';
 
-const FormRiderResult = ({ newResult, setNewResult, goBack }) => {
+const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
 	return (
-		<form>
+		<form className={cls.form}>
 			<SimpleInput
 				name="Zwift Name"
 				state={newResult}
@@ -32,7 +34,16 @@ const FormRiderResult = ({ newResult, setNewResult, goBack }) => {
 				name="Вес, граммы"
 				state={newResult}
 				setState={setNewResult}
+				value={Math.round((newResult.watt / newResult.wattPerKg) * 1000)}
 				property="weightInGrams"
+				type="number"
+				disabled={true}
+			/>
+			<SimpleInput
+				name="Ватты/кг"
+				state={newResult}
+				setState={setNewResult}
+				property="wattPerKg"
 				type="number"
 			/>
 			<SimpleInput
@@ -41,13 +52,6 @@ const FormRiderResult = ({ newResult, setNewResult, goBack }) => {
 				setState={setNewResult}
 				property="watt"
 				type="number"
-			/>
-			<SimpleInput
-				name="Ватты/кг"
-				state={newResult}
-				setState={setNewResult}
-				property="wattPerKg"
-				type="text"
 			/>
 			<SimpleInput
 				name="Рост, см"
@@ -63,19 +67,35 @@ const FormRiderResult = ({ newResult, setNewResult, goBack }) => {
 				property="avgHeartRate"
 				type="number"
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Категория"
 				state={newResult}
 				setState={setNewResult}
 				property="category"
 				type="text"
+				options={[
+					{ id: 0, name: 'A' },
+					{ id: 1, name: 'B' },
+					{ id: 2, name: 'C' },
+					{ id: 3, name: 'W' },
+					{ id: 4, name: 'WA' },
+					{ id: 5, name: 'WB' },
+				]}
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Категория по результату текущего заезда"
 				state={newResult}
 				setState={setNewResult}
 				property="categoryCurrent"
 				type="text"
+				options={[
+					{ id: 0, name: 'A' },
+					{ id: 1, name: 'B' },
+					{ id: 2, name: 'C' },
+					{ id: 3, name: 'W' },
+					{ id: 4, name: 'WA' },
+					{ id: 5, name: 'WB' },
+				]}
 			/>
 			<SimpleInput
 				name="Ссылка на аватар"
@@ -84,23 +104,32 @@ const FormRiderResult = ({ newResult, setNewResult, goBack }) => {
 				property="imageSrc"
 				type="text"
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Пол"
 				state={newResult}
 				setState={setNewResult}
 				property="gender"
 				type="text"
+				options={[
+					{ id: 0, name: 'мужской' },
+					{ id: 1, name: 'женский' },
+				]}
 			/>
-			<SimpleInput
+			<SimpleSelect
 				name="Дисквалификация результата"
 				state={newResult}
 				setState={setNewResult}
 				property="DNF"
 				type="text"
+				options={[
+					{ id: 0, name: 'нет' },
+					{ id: 1, name: 'да' },
+				]}
 			/>
-			<Button getClick={goBack} addCls="mb30">
-				назад
-			</Button>
+			<div className={cls.box__buttons}>
+				<Button getClick={goBack}>назад</Button>
+				<Button getClick={saveResult}>Сохранить</Button>
+			</div>
 		</form>
 	);
 };

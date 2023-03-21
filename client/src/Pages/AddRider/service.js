@@ -25,3 +25,50 @@ export const getScroll = element => {
 		behavior: 'smooth',
 	});
 };
+
+export const resultStart = (stageId, rider) => {
+	return {
+		stageId,
+		name: rider.firstNameZwift ? `${rider.firstNameZwift} ${rider.lastNameZwift}` : '',
+		zwiftId: rider.zwiftId || '',
+		time: '',
+		weightInGrams: '',
+		watt: '',
+		wattPerKg: '',
+		heightInCentimeters: rider.heightInCentimeters || '',
+		avgHeartRate: '',
+		category: rider.category || '',
+		categoryCurrent: '',
+		imageSrc: rider.imageSrc || '',
+		gender: rider.gender || '',
+		DNF: 'нет',
+	};
+};
+
+export const checkForm = result => {
+	if (
+		result.stageId === '' ||
+		result.name === '' ||
+		result.zwiftId === '' ||
+		result.time === '' ||
+		// result.weightInGrams === '' ||
+		result.watt === '' ||
+		result.wattPerKg === '' ||
+		result.heightInCentimeters === '' ||
+		result.avgHeartRate === '' ||
+		result.category === '' ||
+		result.categoryCurrent === '' ||
+		result.gender === ''
+	)
+		return { isCorrect: false, message: 'Не все поля заполнены' };
+
+	if (
+		!(
+			/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/.test(result.time) ||
+			/^[0-9][0-9]:[0-9][0-9]$/.test(result.time)
+		)
+	)
+		return { isCorrect: false, message: 'Неверный формат времени!' };
+
+	return { isCorrect: true };
+};

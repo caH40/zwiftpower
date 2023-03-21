@@ -58,7 +58,7 @@ const ResetPassword = () => {
 							addCls="mb20"
 						/>
 
-						<Button type={'submit'} addCls={['w_full']}>
+						<Button type={'submit'} addCls={'w_full'}>
 							Сохранить
 						</Button>
 					</form>

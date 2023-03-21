@@ -3,15 +3,27 @@ import { handlerNewValue, handlerValue } from './service';
 
 import cls from './SimpleInput.module.css';
 
-const SimpleInput = ({ name, state = {}, setState, property, type, disabled, ...props }) => {
+const SimpleInput = ({
+	name,
+	state = {},
+	setState,
+	property,
+	type,
+	disabled,
+	value,
+	...props
+}) => {
+	const currentValue = value ? value : handlerValue(type, state[property]);
 	return (
 		<>
 			{name ? <label className={cls.label}>{name}:</label> : undefined}
 			<input
 				className={cls.input}
 				type={type}
-				value={handlerValue(type, state[property])}
-				onChange={e => setState(prev => ({ ...prev, [property]: handlerNewValue(type, e) }))}
+				value={currentValue}
+				onChange={e =>
+					setState(prev => ({ ...prev, [property]: handlerNewValue(type, e, currentValue) }))
+				}
 				disabled={disabled}
 				{...props}
 			/>
