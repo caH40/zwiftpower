@@ -34,6 +34,13 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 			/>
 			<SimpleInput name="Маршрут" state={stage} setState={setStage} property="route" type="text" />
 			<SimpleInput
+				name="Ссылка на Звифт"
+				state={stage}
+				setState={setStage}
+				property="link"
+				type="text"
+			/>
+			<SimpleInput
 				name="Ссылка на маршрут"
 				state={stage}
 				setState={setStage}
