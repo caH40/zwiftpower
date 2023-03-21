@@ -251,7 +251,7 @@ export async function checkResult(req, res) {
 export async function postResult(req, res) {
 	try {
 		const { result } = req.body;
-		const resultSaved = await postResultsService(result);
+		const resultSaved = await postResultService(result);
 
 		return res.status(201).json(resultSaved);
 	} catch (error) {

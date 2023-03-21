@@ -18,14 +18,14 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 			<caption>{results[0]?.title}</caption>
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">DQ</th>
-					<th scope="col">Прев.</th>
-					<th scope="col">Штраф</th>
-					<th scope="col">Кат.</th>
-					<th scope="col">Райдер</th>
+					<th>#</th>
+					<th>DQ</th>
+					<th>Прев.</th>
+					<th>Штраф</th>
+					<th>Кат.</th>
+					<th>Райдер</th>
 					{results[0]?.pointsSprint?.map((result, index) => (
-						<th scope="col" key={`${result._id}${result.sprint}th-sp`}>
+						<th key={`${result._id}${result.sprint}th-sp`}>
 							<div className={cls.flexBox}>
 								<span>Спр({result.sprint})</span>
 								<SelectMultiplier
@@ -39,7 +39,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						</th>
 					))}
 					{results[0]?.pointsMountain?.map((result, index) => (
-						<th scope="col" key={`${result._id}${result.mountain}th-sp`}>
+						<th key={`${result._id}${result.mountain}th-sp`}>
 							<div className={cls.flexBox}>
 								<span>Горн({result.mountain})</span>
 								<SelectMultiplier
@@ -52,14 +52,15 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 							</div>
 						</th>
 					))}
-					<th scope="col">Время</th>
-					<th scope="col">Мощ,Вт</th>
-					<th scope="col">Вт/кг</th>
-					<th scope="col">Пульс</th>
-					<th scope="col">Рост,см</th>
-					<th scope="col">Вес,кг</th>
-					<th scope="col">ZP-profile</th>
-					<th scope="col">Результат</th>
+					<th>Время</th>
+					<th>Мощ,Вт</th>
+					<th>Вт/кг</th>
+					<th>Пульс</th>
+					<th>Рост,см</th>
+					<th>Вес,кг</th>
+					<th>ZP-profile</th>
+					<th>Результат</th>
+					<th>Ручное</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -135,6 +136,13 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 							<Button addCls="danger td" getClick={() => deleteResult(result._id, result.name)}>
 								удалить
 							</Button>
+						</td>
+						<td>
+							{result.addedManually ? (
+								<div className={`${cls.boxValue} ${cls.success}`}>true</div>
+							) : (
+								''
+							)}
 						</td>
 					</tr>
 				))}
