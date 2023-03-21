@@ -106,12 +106,12 @@ const TableSeries = ({ target }) => {
 								) : (
 									<>
 										<td>
-											<ButtonLink to={`/edit/series/${seriesOne._id}`} addCls={['td']}>
+											<ButtonLink to={`/edit/series/${seriesOne._id}`} addCls="td">
 												редактировать
 											</ButtonLink>
 										</td>
 										<td>
-											<Button addCls={['danger', 'td']} getClick={() => deleteStage(seriesOne._id)}>
+											<Button addCls="danger td" getClick={() => deleteStage(seriesOne._id)}>
 												удалить
 											</Button>
 										</td>
