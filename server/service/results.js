@@ -101,6 +101,7 @@ export async function postResultService({
 			gender,
 			pointsSprint,
 			pointsMountain,
+			addedManually: true,
 		});
 
 		return { message: 'Результат сохранён!' };

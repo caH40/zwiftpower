@@ -48,6 +48,7 @@ const resultSchema = new Schema({
 	avgHeartRate: Number,
 	gender: String,
 	imageSrc: String,
+	addedManually: { type: Boolean },
 });
 
 export const Result = model('Result', resultSchema);
