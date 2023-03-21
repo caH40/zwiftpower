@@ -33,7 +33,7 @@ export async function mailService(target, token, email, username, password) {
 			html = `Здравствуйте!<br>
     ${date} был произведен запрос на сброс пароля для <b>${username}</b> на сайте zwiftpower.ru, где был указан данный e-mail: <b>${email}</b>.<br>
     Для сброса пароля перейдите по ссылке <a href="${FRONT}/auth/new-password/${token}">${FRONT}/auth/password-reset/${token}</a> <br><br>
-    <b>Внимание!</b> Ссылка действительна 1 часа. Если Вы не делали данного запроса, то просто проигнорируйте это письмо.<br><br>С уважением, команда ZwiftPower.ru`;
+    <b>Внимание!</b> Ссылка действительна 1 час. Если Вы не делали данного запроса, то просто проигнорируйте это письмо.<br><br>С уважением, команда ZwiftPower.ru`;
 		}
 		if (target === 'savedNewPassword') {
 			subject = 'Обновление пароля профиля на сайте zwiftpower.ru';

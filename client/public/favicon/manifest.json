@@ -1,0 +1,9 @@
+{
+	"version": "1.1",
+	"api_version": 3,
+	"layout": {
+		"logo": "https://zwiftpower.ru/favicon/zwiftpower-ya.png",
+		"color": "#ff7c00",
+		"show_title": false
+	}
+}
