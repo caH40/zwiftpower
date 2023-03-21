@@ -53,6 +53,7 @@ const Authorization = () => {
 						register={validateUsername(register)}
 						validationText={errors.username ? errors.username.message : ''}
 						input={{ id: 'username', autoComplete: 'username', type: 'text' }}
+						addCls="mb20"
 					/>
 					<InputAuth
 						label={'Пароль'}
@@ -60,8 +61,9 @@ const Authorization = () => {
 						register={validatePassword(register)}
 						validationText={errors.password ? errors.password.message : ''}
 						input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}
+						addCls="mb20"
 					/>
-					<Button type={'submit'} addCls={['w_full']}>
+					<Button type={'submit'} addCls={'w_full'}>
 						Вход
 					</Button>
 				</form>

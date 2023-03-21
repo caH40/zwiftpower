@@ -45,7 +45,6 @@ select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	outline: none;
 	cursor: pointer;
 }
 :root {
@@ -80,6 +79,7 @@ select {
 	--color-bg-minor: #f6f8fa;
 	--color-border-minor: #cecece;
 	--color-bg: #ffffff;
+	--modal-bg: #00000099;
 
 	--success: #58c34e;
 }

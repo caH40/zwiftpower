@@ -1,20 +1,24 @@
 import { myAxios } from './axios';
 
-export async function getRiders() {
+export async function postResult(result) {
 	try {
 		const response = await myAxios({
-			url: '/api/riders',
-			method: 'get',
+			url: `/api/stage/result`,
+			method: 'post',
+			data: {
+				result,
+			},
 		});
 		return response;
 	} catch (error) {
 		throw error;
 	}
 }
-export async function getRider(zwiftId) {
+
+export async function checkRiderResult(zwiftId, stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/rider/${zwiftId}`,
+			url: `/api/stage/result-check/${zwiftId}/${stageId}`,
 			method: 'get',
 		});
 		return response;

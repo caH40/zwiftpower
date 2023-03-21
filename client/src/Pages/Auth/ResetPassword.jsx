@@ -44,9 +44,10 @@ const ResetPassword = () => {
 						register={validateEmail(register)}
 						validationText={errors.email ? errors.email.message : ''}
 						input={{ id: 'email', email: 'username', type: 'text' }}
+						addCls="mb20"
 					/>
 
-					<Button type={'submit'} addCls={['w_full']}>
+					<Button type={'submit'} addCls={'w_full'}>
 						Сброс
 					</Button>
 				</form>

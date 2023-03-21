@@ -4,7 +4,8 @@ import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
-import { getRidersService } from '../service/riders.js';
+import { checkResultService, postResultService } from '../service/results.js';
+import { getRiderService, getRidersService } from '../service/riders.js';
 import {
 	putSeriesService,
 	postSeriesService,
@@ -218,5 +219,39 @@ export async function getRiders(req, res) {
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json(error);
+	}
+}
+export async function getRider(req, res) {
+	try {
+		const { zwiftId } = req.params;
+		const rider = await getRiderService(zwiftId);
+
+		return res.status(200).json(rider);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function checkResult(req, res) {
+	try {
+		const { zwiftId, stageId } = req.params;
+		if (!zwiftId || !stageId) return res.status(400);
+		const rider = await checkResultService(zwiftId, stageId);
+
+		return res.status(200).json(rider);
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json(error);
+	}
+}
+export async function postResult(req, res) {
+	try {
+		const { result } = req.body;
+		const resultSaved = await postResultService(result);
+
+		return res.status(201).json(resultSaved);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
 	}
 }
