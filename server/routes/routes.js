@@ -23,7 +23,7 @@ import {
 	checkResult,
 	postResult,
 } from '../controllers/controllers.js';
-import { postSchedule, postResults } from '../controllers/uploads.js';
+import { postSchedule, postResults, deleteResult } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
 
 export const router = new Router();
@@ -48,6 +48,7 @@ router.put('/stage/points', authAdmin, putPoints);
 router.put('/stage/points-multiplier', authAdmin, putMultiplier);
 router.get('/stage/result-check/:zwiftId/:stageId', authAdmin, checkResult);
 router.post('/stage/result', authAdmin, postResult);
+router.delete('/stage/result', authAdmin, deleteResult);
 
 router.get('/stage-result/:stageId', authAdmin, getStageResults);
 router.put('/penalty', authAdmin, putPenalty);

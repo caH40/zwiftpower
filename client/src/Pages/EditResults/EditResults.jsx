@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { deleteCurrentResult } from '../../api/result';
 import { getResultStage } from '../../api/stage';
 
 import TableEditStageResults from '../../components/Tables/TableEditStageResults/TableEditStageResults';
 import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import cls from './EditResults.module.css';
 
@@ -16,6 +19,7 @@ const EditResults = () => {
 
 	const { stageId } = useParams();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		getResultStage(stageId).then(data => {
@@ -24,13 +28,37 @@ const EditResults = () => {
 	}, [stageId, update]);
 
 	const getClick = () => navigate(-1);
+
+	const deleteResult = (resultId, riderName) => {
+		const confirm = window.confirm(
+			`Вы действительно хотите удалить результат райдера ${riderName}?`
+		);
+		if (!confirm)
+			return dispatch(
+				getAlert({
+					message: `Отмена удаления результат райдера ${riderName}`,
+					type: 'warning',
+					isOpened: true,
+				})
+			);
+		deleteCurrentResult(resultId)
+			.then(response => {
+				dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({ message: 'Ошибка при удалении результата', type: 'error', isOpened: true })
+				)
+			)
+			.finally(() => setUpdate(prev => !prev));
+	};
 	return (
 		<>
 			<h3 className="titlePage-3">Редактирование данных заезда</h3>
 			<div className={cls.right}>
 				<ButtonLink to={`/edit/stage/${stageId}/rider-add`}>Добавить</ButtonLink>
 			</div>
-			<TableEditStageResults results={results} setUpdate={setUpdate} />
+			<TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />
 			<Button getClick={getClick}>назад</Button>
 		</>
 	);

@@ -4,7 +4,11 @@ import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
-import { checkResultService, postResultService } from '../service/results.js';
+import {
+	checkResultService,
+	postResultService,
+	postResultsService,
+} from '../service/results.js';
 import { getRiderService, getRidersService } from '../service/riders.js';
 import {
 	putSeriesService,
@@ -247,7 +251,7 @@ export async function checkResult(req, res) {
 export async function postResult(req, res) {
 	try {
 		const { result } = req.body;
-		const resultSaved = await postResultService(result);
+		const resultSaved = await postResultsService(result);
 
 		return res.status(201).json(resultSaved);
 	} catch (error) {
