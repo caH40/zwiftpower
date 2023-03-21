@@ -1,131 +1,82 @@
 import { Result } from '../Model/Result.js';
 import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
-import { convertTime } from '../utility/date-convert.js';
-import { prepareResult } from './preparation/result.js';
-import { getSegments } from './preparation/segments.js';
+import { secondesToTime, secondesToTimeThousandths } from '../utility/date-convert.js';
+import { gapValue } from '../utility/gap.js';
+import { filterThousandths } from '../utility/thousandths-seconds.js';
+import { maxValue } from '../utility/value-max.js';
+import { getResultsWithPenalty } from './results-penalty.js';
 
-export async function postResultsService(results) {
+export async function getResultsService(stageId) {
 	try {
-		const seriesName = results.fileAttributes.name.split('_')[0];
-		const stageNumber = results.fileAttributes.name.split('_Stage-')[1].split('.')[0];
+		const category = 'T';
+		// const results = await Result.find({ stageId }).populate('riderId');
+		// console.log(results);
+		const stagesDB = await Stage.find({ _id: stageId });
 
-		const seriesDB = await Series.findOne({ name: seriesName });
-		if (!seriesDB._id) throw { message: wrongName };
+		const seriesId = stagesDB[0].seriesId;
+		const seriesNumber = stagesDB[0].number;
+		const seriesType = stagesDB[0].type;
+		const { name } = await Series.findOne({ _id: seriesId });
 
-		const stageDB = await Stage.findOne({ seriesId: seriesDB._id, number: stageNumber });
-		if (!stageDB._id) throw { message: wrongName };
-		if (stageDB.hasResults) throw { message: existsResults };
+		const resultsDB = await Result.find({ stageId }).populate('riderId');
 
-		for (let result of results.results) {
-			result = await prepareResult(result, stageDB, seriesDB);
-			const resultsDB = await Result.create({ stageId: stageDB._id, ...result }).catch(error => {
-				throw { message: fault };
-			});
+		let results = resultsDB.map(result => result.toObject());
+
+		// const hasPenalty = results.find(
+		// 	result => result.penalty.powerUp !== 0 || result.isDisqualification === true
+		// );
+		// if (hasPenalty) results = getResultsWithPenalty(results);
+		results = getResultsWithPenalty(results);
+		let resultFiltered = [];
+
+		if (category === 'T') {
+			const categories = ['A', 'B', 'C', 'W', 'WA', 'WB'];
+			for (let i = 0; i < categories.length; i++) {
+				let res = results
+					.filter(result => result.category === categories[i])
+					.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
+
+				res.forEach((result, index) => (result.placeCategory = index + 1));
+				resultFiltered = [...resultFiltered, ...res];
+			}
+			resultFiltered = resultFiltered.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
+		} else {
+			resultFiltered = results
+				.filter(result => result.category === category)
+				.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
+
+			resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
 		}
 
-		await Stage.findOneAndUpdate(
-			{ seriesId: seriesDB._id, number: stageNumber },
-			{ $set: { hasResults: true } }
-		);
+		resultFiltered = await gapValue(resultFiltered);
 
-		return {
-			message: 'Протокол с результатами сохранён!',
-			ids: { stageId: stageDB._id, seriesId: seriesDB._id },
-		};
-	} catch (error) {
-		throw error;
-	}
-}
+		const categoryStr = category === 'T' ? `Абсолют` : `Группа "${category}"`;
+		const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
 
-//сообщения о ошибках
-const wrongName = 'Не найдена Series, проверьте правильность наименования файла!';
-const existsResults = 'Результаты данного этапа уже есть на сервере!';
-const fault = 'Ошибка при сохранении некоторых результатов.';
+		resultFiltered.forEach((result, index) => {
+			if (result.time === 999999999) {
+				result.time = 'DNF';
+				result.gapPrev = 0;
+				result.gap = 0;
+			}
+			if (result.time === 99999999) {
+				result.time = 'DQ';
+				result.gapPrev = 0;
+				result.gap = 0;
+			} else {
+				result.time = secondesToTimeThousandths(result.time);
+				result.gapPrev = secondesToTime(result.gapPrev);
+				result.gap = secondesToTime(result.gap);
+			}
 
-export async function checkResultService(zwiftId, stageId) {
-	try {
-		const resultDB = await Result.findOne({ zwiftRiderId: zwiftId, stageId });
-		if (resultDB)
-			throw {
-				message: `Результат ${resultDB.name} уже есть в протоколе данного Этапа!`,
-				hasResult: true,
-			};
-		return { message: 'Отсутствует результат райдера в данном Этапе', hasResult: false };
-	} catch (error) {
-		throw error;
-	}
-}
-
-export async function postResultService({
-	stageId,
-	name,
-	zwiftId: zwiftRiderId,
-	time,
-	weightInGrams,
-	watt,
-	wattPerKg,
-	heightInCentimeters,
-	avgHeartRate,
-	category,
-	categoryCurrent,
-	imageSrc,
-	gender,
-}) {
-	try {
-		const resultDBCheck = await Result.findOne({ zwiftRiderId, stageId });
-		if (resultDBCheck)
-			throw {
-				message: `Результат ${resultDBCheck.name} уже есть в протоколе данного Этапа!`,
-				hasResult: true,
-			};
-
-		const stageDB = await Stage.findOne({ _id: stageId });
-		const { pointsSprint, pointsMountain } = getSegments(stageDB);
-
-		time = convertTime(time);
-
-		const resultDB = await Result.create({
-			stageId,
-			name,
-			zwiftRiderId,
-			time,
-			weightInGrams,
-			watt,
-			wattPerKg,
-			heightInCentimeters,
-			avgHeartRate,
-			category,
-			categoryCurrent,
-			imageSrc,
-			gender,
-			pointsSprint,
-			pointsMountain,
-			addedManually: true,
+			result.weightInGrams = Math.round(result.weightInGrams / 10) / 100;
+			result.title = title;
 		});
 
-		return { message: 'Результат сохранён!' };
-	} catch (error) {
-		throw error;
-	}
-}
-export async function deleteResultService(resultId) {
-	try {
-		const resultDB = await Result.findOneAndDelete({ _id: resultId });
-		if (!resultDB) throw { message: 'Результат не найден!' };
-		return { message: 'Результат удалён!' };
-	} catch (error) {
-		throw error;
-	}
-}
-export async function deleteResultsService(stageId) {
-	try {
-		const stageDB = await Stage.findOneAndUpdate(
-			{ _id: stageId },
-			{ $set: { hasResults: false } }
-		);
-		await Result.deleteMany({ stageId });
-		return { message: `Удалены все результаты Этапа №${stageDB.number}!` };
+		resultFiltered = await maxValue(resultFiltered);
+		resultFiltered = filterThousandths(resultFiltered);
+		return { results: resultFiltered };
 	} catch (error) {
 		throw error;
 	}

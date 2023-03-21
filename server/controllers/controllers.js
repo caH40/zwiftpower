@@ -6,10 +6,10 @@ import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
 import {
 	checkResultService,
+	deleteResultService,
 	deleteResultsService,
 	postResultService,
-	postResultsService,
-} from '../service/results.js';
+} from '../service/results-stage.js';
 import { getRiderService, getRidersService } from '../service/riders.js';
 import {
 	putSeriesService,
@@ -18,7 +18,7 @@ import {
 	getSeriesOne,
 	deleteSeriesService,
 } from '../service/series.js';
-import { getStageResultsService } from '../service/stage-results.js';
+import { getResultsService } from '../service/results.js';
 import {
 	getStageService,
 	getStages,
@@ -208,7 +208,7 @@ export async function postStage(req, res) {
 export async function getStageResults(req, res) {
 	try {
 		const { stageId } = req.params;
-		const stageResults = await getStageResultsService(stageId);
+		const stageResults = await getResultsService(stageId);
 
 		return res.status(200).json(stageResults);
 	} catch (error) {
@@ -266,6 +266,17 @@ export async function deleteResults(req, res) {
 		const resultsDeleted = await deleteResultsService(stageId);
 
 		return res.status(201).json(resultsDeleted);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+}
+export async function deleteResult(req, res) {
+	try {
+		const { resultId } = req.body;
+		const result = await deleteResultService(resultId);
+
+		return res.status(201).json(result);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

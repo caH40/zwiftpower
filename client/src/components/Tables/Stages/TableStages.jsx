@@ -34,6 +34,7 @@ const TableStages = ({ seriesId }) => {
 					<th scope="col">Спринт</th>
 					<th scope="col">Гора</th>
 					<th scope="col">Результат</th>
+					<th scope="col">Регистрация</th>
 					<th scope="col">ZInsider</th>
 				</tr>
 			</thead>
@@ -62,6 +63,11 @@ const TableStages = ({ seriesId }) => {
 							</td>
 							<td>
 								<a href={stage.link} target="_blank" rel="noreferrer">
+									Звифт
+								</a>
+							</td>
+							<td>
+								<a href={stage.routeLink} target="_blank" rel="noreferrer">
 									Маршрут
 								</a>
 							</td>

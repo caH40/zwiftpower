@@ -1,4 +1,4 @@
-import { deleteResultService, postResultsService } from '../service/results.js';
+import { postResultsService } from '../service/protocol.js';
 import { postScheduleSeriesService, postScheduleStagesService } from '../service/schedule.js';
 
 export async function postSchedule(req, res) {
@@ -22,17 +22,6 @@ export async function postResults(req, res) {
 		const resultsSaved = await postResultsService(results);
 
 		return res.status(201).json(resultsSaved);
-	} catch (error) {
-		console.log(error);
-		return res.status(500).json(error);
-	}
-}
-export async function deleteResult(req, res) {
-	try {
-		const { resultId } = req.body;
-		const result = await deleteResultService(resultId);
-
-		return res.status(201).json(result);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

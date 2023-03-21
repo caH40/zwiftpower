@@ -23,8 +23,9 @@ import {
 	checkResult,
 	postResult,
 	deleteResults,
+	deleteResult,
 } from '../controllers/controllers.js';
-import { postSchedule, postResults, deleteResult } from '../controllers/uploads.js';
+import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
 
 export const router = new Router();

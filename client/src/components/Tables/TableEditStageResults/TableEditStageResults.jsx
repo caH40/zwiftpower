@@ -60,7 +60,11 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 					<th>Вес,кг</th>
 					<th>ZP-profile</th>
 					<th>Результат</th>
-					<th>Ручное</th>
+					<th>
+						Ручное
+						<br />
+						добавл.
+					</th>
 				</tr>
 			</thead>
 			<tbody>
