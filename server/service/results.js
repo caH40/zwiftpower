@@ -108,3 +108,12 @@ export async function postResultService({
 		throw error;
 	}
 }
+export async function deleteResultService(resultId) {
+	try {
+		const resultDB = await Result.findOneAndDelete({ _id: resultId });
+		if (!resultDB) throw { message: 'Результат не найден!' };
+		return { message: 'Результат удалён!' };
+	} catch (error) {
+		throw error;
+	}
+}

@@ -10,8 +10,9 @@ import cls from '../Table.module.css';
 import SelectCategory from '../../UI/SelectCategory/SelectCategory';
 import SelectPoints from '../../UI/SelectPoints/SelectPoints';
 import SelectMultiplier from '../../UI/SelectMultiplier/SelectMultiplier';
+import Button from '../../UI/Button/Button';
 
-const TableEditStageResults = ({ results = [], setUpdate }) => {
+const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
 			<caption>{results[0]?.title}</caption>
@@ -58,7 +59,7 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 					<th scope="col">Рост,см</th>
 					<th scope="col">Вес,кг</th>
 					<th scope="col">ZP-profile</th>
-					{/* <th scope="col">Комментарий</th> */}
+					<th scope="col">Результат</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -130,7 +131,11 @@ const TableEditStageResults = ({ results = [], setUpdate }) => {
 						<td>{result.heightInCentimeters}</td>
 						<td>{result.heightInCentimeters}</td>
 						<td>{tdLinkZP(result.zwiftRiderId)}</td>
-						{/* <td>-</td> */}
+						<td>
+							<Button addCls="danger td" getClick={() => deleteResult(result._id, result.name)}>
+								удалить
+							</Button>
+						</td>
 					</tr>
 				))}
 			</tbody>

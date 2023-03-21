@@ -26,3 +26,15 @@ export async function checkRiderResult(zwiftId, stageId) {
 		throw error;
 	}
 }
+export async function deleteCurrentResult(resultId) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage/result`,
+			method: 'delete',
+			data: { resultId },
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
