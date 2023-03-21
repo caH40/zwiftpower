@@ -23,6 +23,13 @@
 .button:active {
 	background-color: var(--color-yellow-main);
 }
+.button:disabled {
+	background-color: var(--color-text-minor);
+}
+.button:disabled:hover {
+	background-color: var(--color-text-minor);
+	transform: none;
+}
 .w_full {
 	width: 100%;
 }

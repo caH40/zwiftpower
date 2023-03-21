@@ -140,3 +140,6 @@
 .error {
 	background-color: var(--error);
 }
+.wrap {
+	white-space: normal;
+}

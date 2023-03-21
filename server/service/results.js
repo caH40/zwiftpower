@@ -118,3 +118,15 @@ export async function deleteResultService(resultId) {
 		throw error;
 	}
 }
+export async function deleteResultsService(stageId) {
+	try {
+		const stageDB = await Stage.findOneAndUpdate(
+			{ _id: stageId },
+			{ $set: { hasResults: false } }
+		);
+		await Result.deleteMany({ stageId });
+		return { message: `Удалены все результаты Этапа №${stageDB.number}!` };
+	} catch (error) {
+		throw error;
+	}
+}

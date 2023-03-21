@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { postDeleteResults } from '../../../api/result';
 
 import { getStages, postDeleteStage } from '../../../api/stage';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
@@ -12,6 +13,7 @@ const TableStagesForEdit = ({ seriesId }) => {
 	const [stages, setStages] = useState([]);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [update, setUpdate] = useState(false);
 
 	const toLink = (url, needLink) => {
 		if (!needLink) return;
@@ -22,10 +24,12 @@ const TableStagesForEdit = ({ seriesId }) => {
 		getStages(seriesId).then(data => {
 			setStages(data.data.stages);
 		});
-	}, [seriesId]);
+	}, [seriesId, update]);
 
 	const deleteStage = stage => {
-		const confirm = window.confirm(`Вы действительно хотите удалить Этап №${stage.number}?`);
+		const confirm = window.confirm(
+			`Вы действительно хотите удалить Этап №${stage.number}? Так же будут удалены все результаты этого этапа!`
+		);
 		if (!confirm)
 			return dispatch(
 				getAlert({
@@ -56,6 +60,40 @@ const TableStagesForEdit = ({ seriesId }) => {
 			);
 	};
 
+	const deleteResults = stage => {
+		const confirm = window.confirm(
+			`Вы действительно хотите удалить все результаты Этапа №${stage.number}?`
+		);
+		if (!confirm)
+			return dispatch(
+				getAlert({
+					message: `Отмена удаления результатов Этапа №${stage.number}`,
+					type: 'warning',
+					isOpened: true,
+				})
+			);
+		postDeleteResults(stage._id)
+			.then(data => {
+				setUpdate(prev => !prev);
+				dispatch(
+					getAlert({
+						message: data.data.message,
+						type: 'success',
+						isOpened: true,
+					})
+				);
+			})
+			.catch(error =>
+				dispatch(
+					getAlert({
+						message: `Ошибка при удалении результатов этапа!`,
+						type: 'error',
+						isOpened: true,
+					})
+				)
+			);
+	};
+
 	const seriesName = stages?.length ? stages[0]?.seriesId.name : '';
 	return (
 		<table className={`${cls.table} ${cls.table_striped}`}>
@@ -75,7 +113,15 @@ const TableStagesForEdit = ({ seriesId }) => {
 					<th scope="col">Результат</th>
 					<th scope="col">ZInsider</th>
 					<th scope="col">Редактировать</th>
-					<th scope="col">Удалить</th>
+					<th scope="col">
+						Удалить <br />
+						этап
+					</th>
+					<th scope="col" className={cls.wrap}>
+						Результаты
+						<br />
+						этапа
+					</th>
 				</tr>
 			</thead>
 			{stages?.length ? (
@@ -110,6 +156,15 @@ const TableStagesForEdit = ({ seriesId }) => {
 								</td>
 								<td>
 									<Button addCls="danger td" getClick={() => deleteStage(stage)}>
+										удалить
+									</Button>
+								</td>
+								<td>
+									<Button
+										addCls="danger td"
+										getClick={() => deleteResults(stage)}
+										disabled={!stage.hasResults}
+									>
 										удалить
 									</Button>
 								</td>

@@ -38,3 +38,16 @@ export async function deleteCurrentResult(resultId) {
 		throw error;
 	}
 }
+
+export async function postDeleteResults(stageId) {
+	try {
+		const response = await myAxios({
+			url: `/api/stage/results`,
+			method: 'delete',
+			data: { stageId },
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}

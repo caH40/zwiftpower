@@ -130,7 +130,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						<td>{result.wattPerKg}</td>
 						<td>{result.avgHeartRate}</td>
 						<td>{result.heightInCentimeters}</td>
-						<td>{result.heightInCentimeters}</td>
+						<td>{result.weightInGrams}</td>
 						<td>{tdLinkZP(result.zwiftRiderId)}</td>
 						<td>
 							<Button addCls="danger td" getClick={() => deleteResult(result._id, result.name)}>

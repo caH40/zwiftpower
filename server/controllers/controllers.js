@@ -6,6 +6,7 @@ import { putPenaltyService } from '../service/penalty.js';
 import { putMultiplierService, putPointsService } from '../service/points.js';
 import {
 	checkResultService,
+	deleteResultsService,
 	postResultService,
 	postResultsService,
 } from '../service/results.js';
@@ -254,6 +255,17 @@ export async function postResult(req, res) {
 		const resultSaved = await postResultService(result);
 
 		return res.status(201).json(resultSaved);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+}
+export async function deleteResults(req, res) {
+	try {
+		const { stageId } = req.body;
+		const resultsDeleted = await deleteResultsService(stageId);
+
+		return res.status(201).json(resultsDeleted);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

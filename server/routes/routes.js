@@ -22,6 +22,7 @@ import {
 	getRider,
 	checkResult,
 	postResult,
+	deleteResults,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults, deleteResult } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
@@ -57,3 +58,4 @@ router.put('/underchecking', authAdmin, putUnderChecking);
 
 router.post('/schedule', authAdmin, postSchedule);
 router.post('/results', authAdmin, postResults);
+router.delete('/stage/results', authAdmin, deleteResults);
