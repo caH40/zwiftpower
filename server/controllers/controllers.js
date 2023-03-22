@@ -3,7 +3,7 @@ import path from 'path';
 import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
-import { putMultiplierService, putPointsService } from '../service/points.js';
+import { putMultiplierService, putPointsService } from '../service/pointsSM.js';
 import {
 	checkResultService,
 	deleteResultService,

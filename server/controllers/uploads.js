@@ -1,3 +1,4 @@
+import { updatePointsGeneral } from '../service/general/points-general.js';
 import { postResultsService } from '../service/protocol.js';
 import { postScheduleSeriesService, postScheduleStagesService } from '../service/schedule.js';
 
@@ -21,6 +22,8 @@ export async function postResults(req, res) {
 		const { results } = req.body;
 		const resultsSaved = await postResultsService(results);
 
+		const pointsUpdated = await updatePointsGeneral(resultsSaved.seriesId);
+		console.log({ pointsUpdated, resultsSaved });
 		return res.status(201).json(resultsSaved);
 	} catch (error) {
 		console.log(error);
