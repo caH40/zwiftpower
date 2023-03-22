@@ -10,3 +10,7 @@
 	text-align: right;
 	margin-bottom: 5px;
 }
+.box__buttons {
+	display: flex;
+	justify-content: space-between;
+}

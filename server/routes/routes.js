@@ -24,6 +24,7 @@ import {
 	postResult,
 	deleteResults,
 	deleteResult,
+	putGeneralPoints,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
@@ -60,3 +61,5 @@ router.put('/underchecking', authAdmin, putUnderChecking);
 router.post('/schedule', authAdmin, postSchedule);
 router.post('/results', authAdmin, postResults);
 router.delete('/stage/results', authAdmin, deleteResults);
+
+router.put('/general', authAdmin, putGeneralPoints);

@@ -3,7 +3,7 @@ import path from 'path';
 import { putCategoryService } from '../service/category.js';
 import { putDisqualificationService } from '../service/disqualification.js';
 import { putPenaltyService } from '../service/penalty.js';
-import { putMultiplierService, putPointsService } from '../service/points.js';
+import { putMultiplierService, putPointsService } from '../service/pointsSM.js';
 import {
 	checkResultService,
 	deleteResultService,
@@ -27,6 +27,7 @@ import {
 	postStageService,
 } from '../service/stages.js';
 import { putUnderCheckingService } from '../service/underchecking.js';
+import { putGeneralPointsService } from '../service/general/general-update.js';
 
 const __dirname = path.resolve();
 
@@ -277,6 +278,17 @@ export async function deleteResult(req, res) {
 		const result = await deleteResultService(resultId);
 
 		return res.status(201).json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+}
+export async function putGeneralPoints(req, res) {
+	try {
+		const { seriesId } = req.body;
+		const generalPoints = await putGeneralPointsService(seriesId);
+
+		return res.status(201).json(generalPoints);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

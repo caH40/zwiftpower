@@ -58,6 +58,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 					<th>Пульс</th>
 					<th>Рост,см</th>
 					<th>Вес,кг</th>
+					<th>Очки</th>
 					<th>ZP-profile</th>
 					<th>Результат</th>
 					<th>
@@ -135,6 +136,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						<td>{result.avgHeartRate}</td>
 						<td>{result.heightInCentimeters}</td>
 						<td>{result.weightInGrams}</td>
+						<td>{result.pointsStage}</td>
 						<td>{tdLinkZP(result.zwiftRiderId)}</td>
 						<td>
 							<Button addCls="danger td" getClick={() => deleteResult(result._id, result.name)}>
