@@ -22,8 +22,8 @@ export async function postResults(req, res) {
 		const { results } = req.body;
 		const resultsSaved = await postResultsService(results);
 
-		const pointsUpdated = await putGeneralPointsService(resultsSaved.seriesId);
-		// console.log({ pointsUpdated, resultsSaved });
+		const pointsUpdated = await putGeneralPointsService(resultsSaved.ids.seriesId);
+
 		return res.status(201).json(resultsSaved);
 	} catch (error) {
 		console.log(error);
