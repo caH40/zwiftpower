@@ -1,12 +1,14 @@
 //обновление очков для каждого результата
 import { Result } from '../../Model/Result.js';
+import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 import { getResultsWithPenalty } from '../results-penalty.js';
 
 import { points } from './points.js';
 
-export async function updatePointsGeneral(seriesId) {
+export async function putGeneralPointsService(seriesId) {
 	try {
+		const seriesDB = await Series.findOne({ _id: seriesId });
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
 
 		for (let i = 0; i < stagesDB.length; i++) {
@@ -87,7 +89,7 @@ export async function updatePointsGeneral(seriesId) {
 		// 		);
 		// 	}
 		// }
-		return true;
+		return { message: `Обновлены очки генерального зачета серии ${seriesDB.name}` };
 	} catch (error) {
 		console.log(error);
 	}
