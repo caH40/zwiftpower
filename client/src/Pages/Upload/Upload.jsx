@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 
 import styles from './Upload.module.css';
 import { postResults, postSchedule } from '../../api/schedule';
@@ -46,7 +47,7 @@ const Upload = () => {
 
 	return (
 		<section className={styles.wrapper}>
-			<div className={styles.block}>
+			<div className={cn(styles.block, { [styles.clear]: !schedule?.fileAttributes })}>
 				<h2 className={styles.title}>Загрузка расписания серии и этапов</h2>
 				<UploadSeriesAndStage
 					schedule={schedule}
@@ -55,7 +56,7 @@ const Upload = () => {
 				/>
 			</div>
 
-			<div className={styles.block}>
+			<div className={cn(styles.block, { [styles.clear]: !results.fileAttributes })}>
 				<h2 className={styles.title}>Загрузка протокола с результатами этапа</h2>
 				<UploadResults results={results} setResults={setResults} saveResults={saveResults} />
 			</div>
