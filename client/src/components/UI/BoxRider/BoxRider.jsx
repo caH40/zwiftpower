@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getRider, getRiders } from '../../../api/riders';
 import SimpleInput from '../SimpleInput/SimpleInput';
-import cls from './BoxRider.module.css';
+import styles from './BoxRider.module.css';
 
 const BoxRider = ({ setRider, setIsVisibleModal }) => {
 	const [state, setState] = useState({ fio: '' });
@@ -32,7 +32,7 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
 		});
 
 	return (
-		<form className={cls.form} name="riders">
+		<form className={styles.form} name="riders">
 			<SimpleInput
 				state={state}
 				setState={setState}
@@ -40,16 +40,18 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
 				type="text"
 				placeholder="Введите имя (фамилию) райдера"
 			/>
-			<ul className={cls.list}>
+			<ul className={styles.list}>
 				{riders.length
 					? filteredRiders.map(rider => (
-							<li className={cls.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
+							<li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
 								{`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
 							</li>
 					  ))
 					: undefined}
 				{filteredRiders.length > 14 ? (
-					<li className={cls.itemMore}>...еще {riders.length - filteredRiders.length} райдеров</li>
+					<li className={styles.itemMore}>
+						...еще {riders.length - filteredRiders.length} райдеров
+					</li>
 				) : undefined}
 			</ul>
 		</form>

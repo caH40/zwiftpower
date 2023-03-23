@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { useNavigate } from 'react-router-dom';
+
 import TableSeries from '../components/Tables/Series/TableSeries';
 import Button from '../components/UI/Button/Button';
 import useTitle from '../hook/useTitle';

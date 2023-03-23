@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { tdLinkZP, tdRider } from '../utils/td';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 import { secondesToTime } from '../../../utils/date-convert';
 
 const TableResultsNew = ({ results = [] }) => {
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>Протокол</caption>
 			<thead>
 				<tr>

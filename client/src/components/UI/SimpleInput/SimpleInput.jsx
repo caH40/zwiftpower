@@ -1,7 +1,7 @@
 import React from 'react';
 import { handlerNewValue, handlerValue } from './service';
 
-import cls from './SimpleInput.module.css';
+import styles from './SimpleInput.module.css';
 
 const SimpleInput = ({
 	name,
@@ -16,9 +16,9 @@ const SimpleInput = ({
 	const currentValue = value ? value : handlerValue(type, state[property]);
 	return (
 		<>
-			{name ? <label className={cls.label}>{name}:</label> : undefined}
+			{name ? <label className={styles.label}>{name}:</label> : undefined}
 			<input
-				className={cls.input}
+				className={styles.input}
 				type={type}
 				value={currentValue}
 				onChange={e =>

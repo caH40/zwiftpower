@@ -1,16 +1,13 @@
 import React from 'react';
+import cn from 'classnames';
+import { addClasses as cns } from '../../../utils/additional-classes.js';
 
-import cls from './Button.module.css';
+import styles from './Button.module.css';
 
 const Button = ({ getClick, children, addCls = '', ...props }) => {
-	const classBtn = addCls
-		.split(' ')
-		.map(elm => cls[elm])
-		.join(' ');
-
 	return (
 		<button
-			className={`${cls.button} ${classBtn}`}
+			className={cn(styles.button, cns(addCls, styles))}
 			onClick={
 				getClick
 					? e => {

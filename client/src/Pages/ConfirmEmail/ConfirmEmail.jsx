@@ -2,10 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import styles from './ConfirmEmail.module.css';
 import { confirmEmail } from '../../api/email';
 import useTitle from '../../hook/useTitle';
-
-import cls from './ConfirmEmail.module.css';
 
 const ConfirmEmail = () => {
 	const [message, setMessage] = useState('');
@@ -19,8 +19,8 @@ const ConfirmEmail = () => {
 		});
 	}, [token]);
 	return (
-		<section className={cls.support}>
-			<p className={cls.text}>{message}</p>
+		<section className={styles.support}>
+			<p className={styles.text}>{message}</p>
 		</section>
 	);
 };

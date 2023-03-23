@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showMenu } from '../../../redux/features/menuBurgerSlice';
-import cls from './PopupMenu.module.css';
+import styles from './PopupMenu.module.css';
 
 const PopupMenu = () => {
 	const dispatch = useDispatch();
@@ -12,18 +12,18 @@ const PopupMenu = () => {
 	const isModerator = ['admin', 'moderator'].includes(user.role);
 
 	return (
-		<div className={cls.modal__overlay} onClick={() => dispatch(showMenu())}>
-			<div className={cls.popup}>
-				<ul className={cls.list}>
-					<li className={cls.item}>
-						<Link to="/" className={cls.link}>
+		<div className={styles.modal__overlay} onClick={() => dispatch(showMenu())}>
+			<div className={styles.popup}>
+				<ul className={styles.list}>
+					<li className={styles.item}>
+						<Link to="/" className={styles.link}>
 							Главная
 						</Link>
 					</li>
 
 					{status ? (
-						<li className={cls.item}>
-							<Link to="/profile" className={cls.link}>
+						<li className={styles.item}>
+							<Link to="/profile" className={styles.link}>
 								Профиль
 							</Link>
 						</li>
@@ -31,23 +31,23 @@ const PopupMenu = () => {
 
 					{isModerator ? (
 						<>
-							<li className={cls.item}>
-								<Link to="/edit/stage" className={cls.link}>
+							<li className={styles.item}>
+								<Link to="/edit/stage" className={styles.link}>
 									Stages
 								</Link>
 							</li>
-							<li className={cls.item}>
-								<Link to="/edit/series" className={cls.link}>
+							<li className={styles.item}>
+								<Link to="/edit/series" className={styles.link}>
 									Series
 								</Link>
 							</li>
-							<li className={cls.item}>
-								<Link to="/edit/upload" className={cls.link}>
+							<li className={styles.item}>
+								<Link to="/edit/upload" className={styles.link}>
 									Загрузка
 								</Link>
 							</li>
-							<li className={cls.item}>
-								<Link to="/edit/riders" className={cls.link}>
+							<li className={styles.item}>
+								<Link to="/edit/riders" className={styles.link}>
 									Райдеры
 								</Link>
 							</li>
@@ -55,8 +55,8 @@ const PopupMenu = () => {
 					) : undefined}
 
 					{isAdmin ? (
-						<li className={cls.item}>
-							<Link to="/edit/users" className={cls.link}>
+						<li className={styles.item}>
+							<Link to="/edit/users" className={styles.link}>
 								Пользователи
 							</Link>
 						</li>

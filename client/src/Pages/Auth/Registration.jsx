@@ -2,10 +2,9 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
+import styles from './Auth.module.css';
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
 import useTitle from '../../hook/useTitle';
-
-import cls from './Auth.module.css';
 import {
 	validateEmail,
 	validatePassword,
@@ -42,10 +41,10 @@ const Registration = () => {
 	};
 
 	return (
-		<main className={cls.wrapper}>
-			<div className={cls.inner}>
-				<h1 className={cls.title}>Регистрация на сайт ZP</h1>
-				<form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+		<main className={styles.wrapper}>
+			<div className={styles.inner}>
+				<h1 className={styles.title}>Регистрация на сайт ZP</h1>
+				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 					<InputAuth
 						label={'E-mail'}
 						register={validateEmail(register)}
@@ -71,8 +70,8 @@ const Registration = () => {
 						Зарегистрироваться
 					</Button>
 				</form>
-				<div className={cls.additional}>
-					<Link className={cls.link} to="/auth/authorization">
+				<div className={styles.additional}>
+					<Link className={styles.link} to="/auth/authorization">
 						Вход на сайт ZP
 					</Link>
 				</div>

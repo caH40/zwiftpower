@@ -2,7 +2,7 @@ import React from 'react';
 
 import ButtonClose from '../ButtonClose/ButtonClose';
 
-import cls from './Modal.module.css';
+import styles from './Modal.module.css';
 
 const Modal = ({ children, title, box, isVisibleModal, setIsVisibleModal }) => {
 	const getClick = () => setIsVisibleModal(false);
@@ -16,10 +16,10 @@ const Modal = ({ children, title, box, isVisibleModal, setIsVisibleModal }) => {
 	return (
 		<>
 			{isVisibleModal ? (
-				<div className={cls.wrapper}>
-					<div className={cls.block}>
-						<h3 className={cls.title}>{title}</h3>
-						<p className={cls.text}>{children}</p>
+				<div className={styles.wrapper}>
+					<div className={styles.block}>
+						<h3 className={styles.title}>{title}</h3>
+						<p className={styles.text}>{children}</p>
 						{box}
 						<ButtonClose getClick={getClick} />
 					</div>

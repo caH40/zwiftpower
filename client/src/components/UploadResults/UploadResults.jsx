@@ -5,7 +5,7 @@ import TableResultsNew from '../Tables/TableEditStageResults/TableResultsNew';
 import Button from '../UI/Button/Button';
 import InputFile from '../UI/InputFile/InputFile';
 
-import cls from './UploadResults.module.css';
+import styles from './UploadResults.module.css';
 
 const UploadResults = ({ results, setResults, saveResults }) => {
 	const getFile = async event => {
@@ -23,7 +23,7 @@ const UploadResults = ({ results, setResults, saveResults }) => {
 			) : (
 				''
 			)}
-			<div className={cls.box__buttons}>
+			<div className={styles.box__buttons}>
 				<InputFile accept={'.json'} getFile={getFile} />
 				{results.results?.length ? <Button getClick={saveResults}>Сохранить</Button> : ''}
 			</div>

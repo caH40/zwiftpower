@@ -7,7 +7,7 @@ import { getStages, postDeleteStage } from '../../../api/stage';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../UI/Button/Button';
 import ClearTbody from '../ClearTbody/ClearTbody';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 const TableStagesForEdit = ({ seriesId }) => {
 	const [stages, setStages] = useState([]);
@@ -96,7 +96,7 @@ const TableStagesForEdit = ({ seriesId }) => {
 
 	const seriesName = stages?.length ? stages[0]?.seriesId.name : '';
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>{seriesName} </caption>
 			<thead>
 				<tr>
@@ -118,7 +118,7 @@ const TableStagesForEdit = ({ seriesId }) => {
 						Удалить <br />
 						этап
 					</th>
-					<th scope="col" className={cls.wrap}>
+					<th scope="col" className={styles.wrap}>
 						Результаты
 						<br />
 						этапа
@@ -129,9 +129,11 @@ const TableStagesForEdit = ({ seriesId }) => {
 				<tbody>
 					{stages.map(stage => {
 						const hasResult = stage.hasResults.toString();
-						const classResult = `${cls.boxValue} ${hasResult === 'true' ? cls.success : cls.error}`;
+						const classResult = `${styles.boxValue} ${
+							hasResult === 'true' ? styles.success : styles.error
+						}`;
 						return (
-							<tr className={cls.trLinkOff} key={stage._id}>
+							<tr className={styles.trLinkOff} key={stage._id}>
 								<th scope="row">{stage.number}</th>
 								<td>{new Date(stage.dateStart).toLocaleDateString()}</td>
 								<td>{stage.route}</td>

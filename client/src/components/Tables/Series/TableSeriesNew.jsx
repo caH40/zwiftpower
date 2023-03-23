@@ -1,15 +1,17 @@
 import React from 'react';
 
 import ClearTbody from '../ClearTbody/ClearTbody';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 const TableSeriesNew = ({ series }) => {
 	const hasGeneral = series[0].hasGeneral.toString();
-	const classGeneral = `${cls.boxValue} ${hasGeneral === 'true' ? cls.success : cls.error}`;
+	const classGeneral = `${styles.boxValue} ${
+		hasGeneral === 'true' ? styles.success : styles.error
+	}`;
 	const hasTeams = series[0].hasTeams.toString();
-	const classTeams = `${cls.boxValue} ${hasTeams === 'true' ? cls.success : cls.error}`;
+	const classTeams = `${styles.boxValue} ${hasTeams === 'true' ? styles.success : styles.error}`;
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>Series</caption>
 			<thead>
 				<tr>

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import styles from './Upload.module.css';
 import { postResults, postSchedule } from '../../api/schedule';
 import UploadResults from '../../components/UploadResults/UploadResults';
 import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSeriesAndStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import cls from './Upload.module.css';
 
 const Upload = () => {
 	const [schedule, setSchedule] = useState({});
@@ -45,9 +45,9 @@ const Upload = () => {
 	};
 
 	return (
-		<section className={cls.wrapper}>
-			<div className={cls.block}>
-				<h2 className={cls.title}>Загрузка расписания серии и этапов</h2>
+		<section className={styles.wrapper}>
+			<div className={styles.block}>
+				<h2 className={styles.title}>Загрузка расписания серии и этапов</h2>
 				<UploadSeriesAndStage
 					schedule={schedule}
 					setSchedule={setSchedule}
@@ -55,8 +55,8 @@ const Upload = () => {
 				/>
 			</div>
 
-			<div className={cls.block}>
-				<h2 className={cls.title}>Загрузка протокола с результатами этапа</h2>
+			<div className={styles.block}>
+				<h2 className={styles.title}>Загрузка протокола с результатами этапа</h2>
 				<UploadResults results={results} setResults={setResults} saveResults={saveResults} />
 			</div>
 		</section>

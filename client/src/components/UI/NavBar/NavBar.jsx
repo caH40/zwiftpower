@@ -5,7 +5,7 @@ import { postLogout } from '../../../api/logout';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { getAuth } from '../../../redux/features/authSlice';
 
-import cls from './NavBar.module.css';
+import styles from './NavBar.module.css';
 
 const NavBar = () => {
 	const dispatch = useDispatch();
@@ -24,14 +24,14 @@ const NavBar = () => {
 		});
 	};
 	return (
-		<ul className={cls.list}>
-			<li className={cls.item}>
+		<ul className={styles.list}>
+			<li className={styles.item}>
 				{status ? (
-					<span onClick={logout} className={cls.link}>
+					<span onClick={logout} className={styles.link}>
 						Выход
 					</span>
 				) : (
-					<NavLink to="/auth/authorization" className={cls.link}>
+					<NavLink to="/auth/authorization" className={styles.link}>
 						Вход
 					</NavLink>
 				)}

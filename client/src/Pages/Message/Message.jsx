@@ -1,23 +1,22 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import styles from './Message.module.css';
 import t from '../../locales/ru.json';
-
-import cls from './Message.module.css';
 
 const Message = () => {
 	const { messageId, additional } = useParams();
 	const message = t.message[messageId];
 
 	return (
-		<main className={cls.wrapper}>
+		<main className={styles.wrapper}>
 			{message ? (
-				<div className={cls.inner}>
-					<h1 className={cls.title}>{message.title}</h1>
-					<p className={cls.text}>{`${message.text_1}${
+				<div className={styles.inner}>
+					<h1 className={styles.title}>{message.title}</h1>
+					<p className={styles.text}>{`${message.text_1}${
 						additional !== 'none' ? additional + message.text_2 : ''
 					}`}</p>
-					<Link className={cls.link} to={message.link}>
+					<Link className={styles.link} to={message.link}>
 						{message.linkText}
 					</Link>
 				</div>

@@ -1,21 +1,21 @@
 import React from 'react';
 
-import cls from './SimpleSelect.module.css';
+import styles from './SimpleSelect.module.css';
 
 const SimpleSelect = ({ name, state, setState, property, disabled, options }) => {
 	return (
 		<>
-			<p className={cls.label}>{name}:</p>
+			<p className={styles.label}>{name}:</p>
 			<select
-				className={cls.select}
+				className={styles.select}
 				placeholder={name}
 				value={state[property]}
 				onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
 				disabled={disabled}
 			>
-				<option className={cls.option} value=""></option>
+				<option className={styles.option} value=""></option>
 				{options.map(element => (
-					<option className={cls.option} value={element.name} key={element.id}>
+					<option className={styles.option} value={element.name} key={element.id}>
 						{element.name}
 					</option>
 				))}

@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import styles from './Edit.module.css';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { isValidSeries, seriesClear } from './service';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postSeries } from '../../api/series';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
-
-import cls from './Edit.module.css';
 
 const AddSeries = () => {
 	const [series, setSeries] = useState(() => ({ ...seriesClear }));
@@ -39,8 +38,8 @@ const AddSeries = () => {
 	};
 
 	return (
-		<section className={cls.block}>
-			<h3 className={cls.title}>{`Добавление новой Series`}</h3>
+		<section className={styles.block}>
+			<h3 className={styles.title}>{`Добавление новой Series`}</h3>
 			<FormEditSeries series={series} setSeries={setSeries} sendForm={sendForm} />
 			<Button getClick={goBack}>назад</Button>
 		</section>

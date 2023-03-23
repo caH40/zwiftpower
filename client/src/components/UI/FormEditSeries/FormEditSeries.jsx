@@ -4,11 +4,11 @@ import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
 
-import cls from './FormEditSeries.module.css';
+import styles from './FormEditSeries.module.css';
 
 const FormEditSeries = ({ series, setSeries, sendForm }) => {
 	return (
-		<form className={cls.form} name="series">
+		<form className={styles.form} name="series">
 			<SimpleInput
 				name="Название серии"
 				state={series}
@@ -43,7 +43,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 				options={[{ name: 'KOM-ON', id: '1' }]}
 			/>
 
-			<div className={cls.box__checkbox}>
+			<div className={styles.box__checkbox}>
 				<SimpleCheckbox
 					state={series}
 					setState={setSeries}
@@ -66,7 +66,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 				/>
 			</div>
 
-			<div className={cls.right}>
+			<div className={styles.right}>
 				<Button getClick={sendForm}>сохранить</Button>
 			</div>
 		</form>

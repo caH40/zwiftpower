@@ -1,14 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { putGeneralPoints } from '../../api/general';
 
+import styles from './Edit.module.css';
+import { putGeneralPoints } from '../../api/general';
 import TableStages from '../../components/Tables/Stages/TableStages';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-
-import cls from './Edit.module.css';
 
 const EditStageList = () => {
 	useTitle('Редактирование данных этапа');
@@ -36,9 +35,9 @@ const EditStageList = () => {
 
 	return (
 		<div>
-			<h3 className={cls.title}>Этапы серии</h3>
+			<h3 className={styles.title}>Этапы серии</h3>
 			<TableStages seriesId={seriesId} />
-			<div className={cls.box__buttons}>
+			<div className={styles.box__buttons}>
 				<Button getClick={goBack}>назад</Button>
 				<Button getClick={updateGeneralPoints}>Обновить генерал</Button>
 			</div>

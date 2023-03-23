@@ -1,11 +1,11 @@
 import avatar from '../../../images/avatar.svg';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 export function tdRider(name, imageSrc) {
 	const riderLogo = imageSrc ? imageSrc : avatar;
 	return (
-		<div className={cls.rider}>
-			<img className={cls.logo} src={riderLogo} alt="Ph" /> <span>{name}</span>
+		<div className={styles.rider}>
+			<img className={styles.logo} src={riderLogo} alt="Ph" /> <span>{name}</span>
 		</div>
 	);
 }
@@ -27,9 +27,9 @@ export function tdCategory(result) {
 	if (result.category.includes('WA') || result.category.includes('WB'))
 		newCategory = result.category.slice(1);
 	return (
-		<div className={cls.categoryBox}>
-			<div className={`${cls.category} ${cls[result.category]}`}>{newCategory}</div>
-			{result.isUnderChecking ? <div className={cls.underChecking}>❗</div> : ''}
+		<div className={styles.categoryBox}>
+			<div className={`${styles.category} ${styles[result.category]}`}>{newCategory}</div>
+			{result.isUnderChecking ? <div className={styles.underChecking}>❗</div> : ''}
 		</div>
 	);
 }

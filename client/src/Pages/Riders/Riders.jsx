@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import styles from './Riders.module.css';
 import { getRiders } from '../../api/riders';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-
-import cls from './Riders.module.css';
 
 const Riders = () => {
 	const [riders, setRiders] = useState([]);
@@ -26,8 +26,8 @@ const Riders = () => {
 
 	return (
 		<>
-			<h3 className={cls.title}>Зарегистрированные Райдеры</h3>
-			<div className={cls.right}>
+			<h3 className={styles.title}>Зарегистрированные Райдеры</h3>
+			<div className={styles.right}>
 				<Button getClick={getAllRidersXLSM}>Скачать</Button>
 			</div>
 			<TableRiders riders={riders} />

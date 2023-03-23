@@ -1,13 +1,13 @@
 import React from 'react';
 
-import cls from './SimpleCheckbox.module.css';
+import styles from './SimpleCheckbox.module.css';
 
 const SimpleCheckbox = ({ state, property, setState, title, disabled }) => {
 	return (
-		<label className={cls.label}>
+		<label className={styles.label}>
 			<span>{title}</span>
 			<input
-				className={cls.input}
+				className={styles.input}
 				checked={state[property]}
 				type="checkbox"
 				onChange={e => setState(prev => ({ ...prev, [property]: e.target.checked }))}
