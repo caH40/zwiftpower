@@ -1,15 +1,15 @@
 import React from 'react';
+import cn from 'classnames';
 
-import { addClasses } from '../../../utils/additional-classes';
+import { addClasses as cns } from '../../../utils/additional-classes';
 import { getStringDate } from '../../../utils/format-date';
 import { convertToKBites } from '../../../utils/format-numbers';
 
 import styles from './DlFile.module.css';
 
 const DlFile = ({ file, addCls }) => {
-	const dlClass = addClasses(addCls, styles);
 	return (
-		<dl className={`${styles.dl} ${dlClass}`}>
+		<dl className={cn(styles.dl, cns(addCls, styles))}>
 			<div className={styles.box}>
 				<dt className={styles.title}>Имя файла:</dt>
 				<dl>{file.name}</dl>

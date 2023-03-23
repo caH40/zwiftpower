@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import styles from './InputAuth.module.css';
+import { addClasses as cns } from '../../../utils/additional-classes';
 
 const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' }) => {
-	const classBox = addCls
-		.split(' ')
-		.map(elm => styles[elm])
-		.join(' ');
-
 	return (
-		<div className={`${styles.box} ${classBox}`}>
+		<div className={cn(styles.box, cns(addCls, styles))}>
 			<div className={styles.box__text}>
 				{label ? (
 					<label className={styles.label} htmlFor={input.id}>

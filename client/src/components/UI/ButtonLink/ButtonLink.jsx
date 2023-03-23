@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import styles from './ButtonLink.module.css';
+import { addClasses as cns } from '../../../utils/additional-classes';
 
 const ButtonLink = ({ children, addCls = '', to }) => {
-	const classLink = addCls
-		.split(' ')
-		.map(elm => styles[elm])
-		.join(' ');
 	return (
-		<Link to={to} className={`${styles.button} ${classLink}`}>
+		<Link to={to} className={cn(styles.button, cns(addCls, styles))}>
 			{children}
 		</Link>
 	);

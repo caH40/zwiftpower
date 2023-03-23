@@ -1,7 +1,12 @@
-export const addClasses = (additionalClasses, classes) => {
-	if (!additionalClasses) return;
-	return additionalClasses
-		.split(' ')
-		.map(elm => classes[elm])
-		.join(' ');
+//использование modules
+export const addClasses = (additionalClasses, classModule) => {
+	try {
+		if (!additionalClasses) return;
+		return additionalClasses
+			.split(' ')
+			.map(elm => classModule[elm])
+			.join(' ');
+	} catch (error) {
+		console.log(error);
+	}
 };
