@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 
-import cls from './Checkbox.module.css';
+import styles from './Checkbox.module.css';
 
 const Checkbox = ({ state, apiRequest, setUpdate, resultId, target }) => {
 	const [check, setCheck] = useState(() => state);
@@ -30,7 +30,7 @@ const Checkbox = ({ state, apiRequest, setUpdate, resultId, target }) => {
 			checked={check}
 			type="checkbox"
 			id={`${target}-${resultId}`}
-			className={cls.input}
+			className={styles.input}
 		/>
 	);
 };

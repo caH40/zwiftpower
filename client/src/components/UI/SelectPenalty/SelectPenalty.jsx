@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { putPenalty } from '../../../api/stage-penalty';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 
-import cls from './SelectPenalty.module.css';
+import styles from './SelectPenalty.module.css';
 
 const SelectPenalty = ({ result, value, setUpdate }) => {
 	const dispatch = useDispatch();
@@ -28,14 +28,14 @@ const SelectPenalty = ({ result, value, setUpdate }) => {
 			name="penalty"
 			size="1"
 			value={value}
-			className={`${cls.select} ${value === 0 ? '' : cls.hasPenalty}`}
+			className={`${styles.select} ${value === 0 ? '' : styles.hasPenalty}`}
 		>
 			<option value="0" label="нет" />
-			<option className={cls.hasPenalty} value="1" label="1 PU" />
-			<option className={cls.hasPenalty} value="2" label="2 PU" />
-			<option className={cls.hasPenalty} value="3" label="3 PU" />
-			<option className={cls.hasPenalty} value="4" label="4 PU" />
-			<option className={cls.hasPenalty} value="5" label="5 PU" />
+			<option className={styles.hasPenalty} value="1" label="1 PU" />
+			<option className={styles.hasPenalty} value="2" label="2 PU" />
+			<option className={styles.hasPenalty} value="3" label="3 PU" />
+			<option className={styles.hasPenalty} value="4" label="4 PU" />
+			<option className={styles.hasPenalty} value="5" label="5 PU" />
 		</select>
 	);
 };

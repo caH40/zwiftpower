@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
 import useTitle from '../../hook/useTitle';
 
-import cls from './Auth.module.css';
+import styles from './Auth.module.css';
 import { validatePassword } from '../../utils/validatorService';
 import Button from '../../components/UI/Button/Button';
 import { useDispatch } from 'react-redux';
@@ -45,11 +45,11 @@ const ResetPassword = () => {
 	};
 
 	return (
-		<section className={cls.wrapper}>
+		<section className={styles.wrapper}>
 			{userId ? (
-				<div className={cls.inner}>
-					<h1 className={cls.title}>Создание пароля</h1>
-					<form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+				<div className={styles.inner}>
+					<h1 className={styles.title}>Создание пароля</h1>
+					<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 						<InputAuth
 							label={'Введите новый пароль'}
 							register={validatePassword(register)}
@@ -62,14 +62,14 @@ const ResetPassword = () => {
 							Сохранить
 						</Button>
 					</form>
-					<div className={cls.additional}>
-						<Link className={cls.link} to="/auth/authorization">
+					<div className={styles.additional}>
+						<Link className={styles.link} to="/auth/authorization">
 							Вход на сайт ZP
 						</Link>
 					</div>
 				</div>
 			) : (
-				<p className={cls.text}>Ссылка для сброса пароля устарела!</p>
+				<p className={styles.text}>Ссылка для сброса пароля устарела!</p>
 			)}
 		</section>
 	);

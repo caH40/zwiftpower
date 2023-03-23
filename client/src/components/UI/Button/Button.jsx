@@ -1,16 +1,16 @@
 import React from 'react';
 
-import cls from './Button.module.css';
+import styles from './Button.module.css';
 
 const Button = ({ getClick, children, addCls = '', ...props }) => {
 	const classBtn = addCls
 		.split(' ')
-		.map(elm => cls[elm])
+		.map(elm => styles[elm])
 		.join(' ');
 
 	return (
 		<button
-			className={`${cls.button} ${classBtn}`}
+			className={`${styles.button} ${classBtn}`}
 			onClick={
 				getClick
 					? e => {

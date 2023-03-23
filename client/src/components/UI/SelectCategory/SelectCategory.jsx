@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { putCategory } from '../../../api/category';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import cls from './SelectCategory.module.css';
+import styles from './SelectCategory.module.css';
 
 const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {
 	const dispatch = useDispatch();
@@ -28,14 +28,14 @@ const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {
 				name="category"
 				size="1"
 				value={value}
-				className={`${cls.select} ${cls[`color__${value}`]}`}
+				className={`${styles.select} ${styles[`color__${value}`]}`}
 			>
-				<option className={cls.color__A} value="A" label="A" />
-				<option className={cls.color__B} value="B" label="B" />
-				<option className={cls.color__C} value="C" label="C" />
-				<option className={cls.color__W} value="W" label="W" />
-				<option className={cls.color__W} value="WA" label="WA" />
-				<option className={cls.color__W} value="WB" label="WB" />
+				<option className={styles.color__A} value="A" label="A" />
+				<option className={styles.color__B} value="B" label="B" />
+				<option className={styles.color__C} value="C" label="C" />
+				<option className={styles.color__W} value="W" label="W" />
+				<option className={styles.color__W} value="WA" label="WA" />
+				<option className={styles.color__W} value="WB" label="WB" />
 			</select>
 		</div>
 	);

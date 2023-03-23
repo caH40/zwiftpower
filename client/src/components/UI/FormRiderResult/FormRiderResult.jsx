@@ -2,11 +2,11 @@ import React from 'react';
 import Button from '../Button/Button';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
-import cls from './FormRiderResult.module.css';
+import styles from './FormRiderResult.module.css';
 
 const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
 	return (
-		<form className={cls.form}>
+		<form className={styles.form}>
 			<SimpleInput
 				name="Zwift Name"
 				state={newResult}
@@ -40,7 +40,7 @@ const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
 				disabled={true}
 			/>
 			<SimpleInput
-				name="Ватты/кг"
+				name="Относительная мощность ватты/кг"
 				state={newResult}
 				setState={setNewResult}
 				property="wattPerKg"
@@ -126,7 +126,7 @@ const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
 					{ id: 1, name: 'да' },
 				]}
 			/>
-			<div className={cls.box__buttons}>
+			<div className={styles.box__buttons}>
 				<Button getClick={goBack}>назад</Button>
 				<Button getClick={saveResult}>Сохранить</Button>
 			</div>

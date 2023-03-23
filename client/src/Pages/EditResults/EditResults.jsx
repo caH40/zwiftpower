@@ -10,7 +10,7 @@ import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
-import cls from './EditResults.module.css';
+import styles from './EditResults.module.css';
 
 const EditResults = () => {
 	const [results, setResults] = useState([]);
@@ -55,7 +55,7 @@ const EditResults = () => {
 	return (
 		<>
 			<h3 className="titlePage-3">Редактирование данных заезда</h3>
-			<div className={cls.right}>
+			<div className={styles.right}>
 				<ButtonLink to={`/edit/stage/${stageId}/rider-add`}>Добавить</ButtonLink>
 			</div>
 			<TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />

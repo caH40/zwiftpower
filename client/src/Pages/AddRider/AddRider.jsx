@@ -9,7 +9,7 @@ import FormRiderResult from '../../components/UI/FormRiderResult/FormRiderResult
 import FormRiderSearch from '../../components/UI/FormRiderSearch/FormRiderSearch';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import cls from './AddRider.module.css';
+import styles from './AddRider.module.css';
 import { checkForm, getScroll, resultClear, resultStart } from './service';
 
 const AddRider = () => {
@@ -89,7 +89,7 @@ const AddRider = () => {
 	return (
 		<section>
 			<h2
-				className={cls.title}
+				className={styles.title}
 			>{`Выберите райдера, чтобы добавить результат в Этап №${stage.number} "${stage.seriesId?.name}"`}</h2>
 			<FormRiderSearch
 				query={query}
@@ -99,7 +99,7 @@ const AddRider = () => {
 				getRiderData={getRiderData}
 				goBack={goBack}
 			/>
-			<h2 ref={refTitle} className={cls.title}>{`Заполните данные по заезду райдера ${
+			<h2 ref={refTitle} className={styles.title}>{`Заполните данные по заезду райдера ${
 				rider.firstNameZwift ? `${rider.firstNameZwift} ${rider.lastNameZwift}` : ''
 			}`}</h2>
 			<FormRiderResult

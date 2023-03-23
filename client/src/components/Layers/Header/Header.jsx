@@ -4,7 +4,7 @@ import Hamburger from '../../UI/Hamburger/Hamburger';
 import NavBar from '../../UI/NavBar/NavBar';
 import PopupMenu from '../../UI/PopupMenu/PopupMenu';
 
-import cls from './Header.module.css';
+import styles from './Header.module.css';
 
 const Header = () => {
 	const titlePage = useSelector(state => {
@@ -12,10 +12,10 @@ const Header = () => {
 	});
 	const { isVisible } = useSelector(state => state.menuBurger);
 	return (
-		<header className={cls.header}>
+		<header className={styles.header}>
 			{isVisible ? <PopupMenu /> : ''}
-			<h1 className={cls.title}>{titlePage}</h1>
-			<div className={cls.header__right}>
+			<h1 className={styles.title}>{titlePage}</h1>
+			<div className={styles.header__right}>
 				<NavBar />
 				<Hamburger />
 			</div>

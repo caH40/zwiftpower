@@ -5,7 +5,7 @@ import TableSeries from '../../components/Tables/Series/TableSeries';
 import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
-import cls from './Edit.module.css';
+import styles from './Edit.module.css';
 
 const EditSeriesMain = () => {
 	useTitle('Редактирование данных Series, Stage');
@@ -17,7 +17,7 @@ const EditSeriesMain = () => {
 		<>
 			<h3 className="titlePage-3">Выберите Series для редактирования</h3>
 			<TableSeries target={'series'} />
-			<div className={cls.right}>
+			<div className={styles.right}>
 				<ButtonLink to="add">Добавить</ButtonLink>
 			</div>
 			<Button getClick={goBack}>назад</Button>

@@ -3,11 +3,11 @@ import React from 'react';
 import Button from '../Button/Button';
 import ListRiderSearch from '../ListRiderSearch/ListRiderSearch';
 import SimpleInput from '../SimpleInput/SimpleInput';
-import cls from './FormRiderSearch.module.css';
+import styles from './FormRiderSearch.module.css';
 
 const FormRiderSearch = ({ query, setQuery, riders, filteredRiders, getRiderData, goBack }) => {
 	return (
-		<form className={cls.form} name="riders">
+		<form className={styles.form} name="riders">
 			<SimpleInput
 				name="Введите имя (фамилию) для поиска райдера"
 				state={query}

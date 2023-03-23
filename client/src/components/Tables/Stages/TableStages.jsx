@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getStages } from '../../../api/stage';
 
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 const TableStages = ({ seriesId }) => {
 	const [stages, setStages] = useState([]);
@@ -19,7 +19,7 @@ const TableStages = ({ seriesId }) => {
 		});
 	}, [seriesId]);
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>{stages[0]?.seriesId.name}:</caption>
 			<thead>
 				<tr>
@@ -41,10 +41,12 @@ const TableStages = ({ seriesId }) => {
 			<tbody>
 				{stages.map(stage => {
 					const hasResult = stage.hasResults.toString();
-					const classResult = `${cls.boxValue} ${hasResult === 'true' ? cls.success : cls.error}`;
+					const classResult = `${styles.boxValue} ${
+						hasResult === 'true' ? styles.success : styles.error
+					}`;
 					return (
 						<tr
-							className={cls.trLink}
+							className={styles.trLink}
 							key={stage._id}
 							onClick={() => myLink(stage._id, stage.hasResults)}
 						>

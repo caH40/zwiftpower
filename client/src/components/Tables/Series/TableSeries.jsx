@@ -7,7 +7,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../UI/Button/Button';
 import ButtonLink from '../../UI/ButtonLink/ButtonLink';
 import ClearTbody from '../ClearTbody/ClearTbody';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 const TableSeries = ({ target }) => {
 	const [series, setSeries] = useState([]);
@@ -60,7 +60,7 @@ const TableSeries = ({ target }) => {
 	};
 
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>Series</caption>
 			<thead>
 				<tr>
@@ -85,10 +85,12 @@ const TableSeries = ({ target }) => {
 				<tbody>
 					{series.map((seriesOne, index) => {
 						const finished = seriesOne.isFinished.toString();
-						const classFinished = `${cls.boxValue} ${finished === 'true' ? cls.success : cls.error}`;
+						const classFinished = `${styles.boxValue} ${
+							finished === 'true' ? styles.success : styles.error
+						}`;
 						return (
 							<tr
-								className={isStage ? cls.trLink : ''}
+								className={isStage ? styles.trLink : ''}
 								key={seriesOne._id}
 								onClick={() => myLink(seriesOne._id)}
 							>

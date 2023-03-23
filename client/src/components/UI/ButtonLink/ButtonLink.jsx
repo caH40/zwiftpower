@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import cls from './ButtonLink.module.css';
+import styles from './ButtonLink.module.css';
 
 const ButtonLink = ({ children, addCls = '', to }) => {
 	const classLink = addCls
 		.split(' ')
-		.map(elm => cls[elm])
+		.map(elm => styles[elm])
 		.join(' ');
 	return (
-		<Link to={to} className={`${cls.button} ${classLink}`}>
+		<Link to={to} className={`${styles.button} ${classLink}`}>
 			{children}
 		</Link>
 	);

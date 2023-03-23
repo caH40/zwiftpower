@@ -4,7 +4,7 @@ import { putMultiplier } from '../../../api/points';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 
-import cls from './SelectMultiplier.module.css';
+import styles from './SelectMultiplier.module.css';
 
 const SelectMultiplier = ({ stageId, number, multiplier, pointsType, setUpdate }) => {
 	const dispatch = useDispatch();
@@ -30,11 +30,11 @@ const SelectMultiplier = ({ stageId, number, multiplier, pointsType, setUpdate }
 			name="multiplier"
 			size="1"
 			defaultValue={multiplier}
-			className={`${cls.select} ${cls[pointsType]}`}
+			className={`${styles.select} ${styles[pointsType]}`}
 		>
-			<option className={`${cls[pointsType]}`} value="0.5" label="x0.5" />
-			<option className={`${cls[pointsType]}`} value="1" label="x1" />
-			<option className={`${cls[pointsType]}`} value="2" label="x2" />
+			<option className={`${styles[pointsType]}`} value="0.5" label="x0.5" />
+			<option className={`${styles[pointsType]}`} value="1" label="x1" />
+			<option className={`${styles[pointsType]}`} value="2" label="x2" />
 		</select>
 	);
 };

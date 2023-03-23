@@ -3,11 +3,11 @@ import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
-import cls from './FormEditStage.module.css';
+import styles from './FormEditStage.module.css';
 
 const FormEditStage = ({ stage, setStage, sendForm }) => {
 	return (
-		<form className={cls.form} name="series">
+		<form className={styles.form} name="series">
 			<SimpleInput
 				name="ID Этапа"
 				state={stage}
@@ -94,7 +94,7 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				property="quantityMountains"
 				type="number"
 			/>
-			<div className={cls.box__checkbox}>
+			<div className={styles.box__checkbox}>
 				<SimpleCheckbox
 					state={stage}
 					setState={setStage}
@@ -110,7 +110,7 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
 				/>
 			</div>
 
-			<div className={cls.right}>
+			<div className={styles.right}>
 				<Button getClick={sendForm}>сохранить</Button>
 			</div>
 		</form>

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Button from '../Button/Button';
 
-import cls from './InputFile.module.css';
+import styles from './InputFile.module.css';
 
 const InputFile = ({ accept, getFile }) => {
 	const inputRef = useRef(null);
@@ -15,7 +15,7 @@ const InputFile = ({ accept, getFile }) => {
 			<input
 				ref={inputRef}
 				type="file"
-				className={cls.hidden}
+				className={styles.hidden}
 				accept={accept}
 				onChange={getFile}
 			/>

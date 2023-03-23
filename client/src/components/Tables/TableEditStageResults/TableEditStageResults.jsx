@@ -6,7 +6,7 @@ import { putDisqualification } from '../../../api/disqualification';
 import { putUnderchecking } from '../../../api/underchecking';
 
 import SelectPenalty from '../../UI/SelectPenalty/SelectPenalty';
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 import SelectCategory from '../../UI/SelectCategory/SelectCategory';
 import SelectPoints from '../../UI/SelectPoints/SelectPoints';
 import SelectMultiplier from '../../UI/SelectMultiplier/SelectMultiplier';
@@ -14,7 +14,7 @@ import Button from '../../UI/Button/Button';
 
 const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>{results[0]?.title}</caption>
 			<thead>
 				<tr>
@@ -26,7 +26,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 					<th>Райдер</th>
 					{results[0]?.pointsSprint?.map((result, index) => (
 						<th key={`${result._id}${result.sprint}th-sp`}>
-							<div className={cls.flexBox}>
+							<div className={styles.flexBox}>
 								<span>Спр({result.sprint})</span>
 								<SelectMultiplier
 									stageId={results[0].stageId}
@@ -40,7 +40,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 					))}
 					{results[0]?.pointsMountain?.map((result, index) => (
 						<th key={`${result._id}${result.mountain}th-sp`}>
-							<div className={cls.flexBox}>
+							<div className={styles.flexBox}>
 								<span>Горн({result.mountain})</span>
 								<SelectMultiplier
 									stageId={results[0].stageId}
@@ -104,7 +104,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						<td>{tdRider(result.name, result.imageSrc)}</td>
 						{result.pointsSprint.map(elm => (
 							<td key={`${result._id}${elm.sprint}td-sp`}>
-								<div className={cls.flexBox}>
+								<div className={styles.flexBox}>
 									<SelectPoints
 										pointsType="pointsSprint"
 										sequenceNumber={elm.sprint}
@@ -118,7 +118,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						))}
 						{result.pointsMountain.map(elm => (
 							<td key={`${result._id}${elm.mountain}td-mn`}>
-								<div className={cls.flexBox}>
+								<div className={styles.flexBox}>
 									<SelectPoints
 										pointsType="pointsMountain"
 										sequenceNumber={elm.mountain}
@@ -145,7 +145,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						</td>
 						<td>
 							{result.addedManually ? (
-								<div className={`${cls.boxValue} ${cls.success}`}>true</div>
+								<div className={`${styles.boxValue} ${styles.success}`}>true</div>
 							) : (
 								''
 							)}

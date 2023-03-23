@@ -1,11 +1,11 @@
 import React from 'react';
 import ClearTbody from '../ClearTbody/ClearTbody';
 
-import cls from '../Table.module.css';
+import styles from '../Table.module.css';
 
 const TableStagesNew = ({ stages = [] }) => {
 	return (
-		<table className={`${cls.table} ${cls.table_striped}`}>
+		<table className={`${styles.table} ${styles.table_striped}`}>
 			<caption>Stages</caption>
 			<thead>
 				<tr>
