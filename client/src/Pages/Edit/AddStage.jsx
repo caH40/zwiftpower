@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import styles from './Edit.module.css';
 import Button from '../../components/UI/Button/Button';
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import useTitle from '../../hook/useTitle';
 import { isValid, stageClear } from './service';
-
-import styles from './Edit.module.css';
 import { postStage } from '../../api/stage';
 import { useDispatch } from 'react-redux';
 import { getAlert } from '../../redux/features/alertMessageSlice';

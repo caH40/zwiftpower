@@ -1,11 +1,11 @@
 import React from 'react';
-
 import { useNavigate } from 'react-router-dom';
+
+import styles from './Edit.module.css';
 import TableSeries from '../../components/Tables/Series/TableSeries';
 import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
-import styles from './Edit.module.css';
 
 const EditSeriesMain = () => {
 	useTitle('Редактирование данных Series, Stage');

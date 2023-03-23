@@ -2,10 +2,9 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
+import styles from './Auth.module.css';
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
 import useTitle from '../../hook/useTitle';
-
-import styles from './Auth.module.css';
 import { validateEmail } from '../../utils/validatorService';
 import Button from '../../components/UI/Button/Button';
 import { useDispatch } from 'react-redux';

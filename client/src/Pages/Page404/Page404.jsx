@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import useTitle from '../../hook/useTitle';
 
 import styles from './Page404.module.css';
+import useTitle from '../../hook/useTitle';
 const urlServer = process.env.REACT_APP_SERVER_FRONT;
 
 const Page404 = () => {

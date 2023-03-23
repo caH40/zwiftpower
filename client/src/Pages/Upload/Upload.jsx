@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import styles from './Upload.module.css';
 import { postResults, postSchedule } from '../../api/schedule';
 import UploadResults from '../../components/UploadResults/UploadResults';
 import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSeriesAndStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import styles from './Upload.module.css';
 
 const Upload = () => {
 	const [schedule, setSchedule] = useState({});

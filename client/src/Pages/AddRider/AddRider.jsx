@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { checkRiderResult, postResult } from '../../api/result';
 
+import styles from './AddRider.module.css';
+import { checkRiderResult, postResult } from '../../api/result';
 import { getRider, getRiders } from '../../api/riders';
 import { getStage } from '../../api/stage';
 import FormRiderResult from '../../components/UI/FormRiderResult/FormRiderResult';
 import FormRiderSearch from '../../components/UI/FormRiderSearch/FormRiderSearch';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import styles from './AddRider.module.css';
 import { checkForm, getScroll, resultClear, resultStart } from './service';
 
 const AddRider = () => {
