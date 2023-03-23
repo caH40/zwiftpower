@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import Button from '../Button/Button';
 
 import styles from './InputFile.module.css';
+import Button from '../Button/Button';
 
-const InputFile = ({ accept, getFile }) => {
+const InputFile = ({ accept, getFile, toolTip }) => {
 	const inputRef = useRef(null);
 
 	const getInput = () => {
@@ -19,7 +19,9 @@ const InputFile = ({ accept, getFile }) => {
 				accept={accept}
 				onChange={getFile}
 			/>
-			<Button getClick={getInput}>Выбрать файл</Button>
+			<Button getClick={getInput} toolTip={toolTip}>
+				Выбрать файл
+			</Button>
 		</>
 	);
 };

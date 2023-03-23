@@ -55,7 +55,12 @@ const EditResults = () => {
 		<>
 			<h3 className="titlePage-3">Редактирование данных заезда</h3>
 			<div className={styles.right}>
-				<ButtonLink to={`/edit/stage/${stageId}/rider-add`}>Добавить</ButtonLink>
+				<ButtonLink
+					to={`/edit/stage/${stageId}/rider-add`}
+					toolTip="Добавление результата райдера который не попал в общий протокол Этапа"
+				>
+					Добавить
+				</ButtonLink>
 			</div>
 			<TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />
 			<Button getClick={getClick}>назад</Button>

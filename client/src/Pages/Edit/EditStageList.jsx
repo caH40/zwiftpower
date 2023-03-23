@@ -39,7 +39,12 @@ const EditStageList = () => {
 			<TableStages seriesId={seriesId} />
 			<div className={styles.box__buttons}>
 				<Button getClick={goBack}>назад</Button>
-				<Button getClick={updateGeneralPoints}>Обновить генерал</Button>
+				<Button
+					getClick={updateGeneralPoints}
+					toolTip="Обновляются очки в генеральной квалификации во всех этапах серии. Необходимо запускать после изменения категории райдеру, штрафа, дисквалификации."
+				>
+					Обновить генерал
+				</Button>
 			</div>
 		</div>
 	);

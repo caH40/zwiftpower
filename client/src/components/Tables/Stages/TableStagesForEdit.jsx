@@ -163,7 +163,11 @@ const TableStagesForEdit = ({ seriesId }) => {
 									</Button>
 								</td>
 								<td>
-									<Button addCls="danger td" getClick={() => deleteStage(stage)}>
+									<Button
+										addCls="danger td"
+										getClick={() => deleteStage(stage)}
+										toolTip="Удаление Этапа и всех результатов этапа."
+									>
 										удалить
 									</Button>
 								</td>

@@ -113,7 +113,11 @@ const TableSeries = ({ target }) => {
 											</ButtonLink>
 										</td>
 										<td>
-											<Button addCls="danger td" getClick={() => deleteStage(seriesOne._id)}>
+											<Button
+												addCls="danger td"
+												getClick={() => deleteStage(seriesOne._id)}
+												toolTip="Удаление Серии (Тура), соответствующих Этапов и всех результатов заездов."
+											>
 												удалить
 											</Button>
 										</td>
