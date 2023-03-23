@@ -24,8 +24,21 @@ const UploadResults = ({ results, setResults, saveResults }) => {
 				''
 			)}
 			<div className={styles.box__buttons}>
-				<InputFile accept={'.json'} getFile={getFile} />
-				{results.results?.length ? <Button getClick={saveResults}>Сохранить</Button> : ''}
+				<InputFile
+					accept={'.json'}
+					getFile={getFile}
+					toolTip="Имя файла: 'Название серии_Stage-номер этапа.json' На данный момент поддерживается только json формат."
+				/>
+				{results.results?.length ? (
+					<Button
+						getClick={saveResults}
+						toolTip="После сохранения протокола произойдет автоматическое начисление очков генеральной квалификации."
+					>
+						Сохранить
+					</Button>
+				) : (
+					''
+				)}
 			</div>
 		</>
 	);

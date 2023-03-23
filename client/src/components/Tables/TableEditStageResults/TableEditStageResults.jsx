@@ -6,7 +6,7 @@ import { putDisqualification } from '../../../api/disqualification';
 import { putUnderchecking } from '../../../api/underchecking';
 
 import SelectPenalty from '../../UI/SelectPenalty/SelectPenalty';
-import styles from '../Table.module.css';
+import cls from '../Table.module.css';
 import SelectCategory from '../../UI/SelectCategory/SelectCategory';
 import SelectPoints from '../../UI/SelectPoints/SelectPoints';
 import SelectMultiplier from '../../UI/SelectMultiplier/SelectMultiplier';
@@ -14,7 +14,7 @@ import Button from '../../UI/Button/Button';
 
 const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 	return (
-		<table className={`${styles.table} ${styles.table_striped}`}>
+		<table className={`${cls.table} ${cls.table_striped}`}>
 			<caption>{results[0]?.title}</caption>
 			<thead>
 				<tr>
@@ -26,7 +26,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 					<th>Райдер</th>
 					{results[0]?.pointsSprint?.map((result, index) => (
 						<th key={`${result._id}${result.sprint}th-sp`}>
-							<div className={styles.flexBox}>
+							<div className={cls.flexBox}>
 								<span>Спр({result.sprint})</span>
 								<SelectMultiplier
 									stageId={results[0].stageId}
@@ -34,13 +34,14 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 									pointsType="pointsSprint"
 									setUpdate={setUpdate}
 									multiplier={result.multiplier}
+									toolTip="Множитель для спринтерских очков."
 								/>
 							</div>
 						</th>
 					))}
 					{results[0]?.pointsMountain?.map((result, index) => (
 						<th key={`${result._id}${result.mountain}th-sp`}>
-							<div className={styles.flexBox}>
+							<div className={cls.flexBox}>
 								<span>Горн({result.mountain})</span>
 								<SelectMultiplier
 									stageId={results[0].stageId}
@@ -48,6 +49,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 									pointsType="pointsMountain"
 									setUpdate={setUpdate}
 									multiplier={result.multiplier}
+									toolTip="Множитель для горных очков в зависимости от категории горы."
 								/>
 							</div>
 						</th>
@@ -79,6 +81,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 								state={result.isDisqualification}
 								resultId={result._id}
 								target="DQ"
+								toolTip="Аннулирование результата райдера на текущем этапе."
 							/>
 						</td>
 						<td>
@@ -88,6 +91,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 								state={result.isUnderChecking}
 								resultId={result._id}
 								target="UC"
+								toolTip="Отметка результата райдера (предупреждение)"
 							/>
 						</td>
 						<td>
@@ -104,7 +108,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						<td>{tdRider(result.name, result.imageSrc)}</td>
 						{result.pointsSprint.map(elm => (
 							<td key={`${result._id}${elm.sprint}td-sp`}>
-								<div className={styles.flexBox}>
+								<div className={cls.flexBox}>
 									<SelectPoints
 										pointsType="pointsSprint"
 										sequenceNumber={elm.sprint}
@@ -118,7 +122,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						))}
 						{result.pointsMountain.map(elm => (
 							<td key={`${result._id}${elm.mountain}td-mn`}>
-								<div className={styles.flexBox}>
+								<div className={cls.flexBox}>
 									<SelectPoints
 										pointsType="pointsMountain"
 										sequenceNumber={elm.mountain}
@@ -145,7 +149,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
 						</td>
 						<td>
 							{result.addedManually ? (
-								<div className={`${styles.boxValue} ${styles.success}`}>true</div>
+								<div className={`${cls.boxValue} ${cls.success}`}>true</div>
 							) : (
 								''
 							)}

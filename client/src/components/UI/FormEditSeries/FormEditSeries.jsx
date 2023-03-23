@@ -49,6 +49,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 					setState={setSeries}
 					property="hasGeneral"
 					title="Генеральный зачёт:"
+					toolTip="Показывать генеральную квалификацию Серии."
 				/>
 
 				<SimpleCheckbox
@@ -56,6 +57,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 					setState={setSeries}
 					property="hasTeams"
 					title="Командный зачёт:"
+					toolTip="Показывать командный зачёт Серии."
 				/>
 
 				<SimpleCheckbox
@@ -63,6 +65,7 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
 					setState={setSeries}
 					property="isFinished"
 					title="Серия завершена:"
+					toolTip="При активации не обновляется генеральная квалификация Серии."
 				/>
 			</div>
 
