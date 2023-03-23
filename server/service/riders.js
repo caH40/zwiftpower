@@ -3,7 +3,7 @@ import { Rider } from '../Model/Rider.js';
 
 export async function getRidersService() {
 	try {
-		const ridersDB = await Rider.find();
+		const ridersDB = await Rider.find().populate({ path: 'teamId', select: 'name' });
 		return { message: 'Зарегистрированные Райдеры!', riders: ridersDB };
 	} catch (error) {
 		throw error;

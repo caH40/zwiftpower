@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import pkg from 'mongoose';
+import { Team } from './Team.js';
 
 const { Schema, model } = pkg;
 
