@@ -10,29 +10,29 @@ import useTitle from '../../hook/useTitle';
 import styles from './Riders.module.css';
 
 const Riders = () => {
-	const [riders, setRiders] = useState([]);
+  const [riders, setRiders] = useState([]);
 
-	useTitle('Редактирование данных Райдеров');
-	const navigate = useNavigate();
+  useTitle('Редактирование данных Райдеров');
+  const navigate = useNavigate();
 
-	const goBack = () => navigate(-1);
-	const getAllRidersXLSM = riders => downloadXLSX(riders);
+  const goBack = () => navigate(-1);
+  const getAllRidersXLSM = riders => downloadXLSX(riders);
 
-	useEffect(() => {
-		getRiders().then(response => setRiders(response.data.riders));
-	}, []);
+  useEffect(() => {
+    getRiders().then(response => setRiders(response.data.riders));
+  }, []);
 
-	return (
-		<>
-			<h3 className={styles.title}>Зарегистрированные Райдеры</h3>
-			<div className={styles.right}>
-				<Button getClick={() => getAllRidersXLSM(riders)}>Скачать</Button>
-			</div>
-			<TableRiders riders={riders} />
+  return (
+    <>
+      <h3 className={styles.title}>Зарегистрированные Райдеры</h3>
+      <div className={styles.right}>
+        <Button getClick={() => getAllRidersXLSM(riders)}>Скачать</Button>
+      </div>
+      <TableRiders riders={riders} />
 
-			<Button getClick={goBack}>назад</Button>
-		</>
-	);
+      <Button getClick={goBack}>назад</Button>
+    </>
+  );
 };
 
 export default Riders;

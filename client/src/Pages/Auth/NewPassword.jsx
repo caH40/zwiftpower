@@ -15,65 +15,65 @@ import { checkRequestPassword } from '../../api/check-request-password';
 import styles from './Auth.module.css';
 
 const ResetPassword = () => {
-	const [userId, setUserId] = useState();
-	useTitle('Создание нового пароля');
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+  const [userId, setUserId] = useState();
+  useTitle('Создание нового пароля');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	const { token } = useParams();
+  const { token } = useParams();
 
-	useEffect(() => {
-		checkRequestPassword(token).then(response => {
-			setUserId(response.data.userId);
-			dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
-		});
-	}, [token, dispatch]);
+  useEffect(() => {
+    checkRequestPassword(token).then(response => {
+      setUserId(response.data.userId);
+      dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
+    });
+  }, [token, dispatch]);
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-	const onSubmit = dataForm => {
-		putNewPassword(dataForm, userId)
-			.then(data => navigate('/message/newPassword/none'))
-			.catch(error => {
-				dispatch(
-					getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
-				);
-			});
-	};
+  const onSubmit = dataForm => {
+    putNewPassword(dataForm, userId)
+      .then(data => navigate('/message/newPassword/none'))
+      .catch(error => {
+        dispatch(
+          getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
+        );
+      });
+  };
 
-	return (
-		<section className={styles.wrapper}>
-			{userId ? (
-				<div className={styles.inner}>
-					<h1 className={styles.title}>Создание пароля</h1>
-					<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-						<InputAuth
-							label={'Введите новый пароль'}
-							register={validatePassword(register)}
-							validationText={errors.password ? errors.password.message : ''}
-							input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}
-							addCls="mb20"
-						/>
+  return (
+    <section className={styles.wrapper}>
+      {userId ? (
+        <div className={styles.inner}>
+          <h1 className={styles.title}>Создание пароля</h1>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <InputAuth
+              label={'Введите новый пароль'}
+              register={validatePassword(register)}
+              validationText={errors.password ? errors.password.message : ''}
+              input={{ id: 'password', autoComplete: 'current-password', type: 'password' }}
+              addCls="mb20"
+            />
 
-						<Button type={'submit'} addCls={'w_full'}>
+            <Button type={'submit'} addCls={'w_full'}>
 							Сохранить
-						</Button>
-					</form>
-					<div className={styles.additional}>
-						<Link className={styles.link} to="/auth/authorization">
+            </Button>
+          </form>
+          <div className={styles.additional}>
+            <Link className={styles.link} to="/auth/authorization">
 							Вход на сайт ZP
-						</Link>
-					</div>
-				</div>
-			) : (
-				<p className={styles.text}>Ссылка для сброса пароля устарела!</p>
-			)}
-		</section>
-	);
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <p className={styles.text}>Ссылка для сброса пароля устарела!</p>
+      )}
+    </section>
+  );
 };
 
 export default ResetPassword;

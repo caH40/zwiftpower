@@ -13,60 +13,60 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import styles from './EditResults.module.css';
 
 const EditResults = () => {
-	const [results, setResults] = useState([]);
-	const [update, setUpdate] = useState(false);
-	useTitle('Редактирование данных этапа');
+  const [results, setResults] = useState([]);
+  const [update, setUpdate] = useState(false);
+  useTitle('Редактирование данных этапа');
 
-	const { stageId } = useParams();
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+  const { stageId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		getResultStage(stageId).then(data => {
-			setResults(data.data?.results);
-		});
-	}, [stageId, update]);
+  useEffect(() => {
+    getResultStage(stageId).then(data => {
+      setResults(data.data?.results);
+    });
+  }, [stageId, update]);
 
-	const getClick = () => navigate(-1);
+  const getClick = () => navigate(-1);
 
-	const deleteResult = (resultId, riderName) => {
-		const confirm = window.confirm(
-			`Вы действительно хотите удалить результат райдера ${riderName}?`
-		);
-		if (!confirm)
-			return dispatch(
-				getAlert({
-					message: `Отмена удаления результат райдера ${riderName}`,
-					type: 'warning',
-					isOpened: true,
-				})
-			);
-		deleteCurrentResult(resultId)
-			.then(response => {
-				dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
-			})
-			.catch(error =>
-				dispatch(
-					getAlert({ message: 'Ошибка при удалении результата', type: 'error', isOpened: true })
-				)
-			)
-			.finally(() => setUpdate(prev => !prev));
-	};
-	return (
-		<>
-			<h3 className="titlePage-3">Редактирование данных заезда</h3>
-			<div className={styles.right}>
-				<ButtonLink
-					to={`/edit/stage/${stageId}/rider-add`}
-					toolTip="Добавление результата райдера который не попал в общий протокол Этапа"
-				>
+  const deleteResult = (resultId, riderName) => {
+    const confirm = window.confirm(
+      `Вы действительно хотите удалить результат райдера ${riderName}?`
+    );
+    if (!confirm)
+      return dispatch(
+        getAlert({
+          message: `Отмена удаления результат райдера ${riderName}`,
+          type: 'warning',
+          isOpened: true,
+        })
+      );
+    deleteCurrentResult(resultId)
+      .then(response => {
+        dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
+      })
+      .catch(error =>
+        dispatch(
+          getAlert({ message: 'Ошибка при удалении результата', type: 'error', isOpened: true })
+        )
+      )
+      .finally(() => setUpdate(prev => !prev));
+  };
+  return (
+    <>
+      <h3 className="titlePage-3">Редактирование данных заезда</h3>
+      <div className={styles.right}>
+        <ButtonLink
+          to={`/edit/stage/${stageId}/rider-add`}
+          toolTip="Добавление результата райдера который не попал в общий протокол Этапа"
+        >
 					Добавить
-				</ButtonLink>
-			</div>
-			<TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />
-			<Button getClick={getClick}>назад</Button>
-		</>
-	);
+        </ButtonLink>
+      </div>
+      <TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />
+      <Button getClick={getClick}>назад</Button>
+    </>
+  );
 };
 
 export default EditResults;

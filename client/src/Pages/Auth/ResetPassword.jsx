@@ -14,51 +14,51 @@ import { resetPassword } from '../../api/reset-password';
 import styles from './Auth.module.css';
 
 const ResetPassword = () => {
-	useTitle('Сброс пароля');
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+  useTitle('Сброс пароля');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-	const onSubmit = dataForm => {
-		resetPassword(dataForm)
-			.then(data => navigate(`/message/resetPassword/${dataForm.email}`))
-			.catch(error => {
-				dispatch(
-					getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
-				);
-			});
-	};
+  const onSubmit = dataForm => {
+    resetPassword(dataForm)
+      .then(data => navigate(`/message/resetPassword/${dataForm.email}`))
+      .catch(error => {
+        dispatch(
+          getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
+        );
+      });
+  };
 
-	return (
-		<main className={styles.wrapper}>
-			<div className={styles.inner}>
-				<h1 className={styles.title}>Сброс пароля</h1>
-				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-					<InputAuth
-						label={'Введите свой e-mail'}
-						register={validateEmail(register)}
-						validationText={errors.email ? errors.email.message : ''}
-						input={{ id: 'email', email: 'username', type: 'text' }}
-						addCls="mb20"
-					/>
+  return (
+    <main className={styles.wrapper}>
+      <div className={styles.inner}>
+        <h1 className={styles.title}>Сброс пароля</h1>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <InputAuth
+            label={'Введите свой e-mail'}
+            register={validateEmail(register)}
+            validationText={errors.email ? errors.email.message : ''}
+            input={{ id: 'email', email: 'username', type: 'text' }}
+            addCls="mb20"
+          />
 
-					<Button type={'submit'} addCls={'w_full'}>
+          <Button type={'submit'} addCls={'w_full'}>
 						Сброс
-					</Button>
-				</form>
-				<div className={styles.additional}>
-					<Link className={styles.link} to="/auth/authorization">
+          </Button>
+        </form>
+        <div className={styles.additional}>
+          <Link className={styles.link} to="/auth/authorization">
 						Вход на сайт ZP
-					</Link>
-				</div>
-			</div>
-		</main>
-	);
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
 };
 
 export default ResetPassword;

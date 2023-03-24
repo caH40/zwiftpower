@@ -13,39 +13,39 @@ import { isValidSeries, seriesClear } from './service';
 import styles from './Edit.module.css';
 
 const AddSeries = () => {
-	const [series, setSeries] = useState(() => ({ ...seriesClear }));
+  const [series, setSeries] = useState(() => ({ ...seriesClear }));
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const goBack = () => navigate(-1);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const goBack = () => navigate(-1);
 
-	useTitle('Редактирование данных Series');
+  useTitle('Редактирование данных Series');
 
-	const sendForm = () => {
-		if (!isValidSeries(series))
-			return dispatch(
-				getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
-			);
+  const sendForm = () => {
+    if (!isValidSeries(series))
+      return dispatch(
+        getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
+      );
 
-		postSeries(series)
-			.then(data => {
-				dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-				navigate('/edit/series/');
-			})
-			.catch(error =>
-				dispatch(
-					getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
-				)
-			);
-	};
+    postSeries(series)
+      .then(data => {
+        dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+        navigate('/edit/series/');
+      })
+      .catch(error =>
+        dispatch(
+          getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
+        )
+      );
+  };
 
-	return (
-		<section className={styles.block}>
-			<h3 className={styles.title}>{'Добавление новой Series'}</h3>
-			<FormEditSeries series={series} setSeries={setSeries} sendForm={sendForm} />
-			<Button getClick={goBack}>назад</Button>
-		</section>
-	);
+  return (
+    <section className={styles.block}>
+      <h3 className={styles.title}>{'Добавление новой Series'}</h3>
+      <FormEditSeries series={series} setSeries={setSeries} sendForm={sendForm} />
+      <Button getClick={goBack}>назад</Button>
+    </section>
+  );
 };
 
 export default AddSeries;

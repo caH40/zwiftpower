@@ -6,10 +6,10 @@ import menuBurgerSlice from '../features/menuBurgerSlice';
 import titleSlice from '../features/titleSlice';
 
 export default configureStore({
-	reducer: {
-		alertMessage: alertMessageSlice,
-		titlePage: titleSlice,
-		checkAuth: authSlice,
-		menuBurger: menuBurgerSlice,
-	},
+  reducer: {
+    alertMessage: alertMessageSlice,
+    titlePage: titleSlice,
+    checkAuth: authSlice,
+    menuBurger: menuBurgerSlice,
+  },
 });

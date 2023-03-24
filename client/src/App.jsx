@@ -48,7 +48,10 @@ function App() {
         <Route path="/edit/series/add" element={<AddSeries />} />
         <Route path="/edit/series/:seriesId" element={<EditSeries />} />
         <Route path="/edit/series/:seriesId/stage-add" element={<AddStage />} />
-        <Route path="/edit/series/:seriesId/stage-edit/:stageId" element={<EditStageParams />} />
+        <Route
+          path="/edit/series/:seriesId/stage-edit/:stageId"
+          element={<EditStageParams />}
+        />
         <Route path="/edit/stage" element={<EditSeriesList />} />
         <Route path="/edit/stage/:seriesId" element={<EditStageList />} />
         <Route path="/edit/stage/:seriesId/:stageId" element={<EditResults />} />

@@ -9,23 +9,23 @@ import useTitle from '../../hook/useTitle';
 import styles from './Edit.module.css';
 
 const EditSeriesMain = () => {
-	useTitle('Редактирование данных Series, Stage');
+  useTitle('Редактирование данных Series, Stage');
 
-	const navigate = useNavigate();
-	const goBack = () => navigate(-1);
+  const navigate = useNavigate();
+  const goBack = () => navigate(-1);
 
-	return (
-		<>
-			<h3 className="titlePage-3">Выберите Series для редактирования</h3>
-			<TableSeries target={'series'} />
-			<div className={styles.right}>
-				<ButtonLink to="add" toolTip="Добавление новой Серии (Тура).">
+  return (
+    <>
+      <h3 className="titlePage-3">Выберите Series для редактирования</h3>
+      <TableSeries target={'series'} />
+      <div className={styles.right}>
+        <ButtonLink to="add" toolTip="Добавление новой Серии (Тура).">
 					Добавить
-				</ButtonLink>
-			</div>
-			<Button getClick={goBack}>назад</Button>
-		</>
-	);
+        </ButtonLink>
+      </div>
+      <Button getClick={goBack}>назад</Button>
+    </>
+  );
 };
 
 export default EditSeriesMain;

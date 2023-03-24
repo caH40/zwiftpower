@@ -18,40 +18,40 @@ import { isValid, stageClear } from './service';
 import styles from './Edit.module.css';
 
 const AddStage = () => {
-	const { seriesId } = useParams();
-	const [stage, setStage] = useState(() => ({ ...stageClear, seriesId }));
+  const { seriesId } = useParams();
+  const [stage, setStage] = useState(() => ({ ...stageClear, seriesId }));
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const goBack = () => navigate(-1);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const goBack = () => navigate(-1);
 
-	useTitle('Редактирование данных Series, Stage');
+  useTitle('Редактирование данных Series, Stage');
 
-	const sendForm = () => {
-		if (!isValid(stage))
-			return dispatch(
-				getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
-			);
+  const sendForm = () => {
+    if (!isValid(stage))
+      return dispatch(
+        getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
+      );
 
-		postStage(stage)
-			.then(data => {
-				dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-				navigate(`/edit/series/${seriesId}`);
-			})
-			.catch(error =>
-				dispatch(
-					getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
-				)
-			);
-	};
+    postStage(stage)
+      .then(data => {
+        dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+        navigate(`/edit/series/${seriesId}`);
+      })
+      .catch(error =>
+        dispatch(
+          getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
+        )
+      );
+  };
 
-	return (
-		<section className={styles.block}>
-			<h3 className={styles.title}>{`Добавление нового Этапа в Series (${seriesId})`}</h3>
-			<FormEditStage stage={stage} setStage={setStage} sendForm={sendForm} />
-			<Button getClick={goBack}>назад</Button>
-		</section>
-	);
+  return (
+    <section className={styles.block}>
+      <h3 className={styles.title}>{`Добавление нового Этапа в Series (${seriesId})`}</h3>
+      <FormEditStage stage={stage} setStage={setStage} sendForm={sendForm} />
+      <Button getClick={goBack}>назад</Button>
+    </section>
+  );
 };
 
 export default AddStage;
