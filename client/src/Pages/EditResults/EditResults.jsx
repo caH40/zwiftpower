@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import styles from './EditResults.module.css';
 import { deleteCurrentResult } from '../../api/result';
 import { getResultStage } from '../../api/stage';
 import TableEditStageResults from '../../components/Tables/TableEditStageResults/TableEditStageResults';
@@ -10,6 +9,8 @@ import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+
+import styles from './EditResults.module.css';
 
 const EditResults = () => {
 	const [results, setResults] = useState([]);

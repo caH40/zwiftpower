@@ -26,7 +26,8 @@ const TableSeries = ({ target }) => {
 
 	const deleteStage = seriesId => {
 		const confirm = window.confirm(
-			`Вы действительно хотите удалить Series №${seriesId}? Будут удалены все этапы серии и все результаты соответствующих этапов!`
+			`Вы действительно хотите удалить Series №${seriesId}? 
+			Будут удалены все этапы серии и все результаты соответствующих этапов!`
 		);
 		if (!confirm)
 			return dispatch(
@@ -50,7 +51,7 @@ const TableSeries = ({ target }) => {
 			.catch(error =>
 				dispatch(
 					getAlert({
-						message: `Ошибка при удалении Series!`,
+						message: 'Ошибка при удалении Series!',
 						type: 'error',
 						isOpened: true,
 					})
@@ -116,7 +117,8 @@ const TableSeries = ({ target }) => {
 											<Button
 												addCls="danger td"
 												getClick={() => deleteStage(seriesOne._id)}
-												toolTip="Удаление Серии (Тура), соответствующих Этапов и всех результатов заездов."
+												toolTip="Удаление Серии (Тура), соответствующих Этапов и всех 
+												результатов заездов."
 											>
 												удалить
 											</Button>

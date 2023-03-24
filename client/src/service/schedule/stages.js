@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+
 import { getCellTitle } from './titles-cell';
 
 export function getScheduleStages(file) {
@@ -7,7 +8,7 @@ export function getScheduleStages(file) {
 
 		const sheetStages = book.Sheets['stages'];
 
-		if (!sheetStages) return console.log(`В книге нет страницы "stages"!`);
+		if (!sheetStages) return console.log('В книге нет страницы "stages"!'); // eslint-disable-line no-console
 
 		const keysStages = Object.keys(sheetStages);
 		const rowTitleStages =
@@ -37,6 +38,6 @@ export function getScheduleStages(file) {
 
 		return totalClearStages;
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }

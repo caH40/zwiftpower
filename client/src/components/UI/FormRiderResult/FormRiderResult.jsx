@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Button from '../Button/Button';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
+
 import styles from './FormRiderResult.module.css';
 
 const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {

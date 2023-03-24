@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import styles from './Edit.module.css';
 import { getSeriesOne, putSeries } from '../../api/series';
 import TableStagesForEdit from '../../components/Tables/Stages/TableStagesForEdit';
 import Button from '../../components/UI/Button/Button';
@@ -10,6 +9,8 @@ import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+
+import styles from './Edit.module.css';
 
 const EditSeries = () => {
 	const [series, setSeries] = useState({});

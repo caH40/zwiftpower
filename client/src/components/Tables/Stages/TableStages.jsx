@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { getStages } from '../../../api/stage';
 
 import styles from '../Table.module.css';

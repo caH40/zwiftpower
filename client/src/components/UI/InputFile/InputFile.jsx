@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 
-import styles from './InputFile.module.css';
 import Button from '../Button/Button';
+
+import styles from './InputFile.module.css';
 
 const InputFile = ({ accept, getFile, toolTip }) => {
 	const inputRef = useRef(null);

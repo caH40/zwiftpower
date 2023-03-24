@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '../Button/Button';
 import ListRiderSearch from '../ListRiderSearch/ListRiderSearch';
 import SimpleInput from '../SimpleInput/SimpleInput';
+
 import styles from './FormRiderSearch.module.css';
 
 const FormRiderSearch = ({ query, setQuery, riders, filteredRiders, getRiderData, goBack }) => {

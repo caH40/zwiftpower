@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import alertMessageSlice from '../features/alertMessageSlice';
 import authSlice from '../features/authSlice';
 import menuBurgerSlice from '../features/menuBurgerSlice';

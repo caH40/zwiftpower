@@ -7,6 +7,6 @@ export const addClasses = (additionalClasses, classModule) => {
 			.map(elm => classModule[elm])
 			.join(' ');
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 };

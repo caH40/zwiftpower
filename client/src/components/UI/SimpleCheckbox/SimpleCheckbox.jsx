@@ -1,7 +1,8 @@
 import React from 'react';
 
-import styles from './SimpleCheckbox.module.css';
 import MyTooltip from '../../../HOC/MyTooltip';
+
+import styles from './SimpleCheckbox.module.css';
 
 const SimpleCheckbox = ({ state, property, setState, title, toolTip, disabled }) => {
 	return (

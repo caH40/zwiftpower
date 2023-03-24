@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './InputAuth.module.css';
 import { addClasses as cns } from '../../../utils/additional-classes';
+
+import styles from './InputAuth.module.css';
 
 const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' }) => {
 	return (

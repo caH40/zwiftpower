@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { uploadProtocol } from '../../service/protocol/protocol';
 import DlFile from '../DescriptionList/DlFile/DlFile';
 import TableResultsNew from '../Tables/TableEditStageResults/TableResultsNew';
@@ -27,12 +28,14 @@ const UploadResults = ({ results, setResults, saveResults }) => {
 				<InputFile
 					accept={'.json'}
 					getFile={getFile}
-					toolTip="Имя файла: 'Название серии_Stage-номер этапа.json' На данный момент поддерживается только json формат."
+					toolTip="Имя файла: 'Название серии_Stage-номер этапа.json' На данный момент 
+					поддерживается только json формат."
 				/>
 				{results.results?.length ? (
 					<Button
 						getClick={saveResults}
-						toolTip="После сохранения протокола произойдет автоматическое начисление очков генеральной квалификации."
+						toolTip="После сохранения протокола произойдет автоматическое 
+						начисление очков генеральной квалификации."
 					>
 						Сохранить
 					</Button>

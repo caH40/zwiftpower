@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+
 import { getRider, getRiders } from '../../../api/riders';
 import SimpleInput from '../SimpleInput/SimpleInput';
+
 import styles from './BoxRider.module.css';
 
 const BoxRider = ({ setRider, setIsVisibleModal }) => {
@@ -43,9 +45,9 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
 			<ul className={styles.list}>
 				{riders.length
 					? filteredRiders.map(rider => (
-							<li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
-								{`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
-							</li>
+						<li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
+							{`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
+						</li>
 					  ))
 					: undefined}
 				{filteredRiders.length > 14 ? (

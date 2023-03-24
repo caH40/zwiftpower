@@ -2,12 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import styles from './Edit.module.css';
 import { putGeneralPoints } from '../../api/general';
 import TableStages from '../../components/Tables/Stages/TableStages';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+
+import styles from './Edit.module.css';
 
 const EditStageList = () => {
 	useTitle('Редактирование данных этапа');
@@ -41,7 +42,9 @@ const EditStageList = () => {
 				<Button getClick={goBack}>назад</Button>
 				<Button
 					getClick={updateGeneralPoints}
-					toolTip="Обновляются очки в генеральной квалификации во всех этапах серии. Необходимо запускать после изменения категории райдеру, штрафа, дисквалификации."
+					toolTip="Обновляются очки в генеральной квалификации 
+					во всех этапах серии. Необходимо запускать после изменения 
+					категории райдеру, штрафа, дисквалификации."
 				>
 					Обновить генерал
 				</Button>

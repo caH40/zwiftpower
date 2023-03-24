@@ -2,7 +2,7 @@ import * as XLSX from 'xlsx';
 
 export function downloadXLSX(riders) {
 	try {
-		let binary = riders.map(rider => {
+		const binary = riders.map(rider => {
 			return {
 				zwiftId: rider.zwiftId,
 				fio: `${rider.lastName} ${rider.firstName}`,
@@ -14,13 +14,13 @@ export function downloadXLSX(riders) {
 			};
 		});
 
-		let binaryWS = XLSX.utils.json_to_sheet(binary);
+		const binaryWS = XLSX.utils.json_to_sheet(binary);
 		// Create a new Workbook
 		var wb = XLSX.utils.book_new();
 		// Name your sheet
 		XLSX.utils.book_append_sheet(wb, binaryWS, 'riders');
 		XLSX.writeFile(wb, 'riders.xlsx');
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }

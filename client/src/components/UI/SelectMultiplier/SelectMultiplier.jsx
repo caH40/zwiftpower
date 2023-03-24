@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { putMultiplier } from '../../../api/points';
 import MyTooltip from '../../../HOC/MyTooltip';
 

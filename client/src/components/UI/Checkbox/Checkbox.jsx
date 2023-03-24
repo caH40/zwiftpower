@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import styles from './Checkbox.module.css';
 import MyTooltip from '../../../HOC/MyTooltip';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+
+import styles from './Checkbox.module.css';
 
 const Checkbox = ({ state, apiRequest, setUpdate, resultId, target, toolTip }) => {
 	const [check, setCheck] = useState(() => state);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { putPenalty } from '../../../api/stage-penalty';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 

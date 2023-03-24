@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+
 import { getCellTitle } from './titles-cell';
 
 export function getScheduleSeries(file) {
@@ -6,7 +7,7 @@ export function getScheduleSeries(file) {
 		const book = XLSX.read(file, { type: 'binary' });
 
 		const sheetSeries = book.Sheets['series'];
-		if (!sheetSeries) return console.log(`В книге нет страницы "series"!`);
+		if (!sheetSeries) return console.log('В книге нет страницы "series"!'); // eslint-disable-line no-console
 
 		const keysSeries = Object.keys(sheetSeries);
 		const rowTitleSeries =
@@ -30,6 +31,6 @@ export function getScheduleSeries(file) {
 
 		return totalClearSeries;
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }

@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import styles from './ConfirmEmail.module.css';
 import { confirmEmail } from '../../api/email';
 import useTitle from '../../hook/useTitle';
+
+import styles from './ConfirmEmail.module.css';
 
 const ConfirmEmail = () => {
 	const [message, setMessage] = useState('');

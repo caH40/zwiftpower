@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './ButtonLink.module.css';
 import { addClasses as cns } from '../../../utils/additional-classes';
 import MyTooltip from '../../../HOC/MyTooltip';
+
+import styles from './ButtonLink.module.css';
 
 const ButtonLink = ({ children, addCls = '', to, toolTip }) => {
 	return (

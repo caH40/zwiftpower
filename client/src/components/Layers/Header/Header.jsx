@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import Hamburger from '../../UI/Hamburger/Hamburger';
 import NavBar from '../../UI/NavBar/NavBar';
 import PopupMenu from '../../UI/PopupMenu/PopupMenu';

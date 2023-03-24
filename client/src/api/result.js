@@ -3,7 +3,7 @@ import { myAxios } from './axios';
 export async function postResult(result) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage/result`,
+			url: '/api/stage/result',
 			method: 'post',
 			data: {
 				result,
@@ -29,7 +29,7 @@ export async function checkRiderResult(zwiftId, stageId) {
 export async function deleteCurrentResult(resultId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage/result`,
+			url: '/api/stage/result',
 			method: 'delete',
 			data: { resultId },
 		});
@@ -42,7 +42,7 @@ export async function deleteCurrentResult(resultId) {
 export async function postDeleteResults(stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage/results`,
+			url: '/api/stage/results',
 			method: 'delete',
 			data: { stageId },
 		});

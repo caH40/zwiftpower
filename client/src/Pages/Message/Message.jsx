@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import styles from './Message.module.css';
 import t from '../../locales/ru.json';
+
+import styles from './Message.module.css';
 
 const Message = () => {
 	const { messageId, additional } = useParams();

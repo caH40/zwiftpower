@@ -1,9 +1,11 @@
 import React from 'react';
 import cn from 'classnames';
+
 import { addClasses as cns } from '../../../utils/additional-classes.js';
 
-import styles from './Button.module.css';
 import MyTooltip from '../../../HOC/MyTooltip.jsx';
+
+import styles from './Button.module.css';
 
 const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }) => {
 	return (
@@ -14,8 +16,8 @@ const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }
 					onClick={
 						getClick
 							? e => {
-									e.preventDefault();
-									getClick();
+								e.preventDefault();
+								getClick();
 							  }
 							: undefined
 					}
@@ -31,8 +33,8 @@ const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }
 						onClick={
 							getClick
 								? e => {
-										e.preventDefault();
-										getClick();
+									e.preventDefault();
+									getClick();
 								  }
 								: undefined
 						}

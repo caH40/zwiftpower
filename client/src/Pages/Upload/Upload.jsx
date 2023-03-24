@@ -3,12 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './Upload.module.css';
 import { postResults, postSchedule } from '../../api/schedule';
 import UploadResults from '../../components/UploadResults/UploadResults';
 import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSeriesAndStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+
+import styles from './Upload.module.css';
 
 const Upload = () => {
 	const [schedule, setSchedule] = useState({});
@@ -23,7 +24,7 @@ const Upload = () => {
 		postSchedule(schedule)
 			.then(data => {
 				dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-				navigate(`/edit/series/`);
+				navigate('/edit/series/');
 			})
 			.catch(error =>
 				dispatch(

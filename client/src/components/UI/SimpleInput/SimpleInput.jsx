@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { handlerNewValue, handlerValue } from './service';
 
 import styles from './SimpleInput.module.css';

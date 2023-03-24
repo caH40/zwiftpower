@@ -1,5 +1,5 @@
 export const uploadFile = file => {
-	let promise = new Promise(resolve => {
+	const promise = new Promise(resolve => {
 		const { name, size, lastModified, type } = file;
 
 		if (type.includes('json')) {

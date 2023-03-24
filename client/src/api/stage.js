@@ -40,7 +40,7 @@ export async function getStage(stageId) {
 export async function putStage(stageChanged) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage`,
+			url: '/api/stage',
 			method: 'put',
 			data: {
 				stageChanged,
@@ -54,7 +54,7 @@ export async function putStage(stageChanged) {
 export async function postStage(stageNew) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage`,
+			url: '/api/stage',
 			method: 'post',
 			data: {
 				stageNew,
@@ -69,7 +69,7 @@ export async function postStage(stageNew) {
 export async function postDeleteStage(stageId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage`,
+			url: '/api/stage',
 			method: 'delete',
 			data: {
 				stageId,

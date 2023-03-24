@@ -22,13 +22,13 @@ myAxios.interceptors.response.use(
 			try {
 				const response = await axios({
 					method: 'post',
-					url: `http://localhost:5000/api/auth/refresh`,
+					url: 'http://localhost:5000/api/auth/refresh',
 					withCredentials: true,
 				});
 				localStorage.setItem('accessToken', response.data.accessToken);
 				return myAxios.request(originalRequest);
 			} catch (error) {
-				console.log('After refresh. Need auth.');
+				console.log('After refresh. Need auth.'); //eslint-disable-line no-console
 			}
 		}
 		throw error;

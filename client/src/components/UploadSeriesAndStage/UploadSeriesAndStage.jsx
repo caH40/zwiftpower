@@ -6,6 +6,7 @@ import TableSeriesNew from '../Tables/Series/TableSeriesNew';
 import TableStagesNew from '../Tables/Stages/TableStagesNew';
 import Button from '../UI/Button/Button';
 import InputFile from '../UI/InputFile/InputFile';
+
 import styles from './UploadSeriesAndStage.module.css';
 
 const UploadSeriesAndStage = ({ schedule, setSchedule, saveSchedule }) => {

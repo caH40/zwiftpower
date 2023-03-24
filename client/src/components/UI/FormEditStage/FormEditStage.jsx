@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
+
 import styles from './FormEditStage.module.css';
 
 const FormEditStage = ({ stage, setStage, sendForm }) => {

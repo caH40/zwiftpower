@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { postDeleteResults } from '../../../api/result';
 
 import { getStages, postDeleteStage } from '../../../api/stage';
@@ -52,7 +53,7 @@ const TableStagesForEdit = ({ seriesId }) => {
 			.catch(error =>
 				dispatch(
 					getAlert({
-						message: `Ошибка при удалении этапа!`,
+						message: 'Ошибка при удалении этапа!',
 						type: 'error',
 						isOpened: true,
 					})
@@ -86,7 +87,7 @@ const TableStagesForEdit = ({ seriesId }) => {
 			.catch(error =>
 				dispatch(
 					getAlert({
-						message: `Ошибка при удалении результатов этапа!`,
+						message: 'Ошибка при удалении результатов этапа!',
 						type: 'error',
 						isOpened: true,
 					})

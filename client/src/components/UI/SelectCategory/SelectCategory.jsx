@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { putCategory } from '../../../api/category';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+
 import styles from './SelectCategory.module.css';
 
 const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {

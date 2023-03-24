@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import styles from './Auth.module.css';
+import { useDispatch } from 'react-redux';
+
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
 import useTitle from '../../hook/useTitle';
 import { validatePassword } from '../../utils/validatorService';
 import Button from '../../components/UI/Button/Button';
-import { useDispatch } from 'react-redux';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { putNewPassword } from '../../api/new-password';
 import { checkRequestPassword } from '../../api/check-request-password';
+
+import styles from './Auth.module.css';
 
 const ResetPassword = () => {
 	const [userId, setUserId] = useState();
@@ -35,7 +37,7 @@ const ResetPassword = () => {
 
 	const onSubmit = dataForm => {
 		putNewPassword(dataForm, userId)
-			.then(data => navigate(`/message/newPassword/none`))
+			.then(data => navigate('/message/newPassword/none'))
 			.catch(error => {
 				dispatch(
 					getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })

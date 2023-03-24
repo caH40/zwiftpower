@@ -22,7 +22,7 @@ export function getResults(fileJson) {
 			if (result.profileData.gender === 'MALE') gender = 'мужской';
 			if (result.profileData.gender === 'FEMALE') gender = 'женский';
 
-			let resultRider = {
+			const resultRider = {
 				zwiftId: result.profileId,
 				placeAbsolute: result.rank,
 				name,
@@ -41,6 +41,6 @@ export function getResults(fileJson) {
 		});
 		return results;
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }

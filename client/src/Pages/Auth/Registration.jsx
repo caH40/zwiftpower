@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import styles from './Auth.module.css';
+import { useDispatch } from 'react-redux';
+
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
 import useTitle from '../../hook/useTitle';
 import {
@@ -12,8 +13,9 @@ import {
 } from '../../utils/validatorService';
 import Button from '../../components/UI/Button/Button';
 import { postRegistration } from '../../api/registration';
-import { useDispatch } from 'react-redux';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+
+import styles from './Auth.module.css';
 
 const Registration = () => {
 	useTitle('Регистрация');

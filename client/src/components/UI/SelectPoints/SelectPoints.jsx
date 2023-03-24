@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { putPoints } from '../../../api/points';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
@@ -18,7 +19,6 @@ const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplie
 				dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
 			})
 			.catch(error => {
-				console.log(error);
 				const message = error.response?.data?.message
 					? error.response?.data?.message
 					: 'Ошибка при начислении очков!';

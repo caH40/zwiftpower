@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Outlet } from 'react-router-dom';
+
 import CustomizedSnackbars from '../UI/Snackbars/CustomizedSnackbars';
 
 import Body from './Body';

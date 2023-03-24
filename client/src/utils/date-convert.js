@@ -13,7 +13,7 @@ export function convertDate(date, time = '00:00') {
 
 		return dateMilliseconds;
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }
 //строку в милисекунды
@@ -32,7 +32,7 @@ export function convertTime(time = '00:00') {
 			return timeArr[0] * millisecondsInMinute + timeArr[1] * 1000;
 		}
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }
 export function secondesToTime(seconds) {

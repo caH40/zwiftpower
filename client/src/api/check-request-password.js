@@ -10,6 +10,6 @@ export async function checkRequestPassword(token) {
 		});
 		return response;
 	} catch (error) {
-		console.log(error);
+		console.log(error); // eslint-disable-line no-console
 	}
 }

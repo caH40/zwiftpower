@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './Riders.module.css';
+import { downloadXLSX } from '../../service/riders';
 import { getRiders } from '../../api/riders';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 
-import { downloadXLSX } from '../../service/riders';
+import styles from './Riders.module.css';
 
 const Riders = () => {
 	const [riders, setRiders] = useState([]);

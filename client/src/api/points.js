@@ -3,7 +3,7 @@ import { myAxios } from './axios';
 export async function putPoints(pointsType, sequenceNumber, place, resultId) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage/points`,
+			url: '/api/stage/points',
 			method: 'put',
 			data: {
 				pointsType,
@@ -21,7 +21,7 @@ export async function putPoints(pointsType, sequenceNumber, place, resultId) {
 export async function putMultiplier(stageId, sequenceNumber, multiplier, pointsType) {
 	try {
 		const response = await myAxios({
-			url: `/api/stage/points-multiplier`,
+			url: '/api/stage/points-multiplier',
 			method: 'put',
 			data: {
 				stageId,
