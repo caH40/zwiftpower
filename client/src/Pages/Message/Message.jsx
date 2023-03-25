@@ -5,7 +5,7 @@ import t from '../../locales/ru.json';
 
 import styles from './Message.module.css';
 
-const Message = () => {
+function Message() {
   const { messageId, additional } = useParams();
   const message = t.message[messageId];
 
@@ -26,6 +26,6 @@ const Message = () => {
       )}
     </main>
   );
-};
+}
 
 export default Message;

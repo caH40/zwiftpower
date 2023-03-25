@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { getResultStage } from '../api/stage';
 
-const StageResults = () => {
+function StageResults() {
   const [results, setResults] = useState([]);
   const { stageId } = useParams();
 
@@ -18,6 +18,6 @@ const StageResults = () => {
       ))}
     </div>
   );
-};
+}
 
 export default StageResults;

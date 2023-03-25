@@ -11,7 +11,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Upload.module.css';
 
-const Upload = () => {
+function Upload() {
   const [schedule, setSchedule] = useState({});
   const [results, setResults] = useState({});
 
@@ -67,6 +67,6 @@ const Upload = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Upload;

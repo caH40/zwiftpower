@@ -4,7 +4,7 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './SimpleCheckbox.module.css';
 
-const SimpleCheckbox = ({ state, property, setState, title, toolTip, disabled }) => {
+function SimpleCheckbox({ state, property, setState, title, toolTip, disabled }) {
   return (
     <MyTooltip toolTip={toolTip}>
       <label className={styles.label}>
@@ -19,6 +19,6 @@ const SimpleCheckbox = ({ state, property, setState, title, toolTip, disabled })
       </label>
     </MyTooltip>
   );
-};
+}
 
 export default SimpleCheckbox;

@@ -6,7 +6,7 @@ import { addClasses as cns } from '../../../utils/additional-classes';
 
 import styles from './InputAuth.module.css';
 
-const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' }) => {
+function InputAuth({ label, register, input, validationText, link, addCls = ' ' }) {
   return (
     <div className={cn(styles.box, cns(addCls, styles))}>
       <div className={styles.box__text}>
@@ -27,6 +27,6 @@ const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' 
       <input {...register} {...input} className={styles.input} />
     </div>
   );
-};
+}
 
 export default InputAuth;

@@ -7,7 +7,7 @@ import SimpleSelect from '../SimpleSelect/SimpleSelect';
 
 import styles from './FormEditSeries.module.css';
 
-const FormEditSeries = ({ series, setSeries, sendForm }) => {
+function FormEditSeries({ series, setSeries, sendForm }) {
   return (
     <form className={styles.form} name="series">
       <SimpleInput
@@ -75,6 +75,6 @@ const FormEditSeries = ({ series, setSeries, sendForm }) => {
       </div>
     </form>
   );
-};
+}
 
 export default FormEditSeries;

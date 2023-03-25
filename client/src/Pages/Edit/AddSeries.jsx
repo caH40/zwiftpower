@@ -12,7 +12,7 @@ import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
 import { isValidSeries, seriesClear } from './service';
 import styles from './Edit.module.css';
 
-const AddSeries = () => {
+function AddSeries() {
   const [series, setSeries] = useState(() => ({ ...seriesClear }));
 
   const dispatch = useDispatch();
@@ -47,6 +47,6 @@ const AddSeries = () => {
       <Button getClick={goBack}>назад</Button>
     </section>
   );
-};
+}
 
 export default AddSeries;

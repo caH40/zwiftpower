@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './SimpleSelect.module.css';
 
-const SimpleSelect = ({ name, state, setState, property, disabled, options }) => {
+function SimpleSelect({ name, state, setState, property, disabled, options }) {
   return (
     <>
       <p className={styles.label}>{name}:</p>
@@ -22,6 +22,6 @@ const SimpleSelect = ({ name, state, setState, property, disabled, options }) =>
       </select>
     </>
   );
-};
+}
 
 export default SimpleSelect;

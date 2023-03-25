@@ -7,7 +7,7 @@ import { convertToKBites } from '../../../utils/format-numbers';
 
 import styles from './DlFile.module.css';
 
-const DlFile = ({ file, addCls }) => {
+function DlFile({ file, addCls }) {
   return (
     <dl className={cn(styles.dl, cns(addCls, styles))}>
       <div className={styles.box}>
@@ -24,6 +24,6 @@ const DlFile = ({ file, addCls }) => {
       </div>
     </dl>
   );
-};
+}
 
 export default DlFile;

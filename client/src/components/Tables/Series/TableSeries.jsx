@@ -9,7 +9,7 @@ import ButtonLink from '../../UI/ButtonLink/ButtonLink';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
 
-const TableSeries = ({ target }) => {
+function TableSeries({ target }) {
   const [series, setSeries] = useState([]);
   const [update, setUpdate] = useState(false);
 
@@ -135,6 +135,6 @@ const TableSeries = ({ target }) => {
       )}
     </table>
   );
-};
+}
 
 export default TableSeries;

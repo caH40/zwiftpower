@@ -3,7 +3,7 @@ import React from 'react';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
 
-const TableSeriesNew = ({ series }) => {
+function TableSeriesNew({ series }) {
   const hasGeneral = series[0].hasGeneral.toString();
   const classGeneral = `${styles.boxValue} ${
     hasGeneral === 'true' ? styles.success : styles.error
@@ -43,6 +43,6 @@ const TableSeriesNew = ({ series }) => {
       )}
     </table>
   );
-};
+}
 
 export default TableSeriesNew;

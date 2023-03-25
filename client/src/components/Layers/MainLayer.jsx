@@ -8,7 +8,7 @@ import Body from './Body';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 
-const MainLayer = () => {
+function MainLayer() {
   return (
     <div className="wrapper">
       <CustomizedSnackbars>
@@ -20,6 +20,6 @@ const MainLayer = () => {
       </CustomizedSnackbars>
     </div>
   );
-};
+}
 
 export default MainLayer;

@@ -13,7 +13,7 @@ import { resetPassword } from '../../api/reset-password';
 
 import styles from './Auth.module.css';
 
-const ResetPassword = () => {
+function ResetPassword() {
   useTitle('Сброс пароля');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,6 +59,6 @@ const ResetPassword = () => {
       </div>
     </main>
   );
-};
+}
 
 export default ResetPassword;

@@ -5,7 +5,7 @@ import SimpleInput from '../SimpleInput/SimpleInput';
 
 import styles from './BoxRider.module.css';
 
-const BoxRider = ({ setRider, setIsVisibleModal }) => {
+function BoxRider({ setRider, setIsVisibleModal }) {
   const [state, setState] = useState({ fio: '' });
   const [riders, setRiders] = useState([]);
   const [filteredRiders, setFilteredRiders] = useState([]);
@@ -58,6 +58,6 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
       </ul>
     </form>
   );
-};
+}
 
 export default BoxRider;

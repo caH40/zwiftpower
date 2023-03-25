@@ -5,7 +5,7 @@ import TableSeries from '../components/Tables/Series/TableSeries';
 import Button from '../components/UI/Button/Button';
 import useTitle from '../hook/useTitle';
 
-const EditSeriesList = () => {
+function EditSeriesList() {
   useTitle('Редактирование данных этапа');
 
   const navigate = useNavigate();
@@ -18,6 +18,6 @@ const EditSeriesList = () => {
       <Button getClick={goBack}>назад</Button>
     </>
   );
-};
+}
 
 export default EditSeriesList;

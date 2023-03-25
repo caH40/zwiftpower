@@ -4,7 +4,7 @@ import ButtonClose from '../ButtonClose/ButtonClose';
 
 import styles from './Modal.module.css';
 
-const Modal = ({ children, title, box, isVisibleModal, setIsVisibleModal }) => {
+function Modal({ children, title, box, isVisibleModal, setIsVisibleModal }) {
   const getClick = () => setIsVisibleModal(false);
   window.addEventListener('keydown', keyHandler);
   function keyHandler(e) {
@@ -29,6 +29,6 @@ const Modal = ({ children, title, box, isVisibleModal, setIsVisibleModal }) => {
       )}
     </>
   );
-};
+}
 
 export default Modal;

@@ -12,7 +12,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Edit.module.css';
 
-const EditSeries = () => {
+function EditSeries() {
   const [series, setSeries] = useState({});
   const [update, setUpdate] = useState(false);
 
@@ -57,6 +57,6 @@ const EditSeries = () => {
       )}
     </>
   );
-};
+}
 
 export default EditSeries;

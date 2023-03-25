@@ -4,7 +4,7 @@ import { tdLinkZP, tdRider } from '../utils/td';
 import styles from '../Table.module.css';
 import { secondesToTime } from '../../../utils/date-convert';
 
-const TableResultsNew = ({ results = [] }) => {
+function TableResultsNew({ results = [] }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <caption>Протокол</caption>
@@ -38,6 +38,6 @@ const TableResultsNew = ({ results = [] }) => {
       </tbody>
     </table>
   );
-};
+}
 
 export default TableResultsNew;

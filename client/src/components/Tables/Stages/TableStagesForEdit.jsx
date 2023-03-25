@@ -10,7 +10,7 @@ import Button from '../../UI/Button/Button';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
 
-const TableStagesForEdit = ({ seriesId }) => {
+function TableStagesForEdit({ seriesId }) {
   const [stages, setStages] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -192,6 +192,6 @@ const TableStagesForEdit = ({ seriesId }) => {
       )}
     </table>
   );
-};
+}
 
 export default TableStagesForEdit;

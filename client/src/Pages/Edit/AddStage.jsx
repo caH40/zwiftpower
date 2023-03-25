@@ -15,7 +15,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { isValid, stageClear } from './service';
 import styles from './Edit.module.css';
 
-const AddStage = () => {
+function AddStage() {
   const { seriesId } = useParams();
   const [stage, setStage] = useState(() => ({ ...stageClear, seriesId }));
 
@@ -51,6 +51,6 @@ const AddStage = () => {
       <Button getClick={goBack}>назад</Button>
     </section>
   );
-};
+}
 
 export default AddStage;

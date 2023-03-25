@@ -6,7 +6,7 @@ import SimpleSelect from '../SimpleSelect/SimpleSelect';
 
 import styles from './FormRiderResult.module.css';
 
-const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
+function FormRiderResult({ newResult, setNewResult, goBack, saveResult }) {
   return (
     <form className={styles.form}>
       <SimpleInput
@@ -134,6 +134,6 @@ const FormRiderResult = ({ newResult, setNewResult, goBack, saveResult }) => {
       </div>
     </form>
   );
-};
+}
 
 export default FormRiderResult;

@@ -8,7 +8,7 @@ import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
-const EditStageParams = () => {
+function EditStageParams() {
   const [stage, setStage] = useState({});
   const [update, setUpdate] = useState(false);
   const { stageId } = useParams();
@@ -47,6 +47,6 @@ const EditStageParams = () => {
       )}
     </>
   );
-};
+}
 
 export default EditStageParams;

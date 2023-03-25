@@ -6,7 +6,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './SelectCategory.module.css';
 
-const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {
+function SelectCategory({ value, zwiftId, stageId, setUpdate }) {
   const dispatch = useDispatch();
 
   const changeCategory = (e) => {
@@ -41,6 +41,6 @@ const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {
       </select>
     </div>
   );
-};
+}
 
 export default SelectCategory;

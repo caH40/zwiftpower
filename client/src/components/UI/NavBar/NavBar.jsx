@@ -8,7 +8,7 @@ import { getAuth } from '../../../redux/features/authSlice';
 
 import styles from './NavBar.module.css';
 
-const NavBar = () => {
+function NavBar() {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.checkAuth.value);
 
@@ -39,6 +39,6 @@ const NavBar = () => {
       </li>
     </ul>
   );
-};
+}
 
 export default NavBar;

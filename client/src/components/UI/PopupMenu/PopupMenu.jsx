@@ -6,7 +6,7 @@ import { showMenu } from '../../../redux/features/menuBurgerSlice';
 
 import styles from './PopupMenu.module.css';
 
-const PopupMenu = () => {
+function PopupMenu() {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.checkAuth.value);
 
@@ -67,6 +67,6 @@ const PopupMenu = () => {
       </div>
     </div>
   );
-};
+}
 
 export default PopupMenu;

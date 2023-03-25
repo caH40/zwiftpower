@@ -14,7 +14,7 @@ import { getAuth } from '../../redux/features/authSlice';
 
 import styles from './Auth.module.css';
 
-const Authorization = () => {
+function Authorization() {
   useTitle('Авторизация');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,6 +77,6 @@ const Authorization = () => {
       </div>
     </main>
   );
-};
+}
 
 export default Authorization;

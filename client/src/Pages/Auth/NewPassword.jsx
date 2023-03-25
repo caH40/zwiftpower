@@ -14,7 +14,7 @@ import { checkRequestPassword } from '../../api/check-request-password';
 
 import styles from './Auth.module.css';
 
-const ResetPassword = () => {
+function ResetPassword() {
   const [userId, setUserId] = useState();
   useTitle('Создание нового пароля');
   const dispatch = useDispatch();
@@ -74,6 +74,6 @@ const ResetPassword = () => {
       )}
     </section>
   );
-};
+}
 
 export default ResetPassword;

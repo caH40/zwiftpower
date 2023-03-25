@@ -6,7 +6,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './SelectPenalty.module.css';
 
-const SelectPenalty = ({ result, value, setUpdate }) => {
+function SelectPenalty({ result, value, setUpdate }) {
   const dispatch = useDispatch();
 
   const changePenalty = (e) => {
@@ -39,6 +39,6 @@ const SelectPenalty = ({ result, value, setUpdate }) => {
       <option className={styles.hasPenalty} value="5" label="5 PU" />
     </select>
   );
-};
+}
 
 export default SelectPenalty;

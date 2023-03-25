@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClearTbody = ({ quantityTd }) => {
+function ClearTbody({ quantityTd }) {
   const tds = Array(quantityTd).fill('');
   return (
     <tbody>
@@ -11,6 +11,6 @@ const ClearTbody = ({ quantityTd }) => {
       </tr>
     </tbody>
   );
-};
+}
 
 export default ClearTbody;

@@ -7,7 +7,7 @@ import SimpleSelect from '../SimpleSelect/SimpleSelect';
 
 import styles from './FormEditStage.module.css';
 
-const FormEditStage = ({ stage, setStage, sendForm }) => {
+function FormEditStage({ stage, setStage, sendForm }) {
   return (
     <form className={styles.form} name="series">
       <SimpleInput
@@ -119,6 +119,6 @@ const FormEditStage = ({ stage, setStage, sendForm }) => {
       </div>
     </form>
   );
-};
+}
 
 export default FormEditStage;

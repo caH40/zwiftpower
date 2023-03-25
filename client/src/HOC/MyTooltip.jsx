@@ -1,7 +1,7 @@
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 
-const MyTooltip = ({ children, toolTip }) => {
+function MyTooltip({ children, toolTip }) {
   return (
     <Tooltip
       title={toolTip}
@@ -17,6 +17,6 @@ const MyTooltip = ({ children, toolTip }) => {
       {children}
     </Tooltip>
   );
-};
+}
 
 export default MyTooltip;

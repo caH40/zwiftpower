@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './ListRiderSearch.module.css';
 
-const ListRiderSearch = ({ riders, filteredRiders, getRiderData }) => {
+function ListRiderSearch({ riders, filteredRiders, getRiderData }) {
   return (
     <ul className={styles.list}>
       {riders.length
@@ -17,6 +17,6 @@ const ListRiderSearch = ({ riders, filteredRiders, getRiderData }) => {
       ) : undefined}
     </ul>
   );
-};
+}
 
 export default ListRiderSearch;

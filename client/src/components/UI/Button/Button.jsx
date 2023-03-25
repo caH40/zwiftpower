@@ -7,7 +7,7 @@ import MyTooltip from '../../../HOC/MyTooltip.jsx';
 
 import styles from './Button.module.css';
 
-const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }) => {
+function Button({ getClick, children, addCls = '', toolTip, disabled, ...props }) {
   return (
     <>
       {disabled ? ( // mui toolpit не работает с кнопкой с disabled (mui рекомендует поместить кнопку в <span>)
@@ -47,6 +47,6 @@ const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }
       )}
     </>
   );
-};
+}
 
 export default Button;

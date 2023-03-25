@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 
 import styles from './InputFile.module.css';
 
-const InputFile = ({ accept, getFile, toolTip }) => {
+function InputFile({ accept, getFile, toolTip }) {
   const inputRef = useRef(null);
 
   const getInput = () => {
@@ -25,6 +25,6 @@ const InputFile = ({ accept, getFile, toolTip }) => {
       </Button>
     </>
   );
-};
+}
 
 export default InputFile;

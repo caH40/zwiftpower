@@ -4,7 +4,7 @@ import ClearTbody from '../ClearTbody/ClearTbody';
 
 import styles from '../Table.module.css';
 
-const TableStagesNew = ({ stages = [] }) => {
+function TableStagesNew({ stages = [] }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <caption>Stages</caption>
@@ -54,6 +54,6 @@ const TableStagesNew = ({ stages = [] }) => {
       )}
     </table>
   );
-};
+}
 
 export default TableStagesNew;

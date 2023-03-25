@@ -9,7 +9,7 @@ import useTitle from '../../hook/useTitle';
 
 import styles from './Riders.module.css';
 
-const Riders = () => {
+function Riders() {
   const [riders, setRiders] = useState([]);
 
   useTitle('Зарегистрированные Райдеры');
@@ -33,6 +33,6 @@ const Riders = () => {
       <Button getClick={goBack}>назад</Button>
     </>
   );
-};
+}
 
 export default Riders;

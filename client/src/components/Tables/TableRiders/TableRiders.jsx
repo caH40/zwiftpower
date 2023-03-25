@@ -5,7 +5,7 @@ import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
 import { tdLinkZP } from '../utils/td';
 
-const TableRiders = ({ riders = [] }) => {
+function TableRiders({ riders = [] }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <caption>Райдеры</caption>
@@ -39,6 +39,6 @@ const TableRiders = ({ riders = [] }) => {
       )}
     </table>
   );
-};
+}
 
 export default TableRiders;

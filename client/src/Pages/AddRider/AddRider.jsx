@@ -13,7 +13,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import styles from './AddRider.module.css';
 import { checkForm, getScroll, resultClear, resultStart } from './service';
 
-const AddRider = () => {
+function AddRider() {
   const [query, setQuery] = useState({ fio: '' });
   const [rider, setRider] = useState({});
   const [stage, setStage] = useState({});
@@ -116,6 +116,6 @@ const AddRider = () => {
       />
     </section>
   );
-};
+}
 
 export default AddRider;

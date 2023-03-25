@@ -4,7 +4,7 @@ import { handlerNewValue, handlerValue } from './service';
 
 import styles from './SimpleInput.module.css';
 
-const SimpleInput = ({
+function SimpleInput({
   name,
   state = {},
   setState,
@@ -13,7 +13,7 @@ const SimpleInput = ({
   disabled,
   value,
   ...props
-}) => {
+}) {
   const currentValue = value ? value : handlerValue(type, state[property]);
   return (
     <>
@@ -30,6 +30,6 @@ const SimpleInput = ({
       />
     </>
   );
-};
+}
 
 export default SimpleInput;

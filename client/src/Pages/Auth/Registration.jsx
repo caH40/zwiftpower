@@ -17,7 +17,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Auth.module.css';
 
-const Registration = () => {
+function Registration() {
   useTitle('Регистрация');
 
   const dispatch = useDispatch();
@@ -80,6 +80,6 @@ const Registration = () => {
       </div>
     </main>
   );
-};
+}
 
 export default Registration;

@@ -9,7 +9,7 @@ import { sprintTable } from '../../Tables/utils/pointsTable';
 
 import styles from './SelectPoints.module.css';
 
-const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplier }) => {
+function SelectPoints({ pointsType, sequenceNumber, result, setUpdate, multiplier }) {
   const dispatch = useDispatch();
 
   const changePlace = (e) => {
@@ -42,6 +42,6 @@ const SelectPoints = ({ pointsType, sequenceNumber, result, setUpdate, multiplie
       })}
     </select>
   );
-};
+}
 
 export default SelectPoints;

@@ -7,7 +7,7 @@ import PopupMenu from '../../UI/PopupMenu/PopupMenu';
 
 import styles from './Header.module.css';
 
-const Header = () => {
+function Header() {
   const titlePage = useSelector((state) => {
     return state.titlePage.value.title;
   });
@@ -22,6 +22,6 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Header;

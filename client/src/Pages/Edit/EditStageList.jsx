@@ -10,7 +10,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Edit.module.css';
 
-const EditStageList = () => {
+function EditStageList() {
   useTitle('Редактирование данных этапа');
   const { seriesId } = useParams();
   const navigate = useNavigate();
@@ -52,6 +52,6 @@ const EditStageList = () => {
       </div>
     </div>
   );
-};
+}
 
 export default EditStageList;

@@ -8,7 +8,7 @@ import useTitle from '../../hook/useTitle';
 
 import styles from './Edit.module.css';
 
-const EditSeriesMain = () => {
+function EditSeriesMain() {
   useTitle('Редактирование данных Series, Stage');
 
   const navigate = useNavigate();
@@ -26,6 +26,6 @@ const EditSeriesMain = () => {
       <Button getClick={goBack}>назад</Button>
     </>
   );
-};
+}
 
 export default EditSeriesMain;

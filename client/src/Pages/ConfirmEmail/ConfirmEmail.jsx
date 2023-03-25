@@ -8,7 +8,7 @@ import useTitle from '../../hook/useTitle';
 
 import styles from './ConfirmEmail.module.css';
 
-const ConfirmEmail = () => {
+function ConfirmEmail() {
   const [message, setMessage] = useState('');
   const { token } = useParams();
 
@@ -24,6 +24,6 @@ const ConfirmEmail = () => {
       <p className={styles.text}>{message}</p>
     </section>
   );
-};
+}
 
 export default ConfirmEmail;

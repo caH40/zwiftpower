@@ -8,7 +8,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './SelectMultiplier.module.css';
 
-const SelectMultiplier = ({ stageId, number, multiplier, pointsType, setUpdate, toolTip }) => {
+function SelectMultiplier({ stageId, number, multiplier, pointsType, setUpdate, toolTip }) {
   const dispatch = useDispatch();
 
   const changeMultiplier = (e) => {
@@ -41,6 +41,6 @@ const SelectMultiplier = ({ stageId, number, multiplier, pointsType, setUpdate, 
       </select>
     </MyTooltip>
   );
-};
+}
 
 export default SelectMultiplier;

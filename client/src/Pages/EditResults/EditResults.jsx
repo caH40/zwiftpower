@@ -12,7 +12,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './EditResults.module.css';
 
-const EditResults = () => {
+function EditResults() {
   const [results, setResults] = useState([]);
   const [update, setUpdate] = useState(false);
   useTitle('Редактирование данных этапа');
@@ -72,6 +72,6 @@ const EditResults = () => {
       <Button getClick={getClick}>назад</Button>
     </>
   );
-};
+}
 
 export default EditResults;

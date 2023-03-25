@@ -5,7 +5,7 @@ import { getStages } from '../../../api/stage';
 
 import styles from '../Table.module.css';
 
-const TableStages = ({ seriesId }) => {
+function TableStages({ seriesId }) {
   const [stages, setStages] = useState([]);
   const navigate = useNavigate();
 
@@ -80,6 +80,6 @@ const TableStages = ({ seriesId }) => {
       </tbody>
     </table>
   );
-};
+}
 
 export default TableStages;

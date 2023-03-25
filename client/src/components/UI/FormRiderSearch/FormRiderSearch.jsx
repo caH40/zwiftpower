@@ -6,7 +6,7 @@ import SimpleInput from '../SimpleInput/SimpleInput';
 
 import styles from './FormRiderSearch.module.css';
 
-const FormRiderSearch = ({ query, setQuery, riders, filteredRiders, getRiderData, goBack }) => {
+function FormRiderSearch({ query, setQuery, riders, filteredRiders, getRiderData, goBack }) {
   return (
     <form className={styles.form} name="riders">
       <SimpleInput
@@ -27,6 +27,6 @@ const FormRiderSearch = ({ query, setQuery, riders, filteredRiders, getRiderData
       </Button>
     </form>
   );
-};
+}
 
 export default FormRiderSearch;

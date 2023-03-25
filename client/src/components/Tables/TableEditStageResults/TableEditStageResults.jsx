@@ -12,7 +12,7 @@ import SelectPoints from '../../UI/SelectPoints/SelectPoints';
 import SelectMultiplier from '../../UI/SelectMultiplier/SelectMultiplier';
 import Button from '../../UI/Button/Button';
 
-const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
+function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
   return (
     <table className={`${cls.table} ${cls.table_striped}`}>
       <caption>{results[0]?.title}</caption>
@@ -159,6 +159,6 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
       </tbody>
     </table>
   );
-};
+}
 
 export default TableEditStageResults;

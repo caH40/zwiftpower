@@ -6,7 +6,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './Checkbox.module.css';
 
-const Checkbox = ({ state, apiRequest, setUpdate, resultId, target, toolTip }) => {
+function Checkbox({ state, apiRequest, setUpdate, resultId, target, toolTip }) {
   const [check, setCheck] = useState(() => state);
 
   const dispatch = useDispatch();
@@ -37,6 +37,6 @@ const Checkbox = ({ state, apiRequest, setUpdate, resultId, target, toolTip }) =
       />
     </MyTooltip>
   );
-};
+}
 
 export default Checkbox;

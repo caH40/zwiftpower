@@ -5,7 +5,7 @@ import { showMenu } from '../../../redux/features/menuBurgerSlice';
 
 import styles from './Hamburger.module.css';
 
-const Hamburger = () => {
+function Hamburger() {
   const dispatch = useDispatch();
   const getMenu = () => {
     dispatch(showMenu());
@@ -19,6 +19,6 @@ const Hamburger = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Hamburger;

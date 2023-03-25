@@ -7,7 +7,7 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './ButtonLink.module.css';
 
-const ButtonLink = ({ children, addCls = '', to, toolTip }) => {
+function ButtonLink({ children, addCls = '', to, toolTip }) {
   return (
     <MyTooltip toolTip={toolTip}>
       <Link to={to} className={cn(styles.button, cns(addCls, styles))}>
@@ -15,6 +15,6 @@ const ButtonLink = ({ children, addCls = '', to, toolTip }) => {
       </Link>
     </MyTooltip>
   );
-};
+}
 
 export default ButtonLink;

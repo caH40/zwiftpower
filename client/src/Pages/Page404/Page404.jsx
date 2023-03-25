@@ -6,7 +6,7 @@ import useTitle from '../../hook/useTitle';
 import styles from './Page404.module.css';
 const urlServer = process.env.REACT_APP_SERVER_FRONT;
 
-const Page404 = () => {
+function Page404() {
   const { '*': wrongUrl } = useParams();
   useTitle('404');
 
@@ -23,6 +23,6 @@ const Page404 = () => {
       </Link>
     </section>
   );
-};
+}
 
 export default Page404;
