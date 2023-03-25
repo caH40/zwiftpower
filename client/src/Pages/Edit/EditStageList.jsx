@@ -2,52 +2,56 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import styles from './Edit.module.css';
 import { putGeneralPoints } from '../../api/general';
 import TableStages from '../../components/Tables/Stages/TableStages';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
-const EditStageList = () => {
-	useTitle('Редактирование данных этапа');
-	const { seriesId } = useParams();
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+import styles from './Edit.module.css';
 
-	const goBack = () => navigate(-1);
+function EditStageList() {
+  useTitle('Редактирование данных этапа');
+  const { seriesId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-	const updateGeneralPoints = () =>
-		putGeneralPoints(seriesId)
-			.then(response =>
-				dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }))
-			)
-			.catch(error =>
-				dispatch(
-					getAlert({
-						message:
-							error.response.data?.message || 'Ошибка при обновлении очков генеральной квалификации',
-						type: 'error',
-						isOpened: true,
-					})
-				)
-			);
+  const goBack = () => navigate(-1);
 
-	return (
-		<div>
-			<h3 className={styles.title}>Этапы серии</h3>
-			<TableStages seriesId={seriesId} />
-			<div className={styles.box__buttons}>
-				<Button getClick={goBack}>назад</Button>
-				<Button
-					getClick={updateGeneralPoints}
-					toolTip="Обновляются очки в генеральной квалификации во всех этапах серии. Необходимо запускать после изменения категории райдеру, штрафа, дисквалификации."
-				>
-					Обновить генерал
-				</Button>
-			</div>
-		</div>
-	);
-};
+  const updateGeneralPoints = () =>
+    putGeneralPoints(seriesId)
+      .then((response) =>
+        dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }))
+      )
+      .catch((error) =>
+        dispatch(
+          getAlert({
+            message:
+              error.response.data?.message ||
+              'Ошибка при обновлении очков генеральной квалификации',
+            type: 'error',
+            isOpened: true,
+          })
+        )
+      );
+
+  return (
+    <div>
+      <h3 className={styles.title}>Этапы серии</h3>
+      <TableStages seriesId={seriesId} />
+      <div className={styles.box__buttons}>
+        <Button getClick={goBack}>назад</Button>
+        <Button
+          getClick={updateGeneralPoints}
+          toolTip="Обновляются очки в генеральной квалификации 
+					во всех этапах серии. Необходимо запускать после изменения 
+					категории райдеру, штрафа, дисквалификации."
+        >
+          Обновить генерал
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 export default EditStageList;

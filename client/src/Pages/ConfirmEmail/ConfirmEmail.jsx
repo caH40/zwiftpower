@@ -3,26 +3,27 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import styles from './ConfirmEmail.module.css';
 import { confirmEmail } from '../../api/email';
 import useTitle from '../../hook/useTitle';
 
-const ConfirmEmail = () => {
-	const [message, setMessage] = useState('');
-	const { token } = useParams();
+import styles from './ConfirmEmail.module.css';
 
-	useTitle('Страница активации аккаунта');
+function ConfirmEmail() {
+  const [message, setMessage] = useState('');
+  const { token } = useParams();
 
-	useEffect(() => {
-		confirmEmail(token).then(response => {
-			setMessage(response.data.message);
-		});
-	}, [token]);
-	return (
-		<section className={styles.support}>
-			<p className={styles.text}>{message}</p>
-		</section>
-	);
-};
+  useTitle('Страница активации аккаунта');
+
+  useEffect(() => {
+    confirmEmail(token).then((response) => {
+      setMessage(response.data.message);
+    });
+  }, [token]);
+  return (
+    <section className={styles.support}>
+      <p className={styles.text}>{message}</p>
+    </section>
+  );
+}
 
 export default ConfirmEmail;

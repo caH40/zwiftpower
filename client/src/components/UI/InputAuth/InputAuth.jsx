@@ -2,30 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './InputAuth.module.css';
 import { addClasses as cns } from '../../../utils/additional-classes';
 
-const InputAuth = ({ label, register, input, validationText, link, addCls = ' ' }) => {
-	return (
-		<div className={cn(styles.box, cns(addCls, styles))}>
-			<div className={styles.box__text}>
-				{label ? (
-					<label className={styles.label} htmlFor={input.id}>
-						{label}
-					</label>
-				) : undefined}
+import styles from './InputAuth.module.css';
 
-				{validationText ? <span className={styles.wrong}>{validationText}</span> : undefined}
+function InputAuth({ label, register, input, validationText, link, addCls = ' ' }) {
+  return (
+    <div className={cn(styles.box, cns(styles, addCls))}>
+      <div className={styles.box__text}>
+        {label ? (
+          <label className={styles.label} htmlFor={input.id}>
+            {label}
+          </label>
+        ) : undefined}
 
-				{link ? (
-					<Link className={styles.link} to={link.to}>
-						{link.text}
-					</Link>
-				) : undefined}
-			</div>
-			<input {...register} {...input} className={styles.input} />
-		</div>
-	);
-};
+        {validationText ? <span className={styles.wrong}>{validationText}</span> : undefined}
+
+        {link ? (
+          <Link className={styles.link} to={link.to}>
+            {link.text}
+          </Link>
+        ) : undefined}
+      </div>
+      <input {...register} {...input} className={styles.input} />
+    </div>
+  );
+}
 
 export default InputAuth;
