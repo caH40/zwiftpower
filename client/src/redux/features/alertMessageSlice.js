@@ -7,7 +7,7 @@ const alertMessageSlice = createSlice({
     // error,warning,info,success
   },
   reducers: {
-    getAlert: (state, action) => {
+    getAlert(state, action) {
       state.value = action.payload;
     },
   },

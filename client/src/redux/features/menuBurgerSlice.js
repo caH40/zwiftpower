@@ -4,7 +4,7 @@ const menuBurgerSlice = createSlice({
   name: 'menuBurger',
   initialState: { isVisible: false },
   reducers: {
-    showMenu: (state) => {
+    showMenu(state) {
       state.isVisible = !state.isVisible;
     },
   },

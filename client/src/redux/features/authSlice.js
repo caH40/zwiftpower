@@ -9,7 +9,7 @@ const authSlice = createSlice({
     },
   },
   reducers: {
-    getAuth: (state, action) => {
+    getAuth(state, action) {
       state.value = action.payload;
     },
   },

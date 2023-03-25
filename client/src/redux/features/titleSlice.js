@@ -6,7 +6,7 @@ const titleSlice = createSlice({
     value: { title: '' },
   },
   reducers: {
-    setTitlePage: (state, action) => {
+    setTitlePage(state, action) {
       state.value = action.payload;
     },
   },
