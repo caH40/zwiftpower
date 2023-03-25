@@ -29,6 +29,12 @@
     "consistent-return": "error",
     "spaced-comment": ["error", "always"],
     "arrow-parens": ["error", "always"],
+    "no-param-reassign": "error",
+    "operator-assignment": ["error", "always"],
+    "default-param-last": ["error"],
+    "no-useless-catch": "error",
+    "dot-notation": "error",
+    "arrow-body-style": ["error", "as-needed"],
     "prefer-destructuring": [
       "error",
       {
