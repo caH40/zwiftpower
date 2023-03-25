@@ -11,6 +11,7 @@ export async function putNewPassword(dataForm, userId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

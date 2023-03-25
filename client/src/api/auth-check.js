@@ -12,6 +12,7 @@ export async function checkAuth() {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

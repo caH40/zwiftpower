@@ -1,8 +1,13 @@
-export const formatDateToString = (date) => new Date(date).toJSON()?.split('T')[0];
+export function formatDateToString(date) {
+  if (!date) return '2023-01-01';
+  return new Date(date).toJSON().split('T')[0];
+}
 
-export const formatDateToNumber = (date) => new Date(date).getTime();
+export function formatDateToNumber(date) {
+  return new Date(date).getTime();
+}
 
-export const getStringDate = (date) => {
+export function getStringDate(date) {
   const formatter = new Intl.DateTimeFormat('ru', {
     year: '2-digit',
     month: '2-digit',
@@ -11,4 +16,4 @@ export const getStringDate = (date) => {
     minute: '2-digit',
   });
   return formatter.format(date);
-};
+}

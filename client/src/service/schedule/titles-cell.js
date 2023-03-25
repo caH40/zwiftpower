@@ -8,6 +8,7 @@ export function getCellTitle(keys, sheet, title) {
     }
     return false;
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }

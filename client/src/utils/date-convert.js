@@ -28,8 +28,9 @@ export function convertTime(time = '00:00') {
   }
   return false;
 }
-export function secondesToTime(seconds) {
-  seconds = seconds / 1000;
+export function secondesToTime(rowSeconds) {
+  let seconds = rowSeconds;
+  seconds /= 1000;
   if (seconds > 3599) {
     const hour = Math.trunc(seconds / 3600);
     const minutes = Math.trunc((seconds - hour * 3600) / 60);
@@ -62,8 +63,8 @@ export function secondesToTimeThousandths(seconds) {
     return seconds;
   }
 }
-function addNull(number) {
-  number = String(number);
+function addNull(rowNumber) {
+  const number = String(rowNumber);
   if (number.length === 1) {
     return '0' + number;
   }

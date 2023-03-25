@@ -34,7 +34,13 @@ function FormEditStage({ stage, setStage, sendForm }) {
         min="2016-01-01"
         max="2030-01-01"
       />
-      <SimpleInput name="Маршрут" state={stage} setState={setStage} property="route" type="text" />
+      <SimpleInput
+        name="Маршрут"
+        state={stage}
+        setState={setStage}
+        property="route"
+        type="text"
+      />
       <SimpleInput
         name="Ссылка на Звифт"
         state={stage}
@@ -110,7 +116,7 @@ function FormEditStage({ stage, setStage, sendForm }) {
           property="hasResults"
           title="Добавлены результаты этапа"
           disabled={true}
-          toolTip="Заблокировано. Для информации"
+          toolTip="Заблокировано. Для информации."
         />
       </div>
 

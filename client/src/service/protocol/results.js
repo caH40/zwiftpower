@@ -1,8 +1,8 @@
 import { secondesToTime, secondesToTimeThousandths } from '../../utils/date-convert';
 
-export function getResults(fileJson) {
+export function getResults(rowFileJson) {
   try {
-    fileJson = fileJson.sort(
+    const fileJson = rowFileJson.sort(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
     const firstRiderTime = fileJson[0].activityData.durationInMilliseconds;
@@ -42,6 +42,7 @@ export function getResults(fileJson) {
     });
     return results;
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }

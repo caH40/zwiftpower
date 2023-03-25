@@ -1,49 +1,52 @@
 {
-  "extends": ["react-app", "react-app/jest"],
-  "rules": {
-    "react/function-component-definition": [2, { "namedComponents": "function-declaration" }],
-    "no-console": "warn",
-    "prefer-const": "error",
-    "quotes": ["error", "single"],
-    "jsx-quotes": ["error", "prefer-double"],
-    "indent": ["warn", 2],
-    "max-len": ["error", { "code": 120 }],
-    "comma-dangle": ["error", "always-multiline"],
-    "semi": ["warn", "always"],
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-          "object",
-          "type"
+    "extends": ["react-app", "react-app/jest"],
+    "rules": {
+        "react/function-component-definition": [
+            2,
+            { "namedComponents": "function-declaration" }
         ],
-        "newlines-between": "always-and-inside-groups"
-      }
-    ],
-    "consistent-return": "error",
-    "spaced-comment": ["error", "always"],
-    "arrow-parens": ["error", "always"],
-    "no-param-reassign": "error",
-    "operator-assignment": ["error", "always"],
-    "default-param-last": ["error"],
-    "no-useless-catch": "error",
-    "dot-notation": "error",
-    "arrow-body-style": ["error", "as-needed"],
-    "prefer-destructuring": [
-      "error",
-      {
-        "array": true,
-        "object": true
-      },
-      {
-        "enforceForRenamedProperties": false
-      }
-    ]
-  }
+        "no-console": "warn",
+        "prefer-const": "error",
+        "quotes": ["error", "single"],
+        "jsx-quotes": ["error", "prefer-double"],
+        "indent": ["warn", 2],
+        "max-len": ["error", { "code": 120 }],
+        "comma-dangle": ["error", "always-multiline"],
+        "semi": ["warn", "always"],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index",
+                    "object",
+                    "type"
+                ],
+                "newlines-between": "always-and-inside-groups"
+            }
+        ],
+        "consistent-return": "error",
+        "spaced-comment": ["error", "always"],
+        "arrow-parens": ["error", "always"],
+        "no-param-reassign": "error",
+        "operator-assignment": ["error", "always"],
+        "default-param-last": ["error"],
+        "no-useless-catch": "error",
+        "dot-notation": "error",
+        "arrow-body-style": ["error", "as-needed"],
+        "prefer-destructuring": [
+            "error",
+            {
+                "array": true,
+                "object": true
+            },
+            {
+                "enforceForRenamedProperties": false
+            }
+        ]
+    }
 }

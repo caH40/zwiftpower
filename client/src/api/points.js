@@ -15,6 +15,7 @@ export async function putPoints(pointsType, sequenceNumber, place, resultId) {
 
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -33,6 +34,7 @@ export async function putMultiplier(stageId, sequenceNumber, multiplier, pointsT
 
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

@@ -10,6 +10,7 @@ export async function postAuthorization(dataForm) {
 
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

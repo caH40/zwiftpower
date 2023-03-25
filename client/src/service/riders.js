@@ -2,17 +2,15 @@ import * as XLSX from 'xlsx';
 
 export function downloadXLSX(riders) {
   try {
-    const binary = riders.map((rider) => {
-      return {
-        zwiftId: rider.zwiftId,
-        fio: `${rider.lastName} ${rider.firstName}`,
-        zwiftName: `${rider.firstNameZwift} ${rider.lastNameZwift}`,
-        team: rider.teamId?.name,
-        trainer: rider.cycleTrainer,
-        profileZP: rider.zwiftPower,
-        gender: rider.gender,
-      };
-    });
+    const binary = riders.map((rider) => ({
+      zwiftId: rider.zwiftId,
+      fio: `${rider.lastName} ${rider.firstName}`,
+      zwiftName: `${rider.firstNameZwift} ${rider.lastNameZwift}`,
+      team: rider.teamId?.name,
+      trainer: rider.cycleTrainer,
+      profileZP: rider.zwiftPower,
+      gender: rider.gender,
+    }));
 
     const binaryWS = XLSX.utils.json_to_sheet(binary);
     // Create a new Workbook

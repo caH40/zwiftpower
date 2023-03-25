@@ -8,7 +8,7 @@ import styles from './InputAuth.module.css';
 
 function InputAuth({ label, register, input, validationText, link, addCls = ' ' }) {
   return (
-    <div className={cn(styles.box, cns(addCls, styles))}>
+    <div className={cn(styles.box, cns(styles, addCls))}>
       <div className={styles.box__text}>
         {label ? (
           <label className={styles.label} htmlFor={input.id}>

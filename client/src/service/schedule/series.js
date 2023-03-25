@@ -6,7 +6,8 @@ export function getScheduleSeries(file) {
   try {
     const book = XLSX.read(file, { type: 'binary' });
 
-    const sheetSeries = book.Sheets['series'];
+    // series название книге в эксель документе
+    const sheetSeries = book.Sheets.series;
     if (!sheetSeries) return console.log('В книге нет страницы "series"!'); // eslint-disable-line no-console
 
     const keysSeries = Object.keys(sheetSeries);
@@ -17,20 +18,19 @@ export function getScheduleSeries(file) {
       raw: false,
     });
 
-    const totalClearSeries = totalSeries.map((elm) => {
-      return {
-        name: elm['Наименование серии'],
-        dateStart: elm['Дата старта'],
-        description: elm['Описание'],
-        type: elm['Тип'],
-        organizer: elm['Организатор'],
-        hasGeneral: elm['Генеральный зачет'] === 'да' ? true : false,
-        hasTeams: elm['Командный зачет'] === 'да' ? true : false,
-      };
-    });
+    const totalClearSeries = totalSeries.map((elm) => ({
+      name: elm['Наименование серии'],
+      dateStart: elm['Дата старта'],
+      description: elm['Описание'],
+      type: elm['Тип'],
+      organizer: elm['Организатор'],
+      hasGeneral: elm['Генеральный зачет'] === 'да' ? true : false,
+      hasTeams: elm['Командный зачет'] === 'да' ? true : false,
+    }));
 
     return totalClearSeries;
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }

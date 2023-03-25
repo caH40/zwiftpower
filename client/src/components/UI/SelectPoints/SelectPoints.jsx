@@ -37,9 +37,9 @@ function SelectPoints({ pointsType, sequenceNumber, result, setUpdate, multiplie
       defaultValue={result[pointsType][sequenceNumber - 1]?.place}
       className={styles.select}
     >
-      {sprintTable.map((elm) => {
-        return <option value={elm.place} label={elm.place} key={elm.place} />;
-      })}
+      {sprintTable.map((elm) => (
+        <option value={elm.place} label={elm.place} key={elm.place} />
+      ))}
     </select>
   );
 }

@@ -4,6 +4,7 @@ export const stageClear = {
   dateStart: '2023-01-01',
   route: '',
   routeLink: '',
+  link: '',
   world: '',
   laps: '',
   distance: '',

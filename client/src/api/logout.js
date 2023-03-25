@@ -11,6 +11,7 @@ export async function postLogout() {
     });
     return response.data;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

@@ -10,6 +10,7 @@ export async function postSchedule(schedules) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -22,6 +23,7 @@ export async function postResults(results) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

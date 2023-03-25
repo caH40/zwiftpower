@@ -9,6 +9,7 @@ export async function getStages(series) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -21,6 +22,7 @@ export async function getResultStage(stageId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -33,6 +35,7 @@ export async function getStage(stageId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -48,6 +51,7 @@ export async function putStage(stageChanged) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -62,6 +66,7 @@ export async function postStage(stageNew) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -77,6 +82,7 @@ export async function postDeleteStage(stageId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

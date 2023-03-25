@@ -8,6 +8,7 @@ export async function getRiders() {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -19,6 +20,7 @@ export async function getRider(zwiftId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

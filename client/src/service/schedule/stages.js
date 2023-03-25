@@ -6,7 +6,8 @@ export function getScheduleStages(file) {
   try {
     const book = XLSX.read(file, { type: 'binary' });
 
-    const sheetStages = book.Sheets['stages'];
+    // stages название книге в эксель документе
+    const sheetStages = book.Sheets.stages;
 
     if (!sheetStages) return console.log('В книге нет страницы "stages"!'); // eslint-disable-line no-console
 
@@ -18,26 +19,25 @@ export function getScheduleStages(file) {
       raw: false,
     });
 
-    const totalClearStages = totalStages.map((elm) => {
-      return {
-        number: elm['Этап'],
-        dateStart: elm['Дата'],
-        timeStart: elm['Время'],
-        world: elm['Мир'],
-        route: elm['Маршрут'],
-        routeLink: elm['Ссылка на маршрут'],
-        laps: elm['Количество кругов'],
-        distance: elm['Общая протяженность, км'],
-        ascent: elm['Общий набор высоты, м'],
-        type: elm['Тип заезда'],
-        quantitySprints: elm['Количество спринтов'],
-        quantityMountains: elm['Количество гор'],
-        link: elm['Ссылка на заезд в Звифте'],
-      };
-    });
+    const totalClearStages = totalStages.map((elm) => ({
+      number: elm['Этап'],
+      dateStart: elm['Дата'],
+      timeStart: elm['Время'],
+      world: elm['Мир'],
+      route: elm['Маршрут'],
+      routeLink: elm['Ссылка на маршрут'],
+      laps: elm['Количество кругов'],
+      distance: elm['Общая протяженность, км'],
+      ascent: elm['Общий набор высоты, м'],
+      type: elm['Тип заезда'],
+      quantitySprints: elm['Количество спринтов'],
+      quantityMountains: elm['Количество гор'],
+      link: elm['Ссылка на заезд в Звифте'],
+    }));
 
     return totalClearStages;
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }

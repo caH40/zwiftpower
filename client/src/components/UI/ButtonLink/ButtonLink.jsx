@@ -10,7 +10,7 @@ import styles from './ButtonLink.module.css';
 function ButtonLink({ children, addCls = '', to, toolTip }) {
   return (
     <MyTooltip toolTip={toolTip}>
-      <Link to={to} className={cn(styles.button, cns(addCls, styles))}>
+      <Link to={to} className={cn(styles.button, cns(styles, addCls))}>
         {children}
       </Link>
     </MyTooltip>

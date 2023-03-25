@@ -5,15 +5,21 @@ export async function getSeries() {
     const response = await myAxios.get('/api/series');
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
 
 export async function getSeriesOne(seriesId) {
   try {
-    const response = await myAxios({ url: '/api/seriesone', method: 'post', data: { seriesId } });
+    const response = await myAxios({
+      url: '/api/seriesone',
+      method: 'post',
+      data: { seriesId },
+    });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -29,6 +35,7 @@ export async function putSeries(seriesChanged) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -43,6 +50,7 @@ export async function postSeries(seriesNew) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -57,6 +65,7 @@ export async function postDeleteSeries(seriesId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

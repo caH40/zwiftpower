@@ -9,7 +9,7 @@ import styles from './DlFile.module.css';
 
 function DlFile({ file, addCls }) {
   return (
-    <dl className={cn(styles.dl, cns(addCls, styles))}>
+    <dl className={cn(styles.dl, cns(styles, addCls))}>
       <div className={styles.box}>
         <dt className={styles.title}>Имя файла:</dt>
         <dl>{file.name}</dl>

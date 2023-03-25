@@ -8,6 +8,7 @@ export async function uploadProtocol(file) {
     const results = getResults(resultJson);
     return { results, fileAttributes };
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }

@@ -14,6 +14,7 @@ export async function putCategory(newCategory, zwiftId, stageId) {
 
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

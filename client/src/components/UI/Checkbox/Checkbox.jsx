@@ -21,7 +21,11 @@ function Checkbox({ state, apiRequest, setUpdate, resultId, target, toolTip }) {
       })
       .catch((error) =>
         dispatch(
-          getAlert({ message: `Ошибка при изменении ${target}!`, type: 'error', isOpened: true })
+          getAlert({
+            message: `Ошибка при изменении ${target}!`,
+            type: 'error',
+            isOpened: true,
+          })
         )
       );
   };

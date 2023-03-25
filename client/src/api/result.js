@@ -11,6 +11,7 @@ export async function postResult(result) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -23,6 +24,7 @@ export async function checkRiderResult(zwiftId, stageId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -35,6 +37,7 @@ export async function deleteCurrentResult(resultId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }
@@ -48,6 +51,7 @@ export async function postDeleteResults(stageId) {
     });
     return response;
   } catch (error) {
+    console.error(error); // eslint-disable-line
     throw error;
   }
 }

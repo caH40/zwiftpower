@@ -12,6 +12,7 @@ export async function uploadSchedule(file) {
 
     return { fileAttributes, scheduleSeries, scheduleStages };
   } catch (error) {
+    console.log(error); // eslint-disable-line
     throw error;
   }
 }
