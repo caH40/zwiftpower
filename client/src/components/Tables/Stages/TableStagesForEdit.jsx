@@ -22,12 +22,12 @@ const TableStagesForEdit = ({ seriesId }) => {
   };
 
   useEffect(() => {
-    getStages(seriesId).then(data => {
+    getStages(seriesId).then((data) => {
       setStages(data.data.stages);
     });
   }, [seriesId, update]);
 
-  const deleteStage = stage => {
+  const deleteStage = (stage) => {
     const confirm = window.confirm(
       `Вы действительно хотите удалить Этап №${stage.number}? Так же будут удалены все результаты этого этапа!`
     );
@@ -40,7 +40,7 @@ const TableStagesForEdit = ({ seriesId }) => {
         })
       );
     postDeleteStage(stage._id)
-      .then(data => {
+      .then((data) => {
         setStages(data.data.stages);
         dispatch(
           getAlert({
@@ -50,7 +50,7 @@ const TableStagesForEdit = ({ seriesId }) => {
           })
         );
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({
             message: 'Ошибка при удалении этапа!',
@@ -59,9 +59,10 @@ const TableStagesForEdit = ({ seriesId }) => {
           })
         )
       );
+    return false;
   };
 
-  const deleteResults = stage => {
+  const deleteResults = (stage) => {
     const confirm = window.confirm(
       `Вы действительно хотите удалить все результаты Этапа №${stage.number}?`
     );
@@ -74,8 +75,8 @@ const TableStagesForEdit = ({ seriesId }) => {
         })
       );
     postDeleteResults(stage._id)
-      .then(data => {
-        setUpdate(prev => !prev);
+      .then((data) => {
+        setUpdate((prev) => !prev);
         dispatch(
           getAlert({
             message: data.data.message,
@@ -84,7 +85,7 @@ const TableStagesForEdit = ({ seriesId }) => {
           })
         );
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({
             message: 'Ошибка при удалении результатов этапа!',
@@ -93,6 +94,7 @@ const TableStagesForEdit = ({ seriesId }) => {
           })
         )
       );
+    return false;
   };
 
   const seriesName = stages?.length ? stages[0]?.seriesId.name : '';
@@ -116,19 +118,19 @@ const TableStagesForEdit = ({ seriesId }) => {
           <th scope="col">ZInsider</th>
           <th scope="col">Редактировать</th>
           <th scope="col">
-						Удалить <br />
-						этап
+            Удалить <br />
+            этап
           </th>
           <th scope="col" className={styles.wrap}>
-						Результаты
+            Результаты
             <br />
-						этапа
+            этапа
           </th>
         </tr>
       </thead>
       {stages?.length ? (
         <tbody>
-          {stages.map(stage => {
+          {stages.map((stage) => {
             const hasResult = stage.hasResults.toString();
             const classResult = `${styles.boxValue} ${
               hasResult === 'true' ? styles.success : styles.error
@@ -150,17 +152,17 @@ const TableStagesForEdit = ({ seriesId }) => {
                 </td>
                 <td>
                   <a href={stage.link} target="_blank" rel="noreferrer">
-										Звифт
+                    Звифт
                   </a>
                 </td>
                 <td>
                   <a href={stage.routeLink} target="_blank" rel="noreferrer">
-										Маршрут
+                    Маршрут
                   </a>
                 </td>
                 <td>
                   <Button getClick={() => toLink(`stage-edit/${stage._id}`, true)} addCls="td">
-										редактировать
+                    редактировать
                   </Button>
                 </td>
                 <td>
@@ -169,7 +171,7 @@ const TableStagesForEdit = ({ seriesId }) => {
                     getClick={() => deleteStage(stage)}
                     toolTip="Удаление Этапа и всех результатов этапа."
                   >
-										удалить
+                    удалить
                   </Button>
                 </td>
                 <td>
@@ -178,7 +180,7 @@ const TableStagesForEdit = ({ seriesId }) => {
                     getClick={() => deleteResults(stage)}
                     disabled={!stage.hasResults}
                   >
-										удалить
+                    удалить
                   </Button>
                 </td>
               </tr>

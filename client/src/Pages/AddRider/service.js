@@ -15,7 +15,7 @@ export const resultClear = {
   DNF: 'нет',
 };
 
-export const getScroll = element => {
+export const getScroll = (element) => {
   const scrollTarget = element;
   const topOffset = 70;
   const elementPosition = scrollTarget.getBoundingClientRect().top;
@@ -45,7 +45,7 @@ export const resultStart = (stageId, rider) => {
   };
 };
 
-export const checkForm = result => {
+export const checkForm = (result) => {
   if (
     result.stageId === '' ||
 		result.name === '' ||

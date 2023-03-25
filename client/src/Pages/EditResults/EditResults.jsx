@@ -22,7 +22,7 @@ const EditResults = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getResultStage(stageId).then(data => {
+    getResultStage(stageId).then((data) => {
       setResults(data.data?.results);
     });
   }, [stageId, update]);
@@ -42,15 +42,16 @@ const EditResults = () => {
         })
       );
     deleteCurrentResult(resultId)
-      .then(response => {
+      .then((response) => {
         dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при удалении результата', type: 'error', isOpened: true })
         )
       )
-      .finally(() => setUpdate(prev => !prev));
+      .finally(() => setUpdate((prev) => !prev));
+    return false;
   };
   return (
     <>
@@ -60,10 +61,14 @@ const EditResults = () => {
           to={`/edit/stage/${stageId}/rider-add`}
           toolTip="Добавление результата райдера который не попал в общий протокол Этапа"
         >
-					Добавить
+          Добавить
         </ButtonLink>
       </div>
-      <TableEditStageResults results={results} setUpdate={setUpdate} deleteResult={deleteResult} />
+      <TableEditStageResults
+        results={results}
+        setUpdate={setUpdate}
+        deleteResult={deleteResult}
+      />
       <Button getClick={getClick}>назад</Button>
     </>
   );

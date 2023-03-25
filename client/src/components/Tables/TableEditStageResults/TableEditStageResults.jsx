@@ -106,7 +106,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
               />
             </td>
             <td>{tdRider(result.name, result.imageSrc)}</td>
-            {result.pointsSprint.map(elm => (
+            {result.pointsSprint.map((elm) => (
               <td key={`${result._id}${elm.sprint}td-sp`}>
                 <div className={cls.flexBox}>
                   <SelectPoints
@@ -120,7 +120,7 @@ const TableEditStageResults = ({ results = [], setUpdate, deleteResult }) => {
                 </div>
               </td>
             ))}
-            {result.pointsMountain.map(elm => (
+            {result.pointsMountain.map((elm) => (
               <td key={`${result._id}${elm.mountain}td-mn`}>
                 <div className={cls.flexBox}>
                   <SelectPoints

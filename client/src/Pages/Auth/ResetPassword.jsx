@@ -24,10 +24,10 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = dataForm => {
+  const onSubmit = (dataForm) => {
     resetPassword(dataForm)
-      .then(data => navigate(`/message/resetPassword/${dataForm.email}`))
-      .catch(error => {
+      .then((data) => navigate(`/message/resetPassword/${dataForm.email}`))
+      .catch((error) => {
         dispatch(
           getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
         );
@@ -48,12 +48,12 @@ const ResetPassword = () => {
           />
 
           <Button type={'submit'} addCls={'w_full'}>
-						Сброс
+            Сброс
           </Button>
         </form>
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/authorization">
-						Вход на сайт ZP
+            Вход на сайт ZP
           </Link>
         </div>
       </div>

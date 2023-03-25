@@ -10,10 +10,10 @@ import styles from './NavBar.module.css';
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.checkAuth.value);
+  const { status } = useSelector((state) => state.checkAuth.value);
 
   const logout = () => {
-    postLogout().then(data => {
+    postLogout().then((data) => {
       localStorage.removeItem('accessToken');
       dispatch(
         getAuth({

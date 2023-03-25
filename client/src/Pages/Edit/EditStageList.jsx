@@ -20,14 +20,15 @@ const EditStageList = () => {
 
   const updateGeneralPoints = () =>
     putGeneralPoints(seriesId)
-      .then(response =>
+      .then((response) =>
         dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }))
       )
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({
             message:
-							error.response.data?.message || 'Ошибка при обновлении очков генеральной квалификации',
+              error.response.data?.message ||
+              'Ошибка при обновлении очков генеральной квалификации',
             type: 'error',
             isOpened: true,
           })
@@ -46,7 +47,7 @@ const EditStageList = () => {
 					во всех этапах серии. Необходимо запускать после изменения 
 					категории райдеру, штрафа, дисквалификации."
         >
-					Обновить генерал
+          Обновить генерал
         </Button>
       </div>
     </div>

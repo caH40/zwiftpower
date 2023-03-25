@@ -8,8 +8,8 @@ const useUpload = (fileNew = {}) => {
 
   const reader = new FileReader();
   reader.readAsText(fileNew);
-  reader.onload = e => {
-    const result = e.target.result;
+  reader.onload = (e) => {
+    const { result } = e.target;
     const resultJson = JSON.parse(result);
     return [
       file,

@@ -22,11 +22,11 @@ const Upload = () => {
 
   const saveSchedule = () => {
     postSchedule(schedule)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
         navigate('/edit/series/');
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
         )
@@ -35,13 +35,17 @@ const Upload = () => {
 
   const saveResults = () => {
     postResults(results)
-      .then(response => {
-        dispatch(getAlert({ message: response.data?.message, type: 'success', isOpened: true }));
+      .then((response) => {
+        dispatch(
+          getAlert({ message: response.data?.message, type: 'success', isOpened: true })
+        );
         navigate(`/edit/stage/${response.data.ids.seriesId}/${response.data.ids.stageId}`);
       })
-      .catch(error => {
+      .catch((error) => {
         let message = 'Ошибка при сохранении данных!';
-        if (error.response?.data?.message) message = error.response.data.message;
+        if (error.response?.data?.message) {
+          ({ message } = error.response.data);
+        }
         dispatch(getAlert({ message, type: 'error', isOpened: true }));
       });
   };

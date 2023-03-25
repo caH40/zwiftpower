@@ -8,9 +8,7 @@ import Button from '../../components/UI/Button/Button';
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import useTitle from '../../hook/useTitle';
 
-
 import { postStage } from '../../api/stage';
-
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
@@ -34,15 +32,16 @@ const AddStage = () => {
       );
 
     postStage(stage)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
         navigate(`/edit/series/${seriesId}`);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
         )
       );
+    return false;
   };
 
   return (

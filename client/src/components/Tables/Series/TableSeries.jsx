@@ -18,13 +18,13 @@ const TableSeries = ({ target }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const myLink = url => (isStage ? navigate(`/edit/stage/${url}`) : '');
+  const myLink = (url) => (isStage ? navigate(`/edit/stage/${url}`) : '');
 
   useEffect(() => {
-    getSeries().then(data => setSeries(data.data.series));
+    getSeries().then((data) => setSeries(data.data.series));
   }, [update]);
 
-  const deleteStage = seriesId => {
+  const deleteStage = (seriesId) => {
     const confirm = window.confirm(
       `Вы действительно хотите удалить Series №${seriesId}? 
 			Будут удалены все этапы серии и все результаты соответствующих этапов!`
@@ -38,7 +38,7 @@ const TableSeries = ({ target }) => {
         })
       );
     postDeleteSeries(seriesId)
-      .then(data => {
+      .then((data) => {
         setSeries(data.data.series);
         dispatch(
           getAlert({
@@ -48,7 +48,7 @@ const TableSeries = ({ target }) => {
           })
         );
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({
             message: 'Ошибка при удалении Series!',
@@ -57,7 +57,8 @@ const TableSeries = ({ target }) => {
           })
         )
       )
-      .finally(() => setUpdate(prev => !prev));
+      .finally(() => setUpdate((prev) => !prev));
+    return false;
   };
 
   return (
@@ -110,7 +111,7 @@ const TableSeries = ({ target }) => {
                   <>
                     <td>
                       <ButtonLink to={`/edit/series/${seriesOne._id}`} addCls="td">
-												редактировать
+                        редактировать
                       </ButtonLink>
                     </td>
                     <td>
@@ -120,7 +121,7 @@ const TableSeries = ({ target }) => {
                         toolTip="Удаление Серии (Тура), соответствующих Этапов и всех 
 												результатов заездов."
                       >
-												удалить
+                        удалить
                       </Button>
                     </td>
                   </>

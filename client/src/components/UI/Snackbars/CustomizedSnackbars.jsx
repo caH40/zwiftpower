@@ -11,7 +11,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 });
 
 export default function CustomizedSnackbars({ children }) {
-  const snackbar = useSelector(state => state.alertMessage.value);
+  const snackbar = useSelector((state) => state.alertMessage.value);
 
   const dispatch = useDispatch();
 

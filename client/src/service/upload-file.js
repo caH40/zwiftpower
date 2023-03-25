@@ -1,12 +1,12 @@
-export const uploadFile = file => {
-  const promise = new Promise(resolve => {
+export const uploadFile = (file) => {
+  const promise = new Promise((resolve) => {
     const { name, size, lastModified, type } = file;
 
     if (type.includes('json')) {
       const reader = new FileReader();
       reader.readAsText(file);
-      reader.onload = e => {
-        const result = e.target.result;
+      reader.onload = (e) => {
+        const { result } = e.target;
         const resultJson = JSON.parse(result);
         resolve({
           resultJson,
@@ -16,7 +16,7 @@ export const uploadFile = file => {
     } else {
       const reader = new FileReader();
       reader.readAsBinaryString(file);
-      reader.onload = e => {
+      reader.onload = (e) => {
         const binaryFile = e.target.result;
         resolve({
           binaryFile,

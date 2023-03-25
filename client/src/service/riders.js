@@ -2,7 +2,7 @@ import * as XLSX from 'xlsx';
 
 export function downloadXLSX(riders) {
   try {
-    const binary = riders.map(rider => {
+    const binary = riders.map((rider) => {
       return {
         zwiftId: rider.zwiftId,
         fio: `${rider.lastName} ${rider.firstName}`,

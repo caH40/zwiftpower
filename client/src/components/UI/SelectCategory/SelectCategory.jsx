@@ -9,14 +9,14 @@ import styles from './SelectCategory.module.css';
 const SelectCategory = ({ value, zwiftId, stageId, setUpdate }) => {
   const dispatch = useDispatch();
 
-  const changeCategory = e => {
+  const changeCategory = (e) => {
     const newCategory = e.target.value;
     putCategory(newCategory, zwiftId, stageId)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
-        setUpdate(prev => !prev);
+        setUpdate((prev) => !prev);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при изменении категории!', type: 'error', isOpened: true })
         )

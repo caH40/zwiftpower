@@ -20,7 +20,7 @@ const EditSeriesMain = () => {
       <TableSeries target={'series'} />
       <div className={styles.right}>
         <ButtonLink to="add" toolTip="Добавление новой Серии (Тура).">
-					Добавить
+          Добавить
         </ButtonLink>
       </div>
       <Button getClick={goBack}>назад</Button>

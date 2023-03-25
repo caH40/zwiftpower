@@ -11,13 +11,13 @@ export function getScheduleSeries(file) {
 
     const keysSeries = Object.keys(sheetSeries);
     const rowTitleSeries =
-			getCellTitle(keysSeries, sheetSeries, 'Наименование серии').slice(1) - 1;
+      getCellTitle(keysSeries, sheetSeries, 'Наименование серии').slice(1) - 1;
     const totalSeries = XLSX.utils.sheet_to_json(sheetSeries, {
       range: rowTitleSeries,
       raw: false,
     });
 
-    const totalClearSeries = totalSeries.map(elm => {
+    const totalClearSeries = totalSeries.map((elm) => {
       return {
         name: elm['Наименование серии'],
         dateStart: elm['Дата старта'],
@@ -31,6 +31,6 @@ export function getScheduleSeries(file) {
 
     return totalClearSeries;
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    throw error;
   }
 }

@@ -14,12 +14,12 @@ const Page404 = () => {
     <section className={styles.page404}>
       <h3 className={styles.title}>Ошибка 404</h3>
       <p className={styles.text}>
-				Мы не смогли найти страницу{' '}
+        Мы не смогли найти страницу{' '}
         <span className={styles.text__wrong}>{`${urlServer}/${wrongUrl}`}</span>
       </p>
       <p className={styles.text}>Не расстраивайтесь, у нас много других интересных страниц!</p>
       <Link to="/" className={styles.text__link}>
-				на главную страницу
+        на главную страницу
       </Link>
     </section>
   );

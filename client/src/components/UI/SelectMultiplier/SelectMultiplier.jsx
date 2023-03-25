@@ -11,19 +11,19 @@ import styles from './SelectMultiplier.module.css';
 const SelectMultiplier = ({ stageId, number, multiplier, pointsType, setUpdate, toolTip }) => {
   const dispatch = useDispatch();
 
-  const changeMultiplier = e => {
+  const changeMultiplier = (e) => {
     const newMultiplier = Number(e.target.value);
 
     putMultiplier(stageId, number, newMultiplier, pointsType)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при коэффициента очков!', type: 'error', isOpened: true })
         )
       )
-      .finally(() => setUpdate(prev => !prev));
+      .finally(() => setUpdate((prev) => !prev));
   };
 
   return (

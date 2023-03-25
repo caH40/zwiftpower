@@ -15,7 +15,7 @@ const TableStages = ({ seriesId }) => {
   };
 
   useEffect(() => {
-    getStages(seriesId).then(data => {
+    getStages(seriesId).then((data) => {
       setStages(data.data.stages);
     });
   }, [seriesId]);
@@ -40,7 +40,7 @@ const TableStages = ({ seriesId }) => {
         </tr>
       </thead>
       <tbody>
-        {stages.map(stage => {
+        {stages.map((stage) => {
           const hasResult = stage.hasResults.toString();
           const classResult = `${styles.boxValue} ${
             hasResult === 'true' ? styles.success : styles.error

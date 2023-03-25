@@ -29,13 +29,13 @@ const Registration = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = dataForm => {
+  const onSubmit = (dataForm) => {
     postRegistration(dataForm)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data?.data?.message, type: 'success', isOpened: true }));
         navigate(`/message/registration/${dataForm.email}`);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: error?.response?.data?.message, type: 'error', isOpened: true })
         )
@@ -69,12 +69,12 @@ const Registration = () => {
             addCls="mb20"
           />
           <Button type={'submit'} addCls={'w_full'}>
-						Зарегистрироваться
+            Зарегистрироваться
           </Button>
         </form>
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/authorization">
-						Вход на сайт ZP
+            Вход на сайт ZP
           </Link>
         </div>
       </div>

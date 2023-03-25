@@ -28,15 +28,16 @@ const AddSeries = () => {
       );
 
     postSeries(series)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
         navigate('/edit/series/');
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при сохранении данных!', type: 'error', isOpened: true })
         )
       );
+    return false;
   };
 
   return (

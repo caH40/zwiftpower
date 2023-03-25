@@ -24,12 +24,12 @@ const EditSeries = () => {
   const getClick = () => navigate(-1);
 
   useEffect(() => {
-    getSeriesOne(seriesId).then(data => setSeries(data.data.series));
+    getSeriesOne(seriesId).then((data) => setSeries(data.data.series));
   }, [seriesId, update]);
 
   const sendForm = () => {
-    putSeries(series).then(data => {
-      setUpdate(prev => !prev);
+    putSeries(series).then((data) => {
+      setUpdate((prev) => !prev);
       dispatch(getAlert({ message: data.data?.message, type: data.type, isOpened: true }));
     });
   };

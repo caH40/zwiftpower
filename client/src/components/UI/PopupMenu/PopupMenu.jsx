@@ -8,7 +8,7 @@ import styles from './PopupMenu.module.css';
 
 const PopupMenu = () => {
   const dispatch = useDispatch();
-  const { user, status } = useSelector(state => state.checkAuth.value);
+  const { user, status } = useSelector((state) => state.checkAuth.value);
 
   const isAdmin = ['admin'].includes(user.role);
   const isModerator = ['admin', 'moderator'].includes(user.role);

@@ -22,8 +22,8 @@ const SimpleInput = ({
         className={styles.input}
         type={type}
         value={currentValue}
-        onChange={e =>
-          setState(prev => ({ ...prev, [property]: handlerNewValue(type, e, currentValue) }))
+        onChange={(e) =>
+          setState((prev) => ({ ...prev, [property]: handlerNewValue(type, e, currentValue) }))
         }
         disabled={disabled}
         {...props}

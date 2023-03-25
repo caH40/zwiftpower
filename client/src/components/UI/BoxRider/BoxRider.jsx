@@ -11,13 +11,13 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
   const [filteredRiders, setFilteredRiders] = useState([]);
 
   useEffect(() => {
-    getRiders().then(response => setRiders(response.data.riders));
+    getRiders().then((response) => setRiders(response.data.riders));
   }, []);
 
   useEffect(() => {
     setFilteredRiders(
       [...riders]
-        .filter(rider =>
+        .filter((rider) =>
           (rider.firstName.toLowerCase() + ' ' + rider.lastName.toLowerCase()).includes(
             state.fio.toLowerCase()
           )
@@ -27,8 +27,8 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
     );
   }, [state, riders]);
 
-  const getRiderData = riderId =>
-    getRider(riderId).then(response => {
+  const getRiderData = (riderId) =>
+    getRider(riderId).then((response) => {
       // setIsVisibleModalSearch(false);
       setRider(response.data.rider);
     });
@@ -44,7 +44,7 @@ const BoxRider = ({ setRider, setIsVisibleModal }) => {
       />
       <ul className={styles.list}>
         {riders.length
-          ? filteredRiders.map(rider => (
+          ? filteredRiders.map((rider) => (
             <li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
               {`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
             </li>

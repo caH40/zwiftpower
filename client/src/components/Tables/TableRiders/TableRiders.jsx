@@ -8,7 +8,7 @@ import { tdLinkZP } from '../utils/td';
 const TableRiders = ({ riders = [] }) => {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <caption>Данные зарегистрированных райдеров</caption>
+      <caption>Райдеры</caption>
       <thead>
         <tr>
           <th>#</th>

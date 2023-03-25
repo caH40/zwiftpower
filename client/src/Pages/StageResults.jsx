@@ -8,12 +8,12 @@ const StageResults = () => {
   const { stageId } = useParams();
 
   useEffect(() => {
-    getResultStage(stageId).then(data => setResults(data));
+    getResultStage(stageId).then((data) => setResults(data));
   }, [stageId]);
 
   return (
     <div>
-      {results.map(result => (
+      {results.map((result) => (
         <div key={result._id}>{JSON.stringify(result, null, 2)}</div>
       ))}
     </div>

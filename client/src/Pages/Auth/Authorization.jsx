@@ -25,18 +25,20 @@ const Authorization = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = dataForm => {
+  const onSubmit = (dataForm) => {
     postAuthorization(dataForm)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data?.data?.message, type: 'success', isOpened: true }));
         if (data.data.accessToken) {
           localStorage.setItem('accessToken', data.data.accessToken);
           dispatch(getAuth({ status: true, user: data.data.user }));
-          dispatch(getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true }));
+          dispatch(
+            getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true })
+          );
         }
         navigate(-1);
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(
           getAlert({ message: error?.response?.data?.message, type: 'error', isOpened: true })
         );
@@ -64,12 +66,12 @@ const Authorization = () => {
             addCls="mb20"
           />
           <Button type={'submit'} addCls={'w_full'}>
-						Вход
+            Вход
           </Button>
         </form>
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/registration">
-						Создание аккаунта
+            Создание аккаунта
           </Link>
         </div>
       </div>

@@ -24,6 +24,19 @@
         ],
         "newlines-between": "always-and-inside-groups"
       }
+    ],
+    "consistent-return": "error",
+    "spaced-comment": ["error", "always"],
+    "arrow-parens": ["error", "always"],
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": true,
+        "object": true
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
     ]
   }
 }

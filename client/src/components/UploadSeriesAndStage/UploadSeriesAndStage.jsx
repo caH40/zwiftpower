@@ -10,7 +10,7 @@ import InputFile from '../UI/InputFile/InputFile';
 import styles from './UploadSeriesAndStage.module.css';
 
 const UploadSeriesAndStage = ({ schedule, setSchedule, saveSchedule }) => {
-  const getFile = async event => {
+  const getFile = async (event) => {
     const scheduleNew = await uploadSchedule(event.target.files[0]);
     setSchedule(scheduleNew);
   };

@@ -13,7 +13,7 @@ const SimpleCheckbox = ({ state, property, setState, title, toolTip, disabled })
           className={styles.input}
           checked={state[property]}
           type="checkbox"
-          onChange={e => setState(prev => ({ ...prev, [property]: e.target.checked }))}
+          onChange={(e) => setState((prev) => ({ ...prev, [property]: e.target.checked }))}
           disabled={disabled}
         />
       </label>

@@ -12,14 +12,14 @@ const Checkbox = ({ state, apiRequest, setUpdate, resultId, target, toolTip }) =
   const dispatch = useDispatch();
 
   const changeValue = () => {
-    setCheck(prev => !prev);
+    setCheck((prev) => !prev);
 
     apiRequest(!check, resultId)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
-        setUpdate(prev => !prev);
+        setUpdate((prev) => !prev);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: `Ошибка при изменении ${target}!`, type: 'error', isOpened: true })
         )

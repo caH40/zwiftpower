@@ -10,11 +10,11 @@ const SimpleSelect = ({ name, state, setState, property, disabled, options }) =>
         className={styles.select}
         placeholder={name}
         value={state[property]}
-        onChange={e => setState(prev => ({ ...prev, [property]: e.target.value }))}
+        onChange={(e) => setState((prev) => ({ ...prev, [property]: e.target.value }))}
         disabled={disabled}
       >
         <option className={styles.option} value=""></option>
-        {options.map(element => (
+        {options.map((element) => (
           <option className={styles.option} value={element.name} key={element.id}>
             {element.name}
           </option>

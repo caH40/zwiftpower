@@ -12,13 +12,13 @@ export function getScheduleStages(file) {
 
     const keysStages = Object.keys(sheetStages);
     const rowTitleStages =
-			getCellTitle(keysStages, sheetStages, 'Ссылка на заезд в Звифте').slice(1) - 1;
+      getCellTitle(keysStages, sheetStages, 'Ссылка на заезд в Звифте').slice(1) - 1;
     const totalStages = XLSX.utils.sheet_to_json(sheetStages, {
       range: rowTitleStages,
       raw: false,
     });
 
-    const totalClearStages = totalStages.map(elm => {
+    const totalClearStages = totalStages.map((elm) => {
       return {
         number: elm['Этап'],
         dateStart: elm['Дата'],
@@ -38,6 +38,6 @@ export function getScheduleStages(file) {
 
     return totalClearStages;
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    throw error;
   }
 }

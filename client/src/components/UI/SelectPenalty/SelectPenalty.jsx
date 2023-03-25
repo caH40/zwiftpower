@@ -9,14 +9,14 @@ import styles from './SelectPenalty.module.css';
 const SelectPenalty = ({ result, value, setUpdate }) => {
   const dispatch = useDispatch();
 
-  const changePenalty = e => {
+  const changePenalty = (e) => {
     const newPenalty = Number(e.target.value);
     putPenalty(newPenalty, result._id)
-      .then(data => {
+      .then((data) => {
         dispatch(getAlert({ message: data.data.message, type: 'success', isOpened: true }));
-        setUpdate(prev => !prev);
+        setUpdate((prev) => !prev);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: 'Ошибка при изменении штрафа!', type: 'error', isOpened: true })
         )

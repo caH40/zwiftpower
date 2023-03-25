@@ -12,19 +12,19 @@ import styles from './Riders.module.css';
 const Riders = () => {
   const [riders, setRiders] = useState([]);
 
-  useTitle('Редактирование данных Райдеров');
+  useTitle('Зарегистрированные Райдеры');
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
-  const getAllRidersXLSM = riders => downloadXLSX(riders);
+  const getAllRidersXLSM = (riders) => downloadXLSX(riders);
 
   useEffect(() => {
-    getRiders().then(response => setRiders(response.data.riders));
+    getRiders().then((response) => setRiders(response.data.riders));
   }, []);
 
   return (
     <>
-      <h3 className={styles.title}>Зарегистрированные Райдеры</h3>
+      <h3 className={styles.title}>Данные зарегистрированных Райдеров</h3>
       <div className={styles.right}>
         <Button getClick={() => getAllRidersXLSM(riders)}>Скачать</Button>
       </div>

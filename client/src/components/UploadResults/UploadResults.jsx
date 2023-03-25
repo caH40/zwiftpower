@@ -9,7 +9,7 @@ import InputFile from '../UI/InputFile/InputFile';
 import styles from './UploadResults.module.css';
 
 const UploadResults = ({ results, setResults, saveResults }) => {
-  const getFile = async event => {
+  const getFile = async (event) => {
     const protocol = await uploadProtocol(event.target.files[0]);
     setResults(protocol);
   };
@@ -37,7 +37,7 @@ const UploadResults = ({ results, setResults, saveResults }) => {
             toolTip="После сохранения протокола произойдет автоматическое 
 						начисление очков генеральной квалификации."
           >
-						Сохранить
+            Сохранить
           </Button>
         ) : (
           ''

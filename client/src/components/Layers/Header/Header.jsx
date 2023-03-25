@@ -8,10 +8,10 @@ import PopupMenu from '../../UI/PopupMenu/PopupMenu';
 import styles from './Header.module.css';
 
 const Header = () => {
-  const titlePage = useSelector(state => {
+  const titlePage = useSelector((state) => {
     return state.titlePage.value.title;
   });
-  const { isVisible } = useSelector(state => state.menuBurger);
+  const { isVisible } = useSelector((state) => state.menuBurger);
   return (
     <header className={styles.header}>
       {isVisible ? <PopupMenu /> : ''}

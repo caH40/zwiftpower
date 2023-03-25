@@ -15,7 +15,7 @@ const ConfirmEmail = () => {
   useTitle('Страница активации аккаунта');
 
   useEffect(() => {
-    confirmEmail(token).then(response => {
+    confirmEmail(token).then((response) => {
       setMessage(response.data.message);
     });
   }, [token]);

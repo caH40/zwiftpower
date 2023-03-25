@@ -10,6 +10,6 @@ export async function confirmEmail(token) {
     });
     return response;
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    throw error;
   }
 }

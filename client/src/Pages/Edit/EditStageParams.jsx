@@ -20,12 +20,12 @@ const EditStageParams = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getStage(stageId).then(data => setStage(data.data.stage));
+    getStage(stageId).then((data) => setStage(data.data.stage));
   }, [stageId, update]);
 
   const sendForm = () => {
-    putStage(stage).then(data => {
-      setUpdate(prev => !prev);
+    putStage(stage).then((data) => {
+      setUpdate((prev) => !prev);
       dispatch(getAlert({ message: data.data.message, type: data.type, isOpened: true }));
     });
   };
@@ -35,7 +35,9 @@ const EditStageParams = () => {
       {stage?._id ? (
         <>
           <section className="page__block">
-            <h3 className="titlePage-3">Редактирование параметров этапа "{stage?.seriesId?.name}"</h3>
+            <h3 className="titlePage-3">
+              Редактирование параметров этапа "{stage?.seriesId?.name}"
+            </h3>
             <FormEditStage stage={stage} setStage={setStage} sendForm={sendForm} />
             <Button getClick={getClick}>назад</Button>
           </section>

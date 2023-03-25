@@ -10,12 +10,12 @@ import styles from './Button.module.css';
 const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }) => {
   return (
     <>
-      {disabled ? ( //mui toolpit не работает с кнопкой с disabled (mui рекомендует поместить кнопку в <span>)
+      {disabled ? ( // mui toolpit не работает с кнопкой с disabled (mui рекомендует поместить кнопку в <span>)
         <button
           className={cn(styles.button, cns(addCls, styles))}
           onClick={
             getClick
-              ? e => {
+              ? (e) => {
                 e.preventDefault();
                 getClick();
 							  }
@@ -32,7 +32,7 @@ const Button = ({ getClick, children, addCls = '', toolTip, disabled, ...props }
             className={cn(styles.button, cns(addCls, styles))}
             onClick={
               getClick
-                ? e => {
+                ? (e) => {
                   e.preventDefault();
                   getClick();
 								  }

@@ -23,7 +23,7 @@ const ResetPassword = () => {
   const { token } = useParams();
 
   useEffect(() => {
-    checkRequestPassword(token).then(response => {
+    checkRequestPassword(token).then((response) => {
       setUserId(response.data.userId);
       dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
     });
@@ -35,10 +35,10 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = dataForm => {
+  const onSubmit = (dataForm) => {
     putNewPassword(dataForm, userId)
-      .then(data => navigate('/message/newPassword/none'))
-      .catch(error => {
+      .then((data) => navigate('/message/newPassword/none'))
+      .catch((error) => {
         dispatch(
           getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
         );
@@ -60,12 +60,12 @@ const ResetPassword = () => {
             />
 
             <Button type={'submit'} addCls={'w_full'}>
-							Сохранить
+              Сохранить
             </Button>
           </form>
           <div className={styles.additional}>
             <Link className={styles.link} to="/auth/authorization">
-							Вход на сайт ZP
+              Вход на сайт ZP
             </Link>
           </div>
         </div>

@@ -28,14 +28,14 @@ const AddRider = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRiders().then(response => setRiders(response.data.riders));
-    getStage(stageId).then(response => setStage(response.data.stage));
+    getRiders().then((response) => setRiders(response.data.riders));
+    getStage(stageId).then((response) => setStage(response.data.stage));
   }, [stageId]);
 
   useEffect(() => {
     setFilteredRiders(
       [...riders]
-        .filter(rider =>
+        .filter((rider) =>
           (rider.firstName.toLowerCase() + ' ' + rider.lastName.toLowerCase()).includes(
             query.fio.toLowerCase()
           )
@@ -49,17 +49,17 @@ const AddRider = () => {
     setNewResult(resultStart(stageId, rider));
   }, [stageId, rider]);
 
-  const getRiderData = async zwiftId => {
+  const getRiderData = async (zwiftId) => {
     const hasResult = await checkRiderResult(zwiftId, stageId)
-      .then(response => false)
-      .catch(error => {
+      .then((response) => false)
+      .catch((error) => {
         dispatch(
           getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
         );
         return true;
       });
     if (hasResult) return;
-    getRider(zwiftId).then(response => {
+    getRider(zwiftId).then((response) => {
       setRider(response.data.rider);
       getScroll(refTitle.current);
     });
@@ -68,21 +68,26 @@ const AddRider = () => {
   const saveResult = () => {
     const checkedForm = checkForm(newResult);
     if (!checkedForm.isCorrect)
-      return dispatch(getAlert({ message: checkedForm.message, type: 'warning', isOpened: true }));
+      return dispatch(
+        getAlert({ message: checkedForm.message, type: 'warning', isOpened: true })
+      );
 
     postResult({
       ...newResult,
       weightInGrams: Math.round((newResult.watt / newResult.wattPerKg) * 1000),
     })
-      .then(response => {
-        dispatch(getAlert({ message: response.data?.message, type: 'success', isOpened: true }));
+      .then((response) => {
+        dispatch(
+          getAlert({ message: response.data?.message, type: 'success', isOpened: true })
+        );
         navigate(-1);
       })
-      .catch(error =>
+      .catch((error) =>
         dispatch(
           getAlert({ message: error.response?.data?.message, type: 'error', isOpened: true })
         )
       );
+    return false;
   };
 
   const goBack = () => navigate(-1);

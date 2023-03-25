@@ -10,10 +10,11 @@ export function getResults(fileJson) {
 
     const results = [];
 
-    fileJson.forEach(result => {
+    fileJson.forEach((result) => {
       const timeString = secondesToTime(result.activityData.durationInMilliseconds);
       const wattPerKg =
-				Math.round((result.sensorData.avgWatts / result.profileData.weightInGrams) * 100000) / 100;
+        Math.round((result.sensorData.avgWatts / result.profileData.weightInGrams) * 100000) /
+        100;
       const name = `${result.profileData.firstName} ${result.profileData.lastName}`;
       const gap = secondesToTimeThousandths(
         result.activityData.durationInMilliseconds - firstRiderTime
@@ -41,6 +42,6 @@ export function getResults(fileJson) {
     });
     return results;
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    throw error;
   }
 }
