@@ -1,5 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
+import { getAlert } from '../../redux/features/alertMessageSlice';
+import { checkFilename } from '../../service/protocol/file-name';
 import { uploadProtocol } from '../../service/protocol/protocol';
 import DlFile from '../DescriptionList/DlFile/DlFile';
 import TableResultsNew from '../Tables/TableEditStageResults/TableResultsNew';
@@ -9,9 +12,19 @@ import InputFile from '../UI/InputFile/InputFile';
 import styles from './UploadResults.module.css';
 
 function UploadResults({ results, setResults, saveResults }) {
+  const dispatch = useDispatch();
+
   const getFile = async (event) => {
-    const protocol = await uploadProtocol(event.target.files[0]);
-    setResults(protocol);
+    const [file] = event.target.files;
+    const isCurrentName = checkFilename(file.name);
+    if (isCurrentName) {
+      const protocol = await uploadProtocol(file);
+      setResults(protocol);
+    } else {
+      dispatch(
+        getAlert({ message: 'Невалидное имя файла протокола!', type: 'error', isOpened: true })
+      );
+    }
   };
 
   return (
