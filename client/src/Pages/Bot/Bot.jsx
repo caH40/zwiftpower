@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import useTitle from '../../hook/useTitle';
 import SimpleInput from '../../components/UI/SimpleInput/SimpleInput';
@@ -12,16 +11,8 @@ function Bot() {
   const [message, setMessage] = useState({ text: '' });
   useTitle('Взаимодействие с ботом Race Info | KOM-on');
 
-  const test = () => {
-    axios({
-      url: 'http://localhost:8080/api/notice/protocol',
-      method: 'post',
-      data: { protocol: 'test' },
-    }).catch((error) => console.log(error));
-  };
-
   const sendMessage = () => {
-    postNotice(message).catch((error) => console.log(error));
+    postNotice(message).catch((error) => console.log(error)); // eslint-disable-line
     setMessage({ text: '' });
   };
 
