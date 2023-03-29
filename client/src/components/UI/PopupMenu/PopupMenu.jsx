@@ -19,14 +19,14 @@ function PopupMenu() {
         <ul className={styles.list}>
           <li className={styles.item}>
             <Link to="/" className={styles.link}>
-							Главная
+              Главная
             </Link>
           </li>
 
           {status ? (
             <li className={styles.item}>
               <Link to="/profile" className={styles.link}>
-								Профиль
+                Профиль
               </Link>
             </li>
           ) : undefined}
@@ -35,22 +35,27 @@ function PopupMenu() {
             <>
               <li className={styles.item}>
                 <Link to="/edit/stage" className={styles.link}>
-									Stages
+                  Stages
                 </Link>
               </li>
               <li className={styles.item}>
                 <Link to="/edit/series" className={styles.link}>
-									Series
+                  Series
                 </Link>
               </li>
               <li className={styles.item}>
                 <Link to="/edit/upload" className={styles.link}>
-									Загрузка
+                  Загрузка
                 </Link>
               </li>
               <li className={styles.item}>
                 <Link to="/edit/riders" className={styles.link}>
-									Райдеры
+                  Райдеры
+                </Link>
+              </li>
+              <li className={styles.item}>
+                <Link to="/bot" className={styles.link}>
+                  Бот
                 </Link>
               </li>
             </>
@@ -59,7 +64,7 @@ function PopupMenu() {
           {isAdmin ? (
             <li className={styles.item}>
               <Link to="/edit/users" className={styles.link}>
-								Пользователи
+                Пользователи
               </Link>
             </li>
           ) : undefined}

@@ -25,6 +25,8 @@ import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
 import NewPassword from './Pages/Auth/NewPassword';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import AddRider from './Pages/AddRider/AddRider';
+import Profile from './Pages/Profile/Profile';
+import Bot from './Pages/Bot/Bot';
 
 function App() {
   useFirstAuth();
@@ -59,6 +61,8 @@ function App() {
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/edit/upload" element={<Upload />} />
         <Route path="/edit/riders" element={<Riders />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/bot" element={<Bot />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>
