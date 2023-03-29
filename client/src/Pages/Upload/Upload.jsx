@@ -8,6 +8,7 @@ import UploadResults from '../../components/UploadResults/UploadResults';
 import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSeriesAndStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { postNoticeProtocol } from '../../api/bot-notice';
 
 import styles from './Upload.module.css';
 
@@ -40,6 +41,7 @@ function Upload() {
           getAlert({ message: response.data?.message, type: 'success', isOpened: true })
         );
         navigate(`/edit/stage/${response.data.ids.seriesId}/${response.data.ids.stageId}`);
+        postNoticeProtocol(results);
       })
       .catch((error) => {
         let message = 'Ошибка при сохранении данных!';
