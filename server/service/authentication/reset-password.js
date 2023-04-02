@@ -5,23 +5,23 @@ import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
 
 export async function resetPasswordService(email) {
-	try {
-		const userDB = await User.findOne({ email });
-		if (!userDB) throw { message: 'e-mail не найден' };
+  try {
+    const userDB = await User.findOne({ email });
+    if (!userDB) throw { message: 'e-mail не найден' };
 
-		const tokenReset = uuidv4();
-		const passwordResetDB = await PasswordReset.create({
-			userId: userDB._id,
-			email,
-			tokenReset,
-			date: Date.now(),
-		});
+    const tokenReset = uuidv4();
+    const passwordResetDB = await PasswordReset.create({
+      userId: userDB._id,
+      email,
+      tokenReset,
+      date: Date.now(),
+    });
 
-		const target = 'resetPassword';
-		await mailService(target, tokenReset, email, userDB.username);
+    const target = 'resetPassword';
+    await mailService(target, tokenReset, email, userDB.username);
 
-		return { message: `Сброс пароля `, email };
-	} catch (error) {
-		throw error;
-	}
+    return { message: `Сброс пароля `, email };
+  } catch (error) {
+    throw error;
+  }
 }
