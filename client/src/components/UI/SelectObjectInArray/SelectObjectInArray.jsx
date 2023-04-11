@@ -12,8 +12,6 @@ function SelectObjectInArray({
   index,
   arrayName,
 }) {
-  console.log({ index });
-  console.log(state[arrayName][index][property]);
   return (
     <>
       <p className={styles.label}>{name}:</p>

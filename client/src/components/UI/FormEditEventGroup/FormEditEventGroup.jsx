@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { jerseys, routes, worlds } from '../../../asset/zwift/lib/esm/zwift-lib';
 import Button from '../Button/Button';
 
 import styles from './FormEditEventGroup.module.css';

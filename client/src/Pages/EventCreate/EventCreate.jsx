@@ -26,6 +26,10 @@ function EventCreate() {
   const goBack = () => navigate(-1);
 
   const sendForm = () => {
+    console.log({
+      ...event,
+      eventSubgroups: [subGroup_0, subGroup_1, subGroup_2, subGroup_3, subGroup_4],
+    });
     // // if (!isValidSeries(series))
     // //   return dispatch(
     // //     getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
@@ -98,6 +102,7 @@ function EventCreate() {
             setSubGroup_2={setSubGroup_2}
             setSubGroup_3={setSubGroup_3}
             setSubGroup_4={setSubGroup_4}
+            sendForm={sendForm}
           />
           <Button getClick={goBack}>назад</Button>
         </>

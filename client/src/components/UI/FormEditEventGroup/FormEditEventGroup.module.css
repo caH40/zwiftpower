@@ -1,12 +1,15 @@
 .form {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .right {
-	text-align: right;
+  text-align: right;
 }
 .box__checkbox {
-	display: flex;
-	justify-content: flex-start;
-	margin-right: 10px;
-	margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.title {
+  color: red;
 }

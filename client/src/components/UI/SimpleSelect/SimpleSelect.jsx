@@ -3,7 +3,6 @@ import React from 'react';
 import styles from './SimpleSelect.module.css';
 
 function SimpleSelect({ name, state, setState, property, disabled, options }) {
-  property = property === 'worldId' ? 'worldId' : 'worldIdStr';
   return (
     <>
       <p className={styles.label}>{name}:</p>

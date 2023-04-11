@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { jerseys, routes, worlds } from '../../../asset/zwift/lib/esm/zwift-lib';
-import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
-import SelectObject from '../SelectObject/SelectObject';
-import SelectObjectInArray from '../SelectObjectInArray/SelectObjectInArray';
+
+import TextArea from '../TextArea/TextArea';
 
 import styles from './FormEditEvent.module.css';
 
-function FormEditEvent({ form, setForm, sendForm }) {
+function FormEditEvent({ form, setForm }) {
   return (
     <form className={styles.form} name="zwiftEvent">
       <SimpleInput
@@ -28,6 +26,13 @@ function FormEditEvent({ form, setForm, sendForm }) {
         property="name"
         type="text"
       />
+      <TextArea
+        name="Описание для Заезда"
+        state={form}
+        setState={setForm}
+        property="description"
+        type="text"
+      />
       <SimpleInput
         name="URL картинки для обложки"
         state={form}
@@ -35,35 +40,6 @@ function FormEditEvent({ form, setForm, sendForm }) {
         property="imageUrl"
         type="text"
       />
-      {/* <SelectObject
-        name="Мир"
-        state={form}
-        setState={setForm}
-        property="worldId"
-        options={worlds.sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-        )}
-      />
-      <SelectObject
-        name="Маршрут"
-        state={form}
-        setState={setForm}
-        property="routeId"
-        options={routes
-          .filter(
-            (route) => route.world === worlds.find((world) => world.id === form.worldId).slug
-          )
-          .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en'))}
-      /> */}
-      {/* <SimpleSelect
-        name="Джерси заезда"
-        state={form}
-        setState={setForm}
-        property="jerseyHashStr"
-        options={jerseys.sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-        )}
-      /> */}
       <SimpleSelect
         name="Тип заезда"
         state={form}
@@ -74,23 +50,6 @@ function FormEditEvent({ form, setForm, sendForm }) {
           { id: 1, name: 'EVENT_TYPE_RACE' },
         ]}
       />
-
-      {/* {form.eventSubgroups.map((eventSubgroup, index) => (
-        <div key={eventSubgroup.id}>
-          <p>Группа {eventSubgroup.subgroupLabel}</p>
-          <SelectObjectInArray
-            index={index}
-            arrayName="eventSubgroups"
-            name="Мир"
-            state={form}
-            setState={setForm}
-            property="mapId"
-            options={worlds.sort((a, b) =>
-              a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-            )}
-          />
-        </div>
-      ))} */}
 
       {/* <div className={styles.box__checkbox}>
         <SimpleCheckbox
