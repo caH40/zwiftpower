@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { getZwiftEvents } from '../../api/zwift/events';
+import { changeZwiftEvents, getZwiftEvents } from '../../api/zwift/events';
 import FormRequest from '../../components/UI/FormRequest/FormRequest';
 import FormEditEvent from '../../components/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/UI/FormEditEventGroup/FormEditEventGroup';
 
 import styles from './EventCreate.module.css';
+import { prepareData } from './utils/preparation';
 
 function EventCreate() {
   const [event, setEvent] = useState({ id: 0 });
@@ -24,31 +25,34 @@ function EventCreate() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-
+  console.log(event);
   const sendForm = () => {
-    console.log({
-      ...event,
-      eventSubgroups: [subGroup_0, subGroup_1, subGroup_2, subGroup_3, subGroup_4],
-    });
-    // // if (!isValidSeries(series))
-    // //   return dispatch(
-    // //     getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
-    // //   );
-    // getZwiftEvents(event.id)
-    //   .then((data) => {
-    //     console.log(data);
-    //     // dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-    //     // navigate('/edit/series/');
-    //   })
-    //   .catch((error) =>
-    //     dispatch(
-    //       getAlert({
-    //         message: 'Ошибка при обработке данных заезда!',
-    //         type: 'error',
-    //         isOpened: true,
-    //       })
-    //     )
+    // if (!isValidSeries(series))
+    //   return dispatch(
+    //     getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
     //   );
+    const eventForPost = prepareData(
+      event,
+      subGroup_0,
+      subGroup_1,
+      subGroup_2,
+      subGroup_3,
+      subGroup_4
+    );
+    changeZwiftEvents(eventForPost)
+      .then((data) => {
+        // dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+        // navigate('/edit/series/');
+      })
+      .catch((error) =>
+        dispatch(
+          getAlert({
+            message: 'Ошибка при обработке данных заезда!',
+            type: 'error',
+            isOpened: true,
+          })
+        )
+      );
     return false;
   };
 

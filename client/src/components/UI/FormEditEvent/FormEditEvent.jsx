@@ -34,6 +34,13 @@ function FormEditEvent({ form, setForm }) {
         type="text"
       />
       <SimpleInput
+        name="Время старта (московское время -3ч)"
+        state={form}
+        setState={setForm}
+        property="eventStart"
+        type="text"
+      />
+      <SimpleInput
         name="URL картинки для обложки"
         state={form}
         setState={setForm}
