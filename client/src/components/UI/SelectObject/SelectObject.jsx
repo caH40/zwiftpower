@@ -1,17 +1,21 @@
 import React from 'react';
 
-import styles from './SimpleSelect.module.css';
+import styles from './SelectObject.module.css';
 
-function SimpleSelect({ name, state, setState, property, disabled, options }) {
-  property = property === 'worldId' ? 'worldId' : 'worldIdStr';
+function SelectObject({ name, state, setState, property, disabled, options }) {
   return (
     <>
       <p className={styles.label}>{name}:</p>
       <select
         className={styles.select}
         placeholder={name}
-        value={state[property]}
-        onChange={(e) => setState((prev) => ({ ...prev, [property]: e.target.value }))}
+        value={options.find((element) => element.id === state[property])?.name}
+        onChange={(e) =>
+          setState((prev) => ({
+            ...prev,
+            [property]: options.find((element) => element.name === e.target.value)?.id,
+          }))
+        }
         disabled={disabled}
       >
         <option className={styles.option} value=""></option>
@@ -25,4 +29,4 @@ function SimpleSelect({ name, state, setState, property, disabled, options }) {
   );
 }
 
-export default SimpleSelect;
+export default SelectObject;

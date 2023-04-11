@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { jerseys, routes, worlds } from 'zwift-data';
 
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
-import FormCreateEvent from '../../components/UI/FormCreateEvent/FormCreateEvent';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { getZwiftEvents } from '../../api/zwift/events';
 import FormRequest from '../../components/UI/FormRequest/FormRequest';
+import FormEditEvent from '../../components/UI/FormEditEvent/FormEditEvent';
 
 import styles from './EventCreate.module.css';
 
@@ -76,7 +75,7 @@ function EventCreate() {
       />
       {event.worldId ? (
         <>
-          <FormCreateEvent form={event} setForm={setEvent} sendForm={sendForm} />
+          <FormEditEvent form={event} setForm={setEvent} sendForm={sendForm} />
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}

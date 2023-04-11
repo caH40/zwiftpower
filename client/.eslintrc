@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["**/lib/esm/*.js"],
   "extends": ["react-app", "react-app/jest"],
   "parserOptions": {
     "ecmaVersion": "latest",
