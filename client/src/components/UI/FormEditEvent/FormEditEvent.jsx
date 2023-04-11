@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { jerseys, routes, worlds } from '../../../asset/zwift/lib/esm/zwift-lib';
 import Button from '../Button/Button';
@@ -6,13 +6,11 @@ import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
 import SelectObject from '../SelectObject/SelectObject';
+import SelectObjectInArray from '../SelectObjectInArray/SelectObjectInArray';
 
 import styles from './FormEditEvent.module.css';
 
 function FormEditEvent({ form, setForm, sendForm }) {
-  console.log(form);
-  console.log(worlds.find((world) => world.id === form.worldId).name);
-
   return (
     <form className={styles.form} name="zwiftEvent">
       <SimpleInput
@@ -37,7 +35,7 @@ function FormEditEvent({ form, setForm, sendForm }) {
         property="imageUrl"
         type="text"
       />
-      <SelectObject
+      {/* <SelectObject
         name="Мир"
         state={form}
         setState={setForm}
@@ -56,7 +54,7 @@ function FormEditEvent({ form, setForm, sendForm }) {
             (route) => route.world === worlds.find((world) => world.id === form.worldId).slug
           )
           .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en'))}
-      />
+      /> */}
       {/* <SimpleSelect
         name="Джерси заезда"
         state={form}
@@ -77,6 +75,23 @@ function FormEditEvent({ form, setForm, sendForm }) {
         ]}
       />
 
+      {/* {form.eventSubgroups.map((eventSubgroup, index) => (
+        <div key={eventSubgroup.id}>
+          <p>Группа {eventSubgroup.subgroupLabel}</p>
+          <SelectObjectInArray
+            index={index}
+            arrayName="eventSubgroups"
+            name="Мир"
+            state={form}
+            setState={setForm}
+            property="mapId"
+            options={worlds.sort((a, b) =>
+              a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
+            )}
+          />
+        </div>
+      ))} */}
+
       {/* <div className={styles.box__checkbox}>
         <SimpleCheckbox
           state={series}
@@ -85,12 +100,7 @@ function FormEditEvent({ form, setForm, sendForm }) {
           title="Генеральный зачёт:"
           toolTip="Показывать генеральную квалификацию Серии."
         />
-
       </div> */}
-
-      <div className={styles.right}>
-        <Button getClick={sendForm}>сохранить</Button>
-      </div>
     </form>
   );
 }

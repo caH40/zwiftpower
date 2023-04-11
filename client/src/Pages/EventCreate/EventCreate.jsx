@@ -8,11 +8,17 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { getZwiftEvents } from '../../api/zwift/events';
 import FormRequest from '../../components/UI/FormRequest/FormRequest';
 import FormEditEvent from '../../components/UI/FormEditEvent/FormEditEvent';
+import FormEditEventGroup from '../../components/UI/FormEditEventGroup/FormEditEventGroup';
 
 import styles from './EventCreate.module.css';
 
 function EventCreate() {
   const [event, setEvent] = useState({ id: 0 });
+  const [subGroup_0, setSubGroup_0] = useState([]);
+  const [subGroup_1, setSubGroup_1] = useState([]);
+  const [subGroup_2, setSubGroup_2] = useState([]);
+  const [subGroup_3, setSubGroup_3] = useState([]);
+  const [subGroup_4, setSubGroup_4] = useState([]);
 
   useTitle('Создание заезда');
   const dispatch = useDispatch();
@@ -50,6 +56,11 @@ function EventCreate() {
     getZwiftEvents(event.id)
       .then((response) => {
         setEvent(response.data);
+        setSubGroup_0(response.data.eventSubgroups[0]);
+        setSubGroup_1(response.data.eventSubgroups[1]);
+        setSubGroup_2(response.data.eventSubgroups[2]);
+        setSubGroup_3(response.data.eventSubgroups[3]);
+        setSubGroup_4(response.data.eventSubgroups[4]);
         dispatch(getAlert({ message: 'Данные получены', type: 'success', isOpened: true }));
       })
       .catch((error) =>
@@ -75,7 +86,19 @@ function EventCreate() {
       />
       {event.worldId ? (
         <>
-          <FormEditEvent form={event} setForm={setEvent} sendForm={sendForm} />
+          <FormEditEvent form={event} setForm={setEvent} />
+          <FormEditEventGroup
+            subGroup_0={subGroup_0}
+            subGroup_1={subGroup_1}
+            subGroup_2={subGroup_2}
+            subGroup_3={subGroup_3}
+            subGroup_4={subGroup_4}
+            setSubGroup_0={setSubGroup_0}
+            setSubGroup_1={setSubGroup_1}
+            setSubGroup_2={setSubGroup_2}
+            setSubGroup_3={setSubGroup_3}
+            setSubGroup_4={setSubGroup_4}
+          />
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
