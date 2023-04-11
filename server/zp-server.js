@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';
 import { timers } from './service/timer.js';
+import { routerZwift } from './routes/zwift.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
@@ -27,6 +28,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
+app.use('/api/zwift', routerZwift);
 app.use('/api/auth', routerAuth);
 app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 app.get('*', (req, res) =>

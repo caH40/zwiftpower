@@ -29,11 +29,11 @@ function NavBar() {
       <li className={styles.item}>
         {status ? (
           <span onClick={logout} className={styles.link}>
-						Выход
+            Выход
           </span>
         ) : (
           <NavLink to="/auth/authorization" className={styles.link}>
-						Вход
+            Вход
           </NavLink>
         )}
       </li>
