@@ -1,18 +1,40 @@
 import { addNull } from '../../../utils/date-convert';
 
-export function prepareData(event, subGroup_0, subGroup_1, subGroup_2, subGroup_3, subGroup_4) {
-  const dateNow = Date.now();
+export function prepareData(
+  event,
+  subGroup_0,
+  subGroup_1,
+  subGroup_2,
+  subGroup_3,
+  subGroup_4,
+  selectedRules
+) {
+  const dateNow = [`timestamp=${Date.now()}`];
   const eventSubgroups = [subGroup_0, subGroup_1, subGroup_2, subGroup_3, subGroup_4].filter(
     (elm) => elm
   );
+  event.rulesId = null;
+  const rulesSet = [...selectedRules].map((rule) => rule.value);
+  event.rulesSet = rulesSet;
 
   // изменение тэга времени
-  event.tags[0] = dateNow;
+  event.tags = dateNow;
   for (const subGroup of eventSubgroups) {
-    subGroup.tags[0] = dateNow;
+    subGroup.tags = dateNow;
+    subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
+    subGroup.rulesId = null;
   }
 
+  if (event.categoryEnforcement) {
+    event.accessExpression =
+      '(subgroup.label == 1 && powerCurves.category == 0) || (powerCurves.category != 5 && powerCurves.category >= subgroup.label) || (powerCurves.category == 5 && subgroup.label == 5)'; // eslint-disable-line
+  } else {
+    event.accessExpression = null;
+  }
+  // event.microserviceExternalResourceId = null;
+  // event.microserviceEventVisibility = null;
+  // event.microserviceName = null;
   return {
     eventTemplateId: event.eventTemplateId,
     eventData: {

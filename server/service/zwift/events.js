@@ -23,8 +23,8 @@ export async function putEventService(event, username, password) {
     const urlEventData = `events/${event.eventData.id}`;
 
     const eventData = await putRequest(urlEventData, token, event);
-    console.log(eventData);
-    return eventData;
+
+    return { eventData, message: 'Изменения сохранены' };
   } catch (error) {
     throw error;
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,29 +20,28 @@ function EventCreate() {
   const [subGroup_2, setSubGroup_2] = useState([]);
   const [subGroup_3, setSubGroup_3] = useState([]);
   const [subGroup_4, setSubGroup_4] = useState([]);
+  const [selectedRules, setSelectedRules] = useState([]);
 
   useTitle('Создание заезда');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  console.log(event);
+  console.log(event); // eslint-disable-line
   const sendForm = () => {
-    // if (!isValidSeries(series))
-    //   return dispatch(
-    //     getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
-    //   );
     const eventForPost = prepareData(
       event,
       subGroup_0,
       subGroup_1,
       subGroup_2,
       subGroup_3,
-      subGroup_4
+      subGroup_4,
+      selectedRules
     );
+
     changeZwiftEvents(eventForPost)
       .then((data) => {
-        // dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
-        // navigate('/edit/series/');
+        dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+        setEvent({ id: 0 });
       })
       .catch((error) =>
         dispatch(
@@ -69,6 +68,7 @@ function EventCreate() {
         setSubGroup_2(response.data.eventSubgroups[2]);
         setSubGroup_3(response.data.eventSubgroups[3]);
         setSubGroup_4(response.data.eventSubgroups[4]);
+        setSelectedRules(response.data.rulesSet.map((rule) => ({ value: rule, label: rule })));
         dispatch(getAlert({ message: 'Данные получены', type: 'success', isOpened: true }));
       })
       .catch((error) =>
@@ -94,7 +94,12 @@ function EventCreate() {
       />
       {event.worldId ? (
         <>
-          <FormEditEvent form={event} setForm={setEvent} />
+          <FormEditEvent
+            form={event}
+            setForm={setEvent}
+            selectedRules={selectedRules}
+            setSelectedRules={setSelectedRules}
+          />
           <FormEditEventGroup
             subGroup_0={subGroup_0}
             subGroup_1={subGroup_1}

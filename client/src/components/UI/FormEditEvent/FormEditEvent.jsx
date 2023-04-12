@@ -3,12 +3,12 @@ import React from 'react';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
-
 import TextArea from '../TextArea/TextArea';
+import MultiSelectRule from '../MultiSelectRule/MultiSelectRule';
 
 import styles from './FormEditEvent.module.css';
 
-function FormEditEvent({ form, setForm }) {
+function FormEditEvent({ form, setForm, selectedRules, setSelectedRules }) {
   return (
     <form className={styles.form} name="zwiftEvent">
       <SimpleInput
@@ -51,22 +51,55 @@ function FormEditEvent({ form, setForm }) {
         name="Тип заезда"
         state={form}
         setState={setForm}
-        property="type"
+        property="eventType"
         options={[
-          { id: 0, name: 'EVENT_TYPE_GROUP_RIDE' },
-          { id: 1, name: 'EVENT_TYPE_RACE' },
+          { id: 0, name: 'GROUP_RIDE' },
+          { id: 1, name: 'RACE' },
         ]}
       />
-
-      {/* <div className={styles.box__checkbox}>
-        <SimpleCheckbox
-          state={series}
-          setState={setSeries}
-          property="hasGeneral"
-          title="Генеральный зачёт:"
-          toolTip="Показывать генеральную квалификацию Серии."
-        />
-      </div> */}
+      <SimpleSelect
+        name="cullingType"
+        state={form}
+        setState={setForm}
+        property="cullingType"
+        options={[
+          { id: 0, name: 'CULLING_SUBGROUP_ONLY' },
+          { id: 1, name: 'CULLING_EVENT_ONLY' },
+        ]}
+      />
+      <MultiSelectRule selected={selectedRules} setSelected={setSelectedRules} />
+      <SimpleSelect
+        name="microserviceEventVisibility"
+        state={form}
+        setState={setForm}
+        property="microserviceEventVisibility"
+        options={[
+          { id: 0, name: 'DEFINED_BY_RESOURCE_ID' },
+          // { id: 1, name: 'PUBLIC' }, ошибка при сохранении
+          { id: 2, name: 'SHAREABLE' },
+        ]}
+      />
+      <SimpleCheckbox
+        state={form}
+        setState={setForm}
+        property="invisibleToNonParticipants"
+        title="invisibleToNonParticipants:"
+        toolTip="нет информации о назначении"
+      />
+      <SimpleCheckbox
+        state={form}
+        setState={setForm}
+        property="visible"
+        title="visible:"
+        toolTip="нет информации о назначении"
+      />
+      <SimpleCheckbox
+        state={form}
+        setState={setForm}
+        property="categoryEnforcement"
+        title="categoryEnforcement:"
+        toolTip="Райдер может выступать в своей категории или более высокой"
+      />
     </form>
   );
 }
