@@ -46,7 +46,7 @@ function EventCreate() {
       .catch((error) =>
         dispatch(
           getAlert({
-            message: 'Ошибка при обработке данных заезда!',
+            message: error.response ? error.response.data.message : 'Непредвиденная ошибка',
             type: 'error',
             isOpened: true,
           })
