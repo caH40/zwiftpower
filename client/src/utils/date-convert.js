@@ -63,7 +63,7 @@ export function secondesToTimeThousandths(seconds) {
     return seconds;
   }
 }
-function addNull(rowNumber) {
+export function addNull(rowNumber) {
   const number = String(rowNumber);
   if (number.length === 1) {
     return '0' + number;

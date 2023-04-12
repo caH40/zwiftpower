@@ -27,6 +27,7 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import AddRider from './Pages/AddRider/AddRider';
 import Profile from './Pages/Profile/Profile';
 import Bot from './Pages/Bot/Bot';
+import EventCreate from './Pages/EventCreate/EventCreate';
 
 function App() {
   useFirstAuth();
@@ -63,6 +64,7 @@ function App() {
         <Route path="/edit/riders" element={<Riders />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/bot" element={<Bot />} />
+        <Route path="/zwift/create/event" element={<EventCreate />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>
