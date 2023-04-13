@@ -76,30 +76,25 @@ function FormEditEvent({ form, setForm, selectedRules, setSelectedRules }) {
         options={[
           { id: 0, name: 'DEFINED_BY_RESOURCE_ID' },
           // { id: 1, name: 'PUBLIC' }, ошибка при сохранении
-          { id: 2, name: 'SHAREABLE' },
+          { id: 1, name: 'SHAREABLE' },
         ]}
       />
-      <SimpleCheckbox
-        state={form}
-        setState={setForm}
-        property="invisibleToNonParticipants"
-        title="invisibleToNonParticipants:"
-        toolTip="нет информации о назначении"
-      />
-      <SimpleCheckbox
-        state={form}
-        setState={setForm}
-        property="visible"
-        title="visible:"
-        toolTip="нет информации о назначении"
-      />
-      <SimpleCheckbox
-        state={form}
-        setState={setForm}
-        property="categoryEnforcement"
-        title="categoryEnforcement:"
-        toolTip="Райдер может выступать в своей категории или более высокой"
-      />
+      <div className={styles.box__checkbox}>
+        <SimpleCheckbox
+          state={form}
+          setState={setForm}
+          property="visible"
+          title="visible:"
+          toolTip="нет информации о назначении"
+        />
+        <SimpleCheckbox
+          state={form}
+          setState={setForm}
+          property="categoryEnforcement"
+          title="categoryEnforcement:"
+          toolTip="Райдер может выступать в своей категории или более высокой"
+        />
+      </div>
     </form>
   );
 }

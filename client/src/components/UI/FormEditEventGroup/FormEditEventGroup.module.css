@@ -6,16 +6,15 @@
 }
 .box__checkbox {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   margin-right: 10px;
-  margin-bottom: 10px;
 }
 .title {
   font-size: 16px;
   font-weight: bold;
   margin: 0 0 10px 0;
 }
-
 .group {
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);

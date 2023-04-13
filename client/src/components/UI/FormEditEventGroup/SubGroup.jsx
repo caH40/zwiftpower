@@ -41,7 +41,6 @@ function SubGroup({ subGroup, setSubGroup }) {
             property="laps"
             type="text"
           />
-
           <SimpleInput
             name="Время старта (московское время -3ч)"
             state={subGroup}
