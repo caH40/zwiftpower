@@ -1,6 +1,8 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
+import MySuspense from '../HOC/Se';
+
 const EventCreate = lazy(() => import('../Pages/EventCreate/EventCreate'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const Upload = lazy(() => import('../Pages/Upload/Upload'));
@@ -19,20 +21,118 @@ const AddRider = lazy(() => import('../Pages/AddRider/AddRider'));
 export function AdminRoute() {
   return (
     <>
-      <Route path="/zwift/create/event" element={<EventCreate />} />
-      <Route path="/bot" element={<Bot />} />
-      <Route path="/edit/upload" element={<Upload />} />
-      <Route path="/edit/riders" element={<Riders />} />
-      <Route path="/edit/users" element={<EditUsers />} />
-      <Route path="/edit/series" element={<EditSeriesMain />} />
-      <Route path="/edit/series/add" element={<AddSeries />} />
-      <Route path="/edit/series/:seriesId" element={<EditSeries />} />
-      <Route path="/edit/series/:seriesId/stage-add" element={<AddStage />} />
-      <Route path="/edit/series/:seriesId/stage-edit/:stageId" element={<EditStageParams />} />
-      <Route path="/edit/stage" element={<EditSeriesList />} />
-      <Route path="/edit/stage/:seriesId" element={<EditStageList />} />
-      <Route path="/edit/stage/:seriesId/:stageId" element={<EditResults />} />
-      <Route path="/edit/stage/:stageId/rider-add" element={<AddRider />} />
+      <Route
+        path="/zwift/create/event"
+        element={
+          <MySuspense>
+            <EventCreate />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/bot"
+        element={
+          <MySuspense>
+            <Bot />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/upload"
+        element={
+          <MySuspense>
+            <Upload />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/riders"
+        element={
+          <MySuspense>
+            <Riders />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/users"
+        element={
+          <MySuspense>
+            <EditUsers />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/series"
+        element={
+          <MySuspense>
+            <EditSeriesMain />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/series/add"
+        element={
+          <MySuspense>
+            <AddSeries />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/series/:seriesId"
+        element={
+          <MySuspense>
+            <EditSeries />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/series/:seriesId/stage-add"
+        element={
+          <MySuspense>
+            <AddStage />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/series/:seriesId/stage-edit/:stageId"
+        element={
+          <MySuspense>
+            <EditStageParams />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/stage"
+        element={
+          <MySuspense>
+            <EditSeriesList />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/stage/:seriesId"
+        element={
+          <MySuspense>
+            <EditStageList />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/stage/:seriesId/:stageId"
+        element={
+          <MySuspense>
+            <EditResults />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/edit/stage/:stageId/rider-add"
+        element={
+          <MySuspense>
+            <AddRider />
+          </MySuspense>
+        }
+      />
     </>
   );
 }
