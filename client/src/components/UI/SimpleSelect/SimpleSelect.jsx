@@ -9,7 +9,7 @@ function SimpleSelect({ name, state, setState, property, disabled, options }) {
       <select
         className={styles.select}
         placeholder={name}
-        value={state[property]}
+        value={state[property] || ''}
         onChange={(e) => setState((prev) => ({ ...prev, [property]: e.target.value }))}
         disabled={disabled}
       >

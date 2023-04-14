@@ -9,6 +9,7 @@ import { changeZwiftEvents, getZwiftEvents } from '../../api/zwift/events';
 import FormRequest from '../../components/UI/FormRequest/FormRequest';
 import FormEditEvent from '../../components/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/UI/FormEditEventGroup/FormEditEventGroup';
+import { syntaxHighlight } from '../../utils/hightlight';
 
 import styles from './EventCreate.module.css';
 import { prepareData } from './utils/preparation';
@@ -26,7 +27,7 @@ function EventCreate() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  console.log(event); // eslint-disable-line
+
   const sendForm = () => {
     const eventForPost = prepareData(
       event,
@@ -116,6 +117,13 @@ function EventCreate() {
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
+      <div className={styles.group}>
+        <pre
+          dangerouslySetInnerHTML={{
+            __html: syntaxHighlight(JSON.stringify(event, undefined, 4)),
+          }}
+        />
+      </div>
     </section>
   );
 }

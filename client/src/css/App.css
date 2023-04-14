@@ -1,38 +1,57 @@
 .body {
-	margin-top: 60px;
-	width: 100%;
-	min-height: calc(100vh - 60px);
+  margin-top: 60px;
+  width: 100%;
+  min-height: calc(100vh - 60px);
 }
 .container {
-	padding: 10px 20px;
+  padding: 10px 20px;
 }
 .page__block {
-	margin-bottom: 35px;
+  margin-bottom: 35px;
 }
 .titlePage-3 {
-	font-size: 18px;
-	margin-bottom: 10px;
-	font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .align-right {
-	text-align: right;
-	margin-bottom: 5px;
+  text-align: right;
+  margin-bottom: 5px;
 }
 .page404 {
-	text-align: center;
+  text-align: center;
 }
 .page404__text {
-	font-size: 20px;
+  font-size: 20px;
 }
 .page404__title {
-	font-size: 34px;
-	margin-bottom: 20px;
+  font-size: 34px;
+  margin-bottom: 20px;
 }
 .page404__text-wrong {
-	color: red;
+  color: red;
 }
 .page404__text-link {
-	color: #ff7b31;
-	text-decoration: underline;
+  color: #ff7b31;
+  text-decoration: underline;
+}
+pre {
+  padding: 5px;
+  margin: 25px 0;
+}
+.string {
+  color: green;
+}
+.number {
+  color: darkorange;
+}
+.boolean {
+  color: blue;
+}
+.null {
+  color: magenta;
+}
+.key {
+  color: red;
 }
