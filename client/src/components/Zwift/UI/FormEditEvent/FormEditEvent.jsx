@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import RInput from '../../../UI/Redux/RInput';
+import RInput from '../../../UI/ReduxUI/RInput/RInput';
+import RTextarea from '../../../UI/ReduxUI/RTextarea/RTextarea';
 
 import styles from './FormEditEvent.module.css';
 
@@ -10,26 +11,32 @@ function FormEditEvent({}) {
   return (
     <form className={styles.form} name="zwiftEvent">
       <RInput
-        name={'ID заезда'}
+        label={'ID заезда'}
         value={eventMainParams.id}
         property={'id'}
         type={'number'}
         disabled={true}
       />
       <RInput
-        name={'Название заезда'}
+        label={'Название заезда'}
         value={eventMainParams.name}
         property={'name'}
         type={'text'}
       />
+      <RTextarea
+        label={'Описание для Заезда'}
+        value={eventMainParams.description}
+        property={'description'}
+        type={'text'}
+      />
       <RInput
-        name={'Время старта (московское время -3ч)'}
+        label={'Время старта (московское время -3ч)'}
         value={eventMainParams.eventStart}
         property={'eventStart'}
         type={'text'}
       />
       <RInput
-        name={'URL картинки для обложки'}
+        label={'URL картинки для обложки'}
         value={eventMainParams.imageUrl}
         property={'imageUrl'}
         type={'text'}
