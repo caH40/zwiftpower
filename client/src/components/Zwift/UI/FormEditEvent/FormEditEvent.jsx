@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 
 import RInput from '../../../UI/ReduxUI/RInput/RInput';
 import RTextarea from '../../../UI/ReduxUI/RTextarea/RTextarea';
+import RSelect from '../../../UI/ReduxUI/RSelect/RSelect';
 
 import styles from './FormEditEvent.module.css';
 
-function FormEditEvent({}) {
+function FormEditEvent() {
   const { eventMainParams } = useSelector((state) => state.eventParams);
   return (
     <form className={styles.form} name="zwiftEvent">
@@ -40,6 +41,34 @@ function FormEditEvent({}) {
         value={eventMainParams.imageUrl}
         property={'imageUrl'}
         type={'text'}
+      />
+      <RSelect
+        label={'Тип заезда'}
+        value={eventMainParams.eventType}
+        property={'eventType'}
+        options={[
+          { id: 0, name: 'GROUP_RIDE' },
+          { id: 1, name: 'RACE' },
+        ]}
+      />
+      <RSelect
+        label={'cullingType'}
+        value={eventMainParams.cullingType}
+        property={'cullingType'}
+        options={[
+          { id: 0, name: 'CULLING_SUBGROUP_ONLY' },
+          { id: 1, name: 'CULLING_EVENT_ONLY' },
+        ]}
+      />
+      <RSelect
+        label={'microserviceEventVisibility'}
+        value={eventMainParams.microserviceEventVisibility}
+        property={'microserviceEventVisibility'}
+        options={[
+          { id: 0, name: 'DEFINED_BY_RESOURCE_ID' },
+          { id: 1, name: 'SHAREABLE' },
+          // { id: 2, name: 'PUBLIC' }, ошибка при сохранении
+        ]}
       />
     </form>
   );

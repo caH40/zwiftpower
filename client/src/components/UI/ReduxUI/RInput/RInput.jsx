@@ -8,8 +8,8 @@ import styles from './RInput.module.css';
 function RInput({ label, value, type, property, disabled }) {
   const dispatch = useDispatch();
   return (
-    <label className={styles.label}>
-      {label || property}
+    <>
+      <label className={styles.label}>{label || property}</label>
       <input
         className={styles.input}
         type={type}
@@ -19,7 +19,7 @@ function RInput({ label, value, type, property, disabled }) {
         }}
         disabled={disabled}
       />
-    </label>
+    </>
   );
 }
 
