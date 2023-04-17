@@ -29,7 +29,6 @@ function ZwiftEditEvent() {
     getZwiftEvents(eventId.id)
       .then((response) => {
         dispatch(setEventParams(response.data));
-        // setSelectedRules(response.data.rulesSet.map((rule) => ({ value: rule, label: rule })));
         dispatch(getAlert({ message: 'Данные получены', type: 'success', isOpened: true }));
       })
       .catch((error) =>

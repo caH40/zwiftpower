@@ -12,7 +12,7 @@ function RTextarea({ label, value, property, placeholder, disabled }) {
       <label className={styles.label}>{label || property}</label>
       <textarea
         className={styles.textarea}
-        value={value}
+        value={value || ''}
         placeholder={placeholder}
         onChange={(e) => dispatch(setMainParams({ [property]: e.target.value }))}
         disabled={disabled}
