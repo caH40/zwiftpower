@@ -3,7 +3,7 @@ import { lazy } from 'react';
 
 import MySuspense from '../HOC/Se';
 
-const EventCreate = lazy(() => import('../Pages/EventCreate/EventCreate'));
+const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const Upload = lazy(() => import('../Pages/Upload/Upload'));
 const Riders = lazy(() => import('../Pages/Riders/Riders'));
@@ -22,10 +22,10 @@ export function AdminRoute() {
   return (
     <>
       <Route
-        path="/zwift/create/event"
+        path="/zwift/edit/event"
         element={
           <MySuspense>
-            <EventCreate />
+            <ZwiftEditEvent />
           </MySuspense>
         }
       />

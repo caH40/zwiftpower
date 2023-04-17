@@ -59,7 +59,7 @@ function PopupMenu() {
                 </Link>
               </li>
               <li className={styles.item}>
-                <Link to="/zwift/create/event" className={styles.link}>
+                <Link to="/zwift/edit/event" className={styles.link}>
                   Edit Event (Zwift)
                 </Link>
               </li>
