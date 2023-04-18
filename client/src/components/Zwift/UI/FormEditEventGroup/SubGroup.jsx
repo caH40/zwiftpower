@@ -6,6 +6,7 @@ import RSelectInArray from '../../../UI/ReduxUI/RSelectInArray/RSelectInArray';
 import RInputInArray from '../../../UI/ReduxUI/RInputInArray/RInputInArray';
 import RTextareaInArray from '../../../UI/ReduxUI/RTextareaInArray/RTextareaInArray';
 import Button from '../../../UI/Button/Button';
+import { getAlert } from '../../../../redux/features/alertMessageSlice';
 import { setSameParams } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './FormEditEventGroup.module.css';
@@ -14,6 +15,13 @@ function SubGroup({ subGroup, index }) {
   const dispatch = useDispatch();
   const setSameParamsClick = () => {
     dispatch(setSameParams(subGroup));
+    dispatch(
+      getAlert({
+        message: 'Установленные текущие настройки для всех групп!',
+        type: 'success',
+        isOpened: true,
+      })
+    );
   };
   return (
     <>

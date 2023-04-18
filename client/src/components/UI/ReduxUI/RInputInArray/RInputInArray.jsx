@@ -22,7 +22,7 @@ function RInputInArray({ label, value, type, property, disabled, indexArray }) {
       <input
         className={styles.input}
         type={type}
-        value={value}
+        value={value || ''}
         onChange={setValueSelected}
         disabled={disabled}
       />
