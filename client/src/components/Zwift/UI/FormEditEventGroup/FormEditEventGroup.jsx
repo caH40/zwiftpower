@@ -6,17 +6,21 @@ import Button from '../../../UI/Button/Button';
 import SubGroup from './SubGroup';
 import styles from './FormEditEventGroup.module.css';
 
-// import SubGroup from './SubGroup';
-
 function FormEditEventGroup({ sendForm }) {
-  const { eventSubgroup_0 } = useSelector((state) => state.eventParams);
+  const {
+    eventSubgroup_0,
+    eventSubgroup_1,
+    eventSubgroup_2,
+    eventSubgroup_3,
+    eventSubgroup_4,
+  } = useSelector((state) => state.eventParams);
   return (
     <form className={styles.form} name="zwiftEvent">
       <SubGroup subGroup={eventSubgroup_0} index={0} />
-      {/* <SubGroup subGroup={subGroup_1} setSubGroup={setSubGroup_1} />
-      <SubGroup subGroup={subGroup_2} setSubGroup={setSubGroup_2} />
-      <SubGroup subGroup={subGroup_3} setSubGroup={setSubGroup_3} />
-      <SubGroup subGroup={subGroup_4} setSubGroup={setSubGroup_4} /> */}
+      <SubGroup subGroup={eventSubgroup_1} index={1} />
+      <SubGroup subGroup={eventSubgroup_2} index={2} />
+      <SubGroup subGroup={eventSubgroup_3} index={3} />
+      <SubGroup subGroup={eventSubgroup_4} index={4} />
       <div className={styles.right}>
         <Button getClick={sendForm}>сохранить</Button>
       </div>

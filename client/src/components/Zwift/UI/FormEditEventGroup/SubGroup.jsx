@@ -1,18 +1,34 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { jerseys, routes, worlds } from '../../../../asset/zwift/lib/esm/zwift-lib';
 import RSelectInArray from '../../../UI/ReduxUI/RSelectInArray/RSelectInArray';
 import RInputInArray from '../../../UI/ReduxUI/RInputInArray/RInputInArray';
 import RTextareaInArray from '../../../UI/ReduxUI/RTextareaInArray/RTextareaInArray';
+import Button from '../../../UI/Button/Button';
+import { setSameParams } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './FormEditEventGroup.module.css';
 
 function SubGroup({ subGroup, index }) {
+  const dispatch = useDispatch();
+  const setSameParamsClick = () => {
+    dispatch(setSameParams(subGroup));
+  };
   return (
     <>
       {subGroup?.subgroupLabel ? (
         <div className={styles.group}>
-          <p className={styles.title}>Группа {subGroup.subgroupLabel}</p>
+          <div className={styles.title__box}>
+            <h4 className={styles.title}>Группа {subGroup.subgroupLabel}</h4>
+            <Button
+              addCls={'td back'}
+              toolTip={'Установить всем группам текущие параметры'}
+              getClick={setSameParamsClick}
+            >
+              Установить
+            </Button>
+          </div>
           <RSelectInArray
             label={'Карта'}
             value={subGroup.mapId}

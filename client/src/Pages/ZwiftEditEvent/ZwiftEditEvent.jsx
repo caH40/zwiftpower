@@ -30,6 +30,7 @@ function ZwiftEditEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+  // console.log(eventSubgroup_0, eventSubgroup_1);
 
   const fetchEventParams = () => {
     if (!eventId.id)
