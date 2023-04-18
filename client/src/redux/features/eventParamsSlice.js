@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  eventMainParams: {},
+  eventMainParams: { id: 0 },
   eventSubgroup_0: {},
   eventSubgroup_1: {},
   eventSubgroup_2: {},

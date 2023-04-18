@@ -7,10 +7,10 @@ import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { changeZwiftEvents, getZwiftEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetParams, setEventParams } from '../../redux/features/eventParamsSlice';
-import { syntaxHighlight } from '../../utils/hightlight';
 import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
+import JSONBlock from '../../components/JSONBlock/JSONBlock';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -98,13 +98,7 @@ function ZwiftEditEvent() {
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
-      <div className={styles.group}>
-        <pre
-          dangerouslySetInnerHTML={{
-            __html: syntaxHighlight(JSON.stringify(eventMainParams, undefined, 4)),
-          }}
-        />
-      </div>
+      <JSONBlock json={eventMainParams} />
     </section>
   );
 }
