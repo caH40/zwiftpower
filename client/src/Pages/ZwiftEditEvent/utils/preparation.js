@@ -1,18 +1,25 @@
 import { addNull } from '../../../utils/date-convert';
 
 export function prepareData(
-  event,
-  subGroup_0,
-  subGroup_1,
-  subGroup_2,
-  subGroup_3,
-  subGroup_4,
+  eventMainParams,
+  eventSubgroup_0,
+  eventSubgroup_1,
+  eventSubgroup_2,
+  eventSubgroup_3,
+  eventSubgroup_4,
   selectedRules
 ) {
+  const event = { ...eventMainParams };
   const dateNow = [`timestamp=${Date.now()}`];
-  const eventSubgroups = [subGroup_0, subGroup_1, subGroup_2, subGroup_3, subGroup_4].filter(
-    (elm) => elm
-  );
+
+  const eventSubgroups = [
+    { ...eventSubgroup_0 },
+    { ...eventSubgroup_1 },
+    { ...eventSubgroup_2 },
+    { ...eventSubgroup_3 },
+    { ...eventSubgroup_4 },
+  ].filter((elm) => elm.id);
+
   event.rulesId = null;
   const rulesSet = [...selectedRules].map((rule) => rule.value);
   event.rulesSet = rulesSet;
@@ -35,6 +42,7 @@ export function prepareData(
   // event.microserviceExternalResourceId = null;
   // event.microserviceEventVisibility = null;
   // event.microserviceName = null;
+
   return {
     eventTemplateId: event.eventTemplateId,
     eventData: {

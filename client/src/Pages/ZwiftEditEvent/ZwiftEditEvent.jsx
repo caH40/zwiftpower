@@ -4,24 +4,34 @@ import { useNavigate } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
-import { getZwiftEvents } from '../../api/zwift/events';
+import { changeZwiftEvents, getZwiftEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { setEventParams } from '../../redux/features/eventParamsSlice';
+import { resetParams, setEventParams } from '../../redux/features/eventParamsSlice';
 import { syntaxHighlight } from '../../utils/hightlight';
 import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
+import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 
 import styles from './ZwiftEditEvent.module.css';
+import { prepareData } from './utils/preparation';
 
 function ZwiftEditEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
-  const { eventMainParams } = useSelector((state) => state.eventParams);
+  const {
+    eventMainParams,
+    eventSubgroup_0,
+    eventSubgroup_1,
+    eventSubgroup_2,
+    eventSubgroup_3,
+    eventSubgroup_4,
+    selectedRules,
+  } = useSelector((state) => state.eventParams);
   useTitle('Zwift - Редактирование заезда');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-
-  const sendFormId = () => {
+  console.log('render');
+  const fetchEventParams = () => {
     if (!eventId.id)
       return dispatch(
         getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
@@ -42,6 +52,36 @@ function ZwiftEditEvent() {
       );
     return false;
   };
+
+  const sendNewEventParams = () => {
+    const eventForPost = prepareData(
+      eventMainParams,
+      eventSubgroup_0,
+      eventSubgroup_1,
+      eventSubgroup_2,
+      eventSubgroup_3,
+      eventSubgroup_4,
+      selectedRules
+    );
+
+    changeZwiftEvents(eventForPost)
+      .then((data) => {
+        dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
+        dispatch(resetParams());
+      })
+      .catch((error) => {
+        dispatch(
+          getAlert({
+            message: error.response
+              ? JSON.stringify(error.response.data.message)
+              : 'Непредвиденная ошибка',
+            type: 'error',
+            isOpened: true,
+          })
+        );
+      });
+    return false;
+  };
   return (
     <section className={styles.block}>
       <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
@@ -49,11 +89,12 @@ function ZwiftEditEvent() {
         name={'Id изменяемого Event'}
         state={eventId}
         setState={setEventId}
-        sendForm={sendFormId}
+        sendForm={fetchEventParams}
       />
       {eventMainParams.worldId ? (
         <>
           <FormEditEvent />
+          <FormEditEventGroup sendForm={sendNewEventParams} />
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}

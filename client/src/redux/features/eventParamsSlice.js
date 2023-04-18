@@ -31,17 +31,41 @@ const eventParamsSlice = createSlice({
         label: rule,
       }));
     },
+
     setSameParams() {},
+
+    resetParams(state) {
+      state.eventSubgroup_0 = {};
+      state.eventSubgroup_1 = {};
+      state.eventSubgroup_2 = {};
+      state.eventSubgroup_3 = {};
+      state.eventSubgroup_4 = {};
+      state.eventMainParams = {};
+      state.selectedRules = [];
+    },
     setMainParams(state, action) {
-      // console.log(action.payload);
       state.eventMainParams = { ...state.eventMainParams, ...action.payload };
     },
+    setSubgroupParams(state, action) {
+      const property = `eventSubgroup_${action.payload.index}`;
+      state[property] = {
+        ...state[property],
+        ...action.payload.obj,
+      };
+    },
+
     setSelectedRules(state, action) {
       state.selectedRules = action.payload;
     },
   },
 });
 
-export const { setEventParams, setMainParams, setSelectedRules } = eventParamsSlice.actions;
+export const {
+  setEventParams,
+  setMainParams,
+  setSubgroupParams,
+  setSelectedRules,
+  resetParams,
+} = eventParamsSlice.actions;
 
 export default eventParamsSlice.reducer;
