@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import { setSubgroupParams } from '../../../../redux/features/eventParamsSlice';
 
-import styles from './RInputArray.module.css';
+import styles from './RTextareaInArray.module.css';
 
-function RInputArray({ label, value, type, property, disabled, indexArray }) {
+function RTextareaInArray({ label, value, property, placeholder, disabled, indexArray }) {
   const dispatch = useDispatch();
 
   const setValueSelected = (e) => {
@@ -19,10 +19,10 @@ function RInputArray({ label, value, type, property, disabled, indexArray }) {
   return (
     <>
       <label className={styles.label}>{label || property}</label>
-      <input
-        className={styles.input}
-        type={type}
-        value={value}
+      <textarea
+        className={styles.textarea}
+        value={value || ''}
+        placeholder={placeholder}
         onChange={setValueSelected}
         disabled={disabled}
       />
@@ -30,4 +30,4 @@ function RInputArray({ label, value, type, property, disabled, indexArray }) {
   );
 }
 
-export default RInputArray;
+export default RTextareaInArray;

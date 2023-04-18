@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import { setSubgroupParams } from '../../../../redux/features/eventParamsSlice';
 
-import styles from './RSelectObject.module.css';
+import styles from './RSelectInArray.module.css';
 
 // отображается name, значение используется id
-function RSelectObject({ label, value, property, disabled, options, indexArray }) {
+function RSelectInArray({ label, value, property, disabled, options, indexArray }) {
   const dispatch = useDispatch();
 
   const setValueSelected = (e) => {
@@ -38,4 +38,4 @@ function RSelectObject({ label, value, property, disabled, options, indexArray }
   );
 }
 
-export default RSelectObject;
+export default RSelectInArray;
