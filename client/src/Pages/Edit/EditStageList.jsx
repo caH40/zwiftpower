@@ -7,11 +7,13 @@ import TableStages from '../../components/Tables/Stages/TableStages';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Edit.module.css';
 
 function EditStageList() {
   useTitle('Редактирование данных этапа');
+  useBackground(false);
   const { seriesId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

@@ -7,12 +7,14 @@ import Button from '../../components/UI/Button/Button';
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 function EditStageParams() {
   const [stage, setStage] = useState({});
   const [update, setUpdate] = useState(false);
   const { stageId } = useParams();
   useTitle('Редактирование данных Series, Stage');
+  useBackground(false);
 
   const navigate = useNavigate();
   const getClick = () => navigate(-1);

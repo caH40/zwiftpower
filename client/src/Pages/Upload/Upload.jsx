@@ -9,6 +9,7 @@ import UploadSeriesAndStage from '../../components/UploadSeriesAndStage/UploadSe
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postNoticeProtocol } from '../../api/bot-notice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Upload.module.css';
 
@@ -20,6 +21,7 @@ function Upload() {
   const navigate = useNavigate();
 
   useTitle('Загрузка расписаний, протоколов этапов');
+  useBackground(false);
 
   const saveSchedule = () => {
     postSchedule(schedule)

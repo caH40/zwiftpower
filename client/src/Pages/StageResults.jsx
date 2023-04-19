@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getResultStage } from '../api/stage';
+import useBackground from '../hook/useBackground';
 
 function StageResults() {
   const [results, setResults] = useState([]);
   const { stageId } = useParams();
+  useBackground(false);
 
   useEffect(() => {
     getResultStage(stageId).then((data) => setResults(data));

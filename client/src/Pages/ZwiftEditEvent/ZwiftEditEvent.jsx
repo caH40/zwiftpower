@@ -11,6 +11,7 @@ import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
+import useBackground from '../../hook/useBackground';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -27,6 +28,7 @@ function ZwiftEditEvent() {
     selectedRules,
   } = useSelector((state) => state.eventParams);
   useTitle('Zwift - Редактирование заезда');
+  useBackground(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);

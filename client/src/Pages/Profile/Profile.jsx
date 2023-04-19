@@ -1,8 +1,13 @@
 import React from 'react';
 
+import useBackground from '../../hook/useBackground';
+import useTitle from '../../hook/useTitle';
+
 // import styles from './Profile.module.css';
 
 function Profile() {
-  return <div></div>;
+  useTitle('Профиль пользователя');
+  useBackground(true);
+  return <h2>В разработке...</h2>;
 }
 export default Profile;

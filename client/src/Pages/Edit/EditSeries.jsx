@@ -9,6 +9,7 @@ import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Edit.module.css';
 
@@ -18,6 +19,7 @@ function EditSeries() {
 
   const { seriesId } = useParams();
   useTitle('Редактирование данных Series, Stage');
+  useBackground(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

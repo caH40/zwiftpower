@@ -6,6 +6,7 @@ import { getRiders } from '../../api/riders';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
 import Button from '../../components/UI/Button/Button';
 import useTitle from '../../hook/useTitle';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Riders.module.css';
 
@@ -13,6 +14,7 @@ function Riders() {
   const [riders, setRiders] = useState([]);
 
   useTitle('Зарегистрированные Райдеры');
+  useBackground(false);
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);

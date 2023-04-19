@@ -13,7 +13,7 @@ const backgroundSlice = createSlice({
     setBackground(state, action) {
       const quantityPictures = 5;
       state.value.isActive = action.payload.isActive;
-      state.value.opacity = action.payload.isActive ? action.payload.isActive : 1;
+      state.value.opacity = action.payload.opacity ? action.payload.opacity : 1;
       state.value.picture = Math.floor(Math.random() * quantityPictures) + 1;
     },
   },

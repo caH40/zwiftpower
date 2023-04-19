@@ -9,6 +9,7 @@ import FormRiderResult from '../../components/UI/FormRiderResult/FormRiderResult
 import FormRiderSearch from '../../components/UI/FormRiderSearch/FormRiderSearch';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './AddRider.module.css';
 import { checkForm, getScroll, resultClear, resultStart } from './service';
@@ -23,6 +24,7 @@ function AddRider() {
   const refTitle = useRef(null);
 
   useTitle('Добавление результата в протокол этапа');
+  useBackground(false);
   const { stageId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
