@@ -9,6 +9,7 @@ import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './EditResults.module.css';
 
@@ -16,6 +17,7 @@ function EditResults() {
   const [results, setResults] = useState([]);
   const [update, setUpdate] = useState(false);
   useTitle('Редактирование данных этапа');
+  useBackground(false);
 
   const { stageId } = useParams();
   const navigate = useNavigate();

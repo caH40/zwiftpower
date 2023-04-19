@@ -8,6 +8,7 @@ import useTitle from '../../hook/useTitle';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postSeries } from '../../api/series';
 import FormEditSeries from '../../components/UI/FormEditSeries/FormEditSeries';
+import useBackground from '../../hook/useBackground';
 
 import { isValidSeries, seriesClear } from './service';
 import styles from './Edit.module.css';
@@ -20,6 +21,7 @@ function AddSeries() {
   const goBack = () => navigate(-1);
 
   useTitle('Редактирование данных Series');
+  useBackground(false);
 
   const sendForm = () => {
     if (!isValidSeries(series))

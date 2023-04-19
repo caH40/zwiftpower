@@ -2,13 +2,16 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Page404.module.css';
+
 const urlServer = process.env.REACT_APP_SERVER_FRONT;
 
 function Page404() {
   const { '*': wrongUrl } = useParams();
   useTitle('404');
+  useBackground(true, 0.7);
 
   return (
     <section className={styles.page404}>

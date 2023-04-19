@@ -14,11 +14,13 @@ import {
 import Button from '../../components/UI/Button/Button';
 import { postRegistration } from '../../api/registration';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Auth.module.css';
 
 function Registration() {
   useTitle('Регистрация');
+  useBackground(true, 1);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

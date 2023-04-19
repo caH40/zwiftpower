@@ -11,12 +11,14 @@ import Button from '../../components/UI/Button/Button';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { putNewPassword } from '../../api/new-password';
 import { checkRequestPassword } from '../../api/check-request-password';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Auth.module.css';
 
 function ResetPassword() {
   const [userId, setUserId] = useState();
   useTitle('Создание нового пароля');
+  useBackground(true, 1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -5,11 +5,13 @@ import TableSeries from '../../components/Tables/Series/TableSeries';
 import Button from '../../components/UI/Button/Button';
 import ButtonLink from '../../components/UI/ButtonLink/ButtonLink';
 import useTitle from '../../hook/useTitle';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Edit.module.css';
 
 function EditSeriesMain() {
   useTitle('Редактирование данных Series, Stage');
+  useBackground(false);
 
   const navigate = useNavigate();
   const goBack = () => navigate(-1);

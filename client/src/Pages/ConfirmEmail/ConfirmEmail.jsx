@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { confirmEmail } from '../../api/email';
 import useTitle from '../../hook/useTitle';
+import useBackground from '../../hook/useBackground';
 
 import styles from './ConfirmEmail.module.css';
 
@@ -13,6 +14,7 @@ function ConfirmEmail() {
   const { token } = useParams();
 
   useTitle('Страница активации аккаунта');
+  useBackground(false);
 
   useEffect(() => {
     confirmEmail(token).then((response) => {

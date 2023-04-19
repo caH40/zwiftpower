@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
-
 import FormEditStage from '../../components/UI/FormEditStage/FormEditStage';
 import useTitle from '../../hook/useTitle';
-
 import { postStage } from '../../api/stage';
-
+import useBackground from '../../hook/useBackground';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import { isValid, stageClear } from './service';
@@ -24,6 +21,7 @@ function AddStage() {
   const goBack = () => navigate(-1);
 
   useTitle('Редактирование данных Series, Stage');
+  useBackground(false);
 
   const sendForm = () => {
     if (!isValid(stage))

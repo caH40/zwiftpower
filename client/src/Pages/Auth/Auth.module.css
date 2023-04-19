@@ -7,7 +7,7 @@
 .title {
   font-size: 20px;
   line-height: 23px;
-  color: var(--color-text-minor);
+  color: var(--color-text-main);
   margin-bottom: 20px;
 }
 .inner {
