@@ -2,12 +2,14 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import t from '../../locales/ru.json';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Message.module.css';
 
 function Message() {
   const { messageId, additional } = useParams();
   const message = t.message[messageId];
+  useBackground(true, 1);
 
   return (
     <main className={styles.wrapper}>
