@@ -11,11 +11,13 @@ import Button from '../../components/UI/Button/Button';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postAuthorization } from '../../api/authorization';
 import { getAuth } from '../../redux/features/authSlice';
+import useBackground from '../../hook/useBackground';
 
 import styles from './Auth.module.css';
 
 function Authorization() {
   useTitle('Авторизация');
+  useBackground(true, 1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
