@@ -1,0 +1,10 @@
+.box {
+  width: 24px;
+  height: 24px;
+}
+.active__stroke {
+  stroke: var(--color-orange-main);
+}
+.active__fill {
+  fill: var(--color-orange-main);
+}
