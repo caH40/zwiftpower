@@ -25,11 +25,11 @@ function ListMenuMain({ state }) {
       </li>
 
       <li>
-        <NavLink to="/race/history" className={activeLink}>
+        <NavLink to="/race/results" className={activeLink}>
           {({ isActive }) => (
             <div className={styles.link__box}>
               <IconResults isActive={isActive} />
-              <span className={`${styles.link__name} ${styles[state]}`}>История</span>
+              <span className={`${styles.link__name} ${styles[state]}`}>Результаты</span>
             </div>
           )}
         </NavLink>

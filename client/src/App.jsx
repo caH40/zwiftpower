@@ -15,6 +15,10 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import Profile from './Pages/Profile/Profile';
 import { AdminRoute } from './Route/AdminRoute';
 import './css/App.css';
+import RaceResults from './Pages/RaceResults/RaceResults';
+import RaceSchedule from './Pages/RaceSchedule/RaceSchedule';
+import RaceSeries from './Pages/RaceSeries/RaceSeries';
+import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
 
 function App() {
   useFirstAuth();
@@ -35,6 +39,10 @@ function App() {
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/race/results" element={<RaceResults />} />
+        <Route path="/race/schedule" element={<RaceSchedule />} />
+        <Route path="/race/series" element={<RaceSeries />} />
+        <Route path="/race/statistics" element={<RaceStatistics />} />
         {isModerator ? AdminRoute() : ''}
         <Route path="*" element={<Page404 />} />
       </Route>
