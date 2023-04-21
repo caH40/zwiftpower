@@ -3,7 +3,6 @@
   z-index: 20;
   width: 50px;
   height: 100%;
-  padding: 10px 0px;
   background-color: var(--menu-side);
   transition: ease-in-out 0.1s;
 }
@@ -13,42 +12,4 @@
 }
 .nav.entered {
   width: 180px;
-}
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px 0px;
-  margin: 20px 13px;
-  color: var(--color-text-main);
-}
-.link {
-  text-decoration: none;
-  font-size: 16px;
-  color: var(--color-text-main);
-}
-.link__box {
-  display: flex;
-  gap: 0px 25px;
-  align-items: center;
-}
-.link__name {
-  opacity: 0;
-
-  white-space: nowrap;
-}
-.link__name.entering {
-  opacity: 0;
-}
-.link__name.entered {
-  opacity: 1;
-  transition: 0.2s;
-}
-.link__name.exiting {
-  display: none;
-}
-.link__name.exited {
-  display: none;
-}
-.active {
-  color: var(--color-orange-main);
 }
