@@ -1,0 +1,38 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0px;
+  padding: 30px 13px;
+  color: var(--color-text-main);
+}
+.link {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--color-text-main);
+}
+.link__box {
+  height: 30px;
+  display: flex;
+  gap: 0px 15px;
+  align-items: center;
+}
+.link__name {
+  opacity: 0;
+  /* white-space: nowrap; */
+}
+.link__name.entering {
+  opacity: 0;
+}
+.link__name.entered {
+  opacity: 1;
+  transition: 0.2s;
+}
+.link__name.exiting {
+  display: none;
+}
+.link__name.exited {
+  display: none;
+}
+.active {
+  color: var(--color-orange-main);
+}

@@ -10,7 +10,7 @@ function PopupMenu() {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.checkAuth.value);
 
-  const isAdmin = ['admin'].includes(user.role);
+  // const isAdmin = ['admin'].includes(user.role);
   const isModerator = ['admin', 'moderator'].includes(user.role);
 
   return (
@@ -23,15 +23,15 @@ function PopupMenu() {
             </Link>
           </li>
 
-          {status ? (
+          {status && (
             <li className={styles.item}>
               <Link to="/profile" className={styles.link}>
                 Профиль
               </Link>
             </li>
-          ) : undefined}
+          )}
 
-          {isModerator ? (
+          {isModerator && (
             <>
               <li className={styles.item}>
                 <Link to="/edit/stage" className={styles.link}>
@@ -58,21 +58,8 @@ function PopupMenu() {
                   Бот
                 </Link>
               </li>
-              <li className={styles.item}>
-                <Link to="/zwift/edit/event" className={styles.link}>
-                  Edit Event (Zwift)
-                </Link>
-              </li>
             </>
-          ) : undefined}
-
-          {isAdmin ? (
-            <li className={styles.item}>
-              <Link to="/edit/users" className={styles.link}>
-                Пользователи
-              </Link>
-            </li>
-          ) : undefined}
+          )}
         </ul>
       </div>
     </div>
