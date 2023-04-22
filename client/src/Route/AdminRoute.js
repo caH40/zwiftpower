@@ -17,6 +17,7 @@ const EditSeriesList = lazy(() => import('../Pages/EditSeriesList'));
 const EditStageList = lazy(() => import('../Pages/Edit/EditStageList'));
 const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 const AddRider = lazy(() => import('../Pages/AddRider/AddRider'));
+const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
 
 export function AdminRoute() {
   return (
@@ -130,6 +131,14 @@ export function AdminRoute() {
         element={
           <MySuspense>
             <AddRider />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/zwift/add/event"
+        element={
+          <MySuspense>
+            <ZwiftAddEvent />
           </MySuspense>
         }
       />

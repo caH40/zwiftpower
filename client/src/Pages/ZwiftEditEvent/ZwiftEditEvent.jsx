@@ -88,15 +88,19 @@ function ZwiftEditEvent() {
   return (
     <section className={styles.block}>
       <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
-      <FormRequest
-        name={'Id изменяемого Event'}
-        state={eventId}
-        setState={setEventId}
-        sendForm={fetchEventParams}
-      />
+      <div className={styles.group}>
+        <FormRequest
+          name={'Id изменяемого Event'}
+          state={eventId}
+          setState={setEventId}
+          sendForm={fetchEventParams}
+        />
+      </div>
       {eventMainParams.worldId ? (
         <>
-          <FormEditEvent />
+          <div className={styles.group}>
+            <FormEditEvent />
+          </div>
           <FormEditEventGroup sendForm={sendNewEventParams} />
           <Button getClick={goBack}>назад</Button>
         </>

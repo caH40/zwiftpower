@@ -13,6 +13,7 @@ function FormEditEvent() {
   const { eventMainParams, selectedRules } = useSelector((state) => state.eventParams);
   return (
     <form className={styles.form} name="zwiftEvent">
+      <h4 className={styles.title}>Общие настройки заезда</h4>
       <RInput
         label={'ID заезда'}
         value={eventMainParams.id}

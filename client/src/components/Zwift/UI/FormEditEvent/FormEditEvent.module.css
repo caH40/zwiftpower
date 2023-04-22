@@ -1,6 +1,11 @@
 .form {
   margin-bottom: 10px;
 }
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
 .right {
   text-align: right;
 }
