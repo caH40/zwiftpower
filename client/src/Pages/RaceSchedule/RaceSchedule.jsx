@@ -5,24 +5,18 @@ import useBackground from '../../hook/useBackground';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getEvents } from '../../api/zwift/events';
 
-import styles from './RaceSchedule.module.css';
-
 function RaceSchedule() {
   const [events, setEvents] = useState([]);
   useTitle('Расписание заездов');
   useBackground(false);
 
   useEffect(() => {
-    getEvents().then((response) => {
-      setEvents(response.data);
+    getEvents(false).then((response) => {
+      setEvents(response.data.events);
     });
   }, []);
-  console.log(events);
-  return (
-    <section>
-      <TableSchedule />
-    </section>
-  );
+
+  return <section>{events?.length ? <TableSchedule events={events} /> : 'Loading...'}</section>;
 }
 
 export default RaceSchedule;

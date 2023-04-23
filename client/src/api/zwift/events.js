@@ -49,10 +49,10 @@ export async function postEvent(event) {
 }
 
 // получение всех добавленных event
-export async function getEvents() {
+export async function getEvents(isFinished) {
   try {
     const response = await axios({
-      url: `${serverExpress}/api/zwift/events`,
+      url: `${serverExpress}/api/zwift/events?finished=${isFinished}`,
       method: 'get',
     });
 

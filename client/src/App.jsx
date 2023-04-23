@@ -19,6 +19,7 @@ import RaceResults from './Pages/RaceResults/RaceResults';
 import RaceSchedule from './Pages/RaceSchedule/RaceSchedule';
 import RaceSeries from './Pages/RaceSeries/RaceSeries';
 import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
+import RaceDescription from './Pages/RaceDescription/RaceDescription';
 
 function App() {
   useFirstAuth();
@@ -41,6 +42,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/race/results" element={<RaceResults />} />
         <Route path="/race/schedule" element={<RaceSchedule />} />
+        <Route path="/race/schedule/:eventId" element={<RaceDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />
         <Route path="/race/statistics" element={<RaceStatistics />} />
         {isModerator ? AdminRoute() : ''}

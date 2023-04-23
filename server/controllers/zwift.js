@@ -38,7 +38,8 @@ export async function postEvent(req, res) {
 
 export async function getEvents(req, res) {
   try {
-    const events = await getEventsService();
+    const { finished } = req.query;
+    const events = await getEventsService(finished);
     res.status(200).json(events);
   } catch (error) {
     console.log(error);
