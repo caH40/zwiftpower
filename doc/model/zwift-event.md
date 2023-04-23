@@ -62,13 +62,19 @@
 
 **visible** - (`Boolean`) - видимость (значение уточняется);
 
-**eventSubgroups** - (`[Object]`) - перечень объектов с параметрами групп в заезде:
+**timeTrialOptions** - (`Object`) - параметры для ТТ заезда:
+
+- maxRidersPerRow - (`Number`) нет данных,
+- maxRows - (`Number`) нет данных,
+- timeGapBetweenRowsMs - (`Number`) нет данных,
 
 **totalEntrantCount** - (`Number`) - количество зарегистрированных райдеров;
 
 **totalJoinedCount** - (`Number`) - количество принявших участие в заезде;
 
 **totalSignedUpCount** - (`Number`) - количество зарегистрированных райдеров;
+
+**eventSubgroups** - (`[Object]`) - перечень объектов с параметрами групп в заезде:
 
 ---
 
@@ -78,8 +84,6 @@
 `client\src\asset\zwift\lib\esm\bikeFrames.js`;
 
 **description** - (`String`) - ;
-
-**durationInSeconds** - (`String`) - ;
 
 **eventSubgroupStart** - (`String`) - ;
 
@@ -103,8 +107,6 @@
 
 **routeId** - (`Number`) - id маршрута `client\src\asset\zwift\lib\esm\routes.js`;
 
-**rulesId** - (`Number`) - id параметров правил (нет данных);
-
 **rulesSet** - (`[String]`) - см.выше;
 
 **subgroupLabel** - (`String`) - буквенное обозначение группы:
@@ -114,6 +116,10 @@
 - C - группа "C",
 - D - группа "C",
 - E - группа "E",
+
+**tags** - (`[String]`) - перечень тэгов;
+
+**timeTrialOptions** - (`Object`) - см.выше;
 
 **totalEntrantCount** - (`Number`) - количество зарегистрированных райдеров;
 
