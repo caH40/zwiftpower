@@ -1,5 +1,9 @@
 // запрос данных заезда по eventId
+import axios from 'axios';
+
 import { myAxios } from '../axios';
+
+const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export async function getZwiftEvents(eventId) {
   try {
@@ -40,6 +44,21 @@ export async function postEvent(event) {
     return response;
   } catch (error) {
     console.error(error); // eslint-disable-line
+    throw error;
+  }
+}
+
+// получение всех добавленных event
+export async function getEvents() {
+  try {
+    const response = await axios({
+      url: `${serverExpress}/api/zwift/events`,
+      method: 'get',
+    });
+
+    return response;
+  } catch (error) {
+    // console.error(error); // eslint-disable-line
     throw error;
   }
 }

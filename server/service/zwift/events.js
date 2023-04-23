@@ -95,3 +95,11 @@ export async function postEventService(event) {
     throw error;
   }
 }
+export async function getEventsService() {
+  try {
+    const eventsDB = await ZwiftEvent.find().populate('eventSubgroups');
+    return { events: eventsDB, message: 'Получены все заезды' };
+  } catch (error) {
+    throw error;
+  }
+}

@@ -19,6 +19,7 @@ const zwiftEventSchema = new Schema({
   microserviceEventVisibility: { type: String, default: null },
   name: { type: String, default: null },
   rulesSet: { type: [String], default: [] },
+  organizer: { type: String, default: null },
   tags: { type: [String], default: [] },
   visible: { type: Boolean, default: true },
   totalEntrantCount: { type: Number, default: null },

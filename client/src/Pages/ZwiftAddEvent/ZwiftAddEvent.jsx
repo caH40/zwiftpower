@@ -15,8 +15,6 @@ function ZwiftAddEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
   const [eventParams, setEventParams] = useState({});
 
-  console.log(eventParams);
-
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
   const dispatch = useDispatch();
