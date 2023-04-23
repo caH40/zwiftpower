@@ -29,3 +29,17 @@ export async function changeZwiftEvents(event) {
     throw error;
   }
 }
+export async function postEvent(event) {
+  try {
+    const response = await myAxios({
+      url: '/api/zwift/events',
+      method: 'post',
+      data: { event },
+    });
+
+    return response;
+  } catch (error) {
+    console.error(error); // eslint-disable-line
+    throw error;
+  }
+}

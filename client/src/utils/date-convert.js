@@ -74,3 +74,18 @@ export function addNull(rowNumber) {
     return number;
   }
 }
+export function getLocalDate(date) {
+  const dateForFormat = new Date(date);
+  if (!date || date === 0) return 'Дата отсутствует, проверяйте старт заезда для каждой группы';
+  const formatter = new Intl.DateTimeFormat('ru', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+  const dateLocal = formatter.format(dateForFormat);
+  return dateLocal;
+}
