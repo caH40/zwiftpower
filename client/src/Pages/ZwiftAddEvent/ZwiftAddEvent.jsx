@@ -15,6 +15,8 @@ function ZwiftAddEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
   const [eventParams, setEventParams] = useState({});
 
+  console.log(eventParams);
+
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
   const dispatch = useDispatch();
@@ -42,7 +44,7 @@ function ZwiftAddEvent() {
   };
 
   const addEvent = () =>
-    postEvent(eventParams.id).catch((error) => {
+    postEvent(eventParams).catch((error) => {
       const message = error.response
         ? JSON.stringify(error.response.data.message || error.message)
         : 'Непредвиденная ошибка';

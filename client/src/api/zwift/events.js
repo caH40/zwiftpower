@@ -29,12 +29,12 @@ export async function changeZwiftEvents(event) {
     throw error;
   }
 }
-export async function postEvent(eventId) {
+export async function postEvent(event) {
   try {
     const response = await myAxios({
       url: '/api/zwift/events',
       method: 'post',
-      data: { eventId },
+      data: { event },
     });
 
     return response;
