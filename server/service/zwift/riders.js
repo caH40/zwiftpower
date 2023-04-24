@@ -28,6 +28,9 @@ export async function putSingedRidersService(eventId, username, password) {
           countryAlpha3: rider.countryAlpha3,
           countryCode: rider.countryCode,
           imageSrc: rider.imageSrc,
+          age: rider.age,
+          height: rider.height,
+          weight: rider.weight,
           subgroupLabel: eventSubgroup.subgroupLabel,
         });
       }

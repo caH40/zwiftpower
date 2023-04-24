@@ -12,6 +12,9 @@ const zwiftSingedRidersSchema = new Schema({
   countryAlpha3: { type: String, default: null },
   countryCode: { type: Number, default: null },
   imageSrc: { type: String, default: null },
+  age: { type: Number, default: null },
+  height: { type: Number, default: null },
+  weight: { type: Number, default: null },
   subgroupLabel: { type: String, default: 'E' },
 });
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
+import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
 import CategoriesBox from '../../components/CategoriesBox/CategoriesBox';
 import RulesBox from '../../components/RulesBox/RulesBox';
 import { getEvent } from '../../api/zwift/events';
@@ -47,6 +48,7 @@ function RaceDescription() {
               ></p>
             </>
           )}
+          <TableSingedRiders riders={event.singedRiders} />
         </>
       ) : (
         'Заезд не найден!'

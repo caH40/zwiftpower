@@ -16,8 +16,9 @@ export function tdLinkZP(zwiftRiderId) {
       target="_blank"
       rel="noreferrer"
       href={`https://zwiftpower.com/profile.php?z=${zwiftRiderId}`}
+      style={{ color: 'inherit', textDecoration: 'inherit' }}
     >
-			ZwiftPower
+      профиль
     </a>
   );
 }

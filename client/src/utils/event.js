@@ -27,3 +27,15 @@ const gap = (dateStart, dateStartGroup) => {
 };
 
 export const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
+
+export const getAgeCategory = (age) => {
+  if (age < 30) return 'Snr';
+  if (age >= 30 && age < 40) return 'Mas';
+  if (age >= 40 && age < 50) return 'Vet';
+  if (age >= 50 && age < 60) return '50+';
+  return '60+';
+};
+
+export const getWeightStr = (weight) => Math.round(weight / 1000) + 'кг';
+export const getHeightStr = (height) => Math.round(height / 10) + 'см';
+export const getGenderStr = (isMale) => (isMale ? 'муж' : 'жен');
