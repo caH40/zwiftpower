@@ -1,5 +1,5 @@
 import { getEventService, postEventService, putEventService } from '../service/zwift/events.js';
-import { getSingedRidersService } from '../service/zwift/riders.js';
+import { putSingedRidersService } from '../service/zwift/riders.js';
 
 export async function getEvent(req, res) {
   try {
@@ -34,7 +34,7 @@ export async function postEvent(req, res) {
 export async function putSingedRiders(req, res) {
   try {
     const { eventId } = req.body;
-    const singedRiders = await getSingedRidersService(eventId);
+    const singedRiders = await putSingedRidersService(eventId);
     res.status(200).json(singedRiders);
   } catch (error) {
     console.log(error);

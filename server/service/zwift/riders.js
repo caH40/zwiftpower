@@ -3,7 +3,7 @@ import { ZwiftSingedRiders } from '../../Model/ZwiftSingedRiders.js';
 import { getRequest } from './request-get.js';
 import { getAccessToken } from './token.js';
 
-export async function getSingedRidersService(eventId, username, password) {
+export async function putSingedRidersService(eventId, username, password) {
   try {
     const token = await getAccessToken(username, password);
     if (!token) throw { message: 'Ошибка при получении токена' };
@@ -12,6 +12,7 @@ export async function getSingedRidersService(eventId, username, password) {
 
     for (const eventSubgroup of eventDB.eventSubgroups) {
       const subgroupId = eventSubgroup.id;
+      // стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
       const urlSingedData = `events/subgroups/entrants/${subgroupId}/?limit=100&participation=signed_up&start=0&type=all`;
       const singedData = await getRequest(urlSingedData, token);
       // удаление всех райдеров из группы
@@ -37,4 +38,3 @@ export async function getSingedRidersService(eventId, username, password) {
     throw error;
   }
 }
-// стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
