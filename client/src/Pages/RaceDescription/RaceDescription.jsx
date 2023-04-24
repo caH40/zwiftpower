@@ -6,7 +6,7 @@ import CategoriesBox from '../../components/CategoriesBox/CategoriesBox';
 import RulesBox from '../../components/RulesBox/RulesBox';
 import { getEvent } from '../../api/zwift/events';
 import { getLocalDate } from '../../utils/date-convert';
-import { map, route } from '../../utils/event';
+import { map, replaceWithBr, route } from '../../utils/event';
 import { getLapsString } from '../../utils/declination';
 
 import styles from './RaceDescription.module.css';
@@ -22,8 +22,6 @@ function RaceDescription() {
       setEvent(response.data.event);
     });
   }, [eventId]);
-
-  const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
 
   return (
     <section>

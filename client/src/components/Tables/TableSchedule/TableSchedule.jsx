@@ -26,7 +26,9 @@ function TableSchedule({ events }) {
             <td>{getLocalDate(event.eventStart, 'short')}</td>
             <td>{event.typeEventCustom}</td>
             <td>
-              <Link to={String(event.id)}>{event.name}</Link>
+              <Link className={styles.link} to={String(event.id)}>
+                {event.name}
+              </Link>
             </td>
             <td>{event.totalEntrantCount}</td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>

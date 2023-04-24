@@ -25,3 +25,5 @@ const gap = (dateStart, dateStartGroup) => {
   const gapMilliseconds = new Date(dateStartGroup).getTime() - new Date(dateStart).getTime();
   return secondesToMinutes(gapMilliseconds);
 };
+
+export const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
