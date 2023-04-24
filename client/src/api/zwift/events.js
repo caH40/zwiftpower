@@ -52,7 +52,7 @@ export async function postEvent(event) {
 export async function getEvents(isFinished) {
   try {
     const response = await axios({
-      url: `${serverExpress}/api/zwift/events?finished=${isFinished}`,
+      url: `${serverExpress}/api/race/events?finished=${isFinished}`,
       method: 'get',
     });
 
