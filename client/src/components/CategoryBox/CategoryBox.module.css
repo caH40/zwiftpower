@@ -1,0 +1,33 @@
+.category {
+  text-align: center;
+  padding: 0.3em 0.3em 0.15em;
+  max-width: 70px;
+  min-width: 50px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: inherit;
+}
+.A {
+  background: #dc4119;
+}
+.B {
+  background: #58c34e;
+}
+.C {
+  background: #3ec0e9;
+}
+.D {
+  background: #fccf0b;
+}
+.E {
+  background: #943e5e;
+}
+.W {
+  background: #9422ae;
+}
+.WA {
+  background: #9422ae;
+}
+.WB {
+  background: #9422ae;
+}

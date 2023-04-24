@@ -46,6 +46,17 @@ export function secondesToTime(rowSeconds) {
     return seconds;
   }
 }
+export function secondesToMinutes(rowSeconds) {
+  let seconds = rowSeconds;
+  seconds /= 1000;
+  if (seconds > 3599) {
+    const hour = Math.trunc(seconds / 3600);
+    const minutes = Math.trunc((seconds - hour * 3600) / 60);
+    return minutes;
+  }
+  return Math.trunc(seconds / 60);
+}
+
 export function secondesToTimeThousandths(seconds) {
   if (seconds > 3599000) {
     const hour = Math.trunc(seconds / 3600000);
@@ -74,17 +85,16 @@ export function addNull(rowNumber) {
     return number;
   }
 }
-export function getLocalDate(date) {
+export function getLocalDate(date, length) {
   const dateForFormat = new Date(date);
   if (!date || date === 0) return 'Дата отсутствует, проверяйте старт заезда для каждой группы';
   const formatter = new Intl.DateTimeFormat('ru', {
     year: 'numeric',
-    month: 'long',
+    month: length === 'short' ? 'numeric' : 'long',
     day: 'numeric',
-    weekday: 'long',
+    weekday: length === 'short' ? undefined : 'long',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
   });
   const dateLocal = formatter.format(dateForFormat);
   return dateLocal;
