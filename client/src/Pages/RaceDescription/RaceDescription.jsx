@@ -13,6 +13,7 @@ import styles from './RaceDescription.module.css';
 
 function RaceDescription() {
   const [event, setEvent] = useState({});
+  const [isVisibleDesc, setIsVisibleDesc] = useState(false);
   useTitle('Описание заезда');
   const { eventId } = useParams();
 
@@ -36,11 +37,18 @@ function RaceDescription() {
           </div>
           <RulesBox event={event} />
           <CategoriesBox event={event} />
-          <img className={styles.poster} src={event.imageUrl} alt="poster" />
-          <p
-            className={styles.paragraph}
-            dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
-          ></p>
+          <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
+            <h4 className={styles.description__title}>Описание</h4>
+          </div>
+          {isVisibleDesc && (
+            <>
+              <img className={styles.poster} src={event.imageUrl} alt="poster" />
+              <p
+                className={styles.paragraph}
+                dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
+              ></p>
+            </>
+          )}
         </>
       ) : (
         'Заезд не найден!'

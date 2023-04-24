@@ -47,3 +47,18 @@
   text-align: justify;
   margin: 0px 0px 15px 0px;
 }
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  margin: 10px 0;
+  width: 100%;
+  background-color: var(--color-yellow-5);
+  cursor: pointer;
+  border-radius: 6px;
+}
+.description__title {
+  font-size: 16px;
+  font-weight: 400;
+}
