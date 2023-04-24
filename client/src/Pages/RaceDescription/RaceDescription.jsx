@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import CategoriesBox from '../../components/CategoriesBox/CategoriesBox';
+import RulesBox from '../../components/RulesBox/RulesBox';
 import { getEvent } from '../../api/zwift/events';
 import { getLocalDate } from '../../utils/date-convert';
 import { map, route } from '../../utils/event';
@@ -23,8 +24,6 @@ function RaceDescription() {
 
   const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
 
-  console.log(event);
-
   return (
     <section>
       {event?.id ? (
@@ -35,6 +34,7 @@ function RaceDescription() {
             {`${map(event.eventSubgroups[0].mapId)}, ${route(event.eventSubgroups[0].routeId)},
            ${getLapsString(event.eventSubgroups[0].laps)}`}
           </div>
+          <RulesBox event={event} />
           <CategoriesBox event={event} />
           <img className={styles.poster} src={event.imageUrl} alt="poster" />
           <p
