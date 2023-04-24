@@ -46,6 +46,17 @@ export function secondesToTime(rowSeconds) {
     return seconds;
   }
 }
+export function secondesToMinutes(rowSeconds) {
+  let seconds = rowSeconds;
+  seconds /= 1000;
+  if (seconds > 3599) {
+    const hour = Math.trunc(seconds / 3600);
+    const minutes = Math.trunc((seconds - hour * 3600) / 60);
+    return minutes;
+  }
+  return Math.trunc(seconds / 60);
+}
+
 export function secondesToTimeThousandths(seconds) {
   if (seconds > 3599000) {
     const hour = Math.trunc(seconds / 3600000);

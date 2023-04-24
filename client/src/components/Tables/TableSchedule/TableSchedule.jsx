@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from '../Table.module.css';
-import { map, route } from '../utils/event';
 
 import { getLocalDate } from '../../../utils/date-convert';
+import { map, route } from '../../../utils/event';
 
 function TableSchedule({ events }) {
-  console.log(events);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
