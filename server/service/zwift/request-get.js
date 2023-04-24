@@ -5,7 +5,7 @@ const headersDefault = {
   'Content-Type': 'application/x-protobuf-lite',
   Accept: 'application/json',
   Connection: 'keep-alive',
-  'Zwift-Api-Version': '',
+  'Zwift-Api-Version': '2.6',
   'User-Agent': 'Zwift/115 CFNetwork/758.0.2 Darwin/15.0.0',
   'Accept-Language': 'en-us',
   'Accept-Encoding': 'gzip',

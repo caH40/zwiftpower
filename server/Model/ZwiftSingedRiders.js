@@ -3,7 +3,7 @@ import pkg from 'mongoose';
 
 const { Schema, model } = pkg;
 
-const zwiftSingedUsersSchema = new Schema({
+const zwiftSingedRidersSchema = new Schema({
   subgroup: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEventSubgroup', required: true },
   id: { type: Number, required: true },
   firstName: { type: String, default: null },
@@ -12,6 +12,7 @@ const zwiftSingedUsersSchema = new Schema({
   countryAlpha3: { type: String, default: null },
   countryCode: { type: Number, default: null },
   imageSrc: { type: String, default: null },
+  subgroupLabel: { type: String, default: 'E' },
 });
 
-export const ZwiftSingedUsers = model('ZwiftSingedUsers', zwiftSingedUsersSchema);
+export const ZwiftSingedRiders = model('ZwiftSingedRiders', zwiftSingedRidersSchema);
