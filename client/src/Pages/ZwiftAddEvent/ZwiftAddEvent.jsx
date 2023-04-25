@@ -6,14 +6,14 @@ import useBackground from '../../hook/useBackground';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { getZwiftEvents, postEvent } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { getLocalDate } from '../../utils/date-convert';
 import Button from '../../components/UI/Button/Button';
+import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
-  const [eventParams, setEventParams] = useState({});
+  const [event, setEvent] = useState({});
 
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
@@ -26,7 +26,7 @@ function ZwiftAddEvent() {
       );
     getZwiftEvents(eventId.id)
       .then((response) => {
-        setEventParams(response.data);
+        setEvent(response.data);
         dispatch(getAlert({ message: 'Данные получены', type: 'success', isOpened: true }));
       })
       .catch((error) => {
@@ -42,7 +42,7 @@ function ZwiftAddEvent() {
   };
 
   const addEvent = () =>
-    postEvent(eventParams).catch((error) => {
+    postEvent(event).catch((error) => {
       const message = error.response
         ? JSON.stringify(error.response.data.message || error.message)
         : 'Непредвиденная ошибка';
@@ -68,17 +68,10 @@ function ZwiftAddEvent() {
           sendForm={fetchEventParams}
         />
       </div>
-      {eventParams.id && (
+      {event.id && (
         <>
-          <div className={styles.group}>
-            <h3 className={styles.h3}>{eventParams.name}</h3>
-            <h4 className={styles.h4}>{getLocalDate(eventParams.eventStart)}</h4>
-            <img className={styles.poster} src={eventParams.imageUrl} alt="poster" />
-            <p className={styles.paragraph}>{eventParams.description}</p>
-            <div className={styles.right}>
-              <Button getClick={addEvent}>Добавить</Button>
-            </div>
-          </div>
+          <DescriptionEventZwift event={event} />
+          <Button getClick={addEvent}>Добавить</Button>
         </>
       )}
     </section>
