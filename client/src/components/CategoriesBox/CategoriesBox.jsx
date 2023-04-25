@@ -10,7 +10,7 @@ function CategoriesBox({ event }) {
   return (
     <div className={styles.block}>
       {event.eventSubgroups.map((group) => (
-        <div className={styles.box} key={group._id}>
+        <div className={styles.box} key={group.id}>
           <CategoryBox label={group.subgroupLabel} quantityRiders={group.totalEntrantCount} />
           {gaps[group.subgroupLabel] === 0 ? null : (
             <span>+{gaps[group.subgroupLabel]}мин</span>

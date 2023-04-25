@@ -4,8 +4,8 @@ import pkg from 'mongoose';
 const { Schema, model } = pkg;
 
 const zwiftEventSchema = new Schema({
-  seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series' },
-  typeEventCustom: { type: String, default: null },
+  seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', default: null },
+  typeRaceCustom: { type: String, default: null },
   id: { type: Number, unique: true, required: true },
   mapId: { type: Number, default: null },
   categoryEnforcement: { type: Boolean, default: false },

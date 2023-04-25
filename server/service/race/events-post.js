@@ -17,7 +17,7 @@ export async function postEventService(event) {
     const eventSaved = await saveEventToDB(event);
     await putSingedRidersService(eventSaved.id);
 
-    return { message: 'Заезд сохранен' };
+    return { message: 'Заезд добавлен в БД' };
   } catch (error) {
     throw error;
   }
@@ -52,7 +52,8 @@ async function saveEventToDB(event) {
 
     const eventDB = await ZwiftEvent.create({
       seriesId: event.seriesId,
-      typeEventCustom: event.typeEventCustom,
+      typeRaceCustom: event.typeRaceCustom,
+      organizer: event.organizer,
       id: event.id,
       mapId: event.mapId,
       categoryEnforcement: event.categoryEnforcement,

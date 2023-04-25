@@ -1,30 +1,31 @@
 import { Router } from 'express';
 
 import {
-	getSeries,
-	postSeriesOne,
-	postStages,
-	getStage,
-	putDisqualification,
-	putUnderChecking,
-	putPenalty,
-	putCategory,
-	putPoints,
-	putMultiplier,
-	putSeries,
-	postSeries,
-	putStage,
-	postStage,
-	deleteStage,
-	getStageResults,
-	deleteSeries,
-	getRiders,
-	getRider,
-	checkResult,
-	postResult,
-	deleteResults,
-	deleteResult,
-	putGeneralPoints,
+  getSeries,
+  postSeriesOne,
+  postStages,
+  getStage,
+  putDisqualification,
+  putUnderChecking,
+  putPenalty,
+  putCategory,
+  putPoints,
+  putMultiplier,
+  putSeries,
+  postSeries,
+  putStage,
+  postStage,
+  deleteStage,
+  getStageResults,
+  deleteSeries,
+  getRiders,
+  getRider,
+  checkResult,
+  postResult,
+  deleteResults,
+  deleteResult,
+  putGeneralPoints,
+  getSeriesActual,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
@@ -32,6 +33,7 @@ import { authAdmin } from '../middleware/authRole.js';
 export const router = new Router();
 
 router.get('/series', authAdmin, getSeries);
+router.get('/series/actual', authAdmin, getSeriesActual);
 router.put('/series', authAdmin, putSeries);
 router.post('/series', authAdmin, postSeries);
 router.delete('/series', authAdmin, deleteSeries);

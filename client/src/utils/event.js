@@ -1,5 +1,7 @@
 import { worlds } from '../asset/zwift/lib/esm/worlds';
 import { routes } from '../asset/zwift/lib/esm/routes';
+import { raceTypes } from '../asset/zwift/race-type';
+import { organizers } from '../asset/zwift/organizer';
 
 import { secondesToMinutes } from './date-convert';
 
@@ -8,6 +10,12 @@ export const map = (id) => {
 };
 export const route = (id) => {
   return routes.find((route) => route.id === id)?.name;
+};
+export const raceType = (value) => {
+  return raceTypes.find((race) => race.value === value)?.name;
+};
+export const organizer = (value) => {
+  return organizers.find((organizer) => organizer.value === value)?.name;
 };
 export const gapStart = (eventParams) => {
   if (!eventParams.id) return {};

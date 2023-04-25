@@ -10,6 +10,16 @@ export async function getSeries() {
   }
 }
 
+export async function getSeriesActual() {
+  try {
+    const response = await myAxios.get('/api/series/actual');
+    return response;
+  } catch (error) {
+    console.log(error); // eslint-disable-line
+    throw error;
+  }
+}
+
 export async function getSeriesOne(seriesId) {
   try {
     const response = await myAxios({

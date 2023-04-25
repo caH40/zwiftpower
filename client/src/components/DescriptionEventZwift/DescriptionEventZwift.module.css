@@ -1,0 +1,78 @@
+.block {
+  margin-bottom: 35px;
+}
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.right {
+  text-align: right;
+  margin-bottom: 5px;
+}
+.group {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+.poster {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  margin: 10px 0px;
+  border-radius: 6px;
+}
+.h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.params {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+.paragraph {
+  letter-spacing: 0.5px;
+  text-align: justify;
+  margin: 0px 0px 10px 0px;
+}
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  margin: 10px 0;
+  width: 100%;
+  background-color: var(--color-yellow-5);
+  cursor: pointer;
+  border-radius: 6px;
+}
+.description__title {
+  font-size: 16px;
+  font-weight: 400;
+}
+.service {
+  font-size: 11px;
+  margin-right: 3px;
+}
+.link {
+  display: block;
+  text-decoration: none;
+  font-size: 16px;
+  color: var(--color-blue-4);
+  margin: 0px 0px 10px 0px;
+}
+.link:hover {
+  text-decoration: underline;
+}
