@@ -28,6 +28,7 @@ const zwiftEventSchema = new Schema({
   eventSubgroups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEventSubgroup' }],
   hasResults: { type: Boolean, default: false },
   needCount: { type: Boolean, default: true },
+  updated: { type: Number, default: null },
 });
 
 export const ZwiftEvent = model('ZwiftEvent', zwiftEventSchema);
