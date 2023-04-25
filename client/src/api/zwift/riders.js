@@ -14,3 +14,17 @@ export async function putEvent(eventId) {
     throw error;
   }
 }
+export async function deleteEvent(eventId) {
+  try {
+    const response = await myAxios({
+      url: '/api/race/events',
+      method: 'delete',
+      data: { eventId },
+    });
+
+    return response;
+  } catch (error) {
+    console.error(error); // eslint-disable-line
+    throw error;
+  }
+}

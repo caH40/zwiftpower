@@ -5,11 +5,10 @@ import styles from '../Table.module.css';
 
 import { getLocalDate } from '../../../utils/date-convert';
 import { map, organizer, raceType, route } from '../../../utils/event';
-import Button from '../../UI/Button/Button';
-import { putEvent } from '../../../api/zwift/riders';
+import IconRefresh from '../../icons/IconRefresh';
+import IconDelete from '../../icons/IconDelete';
 
-function TableSchedule({ events }) {
-  const updateEvent = (eventId) => putEvent(eventId);
+function TableSchedule({ events, updateEvent, removeEvent }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -22,7 +21,7 @@ function TableSchedule({ events }) {
           <th>Карта</th>
           <th>Маршрут</th>
           <th>Круги</th>
-          <th>edit</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -41,7 +40,10 @@ function TableSchedule({ events }) {
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{event.eventSubgroups[0]?.laps}</td>
             <td>
-              <Button getClick={() => updateEvent(event.id)}>update</Button>
+              <div className={styles.box__icons}>
+                <IconRefresh getClick={() => updateEvent(event.id)} />
+                <IconDelete getClick={() => removeEvent(event.id)} />
+              </div>
             </td>
           </tr>
         ))}

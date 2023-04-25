@@ -155,3 +155,7 @@
 .wrap {
   white-space: normal;
 }
+.box__icons {
+  display: flex;
+  gap: 0 5px;
+}

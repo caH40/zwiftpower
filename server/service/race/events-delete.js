@@ -1,9 +1,8 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { ZwiftSingedRiders } from '../../Model/ZwiftSingedRiders.js';
-import { postEventService } from './events-post.js';
 
-export async function putEventService(eventId) {
+export async function deleteEventService(eventId) {
   try {
     const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
     for (const eventSubgroup of eventDB.eventSubgroups) {
@@ -12,8 +11,7 @@ export async function putEventService(eventId) {
     }
     await ZwiftEvent.findByIdAndDelete(eventDB._id);
 
-    await postEventService(eventDB);
-    return { message: `Обновлены данные ${eventDB.name}` };
+    return { message: `Заезд ${eventDB.name} удален!` };
   } catch (error) {
     throw error;
   }
