@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '../Button/Button';
-import { eventTypes } from '../../../asset/zwift/event-type';
+import { raceTypes } from '../../../asset/zwift/race-type';
 import { organizers } from '../../../asset/zwift/organizer';
 import SimpleSelectArray from '../SimpleSelectArray/SimpleSelectArray';
 
@@ -22,7 +22,7 @@ function FormAdditionalParamsEvent({ form, setForm, sendForm, series }) {
         state={form}
         setState={setForm}
         property={'typeRaceCustom'}
-        options={eventTypes}
+        options={raceTypes}
       />
       <SimpleSelectArray
         name={'Серия в которую добавляется заезд'}

@@ -1,4 +1,4 @@
-export const eventTypes = [
+export const raceTypes = [
   { id: 0, value: 'TT', name: 'TT' },
   { id: 1, value: 'catchUp', name: 'Догонялки' },
   { id: 2, value: 'newbies', name: 'Для новичков' },
