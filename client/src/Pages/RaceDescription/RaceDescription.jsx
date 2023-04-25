@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
+import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
 import CategoriesBox from '../../components/CategoriesBox/CategoriesBox';
 import RulesBox from '../../components/RulesBox/RulesBox';
 import { getEvent } from '../../api/zwift/events';
@@ -16,7 +17,7 @@ function RaceDescription() {
   const [isVisibleDesc, setIsVisibleDesc] = useState(false);
   useTitle('Описание заезда');
   const { eventId } = useParams();
-
+  console.log(event);
   useEffect(() => {
     getEvent(eventId).then((response) => {
       setEvent(response.data.event);
@@ -35,18 +36,30 @@ function RaceDescription() {
           </div>
           <RulesBox event={event} />
           <CategoriesBox event={event} />
-          <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
+          {/* <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
             <h4 className={styles.description__title}>Описание</h4>
+          </div> */}
+          <img className={styles.poster} src={event.imageUrl} alt="poster" />
+          <p
+            className={styles.paragraph}
+            dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
+          ></p>
+
+          <Link
+            className={styles.link}
+            to={`https://www.zwift.com/eu/events/view/${event.id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Регистрация в Zwift
+          </Link>
+
+          <TableSingedRiders riders={event.singedRiders} />
+
+          <div className={styles.right}>
+            <span className={styles.service}>Обновление:</span>
+            <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
           </div>
-          {isVisibleDesc && (
-            <>
-              <img className={styles.poster} src={event.imageUrl} alt="poster" />
-              <p
-                className={styles.paragraph}
-                dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
-              ></p>
-            </>
-          )}
         </>
       ) : (
         'Заезд не найден!'

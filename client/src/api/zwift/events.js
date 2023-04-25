@@ -33,10 +33,12 @@ export async function changeZwiftEvents(event) {
     throw error;
   }
 }
+
+// сохранение данных Эвента с Zwift в БД
 export async function postEvent(event) {
   try {
     const response = await myAxios({
-      url: '/api/zwift/events',
+      url: '/api/race/events',
       method: 'post',
       data: { event },
     });
@@ -52,7 +54,7 @@ export async function postEvent(event) {
 export async function getEvents(isFinished) {
   try {
     const response = await axios({
-      url: `${serverExpress}/api/zwift/events?finished=${isFinished}`,
+      url: `${serverExpress}/api/race/events?finished=${isFinished}`,
       method: 'get',
     });
 
