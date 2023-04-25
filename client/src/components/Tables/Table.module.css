@@ -157,5 +157,5 @@
 }
 .box__icons {
   display: flex;
-  gap: 0 5px;
+  gap: 0 10px;
 }

@@ -11,7 +11,14 @@ export async function deleteEventService(eventId) {
     }
     await ZwiftEvent.findByIdAndDelete(eventDB._id);
 
-    return { message: `Заезд ${eventDB.name} удален!` };
+    return {
+      additionalParams: {
+        seriesId: eventDB.seriesId,
+        organizer: eventDB.organizer,
+        typeRaceCustom: eventDB.typeRaceCustom,
+      },
+      message: `Заезд ${eventDB.name} удален!`,
+    };
   } catch (error) {
     throw error;
   }

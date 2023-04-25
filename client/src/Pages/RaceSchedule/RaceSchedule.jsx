@@ -24,6 +24,7 @@ function RaceSchedule() {
   const updateEvent = (eventId) => {
     putEvent(eventId)
       .then((response) => {
+        setTrigger((prev) => !prev);
         dispatch(
           getAlert({
             message: response.data.message,
