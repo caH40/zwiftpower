@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
@@ -45,7 +45,21 @@ function RaceDescription() {
             dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
           ></p>
 
+          <Link
+            className={styles.link}
+            to={`https://www.zwift.com/eu/events/view/${event.id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Регистрация в Zwift
+          </Link>
+
           <TableSingedRiders riders={event.singedRiders} />
+
+          <div className={styles.right}>
+            <span className={styles.service}>Обновление:</span>
+            <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
+          </div>
         </>
       ) : (
         'Заезд не найден!'
