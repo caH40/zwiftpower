@@ -7,7 +7,7 @@ import SimpleSelectArray from '../SimpleSelectArray/SimpleSelectArray';
 
 import styles from './FormAdditionalParamsEvent.module.css';
 
-function FormAdditionalParamsEvent({ form, setForm, sendForm }) {
+function FormAdditionalParamsEvent({ form, setForm, sendForm, series }) {
   return (
     <form className={styles.form} name="requestData">
       <SimpleSelectArray
@@ -21,8 +21,15 @@ function FormAdditionalParamsEvent({ form, setForm, sendForm }) {
         name={'Тип гонки'}
         state={form}
         setState={setForm}
-        property={'raceType'}
+        property={'typeRaceCustom'}
         options={eventTypes}
+      />
+      <SimpleSelectArray
+        name={'Серия в которую добавляется заезд'}
+        state={form}
+        setState={setForm}
+        property={'seriesId'}
+        options={series}
       />
       <div className={styles.right}>
         <Button getClick={sendForm}>Добавить</Button>

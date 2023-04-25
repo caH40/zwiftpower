@@ -13,7 +13,7 @@ function SimpleSelectArray({ name, state, setState, property, disabled, options 
         onChange={(e) =>
           setState((prev) => ({
             ...prev,
-            [property]: options.find((option) => option.name === e.target.value).value,
+            [property]: options.find((option) => option.name === e.target.value)?.value,
           }))
         }
         disabled={disabled}

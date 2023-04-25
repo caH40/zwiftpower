@@ -13,7 +13,7 @@ function RaceDescription() {
   const [event, setEvent] = useState({});
   useTitle('Описание заезда');
   const { eventId } = useParams();
-  console.log(event);
+
   useEffect(() => {
     getEvent(eventId).then((response) => {
       setEvent(response.data.event);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
@@ -8,14 +8,16 @@ import { getZwiftEvents, postEvent } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
+import { getSeriesActual } from '../../api/series';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
   const [event, setEvent] = useState({});
-  const [form, setForm] = useState({});
-  console.log(form);
+  const [series, setSeries] = useState([{ id: 0, value: '', name: '' }]);
+  const [additionalParams, setAdditionalParams] = useState({});
+
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
   const dispatch = useDispatch();
@@ -42,19 +44,68 @@ function ZwiftAddEvent() {
     return false;
   };
 
-  const addEvent = () =>
-    postEvent(event).catch((error) => {
-      const message = error.response
-        ? JSON.stringify(error.response.data.message || error.message)
-        : 'Непредвиденная ошибка';
+  useEffect(() => {
+    getSeriesActual()
+      .then((response) => {
+        const seriesArray = response.data.series;
+        const seriesForOptions = seriesArray.map((seriesOne, index) => ({
+          id: index,
+          value: seriesOne._id,
+          name: seriesOne.name,
+        }));
+        const nullOptions = [{ id: 0, value: null, name: null }];
+        setSeries(seriesArray.length ? seriesForOptions : nullOptions);
+      })
+      .catch((error) => {
+        dispatch(
+          getAlert({
+            message: error.response ? error.response.data.message : 'Непредвиденная ошибка',
+            type: 'error',
+            isOpened: true,
+          })
+        );
+      });
+  }, [event, dispatch]);
+
+  const addEvent = () => {
+    const isFilledFields = additionalParams.typeRaceCustom && additionalParams.organizer;
+    if (!isFilledFields) {
       dispatch(
         getAlert({
-          message,
+          message: 'Необходимо заполнить все поля',
           type: 'error',
           isOpened: true,
         })
       );
-    });
+      return;
+    }
+    const eventForSend = { ...event, ...additionalParams };
+    postEvent(eventForSend)
+      .then((response) => {
+        setEventId({ id: 0 });
+        setEvent({});
+        setAdditionalParams({});
+        dispatch(
+          getAlert({
+            message: response.data.message,
+            type: 'success',
+            isOpened: true,
+          })
+        );
+      })
+      .catch((error) => {
+        const message = error.response
+          ? JSON.stringify(error.response.data.message || error.message)
+          : 'Непредвиденная ошибка';
+        dispatch(
+          getAlert({
+            message,
+            type: 'error',
+            isOpened: true,
+          })
+        );
+      });
+  };
 
   return (
     <section className={styles.block}>
@@ -72,7 +123,12 @@ function ZwiftAddEvent() {
       {event.id && (
         <>
           <DescriptionEventZwift event={event} />
-          <FormAdditionalParamsEvent form={form} setForm={setForm} />
+          <FormAdditionalParamsEvent
+            form={additionalParams}
+            setForm={setAdditionalParams}
+            series={series}
+            sendForm={addEvent}
+          />
         </>
       )}
     </section>
