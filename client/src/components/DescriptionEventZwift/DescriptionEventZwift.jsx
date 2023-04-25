@@ -19,9 +19,6 @@ function DescriptionEventZwift({ event }) {
       </div>
       <RulesBox event={event} />
       <CategoriesBox event={event} />
-      {/* <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
-    <h4 className={styles.description__title}>Описание</h4>
-  </div> */}
       <img className={styles.poster} src={event.imageUrl} alt="poster" />
       <p
         className={styles.paragraph}

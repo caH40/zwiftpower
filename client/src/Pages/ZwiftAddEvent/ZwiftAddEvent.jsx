@@ -6,15 +6,16 @@ import useBackground from '../../hook/useBackground';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { getZwiftEvents, postEvent } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import Button from '../../components/UI/Button/Button';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
   const [eventId, setEventId] = useState({ id: 0 });
   const [event, setEvent] = useState({});
-
+  const [form, setForm] = useState({});
+  console.log(form);
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function ZwiftAddEvent() {
   const fetchEventParams = () => {
     if (!eventId.id)
       return dispatch(
-        getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
+        getAlert({ message: 'Необходимо ввести Id заезда!', type: 'warning', isOpened: true })
       );
     getZwiftEvents(eventId.id)
       .then((response) => {
@@ -71,7 +72,7 @@ function ZwiftAddEvent() {
       {event.id && (
         <>
           <DescriptionEventZwift event={event} />
-          <Button getClick={addEvent}>Добавить</Button>
+          <FormAdditionalParamsEvent form={form} setForm={setForm} />
         </>
       )}
     </section>
