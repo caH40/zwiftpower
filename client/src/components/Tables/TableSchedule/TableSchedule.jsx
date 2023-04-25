@@ -6,10 +6,10 @@ import styles from '../Table.module.css';
 import { getLocalDate } from '../../../utils/date-convert';
 import { map, route } from '../../../utils/event';
 import Button from '../../UI/Button/Button';
-import { putSingedRiders } from '../../../api/zwift/riders';
+import { putEvent } from '../../../api/zwift/riders';
 
 function TableSchedule({ events }) {
-  const updateSingedRiders = (eventId) => putSingedRiders(eventId);
+  const updateEvent = (eventId) => putEvent(eventId);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -39,7 +39,7 @@ function TableSchedule({ events }) {
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{event.eventSubgroups[0]?.laps}</td>
             <td>
-              <Button getClick={() => updateSingedRiders(event.id)}>update</Button>
+              <Button getClick={() => updateEvent(event.id)}>update</Button>
             </td>
           </tr>
         ))}

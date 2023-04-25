@@ -1,9 +1,9 @@
 import { myAxios } from '../axios';
 
-export async function putSingedRiders(eventId) {
+export async function putEvent(eventId) {
   try {
     const response = await myAxios({
-      url: '/api/zwift/events/singed',
+      url: '/api/race/events',
       method: 'put',
       data: { eventId },
     });

@@ -36,18 +36,15 @@ function RaceDescription() {
           </div>
           <RulesBox event={event} />
           <CategoriesBox event={event} />
-          <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
+          {/* <div className={styles.description} onClick={() => setIsVisibleDesc((prev) => !prev)}>
             <h4 className={styles.description__title}>Описание</h4>
-          </div>
-          {isVisibleDesc && (
-            <>
-              <img className={styles.poster} src={event.imageUrl} alt="poster" />
-              <p
-                className={styles.paragraph}
-                dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
-              ></p>
-            </>
-          )}
+          </div> */}
+          <img className={styles.poster} src={event.imageUrl} alt="poster" />
+          <p
+            className={styles.paragraph}
+            dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
+          ></p>
+
           <TableSingedRiders riders={event.singedRiders} />
         </>
       ) : (
