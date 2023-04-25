@@ -9,3 +9,15 @@
 .active__fill {
   fill: var(--color-orange-main);
 }
+.box:hover .alone__success {
+  fill: #17c200;
+  transition: 0.3s;
+}
+.box:hover .alone__error {
+  stroke: #ff1c1c;
+  transition: 0.3s;
+}
+.box.box__alone:active {
+  transform: scale(0.8);
+  transition: 0.3s;
+}
