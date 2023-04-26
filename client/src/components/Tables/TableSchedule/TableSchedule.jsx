@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
@@ -9,6 +10,10 @@ import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
+  const { role } = useSelector((state) => state.checkAuth.value.user);
+
+  const isModerator = ['admin', 'moderator'].includes(role);
+
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -21,7 +26,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
           <th>Карта</th>
           <th>Маршрут</th>
           <th>Круги</th>
-          <th></th>
+          {isModerator ? <th></th> : null}
         </tr>
       </thead>
       <tbody>
@@ -39,12 +44,20 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{event.eventSubgroups[0]?.laps}</td>
-            <td>
-              <div className={styles.box__icons}>
-                <IconRefresh getClick={() => updateEvent(event.id)} />
-                <IconDelete getClick={() => removeEvent(event.id)} />
-              </div>
-            </td>
+            {isModerator ? (
+              <td>
+                <div className={styles.box__icons}>
+                  <IconRefresh
+                    getClick={() => updateEvent(event.id)}
+                    toolTip={'Обновление данных заезда'}
+                  />
+                  <IconDelete
+                    getClick={() => removeEvent(event.id, event.name)}
+                    toolTip={'Удаление из БД заезда'}
+                  />
+                </div>
+              </td>
+            ) : null}
           </tr>
         ))}
       </tbody>

@@ -47,7 +47,18 @@ function RaceSchedule() {
       });
   };
 
-  const removeEvent = (eventId) => {
+  const removeEvent = (eventId, eventName) => {
+    const isConfirmed = window.confirm(`Вы действительно хотите удалить заезд "${eventName}"?`);
+    if (!isConfirmed) {
+      dispatch(
+        getAlert({
+          message: `Отмена удаления заезда ${eventName}`,
+          type: 'warning',
+          isOpened: true,
+        })
+      );
+      return;
+    }
     deleteEvent(eventId)
       .then((response) => {
         setTrigger((prev) => !prev);
