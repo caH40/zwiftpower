@@ -50,11 +50,11 @@ export async function postEvent(event) {
   }
 }
 
-// получение всех добавленных event
-export async function getEvents(isFinished) {
+// получение всех добавленных event, в зависимости от старта которые еще не стартовали
+export async function getEvents(started) {
   try {
     const response = await axios({
-      url: `${serverExpress}/api/race/events?finished=${isFinished}`,
+      url: `${serverExpress}/api/race/events?started=${started}`,
       method: 'get',
     });
 

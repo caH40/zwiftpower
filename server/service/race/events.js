@@ -24,11 +24,9 @@ export async function getEventService(eventId) {
     throw error;
   }
 }
-export async function getEventsService(isFinished) {
+export async function getEventsService(started) {
   try {
-    const eventsDB = await ZwiftEvent.find({ hasResults: isFinished }).populate(
-      'eventSubgroups'
-    );
+    const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
     // сортировка заездов по возрастанию даты старта
     eventsDB.sort(
       (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()

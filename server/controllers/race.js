@@ -16,8 +16,8 @@ export async function getEvent(req, res) {
 }
 export async function getEvents(req, res) {
   try {
-    const { finished } = req.query;
-    const events = await getEventsService(finished);
+    const { started } = req.query;
+    const events = await getEventsService(started);
     res.status(200).json(events);
   } catch (error) {
     console.log(error);

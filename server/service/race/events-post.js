@@ -75,6 +75,7 @@ async function saveEventToDB(event) {
       eventSubgroups,
       updated: Date.now(),
       creator: event.creator,
+      started: event.started,
     });
 
     return eventDB;
