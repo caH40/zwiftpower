@@ -3,8 +3,11 @@
 }
 .title {
   font-size: 18px;
-  margin-bottom: 10px;
   font-weight: 700;
+}
+.title__box {
+  display: flex;
+  gap: 0 10px;
 }
 .right {
   text-align: right;
@@ -23,10 +26,6 @@
   height: auto;
   margin: 10px 0px;
   border-radius: 6px;
-}
-.h3 {
-  font-size: 18px;
-  font-weight: 700;
 }
 .h4 {
   font-size: 16px;

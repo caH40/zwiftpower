@@ -23,14 +23,6 @@ export function AdminRoute() {
   return (
     <>
       <Route
-        path="/zwift/edit/event"
-        element={
-          <MySuspense>
-            <ZwiftEditEvent />
-          </MySuspense>
-        }
-      />
-      <Route
         path="/bot"
         element={
           <MySuspense>
@@ -131,6 +123,22 @@ export function AdminRoute() {
         element={
           <MySuspense>
             <AddRider />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/zwift/edit/event"
+        element={
+          <MySuspense>
+            <ZwiftEditEvent />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/zwift/edit/event/:id"
+        element={
+          <MySuspense>
+            <ZwiftEditEvent />
           </MySuspense>
         }
       />
