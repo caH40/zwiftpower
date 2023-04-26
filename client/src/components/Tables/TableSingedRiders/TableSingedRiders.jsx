@@ -4,6 +4,7 @@ import { tdLinkZP, tdRider } from '../utils/td';
 
 import styles from '../Table.module.css';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
+import Flag from '../../Flag/Flag';
 
 function TableSingedRiders({ riders }) {
   return (
@@ -31,7 +32,11 @@ function TableSingedRiders({ riders }) {
                 {rider.subgroupLabel}
               </span>
             </td>
-            <td>{rider.countryAlpha3}</td>
+            <td>
+              <div className={styles.box__flag}>
+                <Flag name={rider.countryAlpha3} />
+              </div>
+            </td>
             <td>{tdRider(`${rider.firstName} ${rider.lastName}`, rider.imageSrc)}</td>
             <td></td>
             <td>{getAgeCategory(rider.age)}</td>

@@ -159,3 +159,6 @@
   display: flex;
   gap: 0 10px;
 }
+.box__flag {
+  width: 24px;
+}

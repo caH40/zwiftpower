@@ -38,7 +38,7 @@ function RaceDescription() {
           <TableSingedRiders riders={event.singedRiders} />
 
           <div className={styles.right}>
-            <span className={styles.service}>Обновление:</span>
+            <span className={styles.service}>Обновлено:</span>
             <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
           </div>
         </>
