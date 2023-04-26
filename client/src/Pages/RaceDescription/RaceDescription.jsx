@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
+import useBackground from '../../hook/useBackground';
 import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getEvent } from '../../api/zwift/events';
@@ -12,6 +13,7 @@ import styles from './RaceDescription.module.css';
 function RaceDescription() {
   const [event, setEvent] = useState({});
   useTitle('Описание заезда');
+  useBackground(false);
   const { eventId } = useParams();
 
   useEffect(() => {

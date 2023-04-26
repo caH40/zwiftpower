@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
@@ -17,7 +17,14 @@ import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
 
 function ZwiftEditEvent() {
-  const [eventId, setEventId] = useState({ id: 0 });
+  const { id } = useParams();
+  const [eventId, setEventId] = useState({ id: id || 0 });
+
+  useEffect(() => {
+    if (eventId.id === 0) return;
+    fetchEventParams();
+  }, [id]); // eslint-disable-line
+
   const {
     eventMainParams,
     eventSubgroup_0,
@@ -32,12 +39,11 @@ function ZwiftEditEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  // console.log(eventSubgroup_0, eventSubgroup_1);
 
   const fetchEventParams = () => {
     if (!eventId.id)
       return dispatch(
-        getAlert({ message: 'Необходимо заполнить все поля!', type: 'warning', isOpened: true })
+        getAlert({ message: 'Необходимо ввести id заезда!', type: 'warning', isOpened: true })
       );
     getZwiftEvents(eventId.id)
       .then((response) => {
