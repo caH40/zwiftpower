@@ -74,6 +74,7 @@ async function saveEventToDB(event) {
       totalSignedUpCount: event.totalSignedUpCount,
       eventSubgroups,
       updated: Date.now(),
+      creator: event.creator,
     });
 
     return eventDB;

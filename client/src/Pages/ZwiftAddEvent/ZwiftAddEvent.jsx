@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -21,6 +21,7 @@ function ZwiftAddEvent() {
   useTitle('Zwift - Добавление заезда');
   useBackground(false);
   const dispatch = useDispatch();
+  const { id: userId } = useSelector((state) => state.checkAuth.value.user);
 
   const fetchEventParams = () => {
     if (!eventId.id)
@@ -79,7 +80,7 @@ function ZwiftAddEvent() {
       );
       return;
     }
-    const eventForSend = { ...event, ...additionalParams };
+    const eventForSend = { creator: userId, ...event, ...additionalParams };
     postEvent(eventForSend)
       .then((response) => {
         setEventId({ id: 0 });
