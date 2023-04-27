@@ -28,3 +28,17 @@ export async function deleteEvent(eventId) {
     throw error;
   }
 }
+export async function putResults(eventId) {
+  try {
+    const response = await myAxios({
+      url: '/api/race/results',
+      method: 'put',
+      data: { eventId },
+    });
+
+    return response;
+  } catch (error) {
+    console.error(error); // eslint-disable-line
+    throw error;
+  }
+}
