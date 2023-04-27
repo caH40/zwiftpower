@@ -19,6 +19,7 @@ export async function deleteEventService(eventId) {
         creator: eventDB.creator,
         hasResults: eventDB.hasResults,
         needCount: eventDB.needCount,
+        started: eventDB.started,
       },
       message: `Заезд ${eventDB.name} удален!`,
     };

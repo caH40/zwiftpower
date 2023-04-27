@@ -30,6 +30,7 @@ const zwiftEventSchema = new Schema({
   needCount: { type: Boolean, default: true },
   updated: { type: Number, default: null },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+  started: { type: Boolean, default: false },
 });
 
 export const ZwiftEvent = model('ZwiftEvent', zwiftEventSchema);
