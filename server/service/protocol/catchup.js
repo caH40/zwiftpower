@@ -4,9 +4,9 @@ import { addGapStart } from '../../utility/gap.js';
 
 export async function handlerCatchUp(eventId, results) {
   try {
-    // получение гэпов для групп
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
-    const resultsWithStartGap = addGapStart(eventDB, results);
+
+    const resultsWithStartGap = addGapStart(eventDB, results); // получение гэпов для групп
 
     resultsWithStartGap.sort(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
@@ -60,6 +60,9 @@ export async function handlerCatchUp(eventId, results) {
         }
       );
     }
+
+    eventDB.totalFinishedCount = results.length;
+    await eventDB.save();
   } catch (error) {
     console.error(error);
   }

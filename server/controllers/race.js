@@ -15,6 +15,7 @@ export async function getEvent(req, res) {
     res.status(400).json(error.response ? { message: error.response?.data } : error);
   }
 }
+// получение данных заезда (started=false для расписания, started:true для результатов)
 export async function getEvents(req, res) {
   try {
     const { started } = req.query;

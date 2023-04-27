@@ -40,7 +40,7 @@ function TableResults({ events, updateEvent, removeEvent }) {
             </td>
             <td>{organizer(event.organizer)}</td>
             <td>{raceType(event.typeRaceCustom)}</td>
-            <td>{event.totalEntrantCount}</td>
+            <td>{event.totalFinishedCount}</td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{event.eventSubgroups[0]?.laps}</td>
@@ -51,10 +51,10 @@ function TableResults({ events, updateEvent, removeEvent }) {
                     getClick={() => updateEvent(event.id)}
                     toolTip={'Обновление результатов заезда'}
                   />
-                  <IconDelete
+                  {/* <IconDelete
                     getClick={() => removeEvent(event.id, event.name)}
                     toolTip={'Удаление из БД заезда'}
-                  />
+                  /> */}
                 </div>
               </td>
             ) : null}

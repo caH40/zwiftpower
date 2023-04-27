@@ -31,6 +31,7 @@ const zwiftEventSchema = new Schema({
   updated: { type: Number, default: null },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   started: { type: Boolean, default: false },
+  totalFinishedCount: { type: Number, default: 0 },
 });
 
 export const ZwiftEvent = model('ZwiftEvent', zwiftEventSchema);
