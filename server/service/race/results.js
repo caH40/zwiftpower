@@ -1,17 +1,18 @@
 import { getRequest } from '../zwift/request-get.js';
 
-export async function getResults(subgroupId, subgroupLabel = 'E', token) {
+export async function getResults(subgroup, subgroupLabel = 'E', token) {
   try {
     let start = 0;
     let resultsQuantity = 50;
     const resultsSubgroup = [];
 
     while (resultsQuantity === 50) {
-      const urlEventData = `race-results/entries?event_subgroup_id=${subgroupId}&start=${start}&limit=50`;
+      const urlEventData = `race-results/entries?event_subgroup_id=${subgroup.subgroupId}&start=${start}&limit=50`;
       const eventData = await getRequest(urlEventData, token);
       // добавление буквенного названия группы в каждый результат
       eventData.entries.map((entry) => {
         entry.subgroupLabel = subgroupLabel;
+        entry.subgroupId = subgroup.subgroup_id; // id документа из  БД
         return entry;
       });
       resultsSubgroup.push(eventData);

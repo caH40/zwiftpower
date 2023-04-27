@@ -16,10 +16,14 @@ export async function updateResults() {
     for (const event of eventsDB) {
       const resultsTotal = [];
       for (const subgroup of event.eventSubgroups) {
-        const resultsSubgroup = await getResults(subgroup.id, subgroup.subgroupLabel, token);
+        const resultsSubgroup = await getResults(
+          { subgroup_id: subgroup._id, subgroupId: subgroup.id },
+          subgroup.subgroupLabel,
+          token
+        );
         resultsTotal.push(...resultsSubgroup);
       }
-      await handlerProtocol(resultsTotal, event._id, event.typeRaceCustom);
+      await handlerProtocol(event._id, resultsTotal, event.typeRaceCustom);
     }
   } catch (error) {
     console.error(error);

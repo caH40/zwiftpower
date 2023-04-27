@@ -1,9 +1,9 @@
 import { handlerCatchUp } from './catchup.js';
 
-export async function handlerProtocol(results, zwiftEventId, eventParams) {
+export async function handlerProtocol(eventId, results, typeRaceCustom) {
   try {
-    if (eventParams.typeRaceCustom === 'catchUp') {
-      await handlerCatchUp(results);
+    if (typeRaceCustom === 'catchUp') {
+      await handlerCatchUp(eventId, results);
       return;
     }
   } catch (error) {
