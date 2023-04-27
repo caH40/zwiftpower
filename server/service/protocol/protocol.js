@@ -1,7 +1,7 @@
-import { Result } from '../Model/Result.js';
-import { Series } from '../Model/Series.js';
-import { Stage } from '../Model/Stage.js';
-import { prepareResult } from './preparation/result.js';
+import { Result } from '../../Model/Result.js';
+import { Series } from '../../Model/Series.js';
+import { Stage } from '../../Model/Stage.js';
+import { prepareResult } from '../preparation/result.js';
 
 export async function postResultsService(results) {
   try {
