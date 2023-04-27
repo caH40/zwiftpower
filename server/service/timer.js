@@ -19,7 +19,6 @@ export async function timers() {
     setInterval(async () => {
       await updateResults();
     }, millisecondsIn10Minutes);
-    // }, millisecondsIn10Minutes);
   } catch (error) {
     console.log(error);
   }

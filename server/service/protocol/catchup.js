@@ -7,12 +7,14 @@ export async function handlerCatchUp(eventId, results) {
     // получение гэпов для групп
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
     const resultsWithStartGap = addGapStart(eventDB, results);
-    // resultsWithStartGap.sort(
-    //   (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    // );
-    // console.log(resultsWithStartGap.map((result) => ({ name: result.profileData.lastName })));
 
+    resultsWithStartGap.sort(
+      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+    );
+
+    let rankEvent = 0;
     for (const result of results) {
+      rankEvent += 1;
       const zwiftResultDB = await ZwiftResult.findOneAndUpdate(
         { profileId: result.profileId },
         {
@@ -33,6 +35,7 @@ export async function handlerCatchUp(eventId, results) {
             eventSubgroupId: result.eventSubgroupId,
             subgroupLabel: result.subgroupLabel,
             rank: result.rank,
+            rankEvent,
             eventId: result.eventId,
 
             activityData: {
@@ -49,12 +52,6 @@ export async function handlerCatchUp(eventId, results) {
 
             flaggedCheating: result.flaggedCheating,
             flaggedSandbagging: result.flaggedSandbagging,
-
-            // placeAbsolute: { type: Number, default: null },
-            // category: { type: String, default: null },
-            // categoryCurrent: { type: String, default: null },
-            // teamCurrent: { type: String, default: null },
-            // pointsStage: { type: Number, default: 0 },
           },
         },
         {
