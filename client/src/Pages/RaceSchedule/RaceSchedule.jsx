@@ -5,7 +5,7 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getEvents } from '../../api/zwift/events';
-import { putEvent, deleteEvent } from '../../api/race/riders';
+import { putEvent, deleteEvent } from '../../api/race/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
 function RaceSchedule() {

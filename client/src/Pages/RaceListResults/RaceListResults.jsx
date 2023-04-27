@@ -5,10 +5,11 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import { getEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { deleteEventAndResults, putResults } from '../../api/race/riders';
+import { deleteEventAndResults } from '../../api/race/events';
+import { putResults } from '../../api/race/results';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 
-function RaceResults() {
+function RaceListResults() {
   const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
   useTitle('Результаты заездов');
@@ -97,4 +98,4 @@ function RaceResults() {
   );
 }
 
-export default RaceResults;
+export default RaceListResults;
