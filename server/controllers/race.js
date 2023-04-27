@@ -1,4 +1,7 @@
-import { deleteEventService } from '../service/race/events-delete.js';
+import {
+  deleteEventAndResultsService,
+  deleteEventService,
+} from '../service/race/events-delete.js';
 import { postEventService } from '../service/race/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
 import { getEventService } from '../service/race/events.js';
@@ -61,6 +64,17 @@ export async function putResults(req, res) {
     const { eventId } = req.body;
     const resultsUpdated = await putResultsService(eventId);
     res.status(201).json(resultsUpdated);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error.response ? { message: error.response?.data } : error);
+  }
+}
+
+export async function deleteEventAndResults(req, res) {
+  try {
+    const { eventId } = req.body;
+    const eventDeleted = await deleteEventAndResultsService(eventId);
+    res.status(200).json(eventDeleted);
   } catch (error) {
     console.log(error);
     res.status(400).json(error.response ? { message: error.response?.data } : error);

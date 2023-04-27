@@ -5,7 +5,7 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import { getEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { deleteEvent, putEvent, putResults } from '../../api/race/riders';
+import { deleteEventAndResults, putResults } from '../../api/race/riders';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 
 function RaceResults() {
@@ -42,7 +42,9 @@ function RaceResults() {
   };
 
   const removeEvent = (eventId, eventName) => {
-    const isConfirmed = window.confirm(`Вы действительно хотите удалить заезд "${eventName}"?`);
+    const isConfirmed = window.confirm(
+      `Вы действительно хотите удалить заезд "${eventName}"? Будет удалён заезд и все результаты заезда!`
+    );
     if (!isConfirmed) {
       dispatch(
         getAlert({
@@ -53,7 +55,7 @@ function RaceResults() {
       );
       return;
     }
-    deleteEvent(eventId)
+    deleteEventAndResults(eventId)
       .then((response) => {
         setTrigger((prev) => !prev);
         dispatch(

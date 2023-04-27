@@ -8,6 +8,7 @@ import {
   postEvent,
   putEvent,
   putResults,
+  deleteEventAndResults,
 } from '../controllers/race.js';
 
 export const routerRace = new Router();
@@ -18,3 +19,4 @@ routerRace.post('/events', authAdmin, postEvent);
 routerRace.put('/events', authAdmin, putEvent);
 routerRace.delete('/events', authAdmin, deleteEvent);
 routerRace.put('/results', authAdmin, putResults);
+routerRace.delete('/events/results', authAdmin, deleteEventAndResults);

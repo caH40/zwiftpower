@@ -51,10 +51,10 @@ function TableResults({ events, updateEvent, removeEvent }) {
                     getClick={() => updateEvent(event.id)}
                     toolTip={'Обновление результатов заезда'}
                   />
-                  {/* <IconDelete
+                  <IconDelete
                     getClick={() => removeEvent(event.id, event.name)}
-                    toolTip={'Удаление из БД заезда'}
-                  /> */}
+                    toolTip={'Удаление заезда и результатов заезда из БД'}
+                  />
                 </div>
               </td>
             ) : null}
