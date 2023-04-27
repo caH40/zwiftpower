@@ -1,3 +1,6 @@
+import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { ZwiftResult } from '../../Model/ZwiftResult.js';
+import { gapValue } from '../../utility/gap.js';
 import { getRequest } from '../zwift/request-get.js';
 
 export async function getResults(subgroup, subgroupLabel = 'E', token) {
@@ -33,4 +36,26 @@ function convertArrayOfResults(resultsSubgroup) {
     arrayConverted.push(...resultSubgroup.entries);
   }
   return arrayConverted;
+}
+
+export async function getResultsService(eventId) {
+  try {
+    const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
+    const event = eventDB.toObject();
+
+    const resultsDB = await ZwiftResult.find({ zwiftEventId: event._id });
+    // const results = resultsDB.map((result) => result.toObject());
+
+    resultsDB.sort(
+      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+    );
+
+    // const resultsWithGap = gapValue(results);
+
+    event.results = resultsDB;
+
+    return { event, message: 'Результаты заезда' };
+  } catch (error) {
+    throw error;
+  }
 }

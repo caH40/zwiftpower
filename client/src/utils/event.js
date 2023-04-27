@@ -45,5 +45,11 @@ export const getAgeCategory = (age) => {
 };
 
 export const getWeightStr = (weight) => Math.round(weight / 1000) + 'кг';
-export const getHeightStr = (height) => Math.round(height / 10) + 'см';
-export const getGenderStr = (isMale) => (isMale ? 'муж' : 'жен');
+export const getHeightStr = (height, measure) => {
+  if (measure === 'cm') return height + 'см';
+  return Math.round(height / 10) + 'см';
+};
+export const getGenderStr = (isMale, string) => {
+  if (string) return string === 'MALE' ? 'муж' : 'жен';
+  return isMale ? 'муж' : 'жен';
+};

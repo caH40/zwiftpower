@@ -1,6 +1,6 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { addGapStart } from '../../utility/gap.js';
+import { addGapStart, gapValue } from '../../utility/gap.js';
 
 export async function handlerCatchUp(eventId, results) {
   try {
@@ -12,8 +12,10 @@ export async function handlerCatchUp(eventId, results) {
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
+    const resultsWithGaps = gapValue([...resultsWithStartGap]);
+
     let rankEvent = 0;
-    for (const result of results) {
+    for (const result of resultsWithGaps) {
       rankEvent += 1;
       const zwiftResultDB = await ZwiftResult.findOneAndUpdate(
         { profileId: result.profileId },
@@ -52,6 +54,8 @@ export async function handlerCatchUp(eventId, results) {
 
             flaggedCheating: result.flaggedCheating,
             flaggedSandbagging: result.flaggedSandbagging,
+            gap: result.gap,
+            gapPrev: result.gapPrev,
           },
         },
         {
@@ -61,7 +65,7 @@ export async function handlerCatchUp(eventId, results) {
       );
     }
 
-    eventDB.totalFinishedCount = results.length;
+    eventDB.totalFinishedCount = resultsWithGaps.length;
     await eventDB.save();
   } catch (error) {
     console.error(error);

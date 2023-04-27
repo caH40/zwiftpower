@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
-import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
+import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
-import { getEvent } from '../../api/zwift/events';
+import { getResults } from '../../api/race/results';
 import { getLocalDate } from '../../utils/date-convert';
 
-import styles from './RaceDescription.module.css';
+import styles from './RaceResults.module.css';
 
-function RaceDescription() {
+function RaceResults() {
   const [event, setEvent] = useState({});
-  useTitle('Описание заезда');
+  useTitle('Результаты заезда');
   useBackground(false);
   const { eventId } = useParams();
 
   useEffect(() => {
-    getEvent(eventId).then((response) => {
+    getResults(eventId).then((response) => {
       setEvent(response.data.event);
     });
   }, [eventId]);
@@ -27,20 +27,12 @@ function RaceDescription() {
       {event?.id ? (
         <>
           <DescriptionEventZwift event={event} />
-          <Link
-            className={styles.link}
-            to={`https://www.zwift.com/eu/events/view/${event.id}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Регистрация в Zwift
-          </Link>
-          <TableSingedRiders riders={event.singedRiders} />
+          <TableRaceResults results={event.results} />
 
-          <div className={styles.right}>
+          {/* <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>
             <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
-          </div>
+          </div> */}
         </>
       ) : (
         'Заезд не найден!'
@@ -49,4 +41,4 @@ function RaceDescription() {
   );
 }
 
-export default RaceDescription;
+export default RaceResults;
