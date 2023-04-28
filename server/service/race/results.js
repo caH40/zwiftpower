@@ -1,6 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { gapValue } from '../../utility/gap.js';
 import { getRequest } from '../zwift/request-get.js';
 
 export async function getResults(subgroup, subgroupLabel = 'E', token) {
@@ -44,13 +43,10 @@ export async function getResultsService(eventId) {
     const event = eventDB.toObject();
 
     const resultsDB = await ZwiftResult.find({ zwiftEventId: event._id });
-    // const results = resultsDB.map((result) => result.toObject());
 
     resultsDB.sort(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
-
-    // const resultsWithGap = gapValue(results);
 
     event.results = resultsDB;
 

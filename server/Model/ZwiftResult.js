@@ -48,8 +48,6 @@ const zwiftResultSchema = new Schema({
   pointsStage: { type: Number, default: 0 },
   isUnderChecking: { type: Boolean, default: false },
   addedManually: { type: Boolean, default: false },
-  gap: { type: Number, default: null },
-  gapPrev: { type: Number, default: null },
 });
 
 export const ZwiftResult = model('ZwiftResult', zwiftResultSchema);
