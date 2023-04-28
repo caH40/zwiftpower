@@ -38,3 +38,18 @@ export function tdCategory(result) {
 export function tdGap(gap) {
   return <div className={styles.gap}>{gap ? ['+', gap] : ''}</div>;
 }
+
+export function tdTime(time) {
+  if (time === 'DQ') return <div className={styles.dq}>DQ</div>;
+  if (time === 'DNF') return <div className={styles.dq}>DNF</div>;
+  return String(time).includes('.') ? (
+    <>
+      {time.split('.')[0]}
+      <span className={styles.text__additional} key={Date.now()}>
+        .{time.split('.')[1]}
+      </span>
+    </>
+  ) : (
+    time
+  );
+}

@@ -24,14 +24,8 @@ function RaceResults() {
     getResults(eventId).then((response) => {
       const { results: resultsRow, ...eventRow } = response.data.event;
       const resultsWithGaps = gapValue(resultsRow);
-      resultsWithGaps.forEach((result) => {
-        result.activityData.durationInMilliseconds.addition = secondesToTimeThousandths(
-          result.activityData.durationInMilliseconds.value
-        );
-      });
+
       filterThousandths(resultsWithGaps);
-      console.log(resultsWithGaps);
-      // secondesToTimeThousandths(resultsWithGaps.);
       setEvent(eventRow);
       setResults(maxValue(resultsWithGaps));
     });

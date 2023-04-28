@@ -1,4 +1,5 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
+import { secondesToTimeThousandths } from '../../utility/date-convert.js';
 import { addPropertyAddition } from '../../utility/property-addition.js';
 
 export async function getResultsCatchup(event) {
@@ -11,6 +12,13 @@ export async function getResultsCatchup(event) {
     );
 
     const resultsWithMaxValues = addPropertyAddition(results);
+
+    // добавление строки времени в addition durationInMilliseconds
+    for (const result of resultsWithMaxValues) {
+      result.activityData.durationInMilliseconds.addition = secondesToTimeThousandths(
+        result.activityData.durationInMilliseconds.value
+      );
+    }
 
     event.results = resultsWithMaxValues;
 

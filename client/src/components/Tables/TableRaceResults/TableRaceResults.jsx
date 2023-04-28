@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tdRider } from '../utils/td';
+import { tdRider, tdTime } from '../utils/td';
 
 import styles from '../Table.module.css';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
@@ -43,7 +43,7 @@ function TableRaceResults({ results }) {
               )}
             </td>
             <td></td>
-            <td>{result.activityData.durationInMilliseconds.addition}</td>
+            <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
             <td>{secondesToTime(result.gap)}</td>
             <td>{tdGap(result.gapPrev)}</td>
 
