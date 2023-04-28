@@ -11,14 +11,14 @@ import IconEdit from '../icons/IconEdit';
 
 import styles from './DescriptionEventZwift.module.css';
 
-function DescriptionEventZwift({ event }) {
+function DescriptionEventZwift({ event, forSchedule }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
     <>
       <div className={styles.title__box}>
         <h3 className={styles.title}>{event.name}</h3>
-        {isModerator && (
+        {isModerator && forSchedule && (
           <Link to={`/zwift/edit/event/${event.id}`}>
             <IconEdit toolTip={'Редактирование параметров заезда в Звифте'} />
           </Link>

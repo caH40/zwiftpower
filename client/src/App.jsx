@@ -15,11 +15,12 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import Profile from './Pages/Profile/Profile';
 import { AdminRoute } from './Route/AdminRoute';
 import './css/App.css';
-import RaceResults from './Pages/RaceResults/RaceResults';
+import RaceListResults from './Pages/RaceListResults/RaceListResults';
 import RaceSchedule from './Pages/RaceSchedule/RaceSchedule';
 import RaceSeries from './Pages/RaceSeries/RaceSeries';
 import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
 import RaceDescription from './Pages/RaceDescription/RaceDescription';
+import RaceResults from './Pages/RaceResults/RaceResults';
 
 function App() {
   useFirstAuth();
@@ -40,7 +41,8 @@ function App() {
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/race/results" element={<RaceResults />} />
+        <Route path="/race/results" element={<RaceListResults />} />
+        <Route path="/race/results/:eventId" element={<RaceResults />} />
         <Route path="/race/schedule" element={<RaceSchedule />} />
         <Route path="/race/schedule/:eventId" element={<RaceDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />

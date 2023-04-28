@@ -162,3 +162,13 @@
 .box__flag {
   width: 24px;
 }
+.text__additional {
+  font-size: 10px;
+}
+.gap {
+  font-size: 12px;
+}
+.max {
+  font-weight: 700;
+  color: #dc4119;
+}

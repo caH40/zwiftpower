@@ -1,19 +1,22 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { addGapStart } from '../../utility/gap.js';
+import { addWattsPerKg } from '../../utility/watts.js';
 
+// формирует финишный протокол для сохранения в БД, для гонки CatchUp
 export async function handlerCatchUp(eventId, results) {
   try {
-    // получение гэпов для групп
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
-    const resultsWithStartGap = addGapStart(eventDB, results);
 
-    resultsWithStartGap.sort(
+    const resultsWithStartGap = addGapStart(eventDB, results); // получение гэпов для групп
+    const resultsWithWPK = addWattsPerKg(resultsWithStartGap);
+
+    resultsWithWPK.sort(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
     let rankEvent = 0;
-    for (const result of results) {
+    for (const result of resultsWithWPK) {
       rankEvent += 1;
       const zwiftResultDB = await ZwiftResult.findOneAndUpdate(
         { profileId: result.profileId },
@@ -49,6 +52,7 @@ export async function handlerCatchUp(eventId, results) {
               avgWatts: result.sensorData.avgWatts,
               powerType: result.sensorData.powerType,
             },
+            wattsPerKg: result.wattsPerKg,
 
             flaggedCheating: result.flaggedCheating,
             flaggedSandbagging: result.flaggedSandbagging,
@@ -60,6 +64,9 @@ export async function handlerCatchUp(eventId, results) {
         }
       );
     }
+
+    eventDB.totalFinishedCount = resultsWithWPK.length;
+    await eventDB.save();
   } catch (error) {
     console.error(error);
   }

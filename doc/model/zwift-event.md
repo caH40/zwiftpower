@@ -30,6 +30,8 @@
 
 **needCount** - (`Boolean`) надо ли учитывать результаты в Series (если заезд из Series);
 
+**totalFinishedCount** - (`Number`) количество финишировавших;
+
 ### Параметры принимаемые из объекта Event с БД Zwift.
 
 **id** - (`Number`) id заезда;

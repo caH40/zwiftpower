@@ -3,26 +3,21 @@ import { useDispatch } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
-import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getEvents } from '../../api/zwift/events';
-import { putEvent, deleteEvent } from '../../api/race/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { deleteEventAndResults } from '../../api/race/events';
+import { putResults } from '../../api/race/results';
+import TableResults from '../../components/Tables/TableResults/TableResults';
 
-function RaceSchedule() {
+function RaceListResults() {
   const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
-  useTitle('Расписание заездов');
+  useTitle('Результаты заездов');
   useBackground(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getEvents(false).then((response) => {
-      setEvents(response.data.events);
-    });
-  }, [trigger]);
-
   const updateEvent = (eventId) => {
-    putEvent(eventId)
+    putResults(eventId)
       .then((response) => {
         setTrigger((prev) => !prev);
         dispatch(
@@ -48,7 +43,9 @@ function RaceSchedule() {
   };
 
   const removeEvent = (eventId, eventName) => {
-    const isConfirmed = window.confirm(`Вы действительно хотите удалить заезд "${eventName}"?`);
+    const isConfirmed = window.confirm(
+      `Вы действительно хотите удалить заезд "${eventName}"? Будет удалён заезд и все результаты заезда!`
+    );
     if (!isConfirmed) {
       dispatch(
         getAlert({
@@ -59,7 +56,7 @@ function RaceSchedule() {
       );
       return;
     }
-    deleteEvent(eventId)
+    deleteEventAndResults(eventId)
       .then((response) => {
         setTrigger((prev) => !prev);
         dispatch(
@@ -84,10 +81,16 @@ function RaceSchedule() {
       });
   };
 
+  useEffect(() => {
+    getEvents(true).then((response) => {
+      setEvents(response.data.events);
+    });
+  }, [trigger]);
+
   return (
     <section>
       {events?.length ? (
-        <TableSchedule events={events} updateEvent={updateEvent} removeEvent={removeEvent} />
+        <TableResults events={events} updateEvent={updateEvent} removeEvent={removeEvent} />
       ) : (
         'Loading...'
       )}
@@ -95,4 +98,4 @@ function RaceSchedule() {
   );
 }
 
-export default RaceSchedule;
+export default RaceListResults;

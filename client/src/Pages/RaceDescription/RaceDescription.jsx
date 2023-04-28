@@ -26,7 +26,7 @@ function RaceDescription() {
     <section>
       {event?.id ? (
         <>
-          <DescriptionEventZwift event={event} />
+          <DescriptionEventZwift event={event} forSchedule={true} />
           <Link
             className={styles.link}
             to={`https://www.zwift.com/eu/events/view/${event.id}`}

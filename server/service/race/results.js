@@ -1,3 +1,6 @@
+import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { ZwiftResult } from '../../Model/ZwiftResult.js';
+import { getResultsCatchup } from '../preparation/catchup.js';
 import { getRequest } from '../zwift/request-get.js';
 
 export async function getResults(subgroup, subgroupLabel = 'E', token) {
@@ -33,4 +36,21 @@ function convertArrayOfResults(resultsSubgroup) {
     arrayConverted.push(...resultSubgroup.entries);
   }
   return arrayConverted;
+}
+
+export async function getResultsService(eventId) {
+  try {
+    const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
+    const event = eventDB.toObject();
+
+    let eventPrepared = {};
+
+    if (event.typeRaceCustom === 'catchUp') {
+      eventPrepared = await getResultsCatchup(event);
+    }
+
+    return { event: eventPrepared, message: 'Результаты заезда' };
+  } catch (error) {
+    throw error;
+  }
 }
