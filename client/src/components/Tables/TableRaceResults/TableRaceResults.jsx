@@ -1,12 +1,17 @@
 import React from 'react';
 
-import { tdRider, tdTime } from '../utils/td';
+import {
+  tdHeartRate,
+  tdHeight,
+  tdRider,
+  tdTime,
+  tdWatts,
+  tdWattsPerKg,
+  tdWeight,
+} from '../utils/td';
 
 import styles from '../Table.module.css';
-import { getHeightStr, getWeightStr } from '../../../utils/event';
-import { secondesToTime, secondesToTimeThousandths } from '../../../utils/date-convert';
 import { tdGap } from '../utils/td';
-import { filterThousandths } from '../../../utils/thousandths-seconds';
 
 function TableRaceResults({ results }) {
   return (
@@ -16,21 +21,20 @@ function TableRaceResults({ results }) {
           <th>#</th>
           <th>Кат</th>
           <th>Райдер</th>
-          <th>Команда</th>
           <th>Время</th>
           <th>Отс.</th>
-          <th></th>
-          <th>Ватт</th>
-          <th>Ватт/кг</th>
+          <th>Отс.пр.</th>
+          <th>Ср.мощность</th>
+          <th>От.мощность</th>
           <th>Пульс</th>
           <th>Вес</th>
           <th>Рост</th>
         </tr>
       </thead>
       <tbody>
-        {results?.map((result) => (
+        {results?.map((result, index) => (
           <tr key={result._id}>
-            <td>{result.rankEvent}</td>
+            <td>{index + 1}</td>
             <td>
               <span className={`${styles.category} ${styles[result.subgroupLabel]}`}>
                 {result.subgroupLabel}
@@ -42,16 +46,15 @@ function TableRaceResults({ results }) {
                 result.profileData.imageSrc
               )}
             </td>
-            <td></td>
-            <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-            <td>{secondesToTime(result.gap)}</td>
-            <td>{tdGap(result.gapPrev)}</td>
 
-            <td>{result.sensorData.avgWatts.value}</td>
-            <td>{result.wattsPerKg.value}</td>
-            <td>{result.sensorData.heartRateData.avgHeartRate.value}</td>
-            <td>{getWeightStr(result.profileData.weightInGrams.value)}</td>
-            <td>{getHeightStr(result.profileData.heightInCentimeters.value, 'cm')}</td>
+            <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
+            <td>{tdGap(result.gap)}</td>
+            <td>{tdGap(result.gapPrev)}</td>
+            <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
+            <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
+            <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
+            <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
+            <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
           </tr>
         ))}
       </tbody>

@@ -44,7 +44,15 @@ export const getAgeCategory = (age) => {
   return '60+';
 };
 
-export const getWeightStr = (weight) => Math.round(weight / 100) / 10;
+export const getWeightStr = (weight) => {
+  if (String(weight).includes('max')) {
+    // отделение слова 'max', что изменить вес
+    const [value] = weight.split('max');
+    return Math.round(value / 100) / 10 + 'max';
+  }
+  return Math.round(weight / 100) / 10;
+};
+
 export const getHeightStr = (height, measure) => {
   if (measure === 'cm') return height;
   return Math.round(height / 10);

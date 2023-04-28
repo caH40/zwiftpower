@@ -1,4 +1,6 @@
 import avatar from '../../../images/avatar.svg';
+import { secondesToTime } from '../../../utils/date-convert';
+import { getHeightStr, getWeightStr } from '../../../utils/event';
 import styles from '../Table.module.css';
 
 export function tdRider(name, imageSrc) {
@@ -36,7 +38,8 @@ export function tdCategory(result) {
 }
 
 export function tdGap(gap) {
-  return <div className={styles.gap}>{gap ? ['+', gap] : ''}</div>;
+  const gapTime = secondesToTime(gap);
+  return <div className={styles.gap}>{gapTime ? <>{`+${gapTime}`}</> : ''}</div>;
 }
 
 export function tdTime(time) {
@@ -52,4 +55,36 @@ export function tdTime(time) {
   ) : (
     time
   );
+}
+
+export function highlightValueMax(value, dimension) {
+  const data = String(value).includes('max') ? (
+    <span className={styles.max}>
+      {value.replace('max', '')}
+      <small>{dimension}</small>
+    </span>
+  ) : (
+    <span>
+      {value}
+      <small>{dimension}</small>
+    </span>
+  );
+
+  return value ? data : '';
+}
+
+export function tdWatts(value) {
+  return highlightValueMax(value, 'Вт');
+}
+export function tdWattsPerKg(value) {
+  return highlightValueMax(value, 'Вт/кг');
+}
+export function tdHeartRate(value) {
+  return highlightValueMax(value, 'уд/м');
+}
+export function tdWeight(value) {
+  return highlightValueMax(getWeightStr(value), 'кг');
+}
+export function tdHeight(value) {
+  return highlightValueMax(getHeightStr(value, 'cm'), 'см');
 }

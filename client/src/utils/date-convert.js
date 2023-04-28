@@ -35,15 +35,14 @@ export function secondesToTime(rowSeconds) {
     const hour = Math.trunc(seconds / 3600);
     const minutes = Math.trunc((seconds - hour * 3600) / 60);
     const second = Math.trunc(seconds - hour * 3600 - minutes * 60);
-
     return `${addNull(hour)}:${addNull(minutes)}:${addNull(second)}`;
   }
-  if (seconds < 3600) {
+  if (seconds <= 3600) {
     const minutes = Math.trunc(seconds / 60);
     const second = Math.trunc(seconds - minutes * 60);
     return `${addNull(minutes)}:${addNull(second)}`;
   } else {
-    return seconds;
+    return null;
   }
 }
 export function secondesToMinutes(rowSeconds) {

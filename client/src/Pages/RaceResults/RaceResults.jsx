@@ -6,12 +6,9 @@ import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getResults } from '../../api/race/results';
-import { getLocalDate, secondesToTimeThousandths } from '../../utils/date-convert';
 import { gapValue } from '../../utils/gap';
-import { maxValue } from '../../utils/value-max';
+import { setValueMax } from '../../utils/value-max';
 import { filterThousandths } from '../../utils/thousandths-seconds';
-
-import styles from './RaceResults.module.css';
 
 function RaceResults() {
   const [event, setEvent] = useState({});
@@ -25,9 +22,9 @@ function RaceResults() {
       const { results: resultsRow, ...eventRow } = response.data.event;
       const resultsWithGaps = gapValue(resultsRow);
 
-      filterThousandths(resultsWithGaps);
+      filterThousandths(resultsWithGaps); // мутирует массив;
       setEvent(eventRow);
-      setResults(maxValue(resultsWithGaps));
+      setResults(setValueMax(resultsWithGaps));
     });
   }, [eventId]);
 
@@ -37,11 +34,6 @@ function RaceResults() {
         <>
           <DescriptionEventZwift event={event} />
           <TableRaceResults results={results} />
-
-          {/* <div className={styles.right}>
-            <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
-          </div> */}
         </>
       ) : (
         'Заезд не найден!'
