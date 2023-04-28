@@ -2,6 +2,7 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { addGapStart } from '../../utility/gap.js';
 
+// формирует финишный протокол для сохранения в БД, для гонки CatchUp
 export async function handlerCatchUp(eventId, results) {
   try {
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');

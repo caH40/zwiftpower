@@ -26,7 +26,7 @@ function TableRaceResults({ results }) {
         </tr>
       </thead>
       <tbody>
-        {results.map((result) => (
+        {results?.map((result) => (
           <tr key={result._id}>
             <td>{result.rankEvent}</td>
             <td>
