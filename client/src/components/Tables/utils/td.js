@@ -34,3 +34,7 @@ export function tdCategory(result) {
     </div>
   );
 }
+
+export function tdGap(gap) {
+  return <div className={styles.gap}>{gap ? ['+', gap] : ''}</div>;
+}

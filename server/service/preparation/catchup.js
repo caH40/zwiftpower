@@ -1,5 +1,5 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { addPropertyMaxValues } from '../../utility/property-max.js';
+import { addPropertyAddition } from '../../utility/property-addition.js';
 
 export async function getResultsCatchup(event) {
   try {
@@ -10,7 +10,7 @@ export async function getResultsCatchup(event) {
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
-    const resultsWithMaxValues = addPropertyMaxValues(results);
+    const resultsWithMaxValues = addPropertyAddition(results);
 
     event.results = resultsWithMaxValues;
 

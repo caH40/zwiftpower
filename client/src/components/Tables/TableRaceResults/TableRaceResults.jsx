@@ -4,9 +4,11 @@ import { tdRider } from '../utils/td';
 
 import styles from '../Table.module.css';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
+import { secondesToTime, secondesToTimeThousandths } from '../../../utils/date-convert';
+import { tdGap } from '../utils/td';
+import { filterThousandths } from '../../../utils/thousandths-seconds';
 
 function TableRaceResults({ results }) {
-  console.log(results);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -41,9 +43,10 @@ function TableRaceResults({ results }) {
               )}
             </td>
             <td></td>
-            <td>{result.activityData.durationInMilliseconds}</td>
-            <td>{result.gap}</td>
-            <td>{result.gapPrev}</td>
+            <td>{result.activityData.durationInMilliseconds.addition}</td>
+            <td>{secondesToTime(result.gap)}</td>
+            <td>{tdGap(result.gapPrev)}</td>
+
             <td>{result.sensorData.avgWatts.value}</td>
             <td>{result.wattsPerKg.value}</td>
             <td>{result.sensorData.heartRateData.avgHeartRate.value}</td>

@@ -1,8 +1,12 @@
-export function addPropertyMaxValues(results) {
+export function addPropertyAddition(results) {
   try {
     const resultsNew = [...results];
 
     for (const result of resultsNew) {
+      result.activityData.durationInMilliseconds = {
+        value: result.activityData.durationInMilliseconds,
+        addition: '',
+      };
       result.profileData.weightInGrams = {
         value: result.profileData.weightInGrams,
         addition: '',
