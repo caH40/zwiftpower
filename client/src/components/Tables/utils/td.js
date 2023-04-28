@@ -1,6 +1,7 @@
 import avatar from '../../../images/avatar.svg';
 import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
+import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
 export function tdRider(name, imageSrc) {
@@ -87,4 +88,8 @@ export function tdWeight(value) {
 }
 export function tdHeight(value) {
   return highlightValueMax(getHeightStr(value, 'cm'), 'см');
+}
+export function tdRank(value) {
+  if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
+  return null;
 }

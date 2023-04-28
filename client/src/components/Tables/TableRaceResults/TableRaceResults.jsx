@@ -3,6 +3,7 @@ import React from 'react';
 import {
   tdHeartRate,
   tdHeight,
+  tdRank,
   tdRider,
   tdTime,
   tdWatts,
@@ -19,6 +20,7 @@ function TableRaceResults({ results }) {
       <thead>
         <tr>
           <th>#</th>
+          <th></th>
           <th>Кат</th>
           <th>Райдер</th>
           <th>Время</th>
@@ -35,6 +37,7 @@ function TableRaceResults({ results }) {
         {results?.map((result, index) => (
           <tr key={result._id}>
             <td>{index + 1}</td>
+            <td>{tdRank(result.rankEvent)}</td>
             <td>
               <span className={`${styles.category} ${styles[result.subgroupLabel]}`}>
                 {result.subgroupLabel}
