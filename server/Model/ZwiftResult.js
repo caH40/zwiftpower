@@ -34,6 +34,7 @@ const zwiftResultSchema = new Schema({
     avgWatts: { type: Number, default: null },
     powerType: { type: String, default: null },
   },
+  wattsPerKg: { type: Number, default: null },
 
   flaggedCheating: { type: Boolean, default: false },
   flaggedSandbagging: { type: Boolean, default: false },

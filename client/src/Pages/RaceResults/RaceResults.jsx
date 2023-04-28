@@ -7,18 +7,24 @@ import TableRaceResults from '../../components/Tables/TableRaceResults/TableRace
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getResults } from '../../api/race/results';
 import { getLocalDate } from '../../utils/date-convert';
+import { gapValue } from '../../utils/gap';
+import { maxValue } from '../../utils/value-max';
 
 import styles from './RaceResults.module.css';
 
 function RaceResults() {
   const [event, setEvent] = useState({});
+  const [results, setResults] = useState([]);
   useTitle('Результаты заезда');
   useBackground(false);
   const { eventId } = useParams();
 
   useEffect(() => {
     getResults(eventId).then((response) => {
-      setEvent(response.data.event);
+      const { results: resultsRow, ...eventRow } = response.data.event;
+      const resultsWithGaps = gapValue(resultsRow);
+      setEvent(eventRow);
+      setResults(maxValue(resultsWithGaps));
     });
   }, [eventId]);
 
@@ -27,7 +33,7 @@ function RaceResults() {
       {event?.id ? (
         <>
           <DescriptionEventZwift event={event} />
-          <TableRaceResults results={event.results} />
+          <TableRaceResults results={results} />
 
           {/* <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>

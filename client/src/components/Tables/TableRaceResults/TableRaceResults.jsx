@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { tdLinkZP, tdRider } from '../utils/td';
+import { tdRider } from '../utils/td';
 
 import styles from '../Table.module.css';
-import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
-import Flag from '../../Flag/Flag';
+import { getHeightStr, getWeightStr } from '../../../utils/event';
 
 function TableRaceResults({ results }) {
+  console.log(results);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -44,11 +44,11 @@ function TableRaceResults({ results }) {
             <td>{result.activityData.durationInMilliseconds}</td>
             <td>{result.gap}</td>
             <td>{result.gapPrev}</td>
-            <td>{result.sensorData.avgWatts}</td>
-            <td>{result.sensorData.avgWatts}</td>
-            <td>{result.sensorData.heartRateData.avgHeartRate}</td>
-            <td>{getWeightStr(result.profileData.weightInGrams)}</td>
-            <td>{getHeightStr(result.profileData.heightInCentimeters, 'cm')}</td>
+            <td>{result.sensorData.avgWatts.value}</td>
+            <td>{result.wattsPerKg.value}</td>
+            <td>{result.sensorData.heartRateData.avgHeartRate.value}</td>
+            <td>{getWeightStr(result.profileData.weightInGrams.value)}</td>
+            <td>{getHeightStr(result.profileData.heightInCentimeters.value, 'cm')}</td>
           </tr>
         ))}
       </tbody>
