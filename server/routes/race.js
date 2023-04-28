@@ -20,5 +20,5 @@ routerRace.post('/events', authAdmin, postEvent);
 routerRace.put('/events', authAdmin, putEvent);
 routerRace.delete('/events', authAdmin, deleteEvent);
 routerRace.put('/results', authAdmin, putResults);
-routerRace.get('/results/:eventId', authAdmin, getResults);
+routerRace.get('/results/:eventId', getResults);
 routerRace.delete('/events/results', authAdmin, deleteEventAndResults);

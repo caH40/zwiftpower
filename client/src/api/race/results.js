@@ -1,9 +1,11 @@
-import { myAxios } from '../axios';
+import axios from 'axios';
+
+const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export async function putResults(eventId) {
   try {
-    const response = await myAxios({
-      url: '/api/race/results',
+    const response = await axios({
+      url: `${serverExpress}/api/race/results`,
       method: 'put',
       data: { eventId },
     });
@@ -17,8 +19,8 @@ export async function putResults(eventId) {
 
 export async function getResults(eventId) {
   try {
-    const response = await myAxios({
-      url: `/api/race/results/${eventId}`,
+    const response = await axios({
+      url: `${serverExpress}/api/race/results/${eventId}`,
       method: 'get',
     });
 
