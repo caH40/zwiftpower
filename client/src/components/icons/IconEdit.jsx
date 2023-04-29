@@ -1,13 +1,18 @@
 import React from 'react';
+import cn from 'classnames';
 
+import { addClasses as cns } from '../../utils/additional-classes';
 import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconEdit({ isActive, getClick, toolTip }) {
+function IconEdit({ isActive, getClick, toolTip, addCls = ' ' }) {
   return (
     <MyTooltip toolTip={toolTip}>
-      <div className={`${styles.box} ${styles.box__alone}`} onClick={getClick}>
+      <div
+        className={cn(styles.box, styles.box__alone, cns(styles, addCls))}
+        onClick={getClick}
+      >
         <svg
           width="24"
           height="24"

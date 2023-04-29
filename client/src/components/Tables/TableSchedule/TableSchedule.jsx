@@ -50,10 +50,12 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                   <IconRefresh
                     getClick={() => updateEvent(event.id)}
                     toolTip={'Обновление данных заезда'}
+                    addCls={'pointer'}
                   />
                   <IconDelete
                     getClick={() => removeEvent(event.id, event.name)}
                     toolTip={'Удаление из БД заезда'}
+                    addCls={'pointer'}
                   />
                 </div>
               </td>

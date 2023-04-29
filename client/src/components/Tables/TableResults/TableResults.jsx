@@ -50,10 +50,12 @@ function TableResults({ events, updateEvent, removeEvent }) {
                   <IconRefresh
                     getClick={() => updateEvent(event.id)}
                     toolTip={'Обновление результатов заезда'}
+                    addCls={'pointer'}
                   />
                   <IconDelete
                     getClick={() => removeEvent(event.id, event.name)}
                     toolTip={'Удаление заезда и результатов заезда из БД'}
+                    addCls={'pointer'}
                   />
                 </div>
               </td>

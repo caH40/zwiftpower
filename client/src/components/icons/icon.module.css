@@ -2,7 +2,6 @@
   min-width: 24px;
   width: 24px;
   height: 24px;
-  cursor: pointer;
 }
 .box svg {
   display: inline-block;
@@ -30,4 +29,7 @@
 .box.box__alone:active {
   transform: scale(0.8);
   transition: 0.3s;
+}
+.pointer {
+  cursor: pointer;
 }

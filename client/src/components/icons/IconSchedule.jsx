@@ -1,12 +1,15 @@
 import React from 'react';
+import cn from 'classnames';
+
+import { addClasses as cns } from '../../utils/additional-classes';
 
 import styles from './icon.module.css';
 
-function IconSchedule({ isActive }) {
+function IconSchedule({ isActive, addCls = ' ' }) {
   const activeColorStroke = isActive ? styles.active__stroke : undefined;
   const activeColorFill = isActive ? styles.active__fill : undefined;
   return (
-    <div className={styles.box}>
+    <div className={cn(styles.box, cns(styles, addCls))}>
       <svg
         width="24"
         height="24"
