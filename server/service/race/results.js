@@ -1,6 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
+import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
 import { getRequest } from '../zwift/request-get.js';
 
@@ -51,6 +52,9 @@ export async function getResultsService(eventId) {
     }
     if (event.typeRaceCustom === 'newbies') {
       eventPrepared = await getResultsNewbies(event);
+    }
+    if (event.typeRaceCustom === 'classicCommon') {
+      eventPrepared = await getResultsClassicCommon(event);
     }
 
     return { event: eventPrepared, message: 'Результаты заезда' };

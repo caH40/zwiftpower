@@ -1,7 +1,16 @@
 export function filterThousandths(results) {
   try {
-    if (!results.length) return [];
     const lengthArr = results.length;
+
+    // если не было участников
+    if (!lengthArr) return [];
+
+    // если был только один участник
+    if (lengthArr === 1) {
+      [results[0].activityData.durationInMilliseconds.addition] =
+        results[0].activityData.durationInMilliseconds.addition.split('.');
+      return results;
+    }
 
     if (
       results[0].activityData.durationInMilliseconds.addition.split('.')[0] !==
