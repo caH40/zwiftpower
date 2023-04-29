@@ -1,23 +1,25 @@
-import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { addGapStart } from '../../utility/gap.js';
-import { addWattsPerKg } from '../../utility/watts.js';
+import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
+import { ZwiftResult } from '../../../Model/ZwiftResult.js';
+import { addWattsPerKg } from '../../../utility/watts.js';
+import { filterByRank } from './results-filter.js';
 
-// формирует финишный протокол для сохранения в БД, для гонки CatchUp
-export async function handlerCatchUp(eventId, results) {
+// формирует финишный протокол для сохранения в БД, для гонки newbies
+export async function handlerNewbies(eventId, results) {
   try {
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
 
-    const resultsWithStartGap = addGapStart(eventDB, results); // получение гэпов для групп
-    const resultsWithWPK = addWattsPerKg(resultsWithStartGap);
+    const resultsWithWPK = addWattsPerKg(results);
 
-    resultsWithWPK.sort(
-      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    );
+    const resultsSorted = filterByRank(resultsWithWPK);
 
     let rankEvent = 0;
-    for (const result of resultsWithWPK) {
-      rankEvent += 1;
+    for (const result of resultsSorted) {
+      if (result.subgroupLabel === 'C' || result.subgroupLabel === 'D') {
+        rankEvent += 1;
+      } else {
+        rankEvent = 0; // всем группам кроме C,D присваивается место в протоколе равное 0
+      }
+
       await ZwiftResult.findOneAndUpdate(
         { profileId: result.profileId },
         {
@@ -64,7 +66,7 @@ export async function handlerCatchUp(eventId, results) {
       );
     }
 
-    eventDB.totalFinishedCount = resultsWithWPK.length;
+    eventDB.totalFinishedCount = resultsSorted.length;
     await eventDB.save();
   } catch (error) {
     console.error(error);

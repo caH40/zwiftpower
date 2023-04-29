@@ -3,6 +3,7 @@ import { handlerProtocol } from '../protocol/handler.js';
 import { getAccessToken } from '../zwift/token.js';
 import { getResults } from './results.js';
 
+// ручное обновление результатов по запросу модератора
 export async function putResultsService(eventId) {
   try {
     const token = await getAccessToken();

@@ -1,5 +1,6 @@
 export function filterThousandths(results) {
   try {
+    if (!results.length) return [];
     const lengthArr = results.length;
 
     if (

@@ -1,6 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
+import { getResultsNewbies } from '../preparation/newbies.js';
 import { getRequest } from '../zwift/request-get.js';
 
 export async function getResults(subgroup, subgroupLabel = 'E', token) {
@@ -47,6 +48,9 @@ export async function getResultsService(eventId) {
 
     if (event.typeRaceCustom === 'catchUp') {
       eventPrepared = await getResultsCatchup(event);
+    }
+    if (event.typeRaceCustom === 'newbies') {
+      eventPrepared = await getResultsNewbies(event);
     }
 
     return { event: eventPrepared, message: 'Результаты заезда' };

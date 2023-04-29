@@ -3,7 +3,7 @@ import { handlerProtocol } from '../protocol/handler.js';
 import { getResults } from '../race/results.js';
 import { getAccessToken } from '../zwift/token.js';
 
-// обновление результатов заезда из Звифта
+// обновление всех результатов заездов из Звифта
 export async function updateResults() {
   try {
     const token = await getAccessToken();
