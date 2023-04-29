@@ -1,11 +1,14 @@
 import React from 'react';
+import cn from 'classnames';
+
+import { addClasses as cns } from '../../utils/additional-classes';
 
 import styles from './icon.module.css';
 
-function IconCupRank({ place }) {
+function IconCupRank({ place, addCls = ' ' }) {
   const colorFill = { 1: '#FFD700', 2: '#C0C0C0', 3: '#CD7F32' };
   return (
-    <div className={styles.box}>
+    <div className={cn(styles.box, cns(styles, addCls))}>
       <svg
         width="24"
         height="24"
