@@ -18,7 +18,7 @@ function TableResults({ events, updateEvent, removeEvent }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          <th>Дата старта</th>
+          <th>Дата</th>
           <th>Название</th>
           <th>Организатор</th>
           <th>Тип заезда</th>
@@ -32,7 +32,7 @@ function TableResults({ events, updateEvent, removeEvent }) {
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
-            <td>{getLocalDate(event.eventStart, 'short')}</td>
+            <td>{getLocalDate(event.eventStart, ['short', 'onlyDate'])}</td>
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>
