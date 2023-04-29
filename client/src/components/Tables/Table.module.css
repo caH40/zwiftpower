@@ -4,6 +4,7 @@
   margin-bottom: 1rem;
   background-color: transparent;
   border-collapse: collapse;
+  font-size: 15px;
 }
 .table caption {
   font-size: 16px;
@@ -18,7 +19,7 @@
 }
 .table th {
   text-align: inherit;
-  padding: 0.8rem 0.5rem;
+  padding: 0.8em 0.4em;
   vertical-align: middle;
   border-top: 1px solid #dee2e6;
 }
@@ -58,7 +59,7 @@
   border-color: inherit;
 }
 .table td {
-  padding: 0.4rem;
+  padding: 0.2em 0.4em;
   vertical-align: middle;
   border-top: 1px solid #dee2e6;
   /* white-space: normal; */
@@ -171,4 +172,7 @@
 .max {
   font-weight: 700;
   color: #dc4119;
+}
+.big {
+  font-size: 1.15em;
 }

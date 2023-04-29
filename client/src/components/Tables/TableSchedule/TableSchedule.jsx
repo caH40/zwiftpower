@@ -35,7 +35,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             <td>{getLocalDate(event.eventStart, 'short')}</td>
             <td>
               <Link className={styles.link} to={String(event.id)}>
-                {event.name}
+                <span className={styles.big}>{event.name}</span>
               </Link>
             </td>
             <td>{organizer(event.organizer)}</td>
