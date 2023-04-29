@@ -21,7 +21,7 @@ export async function handlerNewbies(eventId, results) {
       }
 
       await ZwiftResult.findOneAndUpdate(
-        { profileId: result.profileId },
+        { $and: [{ profileId: result.profileId }, { zwiftEventId: eventDB._id }] },
         {
           $set: {
             zwiftEventId: eventId, // id документа БД
