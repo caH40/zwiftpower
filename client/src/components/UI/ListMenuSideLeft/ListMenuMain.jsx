@@ -62,7 +62,7 @@ function ListMenuMain({ state }) {
           {({ isActive }) => (
             <div className={styles.link__box}>
               <IconFaq isActive={isActive} />
-              <span className={`${styles.link__name} ${styles[state]}`}>ЧВЗ</span>
+              <span className={`${styles.link__name} ${styles[state]}`}>ЧЗВ</span>
             </div>
           )}
         </NavLink>
