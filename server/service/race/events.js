@@ -30,9 +30,9 @@ export async function getEventsService(started) {
     // сортировка заездов по возрастанию даты старта
     eventsDB.sort((a, b) => {
       if (started) {
-        new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
+        return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
       } else {
-        new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
+        return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
       }
     });
     return { events: eventsDB, message: 'Получены все заезды' };
