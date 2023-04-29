@@ -17,7 +17,7 @@ export async function handlerClassicCommon(eventId, results) {
     for (const result of resultsWithWPK) {
       rankEvent += 1;
       await ZwiftResult.findOneAndUpdate(
-        { profileId: result.profileId },
+        { $and: [{ profileId: result.profileId }, { zwiftEventId: eventDB._id }] },
         {
           $set: {
             zwiftEventId: eventId, // id документа БД

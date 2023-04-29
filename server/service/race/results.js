@@ -1,10 +1,10 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
 import { getRequest } from '../zwift/request-get.js';
 
+// получение результатов заезда из Звифта
 export async function getResults(subgroup, subgroupLabel = 'E', token) {
   try {
     let start = 0;
