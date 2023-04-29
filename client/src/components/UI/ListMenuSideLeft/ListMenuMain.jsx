@@ -5,6 +5,7 @@ import IconCup from '../../icons/IconCup';
 import IconWorld from '../../icons/IconWorld';
 import IconResults from '../../icons/IconResults';
 import IconSchedule from '../../icons/IconSchedule';
+import IconFaq from '../../icons/IconFaq';
 
 import styles from './ListMenu.module.css';
 
@@ -52,6 +53,16 @@ function ListMenuMain({ state }) {
             <div className={styles.link__box}>
               <IconCup isActive={isActive} />
               <span className={`${styles.link__name} ${styles[state]}`}>Статистика</span>
+            </div>
+          )}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/faq" className={activeLink}>
+          {({ isActive }) => (
+            <div className={styles.link__box}>
+              <IconFaq isActive={isActive} />
+              <span className={`${styles.link__name} ${styles[state]}`}>ЧВЗ</span>
             </div>
           )}
         </NavLink>

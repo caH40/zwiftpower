@@ -21,6 +21,7 @@ import RaceSeries from './Pages/RaceSeries/RaceSeries';
 import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
 import RaceDescription from './Pages/RaceDescription/RaceDescription';
 import RaceResults from './Pages/RaceResults/RaceResults';
+import Faq from './Pages/Faq/Faq';
 
 function App() {
   useFirstAuth();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/race/schedule/:eventId" element={<RaceDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />
         <Route path="/race/statistics" element={<RaceStatistics />} />
+        <Route path="/faq" element={<Faq />} />
         {isModerator ? AdminRoute() : ''}
         <Route path="*" element={<Page404 />} />
       </Route>
