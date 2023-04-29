@@ -1,15 +1,13 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { addGapStart } from '../../utility/gap.js';
 import { addWattsPerKg } from '../../utility/watts.js';
 
 // формирует финишный протокол для сохранения в БД, для гонки CatchUp
-export async function handlerCatchUp(eventId, results) {
+export async function handlerClassicCommon(eventId, results) {
   try {
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
 
-    const resultsWithStartGap = addGapStart(eventDB, results); // получение стартовых гэпов для групп
-    const resultsWithWPK = addWattsPerKg(resultsWithStartGap);
+    const resultsWithWPK = addWattsPerKg(results);
 
     resultsWithWPK.sort(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
