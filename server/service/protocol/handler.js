@@ -18,6 +18,6 @@ export async function handlerProtocol(eventId, results, typeRaceCustom) {
       return;
     }
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }

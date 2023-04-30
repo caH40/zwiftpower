@@ -10,7 +10,7 @@ export async function updateStartInfo() {
       await updateStartInfoEvent(event);
     }
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -22,7 +22,7 @@ export async function updateStartInfoEvent(event) {
       await ZwiftEvent.findByIdAndUpdate(event._id, { $set: { started: true } });
     }
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -34,6 +34,6 @@ export async function updateScheduleEvents() {
       await putEventService(event.id);
     }
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }

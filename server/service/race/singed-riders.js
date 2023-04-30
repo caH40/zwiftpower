@@ -10,17 +10,15 @@ export async function putSingedRidersService(eventId, username, password) {
 
     const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
 
-    // const eventDeletedDB = await ZwiftEvent.deleteOne({ id: eventId });
-
     for (const eventSubgroup of eventDB.eventSubgroups) {
       // стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
       const urlSingedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=100&participation=signed_up&start=0&type=all`;
       const singedData = await getRequest(urlSingedData, token);
-      // удаление всех райдеров из группы
+      // удаление всех зарегистрированных райдеров из группы
       await ZwiftSingedRiders.deleteMany({ subgroup: eventSubgroup._id });
       // добавление райдеров в группу
       for (const rider of singedData) {
-        const singedRiderDB = await ZwiftSingedRiders.create({
+        await ZwiftSingedRiders.create({
           subgroup: eventSubgroup._id,
           id: rider.id,
           firstName: rider.firstName,

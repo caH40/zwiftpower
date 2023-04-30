@@ -7,7 +7,9 @@ export async function getEvent(req, res) {
     res.status(200).json(event);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function putEvent(req, res) {
@@ -17,6 +19,8 @@ export async function putEvent(req, res) {
     res.status(200).json(eventChanged);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }

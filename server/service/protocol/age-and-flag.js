@@ -9,9 +9,8 @@ export async function addAgeAndFlag(event, results) {
     }
 
     const newResults = results.map((result) => {
-      const { age, countryAlpha3 } = singedRiders.find(
-        (rider) => rider.id === result.profileId
-      );
+      const { age, countryAlpha3 } =
+        singedRiders.find((rider) => rider.id === result.profileId) || {};
       result.profileData.age = age;
       result.profileData.countryAlpha3 = countryAlpha3;
       return result;

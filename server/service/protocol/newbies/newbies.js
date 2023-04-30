@@ -74,6 +74,6 @@ export async function handlerNewbies(eventId, results) {
     eventDB.updated = Date.now();
     await eventDB.save();
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
