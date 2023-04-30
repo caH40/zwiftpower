@@ -15,6 +15,8 @@ const zwiftResultSchema = new Schema({
     weightInGrams: { type: Number, default: null },
     heightInCentimeters: { type: Number, default: null },
     imageSrc: { type: String, default: null },
+    countryAlpha3: { type: String, default: null },
+    age: { type: Number, default: null },
   },
 
   eventSubgroupId: { type: Number, default: null },

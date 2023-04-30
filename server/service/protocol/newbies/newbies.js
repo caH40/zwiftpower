@@ -1,6 +1,7 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { addWattsPerKg } from '../../../utility/watts.js';
+import { addAgeAndFlag } from '../age-and-flag.js';
 import { filterByRank } from './results-filter.js';
 
 // формирует финишный протокол для сохранения в БД, для гонки newbies
@@ -8,7 +9,8 @@ export async function handlerNewbies(eventId, results) {
   try {
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
 
-    const resultsWithWPK = addWattsPerKg(results);
+    const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, results);
+    const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
     const resultsSorted = filterByRank(resultsWithWPK);
 
@@ -35,6 +37,8 @@ export async function handlerNewbies(eventId, results) {
               weightInGrams: result.profileData.weightInGrams,
               heightInCentimeters: result.profileData.heightInCentimeters,
               imageSrc: result.profileData.imageSrc,
+              countryAlpha3: result.profileData.countryAlpha3,
+              age: result.profileData.age,
             },
 
             eventSubgroupId: result.eventSubgroupId,
