@@ -49,7 +49,8 @@ function TableRaceResults({ results }) {
             <td>{tdRank(result.rankEvent)}</td>
             <td>
               {tdRider(
-                `${result.profileData.firstName} ${result.profileData.lastName}`,
+                result.profileData.firstName,
+                result.profileData.lastName,
                 result.profileData.imageSrc,
                 result.profileData.countryAlpha3
               )}

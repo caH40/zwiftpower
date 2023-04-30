@@ -5,7 +5,7 @@ import Flag from '../../Flag/Flag';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
-export function tdRider(name, imageSrc, flag) {
+export function tdRider(firstName, lastName, imageSrc, flag) {
   const riderLogo = imageSrc ? imageSrc : avatar;
   return (
     <div className={styles.rider}>
@@ -14,8 +14,16 @@ export function tdRider(name, imageSrc, flag) {
           <Flag name={flag} />
         </div>
       ) : null}
-      <img className={styles.logo__rider} src={riderLogo} alt="Ph" />
-      <span>{name}</span>
+      <div className={styles.rider__logo}>
+        {imageSrc ? (
+          <img className={styles.rider__img} src={riderLogo} alt="Ph" />
+        ) : (
+          <div className={styles.rider__img__empty}>
+            {firstName.slice(0, 1) + lastName.slice(0, 1)}
+          </div>
+        )}
+      </div>
+      <span>{`${firstName} ${lastName}`}</span>
     </div>
   );
 }

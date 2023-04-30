@@ -7,6 +7,8 @@ function Flag({ name = '' }) {
   if (name === 'dnk') nameShort = 'dk';
   if (name === 'swe') nameShort = 'se';
   if (name === 'kor') nameShort = 'kr';
+  if (name === 'pol') nameShort = 'pl';
+  if (name === 'and') nameShort = 'ad';
   return (
     <>
       <img

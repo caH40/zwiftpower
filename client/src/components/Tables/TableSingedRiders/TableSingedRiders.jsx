@@ -31,11 +31,7 @@ function TableSingedRiders({ riders }) {
               </span>
             </td>
             <td>
-              {tdRider(
-                `${rider.firstName} ${rider.lastName}`,
-                rider.imageSrc,
-                rider.countryAlpha3
-              )}
+              {tdRider(rider.firstName, rider.lastName, rider.imageSrc, rider.countryAlpha3)}
             </td>
             <td></td>
             <td>{getWeightStr(rider.weight)}</td>
