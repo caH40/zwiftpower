@@ -3,7 +3,7 @@ import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
 import { putSingedRidersService } from './singed-riders.js';
 
-// --postEventService-- добавление эвента в БД zp.ru
+// добавление эвента в БД zp.ru
 export async function postEventService(event) {
   try {
     // проверка на уникальность id нового заезда
