@@ -68,6 +68,7 @@ export async function handlerClassicCommon(eventId, results) {
     }
 
     eventDB.totalFinishedCount = resultsWithWPK.length;
+    eventDB.updated = Date.now();
     await eventDB.save();
   } catch (error) {
     console.error(error);

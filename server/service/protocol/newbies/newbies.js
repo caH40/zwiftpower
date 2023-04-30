@@ -71,6 +71,7 @@ export async function handlerNewbies(eventId, results) {
     }
 
     eventDB.totalFinishedCount = resultsSorted.length;
+    eventDB.updated = Date.now();
     await eventDB.save();
   } catch (error) {
     console.error(error);

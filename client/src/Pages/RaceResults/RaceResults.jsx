@@ -9,6 +9,9 @@ import { getResults } from '../../api/race/results';
 import { gapValue } from '../../utils/gap';
 import { setValueMax } from '../../utils/value-max';
 import { filterThousandths } from '../../utils/thousandths-seconds';
+import { getLocalDate } from '../../utils/date-convert';
+
+import styles from './RaceResults.module.css';
 
 function RaceResults() {
   const [event, setEvent] = useState({});
@@ -34,6 +37,11 @@ function RaceResults() {
         <>
           <DescriptionEventZwift event={event} />
           <TableRaceResults results={results} />
+
+          <div className={styles.right}>
+            <span className={styles.service}>Обновлено:</span>
+            <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
+          </div>
         </>
       ) : (
         'Заезд не найден!'
