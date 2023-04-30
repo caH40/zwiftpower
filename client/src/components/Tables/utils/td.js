@@ -13,7 +13,9 @@ export function tdRider(firstName, lastName, imageSrc, flag) {
         <div className={styles.box__flag}>
           <Flag name={flag} />
         </div>
-      ) : null}
+      ) : (
+        <div className={styles.box__flag} />
+      )}
       <div className={styles.rider__logo}>
         {imageSrc ? (
           <img className={styles.rider__img} src={riderLogo} alt="Ph" />
