@@ -1,14 +1,21 @@
 import avatar from '../../../images/avatar.svg';
 import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
+import Flag from '../../Flag/Flag';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
-export function tdRider(name, imageSrc) {
+export function tdRider(name, imageSrc, flag) {
   const riderLogo = imageSrc ? imageSrc : avatar;
   return (
     <div className={styles.rider}>
-      <img className={styles.logo} src={riderLogo} alt="Ph" /> <span>{name}</span>
+      {flag ? (
+        <div className={styles.box__flag}>
+          <Flag name={flag} />
+        </div>
+      ) : null}
+      <img className={styles.logo__rider} src={riderLogo} alt="Ph" />
+      <span>{name}</span>
     </div>
   );
 }

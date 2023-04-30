@@ -4,7 +4,6 @@ import { tdLinkZP, tdRider } from '../utils/td';
 
 import styles from '../Table.module.css';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
-import Flag from '../../Flag/Flag';
 
 function TableSingedRiders({ riders }) {
   return (
@@ -13,14 +12,13 @@ function TableSingedRiders({ riders }) {
         <tr>
           <th>#</th>
           <th>Кат</th>
-          <th>Страна</th>
           <th>Райдер</th>
           <th>Команда</th>
-          <th>Возраст</th>
           <th>Вес</th>
           <th>Рост</th>
+          <th>Вз.кат.</th>
           <th>Пол</th>
-          <th>zwiftpower.com</th>
+          <th>zp.com</th>
         </tr>
       </thead>
       <tbody>
@@ -33,15 +31,16 @@ function TableSingedRiders({ riders }) {
               </span>
             </td>
             <td>
-              <div className={styles.box__flag}>
-                <Flag name={rider.countryAlpha3} />
-              </div>
+              {tdRider(
+                `${rider.firstName} ${rider.lastName}`,
+                rider.imageSrc,
+                rider.countryAlpha3
+              )}
             </td>
-            <td>{tdRider(`${rider.firstName} ${rider.lastName}`, rider.imageSrc)}</td>
             <td></td>
-            <td>{getAgeCategory(rider.age)}</td>
             <td>{getWeightStr(rider.weight)}</td>
             <td>{getHeightStr(rider.height)}</td>
+            <td>{getAgeCategory(rider.age)}</td>
             <td>{getGenderStr(rider.male)}</td>
             <td className={styles.link}>{tdLinkZP(rider.id)}</td>
           </tr>

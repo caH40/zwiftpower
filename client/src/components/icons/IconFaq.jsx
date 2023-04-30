@@ -23,7 +23,7 @@ function IconFaq({ isActive, addCls = ' ' }) {
           cy="12"
           r="11"
           stroke="#CECECE"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           className={activeColorFill}

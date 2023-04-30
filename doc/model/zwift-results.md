@@ -14,6 +14,8 @@
 - **weightInGrams** -(`Number`) вес в граммах;
 - **heightInCentimeters** -(`Number`) рост в сантиметрах;
 - **imageSrc** -(`String`) имя;
+- **countryAlpha3** - (`String`) страна из трех символов (rus);
+- **age** - (`Number`) возраст;
 
 **eventSubgroupId** -(`Number`) id подгруппы (группы категорий в заезде) в Звифте;  
 **subgroupLabel** -(`String`) буквенное обозначение подгруппы (группы категорий в заезде);  

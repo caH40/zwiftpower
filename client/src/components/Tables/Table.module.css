@@ -67,14 +67,13 @@
 }
 .rider {
   display: flex;
+  gap: 0 7px;
   align-items: center;
 }
-.logo {
-  width: 30px;
+.logo__rider {
+  flex: 0 0 30px;
   height: 30px;
-  border-radius: 50%;
-  margin-right: 5px;
-  flex-shrink: 0;
+  border-radius: 5px;
 }
 .category {
   display: flex;
@@ -161,7 +160,9 @@
   gap: 0 10px;
 }
 .box__flag {
-  width: 24px;
+  flex: 0 0 24px;
+  display: flex;
+  align-items: center;
 }
 .text__additional {
   font-size: 10px;
