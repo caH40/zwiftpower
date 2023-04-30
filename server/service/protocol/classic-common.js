@@ -6,6 +6,7 @@ import { addAgeAndFlag } from './age-and-flag.js';
 // формирует финишный протокол для сохранения в БД, для гонки CatchUp
 export async function handlerClassicCommon(eventId, results) {
   try {
+    console.log(results);
     const eventDB = await ZwiftEvent.findOne({ _id: eventId }).populate('eventSubgroups');
 
     const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, results);

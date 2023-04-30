@@ -2,6 +2,7 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { handlerProtocol } from '../protocol/handler.js';
 import { getResults } from '../race/results.js';
 import { getAccessToken } from '../zwift/token.js';
+import { checkDurationUpdating } from './results-check.js';
 
 // обновление всех результатов заездов из Звифта
 export async function updateResults() {
@@ -26,20 +27,6 @@ export async function updateResults() {
         resultsTotal.push(...resultsSubgroup);
       }
       await handlerProtocol(event._id, resultsTotal, event.typeRaceCustom);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function checkDurationUpdating(event) {
-  try {
-    const millisecondsIn2Hours = 2 * 60 * 60 * 1000; // длительность обновления результатов
-    const eventStart = new Date(event.eventStart).getTime();
-    const timeCurrent = new Date().getTime();
-    if (timeCurrent - eventStart > millisecondsIn2Hours) {
-      event.hasResults = true;
-      await event.save();
     }
   } catch (error) {
     console.error(error);
