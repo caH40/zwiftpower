@@ -39,8 +39,8 @@ const zwiftResultSchema = new Schema({
   flaggedCheating: { type: Boolean, default: false },
   flaggedSandbagging: { type: Boolean, default: false },
   // свойства из предыдущей модели
-  placeAbsolute: { type: Number, default: null },
-  penalty: { powerUp: { type: Number, default: 0 } },
+  rankAbsolute: { type: Number, default: null },
+  penalty: { fairPlay: { type: Number, default: 0 } },
   isDisqualification: { type: Boolean, default: false },
   isDidNotFinish: { type: Boolean, default: false },
   category: { type: String, default: null },
