@@ -16,7 +16,9 @@ export async function getEvent(req, res) {
     res.status(200).json(event);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 // получение данных заезда (started=false для расписания, started:true для результатов)
@@ -27,7 +29,9 @@ export async function getEvents(req, res) {
     res.status(200).json(events);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function postEvent(req, res) {
@@ -37,7 +41,9 @@ export async function postEvent(req, res) {
     res.status(201).json(eventSaved);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function putEvent(req, res) {
@@ -47,7 +53,9 @@ export async function putEvent(req, res) {
     res.status(201).json(eventUpdated);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function deleteEvent(req, res) {
@@ -57,7 +65,9 @@ export async function deleteEvent(req, res) {
     res.status(200).json(eventDeleted);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function putResults(req, res) {
@@ -66,8 +76,10 @@ export async function putResults(req, res) {
     const resultsUpdated = await putResultsService(eventId);
     res.status(201).json(resultsUpdated);
   } catch (error) {
-    console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    console.log(error.message);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function deleteEventAndResults(req, res) {
@@ -77,7 +89,9 @@ export async function deleteEventAndResults(req, res) {
     res.status(200).json(eventDeleted);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
 export async function getResults(req, res) {
@@ -87,6 +101,8 @@ export async function getResults(req, res) {
     res.status(200).json(eventResults);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error.response ? { message: error.response?.data } : error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
