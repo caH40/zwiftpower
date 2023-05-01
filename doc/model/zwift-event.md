@@ -92,7 +92,10 @@
 - **4** - группа "C";
 - **5** - группа "E";
 
-**laps** - (`Number`) - количество кругов;  
+**laps** - (`Number`) - количество кругов (durationInSeconds,distanceInMeters =0 );  
+**distanceInMeters** - (`Number`) - дистанция в метрах (laps,durationInSeconds =0 );  
+**durationInSeconds** - (`Number`) - длительность заезда в секундах (laps,distanceInMeters =0
+);  
 **mapId** - (`Number`) - см.выше;  
 **name** - (`String`) - название заезда;  
 **routeId** - (`Number`) - id маршрута `client\src\asset\zwift\lib\esm\routes.js`;  

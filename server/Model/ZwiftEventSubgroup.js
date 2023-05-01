@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import pkg from 'mongoose';
 
 const { Schema, model } = pkg;
@@ -11,6 +10,8 @@ const zwiftEventSubgroupSchema = new Schema({
   jerseyHash: { type: Number, default: null },
   label: { type: Number, default: null },
   laps: { type: Number, default: null },
+  distanceInMeters: { type: Number, default: null },
+  durationInSeconds: { type: Number, default: null },
   mapId: { type: Number, default: null },
   name: { type: String, default: null },
   routeId: { type: Number, default: null },

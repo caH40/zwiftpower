@@ -38,6 +38,8 @@ async function saveEventToDB(event) {
         jerseyHash: eventSubgroup.jerseyHash,
         label: eventSubgroup.label,
         laps: eventSubgroup.laps,
+        distanceInMeters: eventSubgroup.distanceInMeters,
+        durationInSeconds: eventSubgroup.durationInSeconds,
         mapId: eventSubgroup.mapId,
         name: eventSubgroup.name,
         routeId: eventSubgroup.routeId,
