@@ -8,15 +8,9 @@ export async function deleteEventService(eventId) {
     const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
     for (const eventSubgroup of eventDB.eventSubgroups) {
       await ZwiftSingedRiders.deleteMany({ subgroup: eventSubgroup._id });
-      console.log(
-        new Date(),
-        `1.удаление зарегистрированных райдеров ${eventSubgroup.subgroupLabel}`
-      );
       await ZwiftEventSubgroup.deleteOne({ _id: eventSubgroup._id });
-      console.log(new Date(), `2.удаление группы ${eventSubgroup.subgroupLabel}`);
     }
     await ZwiftEvent.findByIdAndDelete(eventDB._id);
-    console.log(new Date(), `3.удаление эвента ${eventDB.name}`);
 
     return {
       additionalParams: {

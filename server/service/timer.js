@@ -6,7 +6,7 @@ import { updateScheduleEvents, updateStartInfo } from './updates/schedule-events
 export async function timers() {
   try {
     const millisecondsInDay = 24 * 60 * 60 * 1000;
-    const millisecondsIn30Minutes = 30 * 60 * 1000;
+    const millisecondsIn23Minutes = 23 * 60 * 1000;
     const millisecondsIn10Minutes = 10 * 60 * 1000;
     setInterval(async () => {
       await controlConfirmEmail();
@@ -15,7 +15,7 @@ export async function timers() {
     setInterval(async () => {
       await updateScheduleEvents();
       await updateStartInfo();
-    }, millisecondsIn30Minutes);
+    }, millisecondsIn23Minutes);
     setInterval(async () => {
       await updateResults();
     }, millisecondsIn10Minutes);

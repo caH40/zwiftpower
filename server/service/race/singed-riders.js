@@ -8,12 +8,20 @@ export async function putSingedRidersService(eventId) {
 
     for (const eventSubgroup of eventDB.eventSubgroups) {
       // стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
-      const urlSingedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=100&participation=signed_up&start=0&type=all`;
-      const singedData = await getRequest(urlSingedData);
-      // удаление всех зарегистрированных райдеров из группы
-      await ZwiftSingedRiders.deleteMany({ subgroup: eventSubgroup._id });
+      const singedDataTotal = [];
+      let ridersQuantity = 100;
+      let start = 0;
+      while (ridersQuantity === 100) {
+        const urlSingedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
+        const singedData = await getRequest(urlSingedData);
+        singedDataTotal.push(...singedData);
+
+        ridersQuantity = singedData.length;
+        start += 100;
+      }
+
       // добавление райдеров в группу
-      for (const rider of singedData) {
+      for (const rider of singedDataTotal) {
         await ZwiftSingedRiders.create({
           subgroup: eventSubgroup._id,
           id: rider.id,
