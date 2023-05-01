@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
-import TableSingedRiders from '../../components/Tables/TableSingedRiders/TableSingedRiders';
+import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getEvent } from '../../api/zwift/events';
 import { getLocalDate } from '../../utils/date-convert';
@@ -35,7 +35,7 @@ function RaceDescription() {
           >
             Регистрация в Zwift
           </Link>
-          <TableSingedRiders riders={event.singedRiders} />
+          <TableSignedRiders riders={event.signedRiders} />
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>

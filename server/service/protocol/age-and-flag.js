@@ -1,16 +1,16 @@
-import { ZwiftSingedRiders } from '../../Model/ZwiftSingedRiders.js';
+import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
 export async function addAgeAndFlag(event, results) {
   try {
-    const singedRiders = [];
+    const signedRiders = [];
     for (const subgroup of event.eventSubgroups) {
-      const singedRidersDB = await ZwiftSingedRiders.find({ subgroup: subgroup._id });
-      singedRiders.push(...singedRidersDB);
+      const signedRidersDB = await ZwiftSignedRiders.find({ subgroup: subgroup._id });
+      signedRiders.push(...signedRidersDB);
     }
 
     const newResults = results.map((result) => {
       const { age, countryAlpha3 } =
-        singedRiders.find((rider) => rider.id === result.profileId) || {};
+        signedRiders.find((rider) => rider.id === result.profileId) || {};
       result.profileData.age = age;
       result.profileData.countryAlpha3 = countryAlpha3;
       return result;

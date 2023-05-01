@@ -1,13 +1,13 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { ZwiftSingedRiders } from '../../Model/ZwiftSingedRiders.js';
+import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
 export async function deleteEventService(eventId) {
   try {
     const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
     for (const eventSubgroup of eventDB.eventSubgroups) {
-      await ZwiftSingedRiders.deleteMany({ subgroup: eventSubgroup._id });
+      await ZwiftSignedRiders.deleteMany({ subgroup: eventSubgroup._id });
       await ZwiftEventSubgroup.deleteOne({ _id: eventSubgroup._id });
     }
     await ZwiftEvent.findByIdAndDelete(eventDB._id);
@@ -33,7 +33,7 @@ export async function deleteEventAndResultsService(eventId) {
   try {
     const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
     for (const eventSubgroup of eventDB.eventSubgroups) {
-      await ZwiftSingedRiders.deleteMany({ subgroup: eventSubgroup._id });
+      await ZwiftSignedRiders.deleteMany({ subgroup: eventSubgroup._id });
       await ZwiftEventSubgroup.deleteOne({ _id: eventSubgroup._id });
     }
     await ZwiftEvent.findByIdAndDelete(eventDB._id);

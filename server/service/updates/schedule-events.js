@@ -4,7 +4,6 @@ import { putEventService } from '../race/events-put.js';
 // изменение свойства started, если заезд стартовал
 export async function updateStartInfo() {
   try {
-    console.log('----2 запуск  updateStartInfo()');
     const eventsDB = await ZwiftEvent.find({ started: false });
 
     for (const event of eventsDB) {
@@ -30,7 +29,6 @@ export async function updateStartInfoEvent(event) {
 // обновление параметров заездов в расписании (еще не стартовавших)
 export async function updateScheduleEvents() {
   try {
-    console.log('----1 запуск updateScheduleEvents()');
     const eventsDB = await ZwiftEvent.find({ started: false });
     for (const event of eventsDB) {
       await putEventService(event.id);
