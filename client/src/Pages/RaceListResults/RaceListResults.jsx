@@ -5,7 +5,7 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import { getEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { deleteEventAndResults } from '../../api/race/events';
+import { deleteEventAndResults, putEvent } from '../../api/race/events';
 import { putResults } from '../../api/race/results';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 
@@ -16,7 +16,7 @@ function RaceListResults() {
   useBackground(false);
   const dispatch = useDispatch();
 
-  const updateEvent = (eventId) => {
+  const updateResults = (eventId) => {
     putResults(eventId)
       .then((response) => {
         setTrigger((prev) => !prev);
@@ -81,6 +81,32 @@ function RaceListResults() {
       });
   };
 
+  const updateEventAndSinged = (eventId) => {
+    putEvent(eventId)
+      .then((response) => {
+        setTrigger((prev) => !prev);
+        dispatch(
+          getAlert({
+            message: response.data.message,
+            type: 'success',
+            isOpened: true,
+          })
+        );
+      })
+      .catch((error) => {
+        const message = error.response
+          ? JSON.stringify(error.response.data.message || error.message)
+          : 'Непредвиденная ошибка';
+        dispatch(
+          getAlert({
+            message,
+            type: 'error',
+            isOpened: true,
+          })
+        );
+      });
+  };
+
   useEffect(() => {
     getEvents(true).then((response) => {
       setEvents(response.data.events);
@@ -90,7 +116,12 @@ function RaceListResults() {
   return (
     <section>
       {events?.length ? (
-        <TableResults events={events} updateEvent={updateEvent} removeEvent={removeEvent} />
+        <TableResults
+          events={events}
+          updateResults={updateResults}
+          removeEvent={removeEvent}
+          updateEventAndSinged={updateEventAndSinged}
+        />
       ) : (
         'Loading...'
       )}
