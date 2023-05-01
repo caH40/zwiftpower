@@ -10,6 +10,7 @@ import { router } from './routes/routes.js';
 import { timers } from './service/timer.js';
 import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
+import { updateAccessToken } from './service/zwift/token.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
@@ -46,6 +47,7 @@ const start = async () => {
 
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
 
+    // await updateAccessToken();
     await timers();
   } catch (e) {
     console.log(e);

@@ -13,8 +13,8 @@ export async function timers() {
       await controlNewPasswords();
     }, millisecondsInDay);
     setInterval(async () => {
-      await updateStartInfo();
       await updateScheduleEvents();
+      await updateStartInfo();
     }, millisecondsIn30Minutes);
     setInterval(async () => {
       await updateResults();

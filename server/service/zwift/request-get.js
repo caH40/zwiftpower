@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessToken } from './token.js';
 
 const apiUrl = process.env.ZWIFT_API;
 const headersDefault = {
@@ -11,8 +12,10 @@ const headersDefault = {
   'Accept-Encoding': 'gzip',
 };
 
-export async function getRequest(url, token) {
+export async function getRequest(url) {
   try {
+    const token = await getAccessToken();
+
     const response = await axios({
       method: 'get',
       url: `${apiUrl}${url}`,
