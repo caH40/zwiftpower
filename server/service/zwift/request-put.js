@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getAccessToken } from './token.js';
+
 const apiUrl = process.env.ZWIFT_API;
 const headersDefault = {
   'Content-Type': 'application/json',
@@ -14,8 +16,10 @@ const headersDefault = {
   Source: 'my-zwift',
 };
 
-export async function putRequest(url, token, data) {
+export async function putRequest(url, data) {
   try {
+    const token = await getAccessToken();
+
     const response = await axios({
       method: 'put',
       url: `${apiUrl}${url}`,

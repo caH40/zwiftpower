@@ -5,7 +5,7 @@ import { getResultsNewbies } from '../preparation/newbies.js';
 import { getRequest } from '../zwift/request-get.js';
 
 // получение результатов заезда из Звифта
-export async function getResults(subgroup, subgroupLabel = 'E', token) {
+export async function getResults(subgroup, subgroupLabel = 'E') {
   try {
     let start = 0;
     let resultsQuantity = 50;
@@ -13,7 +13,7 @@ export async function getResults(subgroup, subgroupLabel = 'E', token) {
 
     while (resultsQuantity === 50) {
       const urlEventData = `race-results/entries?event_subgroup_id=${subgroup.subgroupId}&start=${start}&limit=50`;
-      const eventData = await getRequest(urlEventData, token);
+      const eventData = await getRequest(urlEventData);
       // добавление буквенного названия группы в каждый результат
       eventData.entries.map((entry) => {
         entry.subgroupLabel = subgroupLabel;
