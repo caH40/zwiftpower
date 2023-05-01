@@ -1,7 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
-import { putSingedRidersService } from './singed-riders.js';
+import { putSignedRidersService } from './signed-riders.js';
 
 // добавление эвента в БД zp.ru
 export async function postEventService(event) {
@@ -16,7 +16,7 @@ export async function postEventService(event) {
     }
 
     const eventSaved = await saveEventToDB(event);
-    await putSingedRidersService(eventSaved.id);
+    await putSignedRidersService(eventSaved.id);
     await updateStartInfoEvent(eventSaved);
 
     return { message: 'Заезд добавлен в БД' };

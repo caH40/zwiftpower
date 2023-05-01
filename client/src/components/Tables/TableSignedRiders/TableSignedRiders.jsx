@@ -5,7 +5,7 @@ import { tdLinkZP, tdRider } from '../utils/td';
 import styles from '../Table.module.css';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
 
-function TableSingedRiders({ riders }) {
+function TableSignedRiders({ riders = [] }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -46,4 +46,4 @@ function TableSingedRiders({ riders }) {
   );
 }
 
-export default TableSingedRiders;
+export default TableSignedRiders;

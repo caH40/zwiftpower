@@ -1,23 +1,23 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftSingedRiders } from '../../Model/ZwiftSingedRiders.js';
+import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
 export async function getEventService(eventId) {
   try {
     const eventDataDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
 
     // поиск и добавление в массив всех зарегистрированных райдеров в подгруппы
-    const singedRiders = [];
+    const signedRiders = [];
     for (const subgroup of eventDataDB.eventSubgroups) {
-      const ridersInGroup = await ZwiftSingedRiders.find({ subgroup: subgroup._id });
-      singedRiders.push(...ridersInGroup);
+      const ridersInGroup = await ZwiftSignedRiders.find({ subgroup: subgroup._id });
+      signedRiders.push(...ridersInGroup);
     }
     const eventData = eventDataDB.toObject();
     // сортировка по убыванию категорий групп
-    singedRiders.sort((a, b) =>
+    signedRiders.sort((a, b) =>
       a.subgroupLabel.toLowerCase().localeCompare(b.subgroupLabel.toLowerCase())
     );
 
-    eventData.singedRiders = singedRiders;
+    eventData.signedRiders = signedRiders;
 
     return { event: eventData };
   } catch (error) {
