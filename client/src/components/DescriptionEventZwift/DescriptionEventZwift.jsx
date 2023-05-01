@@ -5,15 +5,23 @@ import { useSelector } from 'react-redux';
 import RulesBox from '../RulesBox/RulesBox';
 import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import { map, replaceWithBr, route } from '../../utils/event';
-import { getLapsString } from '../../utils/declination';
 import { getLocalDate } from '../../utils/date-convert';
 import IconEdit from '../icons/IconEdit';
+import { getDurationDistance } from '../../Pages/RaceDescription/utils';
 
 import styles from './DescriptionEventZwift.module.css';
 
 function DescriptionEventZwift({ event, forSchedule }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
+
+  const [subgroup] = event.eventSubgroups;
+  const durationDistance = getDurationDistance(
+    subgroup.laps,
+    subgroup.distanceInMeters,
+    subgroup.durationInSeconds
+  );
+
   return (
     <>
       <div className={styles.title__box}>
@@ -27,7 +35,7 @@ function DescriptionEventZwift({ event, forSchedule }) {
       <h4 className={styles.h4}>{getLocalDate(event.eventStart)}</h4>
       <div className={styles.params}>
         {`${map(event.eventSubgroups[0].mapId)}, ${route(event.eventSubgroups[0].routeId)},
-   ${getLapsString(event.eventSubgroups[0].laps)}`}
+   ${durationDistance}`}
       </div>
       <RulesBox event={event} />
       <CategoriesBox event={event} />
