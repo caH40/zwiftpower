@@ -9,7 +9,7 @@ import { map, organizer, raceType, route } from '../../../utils/event';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
-function TableResults({ events, updateEvent, removeEvent }) {
+function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
 
   const isModerator = ['admin', 'moderator'].includes(role);
@@ -48,13 +48,20 @@ function TableResults({ events, updateEvent, removeEvent }) {
               <td>
                 <div className={styles.box__icons}>
                   <IconRefresh
-                    getClick={() => updateEvent(event.id)}
-                    toolTip={'Обновление результатов заезда'}
+                    getClick={() => updateResults(event.id)}
+                    toolTip={'Обновление результатов заезда (протокола)'}
                     addCls={'pointer'}
                   />
                   <IconDelete
                     getClick={() => removeEvent(event.id, event.name)}
                     toolTip={'Удаление заезда и результатов заезда из БД'}
+                    addCls={'pointer'}
+                  />
+                  <IconRefresh
+                    getClick={() => updateEventAndSinged(event.id)}
+                    toolTip={
+                      'Обновление данных заезда и зарегистрированных райдеров. Исправляет отсутствие флагов у некоторых райдеров в протоколе. После данного обновления необходимо запустить обновление результатов'
+                    }
                     addCls={'pointer'}
                   />
                 </div>
