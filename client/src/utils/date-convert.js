@@ -84,17 +84,24 @@ export function addNull(rowNumber) {
     return number;
   }
 }
-export function getLocalDate(date, params = []) {
+// формирование даты согласно локали 'ru'
+export function getLocalDate(date, params) {
   const dateForFormat = new Date(date);
   if (!date || date === 0) return 'Дата отсутствует, проверяйте старт заезда для каждой группы';
   const formatter = new Intl.DateTimeFormat('ru', {
     year: 'numeric',
-    month: params?.includes('short') ? 'numeric' : 'long',
+    month: ['short', 'onlyDate'].includes(params) ? 'numeric' : 'long',
     day: 'numeric',
-    weekday: params.includes('short') ? undefined : 'long',
-    hour: params.includes('onlyDate') ? undefined : '2-digit',
-    minute: params.includes('onlyDate') ? undefined : '2-digit',
+    weekday: ['short', 'onlyDate'].includes(params) ? undefined : 'long',
+    hour: ['onlyDate'].includes(params) ? undefined : '2-digit',
+    minute: ['onlyDate'].includes(params) ? undefined : '2-digit',
   });
   const dateLocal = formatter.format(dateForFormat);
   return dateLocal;
+}
+// дата с заменой сегодняшней даты на слово 'Сегодня'
+export function getToday(data) {
+  const dataConverted = getLocalDate(data, 'short');
+  const onlyDate = getLocalDate(Date.now(), 'onlyDate');
+  return dataConverted.replace(onlyDate, 'Сегодня');
 }
