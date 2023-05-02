@@ -1,19 +1,13 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
+import { countDistance } from '../../utility/distance.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
 import { putSignedRidersService } from './signed-riders.js';
 
 // добавление эвента в БД zp.ru
 export async function postEventService(event) {
   try {
-    // проверка на уникальность id нового заезда
-    const hasEvent = await ZwiftEvent.findOne({ id: event.id });
-    if (hasEvent) throw { message: `Event с id=${event.id} уже есть в БД` };
-    // проверка на уникальность id групп нового заезда
-    for (const eventSubgroup of event.eventSubgroups) {
-      const hasSubGroup = await ZwiftEventSubgroup.findOne({ id: eventSubgroup.id });
-      if (hasSubGroup) throw { message: `SubGroup с id=${eventSubgroup.id} уже есть в БД` };
-    }
+    await checkUnique(event);
 
     const eventSaved = await saveEventToDB(event);
     await putSignedRidersService(eventSaved.id);
@@ -30,6 +24,9 @@ async function saveEventToDB(event) {
   try {
     const eventSubgroups = [];
     for (const eventSubgroup of event.eventSubgroups) {
+      const { distanceInKilometers, elevationGainInMeters } =
+        countDistance(eventSubgroup) || {};
+
       const { _id } = await ZwiftEventSubgroup.create({
         bikeHash: eventSubgroup.bikeHash,
         description: eventSubgroup.description,
@@ -40,6 +37,10 @@ async function saveEventToDB(event) {
         laps: eventSubgroup.laps,
         distanceInMeters: eventSubgroup.distanceInMeters,
         durationInSeconds: eventSubgroup.durationInSeconds,
+        distanceSummary: {
+          distanceInKilometers,
+          elevationGainInMeters,
+        },
         mapId: eventSubgroup.mapId,
         name: eventSubgroup.name,
         routeId: eventSubgroup.routeId,
@@ -83,6 +84,21 @@ async function saveEventToDB(event) {
     });
 
     return eventDB;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function checkUnique(event) {
+  try {
+    // проверка на уникальность id нового заезда
+    const hasEvent = await ZwiftEvent.findOne({ id: event.id });
+    if (hasEvent) throw { message: `Event с id=${event.id} уже есть в БД` };
+    // проверка на уникальность id групп нового заезда
+    for (const eventSubgroup of event.eventSubgroups) {
+      const hasSubGroup = await ZwiftEventSubgroup.findOne({ id: eventSubgroup.id });
+      if (hasSubGroup) throw { message: `SubGroup с id=${eventSubgroup.id} уже есть в БД` };
+    }
   } catch (error) {
     throw error;
   }

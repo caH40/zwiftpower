@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 
 import RulesBox from '../RulesBox/RulesBox';
 import CategoriesBox from '../CategoriesBox/CategoriesBox';
-import { map, replaceWithBr, route } from '../../utils/event';
+import { distanceSummary, map, replaceWithBr, route } from '../../utils/event';
 import { getLocalDate } from '../../utils/date-convert';
 import IconEdit from '../icons/IconEdit';
-import { getDurationDistance } from '../../Pages/RaceScheduleDescription/utils';
+// import { getDurationDistance } from '../../Pages/RaceScheduleDescription/utils';
 
 import styles from './DescriptionEventZwift.module.css';
 
@@ -16,11 +16,11 @@ function DescriptionEventZwift({ event, forSchedule }) {
   const isModerator = ['admin', 'moderator'].includes(role);
 
   const [subgroup] = event.eventSubgroups;
-  const durationDistance = getDurationDistance(
-    subgroup.laps,
-    subgroup.distanceInMeters,
-    subgroup.durationInSeconds
-  );
+  // const durationDistance = getDurationDistance(
+  //   subgroup.laps,
+  //   subgroup.distanceInMeters,
+  //   subgroup.durationInSeconds
+  // );
 
   return (
     <>
@@ -35,7 +35,7 @@ function DescriptionEventZwift({ event, forSchedule }) {
       <h4 className={styles.h4}>{getLocalDate(event.eventStart)}</h4>
       <div className={styles.params}>
         {`${map(event.eventSubgroups[0].mapId)}, ${route(event.eventSubgroups[0].routeId)},
-   ${durationDistance}`}
+   ${distanceSummary(subgroup)}`}
       </div>
       <RulesBox event={event} />
       <CategoriesBox event={event} />
