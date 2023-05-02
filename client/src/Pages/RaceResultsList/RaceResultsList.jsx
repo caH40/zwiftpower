@@ -9,7 +9,7 @@ import { deleteEventAndResults, putEvent } from '../../api/race/events';
 import { putResults } from '../../api/race/results';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 
-function RaceListResults() {
+function RaceResultsList() {
   const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
   useTitle('Результаты заездов');
@@ -129,4 +129,4 @@ function RaceListResults() {
   );
 }
 
-export default RaceListResults;
+export default RaceResultsList;

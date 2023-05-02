@@ -8,7 +8,7 @@ import { getEvents } from '../../api/zwift/events';
 import { putEvent, deleteEvent } from '../../api/race/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 
-function RaceSchedule() {
+function RaceScheduleList() {
   const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
   useTitle('Расписание заездов');
@@ -95,4 +95,4 @@ function RaceSchedule() {
   );
 }
 
-export default RaceSchedule;
+export default RaceScheduleList;

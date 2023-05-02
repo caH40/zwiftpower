@@ -7,7 +7,7 @@ import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import { map, replaceWithBr, route } from '../../utils/event';
 import { getLocalDate } from '../../utils/date-convert';
 import IconEdit from '../icons/IconEdit';
-import { getDurationDistance } from '../../Pages/RaceDescription/utils';
+import { getDurationDistance } from '../../Pages/RaceScheduleDescription/utils';
 
 import styles from './DescriptionEventZwift.module.css';
 
