@@ -144,8 +144,5 @@ export const getElevationForTd = (eventSubgroup) => {
 
 // формирование строки расстояния дистанции
 function getDistanceString(distanceInKilometers) {
-  const distanceArr = String(distanceInKilometers).split('.');
-  const km = `${distanceArr[0]}км`;
-  const m = distanceArr[1] ? ` ${distanceArr[1]}м` : '';
-  return km + m;
+  return Math.round(distanceInKilometers * 10) / 10 + 'км';
 }
