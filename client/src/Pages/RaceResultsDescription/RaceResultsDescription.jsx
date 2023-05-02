@@ -11,9 +11,9 @@ import { setValueMax } from '../../utils/value-max';
 import { filterThousandths } from '../../utils/thousandths-seconds';
 import { getLocalDate } from '../../utils/date-convert';
 
-import styles from './RaceResults.module.css';
+import styles from './RaceResultsDescription.module.css';
 
-function RaceResults() {
+function RaceResultsDescription() {
   const [event, setEvent] = useState({});
   const [results, setResults] = useState([]);
   useTitle('Результаты заезда');
@@ -50,4 +50,4 @@ function RaceResults() {
   );
 }
 
-export default RaceResults;
+export default RaceResultsDescription;

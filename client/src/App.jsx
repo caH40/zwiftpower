@@ -15,12 +15,12 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import Profile from './Pages/Profile/Profile';
 import { AdminRoute } from './Route/AdminRoute';
 import './css/App.css';
-import RaceListResults from './Pages/RaceListResults/RaceListResults';
-import RaceSchedule from './Pages/RaceSchedule/RaceSchedule';
+import RaceResultsList from './Pages/RaceResultsList/RaceResultsList';
+import RaceScheduleList from './Pages/RaceScheduleList/RaceScheduleList';
 import RaceSeries from './Pages/RaceSeries/RaceSeries';
 import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
-import RaceDescription from './Pages/RaceDescription/RaceDescription';
-import RaceResults from './Pages/RaceResults/RaceResults';
+import RaceScheduleDescription from './Pages/RaceScheduleDescription/RaceScheduleDescription';
+import RaceResultsDescription from './Pages/RaceResultsDescription/RaceResultsDescription';
 import Faq from './Pages/Faq/Faq';
 
 function App() {
@@ -42,10 +42,10 @@ function App() {
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/race/results" element={<RaceListResults />} />
-        <Route path="/race/results/:eventId" element={<RaceResults />} />
-        <Route path="/race/schedule" element={<RaceSchedule />} />
-        <Route path="/race/schedule/:eventId" element={<RaceDescription />} />
+        <Route path="/race/results" element={<RaceResultsList />} />
+        <Route path="/race/results/:eventId" element={<RaceResultsDescription />} />
+        <Route path="/race/schedule" element={<RaceScheduleList />} />
+        <Route path="/race/schedule/:eventId" element={<RaceScheduleDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />
         <Route path="/race/statistics" element={<RaceStatistics />} />
         <Route path="/faq" element={<Faq />} />

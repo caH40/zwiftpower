@@ -8,9 +8,9 @@ import DescriptionEventZwift from '../../components/DescriptionEventZwift/Descri
 import { getEvent } from '../../api/zwift/events';
 import { getLocalDate } from '../../utils/date-convert';
 
-import styles from './RaceDescription.module.css';
+import styles from './RaceScheduleDescription.module.css';
 
-function RaceDescription() {
+function RaceScheduleDescription() {
   const [event, setEvent] = useState({});
   useTitle('Описание заезда');
   useBackground(false);
@@ -49,4 +49,4 @@ function RaceDescription() {
   );
 }
 
-export default RaceDescription;
+export default RaceScheduleDescription;
