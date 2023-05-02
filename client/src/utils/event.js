@@ -22,9 +22,9 @@ export const gapStart = (eventParams) => {
   if (!eventParams.id) return {};
   const gaps = {};
   for (const eventSubgroup of eventParams.eventSubgroups) {
-    gaps[eventSubgroup.subgroupLabel] = gap(
+    gaps[eventSubgroup?.subgroupLabel] = gap(
       eventParams.eventStart,
-      eventSubgroup.eventSubgroupStart
+      eventSubgroup?.eventSubgroupStart
     );
   }
   return gaps;
@@ -98,26 +98,26 @@ export const getElevationEstimated = (elevation) => {
 export const distanceSummary = (eventSubgroup) => {
   // если не задана дистанция и время, то показывать расчетные дистанцию и набор высоты
   const showDistanceAndElevation =
-    eventSubgroup.durationInSeconds === 0 && eventSubgroup.distanceInMeters === 0;
+    eventSubgroup?.durationInSeconds === 0 && eventSubgroup?.distanceInMeters === 0;
   // строка отображения кругов
-  const lapsStr = getLaps(eventSubgroup.laps)
-    ? `${getLapsString(getLaps(eventSubgroup.laps))}, `
+  const lapsStr = getLaps(eventSubgroup?.laps)
+    ? `${getLapsString(getLaps(eventSubgroup?.laps))}, `
     : '';
   // строка отображения продолжительности заезда
-  const duration = eventSubgroup.durationInSeconds;
+  const duration = eventSubgroup?.durationInSeconds;
   const durationStr = getDuration(duration) ? getDuration(duration) : '';
   // строка отображения дистанции заезда
-  const distanceStr = getDistance(eventSubgroup.distanceInMeters)
-    ? `${getDistance(eventSubgroup.distanceInMeters)}`
+  const distanceStr = getDistance(eventSubgroup?.distanceInMeters)
+    ? `${getDistance(eventSubgroup?.distanceInMeters)}`
     : '';
   // строка отображения расчетной дистанции заезда
-  const distance = eventSubgroup.distanceSummary.distanceInKilometers;
+  const distance = eventSubgroup?.distanceSummary?.distanceInKilometers;
   const distanceEstimated =
     getDistanceEstimated(distance) && showDistanceAndElevation
       ? `${getDistanceEstimated(distance)}, `
       : '';
   // строка отображения расчетного набора высоты
-  const elevation = eventSubgroup.distanceSummary.elevationGainInMeters;
+  const elevation = eventSubgroup?.distanceSummary?.elevationGainInMeters;
   const elevationStr =
     getElevationEstimated(elevation) && showDistanceAndElevation
       ? getElevationEstimated(elevation)
@@ -131,7 +131,7 @@ export const getDistanceForTd = (eventSubgroup) => {
   if (eventSubgroup?.durationInSeconds !== 0) return null;
   return (
     getDistance(eventSubgroup?.distanceInMeters) ||
-    getDistanceEstimated(eventSubgroup?.distanceSummary.distanceInKilometers)
+    getDistanceEstimated(eventSubgroup?.distanceSummary?.distanceInKilometers)
   );
 };
 
@@ -139,7 +139,7 @@ export const getDistanceForTd = (eventSubgroup) => {
 export const getElevationForTd = (eventSubgroup) => {
   if (eventSubgroup?.durationInSeconds !== 0 || eventSubgroup?.distanceInMeters !== 0)
     return null;
-  return getElevationEstimated(eventSubgroup?.distanceSummary.elevationGainInMeters);
+  return getElevationEstimated(eventSubgroup?.distanceSummary?.elevationGainInMeters);
 };
 
 // формирование строки расстояния дистанции
