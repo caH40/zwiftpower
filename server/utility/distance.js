@@ -8,8 +8,10 @@ export function countDistance(eventSubgroup) {
       return { distanceInKilometers: null, elevationGainInMeters: null };
     }
 
-    const distanceInKilometers = route.leadInDistance + eventSubgroup.laps * route.distance;
-    const elevationGainInMeters = route.leadInElevation + eventSubgroup.laps * route.elevation;
+    const distanceInKilometers =
+      route.leadInDistance + Math.round(eventSubgroup.laps * route.distance * 1000) / 1000;
+    const elevationGainInMeters =
+      route.leadInElevation + Math.round(eventSubgroup.laps * route.elevation * 1000) / 1000;
 
     return { distanceInKilometers, elevationGainInMeters };
   } catch (error) {
