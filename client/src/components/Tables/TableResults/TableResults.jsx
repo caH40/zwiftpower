@@ -4,8 +4,17 @@ import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
-import { getLocalDate, getToday } from '../../../utils/date-convert';
-import { map, organizer, raceType, route } from '../../../utils/event';
+import { getToday } from '../../../utils/date-convert';
+import {
+  getDuration,
+  getLaps,
+  map,
+  organizer,
+  raceType,
+  route,
+  getDistanceForTd,
+  getElevationForTd,
+} from '../../../utils/event';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
@@ -26,6 +35,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
           <th>Карта</th>
           <th>Маршрут</th>
           <th>Круги</th>
+          <th>Расстояние</th>
+          <th>Подъем</th>
+          <th>Прод.</th>
           {isModerator ? <th></th> : null}
         </tr>
       </thead>
@@ -44,7 +56,10 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
             <td>{event.totalFinishedCount}</td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
-            <td>{event.eventSubgroups[0]?.laps}</td>
+            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
+            <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
+            <td>{getElevationForTd(event.eventSubgroups[0])}</td>
+            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
             {isModerator ? (
               <td>
                 <div className={styles.box__icons}>
