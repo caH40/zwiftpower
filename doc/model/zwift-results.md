@@ -40,7 +40,8 @@
 **wattsPerKg** -(`Number`) относительная мощность вт/кг;  
 **flaggedCheating** -(`Boolean`) пойман на читинге;  
 **flaggedSandbagging** -(`Boolean`) пойман на сэндбэгинге;  
-**rankAbsolute** -(`Number`) место в абсолюте (необходимость?);  
+**rankAbsolute** -(`Number`) место в абсолюте (необходимость?);
+
 **penalty** -(`Object`) штрафы (необходимость?):
 
 - **fairPlay** -(`Number`) штраф за "нечестные" действия, единица измерения равная 30секундам;
@@ -53,3 +54,10 @@
 **teamCurrent** -(`Number`) команда за которую выступал райдер в текущем заезде;  
 **pointsStage** -(`Number`) очки за текущий заезд (для серии/тура);  
 **addedManually** -(`Number`) результат добавлен в ручную;
+
+**cpBestEfforts** -(`Array`) результаты CP в заезде:
+
+- **watts** -(`Number`) мощность в ваттах;
+- **wattsKg** -(`Number`) относительная мощность;
+- **cpLabel** -(`String`) название CP;
+- **duration** -(`Number`) длительность в секундах;

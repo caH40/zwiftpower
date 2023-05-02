@@ -51,6 +51,14 @@ const zwiftResultSchema = new Schema({
   pointsStage: { type: Number, default: 0 },
   isUnderChecking: { type: Boolean, default: false },
   addedManually: { type: Boolean, default: false },
+  cpBestEfforts: [
+    {
+      watts: { type: Number, default: null },
+      wattsKg: { type: Number, default: null },
+      cpLabel: { type: String, default: null },
+      duration: { type: Number, default: null },
+    },
+  ],
 });
 
 export const ZwiftResult = model('ZwiftResult', zwiftResultSchema);
