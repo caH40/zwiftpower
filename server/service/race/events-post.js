@@ -1,6 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { countDistance } from '../../utility/distance.js';
+import { getZwiftInsiderUrl } from '../../utility/route.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
 import { putSignedRidersService } from './signed-riders.js';
 
@@ -26,6 +27,7 @@ async function saveEventToDB(event) {
     for (const eventSubgroup of event.eventSubgroups) {
       const { distanceInKilometers, elevationGainInMeters } =
         countDistance(eventSubgroup) || {};
+      const zwiftInsiderUrl = getZwiftInsiderUrl(eventSubgroup.routeId);
 
       const { _id } = await ZwiftEventSubgroup.create({
         bikeHash: eventSubgroup.bikeHash,
@@ -41,6 +43,7 @@ async function saveEventToDB(event) {
           distanceInKilometers,
           elevationGainInMeters,
         },
+        zwiftInsiderUrl,
         mapId: eventSubgroup.mapId,
         name: eventSubgroup.name,
         routeId: eventSubgroup.routeId,

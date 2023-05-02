@@ -16,6 +16,7 @@ const zwiftEventSubgroupSchema = new Schema({
     distanceInKilometers: { type: Number, default: null },
     elevationGainInMeters: { type: Number, default: null },
   },
+  zwiftInsiderUrl: { type: String, default: null },
   mapId: { type: Number, default: null },
   name: { type: String, default: null },
   routeId: { type: Number, default: null },

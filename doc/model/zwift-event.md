@@ -96,7 +96,12 @@
 **distanceInMeters** - (`Number`) - дистанция в метрах (laps,durationInSeconds =0 );  
 **durationInSeconds** - (`Number`) - длительность заезда в секундах (laps,distanceInMeters =0
 );  
-**mapId** - (`Number`) - см.выше;  
+**distanceSummary** - (`Object`) - вычисляемые данные маршрута:
+
+- **distanceInKilometers** - (`Number`) - расстояние дистанции в километрах;
+- **elevationGainInMeters** - (`Number`) - суммарный набор высоты в метрах;
+
+**zwiftInsiderUrl** - (`String`) - ссылка на страницу zwiftInsider описания маршрута;  
 **name** - (`String`) - название заезда;  
 **routeId** - (`Number`) - id маршрута `client\src\asset\zwift\lib\esm\routes.js`;  
 **rulesSet** - (`[String]`) - см.выше;  
