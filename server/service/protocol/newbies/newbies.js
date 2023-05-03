@@ -1,7 +1,7 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { addWattsPerKg } from '../../../utility/watts.js';
 import { addAgeAndFlag } from '../age-and-flag.js';
+import { saveDocument } from '../data-save.js';
 import { filterByRank } from './results-filter.js';
 
 // формирует финишный протокол для сохранения в БД, для гонки newbies
@@ -21,53 +21,7 @@ export async function handlerNewbies(eventId, results) {
       } else {
         rankEvent = 0; // всем группам кроме C,D присваивается место в протоколе равное 0
       }
-
-      await ZwiftResult.findOneAndUpdate(
-        { $and: [{ profileId: result.profileId }, { zwiftEventId: eventDB._id }] },
-        {
-          $set: {
-            zwiftEventId: eventId, // id документа БД
-            subgroupId: result.subgroupId, // id документа БД
-            profileId: result.profileId,
-
-            profileData: {
-              firstName: result.profileData.firstName,
-              lastName: result.profileData.lastName,
-              gender: result.profileData.gender,
-              weightInGrams: result.profileData.weightInGrams,
-              heightInCentimeters: result.profileData.heightInCentimeters,
-              imageSrc: result.profileData.imageSrc,
-              countryAlpha3: result.profileData.countryAlpha3,
-              age: result.profileData.age,
-            },
-
-            eventSubgroupId: result.eventSubgroupId,
-            subgroupLabel: result.subgroupLabel,
-            rank: result.rank,
-            rankEvent,
-            eventId: result.eventId,
-
-            activityData: {
-              activityId: result.activityData.activityId,
-              sport: result.activityData.sport,
-              durationInMilliseconds: result.activityData.durationInMilliseconds,
-            },
-
-            sensorData: {
-              heartRateData: { avgHeartRate: result.sensorData.heartRateData.avgHeartRate },
-              avgWatts: result.sensorData.avgWatts,
-              powerType: result.sensorData.powerType,
-            },
-            wattsPerKg: result.wattsPerKg,
-
-            flaggedCheating: result.flaggedCheating,
-            flaggedSandbagging: result.flaggedSandbagging,
-          },
-        },
-        {
-          upsert: true,
-        }
-      );
+      await saveDocument(eventDB._id, result, rankEvent);
     }
 
     eventDB.totalFinishedCount = resultsSorted.length;

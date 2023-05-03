@@ -30,6 +30,14 @@ function TableRaceResults({ results }) {
           <th>Отс.пр.</th>
           <th>Ср.мощ</th>
           <th>От.мощ</th>
+          <th>5s</th>
+          <th>15s</th>
+          <th>30s</th>
+          <th>1m</th>
+          <th>5m</th>
+          <th>12m</th>
+          <th>20m</th>
+          <th>40m</th>
           <th>Пульс</th>
           <th>Вес</th>
           <th>Рост</th>
@@ -61,6 +69,14 @@ function TableRaceResults({ results }) {
             <td>{tdGap(result.gapPrev)}</td>
             <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 5)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 15)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 30)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 60)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 300)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 720)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 1200)?.wattsKg}</td>
+            <td>{result.cpBestEfforts.find((cp) => cp.duration === 2400)?.wattsKg}</td>
             <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
             <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
             <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
