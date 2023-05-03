@@ -1,5 +1,6 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { handlerProtocol } from '../protocol/handler.js';
+import { addCriticalPowers } from './criticalpower.js';
 
 import { getResults } from './results.js';
 
@@ -16,7 +17,10 @@ export async function putResultsService(eventId) {
       );
       resultsTotal.push(...resultsSubgroup);
     }
-    await handlerProtocol(eventsDB._id, resultsTotal, eventsDB.typeRaceCustom);
+
+    const resultsWithCP = await addCriticalPowers(resultsTotal);
+
+    await handlerProtocol(eventsDB._id, resultsWithCP, eventsDB.typeRaceCustom);
     return { message: `Обновлены результаты заезда "${eventsDB.name}"` };
   } catch (error) {
     throw error;

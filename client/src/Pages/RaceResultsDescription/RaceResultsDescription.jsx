@@ -27,6 +27,7 @@ function RaceResultsDescription() {
 
       filterThousandths(resultsWithGaps); // мутирует массив;
       setEvent(eventRow);
+
       setResults(setValueMax(resultsWithGaps));
     });
   }, [eventId]);
