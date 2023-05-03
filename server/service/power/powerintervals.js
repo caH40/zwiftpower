@@ -1,8 +1,7 @@
+import { intervals } from './intervals-cp.js';
+
 export const getIntervals = (powerInWatts, weightInKilogram) => {
   const cpBestEfforts = [];
-
-  // интервалы в секундах для которых рассчитывается CP
-  const intervals = [5, 15, 30, 60, 180, 300, 720, 1200, 1800, 2400, 3600];
 
   for (const interval of intervals) {
     let cpMax = 0;

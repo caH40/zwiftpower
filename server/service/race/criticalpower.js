@@ -1,4 +1,5 @@
-import { getIntervals } from '../powerintervals.js';
+import { getEmptyCP } from '../power/empty-cp.js';
+import { getIntervals } from '../power/powerintervals.js';
 import { getFullDataUrl } from '../zwift/activity.js';
 import { getPowers } from '../zwift/power.js';
 
@@ -9,12 +10,16 @@ export async function addCriticalPowers(results) {
       const weightRider = result.profileData.weightInGrams / 1000;
 
       const fullDataUrl = await getFullDataUrl(result.activityData.activityId);
-      // const start = Date.now();
+      // если ссылки на активность нет (райдер еще не закончил активность)
+      if (!fullDataUrl) {
+        result.cpBestEfforts = getEmptyCP();
+        resultsWithCP.push(result);
+        continue;
+      }
+
       const powerInWatts = await getPowers(fullDataUrl);
-      // const finish = Date.now();
       const cpBestEfforts = getIntervals(powerInWatts, weightRider);
 
-      // console.log(finish - start);
       result.cpBestEfforts = cpBestEfforts;
       resultsWithCP.push(result);
     }
