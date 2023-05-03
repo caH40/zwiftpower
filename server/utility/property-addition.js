@@ -27,6 +27,12 @@ export function addPropertyAddition(results) {
         value: result.wattsPerKg,
         addition: '',
       };
+      result.cpBestEfforts = result.cpBestEfforts.map((cp) => ({
+        watts: { value: cp.watts, addition: '' },
+        wattsKg: { value: cp.wattsKg, addition: '' },
+        cpLabel: cp.cpLabel,
+        duration: cp.duration,
+      }));
     }
     return resultsNew;
   } catch (error) {

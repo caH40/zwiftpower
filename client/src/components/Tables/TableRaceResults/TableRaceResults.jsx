@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  tdCPWattsPerKg,
   tdHeartRate,
   tdHeight,
   tdRank,
@@ -28,20 +29,20 @@ function TableRaceResults({ results }) {
           <th>Время</th>
           <th>Отс.</th>
           <th>Отс.пр.</th>
-          <th>Ср.мощ</th>
-          <th>От.мощ</th>
+          <th>Сред.</th>
+          <th></th>
           <th>5s</th>
-          <th>15s</th>
+          {/* <th>15s</th> */}
           <th>30s</th>
           <th>1m</th>
           <th>5m</th>
           <th>12m</th>
           <th>20m</th>
-          <th>40m</th>
+          {/* <th>40m</th> */}
           <th>Пульс</th>
           <th>Вес</th>
           <th>Рост</th>
-          <th>Вз.кат.</th>
+          <th>Возр.</th>
         </tr>
       </thead>
       <tbody>
@@ -69,14 +70,14 @@ function TableRaceResults({ results }) {
             <td>{tdGap(result.gapPrev)}</td>
             <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 5)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 15)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 30)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 60)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 300)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 720)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 1200)?.wattsKg}</td>
-            <td>{result.cpBestEfforts.find((cp) => cp.duration === 2400)?.wattsKg}</td>
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 5)}</td>
+            {/* <td>{tdCPWattsPerKg(result.cpBestEfforts, 15)}</td> */}
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 30)}</td>
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 60)}</td>
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 300)}</td>
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 720)}</td>
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 1200)}</td>
+            {/* <td>{tdCPWattsPerKg(result.cpBestEfforts, 2400)}</td> */}
             <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
             <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
             <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>

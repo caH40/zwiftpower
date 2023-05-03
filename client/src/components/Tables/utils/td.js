@@ -79,12 +79,12 @@ export function highlightValueMax(value, dimension) {
   const data = String(value).includes('max') ? (
     <span className={styles.max}>
       {value.replace('max', '')}
-      <small>{dimension}</small>
+      <span className={styles.small}>{dimension}</span>
     </span>
   ) : (
     <span>
       {value}
-      <small>{dimension}</small>
+      <span className={styles.small}>{dimension}</span>
     </span>
   );
 
@@ -96,6 +96,12 @@ export function tdWatts(value) {
 }
 export function tdWattsPerKg(value) {
   return highlightValueMax(value, 'Вт/кг');
+}
+export function tdCPWattsPerKg(value, interval) {
+  return highlightValueMax(
+    value.find((cp) => cp.duration === interval)?.wattsKg.addition,
+    'Вт/кг'
+  );
 }
 export function tdHeartRate(value) {
   return highlightValueMax(value, 'уд/м');
