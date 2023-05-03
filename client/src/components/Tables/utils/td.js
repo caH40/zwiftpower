@@ -76,6 +76,7 @@ export function tdTime(time) {
 }
 
 export function highlightValueMax(value, dimension) {
+  if (+value === 0 || value === '0max') return null;
   const data = String(value).includes('max') ? (
     <span className={styles.max}>
       {value.replace('max', '')}
@@ -95,13 +96,13 @@ export function tdWatts(value) {
   return highlightValueMax(value, 'Вт');
 }
 export function tdWattsPerKg(value) {
-  return highlightValueMax(value, 'Вт/кг');
+  const valueRounded = roundValueToTenths(value);
+  return highlightValueMax(valueRounded, 'вт/кг');
 }
 export function tdCPWattsPerKg(value, interval) {
-  return highlightValueMax(
-    value.find((cp) => cp.duration === interval)?.wattsKg.addition,
-    'Вт/кг'
-  );
+  let valueCP = value.find((cp) => cp.duration === interval)?.wattsKg.addition;
+  valueCP = roundValueToTenths(valueCP);
+  return highlightValueMax(valueCP, 'вт/кг');
 }
 export function tdHeartRate(value) {
   return highlightValueMax(value, 'уд/м');
@@ -115,4 +116,12 @@ export function tdHeight(value) {
 export function tdRank(value) {
   if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
   return null;
+}
+
+function roundValueToTenths(value) {
+  if (String(value).includes('max')) {
+    return (Math.round(value.split('max')[0] * 10) / 10).toFixed(1) + 'max';
+  } else {
+    return (Math.round(value * 10) / 10).toFixed(1);
+  }
 }

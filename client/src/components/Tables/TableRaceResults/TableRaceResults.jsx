@@ -31,14 +31,14 @@ function TableRaceResults({ results }) {
           <th>Отс.пр.</th>
           <th>Сред.</th>
           <th></th>
-          <th>5s</th>
-          {/* <th>15s</th> */}
-          <th>30s</th>
-          <th>1m</th>
-          <th>5m</th>
-          <th>12m</th>
-          <th>20m</th>
-          {/* <th>40m</th> */}
+          <th>5с</th>
+          {/* <th>15с</th> */}
+          <th>30с</th>
+          <th>1м</th>
+          <th>5м</th>
+          <th>12м</th>
+          <th>20м</th>
+          <th>40м</th>
           <th>Пульс</th>
           <th>Вес</th>
           <th>Рост</th>
@@ -77,7 +77,7 @@ function TableRaceResults({ results }) {
             <td>{tdCPWattsPerKg(result.cpBestEfforts, 300)}</td>
             <td>{tdCPWattsPerKg(result.cpBestEfforts, 720)}</td>
             <td>{tdCPWattsPerKg(result.cpBestEfforts, 1200)}</td>
-            {/* <td>{tdCPWattsPerKg(result.cpBestEfforts, 2400)}</td> */}
+            <td>{tdCPWattsPerKg(result.cpBestEfforts, 2400)}</td>
             <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
             <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
             <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
