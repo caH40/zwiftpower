@@ -5,6 +5,7 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { getResults } from '../../api/race/results';
 import { gapValue } from '../../utils/gap';
 import { setValueMax } from '../../utils/value-max';
@@ -37,6 +38,7 @@ function RaceResultsDescription() {
       {event?.id ? (
         <>
           <DescriptionEventZwift event={event} />
+          <NavBarResultsRace />
           <TableRaceResults results={results} />
 
           <div className={styles.right}>

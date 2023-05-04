@@ -1,0 +1,5 @@
+.box {
+  display: flex;
+  gap: 0 15px;
+  margin: 10px 0px;
+}
