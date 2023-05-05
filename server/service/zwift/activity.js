@@ -7,6 +7,6 @@ export async function getFullDataUrl(activityId) {
     const activity = await getRequest(url);
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
-    throw error;
+    console.log(error.message);
   }
 }

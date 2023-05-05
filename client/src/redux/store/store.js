@@ -6,6 +6,8 @@ import menuBurgerSlice from '../features/menuBurgerSlice';
 import titleSlice from '../features/titleSlice';
 import eventParamsSlice from '../features/eventParamsSlice';
 import backgroundSlice from '../features/backgroundSlice';
+import filterCategorySlice from '../features/filterCategorySlice';
+import filterWattsSlice from '../features/filterWattsSlice';
 
 export default configureStore({
   reducer: {
@@ -15,5 +17,7 @@ export default configureStore({
     menuBurger: menuBurgerSlice,
     eventParams: eventParamsSlice,
     background: backgroundSlice,
+    filterCategory: filterCategorySlice,
+    filterWatts: filterWattsSlice,
   },
 });

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -17,8 +18,10 @@ import styles from './RaceResultsDescription.module.css';
 function RaceResultsDescription() {
   const [event, setEvent] = useState({});
   const [results, setResults] = useState([]);
+
   useTitle('Результаты заезда');
   useBackground(false);
+  const filterCategory = useSelector((state) => state.filterCategory.value);
   const { eventId } = useParams();
 
   useEffect(() => {
@@ -33,12 +36,20 @@ function RaceResultsDescription() {
     });
   }, [eventId]);
 
+  // useEffect(() => {
+  //   const resultsFiltered = [...results].filter(
+  //     (result) => result.subgroupLabel === filterCategory.name
+  //   );
+
+  //   setResults(resultsFiltered);
+  // }, [filterCategory]);
+
   return (
     <section>
       {event?.id ? (
         <>
           <DescriptionEventZwift event={event} />
-          <NavBarResultsRace />
+          <NavBarResultsRace results={results} />
           <TableRaceResults results={results} />
 
           <div className={styles.right}>
