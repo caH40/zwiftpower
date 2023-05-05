@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
-  tdCPWattsPerKg,
   tdHeartRate,
   tdHeight,
   tdRank,
@@ -19,6 +19,13 @@ import { getAgeCategory } from '../../../utils/event';
 import TdCpWatts from '../Td/TdCpWatts';
 
 function TableRaceResults({ results }) {
+  const filterCategory = useSelector((state) => state.filterCategory.value);
+
+  const resultFiltered = useMemo(() => {
+    if (filterCategory.name === 'All') return results;
+    return [...results].filter((result) => result.subgroupLabel === filterCategory.name);
+  }, [filterCategory, results]);
+
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -46,7 +53,7 @@ function TableRaceResults({ results }) {
         </tr>
       </thead>
       <tbody>
-        {results?.map((result, index) => (
+        {resultFiltered?.map((result, index) => (
           <tr key={result._id}>
             <td>{index + 1}</td>
 

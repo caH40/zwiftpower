@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -12,6 +12,7 @@ import { gapValue } from '../../utils/gap';
 import { setValueMax } from '../../utils/value-max';
 import { filterThousandths } from '../../utils/thousandths-seconds';
 import { getLocalDate } from '../../utils/date-convert';
+import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 
 import styles from './RaceResultsDescription.module.css';
 
@@ -21,8 +22,9 @@ function RaceResultsDescription() {
 
   useTitle('Результаты заезда');
   useBackground(false);
-  // const filterCategory = useSelector((state) => state.filterCategory.value);
+
   const { eventId } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getResults(eventId).then((response) => {
@@ -36,13 +38,9 @@ function RaceResultsDescription() {
     });
   }, [eventId]);
 
-  // useEffect(() => {
-  //   const resultsFiltered = [...results].filter(
-  //     (result) => result.subgroupLabel === filterCategory.name
-  //   );
-
-  //   setResults(resultsFiltered);
-  // }, [filterCategory]);
+  useEffect(() => {
+    dispatch(resetFilterCategory());
+  }, [dispatch]);
 
   return (
     <section>

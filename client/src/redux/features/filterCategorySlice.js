@@ -7,9 +7,12 @@ const filterCategorySlice = createSlice({
     setFilterCategory(state, action) {
       state.value = action.payload;
     },
+    resetFilterCategory(state) {
+      state.value = { name: 'All', isActive: true };
+    },
   },
 });
 
-export const { setFilterCategory } = filterCategorySlice.actions;
+export const { setFilterCategory, resetFilterCategory } = filterCategorySlice.actions;
 
 export default filterCategorySlice.reducer;
