@@ -118,7 +118,7 @@ export function tdRank(value) {
   return null;
 }
 
-function roundValueToTenths(value) {
+export function roundValueToTenths(value) {
   if (String(value).includes('max')) {
     return (Math.round(value.split('max')[0] * 10) / 10).toFixed(1) + 'max';
   } else {

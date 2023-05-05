@@ -15,7 +15,7 @@
 - classicCommon - классический заезд без разделения по группам, деление только по полу;
 - сriterium - критериум;
 
-- **organizer** - (`String`) организатор заезда:
+**organizer** - (`String`) организатор заезда:
 
 - KOM-on;
 
@@ -79,7 +79,7 @@
 
 **bikeHash** - (`Number`) - id велосипедной рамы для группы
 `client\src\asset\zwift\lib\esm\bikeFrames.js`;  
-**description** - (`String`) - описание лоя группы;  
+**description** - (`String`) - описание для группы;  
 **eventSubgroupStart** - (`String`) - старт группы (-3ч от московского времени);  
 **id** - (`Number`) - id группы в Звифте;  
 **jerseyHash** - (`Number`) - id джерси для группы

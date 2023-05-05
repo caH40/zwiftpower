@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
-  tdCPWattsPerKg,
   tdHeartRate,
   tdHeight,
   tdRank,
@@ -16,8 +16,16 @@ import styles from '../Table.module.css';
 import { tdGap } from '../utils/td';
 
 import { getAgeCategory } from '../../../utils/event';
+import TdCpWatts from '../Td/TdCpWatts';
 
 function TableRaceResults({ results }) {
+  const filterCategory = useSelector((state) => state.filterCategory.value);
+
+  const resultFiltered = useMemo(() => {
+    if (filterCategory.name === 'All') return results;
+    return [...results].filter((result) => result.subgroupLabel === filterCategory.name);
+  }, [filterCategory, results]);
+
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
@@ -32,7 +40,6 @@ function TableRaceResults({ results }) {
           <th>Сред.</th>
           <th></th>
           <th>5с</th>
-          {/* <th>15с</th> */}
           <th>30с</th>
           <th>1м</th>
           <th>5м</th>
@@ -46,7 +53,7 @@ function TableRaceResults({ results }) {
         </tr>
       </thead>
       <tbody>
-        {results?.map((result, index) => (
+        {resultFiltered?.map((result, index) => (
           <tr key={result._id}>
             <td>{index + 1}</td>
 
@@ -70,14 +77,13 @@ function TableRaceResults({ results }) {
             <td>{tdGap(result.gapPrev)}</td>
             <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 5)}</td>
-            {/* <td>{tdCPWattsPerKg(result.cpBestEfforts, 15)}</td> */}
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 30)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 60)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 300)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 720)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 1200)}</td>
-            <td>{tdCPWattsPerKg(result.cpBestEfforts, 2400)}</td>
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={5} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={30} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={60} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={300} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={720} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={1200} />
+            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={2400} />
             <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
             <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
             <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
