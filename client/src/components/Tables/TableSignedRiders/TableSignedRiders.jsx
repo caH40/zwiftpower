@@ -5,20 +5,16 @@ import { tdLinkZP, tdRider } from '../utils/td';
 import styles from '../Table.module.css';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
 
+import { signedRidersColumns } from './column-titles';
+
 function TableSignedRiders({ riders = [] }) {
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Кат</th>
-          <th>Райдер</th>
-          <th>Команда</th>
-          <th>Вес</th>
-          <th>Рост</th>
-          <th>Вз.кат.</th>
-          <th>Пол</th>
-          <th>zp.com</th>
+          {signedRidersColumns.map((column) => (
+            <th key={column.id}>{column.name}</th>
+          ))}
         </tr>
       </thead>
       <tbody>

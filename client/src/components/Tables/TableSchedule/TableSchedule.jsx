@@ -18,6 +18,8 @@ import {
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
+import { scheduleListColumns } from './column-titles';
+
 function TableSchedule({ events, updateEvent, removeEvent }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
 
@@ -27,17 +29,9 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          <th>Дата старта</th>
-          <th>Название</th>
-          <th>Организатор</th>
-          <th>Тип заезда</th>
-          <th>Регистрация</th>
-          <th>Карта</th>
-          <th>Маршрут</th>
-          <th>Круги</th>
-          <th>Расстояние</th>
-          <th>Подъем</th>
-          <th>Прод.</th>
+          {scheduleListColumns.map((column) => (
+            <th key={column.id}>{column.name}</th>
+          ))}
           {isModerator ? <th></th> : null}
         </tr>
       </thead>

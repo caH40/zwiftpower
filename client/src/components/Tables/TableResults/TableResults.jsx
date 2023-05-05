@@ -18,6 +18,8 @@ import {
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
+import { resultsColumns } from './column-titles';
+
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
 
@@ -27,16 +29,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          <th>Дата</th>
-          <th>Название</th>
-          <th>Организатор</th>
-          <th>Тип заезда</th>
-          <th>Финишировало</th>
-          <th>Карта</th>
-          <th>Маршрут</th>
-          <th>Круги</th>
-          <th>Расстояние</th>
-          <th>Подъем</th>
+          {resultsColumns.map((column) => (
+            <th key={column.id}>{column.name}</th>
+          ))}
           <th>Прод.</th>
           {isModerator ? <th></th> : null}
         </tr>

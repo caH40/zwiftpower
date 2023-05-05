@@ -12,11 +12,12 @@ import {
   tdWeight,
 } from '../utils/td';
 
-import styles from '../Table.module.css';
 import { tdGap } from '../utils/td';
-
-import { getAgeCategory } from '../../../utils/event';
 import TdCpWatts from '../Td/TdCpWatts';
+import { getAgeCategory } from '../../../utils/event';
+import styles from '../Table.module.css';
+
+import { raceResultsColumns } from './column-titles';
 
 function TableRaceResults({ results }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
@@ -30,26 +31,9 @@ function TableRaceResults({ results }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Кат</th>
-          <th></th>
-          <th>Райдер</th>
-          <th>Время</th>
-          <th>Отс.</th>
-          <th>Отс.пр.</th>
-          <th>Сред.</th>
-          <th></th>
-          <th>5с</th>
-          <th>30с</th>
-          <th>1м</th>
-          <th>5м</th>
-          <th>12м</th>
-          <th>20м</th>
-          <th>40м</th>
-          <th>Пульс</th>
-          <th>Вес</th>
-          <th>Рост</th>
-          <th>Возр.</th>
+          {raceResultsColumns.map((column) => (
+            <th key={column.id}>{column.name}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
