@@ -18,7 +18,11 @@ export async function addCriticalPowers(results) {
       }
 
       const powerInWatts = await getPowers(fullDataUrl);
-      const cpBestEfforts = getIntervals(powerInWatts, weightRider);
+      const powerInWattsCorrect = sliceExcess(
+        powerInWatts,
+        result.activityData.durationInMilliseconds
+      );
+      const cpBestEfforts = getIntervals(powerInWattsCorrect, weightRider);
 
       result.cpBestEfforts = cpBestEfforts;
       resultsWithCP.push(result);
@@ -27,4 +31,9 @@ export async function addCriticalPowers(results) {
   } catch (error) {
     throw error;
   }
+}
+
+function sliceExcess(powerArray, time) {
+  const secondsInRace = Math.round(time / 1000);
+  return powerArray?.slice(0, secondsInRace);
 }
