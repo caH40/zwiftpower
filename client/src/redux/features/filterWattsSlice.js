@@ -2,10 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const filterWattsSlice = createSlice({
   name: 'filterWatts',
-  initialState: { value: { name: 'ватты', isActive: true } },
+  initialState: { value: { name: 'вт/кг', column: 'wattsKg', isActive: true } },
   reducers: {
     setWattsCategory(state, action) {
-      state.value = action.payload;
+      const values = [
+        { name: 'вт/кг', column: 'wattsKg' },
+        { name: 'ватты', column: 'watts' },
+      ];
+      state.value = values.find((value) => value.name === action.payload.name) || {};
     },
   },
 });

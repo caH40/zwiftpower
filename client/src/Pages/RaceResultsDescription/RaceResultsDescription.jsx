@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -21,7 +21,7 @@ function RaceResultsDescription() {
 
   useTitle('Результаты заезда');
   useBackground(false);
-  const filterCategory = useSelector((state) => state.filterCategory.value);
+  // const filterCategory = useSelector((state) => state.filterCategory.value);
   const { eventId } = useParams();
 
   useEffect(() => {

@@ -10,7 +10,6 @@ import styles from './FilterCategory.module.css';
 function FilterCategory({ results }) {
   const categoryState = useSelector((state) => state.filterCategory.value);
   const categories = (() => {
-    console.log('render');
     const categoriesSet = new Set();
     for (const result of results) {
       categoriesSet.add('All');

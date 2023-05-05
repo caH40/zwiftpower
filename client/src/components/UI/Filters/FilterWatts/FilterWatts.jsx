@@ -10,7 +10,7 @@ import styles from './FilterWatts.module.css';
 function FilterWatts() {
   const wattsState = useSelector((state) => state.filterWatts.value);
 
-  const buttonsWatt = ['ватты', 'вт/кг'];
+  const buttonsWatt = ['вт/кг', 'ватты'];
   const quantityButtonsWatt = buttonsWatt.length;
   return (
     <div className={styles.box}>
