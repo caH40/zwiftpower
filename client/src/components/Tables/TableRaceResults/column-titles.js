@@ -1,4 +1,4 @@
-export const raceResultsColumns = [
+export const raceResultsColumnsStart = [
   { name: '#', id: 0 },
   { name: 'Кат', id: 1 },
   { name: '', id: 2 },
@@ -8,15 +8,19 @@ export const raceResultsColumns = [
   { name: 'Отс.пр.', id: 6 },
   { name: 'Сред.', id: 7 },
   { name: '', id: 8 },
-  { name: '5с', id: 9 },
-  { name: '30с', id: 10 },
-  { name: '1м', id: 11 },
-  { name: '5м', id: 12 },
-  { name: '12м', id: 13 },
-  { name: '20м', id: 14 },
-  { name: '40м', id: 15 },
-  { name: 'Пульс', id: 16 },
-  { name: 'Вес', id: 17 },
-  { name: 'Рост', id: 18 },
-  { name: 'Возр.', id: 19 },
+];
+export const raceResultsColumnsCP = [
+  { name: '5с', id: 100 },
+  { name: '30с', id: 101 },
+  { name: '1м', id: 102 },
+  { name: '5м', id: 103 },
+  { name: '12м', id: 104 },
+  { name: '20м', id: 105 },
+  { name: '40м', id: 106 },
+];
+export const raceResultsColumnsEnd = [
+  { name: 'Пульс', id: 9 },
+  { name: 'Вес', id: 10 },
+  { name: 'Рост', id: 11 },
+  { name: 'Возр.', id: 12 },
 ];

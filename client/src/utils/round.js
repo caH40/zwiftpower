@@ -1,4 +1,5 @@
 export function roundValue(value, dimension) {
+  if (!value) return null;
   const dimensions = { integer: 1, ten: 10, hundred: 100 };
   const sizes = { integer: 0, ten: 1, hundred: 2 };
 
