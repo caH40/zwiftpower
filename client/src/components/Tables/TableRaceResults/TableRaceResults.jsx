@@ -17,10 +17,11 @@ import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import styles from '../Table.module.css';
 
-import { raceResultsColumns } from './column-titles';
+import { raceResultsColumnsEnd, raceResultsColumnsStart } from './column-titles';
 
 function TableRaceResults({ results }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
+  const columnsCP = useSelector((state) => state.columnsCP.value);
 
   const resultFiltered = useMemo(() => {
     if (filterCategory.name === 'All') return results;
@@ -31,7 +32,16 @@ function TableRaceResults({ results }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          {raceResultsColumns.map((column) => (
+          {raceResultsColumnsStart.map((column) => (
+            <th key={column.id}>{column.name}</th>
+          ))}
+          {columnsCP.map((column) => {
+            if (column.isVisible) {
+              return <th key={column.id}>{column.name}</th>;
+            }
+            return null;
+          })}
+          {raceResultsColumnsEnd.map((column) => (
             <th key={column.id}>{column.name}</th>
           ))}
         </tr>
@@ -61,13 +71,19 @@ function TableRaceResults({ results }) {
             <td>{tdGap(result.gapPrev)}</td>
             <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={5} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={30} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={60} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={300} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={720} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={1200} />
-            <TdCpWatts cpBestEfforts={result.cpBestEfforts} interval={2400} />
+            {columnsCP.map((column) => {
+              if (column.isVisible) {
+                return (
+                  <TdCpWatts
+                    cpBestEfforts={result.cpBestEfforts}
+                    interval={column.interval}
+                    key={column.id}
+                  />
+                );
+              }
+              return null;
+            })}
+
             <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
             <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
             <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>

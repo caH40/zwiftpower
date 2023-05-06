@@ -8,6 +8,7 @@ import eventParamsSlice from '../features/eventParamsSlice';
 import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterWattsSlice from '../features/filterWattsSlice';
+import columnsCPSlice from '../features/columnsCPSlice';
 
 export default configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export default configureStore({
     background: backgroundSlice,
     filterCategory: filterCategorySlice,
     filterWatts: filterWattsSlice,
+    columnsCP: columnsCPSlice,
   },
 });

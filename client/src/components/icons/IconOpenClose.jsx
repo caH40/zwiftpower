@@ -1,10 +1,11 @@
 import React from 'react';
+import cn from 'classnames';
 
 import styles from './icon.module.css';
 
-function IconOpenClose() {
+function IconOpenClose({ isOpened }) {
   return (
-    <div className={styles.arrow}>
+    <div className={cn(styles.arrow, { [styles.opened]: isOpened })}>
       <svg
         width="10"
         height="10"

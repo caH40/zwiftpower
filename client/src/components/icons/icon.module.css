@@ -38,6 +38,6 @@
   right: 10px;
   top: calc(50% - 7px);
 }
-.arrow.closed {
+.arrow.opened {
   transform: rotate(180deg);
 }
