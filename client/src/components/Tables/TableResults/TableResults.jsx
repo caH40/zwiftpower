@@ -32,7 +32,6 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
           {resultsColumns.map((column) => (
             <th key={column.id}>{column.name}</th>
           ))}
-          <th>Прод.</th>
           {isModerator ? <th></th> : null}
         </tr>
       </thead>
