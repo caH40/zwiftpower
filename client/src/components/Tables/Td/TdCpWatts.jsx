@@ -10,7 +10,9 @@ function TdCpWatts({ cpBestEfforts, interval }) {
 
   const dimension = column === 'watts' ? 'integer' : 'ten';
   const dimensionValue = column === 'watts' ? 'вт' : 'вт/кг';
-  const valueCP = cpBestEfforts.find((cp) => cp.duration === interval)[column].addition;
+  const valueCP =
+    cpBestEfforts.find((cp) => cp.duration === interval)?.[column]?.addition || null;
+
   const valueCPRounded = roundValue(valueCP, dimension);
 
   return (

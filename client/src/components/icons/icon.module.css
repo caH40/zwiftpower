@@ -33,3 +33,11 @@
 .pointer {
   cursor: pointer;
 }
+.arrow {
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 7px);
+}
+.arrow.closed {
+  transform: rotate(180deg);
+}
