@@ -6,9 +6,9 @@ import useBackground from '../../hook/useBackground';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { deleteEventAndResults, putEvent } from '../../api/race/events';
-import { putResults } from '../../api/race/results';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/eventsSlice';
+import { putResult } from '../../redux/features/resultsSlice';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -18,30 +18,12 @@ function RaceResultsList() {
   useBackground(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchEvents(true));
+  }, [dispatch, trigger]);
+
   const updateResults = (eventId) => {
-    putResults(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+    dispatch(putResult(eventId)).then((r) => setTrigger((p) => !p));
   };
 
   const removeEvent = (eventId, eventName) => {
@@ -109,13 +91,13 @@ function RaceResultsList() {
       });
   };
 
-  useEffect(() => {
-    dispatch(fetchEvents(true));
-  }, [trigger, dispatch]);
-
   return (
     <section>
-      {status === 'loading' && '...загрузка'}
+      {status === 'loading' && (
+        <div style={{ position: 'absolute', top: '100%', left: '50%', fontSize: '20px' }}>
+          ...загрузка
+        </div>
+      )}
       {events[0] && (
         <TableResults
           events={events}

@@ -32,7 +32,7 @@ const eventsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchEvents.pending, (state) => {
-      state.events = [];
+      // state.events = [];
       state.error = null;
       state.status = 'loading';
     });
