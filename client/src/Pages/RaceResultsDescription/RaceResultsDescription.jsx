@@ -15,7 +15,7 @@ import { fetchEvent } from '../../redux/features/eventSlice';
 import styles from './RaceResultsDescription.module.css';
 
 function RaceResultsDescription() {
-  const { eventData, resultsPrepared, status } = useSelector((state) => state.fetchData);
+  const { eventData, resultsPrepared, status } = useSelector((state) => state.fetchEvent);
   useTitle('Результаты заезда');
   useBackground(false);
 

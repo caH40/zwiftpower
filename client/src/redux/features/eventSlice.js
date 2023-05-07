@@ -17,10 +17,9 @@ export const fetchEvent = createAsyncThunk(
       });
       return response.data.event;
     } catch (error) {
-      thunkAPI.dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue({
-        message: error.response.data.message || error.message,
-      });
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue({ message });
     }
   }
 );
@@ -39,8 +38,8 @@ const eventSlice = createSlice({
     builder.addCase(fetchEvent.pending, (state) => {
       state.resultsPrepared = [];
       state.eventData = [];
-      state.status = 'loading';
       state.error = null;
+      state.status = 'loading';
     });
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       state.status = 'resolved';
