@@ -9,6 +9,7 @@ import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterWattsSlice from '../features/filterWattsSlice';
 import columnsCPSlice from '../features/columnsCPSlice';
+import fetchSlice from '../features/eventSlice';
 
 export default configureStore({
   reducer: {
@@ -21,5 +22,6 @@ export default configureStore({
     filterCategory: filterCategorySlice,
     filterWatts: filterWattsSlice,
     columnsCP: columnsCPSlice,
+    fetchData: fetchSlice,
   },
 });

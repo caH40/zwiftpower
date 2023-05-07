@@ -11,7 +11,6 @@ export function gapValue(results) {
           results[i].activityData.durationInMilliseconds.value -
           results[i - 1].activityData.durationInMilliseconds.value;
     }
-
     return results;
   } catch (error) {
     throw error;
