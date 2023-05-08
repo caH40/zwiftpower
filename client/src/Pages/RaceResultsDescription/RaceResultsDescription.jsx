@@ -10,12 +10,11 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 import { getLocalDate } from '../../utils/date-convert';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchEvent } from '../../redux/features/api/eventSlice';
-import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 import styles from './RaceResultsDescription.module.css';
 
 function RaceResultsDescription() {
-  const { eventData, resultsPrepared, status } = useSelector((state) => state.fetchEvent);
+  const { eventData, resultsPrepared } = useSelector((state) => state.fetchEvent);
   useTitle('Результаты заезда');
   useBackground(false);
 
@@ -41,7 +40,6 @@ function RaceResultsDescription() {
           </div>
         </>
       )}
-      {status === 'loading' && <LoaderZ />}
     </section>
   );
 }
