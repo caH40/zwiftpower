@@ -76,7 +76,7 @@ export async function putResults(req, res) {
     const resultsUpdated = await putResultsService(eventId);
     res.status(201).json(resultsUpdated);
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     res
       .status(400)
       .json(error.response ? { message: error.response?.data } : { message: error.message });

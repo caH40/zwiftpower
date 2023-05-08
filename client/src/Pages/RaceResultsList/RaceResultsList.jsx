@@ -1,51 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
-import { getEvents } from '../../api/zwift/events';
+
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { deleteEventAndResults, putEvent } from '../../api/race/events';
-import { putResults } from '../../api/race/results';
 import TableResults from '../../components/Tables/TableResults/TableResults';
+import { fetchEvents } from '../../redux/features/api/eventsSlice';
+import { fetchUpdateResult } from '../../redux/features/api/resultsSlice';
+import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 function RaceResultsList() {
-  const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
+
+  const { events, status } = useSelector((state) => state.fetchEvents);
   useTitle('Результаты заездов');
   useBackground(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchEvents(true));
+  }, [dispatch, trigger]);
+
   const updateResults = (eventId) => {
-    putResults(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+    dispatch(fetchUpdateResult(eventId)).then((r) => setTrigger((p) => !p));
   };
 
   const removeEvent = (eventId, eventName) => {
-    const isConfirmed = window.confirm(
-      `Вы действительно хотите удалить заезд "${eventName}"? Будет удалён заезд и все результаты заезда!`
-    );
+    const question = `Вы действительно хотите удалить заезд "${eventName}"? Будет удалён заезд и все результаты заезда!`;
+    const isConfirmed = window.confirm(question);
     if (!isConfirmed) {
       dispatch(
         getAlert({
@@ -56,74 +39,32 @@ function RaceResultsList() {
       );
       return;
     }
-    deleteEventAndResults(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+
+    dispatch(fetchChangeEvent({ operation: 'delete', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
 
   const updateEventAndSinged = (eventId) => {
-    putEvent(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+    dispatch(fetchChangeEvent({ operation: 'put', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
-
-  useEffect(() => {
-    getEvents(true).then((response) => {
-      setEvents(response.data.events);
-    });
-  }, [trigger]);
 
   return (
     <section>
-      {events?.length ? (
+      {status === 'loading' && (
+        <div style={{ position: 'absolute', top: '100%', left: '50%', fontSize: '20px' }}>
+          ...загрузка
+        </div>
+      )}
+      {events[0] && (
         <TableResults
           events={events}
           updateResults={updateResults}
           removeEvent={removeEvent}
           updateEventAndSinged={updateEventAndSinged}
         />
-      ) : (
-        'Loading...'
       )}
     </section>
   );

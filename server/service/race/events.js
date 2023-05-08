@@ -24,6 +24,7 @@ export async function getEventService(eventId) {
     throw error;
   }
 }
+// получение всех эвентов для расписания (started:false) или для списка евентов с результатами
 export async function getEventsService(started) {
   try {
     const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');

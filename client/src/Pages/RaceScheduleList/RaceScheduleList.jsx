@@ -1,54 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
-import { getEvents } from '../../api/zwift/events';
-import { putEvent, deleteEvent } from '../../api/race/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
+import { fetchEvents } from '../../redux/features/api/eventsSlice';
 
 function RaceScheduleList() {
-  const [events, setEvents] = useState([]);
   const [trigger, setTrigger] = useState(false);
+  const { events, status } = useSelector((state) => state.fetchEvents);
+
   useTitle('Расписание заездов');
   useBackground(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getEvents(false).then((response) => {
-      setEvents(response.data.events);
-    });
-  }, [trigger]);
+    dispatch(fetchEvents(false));
+  }, [dispatch, trigger]);
 
-  const updateEvent = (eventId) => {
-    putEvent(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+  const updateEventAndSinged = (eventId) => {
+    dispatch(fetchChangeEvent({ operation: 'put', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
 
   const removeEvent = (eventId, eventName) => {
-    const isConfirmed = window.confirm(`Вы действительно хотите удалить заезд "${eventName}"?`);
+    const question = `Вы действительно хотите удалить заезд "${eventName}"?`;
+    const isConfirmed = window.confirm(question);
     if (!isConfirmed) {
       dispatch(
         getAlert({
@@ -59,37 +39,25 @@ function RaceScheduleList() {
       );
       return;
     }
-    deleteEvent(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+
+    dispatch(fetchChangeEvent({ operation: 'delete', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
 
   return (
     <section>
-      {events?.length ? (
-        <TableSchedule events={events} updateEvent={updateEvent} removeEvent={removeEvent} />
-      ) : (
-        'Loading...'
+      {status === 'loading' && (
+        <div style={{ position: 'absolute', top: '100%', left: '50%', fontSize: '20px' }}>
+          ...загрузка
+        </div>
+      )}
+      {events?.[0] && (
+        <TableSchedule
+          events={events}
+          updateEvent={updateEventAndSinged}
+          removeEvent={removeEvent}
+        />
       )}
     </section>
   );
