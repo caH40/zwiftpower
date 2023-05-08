@@ -10,7 +10,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 
 import { getLocalDate } from '../../utils/date-convert';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
-import { fetchEvent } from '../../redux/features/eventSlice';
+import { fetchEvent } from '../../redux/features/api/eventSlice';
 
 import styles from './RaceResultsDescription.module.css';
 

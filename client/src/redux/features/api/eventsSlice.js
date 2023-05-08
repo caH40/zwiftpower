@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { getAlert } from './alertMessageSlice';
+import { getAlert } from '../alertMessageSlice';
 
 const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export const fetchEvents = createAsyncThunk(
-  'eventData/fetchEvents',
+  'eventsGet/fetchEvents',
   async function (started, thunkAPI) {
     try {
       const response = await axios({
@@ -23,7 +23,7 @@ export const fetchEvents = createAsyncThunk(
 );
 
 const eventsSlice = createSlice({
-  name: 'eventsData',
+  name: 'eventsGet',
   initialState: {
     events: [],
     status: null,

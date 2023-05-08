@@ -6,8 +6,8 @@ import useBackground from '../../hook/useBackground';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
-import { fetchEvents } from '../../redux/features/eventsSlice';
-import { putResult } from '../../redux/features/resultsSlice';
+import { fetchEvents } from '../../redux/features/api/eventsSlice';
+import { fetchUpdateResult } from '../../redux/features/api/resultsSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 function RaceResultsList() {
@@ -23,7 +23,7 @@ function RaceResultsList() {
   }, [dispatch, trigger]);
 
   const updateResults = (eventId) => {
-    dispatch(putResult(eventId)).then((r) => setTrigger((p) => !p));
+    dispatch(fetchUpdateResult(eventId)).then((r) => setTrigger((p) => !p));
   };
 
   const removeEvent = (eventId, eventName) => {

@@ -9,9 +9,9 @@ import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterWattsSlice from '../features/filterWattsSlice';
 import columnsCPSlice from '../features/columnsCPSlice';
-import eventSlice from '../features/eventSlice';
-import eventsSlice from '../features/eventsSlice';
-import resultsSlice from '../features/resultsSlice';
+import eventSlice from '../features/api/eventSlice';
+import eventsSlice from '../features/api/eventsSlice';
+import resultsSlice from '../features/api/resultsSlice';
 
 export default configureStore({
   reducer: {
