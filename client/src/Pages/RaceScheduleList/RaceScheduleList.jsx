@@ -11,7 +11,7 @@ import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 function RaceScheduleList() {
   const [trigger, setTrigger] = useState(false);
-  const { events, status: statusEventsList } = useSelector((state) => state.fetchEvents);
+  const { eventsPreview, status: statusEventsList } = useSelector((state) => state.fetchEvents);
   const { status: statusEventAndSinged } = useSelector((state) => state.fetchChangeEvent);
 
   useTitle('Расписание заездов');
@@ -49,9 +49,9 @@ function RaceScheduleList() {
 
   return (
     <section>
-      {events?.[0] && (
+      {eventsPreview?.[0] && (
         <TableSchedule
-          events={events}
+          events={eventsPreview}
           updateEvent={updateEventAndSinged}
           removeEvent={removeEvent}
         />

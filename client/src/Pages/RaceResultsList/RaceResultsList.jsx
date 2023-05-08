@@ -14,7 +14,7 @@ import LoaderZ from '../../components/LoaderZ/LoaderZ';
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
 
-  const { events, status: statusEventsList } = useSelector((state) => state.fetchEvents);
+  const { eventsResults, status: statusEventsList } = useSelector((state) => state.fetchEvents);
   const { status: statusEventAndResults } = useSelector((state) => state.fetchResults);
   const { status: statusEventAndSinged } = useSelector((state) => state.fetchChangeEvent);
   useTitle('Результаты заездов');
@@ -56,9 +56,9 @@ function RaceResultsList() {
 
   return (
     <section>
-      {events[0] && (
+      {eventsResults[0] && (
         <TableResults
-          events={events}
+          events={eventsResults}
           updateResults={updateResults}
           removeEvent={removeEvent}
           updateEventAndSinged={updateEventAndSinged}
