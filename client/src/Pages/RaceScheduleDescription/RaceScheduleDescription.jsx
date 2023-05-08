@@ -7,13 +7,12 @@ import useBackground from '../../hook/useBackground';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getLocalDate } from '../../utils/date-convert';
-import LoaderZ from '../../components/LoaderZ/LoaderZ';
 import { fetchEventPreview } from '../../redux/features/api/eventPreviewSlice';
 
 import styles from './RaceScheduleDescription.module.css';
 
 function RaceScheduleDescription() {
-  const { event, status } = useSelector((state) => state.fetchPreviewSlice);
+  const { event } = useSelector((state) => state.fetchEventPreview);
 
   const dispatch = useDispatch();
   useTitle('Описание заезда');
@@ -26,7 +25,7 @@ function RaceScheduleDescription() {
 
   return (
     <section>
-      {event?.id ? (
+      {event?.id && (
         <>
           <DescriptionEventZwift event={event} forSchedule={true} />
           <Link
@@ -44,10 +43,7 @@ function RaceScheduleDescription() {
             <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
           </div>
         </>
-      ) : (
-        'Заезд не найден!'
       )}
-      {status === 'loading' && <LoaderZ />}
     </section>
   );
 }

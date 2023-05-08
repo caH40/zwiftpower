@@ -30,6 +30,6 @@ export default configureStore({
     fetchEvents: eventsSlice,
     fetchResults: resultsSlice,
     fetchChangeEvent: changeEventSlice,
-    fetchPreviewSlice: eventPreviewSlice,
+    fetchEventPreview: eventPreviewSlice,
   },
 });
