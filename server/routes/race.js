@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import { authAdmin } from '../middleware/authRole.js';
 import {
-  deleteEvent,
   getEvent,
   getEvents,
   postEvent,
@@ -18,7 +17,6 @@ routerRace.get('/events/:eventId', getEvent);
 routerRace.get('/events', getEvents);
 routerRace.post('/events', authAdmin, postEvent);
 routerRace.put('/events', authAdmin, putEvent);
-routerRace.delete('/events', authAdmin, deleteEvent);
+routerRace.delete('/events', authAdmin, deleteEventAndResults);
 routerRace.put('/results', authAdmin, putResults);
 routerRace.get('/results/:eventId', getResults);
-routerRace.delete('/events/results', authAdmin, deleteEventAndResults);

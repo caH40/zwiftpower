@@ -12,6 +12,7 @@ import columnsCPSlice from '../features/columnsCPSlice';
 import eventSlice from '../features/eventSlice';
 import eventsSlice from '../features/eventsSlice';
 import resultsSlice from '../features/resultsSlice';
+import deleteEventSlice from '../features/api/deleteEventSlice';
 
 export default configureStore({
   reducer: {
@@ -27,5 +28,6 @@ export default configureStore({
     fetchEvent: eventSlice,
     fetchEvents: eventsSlice,
     fetchResults: resultsSlice,
+    deleteEvent: deleteEventSlice,
   },
 });
