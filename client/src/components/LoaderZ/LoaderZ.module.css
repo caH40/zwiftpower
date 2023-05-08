@@ -1,0 +1,37 @@
+.example {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: calc(50% - 50px);
+  bottom: -40px;
+}
+.example path {
+  border: 2px solid black;
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+
+  animation-name: myAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  /* infinite или число секунд (размерность не нужна)*/
+  animation-iteration-count: infinite;
+  /* направление анимации по кадрам, описанным в keyframes */
+  animation-direction: alternate;
+  /* animation-fill-mode: forwards; */
+  /* animation-delay: 2s; */
+}
+.example:hover {
+  /* на паузу при наведении */
+  animation-play-state: paused;
+}
+
+@keyframes myAnimation {
+  from {
+    fill: var(--color-blue-main);
+  }
+  to {
+    fill: var(--color-orange-main);
+    transform: scale(0.7);
+  }
+}

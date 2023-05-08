@@ -7,10 +7,10 @@ import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
-
 import { getLocalDate } from '../../utils/date-convert';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchEvent } from '../../redux/features/api/eventSlice';
+import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 import styles from './RaceResultsDescription.module.css';
 
@@ -29,7 +29,6 @@ function RaceResultsDescription() {
 
   return (
     <section>
-      {status === 'loading' && '...загрузка'}
       {eventData?.id && (
         <>
           <DescriptionEventZwift event={eventData} />
@@ -42,6 +41,7 @@ function RaceResultsDescription() {
           </div>
         </>
       )}
+      {status === 'loading' && <LoaderZ />}
     </section>
   );
 }

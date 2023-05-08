@@ -13,13 +13,14 @@ export const fetchUpdateResult = createAsyncThunk(
         method: 'put',
         data: { eventId },
       });
+
       const { message } = response.data;
       thunkAPI.dispatch(getAlert({ message, type: 'success', isOpened: true }));
       return message;
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -35,6 +36,9 @@ const resultsSlice = createSlice({
     builder.addCase(fetchUpdateResult.pending, (state) => {
       state.error = null;
       state.status = 'loading';
+    });
+    builder.addCase(fetchUpdateResult.fulfilled, (state) => {
+      state.status = 'resolved';
     });
   },
 });

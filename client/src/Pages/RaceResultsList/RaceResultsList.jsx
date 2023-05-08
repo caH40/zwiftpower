@@ -9,11 +9,14 @@ import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { fetchUpdateResult } from '../../redux/features/api/resultsSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
+import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
 
-  const { events, status } = useSelector((state) => state.fetchEvents);
+  const { events, status: statusEventsList } = useSelector((state) => state.fetchEvents);
+  const { status: statusEventAndResults } = useSelector((state) => state.fetchResults);
+  const { status: statusEventAndSinged } = useSelector((state) => state.fetchChangeEvent);
   useTitle('Результаты заездов');
   useBackground(false);
   const dispatch = useDispatch();
@@ -53,11 +56,6 @@ function RaceResultsList() {
 
   return (
     <section>
-      {status === 'loading' && (
-        <div style={{ position: 'absolute', top: '100%', left: '50%', fontSize: '20px' }}>
-          ...загрузка
-        </div>
-      )}
       {events[0] && (
         <TableResults
           events={events}
@@ -66,6 +64,9 @@ function RaceResultsList() {
           updateEventAndSinged={updateEventAndSinged}
         />
       )}
+      {statusEventsList === 'loading' && <LoaderZ />}
+      {statusEventAndResults === 'loading' && <LoaderZ />}
+      {statusEventAndSinged === 'loading' && <LoaderZ />}
     </section>
   );
 }
