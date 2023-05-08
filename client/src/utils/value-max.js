@@ -1,5 +1,7 @@
 export function setValueMax(results) {
   try {
+    if (!results.length) return [];
+
     let maxWatt = 0;
     let maxWattsPerKg = 0;
     let maxHeightInCentimeters = 0;
