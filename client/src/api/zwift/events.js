@@ -50,21 +50,6 @@ export async function postEvent(event) {
   }
 }
 
-// получение всех добавленных event, в зависимости от старта которые еще не стартовали
-export async function getEvents(started) {
-  try {
-    const response = await axios({
-      url: `${serverExpress}/api/race/events?started=${started}`,
-      method: 'get',
-    });
-
-    return response;
-  } catch (error) {
-    // console.error(error); // eslint-disable-line
-    throw error;
-  }
-}
-// получение данных event-а
 export async function getEvent(eventId) {
   try {
     const response = await axios({

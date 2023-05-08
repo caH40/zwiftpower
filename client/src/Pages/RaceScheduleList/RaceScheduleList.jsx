@@ -7,10 +7,12 @@ import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
+import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 function RaceScheduleList() {
   const [trigger, setTrigger] = useState(false);
-  const { events, status } = useSelector((state) => state.fetchEvents);
+  const { events, status: statusEventsList } = useSelector((state) => state.fetchEvents);
+  const { status: statusEventAndSinged } = useSelector((state) => state.fetchChangeEvent);
 
   useTitle('Расписание заездов');
   useBackground(false);
@@ -47,11 +49,6 @@ function RaceScheduleList() {
 
   return (
     <section>
-      {status === 'loading' && (
-        <div style={{ position: 'absolute', top: '100%', left: '50%', fontSize: '20px' }}>
-          ...загрузка
-        </div>
-      )}
       {events?.[0] && (
         <TableSchedule
           events={events}
@@ -59,6 +56,8 @@ function RaceScheduleList() {
           removeEvent={removeEvent}
         />
       )}
+      {statusEventsList === 'loading' && <LoaderZ />}
+      {statusEventAndSinged === 'loading' && <LoaderZ />}
     </section>
   );
 }

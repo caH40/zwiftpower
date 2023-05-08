@@ -7,6 +7,7 @@ import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSi
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getEvent } from '../../api/zwift/events';
 import { getLocalDate } from '../../utils/date-convert';
+import LoaderZ from '../../components/LoaderZ/LoaderZ';
 
 import styles from './RaceScheduleDescription.module.css';
 
@@ -24,6 +25,7 @@ function RaceScheduleDescription() {
 
   return (
     <section>
+      {/* {status === 'loading' && <LoaderZ />} */}
       {event?.id ? (
         <>
           <DescriptionEventZwift event={event} forSchedule={true} />
