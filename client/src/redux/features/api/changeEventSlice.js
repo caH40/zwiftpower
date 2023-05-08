@@ -4,13 +4,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { myAxios } from '../../../api/axios';
 import { getAlert } from '../alertMessageSlice';
 
-export const deleteEvent = createAsyncThunk(
-  'delete/deleteEvent',
-  async function (eventId, thunkAPI) {
+export const fetchChangeEvent = createAsyncThunk(
+  'event/fetchEventForChange',
+  async function ({ operation, eventId }, thunkAPI) {
     try {
       const response = await myAxios({
         url: '/api/race/events',
-        method: 'delete',
+        method: operation,
         data: { eventId },
       });
 
@@ -25,23 +25,23 @@ export const deleteEvent = createAsyncThunk(
   }
 );
 
-const deleteEventSlice = createSlice({
-  name: 'deleteEvent',
+const changeEventSlice = createSlice({
+  name: 'changeEvent',
   initialState: {
     status: null,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(deleteEvent.pending, (state) => {
+    builder.addCase(fetchChangeEvent.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
-    builder.addCase(deleteEvent.fulfilled, (state) => {
+    builder.addCase(fetchChangeEvent.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
     });
   },
 });
 
-export default deleteEventSlice.reducer;
+export default changeEventSlice.reducer;

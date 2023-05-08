@@ -5,11 +5,10 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { putEvent } from '../../api/race/events';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/eventsSlice';
 import { putResult } from '../../redux/features/resultsSlice';
-import { deleteEvent } from '../../redux/features/api/deleteEventSlice';
+import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -41,33 +40,15 @@ function RaceResultsList() {
       return;
     }
 
-    dispatch(deleteEvent(eventId)).then((r) => setTrigger((p) => !p));
+    dispatch(fetchChangeEvent({ operation: 'delete', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
 
   const updateEventAndSinged = (eventId) => {
-    putEvent(eventId)
-      .then((response) => {
-        setTrigger((prev) => !prev);
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+    dispatch(fetchChangeEvent({ operation: 'put', eventId })).then((r) =>
+      setTrigger((p) => !p)
+    );
   };
 
   return (
