@@ -69,8 +69,8 @@ function TableRaceResults({ results }) {
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
             <td>{tdGap(result.gap)}</td>
             <td>{tdGap(result.gapPrev)}</td>
-            <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
+            <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
             {columnsCP.map((column) => {
               if (column.isVisible) {
                 return (

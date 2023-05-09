@@ -36,7 +36,7 @@
 .arrow {
   position: absolute;
   right: 10px;
-  top: calc(50% - 7px);
+  top: calc(50% - 8px);
 }
 .arrow.opened {
   transform: rotate(180deg);

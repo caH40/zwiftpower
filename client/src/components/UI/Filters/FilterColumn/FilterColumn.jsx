@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ButtonForFilterCheckbox from '../ButtonForFilterCheckbox/ButtonForFilterCheckbox';
+import ButtonForFilterCheckbox from '../ButtonSimple/ButtonSimple';
 import IconOpenClose from '../../../icons/IconOpenClose';
 import PopupMenuCP from '../../PopupMenuCP/PopupMenuCP';
 
