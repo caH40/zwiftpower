@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
@@ -8,13 +8,20 @@ import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import { distanceSummary, map, replaceWithBr, route } from '../../utils/event';
 import { getLocalDate } from '../../utils/date-convert';
 import IconEdit from '../icons/IconEdit';
+import ButtonSimple from '../UI/Filters/ButtonSimple/ButtonSimple';
+import IconOpenClose from '../icons/IconOpenClose';
 
 import styles from './DescriptionEventZwift.module.css';
 
 function DescriptionEventZwift({ event, forSchedule }) {
+  const [isVisibleDetailed, setIsVisibleDetailed] = useState();
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const [subgroup] = event.eventSubgroups;
+  const openDetailed = () => {
+    setIsVisibleDetailed((prev) => !prev);
+  };
+
   return (
     <>
       <div className={styles.title__box}>
@@ -46,11 +53,19 @@ function DescriptionEventZwift({ event, forSchedule }) {
       </div>
       <RulesBox event={event} />
       <CategoriesBox event={event} />
-      <img className={styles.poster} src={event.imageUrl} alt="poster" />
-      <p
-        className={styles.paragraph}
-        dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
-      ></p>
+      <ButtonSimple getClick={openDetailed} addCls="mb10">
+        <span>Подробное описание</span>
+        <IconOpenClose isOpened={isVisibleDetailed} />
+      </ButtonSimple>
+      {isVisibleDetailed && (
+        <div className={styles.box__detailed}>
+          <img className={styles.poster} src={event.imageUrl} alt="poster" />
+          <p
+            className={styles.paragraph}
+            dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
+          ></p>
+        </div>
+      )}
     </>
   );
 }

@@ -21,10 +21,12 @@
   margin-bottom: 15px;
 }
 .poster {
+  object-fit: cover;
+  object-position: center;
   max-width: 500px;
   width: 100%;
-  height: auto;
-  margin: 10px 0px;
+  height: 166px;
+  margin-bottom: 10px;
   border-radius: 6px;
 }
 .h4 {
