@@ -9,12 +9,12 @@ import DescriptionEventZwift from '../../components/DescriptionEventZwift/Descri
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { getLocalDate } from '../../utils/date-convert';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
-import { fetchEvent } from '../../redux/features/api/eventSlice';
+import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
 
 import styles from './RaceResultsDescription.module.css';
 
 function RaceResultsDescription() {
-  const { eventData, resultsPrepared } = useSelector((state) => state.fetchEvent);
+  const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
   useTitle('Результаты заезда');
   useBackground(false);
 
@@ -23,7 +23,7 @@ function RaceResultsDescription() {
 
   useEffect(() => {
     dispatch(resetFilterCategory());
-    dispatch(fetchEvent(eventId));
+    dispatch(fetchResultEvent(eventId));
   }, [eventId, dispatch]);
 
   return (

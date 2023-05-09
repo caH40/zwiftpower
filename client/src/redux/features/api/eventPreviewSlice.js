@@ -1,3 +1,4 @@
+// id:eventId получение описания эвента с зарегистрированными райдерами
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

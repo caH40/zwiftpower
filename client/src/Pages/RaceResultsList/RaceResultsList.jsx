@@ -7,7 +7,7 @@ import useBackground from '../../hook/useBackground';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
-import { fetchUpdateResult } from '../../redux/features/api/resultsSlice';
+import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 function RaceResultsList() {

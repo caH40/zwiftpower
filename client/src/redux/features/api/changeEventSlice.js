@@ -1,4 +1,5 @@
-// удаления Эвента и соответствующих результатов
+// при operation: 'delete' - удаления Эвента и соответствующих результатов, зарегистрированных райдеров из БД
+// при operation: 'put' - обновление данных Эвента и данных зарегистрированных райдеров
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';

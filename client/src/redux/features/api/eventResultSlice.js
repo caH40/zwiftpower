@@ -1,3 +1,4 @@
+// id:eventId получение результатов эвента
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -7,8 +8,8 @@ import { getAlert } from '../alertMessageSlice';
 
 const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
-export const fetchEvent = createAsyncThunk(
-  'eventGet/fetchEvent',
+export const fetchResultEvent = createAsyncThunk(
+  'eventGet/fetchResultEvent',
   async function (eventId, thunkAPI) {
     try {
       const response = await axios({
@@ -24,7 +25,7 @@ export const fetchEvent = createAsyncThunk(
   }
 );
 
-const eventSlice = createSlice({
+const eventResultSlice = createSlice({
   name: 'eventGet',
   initialState: {
     eventData: {},
@@ -35,13 +36,13 @@ const eventSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchEvent.pending, (state) => {
+    builder.addCase(fetchResultEvent.pending, (state) => {
       state.resultsPrepared = [];
       state.eventData = [];
       state.error = null;
       state.status = 'loading';
     });
-    builder.addCase(fetchEvent.fulfilled, (state, action) => {
+    builder.addCase(fetchResultEvent.fulfilled, (state, action) => {
       state.status = 'resolved';
       const { results, ...eventRow } = action.payload;
       const resultsPrepared = prepareResults(results);
@@ -50,11 +51,11 @@ const eventSlice = createSlice({
       state.resultsRow = results;
       state.eventData = eventRow;
     });
-    builder.addCase(fetchEvent.rejected, (state, action) => {
+    builder.addCase(fetchResultEvent.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
   },
 });
 
-export default eventSlice.reducer;
+export default eventResultSlice.reducer;

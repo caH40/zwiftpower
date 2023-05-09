@@ -1,3 +1,4 @@
+// запрос результатов эвета id:eventId из Звифта и обновление их в БД сайта зп.ру
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';
@@ -25,7 +26,7 @@ export const fetchUpdateResult = createAsyncThunk(
   }
 );
 
-const resultsSlice = createSlice({
+const resultsUpdateSlice = createSlice({
   name: 'resultsUpdate',
   initialState: {
     status: null,
@@ -43,4 +44,4 @@ const resultsSlice = createSlice({
   },
 });
 
-export default resultsSlice.reducer;
+export default resultsUpdateSlice.reducer;

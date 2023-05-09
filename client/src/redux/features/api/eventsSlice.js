@@ -1,3 +1,5 @@
+// started:false получения списка расписания предстоящих эвентов
+// started:true получения списка эвентов которые уже стартовали
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 

@@ -9,11 +9,11 @@ import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterWattsSlice from '../features/filterWattsSlice';
 import columnsCPSlice from '../features/columnsCPSlice';
-import eventSlice from '../features/api/eventSlice';
 import eventsSlice from '../features/api/eventsSlice';
-import resultsSlice from '../features/api/resultsSlice';
+import resultsUpdateSlice from '../features/api/resultsUpdateSlice';
 import changeEventSlice from '../features/api/changeEventSlice';
 import eventPreviewSlice from '../features/api/eventPreviewSlice';
+import eventResultSlice from '../features/api/eventResultSlice';
 
 export default configureStore({
   reducer: {
@@ -26,9 +26,9 @@ export default configureStore({
     filterCategory: filterCategorySlice,
     filterWatts: filterWattsSlice,
     columnsCP: columnsCPSlice,
-    fetchEvent: eventSlice,
+    fetchEventResult: eventResultSlice,
     fetchEvents: eventsSlice,
-    fetchResults: resultsSlice,
+    fetchResults: resultsUpdateSlice,
     fetchChangeEvent: changeEventSlice,
     fetchEventPreview: eventPreviewSlice,
   },
