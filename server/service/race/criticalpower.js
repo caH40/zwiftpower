@@ -32,7 +32,7 @@ export async function addCriticalPowers(results) {
     throw error;
   }
 }
-
+// обрезка секунд заезда после завершения гонки
 function sliceExcess(powerArray, time) {
   const secondsInRace = Math.round(time / 1000);
   return powerArray?.slice(0, secondsInRace);
