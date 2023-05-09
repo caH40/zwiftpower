@@ -1,5 +1,7 @@
 .block {
-  margin-bottom: 5px;
+  display: flex;
+  gap: 0 10px;
+  margin-bottom: 10px;
 }
 .text {
   padding: 0;
