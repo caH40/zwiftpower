@@ -1,0 +1,14 @@
+.box {
+  display: inline-block;
+  text-align: center;
+  padding: 0.25em 0.5em 0.2em;
+  max-width: 70px;
+  min-width: 40px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 700;
+  background-color: var(--color-blue-main);
+  color: var(--color-yellow-main);
+  user-select: none;
+}

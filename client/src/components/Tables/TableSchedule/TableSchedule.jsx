@@ -10,7 +10,6 @@ import {
   getLaps,
   map,
   organizer,
-  raceType,
   route,
   getDistanceForTd,
   getElevationForTd,
@@ -18,6 +17,7 @@ import {
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
+import TdRaceType from '../Td/TdRaceType';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -46,7 +46,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
               </Link>
             </td>
             <td>{organizer(event.organizer)}</td>
-            <td>{raceType(event.typeRaceCustom)}</td>
+            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoriesBox event={event} />
             </td>
