@@ -1,13 +1,15 @@
 .category {
   display: inline-block;
   text-align: center;
-  padding: 0.3em 0.5em 0.16em;
+  padding: 0.25em 0.5em 0.2em;
   max-width: 70px;
   min-width: 40px;
   border-radius: 10px;
-  font-size: inherit;
+  font-size: 13px;
+  line-height: 1.2;
   font-weight: 700;
   color: #ffffff;
+  user-select: none;
 }
 .A {
   background: #dc4119;

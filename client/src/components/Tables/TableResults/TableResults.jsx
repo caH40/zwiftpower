@@ -10,7 +10,6 @@ import {
   getLaps,
   map,
   organizer,
-  raceType,
   route,
   getDistanceForTd,
   getElevationForTd,
@@ -18,6 +17,7 @@ import {
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import CategoryBox from '../../CategoryBox/CategoryBox';
+import TdRaceType from '../Td/TdRaceType';
 
 import { resultsColumns } from './column-titles';
 
@@ -47,7 +47,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               </Link>
             </td>
             <td>{organizer(event.organizer)}</td>
-            <td>{raceType(event.typeRaceCustom)}</td>
+            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
             </td>

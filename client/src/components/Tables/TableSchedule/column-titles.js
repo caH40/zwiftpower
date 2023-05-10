@@ -1,8 +1,8 @@
 export const scheduleListColumns = [
   { name: 'Дата старта', id: 0 },
   { name: 'Название', id: 1 },
-  { name: 'Организатор', id: 2 },
-  { name: 'Тип заезда', id: 3 },
+  { name: '', id: 2 },
+  { name: '', id: 3 },
   { name: 'Регистрация', id: 4 },
   { name: 'Карта', id: 5 },
   { name: 'Маршрут', id: 6 },
