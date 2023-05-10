@@ -12,7 +12,9 @@ export async function getEventService(eventId) {
       signedRiders.push(...ridersInGroup);
     }
     const eventData = eventDataDB.toObject();
-    // сортировка по убыванию категорий групп
+    // сортировка групп по убыванию
+    eventData.eventSubgroups.sort((a, b) => a.label - b.label);
+    // сортировка списка райдеров по убыванию категории
     signedRiders.sort((a, b) =>
       a.subgroupLabel.toLowerCase().localeCompare(b.subgroupLabel.toLowerCase())
     );
@@ -29,6 +31,11 @@ export async function getEventsService(started) {
   try {
     const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
     // сортировка заездов по возрастанию даты старта
+    for (const event of eventsDB) {
+      // сортировка групп по убыванию
+      event.eventSubgroups.sort((a, b) => a.label - b.label);
+    }
+
     eventsDB.sort((a, b) => {
       if (started) {
         return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
