@@ -17,6 +17,7 @@ import {
 } from '../../../utils/event';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
+import CategoryBox from '../../CategoryBox/CategoryBox';
 
 import { resultsColumns } from './column-titles';
 
@@ -47,7 +48,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
             </td>
             <td>{organizer(event.organizer)}</td>
             <td>{raceType(event.typeRaceCustom)}</td>
-            <td>{event.totalFinishedCount}</td>
+            <td>
+              <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
+            </td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>

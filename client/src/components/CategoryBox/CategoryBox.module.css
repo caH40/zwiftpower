@@ -1,11 +1,13 @@
 .category {
+  display: inline-block;
   text-align: center;
-  padding: 0.3em 0.3em 0.15em;
+  padding: 0.3em 0.5em 0.16em;
   max-width: 70px;
-  min-width: 50px;
-  width: 100%;
+  min-width: 40px;
   border-radius: 10px;
   font-size: inherit;
+  font-weight: 700;
+  color: #ffffff;
 }
 .A {
   background: #dc4119;
@@ -30,4 +32,7 @@
 }
 .WB {
   background: #9422ae;
+}
+.T {
+  background: var(--color-blue-3);
 }

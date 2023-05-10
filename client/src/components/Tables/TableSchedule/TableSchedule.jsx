@@ -17,6 +17,7 @@ import {
 } from '../../../utils/event';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
+import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -46,7 +47,9 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             </td>
             <td>{organizer(event.organizer)}</td>
             <td>{raceType(event.typeRaceCustom)}</td>
-            <td>{event.totalEntrantCount}</td>
+            <td>
+              <CategoriesBox event={event} />
+            </td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td>{route(event.eventSubgroups[0]?.routeId)}</td>
             <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>

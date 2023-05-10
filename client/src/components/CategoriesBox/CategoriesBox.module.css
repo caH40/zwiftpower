@@ -4,11 +4,13 @@
   flex-wrap: wrap;
   align-items: center;
   font-size: 14px;
-  margin-bottom: 10px;
   font-weight: 400;
 }
 .box {
   display: flex;
   align-items: center;
   gap: 0 5px;
+}
+.mb10 {
+  margin-bottom: 10px;
 }

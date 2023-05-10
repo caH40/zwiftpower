@@ -52,7 +52,7 @@ function DescriptionEventZwift({ event, forSchedule }) {
         <span> {distanceSummary(subgroup)}</span>
       </div>
       <RulesBox event={event} />
-      <CategoriesBox event={event} />
+      <CategoriesBox event={event} needGaps={true} addCls={'mb10'} />
       <ButtonSimple getClick={openDetailed} addCls="mb10">
         <span>Подробное описание</span>
         <IconOpenClose isOpened={isVisibleDetailed} />
