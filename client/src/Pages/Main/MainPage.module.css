@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 0 15px;
+  padding: 35px 123px 0px;
+}
+.wrapper__preview {
+  flex: 0 1 1060px;
+}
+.wrapper__info {
+  flex: 0 1 470px;
+}

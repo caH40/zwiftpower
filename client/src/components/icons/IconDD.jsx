@@ -4,10 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconDD() {
+function IconDD({ squareSize = 24 }) {
   return (
     <MyTooltip toolTip={'Удвоенный драфт'}>
-      <div className={styles.box__rules}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"
           height="24"

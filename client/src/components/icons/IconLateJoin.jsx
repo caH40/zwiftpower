@@ -4,10 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconLateJoin() {
+function IconLateJoin({ squareSize = 24 }) {
   return (
     <MyTooltip toolTip={'Позднее подключение'}>
-      <div className={styles.box__rules}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="21"
           height="24"

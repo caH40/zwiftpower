@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import MainLayer from './components/Layers/MainLayer';
-import Home from './Pages/Home';
+import MainPage from './Pages/Main/MainPage';
 import Page404 from './Pages/Page404/Page404';
 import StageResults from './Pages/StageResults';
 import Authorization from './Pages/Auth/Authorization';
@@ -33,7 +33,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayer />}>
-        <Route index element={<Home />} />
+        <Route index element={<MainPage />} />
         <Route path="/auth/authorization" element={<Authorization />} />
         <Route path="/auth/registration" element={<Registration />} />
         <Route path="/auth/reset" element={<ResetPassword />} />
