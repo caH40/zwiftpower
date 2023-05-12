@@ -8,9 +8,9 @@ import { getTodayTomorrow } from '../../utils/date-convert';
 
 import styles from './CardRacePreview.module.css';
 
-function CardRacePreview({ event }) {
+function CardRacePreview({ event, getClick }) {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={() => getClick(event.id)}>
       <h3 className={styles.title__date}>{getTodayTomorrow(event.eventStart)}</h3>
       <div className={styles.card}>
         <div className={styles.card__top}>
