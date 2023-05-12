@@ -9,3 +9,9 @@
   padding: 20px 13px 20px 63px;
   z-index: 1;
 }
+
+@media screen and (max-width: 576px) {
+  .container {
+    padding: 10px 5px 10px 55px;
+  }
+}
