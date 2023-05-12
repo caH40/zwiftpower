@@ -199,3 +199,10 @@
   font-size: 0.65em;
   white-space: nowrap;
 }
+@media screen and (max-width: 992px) {
+  .big {
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 576px) {
+}
