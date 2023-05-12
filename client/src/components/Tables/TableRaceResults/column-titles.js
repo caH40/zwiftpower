@@ -1,4 +1,4 @@
-export const raceResultsColumnsStart = [
+export const raceResultsColumnsStartFull = [
   { name: '#', id: 0 },
   { name: 'Кат', id: 1 },
   { name: '', id: 2 },
@@ -8,6 +8,21 @@ export const raceResultsColumnsStart = [
   { name: 'Отс.пр.', id: 6 },
   { name: 'Сред.', id: 7 },
   { name: '', id: 8 },
+];
+export const raceResultsColumnsStartLg = [
+  { name: '#', id: 0 },
+  { name: 'Кат', id: 1 },
+  { name: '', id: 2 },
+  { name: 'Райдер', id: 3 },
+  { name: 'Время', id: 4 },
+  { name: 'Сред.', id: 7 },
+  { name: '', id: 8 },
+];
+export const raceResultsColumnsStartSm = [
+  { name: '#', id: 0 },
+  { name: 'Кат', id: 1 },
+  { name: 'Райдер', id: 3 },
+  { name: 'Время', id: 4 },
 ];
 export const raceResultsColumnsCP = [
   { name: '5с', id: 100 },
@@ -24,3 +39,9 @@ export const raceResultsColumnsEnd = [
   { name: 'Рост', id: 11 },
   { name: 'Возр.', id: 12 },
 ];
+
+export const raceResultsColumns = (isScreenLg, isScreenSm) => {
+  if (!isScreenLg && isScreenSm) return raceResultsColumnsStartLg;
+  if (!isScreenSm) return raceResultsColumnsStartSm;
+  return raceResultsColumnsStartFull;
+};

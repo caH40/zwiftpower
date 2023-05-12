@@ -15,13 +15,15 @@ import {
 import { tdGap } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
+import { useResize } from '../../../hook/use-resize';
 import styles from '../Table.module.css';
 
-import { raceResultsColumnsEnd, raceResultsColumnsStart } from './column-titles';
+import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
 function TableRaceResults({ results }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const columnsCP = useSelector((state) => state.columnsCP.value);
+  const { isScreenLg: lg, isScreenSm: sm } = useResize();
 
   const resultFiltered = useMemo(() => {
     if (filterCategory.name === 'All') return results;
@@ -32,18 +34,17 @@ function TableRaceResults({ results }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          {raceResultsColumnsStart.map((column) => (
+          {raceResultsColumns(lg, sm).map((column) => (
             <th key={column.id}>{column.name}</th>
           ))}
-          {columnsCP.map((column) => {
-            if (column.isVisible) {
-              return <th key={column.id}>{column.name}</th>;
-            }
-            return null;
-          })}
-          {raceResultsColumnsEnd.map((column) => (
-            <th key={column.id}>{column.name}</th>
-          ))}
+          {lg &&
+            columnsCP.map((column) => {
+              if (column.isVisible) {
+                return <th key={column.id}>{column.name}</th>;
+              }
+              return null;
+            })}
+          {lg && raceResultsColumnsEnd.map((column) => <th key={column.id}>{column.name}</th>)}
         </tr>
       </thead>
       <tbody>
@@ -56,38 +57,44 @@ function TableRaceResults({ results }) {
                 {result.subgroupLabel}
               </span>
             </td>
-            <td>{tdRank(result.rankEvent)}</td>
+            {sm && <td>{tdRank(result.rankEvent)}</td>}
             <td>
               {tdRider(
                 result.profileData.firstName,
                 result.profileData.lastName,
                 result.profileData.imageSrc,
-                result.profileData.countryAlpha3
+                result.profileData.countryAlpha3,
+                sm
               )}
             </td>
 
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-            <td>{tdGap(result.gap)}</td>
-            <td>{tdGap(result.gapPrev)}</td>
-            <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>
-            <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
-            {columnsCP.map((column) => {
-              if (column.isVisible) {
-                return (
-                  <TdCpWatts
-                    cpBestEfforts={result.cpBestEfforts}
-                    interval={column.interval}
-                    key={column.id}
-                  />
-                );
-              }
-              return null;
-            })}
+            {lg && <td>{tdGap(result.gap)}</td>}
+            {lg && <td>{tdGap(result.gapPrev)}</td>}
+            {sm && <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>}
+            {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
-            <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-            <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
-            <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
-            <td>{getAgeCategory(result.profileData.age)}</td>
+            {lg &&
+              columnsCP.map((column) => {
+                if (column.isVisible) {
+                  return (
+                    <TdCpWatts
+                      cpBestEfforts={result.cpBestEfforts}
+                      interval={column.interval}
+                      key={column.id}
+                    />
+                  );
+                }
+                return null;
+              })}
+            {lg && (
+              <>
+                <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
+                <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
+                <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
+                <td>{getAgeCategory(result.profileData.age)}</td>
+              </>
+            )}
           </tr>
         ))}
       </tbody>

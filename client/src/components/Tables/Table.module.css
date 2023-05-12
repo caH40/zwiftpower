@@ -205,4 +205,10 @@
   }
 }
 @media screen and (max-width: 576px) {
+  .table td {
+    font-size: 14px;
+  }
+  .rider {
+    min-width: 110px;
+  }
 }
