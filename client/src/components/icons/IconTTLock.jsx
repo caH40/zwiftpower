@@ -4,10 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconTTLock() {
+function IconTTLock({ squareSize = 24 }) {
   return (
     <MyTooltip toolTip={'Запрет на ТТ велосипед'}>
-      <div className={styles.box__rules}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"
           height="24"

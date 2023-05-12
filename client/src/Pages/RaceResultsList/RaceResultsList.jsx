@@ -20,7 +20,7 @@ function RaceResultsList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchEvents(true));
+    dispatch(fetchEvents({ started: true }));
   }, [dispatch, trigger]);
 
   const updateResults = (eventId) => {

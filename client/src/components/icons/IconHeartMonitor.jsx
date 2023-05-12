@@ -4,10 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconHeartMonitor() {
+function IconHeartMonitor({ squareSize = 24 }) {
   return (
     <MyTooltip toolTip={'Обязательное наличие монитора пульса'}>
-      <div className={styles.box__rules}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="26"
           height="26"

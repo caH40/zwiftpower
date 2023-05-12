@@ -29,6 +29,7 @@ export function convertTime(time = '00:00') {
   return false;
 }
 export function secondesToTime(rowSeconds) {
+  if (rowSeconds === null) return '';
   let seconds = rowSeconds;
   seconds /= 1000;
   if (seconds > 3599) {
@@ -104,4 +105,20 @@ export function getToday(data) {
   const dataConverted = getLocalDate(data, 'short');
   const onlyDate = getLocalDate(Date.now(), 'onlyDate');
   return dataConverted.replace(onlyDate, 'Сегодня');
+}
+// дата с заменой сегодняшней даты на слово 'Сегодня'
+export function getTodayTomorrow(data) {
+  const dataNow = getLocalDate(data, 'onlyDate');
+
+  const onlyDateToday = getLocalDate(Date.now(), 'onlyDate');
+
+  const millisecondsInDay = 24 * 60 * 60 * 1000;
+  const onlyDateTomorrow = getLocalDate(Date.now() + millisecondsInDay, 'onlyDate');
+
+  let dateStr = 'Нет даты...';
+
+  if (dataNow === onlyDateToday) dateStr = 'Сегодня';
+  if (dataNow === onlyDateTomorrow) dateStr = 'Завтра';
+
+  return dateStr;
 }

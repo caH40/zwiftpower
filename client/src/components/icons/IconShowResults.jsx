@@ -4,10 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconShowResults() {
+function IconShowResults({ squareSize = 24 }) {
   return (
     <MyTooltip toolTip={'На финише показывать таблицу результатов'}>
-      <div className={styles.box__rules}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="22"
           height="24"

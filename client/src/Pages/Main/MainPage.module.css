@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 0 25px;
+  padding: 0px 123px;
+  flex-wrap: wrap;
+}
+.title__info {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  padding-bottom: 10px;
+}
+.wrapper__preview {
+  flex: 1 1 800px;
+}
+.wrapper__info {
+  flex: 1 1 300px;
+  min-width: 300px;
+}
+
+@media screen and (max-width: 1100px) {
+  .wrapper {
+    padding: 0px;
+  }
+}

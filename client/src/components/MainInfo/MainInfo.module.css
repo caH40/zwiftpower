@@ -1,0 +1,35 @@
+.block {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  padding-bottom: 5px;
+}
+.text {
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  padding-bottom: 10px;
+}
+.list {
+  list-style: inside;
+}
+.list__dev {
+  list-style: none;
+}
+.item::after {
+  content: ';';
+}
+.date {
+  margin-right: 5px;
+}
+.date::after {
+  content: ':';
+}

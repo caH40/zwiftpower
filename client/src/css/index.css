@@ -31,6 +31,10 @@ h5 {
   margin: 0;
   padding: 0;
 }
+p {
+  margin: 0;
+  padding: 0;
+}
 input,
 button,
 select,
@@ -78,6 +82,7 @@ select {
   --color-text-minor: #444444;
   --menu-side: #444444;
   --color-bg-minor: #f6f8fa;
+  --color-bg-minor-2: #e4e4e4;
   --color-border-minor: #cecece;
   --color-bg: #ffffff;
   --modal-bg: #00000099;
