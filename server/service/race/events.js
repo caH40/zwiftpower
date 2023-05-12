@@ -4,7 +4,7 @@ import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 export async function getEventService(eventId) {
   try {
     const eventDataDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
-
+    if (!eventDataDB) return { event: [] };
     // поиск и добавление в массив всех зарегистрированных райдеров в подгруппы
     const signedRiders = [];
     for (const subgroup of eventDataDB.eventSubgroups) {

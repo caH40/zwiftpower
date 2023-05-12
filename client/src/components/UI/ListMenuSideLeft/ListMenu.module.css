@@ -36,3 +36,8 @@
 .active {
   color: var(--color-orange-main);
 }
+@media screen and (max-width: 576px) {
+  .list {
+    padding: 20px 8px;
+  }
+}

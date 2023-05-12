@@ -5,6 +5,7 @@ import ParamsEvent from '../ParamEvent/ParamsEvent';
 import RulesBox from '../RulesBox/RulesBox';
 import TimeToStart from '../TimeToStart/TimeToStart';
 import { getTodayTomorrow } from '../../utils/date-convert';
+import TdRaceType from '../Tables/Td/TdRaceType';
 
 import styles from './CardRacePreview.module.css';
 
@@ -24,7 +25,9 @@ function CardRacePreview({ event, getClick }) {
             <dl className={styles.list}>
               <div className={styles.box__term}>
                 <dt className={styles.term}>Формат</dt>
-                <dd className={styles.term__description}>{event.typeRaceCustom}</dd>
+                <dd className={styles.term__description}>
+                  <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
+                </dd>
               </div>
               <div className={styles.box__term}>
                 <dt className={styles.term}>Правила</dt>

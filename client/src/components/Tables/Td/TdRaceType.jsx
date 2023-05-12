@@ -3,12 +3,19 @@ import React from 'react';
 import { raceTypes } from '../../../asset/zwift/race-type';
 import RaceRuleBox from '../../RaceRuleBox/RaceRuleBox';
 
-function TdRaceType({ typeRaceCustom }) {
+// nameFull:true  возвращает только название типа гонки
+function TdRaceType({ typeRaceCustom, nameFull }) {
   const { name, label } = raceTypes.find((type) => type.value === typeRaceCustom);
   return (
-    <td>
-      <RaceRuleBox label={label} name={name} />
-    </td>
+    <>
+      {nameFull ? (
+        <span> {name} </span>
+      ) : (
+        <td>
+          <RaceRuleBox label={label} name={name} />
+        </td>
+      )}
+    </>
   );
 }
 
