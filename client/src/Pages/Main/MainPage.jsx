@@ -12,7 +12,7 @@ import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import styles from './MainPage.module.css';
 
 function MainPage() {
-  const events = useSelector((state) => state.fetchEvents.eventsPreview);
+  const { eventsPreview } = useSelector((state) => state.fetchEvents);
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды');
   useBackground(false);
@@ -25,7 +25,7 @@ function MainPage() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__preview}>
-        {events.map((event) => (
+        {eventsPreview.map((event) => (
           <CardRacePreview event={event} key={event.id} getClick={toLink} />
         ))}
       </div>

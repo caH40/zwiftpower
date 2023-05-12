@@ -10,7 +10,7 @@ import { fetchEvents } from '../../redux/features/api/eventsSlice';
 
 function RaceScheduleList() {
   const [trigger, setTrigger] = useState(false);
-  const { eventsPreview } = useSelector((state) => state.fetchEvents);
+  const { eventsSchedule } = useSelector((state) => state.fetchEvents);
 
   useTitle('Расписание заездов');
   useBackground(false);
@@ -47,9 +47,9 @@ function RaceScheduleList() {
 
   return (
     <section>
-      {eventsPreview?.[0] && (
+      {eventsSchedule?.[0] && (
         <TableSchedule
-          events={eventsPreview}
+          events={eventsSchedule}
           updateEvent={updateEventAndSinged}
           removeEvent={removeEvent}
         />

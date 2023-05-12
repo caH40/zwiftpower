@@ -16,7 +16,7 @@ export const fetchEvents = createAsyncThunk(
         url: `${serverExpress}/api/race/events?started=${options.started}${target}`,
         method: 'get',
       });
-      return { data: response.data.events, started: options.started };
+      return { data: response.data.events, started: options.started, target: options.target };
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
@@ -29,7 +29,9 @@ const eventsSlice = createSlice({
   name: 'eventsGet',
   initialState: {
     eventsPreview: [],
+    eventsSchedule: [],
     eventsResults: [],
+
     status: null,
     error: null,
   },
@@ -42,10 +44,14 @@ const eventsSlice = createSlice({
     builder.addCase(fetchEvents.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
+
+      if (action.payload.target === 'preview') {
+        state.eventsPreview = action.payload.data;
+      }
       if (action.payload.started) {
         state.eventsResults = action.payload.data;
       } else {
-        state.eventsPreview = action.payload.data;
+        state.eventsSchedule = action.payload.data;
       }
     });
     builder.addCase(fetchEvents.rejected, (state, action) => {
