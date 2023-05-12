@@ -6,7 +6,7 @@ import { secondesToTime } from '../../utils/date-convert';
 import styles from './TimeToStart.module.css';
 
 function TimeToStart({ time }) {
-  const [timer, setTimer] = useState(Date.now(time));
+  const [timer, setTimer] = useState(null);
 
   const refreshClock = useCallback(() => {
     const timeStart = new Date(time).getTime();

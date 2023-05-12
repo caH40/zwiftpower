@@ -29,6 +29,7 @@ export function convertTime(time = '00:00') {
   return false;
 }
 export function secondesToTime(rowSeconds) {
+  if (rowSeconds === null) return '';
   let seconds = rowSeconds;
   seconds /= 1000;
   if (seconds > 3599) {

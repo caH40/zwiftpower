@@ -9,13 +9,14 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',
-  async function (started, thunkAPI) {
+  async function (options, thunkAPI) {
     try {
+      const target = options.target ? `&target=${options.target}` : '';
       const response = await axios({
-        url: `${serverExpress}/api/race/events?started=${started}`,
+        url: `${serverExpress}/api/race/events?started=${options.started}${target}`,
         method: 'get',
       });
-      return { data: response.data.events, started };
+      return { data: response.data.events, started: options.started };
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));

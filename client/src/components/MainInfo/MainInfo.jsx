@@ -6,10 +6,10 @@ function MainInfo() {
   return (
     <div>
       <div className={styles.block}>
-        <h3 className={styles.title}>Для чего создан ZP.ru?</h3>
+        <h3 className={styles.title}>Для чего ZP.ru?</h3>
         <div className={styles.text}>
           Сайт создан для корректного формирования протоколов заездов, основанных на правилах,
-          придуманных организаторами заездов в Звифт.
+          созданных организаторами заездов в Звифт.
         </div>
         <h3 className={styles.title}>Какие типы заездов?</h3>
         <div className={styles.text}>

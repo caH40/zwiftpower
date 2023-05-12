@@ -27,13 +27,37 @@ export async function getEventService(eventId) {
   }
 }
 // получение всех эвентов для расписания (started:false) или для списка евентов с результатами
-export async function getEventsService(started) {
+export async function getEventsService(started, target) {
   try {
     const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
     // сортировка заездов по возрастанию даты старта
     for (const event of eventsDB) {
       // сортировка групп по убыванию
       event.eventSubgroups.sort((a, b) => a.label - b.label);
+    }
+
+    // возвращаются только заезды, стартующие сегодня и завтра
+    if (target === 'preview' && !started) {
+      eventsDB.sort(
+        (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+      );
+
+      const events = eventsDB.filter((event) => {
+        const dateToday = new Date().toLocaleDateString();
+
+        const millisecondsInDay = 24 * 60 * 60 * 1000;
+        const dateTomorrow = new Date(Date.now() + millisecondsInDay).toLocaleDateString();
+        const checkDate = (date) => new Date(date).toLocaleDateString();
+
+        const notStarted = Date.now() < new Date(event.eventStart).getTime();
+        const isToday = checkDate(event.eventStart) === dateToday;
+        const isTomorrow = checkDate(event.eventStart) === dateTomorrow;
+
+        if ((isToday || isTomorrow) && notStarted) return true;
+        return false;
+      });
+
+      return { events, message: 'Получены все заезды' };
     }
 
     eventsDB.sort((a, b) => {
@@ -43,6 +67,7 @@ export async function getEventsService(started) {
         return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
       }
     });
+
     return { events: eventsDB, message: 'Получены все заезды' };
   } catch (error) {
     throw error;

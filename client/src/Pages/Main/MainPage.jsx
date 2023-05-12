@@ -20,7 +20,7 @@ function MainPage() {
   const navigate = useNavigate();
   const toLink = (id) => navigate(`/race/schedule/${id}`);
   useEffect(() => {
-    dispatch(fetchEvents(false));
+    dispatch(fetchEvents({ started: false, target: 'preview' }));
   }, [dispatch]);
   return (
     <section className={styles.wrapper}>

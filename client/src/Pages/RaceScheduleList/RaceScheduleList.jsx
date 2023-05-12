@@ -17,7 +17,7 @@ function RaceScheduleList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchEvents(false));
+    dispatch(fetchEvents({ started: false }));
   }, [dispatch, trigger]);
 
   const updateEventAndSinged = (eventId) => {
