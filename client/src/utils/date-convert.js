@@ -90,7 +90,7 @@ export function getLocalDate(date, params) {
   const dateForFormat = new Date(date);
   if (!date || date === 0) return 'Дата отсутствует, проверяйте старт заезда для каждой группы';
   const formatter = new Intl.DateTimeFormat('ru', {
-    year: 'numeric',
+    year: '2-digit',
     month: ['short', 'onlyDate'].includes(params) ? 'numeric' : 'long',
     day: 'numeric',
     weekday: ['short', 'onlyDate'].includes(params) ? undefined : 'long',

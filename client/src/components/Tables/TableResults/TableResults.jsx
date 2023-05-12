@@ -18,11 +18,13 @@ import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
+import { useResize } from '../../../hook/use-resize';
 
 import { resultsColumns } from './column-titles';
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { isScreenLg: lg, isScreenSm: sm } = useResize();
 
   const isModerator = ['admin', 'moderator'].includes(role);
 
@@ -30,7 +32,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          {resultsColumns.map((column) => (
+          {resultsColumns(lg, sm).map((column) => (
             <th key={column.id}>{column.name}</th>
           ))}
           {isModerator ? <th></th> : null}
@@ -40,23 +42,26 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
         {events.map((event) => (
           <tr key={event._id}>
             <td>{getToday(event.eventStart)}</td>
-            {/* <td>{getLocalDate(event.eventStart, ['short', 'onlyDate'])}</td> */}
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>
               </Link>
             </td>
-            <td>{organizer(event.organizer)}</td>
-            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+            {lg && <td>{organizer(event.organizer)}</td>}
+            {lg && <TdRaceType typeRaceCustom={event.typeRaceCustom} />}
             <td>
               <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
             </td>
-            <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-            <td>{route(event.eventSubgroups[0]?.routeId)}</td>
-            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-            <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
-            <td>{getElevationForTd(event.eventSubgroups[0])}</td>
-            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
+            {sm && <td>{map(event.eventSubgroups[0]?.mapId)}</td>}
+            {sm && <td>{route(event.eventSubgroups[0]?.routeId)}</td>}
+            {lg && (
+              <>
+                <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
+                <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
+                <td>{getElevationForTd(event.eventSubgroups[0])}</td>
+                <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
+              </>
+            )}
             {isModerator ? (
               <td>
                 <div className={styles.box__icons}>
