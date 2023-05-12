@@ -5,6 +5,7 @@ import IconParamsRoute from '../icons/Params/IconParamsRoute';
 import IconParamsDistance from '../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../icons/Params/IconParamsAscent';
 import IconParamsDuration from '../icons/Params/IconParamsDuration';
+import IconParamsLap from '../icons/Params/IconParamsLap';
 import { distanceObject, map, route } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
@@ -53,11 +54,20 @@ function ParamsEvent({ event }) {
           </div>
         </div>
       )}
+      {subgroup?.durationInSeconds === 0 && (
+        <div className={styles.box}>
+          <IconParamsLap squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>{distanceObject(subgroup)?.lapsStr}</h4>
+            <p className={styles.title__sub}>КРУГИ</p>
+          </div>
+        </div>
+      )}
       {subgroup?.durationInSeconds !== 0 && (
         <div className={styles.box}>
           <IconParamsDuration squareSize={30} />
           <div className={styles.description}>
-            <h4 className={styles.title}>60 минут</h4>
+            <h4 className={styles.title}>{distanceObject(subgroup)?.durationStr}</h4>
             <p className={styles.title__sub}>ДЛИТЕЛЬНОСТЬ</p>
           </div>
         </div>

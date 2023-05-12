@@ -131,6 +131,8 @@ export const distanceObject = (eventSubgroup) => {
   const lapsStr = getLaps(eventSubgroup?.laps)
     ? `${getLapsString(getLaps(eventSubgroup?.laps))}`
     : '';
+  // строка отображения кругов
+  const laps = getLaps(eventSubgroup?.laps) ? getLaps(eventSubgroup?.laps) : '';
   // строка отображения продолжительности заезда
   const duration = eventSubgroup?.durationInSeconds;
   const durationStr = getDuration(duration) ? getDuration(duration) : '';
@@ -151,7 +153,7 @@ export const distanceObject = (eventSubgroup) => {
       ? getElevationEstimated(elevation)
       : '';
 
-  return { durationStr, distanceStr, lapsStr, distanceEstimated, elevationStr };
+  return { durationStr, distanceStr, lapsStr, laps, distanceEstimated, elevationStr };
 };
 
 // окончательная строка дистанции для таблицы

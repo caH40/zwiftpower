@@ -33,6 +33,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0 10px;
   background-color: var(--color-bg-minor-2);
   border: 1px solid var(--color-border-minor);
   border-top: none;
