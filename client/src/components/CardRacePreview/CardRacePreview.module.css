@@ -46,7 +46,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  gap: 20px 0px;
+  gap: 3px 20px;
 }
 .title {
   font-weight: 700;
@@ -92,7 +92,6 @@
   object-fit: cover;
   border-radius: 5px;
 }
-
 @media screen and (max-width: 992px) {
   .title {
     font-size: 18px;
@@ -106,12 +105,8 @@
     padding: 10px;
   }
   .description {
-    flex: 0 1 100%;
     min-width: 200px;
-    display: flex;
-    justify-content: space-between;
     flex-direction: row;
-    gap: 0px 20px;
     margin-bottom: 10px;
   }
   .poster {
@@ -130,4 +125,10 @@
   }
 }
 @media screen and (max-width: 576px) {
+  .description {
+    flex-wrap: wrap;
+  }
+  .box__term + .box__term {
+    margin-top: 1px;
+  }
 }
