@@ -15,6 +15,7 @@
 .title__box {
   display: flex;
   gap: 0 13px;
+  align-items: center;
 }
 .header__right {
   display: flex;
@@ -24,4 +25,9 @@
 .title {
   font-size: 22px;
   color: white;
+}
+@media screen and (max-width: 576px) {
+  .title {
+    font-size: 19px;
+  }
 }
