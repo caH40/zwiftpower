@@ -6,6 +6,7 @@ import IconWorld from '../../icons/IconWorld';
 import IconResults from '../../icons/IconResults';
 import IconSchedule from '../../icons/IconSchedule';
 import IconFaq from '../../icons/IconFaq';
+import IconHome from '../../icons/IconHome';
 
 import styles from './ListMenu.module.css';
 
@@ -14,6 +15,17 @@ function ListMenuMain({ state }) {
     isActive ? `${styles.link} ${styles.active}` : styles.link;
   return (
     <ul className={styles.list}>
+      <li>
+        <NavLink to="/" className={activeLink}>
+          {({ isActive }) => (
+            <div className={styles.link__box}>
+              <IconHome isActive={isActive} />
+              <span className={`${styles.link__name} ${styles[state]}`}>Домашняя</span>
+            </div>
+          )}
+        </NavLink>
+      </li>
+
       <li>
         <NavLink to="/race/schedule" className={activeLink}>
           {({ isActive }) => (

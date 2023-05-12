@@ -17,8 +17,8 @@
   align-items: center;
 }
 .link__name {
+  padding-top: 4px;
   opacity: 0;
-  /* white-space: nowrap; */
 }
 .link__name.entering {
   opacity: 0;
