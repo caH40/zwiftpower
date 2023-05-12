@@ -3,15 +3,17 @@ import { Transition } from 'react-transition-group';
 
 import ListMenuMain from '../ListMenuSideLeft/ListMenuMain';
 import ListMenuAdmin from '../ListMenuSideLeft/ListMenuAdmin';
+import { useResize } from '../../../hook/use-resize';
 
 import styles from './NavBarSideLeft.module.css';
 
 function NavBarSideLeft() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const openMenu = () => setIsVisible(true);
-  const closeMenu = () => setIsVisible(false);
+  const { isScreenLg } = useResize();
 
+  const openMenu = () => (isScreenLg ? setIsVisible(true) : null);
+  const closeMenu = () => (isScreenLg ? setIsVisible(false) : null);
   return (
     <Transition in={isVisible} timeout={100}>
       {(state) => (

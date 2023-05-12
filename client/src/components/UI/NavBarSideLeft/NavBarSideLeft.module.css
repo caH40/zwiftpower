@@ -13,3 +13,5 @@
 .nav.entered {
   width: 180px;
 }
+@media screen and (max-width: 576px) {
+}

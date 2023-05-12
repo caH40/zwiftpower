@@ -42,7 +42,9 @@ function CardRacePreview({ event, getClick }) {
         </div>
         <div className={styles.card__bottom}>
           <ParamsEvent event={event} />
-          <CategoriesBox event={event} />
+          <div className={styles.box__categories}>
+            <CategoriesBox event={event} />
+          </div>
         </div>
       </div>
     </div>
