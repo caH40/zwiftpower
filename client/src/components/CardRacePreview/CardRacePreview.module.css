@@ -1,5 +1,6 @@
 .wrapper {
   width: 100%;
+  margin-bottom: 25px;
 }
 .title__date {
   font-style: italic;
@@ -37,6 +38,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  gap: 20px 0px;
 }
 .title {
   font-weight: 700;

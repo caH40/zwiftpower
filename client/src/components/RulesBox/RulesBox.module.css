@@ -1,10 +1,12 @@
 .block {
   display: flex;
   gap: 0 10px;
-  margin-bottom: 10px;
 }
 .text {
   padding: 0;
   margin: 0;
   font-style: italic;
+}
+.mb10 {
+  margin-bottom: 10px;
 }

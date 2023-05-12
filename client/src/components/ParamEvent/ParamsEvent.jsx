@@ -5,47 +5,63 @@ import IconParamsRoute from '../icons/Params/IconParamsRoute';
 import IconParamsDistance from '../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../icons/Params/IconParamsAscent';
 import IconParamsDuration from '../icons/Params/IconParamsDuration';
+import { distanceObject, map, route } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
-function ParamsEvent() {
+function ParamsEvent({ event }) {
+  const [subgroup] = event.eventSubgroups;
+
   return (
     <div className={styles.block}>
-      <div className={styles.box}>
-        <IconParamsWorld squareSize={30} />
-        <div className={styles.description}>
-          <h4 className={styles.title}>Marakuri Island</h4>
-          <p className={styles.title__sub}>КАРТА</p>
+      {subgroup?.mapId && (
+        <div className={styles.box}>
+          <IconParamsWorld squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>{map(subgroup.mapId)}</h4>
+            <p className={styles.title__sub}>КАРТА</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.box}>
-        <IconParamsRoute squareSize={30} />
-        <div className={styles.description}>
-          <h4 className={styles.title}>London Classique Reverse</h4>
-          <p className={styles.title__sub}>МАРШРУТ</p>
+      )}
+      {subgroup?.routeId && (
+        <div className={styles.box}>
+          <IconParamsRoute squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>{route(subgroup.routeId)}</h4>
+            <p className={styles.title__sub}>МАРШРУТ</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.box}>
-        <IconParamsDistance squareSize={30} />
-        <div className={styles.description}>
-          <h4 className={styles.title}>23.5 км</h4>
-          <p className={styles.title__sub}>РАССТОЯНИЕ</p>
+      )}
+      {subgroup?.durationInSeconds === 0 && (
+        <div className={styles.box}>
+          <IconParamsDistance squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>
+              {distanceObject(subgroup)?.distanceStr ||
+                distanceObject(subgroup)?.distanceEstimated}
+            </h4>
+            <p className={styles.title__sub}>РАССТОЯНИЕ</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.box}>
-        <IconParamsAscent squareSize={30} />
-        <div className={styles.description}>
-          <h4 className={styles.title}>855 метров</h4>
-          <p className={styles.title__sub}>НАБОР ВЫСОТЫ</p>
+      )}
+      {subgroup?.durationInSeconds === 0 && (
+        <div className={styles.box}>
+          <IconParamsAscent squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>{distanceObject(subgroup)?.elevationStr}</h4>
+            <p className={styles.title__sub}>НАБОР ВЫСОТЫ</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.box}>
-        <IconParamsDuration squareSize={30} />
-        <div className={styles.description}>
-          <h4 className={styles.title}>60 минут</h4>
-          <p className={styles.title__sub}>ПРОДОЛЖИТЕЛЬНОСТЬ</p>
+      )}
+      {subgroup?.durationInSeconds !== 0 && (
+        <div className={styles.box}>
+          <IconParamsDuration squareSize={30} />
+          <div className={styles.description}>
+            <h4 className={styles.title}>60 минут</h4>
+            <p className={styles.title__sub}>ДЛИТЕЛЬНОСТЬ</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

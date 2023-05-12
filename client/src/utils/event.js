@@ -123,6 +123,37 @@ export const distanceSummary = (eventSubgroup) => {
   return `${durationStr}${distanceStr}${lapsStr}${distanceEstimated}${elevationStr}`;
 };
 
+export const distanceObject = (eventSubgroup) => {
+  // если не задана дистанция и время, то показывать расчетные дистанцию и набор высоты
+  const showDistanceAndElevation =
+    eventSubgroup?.durationInSeconds === 0 && eventSubgroup?.distanceInMeters === 0;
+  // строка отображения кругов
+  const lapsStr = getLaps(eventSubgroup?.laps)
+    ? `${getLapsString(getLaps(eventSubgroup?.laps))}`
+    : '';
+  // строка отображения продолжительности заезда
+  const duration = eventSubgroup?.durationInSeconds;
+  const durationStr = getDuration(duration) ? getDuration(duration) : '';
+  // строка отображения дистанции заезда
+  const distanceStr = getDistance(eventSubgroup?.distanceInMeters)
+    ? `${getDistance(eventSubgroup?.distanceInMeters)}`
+    : '';
+  // строка отображения расчетной дистанции заезда
+  const distance = eventSubgroup?.distanceSummary?.distanceInKilometers;
+  const distanceEstimated =
+    getDistanceEstimated(distance) && showDistanceAndElevation
+      ? `${getDistanceEstimated(distance)}`
+      : '';
+  // строка отображения расчетного набора высоты
+  const elevation = eventSubgroup?.distanceSummary?.elevationGainInMeters;
+  const elevationStr =
+    getElevationEstimated(elevation) && showDistanceAndElevation
+      ? getElevationEstimated(elevation)
+      : '';
+
+  return { durationStr, distanceStr, lapsStr, distanceEstimated, elevationStr };
+};
+
 // окончательная строка дистанции для таблицы
 export const getDistanceForTd = (eventSubgroup) => {
   if (eventSubgroup?.durationInSeconds !== 0) return null;
