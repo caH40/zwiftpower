@@ -20,7 +20,7 @@ export const raceResultsColumnsStartLg = [
 ];
 export const raceResultsColumnsStartSm = [
   { name: '#', id: 0 },
-  { name: 'Кат', id: 1 },
+  { name: '', id: 1 },
   { name: 'Райдер', id: 3 },
   { name: 'Время', id: 4 },
 ];
