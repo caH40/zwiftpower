@@ -113,7 +113,7 @@
   .poster {
     max-width: calc(100% + 22px);
     width: calc(100% + 22px);
-    object-position: 20% center;
+    object-position: 5% center;
     min-height: 160px;
     border-radius: 0px;
     margin: 0px -11px;

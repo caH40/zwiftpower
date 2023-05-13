@@ -24,6 +24,9 @@
 .list__dev {
   list-style: none;
 }
+.item + .item {
+  margin-top: 2px;
+}
 .item::after {
   content: ';';
 }

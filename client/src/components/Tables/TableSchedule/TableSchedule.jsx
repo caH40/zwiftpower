@@ -18,11 +18,13 @@ import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
+import { useResize } from '../../../hook/use-resize';
 
 import { scheduleListColumns } from './column-titles';
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { isScreenLg: lg, isScreenSm: sm } = useResize();
 
   const isModerator = ['admin', 'moderator'].includes(role);
 
@@ -30,7 +32,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
     <table className={`${styles.table} ${styles.table_striped}`}>
       <thead>
         <tr>
-          {scheduleListColumns.map((column) => (
+          {scheduleListColumns(lg, sm).map((column) => (
             <th key={column.id}>{column.name}</th>
           ))}
           {isModerator ? <th></th> : null}
@@ -45,17 +47,17 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                 <span className={styles.big}>{event.name}</span>
               </Link>
             </td>
-            <td>{organizer(event.organizer)}</td>
-            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+            {lg && <td>{organizer(event.organizer)}</td>}
+            {lg && <TdRaceType typeRaceCustom={event.typeRaceCustom} />}
             <td>
               <CategoriesBox event={event} />
             </td>
-            <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-            <td>{route(event.eventSubgroups[0]?.routeId)}</td>
-            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-            <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
-            <td>{getElevationForTd(event.eventSubgroups[0])}</td>
-            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
+            {sm && <td>{map(event.eventSubgroups[0]?.mapId)}</td>}
+            {sm && <td>{route(event.eventSubgroups[0]?.routeId)}</td>}
+            {lg && <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>}
+            {lg && <td>{getDistanceForTd(event.eventSubgroups[0])}</td>}
+            {lg && <td>{getElevationForTd(event.eventSubgroups[0])}</td>}
+            {lg && <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>}
             {isModerator ? (
               <td>
                 <div className={styles.box__icons}>

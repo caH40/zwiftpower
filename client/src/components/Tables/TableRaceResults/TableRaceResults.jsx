@@ -11,11 +11,12 @@ import {
   tdWattsPerKg,
   tdWeight,
 } from '../utils/td';
-
 import { tdGap } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
+import CategoryBox from '../../CategoryBox/CategoryBox';
+
 import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
@@ -53,9 +54,7 @@ function TableRaceResults({ results }) {
             <td>{index + 1}</td>
 
             <td>
-              <span className={`${styles.category} ${styles[result.subgroupLabel]}`}>
-                {result.subgroupLabel}
-              </span>
+              <CategoryBox label={result.subgroupLabel} circle={true} />
             </td>
             {sm && <td>{tdRank(result.rankEvent)}</td>}
             <td>

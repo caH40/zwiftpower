@@ -210,5 +210,7 @@
   }
   .rider {
     min-width: 110px;
+    max-width: 157px;
+    letter-spacing: 0;
   }
 }
