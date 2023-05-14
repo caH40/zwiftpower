@@ -4,6 +4,7 @@ import { tdLinkZP, tdRider } from '../utils/td';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
+import Th from '../Th/Th';
 
 import styles from '../Table.module.css';
 
@@ -16,7 +17,7 @@ function TableSignedRiders({ riders = [] }) {
       <thead>
         <tr>
           {signedRidersColumns(lg, sm).map((column) => (
-            <th key={column.id}>{column.name}</th>
+            <Th key={column.id} columnName={column.name} />
           ))}
         </tr>
       </thead>

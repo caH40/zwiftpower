@@ -18,6 +18,7 @@ import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
+import Th from '../Th/Th';
 import { useResize } from '../../../hook/use-resize';
 
 import { resultsColumns } from './column-titles';
@@ -33,9 +34,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
       <thead>
         <tr>
           {resultsColumns(lg, sm).map((column) => (
-            <th key={column.id}>{column.name}</th>
+            <Th key={column.id} columnName={column.name} />
           ))}
-          {isModerator ? <th></th> : null}
+          {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
         </tr>
       </thead>
       <tbody>

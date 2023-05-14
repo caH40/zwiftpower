@@ -13,6 +13,7 @@
   height: 20px;
 }
 .box__rules {
+  display: flex;
   width: 24px;
   height: 24px;
 }

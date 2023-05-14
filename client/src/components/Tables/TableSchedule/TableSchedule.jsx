@@ -19,6 +19,7 @@ import IconDelete from '../../icons/IconDelete';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
+import Th from '../Th/Th';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -33,9 +34,9 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
       <thead>
         <tr>
           {scheduleListColumns(lg, sm).map((column) => (
-            <th key={column.id}>{column.name}</th>
+            <Th key={column.id} columnName={column.name} />
           ))}
-          {isModerator ? <th></th> : null}
+          {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
         </tr>
       </thead>
       <tbody>
