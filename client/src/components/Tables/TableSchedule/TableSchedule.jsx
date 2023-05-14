@@ -36,7 +36,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
           {scheduleListColumns(lg, sm).map((column) => (
             <Th key={column.id} columnName={column.name} />
           ))}
-          {isModerator ? <th></th> : null}
+          {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
         </tr>
       </thead>
       <tbody>

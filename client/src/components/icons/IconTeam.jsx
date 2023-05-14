@@ -15,7 +15,7 @@ function IconTeam({ squareSize = 24, toolTip }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_460_58)">
+          <g clipPath="url(#clip0_460_58)">
             <path
               d="M20.4352 13.4775C21.9591 13.4775 23.1947 12.2427 23.1947 10.7188C23.1947 9.1949 21.959 7.95923 20.4352 7.95923C18.9116 7.95923 17.676 9.1949 17.676 10.7188C17.676 12.2427 18.9116 13.4775 20.4352 13.4775Z"
               fill="black"

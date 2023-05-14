@@ -18,6 +18,8 @@ import IconHeight from '../../icons/IconHeight';
 import IconAge from '../../icons/IconAge';
 import IconGender from '../../icons/IconGender';
 import IconTeam from '../../icons/IconTeam';
+import IconAdmin from '../../icons/IconAdmin';
+import IconFinish from '../../icons/IconFinish';
 
 const Th = ({ columnName, breakPoints }) => {
   /* eslint-disable */
@@ -76,6 +78,12 @@ const Th = ({ columnName, breakPoints }) => {
 
       case 'Команда':
         return <IconTeam toolTip={name} />;
+
+      case 'Управление':
+        return <IconAdmin toolTip={name} />;
+
+      case 'Финиш':
+        return <IconFinish toolTip={name} />;
 
       case 'zp.com':
         return 'zp.com';
