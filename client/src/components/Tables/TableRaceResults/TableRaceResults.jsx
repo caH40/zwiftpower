@@ -16,6 +16,7 @@ import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
+import Th from '../Th/Th';
 
 import styles from '../Table.module.css';
 
@@ -36,7 +37,7 @@ function TableRaceResults({ results }) {
       <thead>
         <tr>
           {raceResultsColumns(lg, sm).map((column) => (
-            <th key={column.id}>{column.name}</th>
+            <Th key={column.id} columnName={column.name} />
           ))}
           {lg &&
             columnsCP.map((column) => {
@@ -45,7 +46,10 @@ function TableRaceResults({ results }) {
               }
               return null;
             })}
-          {lg && raceResultsColumnsEnd.map((column) => <th key={column.id}>{column.name}</th>)}
+          {lg &&
+            raceResultsColumnsEnd.map((column) => (
+              <Th key={column.id} columnName={column.name} />
+            ))}
         </tr>
       </thead>
       <tbody>

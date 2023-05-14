@@ -1,13 +1,13 @@
 export const raceResultsColumnsStartFull = [
   { name: '#', id: 0 },
-  { name: 'Кат', id: 1 },
+  { name: 'Категория', id: 1 },
   { name: '', id: 2 },
   { name: 'Райдер', id: 3 },
   { name: 'Время', id: 4 },
-  { name: 'Отс.', id: 5 },
-  { name: 'Отс.пр.', id: 6 },
-  { name: 'Сред.', id: 7 },
-  { name: '', id: 8 },
+  { name: 'Отставание от лидера', id: 5 },
+  { name: 'Отставание от райдера впереди', id: 6 },
+  { name: 'Средняя мощность за гонку', id: 7 },
+  { name: 'Относительная средняя мощность за гонку', id: 8 },
 ];
 export const raceResultsColumnsStartLg = [
   { name: '#', id: 0 },
@@ -15,8 +15,8 @@ export const raceResultsColumnsStartLg = [
   { name: '', id: 2 },
   { name: 'Райдер', id: 3 },
   { name: 'Время', id: 4 },
-  { name: 'Сред.', id: 7 },
-  { name: '', id: 8 },
+  { name: 'Средняя мощность за гонку', id: 7 },
+  { name: 'Относительная средняя мощность за гонку', id: 8 },
 ];
 export const raceResultsColumnsStartSm = [
   { name: '#', id: 0 },
@@ -37,7 +37,7 @@ export const raceResultsColumnsEnd = [
   { name: 'Пульс', id: 9 },
   { name: 'Вес', id: 10 },
   { name: 'Рост', id: 11 },
-  { name: 'Возр.', id: 12 },
+  { name: 'Возраст', id: 12 },
 ];
 
 export const raceResultsColumns = (isScreenLg, isScreenSm) => {

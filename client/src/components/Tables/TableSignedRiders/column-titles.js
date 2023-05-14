@@ -18,7 +18,7 @@ export const signedRidersColumnsLg = [
 ];
 export const signedRidersColumnsSm = [
   { name: '#', id: 0 },
-  { name: '', id: 1 },
+  { name: 'Категория', id: 1 },
   { name: 'Райдер', id: 2 },
 ];
 export const signedRidersColumns = (isScreenLg, isScreenSm) => {

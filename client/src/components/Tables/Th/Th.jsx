@@ -20,8 +20,13 @@ import IconGender from '../../icons/IconGender';
 import IconTeam from '../../icons/IconTeam';
 import IconAdmin from '../../icons/IconAdmin';
 import IconFinish from '../../icons/IconFinish';
+import IconPulse from '../../icons/IconPulse';
+import IconGap from '../../icons/IconGap';
+import IconGapPrev from '../../icons/IconGapPrev';
+import IconPower from '../../icons/IconPower';
+import IconPowerKg from '../../icons/IconPowerKg';
 
-const Th = ({ columnName, breakPoints }) => {
+const Th = ({ columnName }) => {
   /* eslint-disable */
   const thHtml = (name) => {
     switch (name) {
@@ -38,6 +43,9 @@ const Th = ({ columnName, breakPoints }) => {
         return <IconParamsDistance toolTip={name} />;
 
       case 'Длительность':
+        return <IconParamsDuration toolTip={name} />;
+
+      case 'Время':
         return <IconParamsDuration toolTip={name} />;
 
       case 'Круги':
@@ -76,6 +84,9 @@ const Th = ({ columnName, breakPoints }) => {
       case 'Пол':
         return <IconGender toolTip={name} />;
 
+      case 'Пульс':
+        return <IconPulse toolTip={name} />;
+
       case 'Команда':
         return <IconTeam toolTip={name} />;
 
@@ -84,6 +95,18 @@ const Th = ({ columnName, breakPoints }) => {
 
       case 'Финиш':
         return <IconFinish toolTip={name} />;
+
+      case 'Отставание от лидера':
+        return <IconGap toolTip={name} />;
+
+      case 'Отставание от райдера впереди':
+        return <IconGapPrev toolTip={name} />;
+
+      case 'Средняя мощность за гонку':
+        return <IconPower toolTip={name} />;
+
+      case 'Относительная средняя мощность за гонку':
+        return <IconPowerKg toolTip={name} />;
 
       case 'zp.com':
         return 'zp.com';
