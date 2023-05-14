@@ -11,6 +11,13 @@ import IconRaceType from '../../icons/IconRaceType';
 import IconCreator from '../../icons/IconCreator';
 import IconDateTime from '../../icons/IconDateTime';
 import IconTitle from '../../icons/IconTitle';
+import IconCategory from '../../icons/IconCategory';
+import IconRider from '../../icons/IconRider';
+import IconWeight from '../../icons/IconWeight';
+import IconHeight from '../../icons/IconHeight';
+import IconAge from '../../icons/IconAge';
+import IconGender from '../../icons/IconGender';
+import IconTeam from '../../icons/IconTeam';
 
 const Th = ({ columnName, breakPoints }) => {
   /* eslint-disable */
@@ -48,6 +55,33 @@ const Th = ({ columnName, breakPoints }) => {
 
       case 'Организатор':
         return <IconCreator toolTip={name} />;
+
+      case 'Категория':
+        return <IconCategory toolTip={name} />;
+
+      case 'Райдер':
+        return <IconRider toolTip={name} />;
+
+      case 'Вес':
+        return <IconWeight toolTip={name} />;
+
+      case 'Рост':
+        return <IconHeight toolTip={name} />;
+
+      case 'Возраст':
+        return <IconAge toolTip={name} />;
+
+      case 'Пол':
+        return <IconGender toolTip={name} />;
+
+      case 'Команда':
+        return <IconTeam toolTip={name} />;
+
+      case 'zp.com':
+        return 'zp.com';
+
+      case '#':
+        return '#';
 
       default:
         return '';
