@@ -10,7 +10,7 @@ import IconTTLock from '../icons/IconTTLock';
 import IconLateJoin from '../icons/IconLateJoin';
 import IconHeartMonitor from '../icons/IconHeartMonitor';
 import IconPowerMeter from '../icons/IconPowerMeter';
-import IconDD from '../icons/IconDD';
+import IconRubberBanding from '../icons/IconRubberBanding';
 
 import styles from './RulesBox.module.css';
 
@@ -31,7 +31,9 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         {event.rulesSet.includes('ALLOWS_LATE_JOIN') && (
           <IconLateJoin squareSize={squareSize} />
         )}
-        {event.rulesSet.includes('TEST_BIT_10') && <IconDD squareSize={squareSize} />}
+        {event.rulesSet.includes('TEST_BIT_10') && (
+          <IconRubberBanding squareSize={squareSize} />
+        )}
         {event.categoryEnforcement && <IconCategoryEnforced squareSize={squareSize} />}
       </>
     </div>
