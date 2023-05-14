@@ -10,12 +10,16 @@ function MainInfoDev() {
         <div className={styles.text}>
           <ul className={styles.list__dev}>
             <li className={styles.item}>
-              <span className={styles.date}>12.05.2023</span>добавлена главная страница с
-              анонсами ближайших заездов
+              <span className={styles.date}>14.05.2023</span>замена названий столбцов в таблицах
+              на иконки
             </li>
             <li className={styles.item}>
               <span className={styles.date}>13.05.2023</span>добавлена адаптивная вёрстка для
               страниц расписаний и результатов заездов
+            </li>
+            <li className={styles.item}>
+              <span className={styles.date}>12.05.2023</span>добавлена главная страница с
+              анонсами ближайших заездов
             </li>
           </ul>
         </div>
