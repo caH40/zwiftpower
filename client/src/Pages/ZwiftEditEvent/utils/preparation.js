@@ -22,6 +22,7 @@ export function prepareData(
 
   event.rulesId = null;
   const rulesSet = [...selectedRules].map((rule) => rule.value);
+
   event.rulesSet = rulesSet;
 
   // изменение тэга времени
