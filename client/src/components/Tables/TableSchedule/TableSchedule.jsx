@@ -14,12 +14,13 @@ import {
   getDistanceForTd,
   getElevationForTd,
 } from '../../../utils/event';
-import IconRefresh from '../../icons/IconRefresh';
-import IconDelete from '../../icons/IconDelete';
+
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
 import Th from '../Th/Th';
+
+import TdScheduleMenu from '../Td/TdScheduleMenu';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -59,22 +60,14 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             {lg && <td>{getDistanceForTd(event.eventSubgroups[0])}</td>}
             {lg && <td>{getElevationForTd(event.eventSubgroups[0])}</td>}
             {lg && <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>}
-            {isModerator ? (
-              <td>
-                <div className={styles.box__icons}>
-                  <IconRefresh
-                    getClick={() => updateEvent(event.id)}
-                    toolTip={'Обновление данных заезда'}
-                    addCls={'pointer'}
-                  />
-                  <IconDelete
-                    getClick={() => removeEvent(event.id, event.name)}
-                    toolTip={'Удаление из БД заезда'}
-                    addCls={'pointer'}
-                  />
-                </div>
-              </td>
-            ) : null}
+            {isModerator && (
+              <TdScheduleMenu
+                PopupMenuInTable
+                event={event}
+                updateEvent={updateEvent}
+                removeEvent={removeEvent}
+              />
+            )}
           </tr>
         ))}
       </tbody>

@@ -9,3 +9,6 @@
   font-size: 0.65em;
   white-space: nowrap;
 }
+.icons {
+  position: relative;
+}

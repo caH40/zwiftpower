@@ -17,7 +17,8 @@ function MyTooltip({ children, toolTip, disabled }) {
                 color: '#000000',
               },
             },
-          }}>
+          }}
+        >
           {children}
         </Tooltip>
       )}
