@@ -14,6 +14,8 @@ import resultsUpdateSlice from '../features/api/resultsUpdateSlice';
 import changeEventSlice from '../features/api/changeEventSlice';
 import eventPreviewSlice from '../features/api/eventPreviewSlice';
 import eventResultSlice from '../features/api/eventResultSlice';
+import popupTableScheduleSlice from '../features/popupTableScheduleSlice';
+import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
 
 export default configureStore({
   reducer: {
@@ -31,5 +33,7 @@ export default configureStore({
     fetchResults: resultsUpdateSlice,
     fetchChangeEvent: changeEventSlice,
     fetchEventPreview: eventPreviewSlice,
+    popupTableSchedule: popupTableScheduleSlice,
+    popupTableResultsList: popupTableResultsListSlice,
   },
 });

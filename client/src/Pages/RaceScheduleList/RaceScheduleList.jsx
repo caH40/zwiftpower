@@ -7,6 +7,7 @@ import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
+import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 
 function RaceScheduleList() {
   const [trigger, setTrigger] = useState(false);
@@ -19,6 +20,10 @@ function RaceScheduleList() {
   useEffect(() => {
     dispatch(fetchEvents({ started: false }));
   }, [dispatch, trigger]);
+
+  useEffect(() => {
+    dispatch(createScheduleMenus(eventsSchedule));
+  }, [dispatch, eventsSchedule]);
 
   const updateEventAndSinged = (eventId) => {
     dispatch(fetchChangeEvent({ operation: 'put', eventId })).then((r) =>
@@ -52,6 +57,7 @@ function RaceScheduleList() {
           events={eventsSchedule}
           updateEvent={updateEventAndSinged}
           removeEvent={removeEvent}
+          setTrigger={setTrigger}
         />
       )}
     </section>
