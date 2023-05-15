@@ -24,6 +24,7 @@ function RaceResultsList() {
     dispatch(fetchEvents({ started: true }));
   }, [dispatch, trigger]);
 
+  // создание массива с меню модерации эвентов в таблице
   useEffect(() => {
     dispatch(createResultListMenus(eventsResults));
   }, [dispatch, eventsResults]);

@@ -6,7 +6,7 @@ import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import MyTooltip from '../../../HOC/MyTooltip';
 
-import styles from './PopupMenuTableResultList.module.css';
+import styles from './PopupMenuTable.module.css';
 
 function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEventAndSinged }) {
   const { menus } = useSelector((state) => state.popupTableResultsList);

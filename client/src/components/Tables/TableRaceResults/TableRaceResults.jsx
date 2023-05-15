@@ -58,7 +58,7 @@ function TableRaceResults({ results }) {
             <td>{index + 1}</td>
 
             <td>
-              <CategoryBox label={result.subgroupLabel} circle={true} />
+              <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
             </td>
             {sm && <td>{tdRank(result.rankEvent)}</td>}
             <td>

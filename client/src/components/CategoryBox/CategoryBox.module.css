@@ -1,9 +1,9 @@
 .category {
   display: inline-block;
   text-align: center;
-  padding: 0.25em 0.5em 0.2em;
-  max-width: 70px;
-  min-width: 40px;
+  padding: 0.2em 0.5em;
+  max-width: 50px;
+  min-width: 30px;
   border-radius: 1em;
   font-size: 13px;
   line-height: 1.2;
@@ -51,21 +51,12 @@
 
 @media screen and (max-width: 576px) {
   .category {
-    padding: 0.25em 0.5em 0.2em;
-    max-width: 70px;
-    min-width: 35px;
-    border-radius: 0.9em;
     font-size: 11px;
-    user-select: none;
   }
   .circle {
     max-width: 22px;
     min-width: 22px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 22px;
     height: 22px;
-    border-radius: 50%;
   }
 }

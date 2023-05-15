@@ -26,7 +26,7 @@ function TableSignedRiders({ riders = [] }) {
           <tr key={rider._id}>
             <td>{index + 1}</td>
             <td>
-              <CategoryBox label={rider.subgroupLabel} circle={true} />
+              <CategoryBox showLabel={true} label={rider.subgroupLabel} circle={true} />
             </td>
             <td>
               {tdRider(

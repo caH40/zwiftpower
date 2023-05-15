@@ -20,7 +20,7 @@ import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
 import Th from '../Th/Th';
 
-import TdScheduleMenu from '../Td/TdScheduleMenu';
+import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -61,7 +61,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             {lg && <td>{getElevationForTd(event.eventSubgroups[0])}</td>}
             {lg && <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>}
             {isModerator && (
-              <TdScheduleMenu
+              <TdScheduleMenuTableScheduleList
                 event={event}
                 updateEvent={updateEvent}
                 removeEvent={removeEvent}
