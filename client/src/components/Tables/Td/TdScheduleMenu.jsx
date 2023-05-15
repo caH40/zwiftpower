@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import IconEdit from '../../icons/IconEdit';
-import PopupMenuInTable from '../../UI/PopupMenuInTable/PopupMenuInTable';
+import PopupMenuInTable from '../../UI/PopupMenuTableScheduleList/PopupMenuTableScheduleList';
 import { showScheduleMenu } from '../../../redux/features/popupTableScheduleSlice';
 
 import styles from './Td.module.css';

@@ -5,9 +5,9 @@ import { closeScheduleMenu } from '../../../redux/features/popupTableScheduleSli
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 
-import styles from './PopupMenuInTable.module.css';
+import styles from './PopupMenuTableScheduleList.module.css';
 
-function PopupMenuInTable({ event, updateEvent, removeEvent }) {
+function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
   const { menus } = useSelector((state) => state.popupTableSchedule);
   const dispatch = useDispatch();
 
@@ -49,4 +49,4 @@ function PopupMenuInTable({ event, updateEvent, removeEvent }) {
   );
 }
 
-export default PopupMenuInTable;
+export default PopupMenuTableScheduleList;
