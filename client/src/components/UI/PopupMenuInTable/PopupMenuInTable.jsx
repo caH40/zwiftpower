@@ -13,10 +13,16 @@ function PopupMenuInTable({ event, updateEvent, removeEvent }) {
 
   const menu = menus.find((elm) => elm.eventId === event?.id) || {};
 
-  const clickButton = (e) => {
+  const clickUpdateEvent = (e) => {
     e.stopPropagation();
     dispatch(closeScheduleMenu(event?.id));
     updateEvent(event.id);
+  };
+
+  const clickButton = (e) => {
+    e.stopPropagation();
+    dispatch(closeScheduleMenu(event?.id));
+    removeEvent(event.id, event.name);
   };
 
   return (
@@ -24,16 +30,15 @@ function PopupMenuInTable({ event, updateEvent, removeEvent }) {
       {menu?.isVisible && (
         <div
           className={styles.popup}
-          // onClick={() => dispatch(closeScheduleMenu(event?.id))}
           onMouseLeave={() => dispatch(closeScheduleMenu(event?.id))}
         >
           <ul className={styles.list}>
-            <li className={styles.item} onClick={clickButton}>
+            <li className={styles.item} onClick={clickUpdateEvent}>
               <IconRefresh />
               <span className={styles.label}>Обновление данных заезда</span>
             </li>
 
-            <li className={styles.item} onClick={() => removeEvent(event.id, event.name)}>
+            <li className={styles.item} onClick={clickButton}>
               <IconDelete />
               <span className={styles.label}>Удаление заезда из БД</span>
             </li>

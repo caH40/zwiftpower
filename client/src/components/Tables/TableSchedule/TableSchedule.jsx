@@ -62,7 +62,6 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             {lg && <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>}
             {isModerator && (
               <TdScheduleMenu
-                PopupMenuInTable
                 event={event}
                 updateEvent={updateEvent}
                 removeEvent={removeEvent}

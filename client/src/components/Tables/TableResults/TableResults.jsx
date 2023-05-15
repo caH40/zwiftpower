@@ -14,8 +14,7 @@ import {
   getDistanceForTd,
   getElevationForTd,
 } from '../../../utils/event';
-import IconRefresh from '../../icons/IconRefresh';
-import IconDelete from '../../icons/IconDelete';
+import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
 import Th from '../Th/Th';
@@ -63,29 +62,14 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
                 <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
               </>
             )}
-            {isModerator ? (
-              <td>
-                <div className={styles.box__icons}>
-                  <IconRefresh
-                    getClick={() => updateResults(event.id)}
-                    toolTip={'Обновление результатов заезда (протокола)'}
-                    addCls={'pointer'}
-                  />
-                  <IconDelete
-                    getClick={() => removeEvent(event.id, event.name)}
-                    toolTip={'Удаление заезда и результатов заезда из БД'}
-                    addCls={'pointer'}
-                  />
-                  <IconRefresh
-                    getClick={() => updateEventAndSinged(event.id)}
-                    toolTip={
-                      'Обновление данных заезда и зарегистрированных райдеров. Исправляет отсутствие флагов у некоторых райдеров в протоколе. После данного обновления необходимо запустить обновление результатов'
-                    }
-                    addCls={'pointer'}
-                  />
-                </div>
-              </td>
-            ) : null}
+            {isModerator && (
+              <TdScheduleMenuTableResultList
+                event={event}
+                updateResults={updateResults}
+                updateEventAndSinged={updateEventAndSinged}
+                removeEvent={removeEvent}
+              />
+            )}
           </tr>
         ))}
       </tbody>

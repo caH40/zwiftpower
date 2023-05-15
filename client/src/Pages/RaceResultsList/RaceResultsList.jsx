@@ -9,6 +9,7 @@ import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
+import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -22,6 +23,10 @@ function RaceResultsList() {
   useEffect(() => {
     dispatch(fetchEvents({ started: true }));
   }, [dispatch, trigger]);
+
+  useEffect(() => {
+    dispatch(createResultListMenus(eventsResults));
+  }, [dispatch, eventsResults]);
 
   const updateResults = (eventId) => {
     dispatch(fetchUpdateResult(eventId)).then((r) => setTrigger((p) => !p));

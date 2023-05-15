@@ -1,0 +1,30 @@
+.popup {
+  position: absolute;
+  top: 0;
+  right: 110%;
+  min-width: 140px;
+  width: 250px;
+  background-color: var(--color-bg-minor-2);
+  z-index: 100;
+  padding: 10px 0px;
+  background: #fafafa;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px;
+}
+.item:hover {
+  background: rgba(255, 123, 49, 0.28);
+  transition: all 0.3s;
+}
+.label {
+  margin-left: 5px;
+}
+.item__box {
+  display: flex;
+}
