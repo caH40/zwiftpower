@@ -11,6 +11,8 @@ import IconLateJoin from '../icons/IconLateJoin';
 import IconHeartMonitor from '../icons/IconHeartMonitor';
 import IconPowerMeter from '../icons/IconPowerMeter';
 import IconRubberBanding from '../icons/IconRubberBanding';
+import IconViewEvent from '../icons/IconViewEvent';
+import IconViewGroup from '../icons/IconViewGroup';
 
 import styles from './RulesBox.module.css';
 
@@ -35,6 +37,12 @@ function RulesBox({ event, squareSize = 24, addCls }) {
           <IconRubberBanding squareSize={squareSize} />
         )}
         {event.categoryEnforcement && <IconCategoryEnforced squareSize={squareSize} />}
+        {event.cullingType === 'CULLING_EVENT_ONLY' && (
+          <IconViewEvent squareSize={squareSize} />
+        )}
+        {event.cullingType === 'CULLING_SUBGROUP_ONLY' && (
+          <IconViewGroup squareSize={squareSize} />
+        )}
       </>
     </div>
   );
