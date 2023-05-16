@@ -7,7 +7,7 @@ export async function timers() {
   try {
     const millisecondsInDay = 24 * 60 * 60 * 1000;
     const millisecondsIn23Minutes = 23 * 60 * 1000;
-    const millisecondsIn30Minutes = 30 * 60 * 1000;
+    const millisecondsIn12Minutes = 12 * 60 * 1000;
     setInterval(async () => {
       await controlConfirmEmail();
       await controlNewPasswords();
@@ -18,7 +18,7 @@ export async function timers() {
     }, millisecondsIn23Minutes);
     setInterval(async () => {
       await updateResults();
-    }, millisecondsIn30Minutes);
+    }, millisecondsIn12Minutes);
   } catch (error) {
     console.log(error);
   }
