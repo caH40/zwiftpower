@@ -34,15 +34,6 @@
   margin-bottom: 10px;
   font-weight: 400;
 }
-.params {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: 15px;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
 .paragraph {
   letter-spacing: 0.5px;
   text-align: justify;
@@ -70,9 +61,6 @@
 .link {
   text-decoration: none;
   color: var(--color-blue-4);
-}
-.comma:after {
-  content: ',';
 }
 .link:hover {
   text-decoration: underline;

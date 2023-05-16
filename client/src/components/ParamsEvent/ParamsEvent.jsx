@@ -1,5 +1,7 @@
 import React from 'react';
+import cn from 'classnames';
 
+import { addClasses as cns } from '../../utils/additional-classes';
 import IconParamsWorld from '../icons/Params/IconParamsWorld';
 import IconParamsRoute from '../icons/Params/IconParamsRoute';
 import IconParamsDistance from '../icons/Params/IconParamsDistance';
@@ -10,11 +12,11 @@ import { distanceObject, map, route } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
-function ParamsEvent({ event }) {
+function ParamsEvent({ event, addCls }) {
   const [subgroup] = event.eventSubgroups;
 
   return (
-    <div className={styles.block}>
+    <div className={cn(styles.block, cns(styles, addCls))}>
       {subgroup?.mapId && (
         <div className={styles.box}>
           <IconParamsWorld squareSize={30} />

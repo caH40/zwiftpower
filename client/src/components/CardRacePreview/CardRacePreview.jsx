@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CategoriesBox from '../CategoriesBox/CategoriesBox';
-import ParamsEvent from '../ParamEvent/ParamsEvent';
+import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import RulesBox from '../RulesBox/RulesBox';
 import TimeToStart from '../TimeToStart/TimeToStart';
 import { getTodayTomorrow } from '../../utils/date-convert';
