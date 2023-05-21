@@ -2,7 +2,7 @@ import { getEventService } from '../zwift/events.js';
 import { deleteEventService } from './events-delete.js';
 import { postEventService } from './events-post.js';
 
-export async function putEventService(eventId) {
+export async function putEventService(eventId, userId) {
   try {
     const { additionalParams } = await deleteEventService(eventId);
     const event = await getEventService(eventId);

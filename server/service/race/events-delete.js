@@ -43,7 +43,7 @@ export async function deleteEventAndResultsService(eventId, userId) {
     await ZwiftResult.deleteMany({ zwiftEventId: eventDB._id });
 
     // логирование действия
-    const description = 'delete event data from DB';
+    const description = 'deleteEventDataFromDB';
     const { id, name, eventStart } = eventDB;
     await loggingAdmin(id, name, eventStart, userId, description);
 

@@ -9,7 +9,7 @@ export async function getEventService(eventId, userId) {
     const urlEventData = `events/${eventId}?skip_cache=false`;
     const eventData = await getRequest(urlEventData);
     // логирование действия
-    const description = 'get zwift event data';
+    const description = 'getZwiftEventData';
     const { id, name, eventStart } = eventData;
     await loggingAdmin(id, name, eventStart, userId, description);
 
@@ -24,7 +24,7 @@ export async function putEventService(event, userId) {
     const urlEventData = `events/${event.eventData.id}`;
     const eventData = await putRequest(urlEventData, event);
     // логирование действия
-    const description = 'update zwift event data';
+    const description = 'updateZwiftEventData';
     const { id, name, eventStart } = event.eventData;
     await loggingAdmin(id, name, eventStart, userId, description);
 

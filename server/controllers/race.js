@@ -36,8 +36,10 @@ export async function getEvents(req, res) {
 }
 export async function postEvent(req, res) {
   try {
+    const { userId } = req.params;
     const { event } = req.body;
-    const eventSaved = await postEventService(event);
+
+    const eventSaved = await postEventService(event, userId);
     res.status(201).json(eventSaved);
   } catch (error) {
     console.log(error);
@@ -48,8 +50,10 @@ export async function postEvent(req, res) {
 }
 export async function putEvent(req, res) {
   try {
+    const { userId } = req.params;
     const { eventId } = req.body;
-    const eventUpdated = await putEventService(eventId);
+
+    const eventUpdated = await putEventService(eventId, userId);
     res.status(201).json(eventUpdated);
   } catch (error) {
     console.log(error);

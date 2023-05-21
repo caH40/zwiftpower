@@ -2,17 +2,23 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { countDistance } from '../../utility/distance.js';
 import { getZwiftInsiderUrl } from '../../utility/route.js';
+import { loggingAdmin } from '../log.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
 import { putSignedRidersService } from './signed-riders.js';
 
 // добавление эвента в БД zp.ru
-export async function postEventService(event) {
+export async function postEventService(event, userId) {
   try {
     await checkUnique(event);
 
     const eventSaved = await saveEventToDB(event);
     await putSignedRidersService(eventSaved.id);
     await updateStartInfoEvent(eventSaved);
+
+    // логирование действия
+    const description = 'postZwiftEvent';
+    const { id, name, eventStart } = eventSaved;
+    await loggingAdmin(id, name, eventStart, userId, description);
 
     return { message: 'Заезд добавлен в БД' };
   } catch (error) {
