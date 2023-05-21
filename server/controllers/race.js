@@ -60,8 +60,9 @@ export async function putEvent(req, res) {
 }
 export async function deleteEvent(req, res) {
   try {
+    const { userId } = req.params;
     const { eventId } = req.body;
-    const eventDeleted = await deleteEventService(eventId);
+    const eventDeleted = await deleteEventAndResultsService(eventId, userId);
     res.status(200).json(eventDeleted);
   } catch (error) {
     console.log(error);
@@ -84,8 +85,9 @@ export async function putResults(req, res) {
 }
 export async function deleteEventAndResults(req, res) {
   try {
+    const { userId } = req.params;
     const { eventId } = req.body;
-    const eventDeleted = await deleteEventAndResultsService(eventId);
+    const eventDeleted = await deleteEventAndResultsService(eventId, userId);
     res.status(200).json(eventDeleted);
   } catch (error) {
     console.log(error);
