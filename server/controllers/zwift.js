@@ -14,8 +14,9 @@ export async function getEvent(req, res) {
 }
 export async function putEvent(req, res) {
   try {
+    const { userId } = req.params;
     const { event } = req.body;
-    const eventChanged = await putEventService(event);
+    const eventChanged = await putEventService(event, userId);
     res.status(200).json(eventChanged);
   } catch (error) {
     console.log(error);
