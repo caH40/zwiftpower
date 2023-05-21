@@ -17,3 +17,15 @@ export async function loggingAdmin(eventId, eventName, eventStart, userId, descr
     console.error(error);
   }
 }
+export async function getLogsAdminsService() {
+  try {
+    const logsDB = await LogsAdmin.find();
+
+    return {
+      logs: logsDB,
+      message: 'Логи о действиях админов (модераторов)',
+    };
+  } catch (error) {
+    throw error;
+  }
+}

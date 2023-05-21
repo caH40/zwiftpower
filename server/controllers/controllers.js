@@ -307,3 +307,16 @@ export async function putGeneralPoints(req, res) {
     return res.status(500).json(error);
   }
 }
+// запрос логов по действиям админов(модераторов)
+export async function getLogsAdmins(req, res) {
+  try {
+    const logs = await getLogsAdminsService();
+
+    return res.status(200).json(logs);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
+  }
+}

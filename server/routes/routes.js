@@ -26,6 +26,7 @@ import {
   deleteResult,
   putGeneralPoints,
   getSeriesActual,
+  getLogsAdmins,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
@@ -65,3 +66,5 @@ router.post('/results', authAdmin, postResults);
 router.delete('/stage/results', authAdmin, deleteResults);
 
 router.put('/general', authAdmin, putGeneralPoints);
+
+router.get('/logs-admin', authAdmin, getLogsAdmins);
