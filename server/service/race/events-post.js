@@ -16,9 +16,11 @@ export async function postEventService(event, userId) {
     await updateStartInfoEvent(eventSaved);
 
     // логирование действия
-    const description = 'postZwiftEvent';
-    const { id, name, eventStart } = eventSaved;
-    await loggingAdmin(id, name, eventStart, userId, description);
+    if (userId) {
+      const description = 'postZwiftEvent';
+      const { id, name, eventStart } = eventSaved;
+      await loggingAdmin(id, name, eventStart, userId, description);
+    }
 
     return { message: 'Заезд добавлен в БД' };
   } catch (error) {

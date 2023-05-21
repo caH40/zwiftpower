@@ -1,9 +1,9 @@
-import { getEventService, putEventService } from '../service/zwift/events.js';
+import { getEventZwiftService, putEventZwiftService } from '../service/zwift/events.js';
 
 export async function getEvent(req, res) {
   try {
     const { eventId, userId } = req.params;
-    const event = await getEventService(eventId, userId);
+    const event = await getEventZwiftService(eventId, userId);
     res.status(200).json(event);
   } catch (error) {
     console.log(error);
@@ -16,7 +16,7 @@ export async function putEvent(req, res) {
   try {
     const { userId } = req.params;
     const { event } = req.body;
-    const eventChanged = await putEventService(event, userId);
+    const eventChanged = await putEventZwiftService(event, userId);
     res.status(200).json(eventChanged);
   } catch (error) {
     console.log(error);
