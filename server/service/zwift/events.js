@@ -1,4 +1,5 @@
 import { LogsAdmin } from '../../Model/LogsAdmin.js';
+import { loggingAdmin } from '../log.js';
 import { getRequest } from './request-get.js';
 import { putRequest } from './request-put.js';
 
@@ -8,18 +9,10 @@ export async function getEventService(eventId, userId) {
     const urlEventData = `events/${eventId}?skip_cache=false`;
     const eventData = await getRequest(urlEventData);
     // логирование действия
-    const millisecondsIn3Hours = 3 * 60 * 60 * 1000;
-    const eventStart = new Date(eventData.eventStart).getTime() + millisecondsIn3Hours;
-    await LogsAdmin.create({
-      userId,
-      date: Date.now(),
-      type: 'get zwift event data',
-      event: {
-        id: eventData.id,
-        name: eventData.name,
-        start: eventStart,
-      },
-    });
+    const description = 'get zwift event data';
+    const { id, name, eventStart } = eventData;
+    await loggingAdmin(id, name, eventStart, userId, description);
+
     return eventData;
   } catch (error) {
     throw error;
@@ -31,18 +24,10 @@ export async function putEventService(event, userId) {
     const urlEventData = `events/${event.eventData.id}`;
     const eventData = await putRequest(urlEventData, event);
     // логирование действия
-    const millisecondsIn3Hours = 3 * 60 * 60 * 1000;
-    const eventStart = new Date(event.eventData.eventStart).getTime() + millisecondsIn3Hours;
-    await LogsAdmin.create({
-      userId,
-      date: Date.now(),
-      type: 'update zwift event data',
-      event: {
-        id: event.eventData.id,
-        name: event.eventData.name,
-        start: eventStart,
-      },
-    });
+    const description = 'update zwift event data';
+    const { id, name, eventStart } = event.eventData;
+    await loggingAdmin(id, name, eventStart, userId, description);
+
     return { eventData, message: 'Изменения сохранены' };
   } catch (error) {
     throw error;
