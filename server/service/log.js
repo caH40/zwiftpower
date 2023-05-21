@@ -19,7 +19,8 @@ export async function loggingAdmin(eventId, eventName, eventStart, userId, descr
 }
 export async function getLogsAdminsService() {
   try {
-    const logsDB = await LogsAdmin.find();
+    const logsDB = await LogsAdmin.find().populate({ path: 'userId', select: 'username' });
+    logsDB.reverse();
 
     return {
       logs: logsDB,

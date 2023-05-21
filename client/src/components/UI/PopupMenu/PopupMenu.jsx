@@ -58,6 +58,11 @@ function PopupMenu() {
                   Бот
                 </Link>
               </li>
+              <li className={styles.item}>
+                <Link to="/logs/admin" className={styles.link}>
+                  Логи по Эвентам
+                </Link>
+              </li>
             </>
           )}
         </ul>

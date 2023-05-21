@@ -67,4 +67,4 @@ router.delete('/stage/results', authAdmin, deleteResults);
 
 router.put('/general', authAdmin, putGeneralPoints);
 
-router.get('/logs-admin', authAdmin, getLogsAdmins);
+router.get('/logs/admin', authAdmin, getLogsAdmins);

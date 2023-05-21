@@ -22,6 +22,7 @@ import RaceStatistics from './Pages/RaceStatistics/RaceStatistics';
 import RaceScheduleDescription from './Pages/RaceScheduleDescription/RaceScheduleDescription';
 import RaceResultsDescription from './Pages/RaceResultsDescription/RaceResultsDescription';
 import Faq from './Pages/Faq/Faq';
+import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
 
 function App() {
   useFirstAuth();
@@ -48,6 +49,7 @@ function App() {
         <Route path="/race/schedule/:eventId" element={<RaceScheduleDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />
         <Route path="/race/statistics" element={<RaceStatistics />} />
+        <Route path="/logs/admin" element={<LogsAdmin />} />
         <Route path="/faq" element={<Faq />} />
         {isModerator ? AdminRoute() : ''}
         <Route path="*" element={<Page404 />} />

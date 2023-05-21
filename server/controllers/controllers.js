@@ -29,6 +29,7 @@ import {
 } from '../service/stages.js';
 import { putUnderCheckingService } from '../service/underchecking.js';
 import { putGeneralPointsService } from '../service/general/general-update.js';
+import { getLogsAdminsService } from '../service/log.js';
 
 const __dirname = path.resolve();
 

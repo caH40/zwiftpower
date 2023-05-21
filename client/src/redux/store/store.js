@@ -16,6 +16,7 @@ import eventPreviewSlice from '../features/api/eventPreviewSlice';
 import eventResultSlice from '../features/api/eventResultSlice';
 import popupTableScheduleSlice from '../features/popupTableScheduleSlice';
 import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
+import logsAdminsSlice from '../features/api/logsAdminsSlice';
 
 export default configureStore({
   reducer: {
@@ -35,5 +36,6 @@ export default configureStore({
     fetchEventPreview: eventPreviewSlice,
     popupTableSchedule: popupTableScheduleSlice,
     popupTableResultsList: popupTableResultsListSlice,
+    logsAdmins: logsAdminsSlice,
   },
 });
