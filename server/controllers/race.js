@@ -77,8 +77,9 @@ export async function deleteEvent(req, res) {
 }
 export async function putResults(req, res) {
   try {
+    const { userId } = req.params;
     const { eventId } = req.body;
-    const resultsUpdated = await putResultsService(eventId);
+    const resultsUpdated = await putResultsService(eventId, userId);
     res.status(201).json(resultsUpdated);
   } catch (error) {
     console.log(error);
