@@ -2,8 +2,8 @@ import { getEventService, putEventService } from '../service/zwift/events.js';
 
 export async function getEvent(req, res) {
   try {
-    const { eventId } = req.params;
-    const event = await getEventService(eventId);
+    const { eventId, userId } = req.params;
+    const event = await getEventService(eventId, userId);
     res.status(200).json(event);
   } catch (error) {
     console.log(error);

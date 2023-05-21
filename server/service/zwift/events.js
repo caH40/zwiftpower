@@ -3,10 +3,23 @@ import { getRequest } from './request-get.js';
 import { putRequest } from './request-put.js';
 
 // запрос данных Эвента с сервера Zwift
-export async function getEventService(eventId) {
+export async function getEventService(eventId, userId) {
   try {
     const urlEventData = `events/${eventId}?skip_cache=false`;
     const eventData = await getRequest(urlEventData);
+    // логирование действия
+    const millisecondsIn3Hours = 3 * 60 * 60 * 1000;
+    const eventStart = new Date(eventData.eventStart).getTime() + millisecondsIn3Hours;
+    await LogsAdmin.create({
+      userId,
+      date: Date.now(),
+      type: 'get zwift event data',
+      event: {
+        id: eventData.id,
+        name: eventData.name,
+        start: eventStart,
+      },
+    });
     return eventData;
   } catch (error) {
     throw error;
@@ -30,7 +43,6 @@ export async function putEventService(event, userId) {
         start: eventStart,
       },
     });
-    console.log(logisAdminDB);
     return { eventData, message: 'Изменения сохранены' };
   } catch (error) {
     throw error;
