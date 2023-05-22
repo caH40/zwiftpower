@@ -1,8 +1,4 @@
-import { User } from '../../Model/User.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { secondesToTime } from '../../utility/date-convert.js';
-import { addPropertyAddition } from '../../utility/property-addition.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
@@ -62,40 +58,6 @@ export async function getResultsService(eventId) {
     }
 
     return { event: eventPrepared, message: 'Результаты заезда' };
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function getUserResultsService(zwiftId) {
-  try {
-    const resultsDB = await ZwiftResult.find({ profileId: zwiftId });
-    const results = resultsDB.map((result) => result.toObject());
-
-    const resultsWithMaxValues = addPropertyAddition(results);
-    for (let result of resultsWithMaxValues) {
-      const { name, eventStart } = await ZwiftEvent.findOne({
-        id: result.eventId,
-      });
-      result.eventName = name;
-      result.eventStart = new Date(eventStart).getTime();
-    }
-
-    // добавление строки времени в addition durationInMilliseconds
-    for (const result of resultsWithMaxValues) {
-      result.activityData.durationInMilliseconds.addition = secondesToTime(
-        result.activityData.durationInMilliseconds.value
-      );
-    }
-
-    resultsWithMaxValues.sort((a, b) => b.eventStart - a.eventStart);
-    const userDB = await User.findOne({ zwiftId });
-
-    return {
-      userResults: resultsWithMaxValues,
-      profile: userDB,
-      message: 'Профайл и результаты райдера',
-    };
   } catch (error) {
     throw error;
   }
