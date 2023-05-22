@@ -42,7 +42,11 @@ function App() {
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:zwiftId" element={<Profile />}>
+          <Route path="power" element={'*'} />
+          <Route path="weight" element={'*'} />
+          <Route path="settings" element={'*'} />
+        </Route>
         <Route path="/race/results" element={<RaceResultsList />} />
         <Route path="/race/results/:eventId" element={<RaceResultsDescription />} />
         <Route path="/race/schedule" element={<RaceScheduleList />} />
