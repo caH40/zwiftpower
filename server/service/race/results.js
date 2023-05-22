@@ -1,4 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
@@ -58,6 +59,16 @@ export async function getResultsService(eventId) {
     }
 
     return { event: eventPrepared, message: 'Результаты заезда' };
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getUserResultsService(zwiftId) {
+  try {
+    const resultsDB = await ZwiftResult.find({ profileId: zwiftId });
+
+    return { userResults: resultsDB, message: 'Результаты заезда' };
   } catch (error) {
     throw error;
   }

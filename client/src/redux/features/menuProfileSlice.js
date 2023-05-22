@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { profileButtons } from '../../asset/profile-buttons';
+
 const menuProfileSlice = createSlice({
   name: 'menuProfile',
-  initialState: { menuProfileState: { name: 'Результаты', isActive: true } },
+  initialState: { menuProfileState: { page: 'results', name: 'Результаты', isActive: true } },
   reducers: {
     setProfilePage(state, action) {
-      state.menuProfileState = action.payload;
+      state.menuProfileState = profileButtons.find(
+        (button) => button.name === action.payload.name
+      );
     },
     resetProfilePage(state) {
-      state.menuProfileState = { name: 'Результаты', isActive: true };
+      state.menuProfileState = { page: 'results', name: 'Результаты', isActive: true };
     },
   },
 });

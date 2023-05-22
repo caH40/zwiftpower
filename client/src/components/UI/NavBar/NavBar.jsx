@@ -11,7 +11,7 @@ import styles from './NavBar.module.css';
 
 function NavBar() {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.checkAuth.value);
+  const userAuth = useSelector((state) => state.checkAuth.value);
 
   const logout = () => {
     postLogout().then((_) => {
@@ -28,7 +28,7 @@ function NavBar() {
   return (
     <ul className={styles.list}>
       <li className={styles.item}>
-        {isAuth.status ? (
+        {userAuth.status ? (
           <span onClick={logout} className={styles.link}>
             Выход
           </span>
@@ -40,7 +40,7 @@ function NavBar() {
       </li>
       <li className={styles.item}>
         <div className={styles.box__user}>
-          <UserAccount isAuth={isAuth} />
+          <UserAccount userAuth={userAuth} />
         </div>
       </li>
     </ul>

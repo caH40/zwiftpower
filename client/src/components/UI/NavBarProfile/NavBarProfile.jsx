@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import ButtonForFilter from '../Filters/ButtonForFilter/ButtonForFilter';
@@ -10,6 +11,10 @@ import styles from './NavBarProfile.module.css';
 
 function NavBarProfile() {
   const { menuProfileState } = useSelector((state) => state.menuProfile);
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate(menuProfileState.page);
+  }, [menuProfileState, navigate]);
 
   return (
     <div className={styles.box}>

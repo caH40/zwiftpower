@@ -23,6 +23,7 @@ import RaceScheduleDescription from './Pages/RaceScheduleDescription/RaceSchedul
 import RaceResultsDescription from './Pages/RaceResultsDescription/RaceResultsDescription';
 import Faq from './Pages/Faq/Faq';
 import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
+import ProfileResults from './Pages/Profile/ProfileResults';
 
 function App() {
   useFirstAuth();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile/:zwiftId" element={<Profile />}>
+          <Route path="results" element={<ProfileResults />} />
           <Route path="power" element={'*'} />
           <Route path="weight" element={'*'} />
           <Route path="settings" element={'*'} />

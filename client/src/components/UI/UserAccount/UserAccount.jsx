@@ -6,14 +6,16 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './UserAccount.module.css';
 
-const UserAccount = ({ isAuth }) => {
+const UserAccount = ({ userAuth }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const avatar = isAuth?.user.photoProfile ? isAuth.user.photoProfile : '/images/avatar.svg';
+  const avatar = userAuth?.user.photoProfile
+    ? userAuth.user.photoProfile
+    : '/images/avatar.svg';
   const getClick = () => {
-    if (isAuth.status) {
-      navigate('/profile');
+    if (userAuth.status) {
+      navigate(`/profile/${userAuth.user.zwiftId || 'none'}`);
     } else {
       dispatch(getAlert({ message: 'Необходима авторизация', type: 'info', isOpened: true }));
     }

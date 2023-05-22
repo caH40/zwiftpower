@@ -18,8 +18,8 @@
   cursor: pointer;
 }
 .box__user {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
 }
 .link:hover {
   text-decoration: underline;

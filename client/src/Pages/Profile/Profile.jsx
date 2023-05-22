@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import useBackground from '../../hook/useBackground';
 import useTitle from '../../hook/useTitle';
@@ -10,7 +10,6 @@ import styles from './Profile.module.css';
 function Profile() {
   useTitle('Профиль пользователя');
   useBackground(false);
-  const { zwiftId } = useParams();
 
   return (
     <>
