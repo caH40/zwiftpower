@@ -5,15 +5,16 @@ import { NavLink } from 'react-router-dom';
 import { postLogout } from '../../../api/logout';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { getAuth } from '../../../redux/features/authSlice';
+import UserAccount from '../UserAccount/UserAccount';
 
 import styles from './NavBar.module.css';
 
 function NavBar() {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.checkAuth.value);
+  const isAuth = useSelector((state) => state.checkAuth.value);
 
   const logout = () => {
-    postLogout().then((data) => {
+    postLogout().then((_) => {
       localStorage.removeItem('accessToken');
       dispatch(
         getAuth({
@@ -27,7 +28,7 @@ function NavBar() {
   return (
     <ul className={styles.list}>
       <li className={styles.item}>
-        {status ? (
+        {isAuth.status ? (
           <span onClick={logout} className={styles.link}>
             Выход
           </span>
@@ -36,6 +37,11 @@ function NavBar() {
             Вход
           </NavLink>
         )}
+      </li>
+      <li className={styles.item}>
+        <div className={styles.box__user}>
+          <UserAccount isAuth={isAuth} />
+        </div>
       </li>
     </ul>
   );

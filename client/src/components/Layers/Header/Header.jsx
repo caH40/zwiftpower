@@ -13,6 +13,9 @@ function Header() {
   const titlePage = useSelector((state) => state.titlePage.value.title);
   const { isVisible } = useSelector((state) => state.menuBurger);
   const { isLoading } = useLoader();
+  const { user } = useSelector((state) => state.checkAuth.value);
+
+  const isModerator = ['admin', 'moderator'].includes(user.role);
 
   return (
     <header className={styles.header}>
@@ -23,7 +26,7 @@ function Header() {
       </div>
       <div className={styles.header__right}>
         <NavBar />
-        <Hamburger />
+        {isModerator && <Hamburger />}
       </div>
     </header>
   );
