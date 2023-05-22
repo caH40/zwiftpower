@@ -7,11 +7,11 @@ import { useResize } from '../../../hook/use-resize';
 
 import styles from './NavBarResultsRace.module.css';
 
-function NavBarResultsRace({ results }) {
+function NavBarResultsRace({ results, hideCategory }) {
   const { isScreenLg } = useResize();
   return (
     <div className={styles.box}>
-      <FilterCategory results={results} />
+      {hideCategory ? null : <FilterCategory results={results} />}
       {isScreenLg && <FilterWatts />}
       {isScreenLg && <FilterColumn />}
     </div>

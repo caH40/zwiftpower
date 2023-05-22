@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { getAlert } from '../alertMessageSlice';
+import { setValueMax } from '../../../utils/value-max';
 
 const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
@@ -13,7 +14,7 @@ export const fetchUserResults = createAsyncThunk(
         url: `${serverExpress}/api/race/profile/${zwiftId}/results/`,
         method: 'get',
       });
-      return response.data.userResults;
+      return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
@@ -25,7 +26,7 @@ export const fetchUserResults = createAsyncThunk(
 const userResultsSlice = createSlice({
   name: 'logsAdmins',
   initialState: {
-    user: {},
+    profile: {},
     results: [],
 
     status: null,
@@ -40,7 +41,8 @@ const userResultsSlice = createSlice({
     builder.addCase(fetchUserResults.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      state.results = action.payload;
+      state.profile = action.payload.profile;
+      state.results = setValueMax(action.payload.userResults);
     });
     builder.addCase(fetchUserResults.rejected, (state, action) => {
       state.status = 'rejected';
