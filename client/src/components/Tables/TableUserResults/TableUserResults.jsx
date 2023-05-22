@@ -40,12 +40,13 @@ function TableUserResults({ results }) {
       <tbody>
         {results?.map((result) => (
           <tr key={result._id}>
-            <td>{result.rankEvent}</td>
+            <td>{tdRank(result.rankEvent)}</td>
+            {sm && (
+              <td>
+                <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
+              </td>
+            )}
 
-            <td>
-              <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
-            </td>
-            {sm && <td>{tdRank(result.rankEvent)}</td>}
             <td>{getLocalDate(result.eventStart, 'onlyDate')}</td>
             <td>
               <Link className={styles.link} to={`/race/results/${result.eventId}`}>

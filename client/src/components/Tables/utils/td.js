@@ -115,7 +115,7 @@ export function tdHeight(value) {
 }
 export function tdRank(value) {
   if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
-  return null;
+  return value;
 }
 
 export function roundValueToTenths(value) {
