@@ -1,18 +1,42 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import SimpleInput from '../../components/UI/SimpleInput/SimpleInput';
 import Button from '../../components/UI/Button/Button';
 import { getZwiftRider } from '../../api/zwift/rider';
 import LogoRider from '../../components/LogoRider/LogoRider';
+import { updateZwiftId } from '../../api/user';
+import { checkAuth } from '../../api/auth-check';
+import { getAuth } from '../../redux/features/authSlice';
 
 import styles from './Profile.module.css';
 
 function ProfileSetting() {
   const [form, setForm] = useState({ zwiftId: 0 });
   const [rider, setRider] = useState({});
+  const dispatch = useDispatch();
 
   const findRider = () => {
     getZwiftRider(form.zwiftId).then((response) => setRider(response.data));
+  };
+
+  const saveZwiftId = () => {
+    updateZwiftId(form.zwiftId).then((response) => {
+      // обновление данный юзера после обновления zwiftId
+      checkAuth()
+        .then((response) => {
+          if (!response) return;
+          dispatch(getAuth({ status: true, user: response.data.user }));
+          localStorage.setItem('accessToken', response.data.accessToken);
+        })
+        .catch((error) => {
+          dispatch(getAuth({ status: false, user: {} }));
+          localStorage.setItem('accessToken', '');
+        });
+
+      setForm({ zwiftId: 0 });
+      setRider({});
+    });
   };
 
   return (
@@ -44,7 +68,7 @@ function ProfileSetting() {
                 <span>{rider.lastName}</span>
               </div>
             </div>
-            <Button getClick={findRider}>СОХРАНИТЬ</Button>
+            <Button getClick={saveZwiftId}>СОХРАНИТЬ</Button>
           </>
         )}
       </form>

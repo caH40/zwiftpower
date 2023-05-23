@@ -1,23 +1,23 @@
 .block__zwiftId {
-  max-width: 360px;
+  max-width: 460px;
   padding: 15px;
   background: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
   border-radius: 5px;
 }
 
-.box__img {
-  font-size: 30px;
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
-  overflow: hidden;
-}
 .box__rider {
   display: flex;
-  gap: 0 20px;
+  gap: 15px 20px;
   margin-top: 20px;
   margin-bottom: 12px;
+}
+.box__img {
+  font-size: 30px;
+  flex: 0 0 100px;
+  height: 100px;
+  border-radius: 10%;
+  overflow: hidden;
 }
 .box__name {
   font-weight: 700;
