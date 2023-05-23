@@ -13,6 +13,7 @@
   letter-spacing: 0.06em;
   user-select: none;
   background-color: var(--color-text-main);
+  text-decoration: none;
 }
 .button:not(.active) {
   color: var(--color-border-minor);
@@ -38,6 +39,7 @@
   border-left: none;
   border-radius: 0px 0.4em 0.4em 0px;
 }
+
 .active {
   background-color: var(--color-yellow-5);
   transition: 0.2s;

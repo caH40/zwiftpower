@@ -13,9 +13,12 @@ const UserAccount = ({ userAuth }) => {
   const avatar = userAuth?.user.photoProfile
     ? userAuth.user.photoProfile
     : '/images/avatar.svg';
+
+  const url = userAuth.user.zwiftId ? '/profile/me/results' : '/profile/me/settings';
+
   const getClick = () => {
     if (userAuth.status) {
-      navigate(`/profile/${userAuth.user.zwiftId || 'none'}`);
+      navigate(url);
     } else {
       dispatch(getAlert({ message: 'Необходима авторизация', type: 'info', isOpened: true }));
     }

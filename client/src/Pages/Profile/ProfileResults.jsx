@@ -10,16 +10,26 @@ import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 function ProfileResults() {
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
+  const userAuth = useSelector((state) => state.checkAuth.value);
   const { results, profile } = useSelector((state) => state.fetchUserResults);
 
   useEffect(() => {
-    dispatch(fetchUserResults({ zwiftId }));
-  }, [dispatch, zwiftId]);
+    // если пользователь не добавил свой zwiftId, то запрос делать не надо
+    // if (!userAuth.user.zwiftId && zwiftId === 'me') return;
+    const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
+    dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
+  }, [dispatch, zwiftId, userAuth]);
   return (
     <div>
-      <ProfileBlock results={results} profile={profile} />
-      <NavBarResultsRace results={results} hideCategory={true} />
-      <TableUserResults results={results} />
+      {zwiftId === 'none' ? (
+        'Необходимо добавить свой zwiftId в "Настройках"'
+      ) : (
+        <>
+          <ProfileBlock results={results} profile={profile} />
+          <NavBarResultsRace results={results} hideCategory={true} />
+          <TableUserResults results={results} />
+        </>
+      )}
     </div>
   );
 }

@@ -1,38 +1,56 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import ButtonForFilter from '../Filters/ButtonForFilter/ButtonForFilter';
-import { setProfilePage } from '../../../redux/features/menuProfileSlice';
-import { profileButtons, quantityButtons } from '../../../asset/profile-buttons';
+import { profileButtons } from '../../../asset/profile-buttons';
 
 import styles from './NavBarProfile.module.css';
 
-function NavBarProfile() {
-  const { menuProfileState } = useSelector((state) => state.menuProfile);
-  const navigate = useNavigate();
+function NavBarProfile({ zwiftId }) {
+  const [buttons, setButtons] = useState(profileButtons);
+  const userAuth = useSelector((state) => state.checkAuth.value);
+
   useEffect(() => {
-    navigate(menuProfileState.page);
-  }, [menuProfileState, navigate]);
+    if (zwiftId !== 'me') {
+      // исключение меню Настройки если просматривается не свой профиль
+      setButtons(profileButtons.filter((button) => button.page !== 'settings'));
+    } else if (zwiftId === 'me' && !userAuth.user.zwiftId) {
+      // если просматривается свой профиль, но не добавлен zwiftid, то показывать только меню настроек
+      setButtons(profileButtons.filter((button) => button.page === 'settings'));
+    } else {
+      setButtons(profileButtons);
+    }
+  }, [zwiftId, userAuth]);
+
+  const getStyle = (isActive, index) => {
+    // в зависимости от относительного положения и количества кнопок применяются разные стили
+    const quantityBtn = buttons.length;
+    const positions = {
+      [styles.button__left]: index === 0 && quantityBtn !== 1,
+      [styles.button__center]: index !== 0 && quantityBtn > 2 && index + 1 !== quantityBtn,
+      [styles.button__right]: index !== 0 && index + 1 === quantityBtn,
+    };
+
+    if (isActive) {
+      return cn(styles.button, styles.active, positions);
+    } else {
+      return cn(styles.button, positions);
+    }
+  };
 
   return (
-    <div className={styles.box}>
-      {profileButtons.map((button, index) => (
-        <ButtonForFilter
-          key={button.id}
-          position={cn({
-            left: index === 0,
-            center: index !== 0 && quantityButtons > 2 && index + 1 !== quantityButtons,
-            right: index !== 0 && index + 1 === quantityButtons,
-          })}
-          active={menuProfileState.name === button.name}
-          reducer={setProfilePage}
+    <nav className={styles.box}>
+      {buttons.map((buttonLink, index) => (
+        <NavLink
+          className={({ isActive }) => getStyle(isActive, index)}
+          to={`/profile/${zwiftId}/${buttonLink.page}`}
+          key={buttonLink.id}
         >
-          {button.name}
-        </ButtonForFilter>
+          {buttonLink.name}
+        </NavLink>
       ))}
-    </div>
+    </nav>
   );
 }
 

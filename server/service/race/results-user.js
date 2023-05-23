@@ -6,6 +6,13 @@ import { addPropertyAddition } from '../../utility/property-addition.js';
 
 export async function getUserResultsService(zwiftId) {
   try {
+    if (zwiftId === 'undefined')
+      return {
+        userResults: [],
+        profile: {},
+        message: 'Некорректный zwiftId',
+      };
+
     const resultsDB = await ZwiftResult.find({ profileId: zwiftId });
     const results = resultsDB.map((result) => result.toObject());
 

@@ -30,7 +30,7 @@ function TableSignedRiders({ riders = [] }) {
               <CategoryBox showLabel={true} label={rider.subgroupLabel} circle={true} />
             </td>
             <td>
-              <Link className={styles.link} to={`/profile/${rider.profileId}/results`}>
+              <Link className={styles.link} to={`/profile/${rider.id}/results`}>
                 {tdRider(
                   rider.firstName,
                   rider.lastName,
