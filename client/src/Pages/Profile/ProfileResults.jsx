@@ -14,8 +14,6 @@ function ProfileResults() {
   const { results, profile } = useSelector((state) => state.fetchUserResults);
 
   useEffect(() => {
-    // если пользователь не добавил свой zwiftId, то запрос делать не надо
-    // if (!userAuth.user.zwiftId && zwiftId === 'me') return;
     const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
     dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, userAuth]);

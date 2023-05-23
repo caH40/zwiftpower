@@ -24,6 +24,7 @@ import RaceResultsDescription from './Pages/RaceResultsDescription/RaceResultsDe
 import Faq from './Pages/Faq/Faq';
 import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
 import ProfileResults from './Pages/Profile/ProfileResults';
+import ProfileSetting from './Pages/Profile/ProfileSetting';
 
 function App() {
   useFirstAuth();
@@ -47,7 +48,7 @@ function App() {
           <Route path="results" element={<ProfileResults />} />
           <Route path="power" element={'*'} />
           <Route path="weight" element={'*'} />
-          <Route path="settings" element={'*'} />
+          <Route path="settings" element={<ProfileSetting />} />
         </Route>
         <Route path="/race/results" element={<RaceResultsList />} />
         <Route path="/race/results/:eventId" element={<RaceResultsDescription />} />
