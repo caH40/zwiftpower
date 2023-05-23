@@ -25,16 +25,16 @@ function DescriptionEventZwift({ event, forSchedule }) {
   return (
     <>
       <div className={styles.title__box}>
-        <h3 className={styles.title}>{event.name}</h3>
+        <h2 className={styles.title}>{event.name}</h2>
         {isModerator && forSchedule && (
           <Link to={`/zwift/edit/event/${event.id}`}>
             <IconEdit toolTip={'Редактирование параметров заезда в Звифте'} />
           </Link>
         )}
       </div>
-      <h4 className={styles.h4}>{getLocalDate(event.eventStart)}</h4>
-      <ParamsEvent event={event} addCls={'mb10'} />
-      <RulesBox event={event} addCls={'mb10'} />
+      <h3 className={styles.title__sub}>{getLocalDate(event.eventStart)}</h3>
+      <ParamsEvent event={event} addCls={'mb15'} />
+      <RulesBox event={event} addCls={'mb15'} />
       <CategoriesBox event={event} needGaps={true} addCls={'mb10'} />
       <ButtonSimple getClick={openDetailed} addCls={'mb10'}>
         <span>Подробное описание</span>

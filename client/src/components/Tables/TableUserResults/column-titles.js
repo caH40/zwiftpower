@@ -1,5 +1,5 @@
 export const raceResultsColumnsStartFull = [
-  { name: '#', id: 0 },
+  { name: '', id: 0 },
   { name: 'Категория', id: 1 },
   { name: 'Дата', id: 2 },
   { name: 'Название', id: 3 },
@@ -8,7 +8,7 @@ export const raceResultsColumnsStartFull = [
   { name: 'Относительная средняя мощность за гонку', id: 6 },
 ];
 export const raceResultsColumnsStartLg = [
-  { name: '#', id: 0 },
+  { name: '', id: 0 },
   { name: 'Категория', id: 1 },
   { name: 'Дата', id: 2 },
   { name: 'Название', id: 3 },
@@ -17,7 +17,7 @@ export const raceResultsColumnsStartLg = [
   { name: 'Относительная средняя мощность за гонку', id: 6 },
 ];
 export const raceResultsColumnsStartSm = [
-  { name: '#', id: 0 },
+  { name: '', id: 0 },
   { name: 'Дата', id: 2 },
   { name: 'Название', id: 3 },
   { name: 'Время', id: 4 },

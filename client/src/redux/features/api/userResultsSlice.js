@@ -35,6 +35,8 @@ const userResultsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUserResults.pending, (state) => {
+      state.profile = {};
+      state.results = [];
       state.error = null;
       state.status = 'loading';
     });

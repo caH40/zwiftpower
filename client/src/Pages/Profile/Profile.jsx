@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import useBackground from '../../hook/useBackground';
 import useTitle from '../../hook/useTitle';
-import NavBarProfile from '../../components/UI/NavBarProfile/NavBarProfile';
+// import NavBarProfile from '../../components/UI/NavBarProfile/NavBarProfile';
 
 import styles from './Profile.module.css';
 
@@ -14,7 +14,7 @@ function Profile() {
   return (
     <>
       <section className={styles.wrapper}>
-        <NavBarProfile />
+        {/* <NavBarProfile /> */}
         <Outlet />
       </section>
     </>

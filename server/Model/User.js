@@ -22,6 +22,7 @@ const userSchema = new Schema({
   role: { type: String },
   photoFromZp: { type: Boolean },
   photoProfile: { type: String },
+  bio: { type: String },
 });
 
 export const User = model('User', userSchema);

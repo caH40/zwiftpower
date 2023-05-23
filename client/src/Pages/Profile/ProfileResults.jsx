@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { fetchUserResults } from '../../redux/features/api/userResultsSlice';
 import TableUserResults from '../../components/Tables/TableUserResults/TableUserResults';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
+import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 
 function ProfileResults() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function ProfileResults() {
   }, [dispatch, zwiftId]);
   return (
     <div>
+      <ProfileBlock results={results} profile={profile} />
       <NavBarResultsRace results={results} hideCategory={true} />
       <TableUserResults results={results} />
     </div>

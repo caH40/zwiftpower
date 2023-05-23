@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
@@ -55,20 +56,23 @@ function TableRaceResults({ results }) {
       <tbody>
         {resultFiltered?.map((result, index) => (
           <tr key={result._id}>
-            <td>{index + 1}</td>
+            <td>{tdRank(result.rankEvent)}</td>
+            {sm && (
+              <td>
+                <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
+              </td>
+            )}
 
             <td>
-              <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
-            </td>
-            {sm && <td>{tdRank(result.rankEvent)}</td>}
-            <td>
-              {tdRider(
-                result.profileData.firstName,
-                result.profileData.lastName,
-                result.profileData.imageSrc,
-                result.profileData.countryAlpha3,
-                sm
-              )}
+              <Link className={styles.link} to={`/profile/${result.profileId}/results`}>
+                {tdRider(
+                  result.profileData.firstName,
+                  result.profileData.lastName,
+                  result.profileData.imageSrc,
+                  result.profileData.countryAlpha3,
+                  sm
+                )}
+              </Link>
             </td>
 
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
