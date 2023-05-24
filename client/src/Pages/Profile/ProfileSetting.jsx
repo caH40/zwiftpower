@@ -8,6 +8,7 @@ import LogoRider from '../../components/LogoRider/LogoRider';
 import { updateZwiftId } from '../../api/user';
 import { checkAuth } from '../../api/auth-check';
 import { getAuth } from '../../redux/features/authSlice';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Profile.module.css';
 
@@ -21,22 +22,29 @@ function ProfileSetting() {
   };
 
   const saveZwiftId = () => {
-    updateZwiftId(form.zwiftId).then((response) => {
-      // обновление данный юзера после обновления zwiftId
-      checkAuth()
-        .then((response) => {
-          if (!response) return;
-          dispatch(getAuth({ status: true, user: response.data.user }));
-          localStorage.setItem('accessToken', response.data.accessToken);
-        })
-        .catch((error) => {
-          dispatch(getAuth({ status: false, user: {} }));
-          localStorage.setItem('accessToken', '');
-        });
+    updateZwiftId(form.zwiftId)
+      .then((response) => {
+        // обновление данный юзера после обновления zwiftId
+        checkAuth()
+          .then((response) => {
+            if (!response) return;
+            dispatch(getAuth({ status: true, user: response.data.user }));
+            localStorage.setItem('accessToken', response.data.accessToken);
+          })
+          .catch((error) => {
+            dispatch(getAuth({ status: false, user: {} }));
+            localStorage.setItem('accessToken', '');
+          });
 
-      setForm({ zwiftId: 0 });
-      setRider({});
-    });
+        setForm({ zwiftId: 0 });
+        setRider({});
+        dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
+      })
+      .catch((error) => {
+        dispatch(
+          getAlert({ message: error.response.data.message, type: 'error', isOpened: true })
+        );
+      });
   };
 
   return (

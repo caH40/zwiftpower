@@ -3,11 +3,12 @@ import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { addClasses as cns } from '../../../utils/additional-classes';
 import { profileButtons } from '../../../asset/profile-buttons';
 
 import styles from './NavBarProfile.module.css';
 
-function NavBarProfile({ zwiftId }) {
+function NavBarProfile({ zwiftId, addCls }) {
   const [buttons, setButtons] = useState(profileButtons);
   const userAuth = useSelector((state) => state.checkAuth.value);
 
@@ -40,7 +41,7 @@ function NavBarProfile({ zwiftId }) {
   };
 
   return (
-    <nav className={styles.box}>
+    <nav className={cn(styles.box, cns(styles, addCls))}>
       {buttons.map((buttonLink, index) => (
         <NavLink
           className={({ isActive }) => getStyle(isActive, index)}

@@ -15,7 +15,7 @@ function Profile() {
   return (
     <>
       <section className={styles.wrapper}>
-        <NavBarProfile zwiftId={zwiftId} />
+        <NavBarProfile zwiftId={zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>
     </>

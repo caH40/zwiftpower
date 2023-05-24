@@ -33,6 +33,7 @@ export async function authorizationService(username, password, refreshToken) {
         id: userDB._id,
         role: userDB.role,
         photoProfile: userDB.photoProfile,
+        zwiftId: userDB.zwiftId,
       },
     };
   } catch (error) {

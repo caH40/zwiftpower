@@ -25,6 +25,8 @@ import Faq from './Pages/Faq/Faq';
 import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
 import ProfileResults from './Pages/Profile/ProfileResults';
 import ProfileSetting from './Pages/Profile/ProfileSetting';
+import ProfilePower from './Pages/Profile/ProfilePower';
+import ProfileWeight from './Pages/Profile/ProfileWeight';
 
 function App() {
   useFirstAuth();
@@ -46,8 +48,8 @@ function App() {
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile/:zwiftId" element={<Profile />}>
           <Route path="results" element={<ProfileResults />} />
-          <Route path="power" element={'*'} />
-          <Route path="weight" element={'*'} />
+          <Route path="power" element={<ProfileWeight />} />
+          <Route path="weight" element={<ProfilePower />} />
           <Route path="settings" element={<ProfileSetting />} />
         </Route>
         <Route path="/race/results" element={<RaceResultsList />} />

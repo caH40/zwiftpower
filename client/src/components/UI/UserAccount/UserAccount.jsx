@@ -14,9 +14,9 @@ const UserAccount = ({ userAuth }) => {
     ? userAuth.user.photoProfile
     : '/images/avatar.svg';
 
-  const url = userAuth.user.zwiftId ? '/profile/me/results' : '/profile/me/settings';
-
   const getClick = () => {
+    const url = userAuth.user.zwiftId ? '/profile/me/results' : '/profile/me/settings';
+
     if (userAuth.status) {
       navigate(url);
     } else {
