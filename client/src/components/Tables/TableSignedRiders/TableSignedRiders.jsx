@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { tdLinkZP, tdRider } from '../utils/td';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
@@ -29,13 +30,15 @@ function TableSignedRiders({ riders = [] }) {
               <CategoryBox showLabel={true} label={rider.subgroupLabel} circle={true} />
             </td>
             <td>
-              {tdRider(
-                rider.firstName,
-                rider.lastName,
-                rider.imageSrc,
-                rider.countryAlpha3,
-                sm
-              )}
+              <Link className={styles.link} to={`/profile/${rider.id}/results`}>
+                {tdRider(
+                  rider.firstName,
+                  rider.lastName,
+                  rider.imageSrc,
+                  rider.countryAlpha3,
+                  sm
+                )}
+              </Link>
             </td>
             {lg && <td></td>}
             {sm && <td>{getWeightStr(rider.weight)}</td>}

@@ -1,4 +1,3 @@
-import avatar from '../../../images/avatar.svg';
 import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
 import Flag from '../../Flag/Flag';
@@ -6,7 +5,6 @@ import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
 export function tdRider(firstName, lastName, imageSrc, flag, showIcons) {
-  const riderLogo = imageSrc ? imageSrc : avatar;
   return (
     <div className={styles.rider}>
       {flag ? (
@@ -19,7 +17,7 @@ export function tdRider(firstName, lastName, imageSrc, flag, showIcons) {
       {showIcons && (
         <div className={styles.rider__logo}>
           {imageSrc ? (
-            <img className={styles.rider__img} src={riderLogo} alt="Ph" />
+            <img className={styles.rider__img} src={imageSrc} alt="Ph" />
           ) : (
             <div className={styles.rider__img__empty}>
               {firstName.slice(0, 1) + lastName.slice(0, 1)}
@@ -117,7 +115,7 @@ export function tdHeight(value) {
 }
 export function tdRank(value) {
   if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
-  return null;
+  return value;
 }
 
 export function roundValueToTenths(value) {

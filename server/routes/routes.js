@@ -27,9 +27,11 @@ import {
   putGeneralPoints,
   getSeriesActual,
   getLogsAdmins,
+  putUserZwiftId,
 } from '../controllers/controllers.js';
 import { postSchedule, postResults } from '../controllers/uploads.js';
 import { authAdmin } from '../middleware/authRole.js';
+import { checkAuth } from '../middleware/auth.js';
 
 export const router = new Router();
 
@@ -68,3 +70,5 @@ router.delete('/stage/results', authAdmin, deleteResults);
 router.put('/general', authAdmin, putGeneralPoints);
 
 router.get('/logs/admin', authAdmin, getLogsAdmins);
+
+router.put('/user', checkAuth, putUserZwiftId);

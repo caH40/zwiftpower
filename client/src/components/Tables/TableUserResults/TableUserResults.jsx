@@ -1,37 +1,21 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {
-  tdHeartRate,
-  tdHeight,
-  tdRank,
-  tdRider,
-  tdTime,
-  tdWatts,
-  tdWattsPerKg,
-  tdWeight,
-} from '../utils/td';
-import { tdGap } from '../utils/td';
+import { tdHeartRate, tdRank, tdTime, tdWatts, tdWattsPerKg, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
-import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import Th from '../Th/Th';
+import { getLocalDate } from '../../../utils/date-convert';
 
 import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
-function TableRaceResults({ results }) {
-  const filterCategory = useSelector((state) => state.filterCategory.value);
+function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
-
-  const resultFiltered = useMemo(() => {
-    if (filterCategory.name === 'All') return results;
-    return [...results].filter((result) => result.subgroupLabel === filterCategory.name);
-  }, [filterCategory, results]);
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
@@ -54,7 +38,7 @@ function TableRaceResults({ results }) {
         </tr>
       </thead>
       <tbody>
-        {resultFiltered?.map((result, index) => (
+        {results?.map((result) => (
           <tr key={result._id}>
             <td>{tdRank(result.rankEvent)}</td>
             {sm && (
@@ -63,21 +47,13 @@ function TableRaceResults({ results }) {
               </td>
             )}
 
+            <td>{getLocalDate(result.eventStart, 'onlyDate')}</td>
             <td>
-              <Link className={styles.link} to={`/profile/${result.profileId}/results`}>
-                {tdRider(
-                  result.profileData.firstName,
-                  result.profileData.lastName,
-                  result.profileData.imageSrc,
-                  result.profileData.countryAlpha3,
-                  sm
-                )}
+              <Link className={styles.link} to={`/race/results/${result.eventId}`}>
+                <span className={styles.big}>{result.eventName}</span>
               </Link>
             </td>
-
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-            {lg && <td>{tdGap(result.gap)}</td>}
-            {lg && <td>{tdGap(result.gapPrev)}</td>}
             {sm && <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>}
             {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
@@ -98,8 +74,6 @@ function TableRaceResults({ results }) {
               <>
                 <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
                 <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
-                <td>{tdHeight(result.profileData.heightInCentimeters.addition)}</td>
-                <td>{getAgeCategory(result.profileData.age)}</td>
               </>
             )}
           </tr>
@@ -109,4 +83,4 @@ function TableRaceResults({ results }) {
   );
 }
 
-export default TableRaceResults;
+export default TableUserResults;

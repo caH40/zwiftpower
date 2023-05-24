@@ -30,6 +30,7 @@ import {
 import { putUnderCheckingService } from '../service/underchecking.js';
 import { putGeneralPointsService } from '../service/general/general-update.js';
 import { getLogsAdminsService } from '../service/log.js';
+import { updateZwiftIdService } from '../service/user.js';
 
 const __dirname = path.resolve();
 
@@ -314,6 +315,21 @@ export async function getLogsAdmins(req, res) {
     const logs = await getLogsAdminsService();
 
     return res.status(200).json(logs);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
+  }
+}
+// обновление zwiftId у пользователя
+export async function putUserZwiftId(req, res) {
+  try {
+    const { userId } = req.params;
+    const { zwiftId } = req.body;
+    const user = await updateZwiftIdService(userId, zwiftId);
+
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error);
     res

@@ -1,4 +1,4 @@
-export function setValueMax(results) {
+export function setValueMax(results = []) {
   try {
     if (!results.length) return [];
 

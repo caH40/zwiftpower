@@ -7,6 +7,7 @@ import { putEventService } from '../service/race/events-put.js';
 import { getEventService } from '../service/race/events.js';
 import { getEventsService } from '../service/race/events.js';
 import { putResultsService } from '../service/race/results-put.js';
+import { getUserResultsService } from '../service/race/results-user.js';
 import { getResultsService } from '../service/race/results.js';
 
 export async function getEvent(req, res) {
@@ -106,6 +107,19 @@ export async function getResults(req, res) {
     const { eventId } = req.params;
     const eventResults = await getResultsService(eventId);
     res.status(200).json(eventResults);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
+  }
+}
+export async function getUserResults(req, res) {
+  try {
+    const { zwiftId } = req.params;
+
+    const userResults = await getUserResultsService(zwiftId);
+    res.status(200).json(userResults);
   } catch (error) {
     console.log(error);
     res

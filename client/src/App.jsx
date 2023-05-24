@@ -23,6 +23,10 @@ import RaceScheduleDescription from './Pages/RaceScheduleDescription/RaceSchedul
 import RaceResultsDescription from './Pages/RaceResultsDescription/RaceResultsDescription';
 import Faq from './Pages/Faq/Faq';
 import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
+import ProfileResults from './Pages/Profile/ProfileResults';
+import ProfileSetting from './Pages/Profile/ProfileSetting';
+import ProfilePower from './Pages/Profile/ProfilePower';
+import ProfileWeight from './Pages/Profile/ProfileWeight';
 
 function App() {
   useFirstAuth();
@@ -42,7 +46,12 @@ function App() {
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/results/stage/:stageId" element={<StageResults />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:zwiftId" element={<Profile />}>
+          <Route path="results" element={<ProfileResults />} />
+          <Route path="power" element={<ProfileWeight />} />
+          <Route path="weight" element={<ProfilePower />} />
+          <Route path="settings" element={<ProfileSetting />} />
+        </Route>
         <Route path="/race/results" element={<RaceResultsList />} />
         <Route path="/race/results/:eventId" element={<RaceResultsDescription />} />
         <Route path="/race/schedule" element={<RaceScheduleList />} />

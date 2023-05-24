@@ -1,0 +1,43 @@
+.params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+}
+.box__img {
+  font-size: 30px;
+  flex: 0 0 140px;
+  height: 140px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.box__term {
+  width: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0 5px;
+}
+.box__term + .box__term {
+  margin-top: 6px;
+}
+.list {
+  margin: 0;
+}
+.term {
+  flex-basis: 70px;
+  font-weight: 400;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin: 0px;
+}
+.term::after {
+  content: ':';
+}
+.term__description {
+  flex: 1 1 250px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  margin-inline-start: 0px;
+  margin: 0px;
+}

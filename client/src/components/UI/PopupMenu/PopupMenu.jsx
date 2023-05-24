@@ -8,7 +8,7 @@ import styles from './PopupMenu.module.css';
 
 function PopupMenu() {
   const dispatch = useDispatch();
-  const { user, status } = useSelector((state) => state.checkAuth.value);
+  const { user } = useSelector((state) => state.checkAuth.value);
 
   // const isAdmin = ['admin'].includes(user.role);
   const isModerator = ['admin', 'moderator'].includes(user.role);
@@ -17,20 +17,6 @@ function PopupMenu() {
     <div className={styles.modal__overlay} onClick={() => dispatch(showMenu())}>
       <div className={styles.popup}>
         <ul className={styles.list}>
-          <li className={styles.item}>
-            <Link to="/" className={styles.link}>
-              Главная
-            </Link>
-          </li>
-
-          {status && (
-            <li className={styles.item}>
-              <Link to="/profile" className={styles.link}>
-                Профиль
-              </Link>
-            </li>
-          )}
-
           {isModerator && (
             <>
               <li className={styles.item}>

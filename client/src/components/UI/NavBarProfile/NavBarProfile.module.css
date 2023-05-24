@@ -1,0 +1,60 @@
+.box {
+  display: flex;
+  justify-content: flex-end;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid var(--color-blue-main);
+  border-radius: 0.4em;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  user-select: none;
+  background-color: var(--color-text-main);
+  text-decoration: none;
+}
+.button:not(.active) {
+  color: var(--color-border-minor);
+  transition: 0.2s;
+}
+.button:not(.active):hover {
+  background-color: var(--color-border-minor);
+  color: var(--color-text-minor);
+  transition: 0.2s;
+}
+.button:not(.active):active {
+  background-color: var(--color-yellow-4);
+  transition: 0.2s;
+}
+.button__center {
+  border-left: none;
+  border-radius: 0px;
+}
+.button__left {
+  border-radius: 0.4em 0px 0px 0.4em;
+}
+.button__right {
+  border-left: none;
+  border-radius: 0px 0.4em 0.4em 0px;
+}
+
+.active {
+  background-color: var(--color-yellow-5);
+  transition: 0.2s;
+}
+.mb15 {
+  margin-bottom: 15px;
+}
+@media screen and (max-width: 576px) {
+  .button {
+    font-size: 13px;
+    padding: 0.2em 0.6em;
+    letter-spacing: inherit;
+  }
+}
