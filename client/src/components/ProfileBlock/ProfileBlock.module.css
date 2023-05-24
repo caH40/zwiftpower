@@ -1,10 +1,11 @@
 .params {
   display: flex;
-  gap: 0 20px;
+  flex-wrap: wrap;
+  gap: 15px 20px;
 }
 .box__img {
   font-size: 30px;
-  width: 140px;
+  flex: 0 0 140px;
   height: 140px;
   border-radius: 20px;
   overflow: hidden;
