@@ -10,6 +10,10 @@ function MainInfoDev() {
         <div className={styles.text}>
           <ul className={styles.list__dev}>
             <li className={styles.item}>
+              <span className={styles.date}>24.05.2023</span>создание профиля пользователя с
+              результатами заездов
+            </li>
+            <li className={styles.item}>
               <span className={styles.date}>14.05.2023</span>замена названий столбцов в таблицах
               на иконки
             </li>
