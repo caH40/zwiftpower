@@ -49,6 +49,7 @@ function ProfileSetting() {
 
   return (
     <section className={styles.wrapper}>
+      <span>Добавление Zwift Id в профиль пользователя</span>
       <form className={styles.block__zwiftId}>
         <div className={styles.box__zwiftId}>
           <SimpleInput
