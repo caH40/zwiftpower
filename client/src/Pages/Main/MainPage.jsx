@@ -27,12 +27,12 @@ function MainPage() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__preview}>
+        {!eventsPreview[0]?.id && <div className={styles.title__notFound}>{notFound}</div>}
         {eventsPreview.map((event) => (
           <CardRacePreview event={event} key={event.id} getClick={toLink} />
         ))}
       </div>
       <div className={styles.wrapper__info}>
-        {eventsPreview?.length || <div className={styles.title__notFound}>{notFound}</div>}
         <h2 className={styles.title__info}>Информационный блок</h2>
         <MainInfo />
         <MainInfoDev />

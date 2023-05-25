@@ -24,7 +24,7 @@ function TableLogsAdmin({ logs }) {
         {logs?.map((log) => (
           <tr key={log._id}>
             <td>{getStringDate(log.date)}</td>
-            <td>{log.userId.username}</td>
+            <td>{log.userId?.username || 'deleted'}</td>
             <td>{descriptionLogsAdmins[log.description]}</td>
             {sm && <td>{log.event.id}</td>}
             <td>{log.event.name}</td>
