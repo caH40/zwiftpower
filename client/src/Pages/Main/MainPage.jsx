@@ -11,6 +11,8 @@ import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 
 import styles from './MainPage.module.css';
 
+const notFound = 'К сожалению, заезды не найдены ... ((';
+
 function MainPage() {
   const { eventsPreview } = useSelector((state) => state.fetchEvents);
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ function MainPage() {
         ))}
       </div>
       <div className={styles.wrapper__info}>
+        {eventsPreview?.length || <div className={styles.title__notFound}>{notFound}</div>}
         <h2 className={styles.title__info}>Информационный блок</h2>
         <MainInfo />
         <MainInfoDev />

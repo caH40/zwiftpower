@@ -9,6 +9,10 @@ import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 
+import styles from './RaceScheduleList.module.css';
+
+const notFound = 'К сожалению, заезды не найдены ... ((';
+
 function RaceScheduleList() {
   const [trigger, setTrigger] = useState(false);
   const { eventsSchedule } = useSelector((state) => state.fetchEvents);
@@ -52,13 +56,15 @@ function RaceScheduleList() {
 
   return (
     <section>
-      {eventsSchedule?.[0] && (
+      {eventsSchedule?.[0] ? (
         <TableSchedule
           events={eventsSchedule}
           updateEvent={updateEventAndSinged}
           removeEvent={removeEvent}
           setTrigger={setTrigger}
         />
+      ) : (
+        <div className={styles.title__notFound}>{notFound}</div>
       )}
     </section>
   );

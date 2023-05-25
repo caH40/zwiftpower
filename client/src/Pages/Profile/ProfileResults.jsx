@@ -7,6 +7,10 @@ import TableUserResults from '../../components/Tables/TableUserResults/TableUser
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 
+import styles from './Profile.module.css';
+
+const notFound = 'Заезды не найдены ... ((';
+
 function ProfileResults() {
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
@@ -19,14 +23,14 @@ function ProfileResults() {
   }, [dispatch, zwiftId, userAuth]);
   return (
     <div>
-      {zwiftId === 'none' ? (
-        'Необходимо добавить свой zwiftId в "Настройках"'
-      ) : (
+      <ProfileBlock results={results} profile={profile} />
+      {results?.length ? (
         <>
-          <ProfileBlock results={results} profile={profile} />
           <NavBarResultsRace results={results} hideCategory={true} />
           <TableUserResults results={results} />
         </>
+      ) : (
+        <div className={styles.title__notFound}>{notFound}</div>
       )}
     </div>
   );

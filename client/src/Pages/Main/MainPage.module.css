@@ -11,6 +11,14 @@
   letter-spacing: 0.03em;
   padding-bottom: 10px;
 }
+.title__notFound {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: var(--color-blue-2);
+  padding-bottom: 20px;
+}
 .wrapper__preview {
   flex: 1 1 800px;
 }
