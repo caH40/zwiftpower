@@ -47,7 +47,7 @@ const start = async () => {
 
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
 
-    // await updateAccessToken();
+    await updateAccessToken();
     await timers();
   } catch (e) {
     console.log(e);

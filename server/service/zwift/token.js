@@ -25,7 +25,9 @@ export async function updateAccessToken() {
       grant_type: 'password',
     };
 
-    const response = await axios.post(secureUrl, qs.stringify(data));
+    const response = await axios.post(secureUrl, qs.stringify(data)).catch((error) => {
+      errorAxios(error, 'updateAccessToken');
+    });
     const token = response.data.access_token;
 
     await ZwiftToken.findOneAndUpdate(

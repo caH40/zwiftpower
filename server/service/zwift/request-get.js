@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getAccessToken } from './token.js';
+import { errorAxios } from '../../app_modules/error/axios.js';
 
 const apiUrl = process.env.ZWIFT_API;
 const headersDefault = {
@@ -23,6 +24,8 @@ export async function getRequest(url) {
         ...headersDefault,
         Authorization: 'Bearer ' + token,
       },
+    }).catch((error) => {
+      errorAxios(error, 'getRequest');
     });
 
     return response.data;
