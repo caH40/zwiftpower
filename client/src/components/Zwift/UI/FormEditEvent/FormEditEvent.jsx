@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import RInput from '../../../UI/ReduxUI/RInput/RInput';
@@ -10,6 +10,8 @@ import RMultiSelectRule from '../../../UI/ReduxUI/RMultiSelectRule/RMultiSelectR
 import styles from './FormEditEvent.module.css';
 
 function FormEditEvent() {
+  const [additionalParam1, setAdditionalParam1] = useState('');
+  const [additionalParam2, setAdditionalParam2] = useState('');
   const { eventMainParams, selectedRules } = useSelector((state) => state.eventParams);
   return (
     <form className={styles.form} name="zwiftEvent">
@@ -87,6 +89,44 @@ function FormEditEvent() {
           property={'categoryEnforcement'}
           toolTip="Райдер может выступать в своей категории или более высокой"
         />
+      </div>
+
+      <div className={styles.additional}>
+        <h3>Ручной ввод параметра для Эвента:</h3>
+        <label className={styles.label}>
+          Название параметра 1
+          <input
+            className={styles.input}
+            value={additionalParam1}
+            onChange={(e) => setAdditionalParam1(e.target.value)}
+            type={'text'}
+          />
+        </label>
+        <div className={styles.rInput}>
+          <RInput
+            label={'Значение параметра 1'}
+            value={eventMainParams[additionalParam1]}
+            property={additionalParam1}
+            type={'text'}
+          />
+        </div>
+        <label className={styles.label}>
+          Название параметра 2
+          <input
+            className={styles.input}
+            value={additionalParam2}
+            onChange={(e) => setAdditionalParam2(e.target.value)}
+            type={'text'}
+          />
+        </label>
+        <div className={styles.rInput}>
+          <RInput
+            label={'Значение параметра 2'}
+            value={eventMainParams[additionalParam2]}
+            property={additionalParam2}
+            type={'text'}
+          />
+        </div>
       </div>
     </form>
   );
