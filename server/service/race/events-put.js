@@ -5,8 +5,8 @@ import { postEventService } from './events-post.js';
 
 export async function putEventService(eventId, userId) {
   try {
-    const { additionalParams } = await deleteEventService(eventId);
     const event = await getEventZwiftService(eventId);
+    const { additionalParams } = await deleteEventService(eventId);
     await postEventService({ ...event, ...additionalParams });
     // логирование действия
     if (userId) {
