@@ -18,6 +18,7 @@
   letter-spacing: 0.03em;
   padding-bottom: 10px;
 }
+
 .list {
   list-style: inside;
 }
@@ -40,4 +41,18 @@
   .block {
     padding: 10px 10px 0px;
   }
+}
+.link {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: inherit;
+  color: var(--color-blue-4);
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.link:active {
+  color: var(--color-yellow-main);
 }

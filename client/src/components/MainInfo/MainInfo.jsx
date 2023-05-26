@@ -25,8 +25,21 @@ function MainInfo() {
         </div>
         <h3 className={styles.title}>Улучшение сайта?</h3>
         <div className={styles.text}>
-          В ближайшее время будет создана форма обратной связи для Ваших пожеланий в улучшении
-          сайта и добавления новых фитчей для zwiftpower.ru
+          <p className={styles.p}>
+            В ближайшее время будет создана форма обратной связи для Ваших пожеланий в улучшении
+            сайта и добавления новых фитчей для zwiftpower.ru.
+          </p>
+          <p>
+            Для более оперативной обратной связи создана группа{' '}
+            <a
+              className={styles.link}
+              target="_blank"
+              rel="noreferrer"
+              href="https://t.me/zwiftpower"
+            >
+              https://t.me/zwiftpower
+            </a>
+          </p>
         </div>
       </div>
     </div>
