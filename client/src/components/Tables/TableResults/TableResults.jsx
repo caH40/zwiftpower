@@ -17,10 +17,9 @@ import {
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
-import Th from '../Th/Th';
 import { useResize } from '../../../hook/use-resize';
 
-import { resultsColumns } from './column-titles';
+import Thead from './Thead';
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
@@ -30,14 +29,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <thead>
-        <tr>
-          {resultsColumns(lg, sm).map((column) => (
-            <Th key={column.id} columnName={column.name} />
-          ))}
-          {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
-        </tr>
-      </thead>
+      <Thead lg={lg} sm={sm} isModerator />
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>

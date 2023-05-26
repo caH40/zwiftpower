@@ -5,23 +5,16 @@ import { tdLinkZP, tdRider } from '../utils/td';
 import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
-import Th from '../Th/Th';
 
 import styles from '../Table.module.css';
 
-import { signedRidersColumns } from './column-titles';
+import Thead from './Thead';
 
 function TableSignedRiders({ riders = [] }) {
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <thead>
-        <tr>
-          {signedRidersColumns(lg, sm).map((column) => (
-            <Th key={column.id} columnName={column.name} />
-          ))}
-        </tr>
-      </thead>
+      <Thead lg={lg} sm={sm} />
       <tbody>
         {riders.map((rider, index) => (
           <tr key={rider._id}>
