@@ -29,7 +29,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <Thead lg={lg} sm={sm} isModerator />
+      <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
