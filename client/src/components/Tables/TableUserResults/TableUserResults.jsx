@@ -6,12 +6,11 @@ import { tdHeartRate, tdRank, tdTime, tdWatts, tdWattsPerKg, tdWeight } from '..
 import TdCpWatts from '../Td/TdCpWatts';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
-import Th from '../Th/Th';
 import { getLocalDate } from '../../../utils/date-convert';
 
 import styles from '../Table.module.css';
 
-import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
+import Thead from './Thead';
 
 function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
@@ -19,24 +18,7 @@ function TableUserResults({ results }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <thead>
-        <tr>
-          {raceResultsColumns(lg, sm).map((column) => (
-            <Th key={column.id} columnName={column.name} />
-          ))}
-          {lg &&
-            columnsCP.map((column) => {
-              if (column.isVisible) {
-                return <th key={column.id}>{column.name}</th>;
-              }
-              return null;
-            })}
-          {lg &&
-            raceResultsColumnsEnd.map((column) => (
-              <Th key={column.id} columnName={column.name} />
-            ))}
-        </tr>
-      </thead>
+      <Thead lg={lg} sm={sm} columnsCP={columnsCP} />
       <tbody>
         {results?.map((result) => (
           <tr key={result._id}>

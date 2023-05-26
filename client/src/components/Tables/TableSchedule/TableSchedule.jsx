@@ -18,11 +18,10 @@ import {
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
-import Th from '../Th/Th';
 
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 
-import { scheduleListColumns } from './column-titles';
+import Thead from './Thead';
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
@@ -32,14 +31,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <thead>
-        <tr>
-          {scheduleListColumns(lg, sm).map((column) => (
-            <Th key={column.id} columnName={column.name} />
-          ))}
-          {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
-        </tr>
-      </thead>
+      <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
