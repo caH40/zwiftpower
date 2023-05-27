@@ -6,14 +6,14 @@ import MyTooltip from '../../../HOC/MyTooltip.jsx';
 
 import styles from './Button.module.css';
 
-function Button({ getClick, children, addCls = '', toolTip, disabled, ...props }) {
+function Button({ getClick, children, addCls = '', tooltip, disabled, ...props }) {
   const getClickPreventDefault = (e) => {
     e.preventDefault();
     getClick();
   };
 
   return (
-    <MyTooltip toolTip={toolTip} disabled={disabled}>
+    <MyTooltip tooltip={tooltip} disabled={disabled}>
       <button
         className={cn(styles.button, cns(styles, addCls))}
         onClick={getClick ? getClickPreventDefault : undefined}

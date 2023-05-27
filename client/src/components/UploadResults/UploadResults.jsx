@@ -41,13 +41,13 @@ function UploadResults({ results, setResults, saveResults }) {
         <InputFile
           accept={'.json'}
           getFile={getFile}
-          toolTip="Имя файла: 'Название серии_Stage-номер этапа.json' На данный момент 
+          tooltip="Имя файла: 'Название серии_Stage-номер этапа.json' На данный момент 
 					поддерживается только json формат."
         />
         {results.results?.length ? (
           <Button
             getClick={saveResults}
-            toolTip="После сохранения протокола произойдет автоматическое 
+            tooltip="После сохранения протокола произойдет автоматическое 
 						начисление очков генеральной квалификации."
           >
             Сохранить

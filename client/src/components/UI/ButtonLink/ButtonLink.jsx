@@ -7,9 +7,9 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './ButtonLink.module.css';
 
-function ButtonLink({ children, addCls = '', to, toolTip }) {
+function ButtonLink({ children, addCls = '', to, tooltip }) {
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <Link to={to} className={cn(styles.button, cns(styles, addCls))}>
         {children}
       </Link>

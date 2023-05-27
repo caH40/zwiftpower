@@ -31,7 +31,7 @@ function SubGroup({ subGroup, index }) {
             <h4 className={styles.title}>Группа {subGroup.subgroupLabel}</h4>
             <Button
               addCls={'td back'}
-              toolTip={'Установить всем группам текущие параметры'}
+              tooltip={'Установить всем группам текущие параметры'}
               getClick={setSameParamsClick}
             >
               Установить

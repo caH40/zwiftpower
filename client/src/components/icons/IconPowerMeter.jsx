@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconPowerMeter() {
   return (
-    <MyTooltip toolTip={'Обязательное наличие измерителя мощности'}>
+    <MyTooltip tooltip={'Обязательное наличие измерителя мощности'}>
       <div className={styles.box__rules}>
         <svg
           width="24"

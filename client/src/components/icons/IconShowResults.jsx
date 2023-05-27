@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconShowResults({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'На финише показывать таблицу результатов'}>
+    <MyTooltip tooltip={'На финише показывать таблицу результатов'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="22"

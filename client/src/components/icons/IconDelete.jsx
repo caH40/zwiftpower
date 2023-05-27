@@ -6,9 +6,9 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconDelete({ isActive, getClick, toolTip, addCls = ' ' }) {
+function IconDelete({ isActive, getClick, tooltip, addCls = ' ' }) {
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <div
         className={cn(styles.box, styles.box__alone, cns(styles, addCls))}
         onClick={getClick}

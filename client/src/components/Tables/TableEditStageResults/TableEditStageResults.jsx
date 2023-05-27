@@ -34,7 +34,7 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
                   pointsType="pointsSprint"
                   setUpdate={setUpdate}
                   multiplier={result.multiplier}
-                  toolTip="Множитель для спринтерских очков."
+                  tooltip="Множитель для спринтерских очков."
                 />
               </div>
             </th>
@@ -49,7 +49,7 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
                   pointsType="pointsMountain"
                   setUpdate={setUpdate}
                   multiplier={result.multiplier}
-                  toolTip="Множитель для горных очков в зависимости от категории горы."
+                  tooltip="Множитель для горных очков в зависимости от категории горы."
                 />
               </div>
             </th>
@@ -64,9 +64,9 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
           <th>ZP-profile</th>
           <th>Результат</th>
           <th>
-						Ручное
+            Ручное
             <br />
-						добавл.
+            добавл.
           </th>
         </tr>
       </thead>
@@ -81,7 +81,7 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
                 state={result.isDisqualification}
                 resultId={result._id}
                 target="DQ"
-                toolTip="Аннулирование результата райдера на текущем этапе."
+                tooltip="Аннулирование результата райдера на текущем этапе."
               />
             </td>
             <td>
@@ -91,11 +91,15 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
                 state={result.isUnderChecking}
                 resultId={result._id}
                 target="UC"
-                toolTip="Отметка результата райдера (предупреждение)"
+                tooltip="Отметка результата райдера (предупреждение)"
               />
             </td>
             <td>
-              <SelectPenalty result={result} setUpdate={setUpdate} value={result.penalty.powerUp} />
+              <SelectPenalty
+                result={result}
+                setUpdate={setUpdate}
+                value={result.penalty.powerUp}
+              />
             </td>
             <td>
               <SelectCategory
@@ -144,7 +148,7 @@ function TableEditStageResults({ results = [], setUpdate, deleteResult }) {
             <td>{tdLinkZP(result.zwiftRiderId)}</td>
             <td>
               <Button addCls="danger td" getClick={() => deleteResult(result._id, result.name)}>
-								удалить
+                удалить
               </Button>
             </td>
             <td>

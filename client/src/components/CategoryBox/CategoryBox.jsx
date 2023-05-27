@@ -1,13 +1,24 @@
 import React from 'react';
 import cn from 'classnames';
 
+import MyTooltip from '../../HOC/MyTooltip';
+
 import styles from './CategoryBox.module.css';
 
 function CategoryBox({ label = '', showLabel, quantityRiders = '', circle }) {
+  const classes = cn(styles.category, styles[label], { [styles.circle]: circle });
+  const value = `${showLabel ? label : ''} ${quantityRiders}`;
+
+  // если circle:true то подсказка - только название категории
+  const registered = circle ? '' : `. Зарегистрировалось: ${quantityRiders}`;
+  const finished = `Финишировало: ${quantityRiders}`;
+  // если label:T то подсказка - финишный блок с соответствующим описанием
+  const tooltip = label === 'T' ? finished : `Категория: ${label}${registered}`;
+
   return (
-    <div className={cn(styles.category, styles[label], { [styles.circle]: circle })}>{`${
-      showLabel ? label : ''
-    } ${quantityRiders}`}</div>
+    <MyTooltip tooltip={tooltip}>
+      <div className={classes}>{value}</div>
+    </MyTooltip>
   );
 }
 

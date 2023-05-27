@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconDD({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Удвоенный драфт'}>
+    <MyTooltip tooltip={'Удвоенный драфт'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"

@@ -81,13 +81,13 @@ function FormEditEvent() {
           label={'visible'}
           value={eventMainParams.visible}
           property={'visible'}
-          toolTip="нет информации о назначении"
+          tooltip="нет информации о назначении"
         />
         <RCheckbox
           label={'categoryEnforcement'}
           value={eventMainParams.categoryEnforcement}
           property={'categoryEnforcement'}
-          toolTip="Райдер может выступать в своей категории или более высокой"
+          tooltip="Райдер может выступать в своей категории или более высокой"
         />
       </div>
 

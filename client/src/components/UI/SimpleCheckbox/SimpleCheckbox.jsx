@@ -4,9 +4,9 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './SimpleCheckbox.module.css';
 
-function SimpleCheckbox({ state, property, setState, title, toolTip, disabled }) {
+function SimpleCheckbox({ state, property, setState, title, tooltip, disabled }) {
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <label className={styles.label}>
         <span>{title}</span>
         <input

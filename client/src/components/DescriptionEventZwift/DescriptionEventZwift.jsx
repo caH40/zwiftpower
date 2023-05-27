@@ -28,7 +28,7 @@ function DescriptionEventZwift({ event, forSchedule }) {
         <h2 className={styles.title}>{event.name}</h2>
         {isModerator && forSchedule && (
           <Link to={`/zwift/edit/event/${event.id}`}>
-            <IconEdit toolTip={'Редактирование параметров заезда в Звифте'} />
+            <IconEdit tooltip={'Редактирование параметров заезда в Звифте'} />
           </Link>
         )}
       </div>

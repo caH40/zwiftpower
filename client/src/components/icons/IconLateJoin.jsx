@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconLateJoin({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Позднее подключение'}>
+    <MyTooltip tooltip={'Позднее подключение'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="21"

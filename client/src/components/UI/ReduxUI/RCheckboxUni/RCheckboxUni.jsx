@@ -6,10 +6,10 @@ import MyTooltip from '../../../../HOC/MyTooltip';
 
 import styles from './RCheckboxUni.module.css';
 
-function RCheckboxUni({ reducer, label, values, property, toolTip, disabled }) {
+function RCheckboxUni({ reducer, label, values, property, tooltip, disabled }) {
   const dispatch = useDispatch();
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <label className={styles.label}>
         <input
           className={styles.input}

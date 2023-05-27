@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconHeartMonitor({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Обязательное наличие монитора пульса'}>
+    <MyTooltip tooltip={'Обязательное наличие монитора пульса'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="26"

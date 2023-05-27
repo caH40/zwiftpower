@@ -6,7 +6,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './Checkbox.module.css';
 
-function Checkbox({ state, apiRequest, setUpdate, resultId, target, toolTip }) {
+function Checkbox({ state, apiRequest, setUpdate, resultId, target, tooltip }) {
   const [check, setCheck] = useState(() => state);
 
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function Checkbox({ state, apiRequest, setUpdate, resultId, target, toolTip }) {
   };
 
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <input
         onChange={changeValue}
         checked={check}

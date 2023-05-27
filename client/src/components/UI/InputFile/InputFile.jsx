@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 
 import styles from './InputFile.module.css';
 
-function InputFile({ accept, getFile, toolTip }) {
+function InputFile({ accept, getFile, tooltip }) {
   const inputRef = useRef(null);
   const getInput = () => inputRef.current.click();
   return (
@@ -16,7 +16,7 @@ function InputFile({ accept, getFile, toolTip }) {
         accept={accept}
         onChange={getFile}
       />
-      <Button getClick={getInput} toolTip={toolTip}>
+      <Button getClick={getInput} tooltip={tooltip}>
         Выбрать файл
       </Button>
     </>

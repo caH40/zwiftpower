@@ -45,7 +45,7 @@ function EditStageList() {
         <Button getClick={goBack}>назад</Button>
         <Button
           getClick={updateGeneralPoints}
-          toolTip="Обновляются очки в генеральной квалификации 
+          tooltip="Обновляются очки в генеральной квалификации 
 					во всех этапах серии. Необходимо запускать после изменения 
 					категории райдеру, штрафа, дисквалификации."
         >

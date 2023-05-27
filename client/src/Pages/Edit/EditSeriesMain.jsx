@@ -21,7 +21,7 @@ function EditSeriesMain() {
       <h3 className="titlePage-3">Выберите Series для редактирования</h3>
       <TableSeries target={'series'} />
       <div className={styles.right}>
-        <ButtonLink to="add" toolTip="Добавление новой Серии (Тура).">
+        <ButtonLink to="add" tooltip="Добавление новой Серии (Тура).">
           Добавить
         </ButtonLink>
       </div>
