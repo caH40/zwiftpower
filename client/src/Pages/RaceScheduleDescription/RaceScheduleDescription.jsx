@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
-import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import { getLocalDate } from '../../utils/date-convert';
 import { fetchEventPreview } from '../../redux/features/api/eventPreviewSlice';
 
@@ -27,7 +27,7 @@ function RaceScheduleDescription() {
     <section>
       {event?.id && (
         <>
-          <DescriptionEventZwift event={event} forSchedule={true} />
+          <DescriptionEventZwiftNew event={event} forSchedule={true} />
           <Link
             className={styles.link}
             to={`https://www.zwift.com/eu/events/view/${event.id}`}
