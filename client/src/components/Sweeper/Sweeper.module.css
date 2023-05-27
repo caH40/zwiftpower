@@ -1,0 +1,11 @@
+.box {
+  text-transform: uppercase;
+  color: var(--color-text-dark);
+  font-size: 10px;
+  display: inline-block;
+  padding: 0.15em 0.3em;
+  border-radius: 0.3em;
+  margin-left: 5px;
+  background-color: var(--color-orange-2);
+  outline: 1px solid var(--color-blue-main);
+}

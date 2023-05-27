@@ -32,7 +32,7 @@ function RaceResultsDescription() {
         <>
           <DescriptionEventZwift event={eventData} />
           <NavBarResultsRace results={resultsPrepared} />
-          <TableRaceResults results={resultsPrepared} />
+          <TableRaceResults results={resultsPrepared} event={eventData} />
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>

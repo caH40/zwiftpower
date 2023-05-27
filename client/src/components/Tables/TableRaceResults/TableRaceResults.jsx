@@ -16,15 +16,17 @@ import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
+import useLeader from '../../../hook/useLeaders';
 
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
 
-function TableRaceResults({ results }) {
+function TableRaceResults({ results, event }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
+  const [getLeaders, getSweepers] = useLeader(event);
 
   const resultFiltered = useMemo(() => {
     if (filterCategory.name === 'All') return results;
@@ -46,7 +48,13 @@ function TableRaceResults({ results }) {
                   <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
                 </td>
               )}
-              <TdRider profile={profile} profileId={result.profileId} showIcons={{ sm }} />
+              <TdRider
+                profile={profile}
+                profileId={result.profileId}
+                showIcons={{ sm }}
+                getLeaders={getLeaders}
+                getSweepers={getSweepers}
+              />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
               {lg && <td>{tdGap(result.gap)}</td>}
               {lg && <td>{tdGap(result.gapPrev)}</td>}
