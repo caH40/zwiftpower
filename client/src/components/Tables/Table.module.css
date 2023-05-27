@@ -122,10 +122,13 @@
   font-weight: bold;
   background: #6d6d6d;
 }
+.center {
+  text-align: center;
+}
 .penalty {
   display: flex;
   justify-content: center;
-  align-items: center;
+
   width: 36px;
   height: 24px;
   border-radius: 50%;
@@ -211,7 +214,7 @@
   }
   .rider {
     min-width: 110px;
-    max-width: 157px;
+    /* max-width: 157px; */
     letter-spacing: 0;
   }
 }

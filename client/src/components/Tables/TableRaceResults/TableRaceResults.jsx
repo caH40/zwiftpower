@@ -42,7 +42,7 @@ function TableRaceResults({ results, event }) {
 
           return (
             <tr key={result._id}>
-              <td>{tdRank(result.rankEvent)}</td>
+              <td className={styles.center}>{tdRank(result.rankEvent)}</td>
               {sm && (
                 <td>
                   <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
