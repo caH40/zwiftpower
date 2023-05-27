@@ -1,7 +1,7 @@
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 
-function MyTooltip({ children, toolTip, disabled }) {
+function MyTooltip({ children, tooltip, disabled }) {
   return (
     <>
       {/* mui tooltip не работает с кнопкой которая disabled */}
@@ -9,7 +9,7 @@ function MyTooltip({ children, toolTip, disabled }) {
         <>{children}</>
       ) : (
         <Tooltip
-          title={toolTip}
+          title={tooltip}
           componentsProps={{
             tooltip: {
               sx: {

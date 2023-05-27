@@ -6,7 +6,7 @@ import styles from './RaceRuleBox.module.css';
 
 const RaceRuleBox = ({ label, name }) => {
   return (
-    <MyTooltip toolTip={name}>
+    <MyTooltip tooltip={name}>
       <div className={styles.box}>{label}</div>
     </MyTooltip>
   );

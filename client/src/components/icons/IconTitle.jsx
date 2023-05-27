@@ -4,9 +4,9 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconTitle({ squareSize = 24, toolTip }) {
+function IconTitle({ squareSize = 24, tooltip }) {
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"

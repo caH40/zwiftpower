@@ -6,10 +6,10 @@ import { setMainParams } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './RCheckbox.module.css';
 
-function RCheckbox({ label, value, property, toolTip, disabled }) {
+function RCheckbox({ label, value, property, tooltip, disabled }) {
   const dispatch = useDispatch();
   return (
-    <MyTooltip toolTip={toolTip}>
+    <MyTooltip tooltip={tooltip}>
       <label className={styles.label}>
         <span>{label || property}</span>
         <input

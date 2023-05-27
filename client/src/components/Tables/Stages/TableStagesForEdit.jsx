@@ -169,7 +169,7 @@ function TableStagesForEdit({ seriesId }) {
                   <Button
                     addCls="danger td"
                     getClick={() => deleteStage(stage)}
-                    toolTip="Удаление Этапа и всех результатов этапа."
+                    tooltip="Удаление Этапа и всех результатов этапа."
                   >
                     удалить
                   </Button>

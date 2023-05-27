@@ -61,7 +61,7 @@ function EditResults() {
       <div className={styles.right}>
         <ButtonLink
           to={`/edit/stage/${stageId}/rider-add`}
-          toolTip="Добавление результата райдера который не попал в общий протокол Этапа"
+          tooltip="Добавление результата райдера который не попал в общий протокол Этапа"
         >
           Добавить
         </ButtonLink>

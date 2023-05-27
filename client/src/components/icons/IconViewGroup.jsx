@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconViewGroup({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Видны только райдеры из группы'}>
+    <MyTooltip tooltip={'Видны только райдеры из группы'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"

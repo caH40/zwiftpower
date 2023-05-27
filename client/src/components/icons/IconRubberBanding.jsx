@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconRubberBanding({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Резиновая лента'}>
+    <MyTooltip tooltip={'Резиновая лента'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"

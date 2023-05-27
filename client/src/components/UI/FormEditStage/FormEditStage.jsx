@@ -108,7 +108,7 @@ function FormEditStage({ stage, setStage, sendForm }) {
           setState={setStage}
           property="needCount"
           title="Необходимо учитывать в генерале:"
-          toolTip="Можно исключать этап из генеральной квалификации, например этапы 'Дружбы'."
+          tooltip="Можно исключать этап из генеральной квалификации, например этапы 'Дружбы'."
         />
         <SimpleCheckbox
           state={stage}
@@ -116,7 +116,7 @@ function FormEditStage({ stage, setStage, sendForm }) {
           property="hasResults"
           title="Добавлены результаты этапа"
           disabled={true}
-          toolTip="Заблокировано. Для информации."
+          tooltip="Заблокировано. Для информации."
         />
       </div>
 

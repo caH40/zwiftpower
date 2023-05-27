@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconCategoryEnforced({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Строгая категоризация'}>
+    <MyTooltip tooltip={'Строгая категоризация'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="25"

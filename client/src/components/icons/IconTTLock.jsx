@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconTTLock({ squareSize = 24 }) {
   return (
-    <MyTooltip toolTip={'Запрет на ТТ велосипед'}>
+    <MyTooltip tooltip={'Запрет на ТТ велосипед'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"

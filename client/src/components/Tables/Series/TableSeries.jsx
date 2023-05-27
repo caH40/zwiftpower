@@ -118,7 +118,7 @@ function TableSeries({ target }) {
                       <Button
                         addCls="danger td"
                         getClick={() => deleteStage(seriesOne._id)}
-                        toolTip="Удаление Серии (Тура), соответствующих Этапов и всех 
+                        tooltip="Удаление Серии (Тура), соответствующих Этапов и всех 
 												результатов заездов."
                       >
                         удалить

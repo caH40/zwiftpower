@@ -31,82 +31,82 @@ const Th = ({ columnName }) => {
   const thHtml = (name) => {
     switch (name) {
       case 'Дата':
-        return <IconDateTime toolTip={name} />;
+        return <IconDateTime tooltip={name} />;
 
       case 'Название':
-        return <IconTitle toolTip={name} />;
+        return <IconTitle tooltip={name} />;
 
       case 'Подъем':
-        return <IconParamsAscent toolTip={name} />;
+        return <IconParamsAscent tooltip={name} />;
 
       case 'Расстояние':
-        return <IconParamsDistance toolTip={name} />;
+        return <IconParamsDistance tooltip={name} />;
 
       case 'Длительность':
-        return <IconParamsDuration toolTip={name} />;
+        return <IconParamsDuration tooltip={name} />;
 
       case 'Время':
-        return <IconParamsDuration toolTip={name} />;
+        return <IconParamsDuration tooltip={name} />;
 
       case 'Круги':
-        return <IconParamsLap toolTip={name} />;
+        return <IconParamsLap tooltip={name} />;
 
       case 'Маршрут':
-        return <IconParamsRoute toolTip={name} />;
+        return <IconParamsRoute tooltip={name} />;
 
       case 'Карта':
-        return <IconParamsWorld toolTip={name} />;
+        return <IconParamsWorld tooltip={name} />;
 
       case 'Зарегистрировались':
-        return <IconRegistered toolTip={name} />;
+        return <IconRegistered tooltip={name} />;
 
       case 'Формат заезда':
-        return <IconRaceType toolTip={name} />;
+        return <IconRaceType tooltip={name} />;
 
       case 'Организатор':
-        return <IconCreator toolTip={name} />;
+        return <IconCreator tooltip={name} />;
 
       case 'Категория':
-        return <IconCategory toolTip={name} />;
+        return <IconCategory tooltip={name} />;
 
       case 'Райдер':
-        return <IconRider toolTip={name} />;
+        return <IconRider tooltip={name} />;
 
       case 'Вес':
-        return <IconWeight toolTip={name} />;
+        return <IconWeight tooltip={name} />;
 
       case 'Рост':
-        return <IconHeight toolTip={name} />;
+        return <IconHeight tooltip={name} />;
 
       case 'Возраст':
-        return <IconAge toolTip={name} />;
+        return <IconAge tooltip={name} />;
 
       case 'Пол':
-        return <IconGender toolTip={name} />;
+        return <IconGender tooltip={name} />;
 
       case 'Пульс':
-        return <IconPulse toolTip={name} />;
+        return <IconPulse tooltip={name} />;
 
       case 'Команда':
-        return <IconTeam toolTip={name} />;
+        return <IconTeam tooltip={name} />;
 
       case 'Управление':
-        return <IconAdmin toolTip={name} />;
+        return <IconAdmin tooltip={name} />;
 
       case 'Финиш':
-        return <IconFinish toolTip={name} />;
+        return <IconFinish tooltip={name} />;
 
       case 'Отставание от лидера':
-        return <IconGap toolTip={name} />;
+        return <IconGap tooltip={name} />;
 
       case 'Отставание от райдера впереди':
-        return <IconGapPrev toolTip={name} />;
+        return <IconGapPrev tooltip={name} />;
 
       case 'Средняя мощность за гонку':
-        return <IconPower toolTip={name} />;
+        return <IconPower tooltip={name} />;
 
       case 'Относительная средняя мощность за гонку':
-        return <IconPowerKg toolTip={name} />;
+        return <IconPowerKg tooltip={name} />;
 
       case 'zp.com':
         return 'zp.com';

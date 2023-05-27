@@ -49,7 +49,7 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
           </ul>
 
           <MyTooltip
-            toolTip={
+            tooltip={
               'Исправляет отсутствие флагов у некоторых райдеров в протоколе.После данного обновления необходимо запустить обновление результатов'
             }
           >
@@ -72,17 +72,17 @@ export default PopupMenuTableResultList;
 //   <div className={styles.box__icons}>
 //     <IconRefresh
 //       getClick={() => updateResults(event.id)}
-//       toolTip={'Обновление результатов заезда (протокола)'}
+//       tooltip={'Обновление результатов заезда (протокола)'}
 //       addCls={'pointer'}
 //     />
 //     <IconDelete
 //       getClick={() => removeEvent(event.id, event.name)}
-//       toolTip={'Удаление заезда и результатов заезда из БД'}
+//       tooltip={'Удаление заезда и результатов заезда из БД'}
 //       addCls={'pointer'}
 //     />
 //     <IconRefresh
 //       getClick={() => updateEventAndSinged(event.id)}
-//       toolTip={
+//       tooltip={
 //         'Обновление данных заезда и зарегистрированных райдеров.
 // Исправляет отсутствие флагов у некоторых райдеров в протоколе.
 //  После данного обновления необходимо запустить обновление результатов'
