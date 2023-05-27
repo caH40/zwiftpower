@@ -62,6 +62,8 @@ async function saveEventToDB(event) {
         totalEntrantCount: eventSubgroup.totalEntrantCount,
         totalJoinedCount: eventSubgroup.totalJoinedCount,
         totalSignedUpCount: eventSubgroup.totalSignedUpCount,
+        invitedLeaders: eventSubgroup.invitedLeaders,
+        invitedSweepers: eventSubgroup.invitedSweepers,
       });
       eventSubgroups.push(_id);
     }

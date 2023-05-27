@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Flag from '../../Flag/Flag';
+import Leader from '../../Leader/Leader';
+import Sweeper from '../../Sweeper/Sweeper';
 
 import styles from '../Table.module.css';
 
-function TdRider({ profile, profileId, showIcons }) {
+function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
   return (
     <td>
       <Link className={styles.link} to={`/profile/${profileId}/results`}>
@@ -28,7 +30,11 @@ function TdRider({ profile, profileId, showIcons }) {
               )}
             </div>
           )}
-          <span>{`${profile.firstName} ${profile.lastName}`}</span>
+          <span>
+            {`${profile.firstName} ${profile.lastName}`}
+            <Leader getLeaders={getLeaders} profileId={profileId} />
+            <Sweeper getSweepers={getSweepers} profileId={profileId} />
+          </span>
         </div>
       </Link>
     </td>

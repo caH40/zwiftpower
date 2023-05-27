@@ -36,7 +36,7 @@ function RaceScheduleDescription() {
           >
             Регистрация в Zwift
           </Link>
-          <TableSignedRiders riders={event.signedRiders} />
+          <TableSignedRiders riders={event.signedRiders} event={event} />
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>

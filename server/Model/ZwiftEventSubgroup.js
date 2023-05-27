@@ -27,6 +27,8 @@ const zwiftEventSubgroupSchema = new Schema({
   totalEntrantCount: { type: Number, default: null },
   totalJoinedCount: { type: Number, default: null },
   totalSignedUpCount: { type: Number, default: null },
+  invitedLeaders: { type: [Number], default: [] },
+  invitedSweepers: { type: [Number], default: [] },
 });
 
 export const ZwiftEventSubgroup = model('ZwiftEventSubgroup', zwiftEventSubgroupSchema);
