@@ -1,18 +1,12 @@
 .wrapper {
-  flex: 0 0 220px;
-  /* height: 66px; */
+  flex: 0 1 450px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 5px;
   color: #ffffff;
 }
-.box__title {
-  display: flex;
-  align-items: center;
-  gap: 0 5px;
-  margin-bottom: 2px;
-}
+
 .title {
   font-weight: 700;
   font-size: 14px;

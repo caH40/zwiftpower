@@ -26,7 +26,7 @@ function IconShowResults({ squareSize = 24 }) {
           />
           <path
             d="M8 1H14C14.5523 1 15 1.44772 15 2V8.23077H7V2C7 1.44772 7.44771 1 8 1Z"
-            fill="white"
+            fill="#008600"
             stroke="#008600"
             strokeWidth="2"
           />

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import RulesBox from '../RulesBox/RulesBox';
-import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import { gapStart, replaceWithBr } from '../../utils/event';
 import { getLocalDate } from '../../utils/date-convert';
 import IconEdit from '../icons/IconEdit';
@@ -11,6 +9,7 @@ import ButtonSimple from '../UI/Filters/ButtonSimple/ButtonSimple';
 import IconOpenClose from '../icons/IconOpenClose';
 import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import CategoryBoxDescription from '../CategoryBoxDescription/CategoryBoxDescription';
+import RaceBoxDescription from '../RaceBoxDescription/RaceBoxDescription';
 
 import styles from './DescriptionEventZwiftNew.module.css';
 
@@ -44,6 +43,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
           </div>
 
           <div className={styles.box__right}>
+            <RaceBoxDescription event={event} />
             {event?.eventSubgroups?.map((subgroup) => (
               <CategoryBoxDescription key={subgroup.id} subgroup={subgroup} gaps={gaps} />
             ))}
