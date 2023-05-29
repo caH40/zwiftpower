@@ -1,0 +1,108 @@
+.wrapper {
+  margin-bottom: 10px;
+}
+.block__main {
+  position: relative;
+  width: 100%;
+  min-height: 388px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+  padding: 20px 67px 0px 20px;
+}
+.main__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 90px;
+}
+.block__text {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-top: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 20px;
+}
+.box__params {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  width: 100%;
+}
+.box__title {
+  display: flex;
+  gap: 0 5px;
+  align-items: center;
+}
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+}
+.subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+}
+.box__right {
+  flex: 0 1 450px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-flow: wrap;
+}
+.box__left {
+  background: rgba(0, 0, 0, 0.6);
+  /* border: 1px solid #ffffff; */
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-right: 35px;
+}
+.block__mainClosed {
+  min-height: 0px;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: top;
+}
+.main__innerClosed {
+  padding-bottom: 10px;
+}
+@media screen and (max-width: 992px) {
+  .block__main {
+    padding: 20px 20px 0px 20px;
+  }
+  .subtitle {
+    margin-bottom: 15px;
+  }
+  .main__inner {
+    flex-flow: wrap;
+    padding-bottom: 100px;
+  }
+  .main__innerClosed {
+    padding-bottom: 10px;
+  }
+  .box__right {
+    flex: 0 1 100%;
+    justify-content: space-between;
+  }
+  .box__params {
+    padding: 10px 20px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .main__inner {
+    padding-bottom: 130px;
+  }
+  .main__innerClosed {
+    padding-bottom: 10px;
+  }
+}

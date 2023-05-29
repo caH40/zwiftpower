@@ -50,3 +50,6 @@
 .arrow.opened {
   transform: rotate(180deg);
 }
+.white {
+  color: #ffffff;
+}

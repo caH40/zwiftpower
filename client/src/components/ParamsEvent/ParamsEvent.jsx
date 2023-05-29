@@ -12,14 +12,14 @@ import { distanceObject, map, route } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
-function ParamsEvent({ event, addCls }) {
+function ParamsEvent({ event, addCls, bgColor }) {
   const [subgroup] = event.eventSubgroups;
 
   return (
-    <div className={cn(styles.block, cns(styles, addCls))}>
+    <div className={cn(styles.block, cns(styles, addCls), styles[bgColor])}>
       {subgroup?.mapId && (
         <div className={styles.box}>
-          <IconParamsWorld squareSize={30} />
+          <IconParamsWorld squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>{map(subgroup.mapId)}</h4>
             <p className={styles.title__sub}>КАРТА</p>
@@ -28,7 +28,7 @@ function ParamsEvent({ event, addCls }) {
       )}
       {subgroup?.routeId && (
         <div className={styles.box}>
-          <IconParamsRoute squareSize={30} />
+          <IconParamsRoute squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>{route(subgroup.routeId)}</h4>
             <p className={styles.title__sub}>МАРШРУТ</p>
@@ -37,7 +37,7 @@ function ParamsEvent({ event, addCls }) {
       )}
       {subgroup?.durationInSeconds === 0 && (
         <div className={styles.box}>
-          <IconParamsDistance squareSize={30} />
+          <IconParamsDistance squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>
               {distanceObject(subgroup)?.distanceStr ||
@@ -49,7 +49,7 @@ function ParamsEvent({ event, addCls }) {
       )}
       {subgroup?.durationInSeconds === 0 && (
         <div className={styles.box}>
-          <IconParamsAscent squareSize={30} />
+          <IconParamsAscent squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>{distanceObject(subgroup)?.elevationStr}</h4>
             <p className={styles.title__sub}>НАБОР ВЫСОТЫ</p>
@@ -58,7 +58,7 @@ function ParamsEvent({ event, addCls }) {
       )}
       {subgroup?.durationInSeconds === 0 && (
         <div className={styles.box}>
-          <IconParamsLap squareSize={30} />
+          <IconParamsLap squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>{distanceObject(subgroup)?.lapsStr}</h4>
             <p className={styles.title__sub}>КРУГИ</p>
@@ -67,7 +67,7 @@ function ParamsEvent({ event, addCls }) {
       )}
       {subgroup?.durationInSeconds !== 0 && (
         <div className={styles.box}>
-          <IconParamsDuration squareSize={30} />
+          <IconParamsDuration squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
             <h4 className={styles.title}>{distanceObject(subgroup)?.durationStr}</h4>
             <p className={styles.title__sub}>ДЛИТЕЛЬНОСТЬ</p>
