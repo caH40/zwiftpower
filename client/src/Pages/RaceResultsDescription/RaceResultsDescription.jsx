@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
-import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { getLocalDate } from '../../utils/date-convert';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
@@ -30,7 +30,7 @@ function RaceResultsDescription() {
     <section>
       {eventData?.id && (
         <>
-          <DescriptionEventZwift event={eventData} />
+          <DescriptionEventZwiftNew event={eventData} />
           <NavBarResultsRace results={resultsPrepared} />
           <TableRaceResults results={resultsPrepared} event={eventData} />
 

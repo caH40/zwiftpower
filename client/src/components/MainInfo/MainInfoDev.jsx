@@ -10,6 +10,9 @@ function MainInfoDev() {
         <div className={styles.text}>
           <ul className={styles.list__dev}>
             <li className={styles.item}>
+              <span className={styles.date}>29.05.2023</span>изменен дизайн в описании заезда
+            </li>
+            <li className={styles.item}>
               <span className={styles.date}>27.05.2023</span>отметка "Лидера" и "Замыкающего" в
               заезде
             </li>

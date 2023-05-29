@@ -6,7 +6,7 @@ import useBackground from '../../hook/useBackground';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { getZwiftEvents, postEvent } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
 import { getSeriesActual } from '../../api/series';
 
@@ -123,7 +123,7 @@ function ZwiftAddEvent() {
       </div>
       {event.id && (
         <>
-          <DescriptionEventZwift event={event} />
+          <DescriptionEventZwiftNew event={event} />
           <FormAdditionalParamsEvent
             form={additionalParams}
             setForm={setAdditionalParams}
