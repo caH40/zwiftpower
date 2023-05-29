@@ -6,7 +6,7 @@ import LogoRider from '../LogoRider/LogoRider';
 import styles from './ProfileBlock.module.css';
 
 function ProfileBlock({ results, profile }) {
-  if (!results.length) return null;
+  if (!results?.length) return null;
   const [{ profileData }] = results;
 
   return (

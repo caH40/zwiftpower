@@ -14,7 +14,7 @@ import styles from './MainPage.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 function MainPage() {
-  const { eventsPreview } = useSelector((state) => state.fetchEvents);
+  const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды');
   useBackground(false);
@@ -27,7 +27,9 @@ function MainPage() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__preview}>
-        {!eventsPreview[0]?.id && <div className={styles.title__notFound}>{notFound}</div>}
+        {!eventsPreview[0]?.id && status === 'resolved' && (
+          <div className={styles.title__notFound}>{notFound}</div>
+        )}
         {eventsPreview.map((event) => (
           <CardRacePreview event={event} key={event.id} getClick={toLink} />
         ))}

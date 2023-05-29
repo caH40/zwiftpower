@@ -15,7 +15,7 @@ function ProfileResults() {
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
-  const { results, profile } = useSelector((state) => state.fetchUserResults);
+  const { results, profile, status } = useSelector((state) => state.fetchUserResults);
 
   useEffect(() => {
     const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
@@ -24,14 +24,16 @@ function ProfileResults() {
   return (
     <div>
       <ProfileBlock results={results} profile={profile} />
-      {results?.length ? (
+      {results?.length && status === 'resolved' ? (
         <>
           <NavBarResultsRace results={results} hideCategory={true} />
           <TableUserResults results={results} />
         </>
-      ) : (
+      ) : null}
+
+      {!results?.length && status === 'resolved' ? (
         <div className={styles.title__notFound}>{notFound}</div>
-      )}
+      ) : null}
     </div>
   );
 }
