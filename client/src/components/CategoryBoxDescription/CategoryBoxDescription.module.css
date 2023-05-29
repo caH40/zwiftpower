@@ -1,10 +1,10 @@
 .wrapper {
   flex: 0 0 220px;
-  /* height: 66px; */
+
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding: 5px;
+  padding: 7px 10px;
   color: #ffffff;
 }
 .box__title {

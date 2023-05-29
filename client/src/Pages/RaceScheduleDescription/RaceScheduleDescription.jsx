@@ -27,15 +27,17 @@ function RaceScheduleDescription() {
     <section>
       {event?.id && (
         <>
-          <DescriptionEventZwiftNew event={event} forSchedule={true} />
-          <Link
-            className={styles.link}
-            to={`https://www.zwift.com/eu/events/view/${event.id}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Регистрация в Zwift
-          </Link>
+          <div className={styles.container}>
+            <DescriptionEventZwiftNew event={event} forSchedule={true} />
+            <Link
+              className={styles.link}
+              to={`https://www.zwift.com/eu/events/view/${event.id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Регистрация в Zwift
+            </Link>
+          </div>
           <TableSignedRiders riders={event.signedRiders} event={event} />
 
           <div className={styles.right}>
