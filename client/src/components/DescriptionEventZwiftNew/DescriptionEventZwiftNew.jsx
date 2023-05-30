@@ -42,10 +42,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
               <h2 className={styles.title}>{event.name}</h2>
               {isModerator && forSchedule && (
                 <Link to={`/zwift/edit/event/${event.id}`}>
-                  <IconEdit
-                    tooltip={'Редактирование параметров заезда в Звифте'}
-                    bgColor={'white'}
-                  />
+                  <IconEdit tooltip={'Редактирование параметров заезда в Звифте'} />
                 </Link>
               )}
             </div>
@@ -64,7 +61,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
 
         {isOpened && (
           <div className={styles.box__params}>
-            <ParamsEvent event={event} bgColor={'white'} />
+            <ParamsEvent event={event} />
           </div>
         )}
       </div>

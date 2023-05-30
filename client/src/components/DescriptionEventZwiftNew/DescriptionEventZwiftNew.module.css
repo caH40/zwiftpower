@@ -30,7 +30,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--wafer-white);
   padding: 20px;
   width: 100%;
 }
@@ -43,14 +43,12 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #ffffff;
 }
 .subtitle {
   font-size: 16px;
   font-weight: 400;
   line-height: 19px;
   letter-spacing: 0.03em;
-  color: #ffffff;
 }
 .box__right {
   flex: 0 1 450px;
@@ -60,8 +58,7 @@
   flex-flow: wrap;
 }
 .box__left {
-  background: rgba(0, 0, 0, 0.6);
-  /* border: 1px solid #ffffff; */
+  background-color: var(--wafer-white);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
