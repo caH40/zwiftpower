@@ -1,10 +1,14 @@
 .form {
+  display: flex;
+  flex-flow: wrap column;
+  gap: 10px 60px;
   margin-bottom: 10px;
 }
 .title {
   font-size: 18px;
   margin-bottom: 10px;
   font-weight: 700;
+  text-decoration: underline;
 }
 .right {
   text-align: right;

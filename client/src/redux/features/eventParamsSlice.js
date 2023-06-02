@@ -33,6 +33,9 @@ const eventParamsSlice = createSlice({
         label: rule,
       }));
     },
+    setEventParameter(state, action) {
+      state[action.payload.target] = action.payload.parameter;
+    },
 
     setSameParams(state, action) {
       state.eventMainParams.eventStart = action.payload.eventSubgroupStart;
@@ -86,6 +89,7 @@ export const {
   setSelectedRules,
   setSameParams,
   resetParams,
+  setEventParameter,
 } = eventParamsSlice.actions;
 
 export default eventParamsSlice.reducer;
