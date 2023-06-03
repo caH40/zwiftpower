@@ -6,6 +6,7 @@ import RTextarea from '../ReduxUI/RTextarea/RTextarea';
 import { closePopupInput } from '../../../redux/features/popupInputSlice';
 import ButtonClose from '../ButtonClose/ButtonClose';
 import RSelect from '../ReduxUI/RSelect/RSelect';
+import RInputTime from '../ReduxUI/RInputTime/RInputTime';
 
 import styles from './PopupInput.module.css';
 
@@ -49,6 +50,13 @@ function PopupInput() {
                 property={inputParams.property}
                 type={inputParams.typeValue}
                 options={inputParams.options}
+              />
+            )}
+            {inputParams?.type === 'inputTime' && (
+              <RInputTime
+                label={inputParams.label}
+                value={eventMainParams[inputParams.property]}
+                property={inputParams.property}
               />
             )}
           </div>

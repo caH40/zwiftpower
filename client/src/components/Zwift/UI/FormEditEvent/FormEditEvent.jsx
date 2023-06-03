@@ -8,91 +8,141 @@ import {
   optionsCulling,
   optionsEventType,
 } from '../../../../asset/select/event-edit';
+import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
+import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
+import { getLocalDate } from '../../../../utils/date-convert';
 
 import styles from './FormEditEvent.module.css';
 
 function FormEditEvent() {
-  const { eventMainParams } = useSelector((state) => state.eventParams);
+  const { eventMainParams, checkboxRules } = useSelector((state) => state.eventParams);
+
   return (
-    <div className={styles.form} name="zwiftEvent">
+    <>
       <h4 className={styles.title}>Общие настройки заезда</h4>
-      <BoxParameter title={'ID заезда'}>{eventMainParams.id}</BoxParameter>
+      <div className={styles.form} name="zwiftEvent">
+        <div className={styles.box__inputs}>
+          <BoxParameter title={'ID заезда'}>{eventMainParams.id}</BoxParameter>
 
-      <BoxParameter
-        title={'Название'}
-        sample={true}
-        pen={true}
-        inputParams={{ label: 'Название', property: 'name', typeValue: 'text', type: 'input' }}
-      >
-        {eventMainParams.name}
-      </BoxParameter>
+          <BoxParameter
+            title={'Дата и время старта'}
+            sample={true}
+            pen={true}
+            inputParams={{
+              label: 'Дата и время старта',
+              property: 'eventStart',
+              typeValue: 'dateAndTime',
+              type: 'inputTime',
+            }}
+          >
+            {getLocalDate(eventMainParams.eventStart)}
+          </BoxParameter>
 
-      <BoxParameter
-        title={'Описание'}
-        sample={true}
-        pen={true}
-        inputParams={{
-          label: 'Описание для Заезда',
-          property: 'description',
-          typeValue: 'text',
-          type: 'textarea',
-        }}
-      >
-        {eventMainParams.description}
-      </BoxParameter>
+          <BoxParameter
+            title={'Название'}
+            sample={true}
+            pen={true}
+            inputParams={{
+              label: 'Название',
+              property: 'name',
+              typeValue: 'text',
+              type: 'input',
+            }}
+          >
+            {eventMainParams.name}
+          </BoxParameter>
 
-      <BoxParameter
-        title={'URL картинки для обложки'}
-        pen={true}
-        inputParams={{
-          label: 'URL картинки для обложки',
-          property: 'imageUrl',
-          typeValue: 'text',
-          type: 'input',
-        }}
-      >
-        {eventMainParams.imageUrl}
-      </BoxParameter>
+          <BoxParameter
+            title={'Описание'}
+            sample={true}
+            pen={true}
+            inputParams={{
+              label: 'Описание для Заезда',
+              property: 'description',
+              typeValue: 'text',
+              type: 'textarea',
+            }}
+          >
+            {eventMainParams.description}
+          </BoxParameter>
 
-      <BoxParameter
-        title={'Видимость райдеров'}
-        pen={true}
-        inputParams={{
-          label: 'Видимость райдеров',
-          property: 'cullingType',
-          type: 'select',
-          options: optionsCulling,
-        }}
-      >
-        {getNameSelected(optionsCulling, eventMainParams.cullingType)}
-      </BoxParameter>
+          <BoxParameter
+            title={'URL картинки для обложки'}
+            pen={true}
+            inputParams={{
+              label: 'URL картинки для обложки',
+              property: 'imageUrl',
+              typeValue: 'text',
+              type: 'input',
+            }}
+          >
+            {eventMainParams.imageUrl}
+          </BoxParameter>
 
-      <BoxParameter
-        title={'Приватность Заезда'}
-        pen={true}
-        inputParams={{
-          label: 'microserviceEventVisibility',
-          property: 'microserviceEventVisibility',
-          type: 'select',
-          options: optionPrivate,
-        }}
-      >
-        {getNameSelected(optionPrivate, eventMainParams.microserviceEventVisibility)}
-      </BoxParameter>
+          <BoxParameter
+            title={'Видимость райдеров'}
+            pen={true}
+            inputParams={{
+              label: 'Видимость райдеров',
+              property: 'cullingType',
+              type: 'select',
+              options: optionsCulling,
+            }}
+          >
+            {getNameSelected(optionsCulling, eventMainParams.cullingType)}
+          </BoxParameter>
 
-      <BoxParameter
-        title={'Тип заезда'}
-        pen={true}
-        inputParams={{
-          label: 'Тип заезда',
-          property: 'eventType',
-          type: 'select',
-          options: optionsEventType,
-        }}
-      >
-        {getNameSelected(optionsEventType, eventMainParams.eventType)}
-      </BoxParameter>
-    </div>
+          <BoxParameter
+            title={'Приватность Заезда'}
+            pen={true}
+            inputParams={{
+              label: 'microserviceEventVisibility',
+              property: 'microserviceEventVisibility',
+              type: 'select',
+              options: optionPrivate,
+            }}
+          >
+            {getNameSelected(optionPrivate, eventMainParams.microserviceEventVisibility)}
+          </BoxParameter>
+
+          <BoxParameter
+            title={'Тип заезда'}
+            pen={true}
+            inputParams={{
+              label: 'Тип заезда',
+              property: 'eventType',
+              type: 'select',
+              options: optionsEventType,
+            }}
+          >
+            {getNameSelected(optionsEventType, eventMainParams.eventType)}
+          </BoxParameter>
+        </div>
+
+        <div className={styles.box__checkbox}>
+          {/* <RCheckbox
+        label={'visible'}
+        value={eventMainParams.visible}
+        property={'visible'}
+        tooltip="нет информации о назначении"
+      /> */}
+          <RCheckbox
+            label={'Строгая категоризация'}
+            value={eventMainParams.categoryEnforcement}
+            property={'categoryEnforcement'}
+            tooltip="Райдер может выступать в своей категории или более высокой"
+          />
+          {checkboxRules.map((checkboxRule) => (
+            <RCheckboxArray
+              key={checkboxRule.id}
+              label={checkboxRule.translate}
+              value={checkboxRule.checked}
+              property={checkboxRule.value}
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 

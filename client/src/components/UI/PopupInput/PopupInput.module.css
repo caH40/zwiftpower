@@ -36,3 +36,8 @@
   right: -3px;
   cursor: pointer;
 }
+@media screen and (max-width: 576px) {
+  .block {
+    flex: 0 1 90%;
+  }
+}

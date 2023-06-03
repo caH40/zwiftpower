@@ -1,16 +1,19 @@
 .parameter {
-  width: 400px;
   overflow: hidden;
+  margin-bottom: 10px;
 }
 .box__title {
   display: flex;
   justify-content: space-between;
 }
 .box__icons {
+  flex-shrink: 0;
   display: flex;
   gap: 0 5px;
 }
 .title {
+  flex: 0 1 420px;
+  min-width: 230px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
@@ -26,8 +29,27 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 18px;
-  max-width: 370px;
+  max-width: 410px;
+  min-width: 230px;
+  max-height: 150px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 .mb10 {
   margin-bottom: 10px;
+}
+@media screen and (max-width: 576px) {
+  .value {
+    max-width: 350px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .value {
+    max-width: 310px;
+  }
+}
+@media screen and (max-width: 390px) {
+  .value {
+    max-width: 260px;
+  }
 }

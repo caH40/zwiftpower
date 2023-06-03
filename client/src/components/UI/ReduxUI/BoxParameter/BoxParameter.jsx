@@ -31,7 +31,8 @@ function BoxParameter({ title, children, sample, pen, inputParams }) {
           )}
         </div>
       </div>
-      <p className={styles.value}>{children}</p>
+
+      <div className={styles.value}>{children}</div>
     </div>
   );
 }

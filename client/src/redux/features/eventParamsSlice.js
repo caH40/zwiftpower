@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { DtoSubgroup } from '../../dto/subgroup';
+import { rules } from '../../asset/zwift/rule';
 
 const initialState = {
   eventMainParams: { id: 0 },
@@ -10,6 +11,7 @@ const initialState = {
   eventSubgroup_3: {},
   eventSubgroup_4: {},
   selectedRules: [],
+  checkboxRules: [],
 };
 
 const eventParamsSlice = createSlice({
@@ -32,6 +34,18 @@ const eventParamsSlice = createSlice({
         value: rule,
         label: rule,
       }));
+      state.checkboxRules = rules.map((rule) => {
+        return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
+      });
+    },
+    setEventRules(state, action) {
+      state.checkboxRules = state.checkboxRules.map((rule) => {
+        if (rule.value === action.payload.property) {
+          return { ...rule, checked: action.payload.checked };
+        } else {
+          return rule;
+        }
+      });
     },
     setEventParameter(state, action) {
       state[action.payload.target] = action.payload.parameter;
@@ -90,6 +104,7 @@ export const {
   setSameParams,
   resetParams,
   setEventParameter,
+  setEventRules,
 } = eventParamsSlice.actions;
 
 export default eventParamsSlice.reducer;
