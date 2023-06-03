@@ -18,14 +18,14 @@ function BoxParameter({ title, children, sample, pen, inputParams }) {
         <div className={styles.box__icons}>
           {sample && (
             <IconSample
-              squareSize={16}
+              squareSize={18}
               tooltip={'Применить ко всем группам'}
               getClick={() => dispatch(setSameParameter(inputParams.property))}
             />
           )}
           {pen && (
             <IconPen
-              squareSize={16}
+              squareSize={18}
               tooltip={'Изменить значение'}
               getClick={() => dispatch(getPopupInput({ isVisible: true, inputParams }))}
             />

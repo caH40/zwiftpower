@@ -53,3 +53,14 @@
 .white {
   color: #ffffff;
 }
+.animate {
+  transition: all 0.4s;
+}
+.animate:hover {
+  transform: scale(1.15);
+  transition: all 0.4s;
+}
+.animate:active {
+  transform: scale(1);
+  transition: all 0.4s;
+}

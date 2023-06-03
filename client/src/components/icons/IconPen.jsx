@@ -9,7 +9,7 @@ function IconPen({ squareSize = 24, tooltip, getClick }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div
-        className={cn(styles.box__rules, { [styles.pointer]: getClick })}
+        className={cn(styles.box__rules, styles.animate, { [styles.pointer]: getClick })}
         style={{ width: squareSize, height: squareSize }}
         onClick={getClick}
       >
