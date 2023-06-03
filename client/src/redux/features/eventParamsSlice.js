@@ -70,6 +70,17 @@ const eventParamsSlice = createSlice({
         : undefined;
     },
 
+    setSameParameter(state, action) {
+      const valueProperty = state.eventMainParams[action.payload];
+      // у подгрупп другое название свойства старта Эвента
+      const property = action.payload === 'eventStart' ? 'eventSubgroupStart' : action.payload;
+
+      for (let i = 0; i < 5; i++) {
+        // если подгруппа существует, то меняем нужное значение (property) в данной подгруппе
+        if (state['eventSubgroup_' + i]) state['eventSubgroup_' + i][property] = valueProperty;
+      }
+    },
+
     resetParams(state) {
       state.eventSubgroup_0 = {};
       state.eventSubgroup_1 = {};
@@ -105,6 +116,7 @@ export const {
   resetParams,
   setEventParameter,
   setEventRules,
+  setSameParameter,
 } = eventParamsSlice.actions;
 
 export default eventParamsSlice.reducer;

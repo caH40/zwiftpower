@@ -11,6 +11,7 @@ function IconSample({ tooltip, getClick, squareSize = 24 }) {
       <div
         className={cn(styles.box__rules, { [styles.pointer]: getClick })}
         style={{ width: squareSize, height: squareSize }}
+        onClick={getClick}
       >
         <svg
           width="16"

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getPopupInput } from '../../../../redux/features/popupInputSlice';
 import IconSample from '../../../icons/IconSample';
 import IconPen from '../../../icons/IconPen';
+import { setSameParameter } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './BoxParameter.module.css';
 
@@ -19,7 +20,7 @@ function BoxParameter({ title, children, sample, pen, inputParams }) {
             <IconSample
               squareSize={16}
               tooltip={'Применить ко всем группам'}
-              getClick={() => console.log('test')}
+              getClick={() => dispatch(setSameParameter(inputParams.property))}
             />
           )}
           {pen && (
