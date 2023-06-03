@@ -1,5 +1,5 @@
 .input {
-  width: 1.2em;
+  flex: 0 0 1.2em;
   height: 1.2em;
   vertical-align: top;
   background-color: #fff;
@@ -23,11 +23,12 @@
 }
 .label {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  margin-right: 50px;
+  margin-bottom: 10px;
 }
 .label span {
+  min-width: 240px;
   font-size: 16px;
   font-weight: 700;
   margin-right: 10px;

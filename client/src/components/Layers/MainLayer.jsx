@@ -3,6 +3,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import CustomizedSnackbars from '../UI/Snackbars/CustomizedSnackbars';
+import PopupInput from '../UI/PopupInput/PopupInput';
 
 import Body from './Body';
 import Footer from './Footer/Footer';
@@ -17,6 +18,7 @@ function MainLayer() {
           <Outlet />
         </Body>
         <Footer />
+        <PopupInput />
       </CustomizedSnackbars>
     </div>
   );

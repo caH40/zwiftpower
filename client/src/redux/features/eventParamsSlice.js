@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { DtoSubgroup } from '../../dto/subgroup';
+import { rules } from '../../asset/zwift/rule';
 
 const initialState = {
   eventMainParams: { id: 0 },
@@ -10,6 +11,7 @@ const initialState = {
   eventSubgroup_3: {},
   eventSubgroup_4: {},
   selectedRules: [],
+  checkboxRules: [],
 };
 
 const eventParamsSlice = createSlice({
@@ -32,6 +34,21 @@ const eventParamsSlice = createSlice({
         value: rule,
         label: rule,
       }));
+      state.checkboxRules = rules.map((rule) => {
+        return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
+      });
+    },
+    setEventRules(state, action) {
+      state.checkboxRules = state.checkboxRules.map((rule) => {
+        if (rule.value === action.payload.property) {
+          return { ...rule, checked: action.payload.checked };
+        } else {
+          return rule;
+        }
+      });
+    },
+    setEventParameter(state, action) {
+      state[action.payload.target] = action.payload.parameter;
     },
 
     setSameParams(state, action) {
@@ -51,6 +68,17 @@ const eventParamsSlice = createSlice({
       state.eventSubgroup_4 = state.eventSubgroup_4
         ? { ...state.eventSubgroup_4, ...new DtoSubgroup(action.payload) }
         : undefined;
+    },
+
+    setSameParameter(state, action) {
+      const valueProperty = state.eventMainParams[action.payload];
+      // у подгрупп другое название свойства старта Эвента
+      const property = action.payload === 'eventStart' ? 'eventSubgroupStart' : action.payload;
+
+      for (let i = 0; i < 5; i++) {
+        // если подгруппа существует, то меняем нужное значение (property) в данной подгруппе
+        if (state['eventSubgroup_' + i]) state['eventSubgroup_' + i][property] = valueProperty;
+      }
     },
 
     resetParams(state) {
@@ -86,6 +114,9 @@ export const {
   setSelectedRules,
   setSameParams,
   resetParams,
+  setEventParameter,
+  setEventRules,
+  setSameParameter,
 } = eventParamsSlice.actions;
 
 export default eventParamsSlice.reducer;

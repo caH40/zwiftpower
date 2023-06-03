@@ -122,3 +122,19 @@ export function getTodayTomorrow(data) {
 
   return dateStr;
 }
+
+export function getDateTimeStart(dateRaw) {
+  const dateRawNumber = new Date(dateRaw).getTime();
+  const formatter = new Intl.DateTimeFormat('ru', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const dateFormatted = formatter.format(dateRawNumber);
+  const date = dateFormatted.slice(0, 10).split('.').reverse().join('-');
+  const time = dateFormatted.slice(12);
+
+  return { date, time };
+}

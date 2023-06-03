@@ -7,6 +7,7 @@ import styles from './RSelect.module.css';
 
 function RSelect({ label, value, property, disabled, options }) {
   const dispatch = useDispatch();
+
   return (
     <>
       <label className={styles.label}>{label || property}</label>
@@ -19,7 +20,7 @@ function RSelect({ label, value, property, disabled, options }) {
         <option className={styles.option} value=""></option>
         {options.map((element) => (
           <option className={styles.option} value={element.name} key={element.id}>
-            {element.name}
+            {element.translate ? element.translate : element.name}
           </option>
         ))}
       </select>
