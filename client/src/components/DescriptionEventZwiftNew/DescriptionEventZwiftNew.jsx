@@ -11,6 +11,7 @@ import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import CategoryBoxDescription from '../CategoryBoxDescription/CategoryBoxDescription';
 import RaceBoxDescription from '../RaceBoxDescription/RaceBoxDescription';
 import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
+import PrivateEvent from '../PrivateEvent/PrivateEvent';
 
 import styles from './DescriptionEventZwiftNew.module.css';
 
@@ -46,9 +47,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
                 </Link>
               )}
             </div>
-            {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' && (
-              <h3 className={styles.subtitle}>(только для участников клуба)</h3>
-            )}
+            <PrivateEvent event={event} />
             <h3 className={styles.subtitle}>{getLocalDate(event.eventStart)}</h3>
           </div>
 

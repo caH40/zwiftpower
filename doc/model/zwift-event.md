@@ -51,6 +51,7 @@
 - "EVENT_TYPE_GROUP_RIDE" - заезд, с соответствующими правилами (правила уточняются);
 
 **imageUrl** - (`String`) - ссылка на постер заезда;  
+**microserviceExternalResourceId** - (`String`) - id клуба из которого создается заезд;
 **microserviceEventVisibility** - (`String`) - приватность заезда:
 
 - "PUBLIC" - все могут участвовать в заезде;

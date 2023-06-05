@@ -4,14 +4,17 @@ import { countDistance } from '../../utility/distance.js';
 import { getZwiftInsiderUrl } from '../../utility/route.js';
 import { loggingAdmin } from '../log.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
+import { getClubName } from './club.js';
 import { putSignedRidersService } from './signed-riders.js';
 
 // добавление эвента в БД zp.ru
 export async function postEventService(event, userId) {
   try {
     await checkUnique(event);
+    await getClubName(event);
 
     const eventSaved = await saveEventToDB(event);
+
     await putSignedRidersService(eventSaved.id);
     await updateStartInfoEvent(eventSaved);
 
@@ -83,6 +86,8 @@ async function saveEventToDB(event) {
       type: event.type,
       imageUrl: event.imageUrl,
       microserviceEventVisibility: event.microserviceEventVisibility,
+      microserviceExternalResourceId: event.microserviceExternalResourceId,
+      clubName: event.clubName,
       name: event.name,
       rulesSet: event.rulesSet,
       tags: event.tags,

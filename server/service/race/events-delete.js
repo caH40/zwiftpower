@@ -23,6 +23,7 @@ export async function deleteEventService(eventId) {
         hasResults: eventDB.hasResults,
         needCount: eventDB.needCount,
         started: eventDB.started,
+        clubName: eventDB.clubName,
       },
       message: `Заезд ${eventDB.name} удален!`,
     };

@@ -6,6 +6,7 @@ import RulesBox from '../RulesBox/RulesBox';
 import TimeToStart from '../TimeToStart/TimeToStart';
 import { getTodayTomorrow } from '../../utils/date-convert';
 import TdRaceType from '../Tables/Td/TdRaceType';
+import PrivateEvent from '../PrivateEvent/PrivateEvent';
 
 import styles from './CardRacePreview.module.css';
 
@@ -19,11 +20,8 @@ function CardRacePreview({ event, getClick }) {
             <div>
               <h2 className={styles.title}>
                 {event.name}
-                {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' && (
-                  <span className={styles.title__sub}>(private event)</span>
-                )}
+                <PrivateEvent event={event} />
               </h2>
-
               <p className={styles.title__sub}>
                 <TimeToStart time={event.eventStart} />
               </p>
