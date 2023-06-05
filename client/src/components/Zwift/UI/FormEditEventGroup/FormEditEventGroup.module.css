@@ -22,7 +22,27 @@
   padding: 15px 10px;
   margin-bottom: 15px;
 }
-.title__box {
+
+.A {
+  background-color: #dc401920;
+}
+.B {
+  background-color: #58c34e20;
+}
+.C {
+  background-color: #3ec0e920;
+}
+.D {
+  background-color: #fccf0b20;
+}
+.E {
+  background-color: #943e5e20;
+}
+.form__group {
   display: flex;
-  justify-content: space-between;
+  flex-flow: wrap;
+  gap: 10px 100px;
+}
+.box__inputs {
+  flex: 0 1 450px;
 }

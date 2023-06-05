@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { DtoSubgroup } from '../../dto/subgroup';
 import { rules } from '../../asset/zwift/rule';
 
 const initialState = {
@@ -19,6 +18,7 @@ const eventParamsSlice = createSlice({
   // eventSubgroup_ порядковый номер массива в свойстве  eventSubgroups
   initialState,
   reducers: {
+    // первоначальная установка (инициализация) сущностей после загрузки данных эвента с сервера Звифта
     setEventParams(state, action) {
       [
         state.eventSubgroup_0,
@@ -30,10 +30,10 @@ const eventParamsSlice = createSlice({
 
       state.eventMainParams = action.payload;
 
-      state.selectedRules = action.payload.rulesSet.map((rule) => ({
-        value: rule,
-        label: rule,
-      }));
+      // state.selectedRules = action.payload.rulesSet.map((rule) => ({
+      //   value: rule,
+      //   label: rule,
+      // }));
       state.checkboxRules = rules.map((rule) => {
         return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
       });
@@ -47,37 +47,25 @@ const eventParamsSlice = createSlice({
         }
       });
     },
-    setEventParameter(state, action) {
-      state[action.payload.target] = action.payload.parameter;
-    },
 
-    setSameParams(state, action) {
-      state.eventMainParams.eventStart = action.payload.eventSubgroupStart;
-      state.eventSubgroup_0 = state.eventSubgroup_0
-        ? { ...state.eventSubgroup_0, ...new DtoSubgroup(action.payload) }
-        : undefined;
-      state.eventSubgroup_1 = state.eventSubgroup_1
-        ? { ...state.eventSubgroup_1, ...new DtoSubgroup(action.payload) }
-        : undefined;
-      state.eventSubgroup_2 = state.eventSubgroup_2
-        ? { ...state.eventSubgroup_2, ...new DtoSubgroup(action.payload) }
-        : undefined;
-      state.eventSubgroup_3 = state.eventSubgroup_3
-        ? { ...state.eventSubgroup_3, ...new DtoSubgroup(action.payload) }
-        : undefined;
-      state.eventSubgroup_4 = state.eventSubgroup_4
-        ? { ...state.eventSubgroup_4, ...new DtoSubgroup(action.payload) }
-        : undefined;
-    },
-
+    // установка значения текущего параметра Эвента для всех групп
     setSameParameter(state, action) {
-      const valueProperty = state.eventMainParams[action.payload];
-      // у подгрупп другое название свойства старта Эвента
-      const property = action.payload === 'eventStart' ? 'eventSubgroupStart' : action.payload;
+      const { subgroupIndex, property } = action.payload;
+      const isEventMainParameter = subgroupIndex === 'eventMainParameter';
 
+      const valueProperty = isEventMainParameter
+        ? state.eventMainParams[property]
+        : state[`eventSubgroup_${subgroupIndex}`][property];
+
+      // у подгрупп и Эвента разные названия свойства старта Эвента
+      const propertySubgroup = property === 'eventStart' ? 'eventSubgroupStart' : property;
+      const propertyEventMain = property === 'eventSubgroupStart' ? 'eventStart' : property;
+
+      state.eventMainParams[propertyEventMain] = valueProperty;
       for (let i = 0; i < 5; i++) {
         // если подгруппа существует, то меняем нужное значение (property) в данной подгруппе
-        if (state['eventSubgroup_' + i]) state['eventSubgroup_' + i][property] = valueProperty;
+        if (state['eventSubgroup_' + i])
+          state['eventSubgroup_' + i][propertySubgroup] = valueProperty;
       }
     },
 
@@ -88,22 +76,29 @@ const eventParamsSlice = createSlice({
       state.eventSubgroup_3 = {};
       state.eventSubgroup_4 = {};
       state.eventMainParams = { id: 0 };
-      state.selectedRules = [];
+      state.checkboxRules = [];
+      // state.selectedRules = [];
     },
+
     setMainParams(state, action) {
+      delete action.payload.index;
+
       state.eventMainParams = { ...state.eventMainParams, ...action.payload };
     },
+
     setSubgroupParams(state, action) {
       const property = `eventSubgroup_${action.payload.index}`;
+      delete action.payload.index;
+
       state[property] = {
         ...state[property],
-        ...action.payload.obj,
+        ...action.payload,
       };
     },
 
-    setSelectedRules(state, action) {
-      state.selectedRules = action.payload;
-    },
+    // setSelectedRules(state, action) {
+    //   state.selectedRules = action.payload;
+    // },
   },
 });
 
@@ -111,10 +106,8 @@ export const {
   setEventParams,
   setMainParams,
   setSubgroupParams,
-  setSelectedRules,
-  setSameParams,
+  // setSelectedRules,
   resetParams,
-  setEventParameter,
   setEventRules,
   setSameParameter,
 } = eventParamsSlice.actions;

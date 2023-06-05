@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { setMainParams, setSubgroupParams } from '../../../../redux/features/eventParamsSlice';
 
-import styles from './RInput.module.css';
+import styles from './RSelect.module.css';
 
-function RInput({ subgroupIndex, label, type, property, disabled }) {
+function RSelectId({ subgroupIndex, label, property, disabled, options }) {
   const {
     eventMainParams,
     eventSubgroup_0,
@@ -39,20 +39,24 @@ function RInput({ subgroupIndex, label, type, property, disabled }) {
 
   return (
     <>
-      <label className={styles.label}>
-        {label || property}
-        <input
-          className={styles.input}
-          type={type}
-          value={blockWithParameters()[property]}
-          onChange={(e) => {
-            dispatch(inputHandler({ [property]: e.target.value, index: subgroupIndex }));
-          }}
-          disabled={disabled}
-        />
-      </label>
+      <label className={styles.label}>{label || property}</label>
+      <select
+        className={styles.select}
+        value={blockWithParameters()[property]} // select не может быть null
+        onChange={(e) => {
+          dispatch(inputHandler({ [property]: +e.target.value, index: subgroupIndex }));
+        }}
+        disabled={disabled}
+      >
+        <option className={styles.option} value=""></option>
+        {options.map((element) => (
+          <option className={styles.option} value={element.id} key={element.id}>
+            {element.name}
+          </option>
+        ))}
+      </select>
     </>
   );
 }
 
-export default RInput;
+export default RSelectId;

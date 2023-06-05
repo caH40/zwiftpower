@@ -7,12 +7,12 @@ import { closePopupInput } from '../../../redux/features/popupInputSlice';
 import ButtonClose from '../ButtonClose/ButtonClose';
 import RSelect from '../ReduxUI/RSelect/RSelect';
 import RInputTime from '../ReduxUI/RInputTime/RInputTime';
+import RSelectId from '../ReduxUI/RSelect/RSelectId';
 
 import styles from './PopupInput.module.css';
 
 function PopupInput() {
   const { isVisible, inputParams } = useSelector((state) => state.getPopupInput);
-  const { eventMainParams } = useSelector((state) => state.eventParams);
 
   const dispatch = useDispatch();
 
@@ -29,8 +29,8 @@ function PopupInput() {
 
             {inputParams?.type === 'input' && (
               <RInput
+                subgroupIndex={inputParams.subgroupIndex}
                 label={inputParams.label}
-                value={eventMainParams[inputParams.property]}
                 property={inputParams.property}
                 type={inputParams.typeValue}
                 disabled={inputParams.disabled}
@@ -38,15 +38,24 @@ function PopupInput() {
             )}
             {inputParams?.type === 'textarea' && (
               <RTextarea
+                subgroupIndex={inputParams.subgroupIndex}
                 label={inputParams.label}
-                value={eventMainParams[inputParams.property]}
                 property={inputParams.property}
               />
             )}
             {inputParams?.type === 'select' && (
               <RSelect
+                subgroupIndex={inputParams.subgroupIndex}
                 label={inputParams.label}
-                value={eventMainParams[inputParams.property]}
+                property={inputParams.property}
+                type={inputParams.typeValue}
+                options={inputParams.options}
+              />
+            )}
+            {inputParams?.type === 'selectId' && (
+              <RSelectId
+                subgroupIndex={inputParams.subgroupIndex}
+                label={inputParams.label}
                 property={inputParams.property}
                 type={inputParams.typeValue}
                 options={inputParams.options}
@@ -54,8 +63,9 @@ function PopupInput() {
             )}
             {inputParams?.type === 'inputTime' && (
               <RInputTime
+                subgroupIndex={inputParams.subgroupIndex}
                 label={inputParams.label}
-                value={eventMainParams[inputParams.property]}
+                value={inputParams.value}
                 property={inputParams.property}
               />
             )}
