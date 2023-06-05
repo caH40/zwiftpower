@@ -18,14 +18,18 @@ function RaceBoxDescription({ event }) {
           </dd>
         </div>
         <div className={styles.box__term}>
-          <dt className={styles.term}>ОРГАНИЗАТОР:</dt>
-          <dd className={styles.description}>{event.organizer}</dd>
-        </div>
-        <div className={styles.box__term}>
           <dt className={styles.term}>ПРАВИЛА:</dt>
           <dd className={styles.description}>
             <RulesBox event={event} />
           </dd>
+        </div>
+        <div className={styles.box__term}>
+          <dt className={styles.term}>Тип</dt>
+          <dd className={styles.description}>{event.eventType}</dd>
+        </div>
+        <div className={styles.box__term}>
+          <dt className={styles.term}>ОРГАНИЗАТОР:</dt>
+          <dd className={styles.description}>{event.organizer}</dd>
         </div>
       </dl>
     </div>

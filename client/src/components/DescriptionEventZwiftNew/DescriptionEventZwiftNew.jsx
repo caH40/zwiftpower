@@ -46,6 +46,9 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
                 </Link>
               )}
             </div>
+            {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' && (
+              <h3 className={styles.subtitle}>(только для участников клуба)</h3>
+            )}
             <h3 className={styles.subtitle}>{getLocalDate(event.eventStart)}</h3>
           </div>
 

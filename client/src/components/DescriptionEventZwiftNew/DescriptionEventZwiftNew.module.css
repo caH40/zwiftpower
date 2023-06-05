@@ -75,9 +75,6 @@
   .block__main {
     padding: 20px 20px 0px 20px;
   }
-  .subtitle {
-    margin-bottom: 15px;
-  }
   .main__inner {
     flex-flow: wrap;
     padding-bottom: 100px;
@@ -99,5 +96,11 @@
   }
   .main__innerClosed {
     padding-bottom: 10px;
+  }
+  .block__main {
+    padding: 10px 10px 0px 10px;
+  }
+  .box__params {
+    padding: 10px 10px;
   }
 }

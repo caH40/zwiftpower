@@ -17,7 +17,13 @@ function CardRacePreview({ event, getClick }) {
         <div className={styles.card__top}>
           <div className={styles.description}>
             <div>
-              <h2 className={styles.title}>{event.name}</h2>
+              <h2 className={styles.title}>
+                {event.name}
+                {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' && (
+                  <span className={styles.title__sub}>(private event)</span>
+                )}
+              </h2>
+
               <p className={styles.title__sub}>
                 <TimeToStart time={event.eventStart} />
               </p>
@@ -34,6 +40,10 @@ function CardRacePreview({ event, getClick }) {
                 <dd className={styles.term__description}>
                   <RulesBox event={event} squareSize={18} />
                 </dd>
+              </div>
+              <div className={styles.box__term}>
+                <dt className={styles.term}>Тип</dt>
+                <dd className={styles.term__description}>{event.eventType}</dd>
               </div>
               <div className={styles.box__term}>
                 <dt className={styles.term}>Организатор</dt>

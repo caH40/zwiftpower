@@ -93,6 +93,7 @@
   object-fit: cover;
   border-radius: 5px;
 }
+
 @media screen and (max-width: 992px) {
   .title {
     font-size: 18px;

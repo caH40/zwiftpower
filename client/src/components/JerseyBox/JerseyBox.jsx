@@ -4,7 +4,7 @@ import { jerseys } from '../../asset/zwift/lib/esm/jerseys';
 
 function JerseyBox({ jerseyId }) {
   const jersey = jerseys.find((jersey) => jersey.id === jerseyId) || {};
-  return <div>{jersey.name}</div>;
+  return <div>{jersey.name ?? 'не выбрано'}</div>;
 }
 
 export default JerseyBox;
