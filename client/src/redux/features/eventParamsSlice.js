@@ -9,7 +9,6 @@ const initialState = {
   eventSubgroup_2: {},
   eventSubgroup_3: {},
   eventSubgroup_4: {},
-  selectedRules: [],
   checkboxRules: [],
 };
 
@@ -30,14 +29,12 @@ const eventParamsSlice = createSlice({
 
       state.eventMainParams = action.payload;
 
-      // state.selectedRules = action.payload.rulesSet.map((rule) => ({
-      //   value: rule,
-      //   label: rule,
-      // }));
       state.checkboxRules = rules.map((rule) => {
         return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
       });
     },
+
+    // установка правил и сохранение в состояние checkboxRules
     setEventRules(state, action) {
       state.checkboxRules = state.checkboxRules.map((rule) => {
         if (rule.value === action.payload.property) {
@@ -48,7 +45,7 @@ const eventParamsSlice = createSlice({
       });
     },
 
-    // установка значения текущего параметра Эвента для всех групп
+    // установка значения текущего параметра Эвента для всех групп и Эвента
     setSameParameter(state, action) {
       const { subgroupIndex, property } = action.payload;
       const isEventMainParameter = subgroupIndex === 'eventMainParameter';
@@ -69,6 +66,7 @@ const eventParamsSlice = createSlice({
       }
     },
 
+    // сброс всех состояний
     resetParams(state) {
       state.eventSubgroup_0 = {};
       state.eventSubgroup_1 = {};
@@ -77,15 +75,16 @@ const eventParamsSlice = createSlice({
       state.eventSubgroup_4 = {};
       state.eventMainParams = { id: 0 };
       state.checkboxRules = [];
-      // state.selectedRules = [];
     },
 
+    // установка нового параметра в настройках Эвента
     setMainParams(state, action) {
       delete action.payload.index;
 
       state.eventMainParams = { ...state.eventMainParams, ...action.payload };
     },
 
+    // установка нового параметра в настройках подгруппы
     setSubgroupParams(state, action) {
       const property = `eventSubgroup_${action.payload.index}`;
       delete action.payload.index;
@@ -95,10 +94,6 @@ const eventParamsSlice = createSlice({
         ...action.payload,
       };
     },
-
-    // setSelectedRules(state, action) {
-    //   state.selectedRules = action.payload;
-    // },
   },
 });
 
@@ -106,7 +101,6 @@ export const {
   setEventParams,
   setMainParams,
   setSubgroupParams,
-  // setSelectedRules,
   resetParams,
   setEventRules,
   setSameParameter,
