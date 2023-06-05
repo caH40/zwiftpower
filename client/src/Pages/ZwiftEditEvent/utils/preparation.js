@@ -7,7 +7,7 @@ export function prepareData(
   eventSubgroup_2,
   eventSubgroup_3,
   eventSubgroup_4,
-  selectedRules
+  checkboxRules
 ) {
   const event = { ...eventMainParams };
   const dateNow = [`timestamp=${Date.now()}`];
@@ -21,7 +21,7 @@ export function prepareData(
   ].filter((elm) => elm.id);
 
   event.rulesId = null;
-  const rulesSet = [...selectedRules].map((rule) => rule.value);
+  const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
 
   event.rulesSet = rulesSet;
 

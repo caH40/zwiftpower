@@ -33,6 +33,7 @@ function FormEditEvent() {
               property: 'eventStart',
               typeValue: 'dateAndTime',
               type: 'inputTime',
+              value: eventMainParams.eventStart,
             }}
           >
             {getLocalDate(eventMainParams.eventStart)}
@@ -120,12 +121,6 @@ function FormEditEvent() {
         </div>
 
         <div className={styles.box__checkbox}>
-          {/* <RCheckbox
-        label={'visible'}
-        value={eventMainParams.visible}
-        property={'visible'}
-        tooltip="нет информации о назначении"
-      /> */}
           <RCheckbox
             label={'Строгая категоризация'}
             value={eventMainParams.categoryEnforcement}

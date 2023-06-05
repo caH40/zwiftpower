@@ -32,7 +32,7 @@ function ZwiftEditEvent() {
     eventSubgroup_2,
     eventSubgroup_3,
     eventSubgroup_4,
-    selectedRules,
+    checkboxRules,
   } = useSelector((state) => state.eventParams);
   useTitle('Zwift - Редактирование заезда');
   useBackground(false);
@@ -70,7 +70,7 @@ function ZwiftEditEvent() {
       eventSubgroup_2,
       eventSubgroup_3,
       eventSubgroup_4,
-      selectedRules
+      checkboxRules
     );
 
     changeZwiftEvents(eventForPost)

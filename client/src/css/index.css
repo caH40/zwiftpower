@@ -89,4 +89,32 @@ select {
 
   --success: #58c34e;
   --wafer-white: rgba(255, 255, 255, 0.7);
+
+  /* .A {
+    background-color: #dc4119;
+  }
+  .B {
+    background-color: #58c34e;
+  }
+  .C {
+    background-color: #3ec0e9;
+  }
+  .D {
+    background-color: #fccf0b;
+  }
+  .E {
+    background-color: #943e5e;
+  }
+  .W {
+    background-color: #9422ae;
+  }
+  .WA {
+    background-color: #9422ae;
+  }
+  .WB {
+    background-color: #9422ae;
+  }
+  .T {
+    background-color: var(--color-blue-3);
+  } */
 }

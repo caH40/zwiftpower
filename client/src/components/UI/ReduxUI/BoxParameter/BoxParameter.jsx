@@ -18,9 +18,17 @@ function BoxParameter({ title, children, sample, pen, inputParams }) {
         <div className={styles.box__icons}>
           {sample && (
             <IconSample
+              subgroupIndex={inputParams.subgroupIndex}
               squareSize={18}
               tooltip={'Применить ко всем группам'}
-              getClick={() => dispatch(setSameParameter(inputParams.property))}
+              getClick={() =>
+                dispatch(
+                  setSameParameter({
+                    property: inputParams.property,
+                    subgroupIndex: inputParams.subgroupIndex ?? 'eventMainParameter',
+                  })
+                )
+              }
             />
           )}
           {pen && (

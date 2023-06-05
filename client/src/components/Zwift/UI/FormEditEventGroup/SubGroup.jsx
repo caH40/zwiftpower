@@ -1,115 +1,161 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+
+import cn from 'classnames';
 
 import { jerseys, routes, worlds } from '../../../../asset/zwift/lib/esm/zwift-lib';
-import RSelectInArray from '../../../UI/ReduxUI/RSelectInArray/RSelectInArray';
-import RInputInArray from '../../../UI/ReduxUI/RInputInArray/RInputInArray';
-import RTextareaInArray from '../../../UI/ReduxUI/RTextareaInArray/RTextareaInArray';
-import Button from '../../../UI/Button/Button';
-import { getAlert } from '../../../../redux/features/alertMessageSlice';
-import { setSameParams } from '../../../../redux/features/eventParamsSlice';
+import { getLocalDate } from '../../../../utils/date-convert';
+import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 
 import styles from './FormEditEventGroup.module.css';
 
 function SubGroup({ subGroup, index }) {
-  const dispatch = useDispatch();
-  const setSameParamsClick = () => {
-    dispatch(setSameParams(subGroup));
-    dispatch(
-      getAlert({
-        message: 'Установленные текущие настройки для всех групп!',
-        type: 'success',
-        isOpened: true,
-      })
-    );
-  };
   return (
     <>
       {subGroup?.subgroupLabel ? (
-        <div className={styles.group}>
-          <div className={styles.title__box}>
-            <h4 className={styles.title}>Группа {subGroup.subgroupLabel}</h4>
-            <Button
-              addCls={'td back'}
-              tooltip={'Установить всем группам текущие параметры'}
-              getClick={setSameParamsClick}
-            >
-              Установить
-            </Button>
+        <div className={cn(styles.group, styles[subGroup.subgroupLabel])}>
+          <h4 className={styles.title}>Группа {subGroup.subgroupLabel}</h4>
+          <div className={styles.form__group}>
+            <div className={styles.box__inputs}>
+              <BoxParameter
+                title={'Дата и время старта'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Дата и время старта',
+                  property: 'eventSubgroupStart',
+                  typeValue: 'dateAndTime',
+                  type: 'inputTime',
+                  value: subGroup.eventSubgroupStart,
+                  subgroupIndex: index,
+                }}
+              >
+                {getLocalDate(subGroup.eventSubgroupStart)}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Название для группы'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Название для группы',
+                  property: 'name',
+                  typeValue: 'text',
+                  type: 'input',
+                  subgroupIndex: index,
+                }}
+              >
+                {subGroup.name}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Описание для группы'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Описание для группы',
+                  property: 'description',
+                  type: 'textarea',
+                  subgroupIndex: index,
+                }}
+              >
+                {subGroup.description}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Джерси для группы'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Джерси для группы',
+                  property: 'jerseyHash',
+                  type: 'selectId',
+                  subgroupIndex: index,
+                  options: [...jerseys].sort((a, b) =>
+                    a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
+                  ),
+                }}
+              >
+                {jerseys.find((jersey) => jersey.id === subGroup.jerseyHash)?.name ||
+                  'Джерси не найдена или не задана'}
+              </BoxParameter>
+
+              {/* <BoxParameter title={'Номер пакета правил'}>{subGroup.rulesId}</BoxParameter> */}
+            </div>
+
+            <div className={styles.box__inputs}>
+              <BoxParameter
+                title={'Карта'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Карта',
+                  property: 'mapId',
+                  type: 'selectId',
+                  subgroupIndex: index,
+                  options: [...worlds].sort((a, b) =>
+                    a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
+                  ),
+                }}
+              >
+                {worlds.find((world) => world.id === subGroup.mapId)?.name ||
+                  'Карта не найдена'}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Маршрут'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Маршрут',
+                  property: 'routeId',
+                  type: 'selectId',
+                  subgroupIndex: index,
+                  options: routes
+                    .filter(
+                      (route) =>
+                        route.world ===
+                        worlds.find((world) => world.id === subGroup.mapId)?.slug
+                    )
+                    .sort((a, b) =>
+                      a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
+                    ),
+                }}
+              >
+                {routes.find((route) => route.id === subGroup.routeId)?.name ||
+                  'Маршрут не найден'}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Количество кругов'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Количество кругов',
+                  property: 'laps',
+                  type: 'input',
+                  typeValue: 'number',
+                  subgroupIndex: index,
+                }}
+              >
+                {subGroup.laps}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Номер "кармана" на старте'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Номер "кармана" на старте',
+                  property: 'startLocation',
+                  type: 'input',
+                  typeValue: 'number',
+                  subgroupIndex: index,
+                }}
+              >
+                {subGroup.startLocation}
+              </BoxParameter>
+            </div>
           </div>
-          <RSelectInArray
-            label={'Карта'}
-            value={subGroup.mapId}
-            property={'mapId'}
-            options={worlds.sort((a, b) =>
-              a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-            )}
-            indexArray={index}
-          />
-          <RSelectInArray
-            label={'Маршрут'}
-            value={subGroup.routeId}
-            property={'routeId'}
-            options={routes
-              .filter(
-                (route) =>
-                  route.world === worlds.find((world) => world.id === subGroup.mapId)?.slug
-              )
-              .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en'))}
-            indexArray={index}
-          />
-          <RInputInArray
-            label={'Количество кругов'}
-            value={subGroup.laps}
-            property={'laps'}
-            type={'number'}
-            indexArray={index}
-          />
-          <RInputInArray
-            label={'Время старта (московское время -3ч)'}
-            value={subGroup.eventSubgroupStart}
-            property={'eventSubgroupStart'}
-            type={'text'}
-            indexArray={index}
-          />
-          <RInputInArray
-            label={'Название для группы'}
-            value={subGroup.name}
-            property={'name'}
-            type={'text'}
-            indexArray={index}
-          />
-          <RTextareaInArray
-            label={'Описание для группы'}
-            value={subGroup.description}
-            property={'description'}
-            type={'text'}
-            indexArray={index}
-          />
-          <RSelectInArray
-            label={'Джерси заезда'}
-            value={subGroup.jerseyHash}
-            property={'jerseyHash'}
-            options={jerseys.sort((a, b) =>
-              a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-            )}
-            indexArray={index}
-          />
-          <RInputInArray
-            label={'Номер места старта'}
-            value={subGroup.startLocation}
-            property={'startLocation'}
-            type={'number'}
-            indexArray={index}
-          />
-          <RInputInArray
-            label={'Номер пакета правил'}
-            value={subGroup.rulesId}
-            property={'rulesId'}
-            type={'number'}
-            indexArray={index}
-            disabled={true}
-          />
         </div>
       ) : undefined}
     </>

@@ -5,19 +5,19 @@ export const rules = [
     label: 'Показывать результаты',
     translate: 'Показывать результаты',
   },
+  { id: 1, value: 'NO_POWERUPS', label: 'Нет power ups', translate: 'Отключение PowerUp' },
   {
-    id: 1,
+    id: 2,
     value: 'ENFORCE_NO_ZPOWER',
     label: 'Только с PM',
     translate: 'Обязательное наличие измерителя мощности',
   },
   {
-    id: 2,
+    id: 3,
     value: 'ENFORCE_HRM',
     label: 'Только с HRM',
     translate: 'Обязательное наличие измерителя пульса',
   },
-  { id: 3, value: 'NO_POWERUPS', label: 'Нет power ups', translate: 'Отключение PowerUp' },
   {
     id: 4,
     value: 'NO_DRAFTING',
@@ -31,6 +31,6 @@ export const rules = [
     label: 'Позднее подключение',
     translate: 'Позднее подключение',
   },
-  { id: 7, value: 'TEST_BIT_10', label: 'TEST_BIT_10', translate: '“Резиновая” группа' },
-  { id: 8, value: 'LADIES_ONLY', label: 'LADIES_ONLY', translate: 'LADIES_ONLY' },
+  { id: 7, value: 'TEST_BIT_10', label: 'TEST_BIT_10', translate: 'Резиновая лента' },
+  // { id: 8, value: 'LADIES_ONLY', label: 'LADIES_ONLY', translate: 'LADIES_ONLY' },
 ];
