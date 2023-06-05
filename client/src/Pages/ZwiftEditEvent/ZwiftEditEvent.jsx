@@ -21,6 +21,7 @@ function ZwiftEditEvent() {
   const [eventId, setEventId] = useState({ id: id || 0 });
 
   useEffect(() => {
+    dispatch(resetParams());
     if (eventId.id === 0) return;
     fetchEventParams();
   }, [id]); // eslint-disable-line
