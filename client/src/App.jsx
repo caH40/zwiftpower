@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import MainLayer from './components/Layers/MainLayer';
@@ -27,6 +27,7 @@ import ProfileResults from './Pages/Profile/ProfileResults';
 import ProfileSetting from './Pages/Profile/ProfileSetting';
 import ProfilePower from './Pages/Profile/ProfilePower';
 import ProfileWeight from './Pages/Profile/ProfileWeight';
+import { sendMetrika } from './metrika/yandex';
 
 function App() {
   useFirstAuth();
@@ -34,6 +35,9 @@ function App() {
 
   // const isAdmin = ['admin'].includes(userAuth.role);
   const isModerator = ['admin', 'moderator'].includes(userAuth.role);
+
+  const location = useLocation();
+  sendMetrika('hit', location.pathname);
 
   return (
     <Routes>
