@@ -33,7 +33,7 @@ const eventPreviewSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchEventPreview.pending, (state) => {
-      state.event = [];
+      state.event = {};
       state.error = null;
       state.status = 'loading';
     });
