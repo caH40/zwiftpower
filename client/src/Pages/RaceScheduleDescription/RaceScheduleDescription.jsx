@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -13,6 +13,7 @@ import styles from './RaceScheduleDescription.module.css';
 
 function RaceScheduleDescription() {
   const { event } = useSelector((state) => state.fetchEventPreview);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   useTitle('Описание заезда');
@@ -23,9 +24,15 @@ function RaceScheduleDescription() {
     dispatch(fetchEventPreview(eventId));
   }, [eventId, dispatch]);
 
+  useEffect(() => {
+    if (event.hasResults) {
+      navigate(`/race/results/${eventId}`, { replace: true });
+    }
+  }, [event, navigate, eventId]);
+
   return (
     <section>
-      {event?.id && (
+      {event?.id && !event.hasResults && (
         <>
           <DescriptionEventZwiftNew event={event} forSchedule={true} />
           <Link
