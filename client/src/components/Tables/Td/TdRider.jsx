@@ -5,7 +5,9 @@ import Flag from '../../Flag/Flag';
 import Leader from '../../Leader/Leader';
 import Sweeper from '../../Sweeper/Sweeper';
 
-import styles from '../Table.module.css';
+import IconFemale from '../../icons/IconFemale';
+
+import styles from './Td.module.css';
 
 function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
   return (
@@ -30,11 +32,13 @@ function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
               )}
             </div>
           )}
-          <span>
+
+          <div className={styles.name}>
             {`${profile.firstName} ${profile.lastName}`}
+            {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
             <Leader getLeaders={getLeaders} profileId={profileId} />
             <Sweeper getSweepers={getSweepers} profileId={profileId} />
-          </span>
+          </div>
         </div>
       </Link>
     </td>

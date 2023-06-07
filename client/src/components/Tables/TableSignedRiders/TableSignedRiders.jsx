@@ -26,7 +26,7 @@ function TableSignedRiders({ riders = [], event }) {
               <CategoryBox showLabel={true} label={rider.subgroupLabel} circle={true} />
             </td>
             <TdRider
-              profile={rider}
+              profile={{ ...rider, gender: rider.male ? 'MALE' : 'FEMALE' }}
               profileId={rider.id}
               showIcons={{ sm }}
               getLeaders={getLeaders}
