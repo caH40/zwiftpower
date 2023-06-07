@@ -25,14 +25,14 @@ function RaceScheduleDescription() {
   }, [eventId, dispatch]);
 
   useEffect(() => {
-    if (event.hasResults) {
+    if (event.started) {
       navigate(`/race/results/${eventId}`, { replace: true });
     }
   }, [event, navigate, eventId]);
 
   return (
     <section>
-      {event?.id && !event.hasResults && (
+      {event?.id && !event.started && (
         <>
           <DescriptionEventZwiftNew event={event} forSchedule={true} />
           <Link
