@@ -17,6 +17,13 @@
   width: 24px;
   height: 24px;
 }
+.box__inline {
+  display: inline-block;
+}
+.box__inline svg {
+  width: 100%;
+  height: 100%;
+}
 .box__rules svg {
   width: 100%;
   height: 100%;
