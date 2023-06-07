@@ -19,7 +19,7 @@
 }
 .table th {
   text-align: inherit;
-  padding: 0.8em 0.4em;
+  padding: 0.5em 0.4em;
   vertical-align: middle;
   border-top: 1px solid #dee2e6;
 }
@@ -124,6 +124,7 @@
 }
 .center {
   text-align: center;
+  width: 24px;
 }
 .penalty {
   display: flex;
