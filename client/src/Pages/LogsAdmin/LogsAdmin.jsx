@@ -11,7 +11,7 @@ import styles from './LogsAdmin.module.css';
 function LogsAdmin() {
   useTitle('Логи действий с Эвентами');
   useBackground(false);
-  const { logs } = useSelector((state) => state.logsAdmins);
+  const { logs, quantityPages } = useSelector((state) => state.logsAdmins);
   const dispatch = useDispatch();
 
   useEffect(() => {

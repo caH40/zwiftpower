@@ -17,13 +17,22 @@ export async function loggingAdmin(eventId, eventName, eventStart, userId, descr
     console.error(error);
   }
 }
-export async function getLogsAdminsService() {
+export async function getLogsAdminsService({ page = 1, docsOnPage = 20 }) {
   try {
-    const logsDB = await LogsAdmin.find().populate({ path: 'userId', select: 'username' });
-    logsDB.reverse();
+    const logsDB = await LogsAdmin.find()
+      .sort({ date: -1 })
+      .populate({ path: 'userId', select: 'username' });
+
+    const quantityPages = Math.ceil(logsDB.length / docsOnPage);
+
+    const sliceStart = page * docsOnPage - docsOnPage;
+    const sliceEnd = docsOnPage * page;
+    const logsFiltered = logsDB.slice(sliceStart, sliceEnd);
 
     return {
-      logs: logsDB,
+      logs: logsFiltered,
+      quantityPages,
+      page,
       message: 'Логи о действиях админов (модераторов)',
     };
   } catch (error) {
