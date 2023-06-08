@@ -312,7 +312,9 @@ export async function putGeneralPoints(req, res) {
 // запрос логов по действиям админов(модераторов)
 export async function getLogsAdmins(req, res) {
   try {
-    const logs = await getLogsAdminsService();
+    const query = req.query;
+
+    const logs = await getLogsAdminsService(query);
 
     return res.status(200).json(logs);
   } catch (error) {

@@ -15,5 +15,5 @@ export function errorAxios(error, functionName = '') {
     // Произошло что-то при настройке запроса, вызвавшее ошибку
     console.log('Error', error.message);
   }
-  throw { message: error.message, functionName };
+  throw { message: error.response.data.message, functionName };
 }

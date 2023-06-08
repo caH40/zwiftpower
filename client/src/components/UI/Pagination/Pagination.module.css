@@ -1,0 +1,30 @@
+.navigation {
+  display: block;
+}
+.list {
+  display: flex;
+  gap: 0 3px;
+  justify-content: center;
+}
+.item {
+  display: block;
+  min-width: 30px;
+  border: 1px solid #f1f1f173;
+  border-radius: 3px;
+  font-size: 16px;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  transition: ease-in-out 0.4s;
+}
+.item:hover {
+  background-color: var(--color-orange-main);
+  transition: ease-in-out 0.4s;
+}
+.item:active {
+  background-color: var(--color-yellow-3);
+  transition: ease-in-out 0.4s;
+}
+.active {
+  background-color: var(--color-yellow-4);
+}

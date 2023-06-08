@@ -5,14 +5,14 @@ import { getAlert } from '../alertMessageSlice';
 
 export const fetchLogsAdmins = createAsyncThunk(
   'logsGet/logsAdmins',
-  async function (_, thunkAPI) {
+  async function ({ page, docsOnPage }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: '/api/logs/admin',
+        url: `/api/logs/admin?docsOnPage=${docsOnPage}&page=${page}`,
         method: 'get',
       });
 
-      return response.data.logs;
+      return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
@@ -25,6 +25,7 @@ const logsAdminsSlice = createSlice({
   name: 'logsAdmins',
   initialState: {
     logs: [],
+    quantityPages: 0,
 
     status: null,
     error: null,
@@ -38,7 +39,8 @@ const logsAdminsSlice = createSlice({
     builder.addCase(fetchLogsAdmins.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      state.logs = action.payload;
+      state.logs = action.payload.logs;
+      state.quantityPages = +action.payload.quantityPages;
     });
     builder.addCase(fetchLogsAdmins.rejected, (state, action) => {
       state.status = 'rejected';
