@@ -5,24 +5,27 @@
   display: flex;
   gap: 0 3px;
   justify-content: center;
+  align-items: center;
 }
 .item {
-  display: block;
-  min-width: 30px;
-  border: 1px solid #f1f1f173;
+  flex: 0 0 28px;
+  border: 1px solid var(--color-blue-main);
   border-radius: 3px;
-  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
   text-align: center;
-  padding: 5px;
+  padding: 4px 2px;
   cursor: pointer;
   transition: ease-in-out 0.4s;
 }
+
 .item:hover {
-  background-color: var(--color-orange-main);
+  background-color: var(--color-yellow-2);
   transition: ease-in-out 0.4s;
 }
 .item:active {
-  background-color: var(--color-yellow-3);
+  background-color: var(--color-yellow-5);
   transition: ease-in-out 0.4s;
 }
 .active {

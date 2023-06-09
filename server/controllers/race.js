@@ -25,8 +25,13 @@ export async function getEvent(req, res) {
 // получение данных заезда (started=false для расписания, started:true для результатов)
 export async function getEvents(req, res) {
   try {
-    const { started, target } = req.query;
-    const events = await getEventsService(started === 'true' ? true : false, target);
+    const { started, target, page, docsOnPage } = req.query;
+    const events = await getEventsService(
+      started === 'true' ? true : false,
+      target,
+      page,
+      docsOnPage
+    );
     res.status(200).json(events);
   } catch (error) {
     console.log(error);

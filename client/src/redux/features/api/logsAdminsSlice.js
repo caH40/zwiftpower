@@ -7,8 +7,9 @@ export const fetchLogsAdmins = createAsyncThunk(
   'logsGet/logsAdmins',
   async function ({ page, docsOnPage }, thunkAPI) {
     try {
+      const query = `docsOnPage=${docsOnPage}&page=${page}`;
       const response = await myAxios({
-        url: `/api/logs/admin?docsOnPage=${docsOnPage}&page=${page}`,
+        url: `/api/logs/admin?${query}`,
         method: 'get',
       });
 
