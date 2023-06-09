@@ -9,14 +9,23 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',
-  async function (options, thunkAPI) {
+  async function ({ target, started, page, docsOnPage }, thunkAPI) {
     try {
-      const target = options.target ? `&target=${options.target}` : '';
+      const targetCurrent = target ? `&target=${target}` : '';
+      const pageStr = page ? `&page=${page}` : '';
+      const docsOnPageStr = docsOnPage ? `&docsOnPage=${docsOnPage}` : '';
+
+      const query = `started=${started}${targetCurrent}${pageStr}${docsOnPageStr}`;
       const response = await axios({
-        url: `${serverExpress}/api/race/events?started=${options.started}${target}`,
+        url: `${serverExpress}/api/race/events?${query}`,
         method: 'get',
       });
-      return { data: response.data.events, started: options.started, target: options.target };
+      return {
+        events: response.data.events,
+        quantityPages: response.data.quantityPages,
+        started: started,
+        target: target,
+      };
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
@@ -31,6 +40,7 @@ const eventsSlice = createSlice({
     eventsPreview: [],
     eventsSchedule: [],
     eventsResults: [],
+    quantityPages: 0,
 
     status: null,
     error: null,
@@ -46,13 +56,14 @@ const eventsSlice = createSlice({
       state.status = 'resolved';
 
       if (action.payload.target === 'preview') {
-        state.eventsPreview = action.payload.data;
+        state.eventsPreview = action.payload.events;
       }
       if (action.payload.started) {
-        state.eventsResults = action.payload.data;
+        state.eventsResults = action.payload.events;
       } else {
-        state.eventsSchedule = action.payload.data;
+        state.eventsSchedule = action.payload.events;
       }
+      state.quantityPages = +action.payload.quantityPages;
     });
     builder.addCase(fetchEvents.rejected, (state, action) => {
       state.status = 'rejected';

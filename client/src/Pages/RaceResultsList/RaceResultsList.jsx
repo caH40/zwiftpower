@@ -10,19 +10,21 @@ import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
+import Pagination from '../../components/UI/Pagination/Pagination';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
+  const [page, setPage] = useState(1);
 
-  const { eventsResults } = useSelector((state) => state.fetchEvents);
+  const { eventsResults, quantityPages } = useSelector((state) => state.fetchEvents);
 
   useTitle('Результаты заездов');
   useBackground(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchEvents({ started: true }));
-  }, [dispatch, trigger]);
+    dispatch(fetchEvents({ started: true, page, docsOnPage: 25 }));
+  }, [dispatch, trigger, page]);
 
   // создание массива с меню модерации эвентов в таблице
   useEffect(() => {
@@ -61,12 +63,17 @@ function RaceResultsList() {
   return (
     <section>
       {eventsResults[0] && (
-        <TableResults
-          events={eventsResults}
-          updateResults={updateResults}
-          removeEvent={removeEvent}
-          updateEventAndSinged={updateEventAndSinged}
-        />
+        <>
+          <TableResults
+            events={eventsResults}
+            updateResults={updateResults}
+            removeEvent={removeEvent}
+            updateEventAndSinged={updateEventAndSinged}
+          />
+          {quantityPages > 1 && (
+            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+          )}
+        </>
       )}
     </section>
   );

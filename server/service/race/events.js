@@ -27,8 +27,9 @@ export async function getEventService(eventId) {
   }
 }
 // получение всех эвентов для расписания (started:false) или для списка евентов с результатами
-export async function getEventsService(started, target) {
+export async function getEventsService(started, target, page = 1, docsOnPage = 20) {
   try {
+    console.log({ started, target, page, docsOnPage });
     const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
     // сортировка заездов по возрастанию даты старта
     for (const event of eventsDB) {
@@ -59,7 +60,7 @@ export async function getEventsService(started, target) {
 
       return { events, message: 'Получены все заезды' };
     }
-
+    // console.log(eventsDB);
     eventsDB.sort((a, b) => {
       if (started) {
         return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
@@ -68,7 +69,13 @@ export async function getEventsService(started, target) {
       }
     });
 
-    return { events: eventsDB, message: 'Получены все заезды' };
+    const quantityPages = Math.ceil(eventsDB.length / docsOnPage);
+
+    const sliceStart = page * docsOnPage - docsOnPage;
+    const sliceEnd = docsOnPage * page;
+    const eventsFiltered = eventsDB.slice(sliceStart, sliceEnd);
+
+    return { events: eventsFiltered, quantityPages, message: 'Получены все заезды' };
   } catch (error) {
     throw error;
   }
