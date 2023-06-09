@@ -1,9 +1,12 @@
+// меню в таблице эвентов с результатами, модерирование каждого эвента
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeResultListMenu } from '../../../redux/features/popupTableResultsListSlice';
+import { fetchResultsJson } from '../../../redux/features/api/downloadResultsSlice';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
+import IconDownload from '../../icons/IconIconDownload';
 import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './PopupMenuTable.module.css';
@@ -28,6 +31,11 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
     dispatch(closeResultListMenu(event?.id));
     removeEvent(event.id, event.name);
   };
+  const clickDownloadJson = (e) => {
+    e.stopPropagation();
+    dispatch(closeResultListMenu(event?.id));
+    dispatch(fetchResultsJson({ eventId: event?.id }));
+  };
 
   return (
     <>
@@ -45,6 +53,11 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
             <li className={styles.item} onClick={clickRemoveEvent}>
               <IconDelete />
               <span className={styles.label}>Удаление заезда и результатов заезда из БД</span>
+            </li>
+
+            <li className={styles.item} onClick={clickDownloadJson}>
+              <IconDownload />
+              <span className={styles.label}>Скачать результаты с Zwift в формате JSON</span>
             </li>
           </ul>
 
@@ -67,27 +80,3 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
 }
 
 export default PopupMenuTableResultList;
-
-// <td>
-//   <div className={styles.box__icons}>
-//     <IconRefresh
-//       getClick={() => updateResults(event.id)}
-//       tooltip={'Обновление результатов заезда (протокола)'}
-//       addCls={'pointer'}
-//     />
-//     <IconDelete
-//       getClick={() => removeEvent(event.id, event.name)}
-//       tooltip={'Удаление заезда и результатов заезда из БД'}
-//       addCls={'pointer'}
-//     />
-//     <IconRefresh
-//       getClick={() => updateEventAndSinged(event.id)}
-//       tooltip={
-//         'Обновление данных заезда и зарегистрированных райдеров.
-// Исправляет отсутствие флагов у некоторых райдеров в протоколе.
-//  После данного обновления необходимо запустить обновление результатов'
-//       }
-//       addCls={'pointer'}
-//     />
-//   </div>
-// </td>

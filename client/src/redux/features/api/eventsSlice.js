@@ -49,6 +49,10 @@ const eventsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchEvents.pending, (state) => {
       state.error = null;
+      state.eventsPreview = [];
+      state.eventsSchedule = [];
+      state.eventsResults = [];
+      state.quantityPages = 0;
       state.status = 'loading';
     });
     builder.addCase(fetchEvents.fulfilled, (state, action) => {
