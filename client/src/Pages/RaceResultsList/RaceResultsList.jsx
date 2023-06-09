@@ -23,7 +23,7 @@ function RaceResultsList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchEvents({ started: true, page, docsOnPage: 25 }));
+    dispatch(fetchEvents({ started: true, page, docsOnPage: 20 }));
   }, [dispatch, trigger, page]);
 
   // создание массива с меню модерации эвентов в таблице

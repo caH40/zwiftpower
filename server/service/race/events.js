@@ -29,7 +29,6 @@ export async function getEventService(eventId) {
 // получение всех эвентов для расписания (started:false) или для списка евентов с результатами
 export async function getEventsService(started, target, page = 1, docsOnPage = 20) {
   try {
-    console.log({ started, target, page, docsOnPage });
     const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
     // сортировка заездов по возрастанию даты старта
     for (const event of eventsDB) {
