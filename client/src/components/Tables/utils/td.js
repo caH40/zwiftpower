@@ -1,31 +1,20 @@
 import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
-import Flag from '../../Flag/Flag';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
-export function tdRider(firstName, lastName, imageSrc, flag, showIcons) {
+export function tdRider(name, imageSrc) {
   return (
     <div className={styles.rider}>
-      {flag ? (
-        <div className={styles.box__flag}>
-          <Flag name={flag} />
-        </div>
-      ) : (
-        <div className={styles.box__flag} />
-      )}
-      {showIcons && (
-        <div className={styles.rider__logo}>
-          {imageSrc ? (
-            <img className={styles.rider__img} src={imageSrc} alt="Ph" />
-          ) : (
-            <div className={styles.rider__img__empty}>
-              {firstName.slice(0, 1) + lastName.slice(0, 1)}
-            </div>
-          )}
-        </div>
-      )}
-      <span>{`${firstName} ${lastName}`}</span>
+      <div className={styles.rider__logo}>
+        {imageSrc ? (
+          <img className={styles.rider__img} src={imageSrc} alt="Ph" />
+        ) : (
+          <div className={styles.rider__img__empty}>{name.slice(0, 3)}</div>
+        )}
+      </div>
+
+      <span>{name}</span>
     </div>
   );
 }
