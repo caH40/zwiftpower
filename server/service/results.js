@@ -2,7 +2,7 @@ import { Result } from '../Model/Result.js';
 import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
 import { secondesToTime, secondesToTimeThousandths } from '../utility/date-convert.js';
-import { gapValue } from '../utility/gap.js';
+import { gapValueOld } from '../utility/gap.js';
 import { filterThousandths } from '../utility/thousandths-seconds.js';
 import { maxValue } from '../utility/value-max.js';
 
@@ -50,7 +50,7 @@ export async function getResultsService(stageId) {
       resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
     }
 
-    resultFiltered = await gapValue(resultFiltered);
+    resultFiltered = await gapValueOld(resultFiltered);
 
     const categoryStr = category === 'T' ? `Абсолют` : `Группа "${category}"`;
     const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
