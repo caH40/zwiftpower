@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
-import { getToday } from '../../../utils/date-convert';
+import { getLocalDate } from '../../../utils/date-convert';
 import {
   getDuration,
   getLaps,
@@ -33,7 +33,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
-            <td>{getToday(event.eventStart)}</td>
+            <td>{getLocalDate(event.eventStart, 'onlyDate')}</td>
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>
