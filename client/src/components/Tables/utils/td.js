@@ -84,10 +84,7 @@ export function highlightValueMax(value, dimension) {
 export function tdWatts(value) {
   return highlightValueMax(value, 'Вт');
 }
-export function tdWattsPerKg(value) {
-  const valueRounded = roundValueToTenths(value);
-  return highlightValueMax(valueRounded, 'вт/кг');
-}
+
 export function tdCPWattsPerKg(value, interval) {
   let valueCP = value.find((cp) => cp.duration === interval)?.wattsKg.addition;
   valueCP = roundValueToTenths(valueCP);

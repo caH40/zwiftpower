@@ -1,22 +1,16 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  tdHeartRate,
-  tdHeight,
-  tdRank,
-  tdTime,
-  tdWatts,
-  tdWattsPerKg,
-  tdWeight,
-} from '../utils/td';
+import useLeader from '../../../hook/useLeaders';
+import { tdHeartRate, tdHeight, tdRank, tdTime, tdWatts, tdWeight } from '../utils/td';
 import { tdGap } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
-import useLeader from '../../../hook/useLeaders';
+
+import TdWattsPerKg from '../Td/TdWattsPerKg';
 
 import styles from '../Table.module.css';
 
@@ -58,7 +52,12 @@ function TableRaceResults({ results, event }) {
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
               {lg && <td>{tdGap(result.gap)}</td>}
               {lg && <td>{tdGap(result.gapPrev)}</td>}
-              {sm && <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>}
+              {sm && (
+                <TdWattsPerKg
+                  valueRaw={result.wattsPerKg.value}
+                  valueAddition={result.wattsPerKg.addition}
+                />
+              )}
               {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
               {lg &&

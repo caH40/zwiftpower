@@ -2,8 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { tdHeartRate, tdRank, tdTime, tdWatts, tdWattsPerKg, tdWeight } from '../utils/td';
+import { tdHeartRate, tdRank, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
+import TdWattsPerKg from '../Td/TdWattsPerKg';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getLocalDate } from '../../../utils/date-convert';
@@ -36,7 +37,7 @@ function TableUserResults({ results }) {
               </Link>
             </td>
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-            {sm && <td>{tdWattsPerKg(result.wattsPerKg.addition)}</td>}
+            {sm && <TdWattsPerKg value={result.wattsPerKg.addition} />}
             {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
             {lg &&
