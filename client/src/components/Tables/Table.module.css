@@ -219,3 +219,8 @@
     letter-spacing: 0;
   }
 }
+@media screen and (max-width: 400px) {
+  .table td {
+    padding: 0.3em 0.3em;
+  }
+}
