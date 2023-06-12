@@ -37,7 +37,12 @@ function TableUserResults({ results }) {
               </Link>
             </td>
             <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-            {sm && <TdWattsPerKg value={result.wattsPerKg.addition} />}
+            {sm && (
+              <TdWattsPerKg
+                valueRaw={result.wattsPerKg.value}
+                valueAddition={result.wattsPerKg.addition}
+              />
+            )}
             {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
             {lg &&
