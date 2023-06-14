@@ -6,9 +6,15 @@ export async function filterActivities(activities, zwiftId) {
     const powerCurveDB = await PowerCurve.findOne({ zwiftId });
     if (!powerCurveDB) return activities;
 
-    const activitiesFiltered = activities.filter(
-      (activity) => new Date(activity.date) > powerCurveDB.dateLastRace
-    );
+    const millisecondsIn90Days = 90 * 24 * 60 * 60 * 1000;
+
+    const activitiesFiltered = activities.filter((activity) => {
+      const activityDate = new Date(activity.date);
+      const dateInPeriod90Days = Date.now() - millisecondsIn90Days < activityDate;
+
+      // активность не должна быть старше 90 дней и
+      return activityDate > powerCurveDB.dateLastRace && dateInPeriod90Days;
+    });
     return activitiesFiltered;
   } catch (error) {
     throw error;

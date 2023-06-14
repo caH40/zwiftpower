@@ -15,14 +15,13 @@ export async function updatePowerCurve(zwiftId) {
     const activitiesFiltered = await filterActivities(activities, zwiftId);
     // запрос данный райдера для получения веса
     const rider = await getZwiftRiderService(zwiftId);
-    const weightInKilogram = rider.weight;
+    const weightInKilogram = rider.weight / 1000;
 
     for (const activityCurrent of activitiesFiltered) {
       const fullDataUrl = await getFullDataUrl(activityCurrent.id);
       const powerInWatts = await getPowers(fullDataUrl);
 
       const cpBestEfforts = getIntervals(powerInWatts, weightInKilogram, intervals);
-
       const powerCurveSaved = await savePowerCurve(
         zwiftId,
         cpBestEfforts,

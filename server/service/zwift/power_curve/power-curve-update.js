@@ -6,7 +6,7 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
     const powerCurveDB = await PowerCurve.findOne({ zwiftId });
     const powerCPUpdated = [];
     const powerPerKgCPUpdated = [];
-    let { dateLastRace } = powerCurveDB;
+    let dateLastRace = powerCurveDB.dateLastRace;
 
     if (!dateLastRace || dateLastRace <= date) dateLastRace = date;
 

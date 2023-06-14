@@ -8,5 +8,6 @@ export async function getFullDataUrl(activityId) {
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
     console.log(error.message);
+    throw error;
   }
 }
