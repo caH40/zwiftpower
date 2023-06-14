@@ -4,7 +4,7 @@ const { Schema, model } = pkg;
 
 const powerCurveSchema = new Schema({
   zwiftId: { type: Number, required: true, unique: true },
-  dateLastRace: { type: Number },
+  dateLastRace: { type: Number, default: null },
   pointsWatts: [
     {
       duration: { type: Number, default: null },
