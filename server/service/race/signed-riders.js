@@ -36,6 +36,7 @@ export async function putSignedRidersService(eventId) {
           weight: rider.weight,
           subgroupLabel: eventSubgroup.subgroupLabel,
         });
+        // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
         await PowerCurve.create({ zwiftId: rider.id }).catch((error) => {
           if (error.code === 11000) return true;
           console.log(error);
