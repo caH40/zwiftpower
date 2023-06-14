@@ -1,22 +1,20 @@
 import { loggingAdmin } from '../log.js';
-import { updateAllPowerCurve } from '../updates/power-curve.js';
 import { getEventZwiftService } from '../zwift/events.js';
 import { deleteEventService } from './events-delete.js';
 import { postEventService } from './events-post.js';
 
 export async function putEventService(eventId, userId) {
   try {
-    // const event = await getEventZwiftService(eventId);
-    // const { additionalParams } = await deleteEventService(eventId);
-    // await postEventService({ ...event, ...additionalParams });
-    // // логирование действия
-    // if (userId) {
-    //   const description = 'updateEventInDB';
-    //   const { id, name, eventStart } = event;
-    //   await loggingAdmin(id, name, eventStart, userId, description);
-    // }
-    await updateAllPowerCurve();
-    // return { message: `Обновлены данные ${event.name}` };
+    const event = await getEventZwiftService(eventId);
+    const { additionalParams } = await deleteEventService(eventId);
+    await postEventService({ ...event, ...additionalParams });
+    // логирование действия
+    if (userId) {
+      const description = 'updateEventInDB';
+      const { id, name, eventStart } = event;
+      await loggingAdmin(id, name, eventStart, userId, description);
+    }
+    return { message: `Обновлены данные ${event.name}` };
   } catch (error) {
     throw error;
   }

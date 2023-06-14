@@ -4,17 +4,18 @@ import { PowerCurve } from '../../../Model/PowerCurve.js';
 export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
   try {
     const powerCurveDB = await PowerCurve.findOne({ zwiftId });
-    const powerCPUpdated = [];
-    const powerPerKgCPUpdated = [];
-    let dateLastRace = powerCurveDB.dateLastRace;
 
-    if (!dateLastRace || dateLastRace <= date) dateLastRace = date;
+    const millisecondsIn90Days = 90 * 24 * 60 * 60 * 1000;
+
+    // брать из БД CP которые не старше 90 дней
+    const pointsWattsFiltered = powerCurveDB.pointsWatts.filter(
+      (cp) => Date.now() - millisecondsIn90Days < new Date(cp.date).getTime()
+    );
+    const powerCPUpdated = [];
 
     for (const power of cpBestEfforts) {
       // поиск CP для ватт соответствующего интервала
-      const cpWattCurrent = powerCurveDB.pointsWatts.find(
-        (cp) => cp.duration === power.duration
-      );
+      const cpWattCurrent = pointsWattsFiltered.find((cp) => cp.duration === power.duration);
       // если нет данных по данному интервалу, то добавить интервал
       if (!cpWattCurrent) {
         powerCPUpdated.push({ duration: power.duration, value: power.watts, date });
@@ -29,8 +30,13 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
     }
 
     // для удельных ватт
+    const powerPerKgCPUpdated = [];
+    const pointsWattsPerKgFiltered = powerCurveDB.pointsWattsPerKg.filter(
+      (cp) => Date.now() - millisecondsIn90Days < new Date(cp.date).getTime()
+    );
+
     for (const power of cpBestEfforts) {
-      const cpWattPerKgCurrent = powerCurveDB.pointsWattsPerKg.find(
+      const cpWattPerKgCurrent = pointsWattsPerKgFiltered.find(
         (cp) => cp.duration === power.duration
       );
       // если нет данных по данному интервалу, то добавить интервал
@@ -50,7 +56,7 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
       { zwiftId },
       {
         $set: {
-          dateLastRace,
+          date: Date.now(),
           pointsWatts: powerCPUpdated,
           pointsWattsPerKg: powerPerKgCPUpdated,
         },

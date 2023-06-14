@@ -9,12 +9,13 @@ export async function filterActivities(activities, zwiftId) {
     const millisecondsIn90Days = 90 * 24 * 60 * 60 * 1000;
 
     const activitiesFiltered = activities.filter((activity) => {
-      const activityDate = new Date(activity.date);
-      const dateInPeriod90Days = Date.now() - millisecondsIn90Days < activityDate;
+      const dateInPeriod90Days =
+        Date.now() - millisecondsIn90Days < new Date(activity.date).getTime();
 
-      // активность не должна быть старше 90 дней и
-      return activityDate > powerCurveDB.dateLastRace && dateInPeriod90Days;
+      // Каждый раз придется пробегаться по всем активностям, которые не старше 90 дней.
+      return dateInPeriod90Days;
     });
+
     return activitiesFiltered;
   } catch (error) {
     throw error;
