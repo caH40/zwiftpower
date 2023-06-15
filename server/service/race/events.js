@@ -1,3 +1,4 @@
+import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
@@ -19,7 +20,15 @@ export async function getEventService(eventId) {
       a.subgroupLabel.toLowerCase().localeCompare(b.subgroupLabel.toLowerCase())
     );
 
-    eventData.signedRiders = signedRiders;
+    // добавление powerCurve каждому райдеру
+    const signedRidersArray = signedRiders.map((s) => s.toObject());
+    const powerCurvesDB = await PowerCurve.find();
+
+    for (const rider of signedRidersArray) {
+      rider.powerCurve = powerCurvesDB.find((cp) => cp.zwiftId === rider.id);
+    }
+
+    eventData.signedRiders = signedRidersArray;
 
     return { event: eventData };
   } catch (error) {
@@ -59,7 +68,7 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
 
       return { events, message: 'Получены все заезды' };
     }
-    // console.log(eventsDB);
+
     eventsDB.sort((a, b) => {
       if (started) {
         return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();

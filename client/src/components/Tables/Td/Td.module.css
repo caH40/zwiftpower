@@ -26,6 +26,9 @@
 .link:hover {
   text-decoration: underline;
 }
+.max__width {
+  width: 60%;
+}
 .rider {
   display: flex;
   gap: 0 7px;

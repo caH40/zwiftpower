@@ -114,6 +114,15 @@ const Th = ({ columnName }) => {
       case '#':
         return '#';
 
+      case '15с':
+        return '15с';
+
+      case '5м':
+        return '5м';
+
+      case '20м':
+        return '20м';
+
       default:
         return '';
     }

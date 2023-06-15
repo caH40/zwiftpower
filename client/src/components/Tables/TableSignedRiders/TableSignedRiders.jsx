@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { tdLinkZP } from '../utils/td';
-import { getAgeCategory, getGenderStr, getHeightStr, getWeightStr } from '../../../utils/event';
+import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
+import { getAgeCategory, getGenderStr } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
+import TdCpWattsSchedule from '../Td/TdCpWattsSchedule';
 
 import styles from '../Table.module.css';
 
@@ -14,7 +15,7 @@ import Thead from './Thead';
 function TableSignedRiders({ riders = [], event }) {
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
   const [getLeaders, getSweepers] = useLeader(event);
-
+  // console.log(riders);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <Thead lg={lg} sm={sm} />
@@ -34,8 +35,29 @@ function TableSignedRiders({ riders = [], event }) {
             />
 
             {lg && <td></td>}
-            {sm && <td>{getWeightStr(rider.weight)}</td>}
-            {sm && <td>{getHeightStr(rider.height)}</td>}
+            {lg && (
+              <TdCpWattsSchedule
+                cp={rider.powerCurve?.pointsWattsPerKg}
+                duration={15}
+                dimension={'вт/кг'}
+              />
+            )}
+            {lg && (
+              <TdCpWattsSchedule
+                cp={rider.powerCurve?.pointsWattsPerKg}
+                duration={300}
+                dimension={'вт/кг'}
+              />
+            )}
+            {lg && (
+              <TdCpWattsSchedule
+                cp={rider.powerCurve?.pointsWattsPerKg}
+                duration={1200}
+                dimension={'вт/кг'}
+              />
+            )}
+            {sm && <td>{tdWeight(rider.weight)}</td>}
+            {sm && <td>{tdHeight(rider.height / 10)}</td>}
             {lg && <td>{getAgeCategory(rider.age)}</td>}
             {lg && <td>{getGenderStr(rider.male)}</td>}
             {lg && <td className={styles.link}>{tdLinkZP(rider.id)}</td>}
