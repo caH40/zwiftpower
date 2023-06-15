@@ -10,6 +10,10 @@ function MainInfoDev() {
         <div className={styles.text}>
           <ul className={styles.list__dev}>
             <li className={styles.item}>
+              <span className={styles.date}>15.06.2023</span>в профиль пользователя добавлены
+              данные основных Critical Power за последние 90 дней
+            </li>
+            <li className={styles.item}>
               <span className={styles.date}>29.05.2023</span>изменен дизайн в описании заезда
             </li>
             <li className={styles.item}>
