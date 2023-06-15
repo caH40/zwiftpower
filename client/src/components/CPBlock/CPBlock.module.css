@@ -1,0 +1,12 @@
+.wrapper {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px 0;
+}
+.title {
+  text-align: center;
+  font-weight: 400;
+  font-size: 11px;
+  margin-bottom: 2px;
+}

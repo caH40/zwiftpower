@@ -1,3 +1,4 @@
+import { PowerCurve } from '../../Model/PowerCurve.js';
 import { User } from '../../Model/User.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
@@ -10,8 +11,10 @@ export async function getUserResultsService(zwiftId) {
       return {
         userResults: [],
         profile: {},
+        powerCurve: {},
         message: 'Некорректный zwiftId',
       };
+    const powerCurveDB = await PowerCurve.findOne({ zwiftId });
 
     const resultsDB = await ZwiftResult.find({ profileId: zwiftId });
     const results = resultsDB.map((result) => result.toObject());
@@ -38,6 +41,7 @@ export async function getUserResultsService(zwiftId) {
     return {
       userResults: resultsWithMaxValues,
       profile: userDB,
+      powerCurve: powerCurveDB || {},
       message: 'Профайл и результаты райдера',
     };
   } catch (error) {

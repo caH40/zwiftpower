@@ -6,6 +6,7 @@ import { fetchUserResults } from '../../redux/features/api/userResultsSlice';
 import TableUserResults from '../../components/Tables/TableUserResults/TableUserResults';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
+import CPBlock from '../../components/CPBlock/CPBlock';
 
 import styles from './Profile.module.css';
 
@@ -15,17 +16,25 @@ function ProfileResults() {
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
-  const { results, profile, status } = useSelector((state) => state.fetchUserResults);
+  const { results, powerCurve, profile, status } = useSelector(
+    (state) => state.fetchUserResults
+  );
 
   useEffect(() => {
     const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
+    if (!currentZwiftId) return;
     dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, userAuth]);
   return (
     <div>
       <ProfileBlock results={results} profile={profile} />
+
       {results?.length && status === 'resolved' ? (
         <>
+          <div className={styles.block__cp}>
+            <CPBlock criticalPowers={powerCurve.pointsWattsPerKg} label={'wattsPerKg'} />
+            <CPBlock criticalPowers={powerCurve.pointsWatts} label={'watts'} />
+          </div>
           <NavBarResultsRace results={results} hideCategory={true} />
           <TableUserResults results={results} />
         </>

@@ -1,0 +1,48 @@
+.wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0 15px;
+  align-items: center;
+}
+.title {
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+.block {
+  flex: 0 0 160px;
+  height: 20px;
+  background: #ffffff;
+  border: 1px solid #df004f;
+}
+.box {
+  min-width: 32px;
+  max-width: 158px;
+  width: 91px;
+  height: 18px;
+  background: #df004f;
+  text-align: right;
+}
+.box:hover {
+  opacity: 0.85;
+}
+.value {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #ffffff;
+  padding: 2px 5px 2px 2px;
+  cursor: default;
+}
+.watts__border {
+  border: 1px solid #6d809d;
+}
+.wattsPerKg__border {
+  border: 1px solid #30872e;
+}
+.watts__bg {
+  background: #6d809d;
+}
+.wattsPerKg__bg {
+  background: #30872e;
+}
