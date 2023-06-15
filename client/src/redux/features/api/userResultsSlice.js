@@ -29,6 +29,7 @@ const userResultsSlice = createSlice({
   initialState: {
     profile: {},
     results: [],
+    powerCurve: {},
 
     status: null,
     error: null,
@@ -38,6 +39,7 @@ const userResultsSlice = createSlice({
     builder.addCase(fetchUserResults.pending, (state) => {
       state.profile = {};
       state.results = [];
+      state.powerCurve = {};
       state.error = null;
       state.status = 'loading';
     });
@@ -45,6 +47,7 @@ const userResultsSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       state.profile = action.payload.profile;
+      state.powerCurve = action.payload.powerCurve;
       state.results = setValueMax(action.payload.userResults);
     });
     builder.addCase(fetchUserResults.rejected, (state, action) => {

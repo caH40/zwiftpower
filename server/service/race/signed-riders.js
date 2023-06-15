@@ -1,3 +1,4 @@
+import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 import { getRequest } from '../zwift/request-get.js';
@@ -19,7 +20,6 @@ export async function putSignedRidersService(eventId) {
         ridersQuantity = signedData.length;
         start += 100;
       }
-
       // добавление райдеров в группу
       for (const rider of signedDataTotal) {
         await ZwiftSignedRiders.create({
@@ -35,6 +35,11 @@ export async function putSignedRidersService(eventId) {
           height: rider.height,
           weight: rider.weight,
           subgroupLabel: eventSubgroup.subgroupLabel,
+        });
+        // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
+        await PowerCurve.create({ zwiftId: rider.id }).catch((error) => {
+          if (error.code === 11000) return true;
+          console.log(error);
         });
       }
     }

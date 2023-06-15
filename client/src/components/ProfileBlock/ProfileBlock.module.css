@@ -1,3 +1,6 @@
+.wrapper {
+  margin-bottom: 15px;
+}
 .params {
   display: flex;
   flex-wrap: wrap;
