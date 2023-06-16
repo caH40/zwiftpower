@@ -1,7 +1,7 @@
 import { PowerCurve } from '../../../Model/PowerCurve.js';
 
 // обновление данных мощности и удельной мощности в базе данных для райдера zwiftId
-export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
+export async function savePowerCurve(zwiftId, cpBestEfforts, date, name) {
   try {
     const powerCurveDB = await PowerCurve.findOne({ zwiftId });
 
@@ -18,12 +18,12 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
       const cpWattCurrent = pointsWattsFiltered.find((cp) => cp.duration === power.duration);
       // если нет данных по данному интервалу, то добавить интервал
       if (!cpWattCurrent) {
-        powerCPUpdated.push({ duration: power.duration, value: power.watts, date });
+        powerCPUpdated.push({ duration: power.duration, value: power.watts, date, name });
         continue;
       }
       // обновлять CP если текущее значение больше или равно в БД
       if (power.watts >= cpWattCurrent.value) {
-        powerCPUpdated.push({ duration: power.duration, value: power.watts, date });
+        powerCPUpdated.push({ duration: power.duration, value: power.watts, date, name });
       } else {
         powerCPUpdated.push(cpWattCurrent);
       }
@@ -41,12 +41,22 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date) {
       );
       // если нет данных по данному интервалу, то добавить интервал
       if (!cpWattPerKgCurrent) {
-        powerPerKgCPUpdated.push({ duration: power.duration, value: power.wattsKg, date });
+        powerPerKgCPUpdated.push({
+          duration: power.duration,
+          value: power.wattsKg,
+          date,
+          name,
+        });
         continue;
       }
       // обновлять CP если текущее значение больше или равно в БД
       if (power.wattsKg >= cpWattPerKgCurrent.value) {
-        powerPerKgCPUpdated.push({ duration: power.duration, value: power.wattsKg, date });
+        powerPerKgCPUpdated.push({
+          duration: power.duration,
+          value: power.wattsKg,
+          date,
+          name,
+        });
       } else {
         powerPerKgCPUpdated.push(cpWattPerKgCurrent);
       }

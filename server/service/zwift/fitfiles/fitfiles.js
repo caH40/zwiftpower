@@ -1,6 +1,6 @@
 import { getZwiftRiderService } from '../rider.js';
-import { getActivities } from '../power_curve/activities.js';
-import { filterActivities } from '../power_curve/filter-activities.js';
+import { getActivities } from './activities.js';
+import { filterActivities } from './filter-activities.js';
 import { saveFitFiles } from './fitfilestoDB.js';
 
 export async function createFitFiles(zwiftId) {

@@ -10,6 +10,8 @@ const powerCurveSchema = new Schema({
       duration: { type: Number, default: null },
       value: { type: Number, default: null },
       date: { type: Number, default: null },
+      name: { type: String, default: null },
+      _id: false,
     },
   ],
   pointsWattsPerKg: [
@@ -17,6 +19,8 @@ const powerCurveSchema = new Schema({
       duration: { type: Number, default: null },
       value: { type: Number, default: null },
       date: { type: Number, default: null },
+      name: { type: String, default: null },
+      _id: false,
     },
   ],
 });
