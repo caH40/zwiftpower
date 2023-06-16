@@ -7,6 +7,7 @@ export async function getActivities(zwiftId) {
     const activities = response.map((activity) => ({
       id: activity.id_str,
       date: new Date(activity.startDate).getTime(),
+      name: activity.name,
     }));
     return activities;
   } catch (error) {
