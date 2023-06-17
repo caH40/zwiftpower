@@ -17,9 +17,9 @@ const headersDefault = {
   Source: 'my-zwift',
 };
 
-export async function putRequest(url, data) {
+export async function putRequest(url, data, isMainToken = true) {
   try {
-    const token = await getAccessToken();
+    const token = await getAccessToken(isMainToken);
 
     const response = await axios({
       method: 'put',

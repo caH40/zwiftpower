@@ -13,9 +13,9 @@ const headersDefault = {
   'Accept-Encoding': 'gzip',
 };
 
-export async function getRequest(url) {
+export async function getRequest(url, isMainToken = true) {
   try {
-    const token = await getAccessToken();
+    const token = await getAccessToken(isMainToken);
 
     const response = await axios({
       method: 'get',

@@ -4,10 +4,9 @@ import { getRequest } from './request-get.js';
 export async function getFullDataUrl(activityId) {
   try {
     const url = `activities/${activityId}`;
-    const activity = await getRequest(url);
+    const activity = await getRequest(url, false);
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 }
