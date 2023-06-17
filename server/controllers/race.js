@@ -7,7 +7,7 @@ import { putEventService } from '../service/race/events-put.js';
 import { getEventService } from '../service/race/events.js';
 import { getEventsService } from '../service/race/events.js';
 import { putResultsService } from '../service/race/results-put.js';
-import { getUserResultsService } from '../service/race/results-user.js';
+import { getUserResultsService } from '../service/race/rider/rider-profile.js';
 import { getResultsService } from '../service/race/results.js';
 
 export async function getEvent(req, res) {

@@ -25,16 +25,20 @@ function ProfileResults() {
     if (!currentZwiftId) return;
     dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, userAuth]);
+
   return (
     <div>
-      <ProfileBlock results={results} profile={profile} />
-
-      {results?.length && status === 'resolved' ? (
+      {status === 'resolved' && (
         <>
+          <ProfileBlock results={results} profile={profile} />
           <div className={styles.block__cp}>
             <CPBlock criticalPowers={powerCurve.pointsWattsPerKg} label={'wattsPerKg'} />
             <CPBlock criticalPowers={powerCurve.pointsWatts} label={'watts'} />
           </div>
+        </>
+      )}
+      {results?.length && status === 'resolved' ? (
+        <>
           <NavBarResultsRace results={results} hideCategory={true} />
           <TableUserResults results={results} />
         </>
