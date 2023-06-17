@@ -37,7 +37,7 @@
   content: ':';
 }
 .term__description {
-  flex: 1 1 250px;
+  flex: 0 1 auto;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.03em;

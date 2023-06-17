@@ -6,8 +6,8 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './CPBox.module.css';
 
-function CPBox({ value = 0, duration, date, label }) {
-  const dateCP = date ? new Date(date).toLocaleDateString() : 'нет данных';
+function CPBox({ value = 0, duration, date, name, label }) {
+  const dateCP = date ? `${new Date(date).toLocaleDateString()}, ${name}` : 'нет данных';
   const title = duration <= 60 ? `${duration} сек` : `${duration / 60} мин`;
   const ratio = useRatioBoxValue(duration, label);
   return (

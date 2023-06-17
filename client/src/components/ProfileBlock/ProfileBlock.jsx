@@ -2,22 +2,20 @@ import React from 'react';
 
 import { getAgeCategory, getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
+import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './ProfileBlock.module.css';
 
 function ProfileBlock({ results, profile }) {
-  if (!results?.length) return null;
-  const [{ profileData }] = results;
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.bio}>{profile?.bio}</div>
       <div className={styles.params}>
         <div className={styles.box__img}>
           <LogoRider
-            source={profileData.imageSrc}
-            firstName={profileData.firstName}
-            lastName={profileData.lastName}
+            source={profile.imageSrc}
+            firstName={profile.firstName}
+            lastName={profile.lastName}
           />
         </div>
         <dl className={styles.list}>
@@ -25,7 +23,7 @@ function ProfileBlock({ results, profile }) {
             <dt className={styles.term}>РАЙДЕР</dt>
             <dd
               className={styles.term__description}
-            >{`${profileData.firstName} ${profileData.lastName}`}</dd>
+            >{`${profile.firstName} ${profile.lastName}`}</dd>
           </div>
 
           <div className={styles.box__term}>
@@ -35,20 +33,22 @@ function ProfileBlock({ results, profile }) {
 
           <div className={styles.box__term}>
             <dt className={styles.term}>FTP</dt>
-            <dd className={styles.term__description}>{profile?.ftp}</dd>
+            <MyTooltip tooltip={'95% от CP20'} placement={'right'}>
+              <dd className={styles.term__description}>{profile?.ftp}</dd>
+            </MyTooltip>
           </div>
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ВЕС</dt>
             <dd className={styles.term__description}>
-              {getWeightStr(profileData.weightInGrams.value)}
+              {getWeightStr(profile.weightInGrams)}
               {'кг'}
             </dd>
           </div>
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ВОЗРАСТ</dt>
-            <dd className={styles.term__description}>{getAgeCategory(profileData.age)}</dd>
+            <dd className={styles.term__description}>{getAgeCategory(profile.age)}</dd>
           </div>
 
           {/* <div className={styles.box__term}>

@@ -26,6 +26,7 @@ function CPBlock({ criticalPowers = [], label }) {
           value={cp.value}
           duration={cp.duration}
           date={cp.date}
+          name={cp.name}
           label={label}
           key={cp.duration}
         />
