@@ -10,8 +10,6 @@ import { router } from './routes/routes.js';
 import { timers } from './service/timer.js';
 import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
-import { updateAccessToken } from './service/zwift/token.js';
-import { updateAllPowerCurve } from './service/updates/power-curve.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
@@ -47,8 +45,7 @@ const start = async () => {
       .catch((error) => console.log(error));
 
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
-    // await updateAllPowerCurve();
-    // await updateAccessToken();
+
     await timers();
   } catch (e) {
     console.log(e);
