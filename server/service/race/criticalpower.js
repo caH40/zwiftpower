@@ -1,9 +1,10 @@
+import { FitFile } from '../../Model/FitFile.js';
 import { getEmptyCP } from '../power/empty-cp.js';
 import { getIntervals } from '../power/powerintervals.js';
 import { getFullDataUrl } from '../zwift/activity.js';
 import { getPowers } from '../zwift/power.js';
 
-export async function addCriticalPowers(results) {
+export async function addCriticalPowers(results, nameAndDate) {
   try {
     const resultsWithCP = [];
     for (const result of results) {
@@ -18,10 +19,14 @@ export async function addCriticalPowers(results) {
       }
 
       const powerInWatts = await getPowers(fullDataUrl);
+      // добавление фитфайла в БД ======
+      await addToDB(powerInWatts, result, nameAndDate);
+      // обрезка заезда после завершения гонки
       const powerInWattsCorrect = sliceExcess(
         powerInWatts,
         result.activityData.durationInMilliseconds
       );
+      // получение critical powers гонки
       const cpBestEfforts = getIntervals(powerInWattsCorrect, weightRider);
 
       result.cpBestEfforts = cpBestEfforts;
@@ -32,8 +37,29 @@ export async function addCriticalPowers(results) {
     throw error;
   }
 }
-// обрезка секунд заезда после завершения гонки
+
 function sliceExcess(powerArray, time) {
   const secondsInRace = Math.round(time / 1000);
   return powerArray?.slice(0, secondsInRace);
+}
+// добавление данных мощности в заезде из fitfile в БД
+async function addToDB(powerInWatts, result, { name, eventStart }) {
+  try {
+    const power = {
+      name: name,
+      date: eventStart,
+      powerInWatts: JSON.stringify(powerInWatts),
+      weightInGrams: result.profileData.weightInGrams,
+    };
+    const zwiftId = result.profileId;
+    const fitFileDB = await FitFile.findOne({ zwiftId });
+
+    if (!fitFileDB) {
+      await FitFile.create({ zwiftId });
+    }
+
+    await FitFile.findOneAndUpdate({ zwiftId }, { $addToSet: { activities: power } });
+  } catch (error) {
+    throw error;
+  }
 }

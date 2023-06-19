@@ -23,6 +23,7 @@ export async function updateResults() {
 
 export async function updateResultsEvent(event) {
   const resultsTotal = [];
+  const nameAndDate = { name: event.name, eventStart: new Date(event.eventStart).getTime() };
   for (const subgroup of event.eventSubgroups) {
     const resultsSubgroup = await getResults(
       { subgroup_id: subgroup._id, subgroupId: subgroup.id },
@@ -31,7 +32,7 @@ export async function updateResultsEvent(event) {
     resultsTotal.push(...resultsSubgroup);
   }
 
-  const resultsWithCP = await addCriticalPowers(resultsTotal);
+  const resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
 
   await handlerProtocol(event._id, resultsWithCP, event.typeRaceCustom);
 }
