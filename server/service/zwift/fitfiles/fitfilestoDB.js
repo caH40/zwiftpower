@@ -24,6 +24,7 @@ export async function saveFitFiles(zwiftId, activities, weightInGrams) {
     powers.sort((a, b) => b.date - a.date);
     const dateLastedActivity = powers[0].date;
 
+    // добавление фитфайла в БД
     const fitFileDB = await FitFile.findOne({ zwiftId });
 
     if (!fitFileDB) {
