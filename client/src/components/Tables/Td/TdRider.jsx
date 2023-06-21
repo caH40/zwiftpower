@@ -11,7 +11,7 @@ import styles from './Td.module.css';
 
 function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
   return (
-    <td className={styles.max__width}>
+    <td>
       <Link className={styles.link} to={`/profile/${profileId}/results`}>
         <div className={styles.rider}>
           {profile.countryAlpha3 ? (

@@ -26,9 +26,6 @@
 .link:hover {
   text-decoration: underline;
 }
-.max__width {
-  width: 60%;
-}
 .rider {
   display: flex;
   gap: 0 7px;
@@ -64,4 +61,10 @@
 }
 .cursor__default {
   cursor: default;
+}
+
+@media screen and (max-width: 576px) {
+  .rider {
+    min-width: 180px;
+  }
 }

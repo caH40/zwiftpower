@@ -35,29 +35,27 @@ function TableSignedRiders({ riders = [], event }) {
             />
 
             {lg && <td></td>}
-            {lg && (
+            {sm && (
               <TdCpWattsSchedule
                 cp={rider.powerCurve?.pointsWattsPerKg}
                 duration={15}
                 dimension={'вт/кг'}
               />
             )}
-            {lg && (
+            {sm && (
               <TdCpWattsSchedule
                 cp={rider.powerCurve?.pointsWattsPerKg}
                 duration={300}
                 dimension={'вт/кг'}
               />
             )}
-            {lg && (
-              <TdCpWattsSchedule
-                cp={rider.powerCurve?.pointsWattsPerKg}
-                duration={1200}
-                dimension={'вт/кг'}
-              />
-            )}
-            {sm && <td>{tdWeight(rider.weight)}</td>}
-            {sm && <td>{tdHeight(rider.height / 10)}</td>}
+            <TdCpWattsSchedule
+              cp={rider.powerCurve?.pointsWattsPerKg}
+              duration={1200}
+              dimension={'вт/кг'}
+            />
+            {lg && <td>{tdWeight(rider.weight)}</td>}
+            {lg && <td>{tdHeight(rider.height / 10)}</td>}
             {lg && <td>{getAgeCategory(rider.age)}</td>}
             {lg && <td>{getGenderStr(rider.male)}</td>}
             {lg && <td className={styles.link}>{tdLinkZP(rider.id)}</td>}
