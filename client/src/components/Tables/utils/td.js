@@ -1,4 +1,3 @@
-import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
@@ -44,13 +43,7 @@ export function tdCategory(result) {
   );
 }
 
-export function tdGap(gap) {
-  const gapTime = secondesToTime(gap);
-  return <div className={styles.gap}>{gapTime ? <>{`+${gapTime}`}</> : ''}</div>;
-}
-
 export function tdTime(time) {
-  console.log(time);
   if (time === 'DQ') return <div className={styles.dq}>DQ</div>;
   if (time === 'DNF') return <div className={styles.dq}>DNF</div>;
   return String(time).includes('.') ? (
