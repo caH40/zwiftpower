@@ -3,13 +3,12 @@ import { useSelector } from 'react-redux';
 
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdRank, tdTime, tdWatts, tdWeight } from '../utils/td';
-import { tdGap } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
-
+import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 
 import styles from '../Table.module.css';
@@ -50,8 +49,8 @@ function TableRaceResults({ results, event }) {
                 getSweepers={getSweepers}
               />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              {lg && <td>{tdGap(result.gap)}</td>}
-              {lg && <td>{tdGap(result.gapPrev)}</td>}
+              {lg && <TdGap gap={result.gap} />}
+              {lg && <TdGap gap={result.gapPrev} />}
               {sm && (
                 <TdWattsPerKg
                   valueRaw={result.wattsPerKg.value}

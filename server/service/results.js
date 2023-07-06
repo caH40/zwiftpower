@@ -1,9 +1,10 @@
 import { Result } from '../Model/Result.js';
 import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
-import { secondesToTime, secondesToTimeThousandths } from '../utility/date-convert.js';
+import { secondesToTime } from '../utility/date-convert.js';
 import { gapValueOld } from '../utility/gap.js';
 import { filterThousandths } from '../utility/thousandths-seconds.js';
+import { secondesToTimeThousandths } from '../utility/thousandths.js';
 import { maxValue } from '../utility/value-max.js';
 
 import { getResultsWithPenalty } from './results-penalty.js';

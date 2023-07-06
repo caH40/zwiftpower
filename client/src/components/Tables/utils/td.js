@@ -1,4 +1,3 @@
-import { secondesToTime } from '../../../utils/date-convert';
 import { getHeightStr, getWeightStr } from '../../../utils/event';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
@@ -42,11 +41,6 @@ export function tdCategory(result) {
       {result.isUnderChecking ? <div className={styles.underChecking}>❗</div> : ''}
     </div>
   );
-}
-
-export function tdGap(gap) {
-  const gapTime = secondesToTime(gap);
-  return <div className={styles.gap}>{gapTime ? <>{`+${gapTime}`}</> : ''}</div>;
 }
 
 export function tdTime(time) {

@@ -1,6 +1,6 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { secondesToTimeThousandths } from '../../utility/date-convert.js';
 import { addPropertyAddition } from '../../utility/property-addition.js';
+import { secondesToTimeThousandths } from '../../utility/thousandths.js';
 
 export async function getResultsClassicCommon(event) {
   try {

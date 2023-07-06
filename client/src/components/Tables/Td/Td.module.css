@@ -18,6 +18,11 @@
   gap: 3px;
   flex-flow: wrap;
 }
+.gap {
+  font-size: 10px;
+  font-style: italic;
+  white-space: nowrap;
+}
 
 .link {
   text-decoration: none;
