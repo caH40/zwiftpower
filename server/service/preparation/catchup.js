@@ -1,5 +1,5 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { secondesToTimeThousandths } from '../../utility/date-convert.js';
+import { secondesToTimeThousandths } from '../../utility/thousandths.js';
 import { addPropertyAddition } from '../../utility/property-addition.js';
 
 export async function getResultsCatchup(event) {

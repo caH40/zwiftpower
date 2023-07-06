@@ -17,6 +17,7 @@ import styles from '../Table.module.css';
 import Thead from './Thead';
 
 function TableRaceResults({ results, event }) {
+  console.log(results);
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { isScreenLg: lg, isScreenSm: sm } = useResize();

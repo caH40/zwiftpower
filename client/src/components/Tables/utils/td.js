@@ -50,6 +50,7 @@ export function tdGap(gap) {
 }
 
 export function tdTime(time) {
+  console.log(time);
   if (time === 'DQ') return <div className={styles.dq}>DQ</div>;
   if (time === 'DNF') return <div className={styles.dq}>DNF</div>;
   return String(time).includes('.') ? (
