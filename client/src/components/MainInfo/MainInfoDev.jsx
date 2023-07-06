@@ -10,6 +10,10 @@ function MainInfoDev() {
         <div className={styles.text}>
           <ul className={styles.list__dev}>
             <li className={styles.item}>
+              <span className={styles.date}>06.07.2023</span>изменено отображение отставаний в
+              результатах заезда. Исправлен баг при отображении миллисекунд
+            </li>
+            <li className={styles.item}>
               <span className={styles.date}>15.06.2023</span>в профиль пользователя добавлены
               данные основных Critical Power за последние 90 дней
             </li>
