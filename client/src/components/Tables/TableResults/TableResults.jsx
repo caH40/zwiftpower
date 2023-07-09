@@ -17,6 +17,7 @@ import {
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
+import TdSeries from '../Td/TdSeries';
 import { useResize } from '../../../hook/use-resize';
 
 import Thead from './Thead';
@@ -26,7 +27,6 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
 
   const isModerator = ['admin', 'moderator'].includes(role);
-
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
@@ -34,11 +34,13 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
         {events.map((event) => (
           <tr key={event._id}>
             <td>{getLocalDate(event.eventStart, 'onlyDate')}</td>
+            <TdSeries seriesName={event.seriesId?.name} />
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>
               </Link>
             </td>
+
             {lg && <td>{organizer(event.organizer)}</td>}
             {lg && <TdRaceType typeRaceCustom={event.typeRaceCustom} />}
             <td>
