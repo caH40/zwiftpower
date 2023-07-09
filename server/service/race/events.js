@@ -1,4 +1,5 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
+import { Series } from '../../Model/Series.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
@@ -38,7 +39,10 @@ export async function getEventService(eventId) {
 // получение всех эвентов для расписания (started:false) или для списка евентов с результатами
 export async function getEventsService(started, target, page = 1, docsOnPage = 20) {
   try {
-    const eventsDB = await ZwiftEvent.find({ started }).populate('eventSubgroups');
+    const eventsDB = await ZwiftEvent.find({ started })
+      .populate('eventSubgroups')
+      .populate('seriesId');
+
     // сортировка заездов по возрастанию даты старта
     for (const event of eventsDB) {
       // сортировка групп по убыванию
