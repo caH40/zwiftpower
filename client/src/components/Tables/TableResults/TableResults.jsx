@@ -34,7 +34,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
         {events.map((event) => (
           <tr key={event._id}>
             <td>{getLocalDate(event.eventStart, 'onlyDate')}</td>
-            <TdSeries seriesName={event.seriesId?.name} />
+            {lg && <TdSeries seriesName={event.seriesId?.name} />}
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>
