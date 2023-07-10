@@ -25,6 +25,7 @@ import IconGap from '../../icons/IconGap';
 import IconGapPrev from '../../icons/IconGapPrev';
 import IconPower from '../../icons/IconPower';
 import IconPowerKg from '../../icons/IconPowerKg';
+import IconDescription from '../../icons/IconDescription';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -107,6 +108,9 @@ const Th = ({ columnName }) => {
 
       case 'Относительная средняя мощность за гонку':
         return <IconPowerKg tooltip={name} />;
+
+      case 'Описание':
+        return <IconDescription tooltip={name} />;
 
       case 'zp.com':
         return 'zp.com';

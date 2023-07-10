@@ -20,6 +20,7 @@ import logsAdminsSlice from '../features/api/logsAdminsSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
+import seriesSlice from '../features/api/seriesSlice';
 
 export default configureStore({
   reducer: {
@@ -43,5 +44,6 @@ export default configureStore({
     fetchUserResults: userResultsSlice,
     getPopupInput: popupInputSlice,
     downloadResults: downloadResultsSlice,
+    fetchSeries: seriesSlice,
   },
 });
