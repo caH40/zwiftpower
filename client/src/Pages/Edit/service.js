@@ -40,6 +40,8 @@ export const seriesClear = {
   dateStart: '2023-01-01',
   type: '',
   organizer: '',
+  description: '',
+  descriptionShort: '',
   hasGeneral: false,
   hasTeams: false,
   isFinished: false,
