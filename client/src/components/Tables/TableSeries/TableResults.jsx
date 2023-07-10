@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
@@ -24,7 +24,7 @@ function TableSeries({ series }) {
           <tr
             className={styles.trLink}
             key={seriesOne._id}
-            onClick={() => getLink(seriesOne._id)}
+            onClick={() => getLink(seriesOne.type?.toLowerCase())}
           >
             <td>{seriesOne.name}</td>
             <td>{seriesOne.descriptionShort}</td>

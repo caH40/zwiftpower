@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
@@ -11,9 +11,11 @@ function RaceSeries() {
   useTitle('Серии и Туры заездов');
   useBackground(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchSeries();
-  }, []);
+    dispatch(fetchSeries());
+  }, [dispatch]);
 
   return (
     <section>

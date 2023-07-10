@@ -8,6 +8,7 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 export const fetchSeries = createAsyncThunk('seriesGet/fetch', async function (_, thunkAPI) {
   try {
     const response = await axios({ url: `${serverExpress}/api/race/series` });
+
     return { series: response.data };
   } catch (error) {
     const message = error.response.data.message || error.message;
