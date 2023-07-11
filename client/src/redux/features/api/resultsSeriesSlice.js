@@ -15,6 +15,7 @@ export const fetchResultsSeries = createAsyncThunk(
       });
       return {
         results: response.data.results,
+        resultsSummary: response.data.resultsSummary,
       };
     } catch (error) {
       const message = error.response.data.message || error.message;
@@ -28,6 +29,7 @@ const resultsSeriesSlice = createSlice({
   name: 'resultsSeriesGet',
   initialState: {
     results: [],
+    resultsSummary: [],
 
     status: null,
     error: null,
@@ -37,12 +39,14 @@ const resultsSeriesSlice = createSlice({
     builder.addCase(fetchResultsSeries.pending, (state) => {
       state.error = null;
       state.results = [];
+      state.resultsSummary = [];
       state.status = 'loading';
     });
     builder.addCase(fetchResultsSeries.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
       state.results = action.payload.results;
+      state.resultsSummary = action.payload.resultsSummary;
     });
     builder.addCase(fetchResultsSeries.rejected, (state, action) => {
       state.status = 'rejected';

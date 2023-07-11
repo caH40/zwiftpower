@@ -5,8 +5,11 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './CategoryBox.module.css';
 
-function CategoryBox({ label = '', showLabel, quantityRiders = '', circle }) {
-  const classes = cn(styles.category, styles[label], { [styles.circle]: circle });
+function CategoryBox({ label = '', showLabel, quantityRiders = '', circle, full }) {
+  const classes = cn(styles.category, styles[label], {
+    [styles.circle]: circle,
+    [styles.full]: full,
+  });
   const value = `${showLabel ? label : ''} ${quantityRiders}`;
 
   // если circle:true то подсказка - только название категории
