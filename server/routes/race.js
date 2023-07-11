@@ -25,4 +25,4 @@ routerRace.put('/results', authAdmin, putResults);
 routerRace.get('/results/:eventId', getResults);
 routerRace.get('/profile/:zwiftId/results', getUserResults);
 routerRace.get('/series', getSeries);
-routerRace.get('/series/results/:type', getResultsSeries);
+routerRace.get('/series/results/:type/:season', getResultsSeries);

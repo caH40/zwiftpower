@@ -7,10 +7,10 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export const fetchResultsSeries = createAsyncThunk(
   'resultsSeriesGet/fetchResults',
-  async function ({ type }, thunkAPI) {
+  async function ({ type, season }, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/race/series/results/${type}`,
+        url: `${serverExpress}/api/race/series/results/${type}/${season || 'none'}`,
         method: 'get',
       });
       return {

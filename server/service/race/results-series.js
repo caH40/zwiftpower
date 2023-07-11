@@ -6,16 +6,16 @@ export async function getResultsSeriesService(type, seasonCurrent) {
   try {
     const endDate = (season) => {
       switch (season) {
-        case '2022-2023':
+        case 'Сезон 2022-2023':
           return 1693526400000;
         // по умолчанию возвращать текущий сезон, придумать улучшенный алгоритм
         default:
-          return 1693526400000;
+          return null;
       }
     };
-
     // !!!задействовать выбор сезона
     const totalCatchupDB = await TotalCatchup.findOne({ type, end: endDate(seasonCurrent) });
+    if (!totalCatchupDB) return { results: [], resultsSummary: [] };
 
     const zwiftEventsDB = await ZwiftEvent.find(
       { typeRaceCustom: type },

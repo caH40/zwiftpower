@@ -11,3 +11,6 @@
 .box__results {
   flex: 1 1 750px;
 }
+.box__filter {
+  text-align: right;
+}

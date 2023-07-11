@@ -147,8 +147,8 @@ export async function getSeries(req, res) {
 }
 export async function getResultsSeries(req, res) {
   try {
-    const { type } = req.params;
-    const results = await getResultsSeriesService(type);
+    const { type, season } = req.params;
+    const results = await getResultsSeriesService(type, season);
     res.status(200).json(results);
   } catch (error) {
     console.log(error);
