@@ -1,25 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
-import { getToday } from '../../../utils/date-convert';
-import {
-  getDuration,
-  getLaps,
-  map,
-  organizer,
-  route,
-  getDistanceForTd,
-  getElevationForTd,
-} from '../../../utils/event';
+import { getLocalDate, secondesToTime } from '../../../utils/date-convert';
 
-import CategoriesBox from '../../CategoriesBox/CategoriesBox';
-import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
-
-import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
+import CategoryBox from '../../CategoryBox/CategoryBox';
+import TdRider from '../Td/TdRider';
+import { getDistanceForTd, getElevationForTd, getLaps, map, route } from '../../../utils/event';
 
 import Thead from './Thead';
 
@@ -35,30 +25,22 @@ function TableCatchup({ catchups }) {
       <tbody>
         {catchups.map((catchupResult) => (
           <tr key={catchupResult._id}>
-            <td>{getToday(catchupResult.eventStart)}</td>
+            <td>{getLocalDate(catchupResult.eventStart, 'onlyDate')}</td>
             <td>
-              <Link className={styles.link} to={String(catchupResult.id)}>
-                <span className={styles.big}>{catchupResult.name}</span>
-              </Link>
+              <CategoryBox showLabel={true} label={catchupResult.subgroupLabel} circle={true} />
             </td>
-            {lg && <td>{organizer(catchupResult.organizer)}</td>}
-            {lg && <TdRaceType typeRaceCustom={catchupResult.typeRaceCustom} />}
-            <td>
-              <CategoriesBox event={catchupResult} />
-            </td>
-            {sm && <td>{map(catchupResult.eventSubgroups[0]?.mapId)}</td>}
-            {sm && <td>{route(catchupResult.eventSubgroups[0]?.routeId)}</td>}
-            {lg && <td>{getLaps(catchupResult.eventSubgroups[0]?.laps)}</td>}
-            {lg && <td>{getDistanceForTd(catchupResult.eventSubgroups[0])}</td>}
-            {lg && <td>{getElevationForTd(catchupResult.eventSubgroups[0])}</td>}
-            {lg && <td>{getDuration(catchupResult.eventSubgroups[0]?.durationInSeconds)}</td>}
-            {isModerator && (
-              <TdScheduleMenuTableScheduleList
-                event={catchupResult}
-                updateEvent={catchupResult}
-                removeEvent={catchupResult}
-              />
-            )}
+            <TdRider
+              profileId={catchupResult.profileId}
+              profile={catchupResult.profileData}
+              showIcons={{ sm }}
+            />
+            {sm && <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>}
+            {sm && <td>{catchupResult.totalFinishedCount}</td>}
+            {lg && <td>{map(catchupResult.eventSubgroup.mapId)}</td>}
+            {lg && <td>{route(catchupResult.eventSubgroup.routeId)}</td>}
+            {lg && <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>}
+            {lg && <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>}
+            {lg && <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>}
           </tr>
         ))}
       </tbody>

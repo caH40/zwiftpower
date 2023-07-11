@@ -10,14 +10,13 @@ function Catchup() {
   const catchups = useSelector((state) => state.fetchResultsSeries.results);
   useTitle('Догонялки');
   useBackground(false);
-  console.log(catchups);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchResultsSeries({ type: 'catchUp' }));
   }, [dispatch]);
 
-  return <section>{catchups[0] && <>{/* <TableCatchup catchups={catchups} /> */}</>}</section>;
+  return <section>{catchups[0] && <>{<TableCatchup catchups={catchups} />}</>}</section>;
 }
 
 export default Catchup;

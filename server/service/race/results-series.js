@@ -44,25 +44,18 @@ function getResults(resultsFromDB) {
     const results = [];
     for (const event of resultsFromDB) {
       const result = {};
+      result._id = event._id;
       result.subgroupLabel = event.subgroupLabel;
+      result.profileId = event.profileId;
       result.profileData = event.profileData;
       result.durationInMilliseconds = event.activityData.durationInMilliseconds;
       result.durationInMilliseconds = event.activityData.durationInMilliseconds;
-      result.event = {
-        distanceSummary: {
-          distanceInKilometers: event.subgroupId.distanceSummary.distanceInKilometers,
-          elevationGainInMeters: event.subgroupId.distanceSummary.elevationGainInMeters,
-        },
-      };
-      result.laps = event.subgroupId.laps;
-      result.mapId = event.subgroupId.mapId;
-      result.routeId = event.subgroupId.routeId;
-      result.distanceInMeters = event.subgroupId.distanceInMeters; // необходим или уже подсчитано в distanceSummary.distanceInKilometers
-      result.eventStart = event.zwiftEventId.eventStart;
+      result.eventSubgroup = event.subgroupId;
+      result.eventStart = new Date(event.zwiftEventId.eventStart).getTime();
       result.totalFinishedCount = event.zwiftEventId.totalFinishedCount;
       results.push(result);
     }
-    return results;
+    return results.sort((a, b) => b.eventStart - a.eventStart);
   } catch (error) {
     throw error;
   }

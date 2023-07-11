@@ -36,8 +36,8 @@ function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
           <div className={styles.name}>
             {`${profile.firstName} ${profile.lastName}`}
             {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
-            <Leader getLeaders={getLeaders} profileId={profileId} />
-            <Sweeper getSweepers={getSweepers} profileId={profileId} />
+            {getLeaders && <Leader getLeaders={getLeaders} profileId={profileId} />}
+            {getSweepers && <Sweeper getSweepers={getSweepers} profileId={profileId} />}
           </div>
         </div>
       </Link>
