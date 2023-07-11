@@ -26,6 +26,7 @@ function TableSeries({ series }) {
             key={seriesOne._id}
             onClick={() => getLink(seriesOne.type?.toLowerCase())}
           >
+            <td>{seriesOne.organizer}</td>
             <td>{seriesOne.name}</td>
             <td>{seriesOne.descriptionShort}</td>
           </tr>

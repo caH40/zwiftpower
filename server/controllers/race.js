@@ -10,6 +10,7 @@ import { putResultsService } from '../service/race/results-put.js';
 import { getUserResultsService } from '../service/race/rider/rider-profile.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
+import { getResultsSeriesService } from '../service/race/results-series.js';
 
 export async function getEvent(req, res) {
   try {
@@ -137,6 +138,18 @@ export async function getSeries(req, res) {
   try {
     const series = await getSeriesService();
     res.status(200).json(series);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json(error.response ? { message: error.response?.data } : { message: error.message });
+  }
+}
+export async function getResultsSeries(req, res) {
+  try {
+    const { type } = req.params;
+    const results = await getResultsSeriesService(type);
+    res.status(200).json(results);
   } catch (error) {
     console.log(error);
     res
