@@ -10,6 +10,8 @@ import {
   deleteEventAndResults,
   getResults,
   getUserResults,
+  getSeries,
+  getResultsSeries,
 } from '../controllers/race.js';
 
 export const routerRace = new Router();
@@ -22,3 +24,5 @@ routerRace.delete('/events', authAdmin, deleteEventAndResults);
 routerRace.put('/results', authAdmin, putResults);
 routerRace.get('/results/:eventId', getResults);
 routerRace.get('/profile/:zwiftId/results', getUserResults);
+routerRace.get('/series', getSeries);
+routerRace.get('/series/results/:type/:season', getResultsSeries);

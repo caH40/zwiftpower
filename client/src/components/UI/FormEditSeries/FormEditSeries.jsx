@@ -4,6 +4,9 @@ import Button from '../Button/Button';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import SimpleSelect from '../SimpleSelect/SimpleSelect';
+import TextArea from '../TextArea/TextArea';
+
+import { seriesType } from '../../../asset/series-type';
 
 import styles from './FormEditSeries.module.css';
 
@@ -31,10 +34,7 @@ function FormEditSeries({ series, setSeries, sendForm }) {
         state={series}
         setState={setSeries}
         property="type"
-        options={[
-          { name: 'series', id: '1' },
-          { name: 'tour', id: '2' },
-        ]}
+        options={seriesType}
       />
       <SimpleSelect
         name="Организатор"
@@ -43,6 +43,13 @@ function FormEditSeries({ series, setSeries, sendForm }) {
         property="organizer"
         options={[{ name: 'KOM-ON', id: '1' }]}
       />
+      <TextArea
+        name="Краткое описание"
+        state={series}
+        setState={setSeries}
+        property="descriptionShort"
+      />
+      <TextArea name="Описание" state={series} setState={setSeries} property="description" />
 
       <div className={styles.box__checkbox}>
         <SimpleCheckbox

@@ -10,6 +10,7 @@ import { router } from './routes/routes.js';
 import { timers } from './service/timer.js';
 import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
+import { TotalCatchup } from './Model/TotalCatchup.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;

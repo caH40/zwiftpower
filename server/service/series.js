@@ -40,6 +40,8 @@ export async function putSeriesService({
   dateStart,
   type,
   organizer,
+  description,
+  descriptionShort,
   hasGeneral,
   hasTeams,
   isFinished,
@@ -47,7 +49,19 @@ export async function putSeriesService({
   try {
     await Series.findOneAndUpdate(
       { _id },
-      { $set: { name, dateStart, type, organizer, hasGeneral, hasTeams, isFinished } }
+      {
+        $set: {
+          name,
+          dateStart,
+          type,
+          organizer,
+          description,
+          descriptionShort,
+          hasGeneral,
+          hasTeams,
+          isFinished,
+        },
+      }
     );
     return { message: `Изменения в ${name} сохранены!` };
   } catch (error) {

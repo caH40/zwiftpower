@@ -1,0 +1,16 @@
+.block {
+  display: flex;
+  align-items: flex-start;
+  gap: 0px 20px;
+  flex-wrap: wrap;
+}
+.box__total {
+  flex: 0 1 400px;
+  min-width: 300px;
+}
+.box__results {
+  flex: 1 1 750px;
+}
+.box__filter {
+  text-align: right;
+}
