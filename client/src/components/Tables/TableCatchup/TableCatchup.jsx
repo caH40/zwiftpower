@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -21,10 +22,11 @@ function TableCatchup({ catchups }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption>Победители этапов</caption>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {catchups.map((catchupResult) => (
-          <tr key={catchupResult._id}>
+          <tr key={catchupResult.eventId}>
             <td>{getLocalDate(catchupResult.eventStart, 'onlyDate')}</td>
             <td>
               <CategoryBox showLabel={true} label={catchupResult.subgroupLabel} circle={true} />
@@ -41,6 +43,13 @@ function TableCatchup({ catchups }) {
             {lg && <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>}
             {lg && <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>}
             {lg && <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>}
+            {sm && (
+              <td>
+                <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
+                  этап
+                </Link>
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

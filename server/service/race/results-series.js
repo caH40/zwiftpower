@@ -46,7 +46,7 @@ function getResults(resultsFromDB) {
     const results = [];
     for (const event of resultsFromDB) {
       const result = {};
-      result._id = event._id;
+      result.eventId = event.eventId;
       result.subgroupLabel = event.subgroupLabel;
       result.profileId = event.profileId;
       result.profileData = event.profileData;

@@ -27,6 +27,7 @@ import IconPower from '../../icons/IconPower';
 import IconPowerKg from '../../icons/IconPowerKg';
 import IconDescription from '../../icons/IconDescription';
 import IconCupRank from '../../icons/IconCupRank';
+import IconResultsSmall from '../../icons/IconResultsSmall';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -115,6 +116,9 @@ const Th = ({ columnName }) => {
 
       case 'Победа':
         return <IconCupRank tooltip={name} place={0} />;
+
+      case 'Результаты':
+        return <IconResultsSmall tooltip={name} place={0} />;
 
       case 'zp.com':
         return 'zp.com';

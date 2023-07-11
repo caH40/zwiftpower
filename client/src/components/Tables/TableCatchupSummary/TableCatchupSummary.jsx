@@ -19,6 +19,7 @@ function TableCatchupSummary({ resultsSummary = [] }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption>Общий зачет сезона</caption>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {resultsSummary.map((result, index) => (
