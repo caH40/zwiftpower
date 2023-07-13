@@ -1,6 +1,6 @@
 import { postDevelopmentService } from '../service/information/development.js';
 
-export async function getDevelopment() {
+export async function getDevelopment(req, res) {
   try {
     const x = await getDevelopmentService();
     res.status(200).json(x);
@@ -11,7 +11,7 @@ export async function getDevelopment() {
       .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
-export async function postDevelopment() {
+export async function postDevelopment(req, res) {
   try {
     const { releaseData } = req.body;
     const { userId } = req.params;
@@ -25,7 +25,7 @@ export async function postDevelopment() {
       .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
-export async function putDevelopment() {
+export async function putDevelopment(req, res) {
   try {
     const x = await putDevelopmentService();
     res.status(200).json(x);
@@ -36,7 +36,7 @@ export async function putDevelopment() {
       .json(error.response ? { message: error.response?.data } : { message: error.message });
   }
 }
-export async function deleteDevelopment() {
+export async function deleteDevelopment(req, res) {
   try {
     const x = await deleteDevelopmentService();
     res.status(200).json(x);

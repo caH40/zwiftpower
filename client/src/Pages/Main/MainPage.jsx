@@ -15,6 +15,8 @@ const notFound = 'К сожалению, заезды не найдены ... ((
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
+  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const isModerator = ['admin', 'moderator'].includes(role);
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды');
   useBackground(false);
@@ -37,7 +39,7 @@ function MainPage() {
       <div className={styles.wrapper__info}>
         <h2 className={styles.title__info}>Информационный блок</h2>
         <MainInfo />
-        <MainInfoDev />
+        <MainInfoDev isModerator={isModerator} />
       </div>
     </section>
   );

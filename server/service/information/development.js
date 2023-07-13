@@ -3,10 +3,10 @@ import { InfoDevelopment } from '../../Model/InfoDevelopment.js';
 export async function postDevelopmentService(releaseData, userId) {
   try {
     const body = {
-      release: releaseData.release,
+      releaseDate: releaseData.releaseDate,
       version: releaseData.version,
-      post: Date.now(),
-      text: releaseData.text,
+      postDate: Date.now(),
+      text: releaseData.description,
       isFromGitHubActions: releaseData.isFromGitHubActions,
       userPost: userId,
     };

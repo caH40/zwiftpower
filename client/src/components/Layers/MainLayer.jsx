@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 import CustomizedSnackbars from '../UI/Snackbars/CustomizedSnackbars';
 import PopupInput from '../UI/PopupInput/PopupInput';
+import PopupInfoDev from '../UI/PopupInfoDev/PopupInfoDev';
 
 import Body from './Body';
 import Footer from './Footer/Footer';
@@ -19,6 +20,7 @@ function MainLayer() {
         </Body>
         <Footer />
         <PopupInput />
+        <PopupInfoDev />
       </CustomizedSnackbars>
     </div>
   );

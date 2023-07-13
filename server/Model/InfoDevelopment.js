@@ -2,9 +2,9 @@ import { Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 
 const infoDevelopmentSchema = new Schema({
-  post: Number, // дата поста релиза
-  update: Number, // дата изменения текста релиза
-  release: Number, // дата релиза текущей версии проекта
+  postDate: Number, // дата поста релиза
+  updateDate: Number, // дата изменения текста релиза
+  releaseDate: Number, // дата релиза текущей версии проекта
   version: String, // версия релиза
   userPost: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // id пользователя, создавшего пост релиза
   userEdit: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // id пользователя, изменившего текст релиза
