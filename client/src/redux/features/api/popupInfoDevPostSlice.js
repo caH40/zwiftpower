@@ -1,4 +1,4 @@
-// открытие и закрытие попап меню, пост запрос (добавление информации о релизе)
+// пост запрос (добавление информации о релизе)
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';
@@ -9,17 +9,12 @@ import { fetchGetInfoDev } from './popupInfoDevGetSlice';
 
 export const fetchPostInfoDev = createAsyncThunk(
   'informationDevelopment/postInfoDev',
-  async function ({ releaseDate, description }, thunkAPI) {
+  async function (releaseData, thunkAPI) {
     try {
       const response = await myAxios({
         url: '/api/information/development',
         method: 'post',
-        data: {
-          releaseData: {
-            releaseDate,
-            description,
-          },
-        },
+        data: { releaseData },
       });
 
       const { message } = response.data;
@@ -35,23 +30,14 @@ export const fetchPostInfoDev = createAsyncThunk(
   }
 );
 
-const popupFormSlice = createSlice({
+const popupInfoDevPostSlice = createSlice({
   name: 'popupForm',
   initialState: {
-    isVisible: false,
     error: null,
     status: null,
     response: {},
-    informationDev: [],
   },
-  reducers: {
-    openPopupForm(state) {
-      state.isVisible = true;
-    },
-    closePopupForm(state) {
-      state.isVisible = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPostInfoDev.pending, (state) => {
       state.error = null;
@@ -68,6 +54,4 @@ const popupFormSlice = createSlice({
   },
 });
 
-export const { openPopupForm, closePopupForm } = popupFormSlice.actions;
-
-export default popupFormSlice.reducer;
+export default popupInfoDevPostSlice.reducer;

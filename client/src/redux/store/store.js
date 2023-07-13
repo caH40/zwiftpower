@@ -22,11 +22,12 @@ import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
 import seriesSlice from '../features/api/seriesSlice';
 import resultsSeriesSlice from '../features/api/resultsSeriesSlice';
-import popupFormSlice from '../features/api/popupFormSlice';
+import popupFormSlice from '../features/popupFormSlice';
 // удаление информации о релизе из БД
 import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
 // получение всех релизов из БД
 import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
+import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 
 export default configureStore({
   reducer: {
@@ -55,5 +56,6 @@ export default configureStore({
     fetchResultsSeries: resultsSeriesSlice,
     popupInfoDevDelete: popupInfoDevDeleteSlice,
     popupInfoDevGet: popupInfoDevGetSlice,
+    popupInfoDevPost: popupInfoDevPostSlice,
   },
 });

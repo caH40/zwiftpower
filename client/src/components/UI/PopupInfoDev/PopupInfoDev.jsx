@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closePopupForm, fetchPostInfoDev } from '../../../redux/features/api/popupFormSlice';
 import ButtonClose from '../ButtonClose/ButtonClose';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import TextArea from '../TextArea/TextArea';
 import Button from '../Button/Button';
+import { fetchPostInfoDev } from '../../../redux/features/api/popupInfoDevPostSlice';
+import { closePopupForm } from '../../../redux/features/popupFormSlice';
 
 import styles from './PopupInfoDev.module.css';
 
-const clearData = { releaseDate: Date.now(), description: '', version: '' };
-
 function PopupInfoDev() {
-  const [form, setForm] = useState(clearData);
-  const { isVisible } = useSelector((state) => state.popupForm);
+  const { isVisible, releaseData } = useSelector((state) => state.popupForm);
+
+  const [form, setForm] = useState(() => releaseData);
   const dispatch = useDispatch();
 
   const getClick = () => {
     dispatch(fetchPostInfoDev(form));
-    setForm(clearData);
+    setForm({});
     dispatch(closePopupForm());
   };
   const closePopup = () => dispatch(closePopupForm());
@@ -48,7 +48,7 @@ function PopupInfoDev() {
               />
               <TextArea
                 name={'Описание релиза'}
-                property={'description'}
+                property={'text'}
                 state={form}
                 setState={setForm}
               />

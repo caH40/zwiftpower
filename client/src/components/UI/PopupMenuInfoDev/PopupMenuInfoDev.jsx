@@ -5,21 +5,24 @@ import { useDispatch } from 'react-redux';
 import IconAdd from '../../icons/IconAdd';
 import IconDelete from '../../icons/IconDelete';
 import IconEdit from '../../icons/IconEdit';
-import { openPopupForm } from '../../../redux/features/api/popupFormSlice';
+import { openPopupForm } from '../../../redux/features/popupFormSlice';
 
 import styles from './PopupMenuInfoDev.module.css';
 
-function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete }) {
+function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete, setIsVisibleEdit }) {
   const dispatch = useDispatch();
 
   const clickAddRelease = (e) => {
     e.stopPropagation();
     setIsVisible(false);
-    dispatch(openPopupForm({ isVisible: true, form: {} }));
+    dispatch(
+      openPopupForm({ releaseData: { releaseDate: Date.now(), text: '', version: '' } })
+    );
   };
   const clickEditRelease = (e) => {
     e.stopPropagation();
     setIsVisible(false);
+    setIsVisibleEdit(true);
   };
   const clickDeleteRelease = (e) => {
     e.stopPropagation();

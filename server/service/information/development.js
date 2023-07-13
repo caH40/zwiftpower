@@ -6,13 +6,13 @@ export async function postDevelopmentService(releaseData, userId) {
       releaseDate: releaseData.releaseDate,
       version: releaseData.version,
       postDate: Date.now(),
-      text: releaseData.description,
+      text: releaseData.text,
       isFromGitHubActions: releaseData.isFromGitHubActions,
       userPost: userId,
     };
     await InfoDevelopment.create(body);
 
-    return { message: 'Данные релиза сохранены в БД' };
+    return { message: 'Информация о релизе сохранена в БД' };
   } catch (error) {
     throw error;
   }
@@ -30,6 +30,22 @@ export async function deleteDevelopmentService(id) {
   try {
     const informationDev = await InfoDevelopment.findOneAndDelete({ _id: id });
     return { message: `Релиз "${informationDev.text}" удалён!` };
+  } catch (error) {
+    throw error;
+  }
+}
+export async function putDevelopmentService(releaseData, userId) {
+  try {
+    const body = {
+      releaseDate: releaseData.releaseDate,
+      version: releaseData.version,
+      updateDate: Date.now(),
+      text: releaseData.description,
+      userEdit: userId,
+    };
+    await InfoDevelopment.findOneAndUpdate({ _id: releaseData._id }, body);
+
+    return { message: 'Изменение информации о релизе сохранены в БД' };
   } catch (error) {
     throw error;
   }

@@ -7,12 +7,15 @@ import { getLocalDate } from '../../utils/date-convert';
 import IconDelete from '../icons/IconDelete';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchDeleteInfoDev } from '../../redux/features/api/popupInfoDevDeleteSlice';
+import IconEdit from '../icons/IconEdit';
+import { openPopupForm } from '../../redux/features/popupFormSlice';
 
 import styles from './MainInfo.module.css';
 
 function MainInfoDev({ isModerator }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const [isVisibleDelete, setIsVisibleDelete] = useState(false);
+  const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const informationDev = useSelector((state) => state.popupInfoDevGet.informationDev);
 
   const dispatch = useDispatch();
@@ -29,14 +32,26 @@ function MainInfoDev({ isModerator }) {
     setIsVisibleDelete(false);
   };
 
+  const editInfoDev = (releaseData) => {
+    dispatch(openPopupForm({ releaseData }));
+    setIsVisibleDelete(false);
+  };
+
   return (
     <div>
       <div className={styles.block}>
-        {isModerator && <IconMenuInfoDev setIsVisible={setIsVisible} />}
+        {isModerator && (
+          <IconMenuInfoDev
+            setIsVisible={setIsVisibleMenu}
+            setIsVisibleDelete={setIsVisibleDelete}
+            setIsVisibleEdit={setIsVisibleEdit}
+          />
+        )}
         <PopupMenuInfoDev
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
+          isVisible={isVisibleMenu}
+          setIsVisible={setIsVisibleMenu}
           setIsVisibleDelete={setIsVisibleDelete}
+          setIsVisibleEdit={setIsVisibleEdit}
         />
         <h3 className={styles.title}>Изменения на сайте</h3>
         <div className={styles.block__text}>
@@ -56,6 +71,11 @@ function MainInfoDev({ isModerator }) {
                       onClick={() => deleteInfoDev(info._id, info.text)}
                     >
                       <IconDelete />
+                    </div>
+                  )}
+                  {isVisibleEdit && (
+                    <div className={styles.icon} onClick={() => editInfoDev(info)}>
+                      <IconEdit />
                     </div>
                   )}
                 </div>

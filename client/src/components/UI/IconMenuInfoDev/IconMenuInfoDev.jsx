@@ -4,9 +4,14 @@ import IconEdit from '../../icons/IconEdit';
 
 import styles from './IconMenuInfoDev.module.css';
 
-function IconMenuInfoDev({ setIsVisible }) {
+function IconMenuInfoDev({ setIsVisible, setIsVisibleDelete, setIsVisibleEdit }) {
+  const getClick = () => {
+    setIsVisible((prev) => !prev);
+    setIsVisibleDelete(false);
+    setIsVisibleEdit(false);
+  };
   return (
-    <div className={styles.icons} onClick={() => setIsVisible((prev) => !prev)}>
+    <div className={styles.icons} onClick={getClick}>
       <IconEdit addCls="pointer" />
     </div>
   );

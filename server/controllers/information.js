@@ -2,6 +2,7 @@ import {
   getDevelopmentService,
   postDevelopmentService,
   deleteDevelopmentService,
+  putDevelopmentService,
 } from '../service/information/development.js';
 
 export async function getDevelopment(req, res) {
@@ -31,8 +32,10 @@ export async function postDevelopment(req, res) {
 }
 export async function putDevelopment(req, res) {
   try {
-    const x = await putDevelopmentService();
-    res.status(200).json(x);
+    const { releaseData } = req.body;
+    const { userId } = req.params;
+    const response = await putDevelopmentService(releaseData, userId);
+    res.status(200).json(response);
   } catch (error) {
     console.log(error);
     res
