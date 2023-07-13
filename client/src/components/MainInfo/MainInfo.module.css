@@ -13,7 +13,7 @@
   letter-spacing: 0.03em;
   padding-bottom: 5px;
 }
-.text {
+.block__text {
   font-weight: 400;
   font-size: 14px;
   letter-spacing: 0.03em;
@@ -26,10 +26,15 @@
 .list__dev {
   list-style: none;
 }
+.li__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .item + .item {
   margin-top: 2px;
 }
-.item::after {
+.text::after {
   content: ';';
 }
 .date {
@@ -56,4 +61,9 @@
 }
 .link:active {
   color: var(--color-yellow-main);
+}
+.icon {
+  flex: 0 0 30px;
+  margin-left: 5px;
+  cursor: pointer;
 }

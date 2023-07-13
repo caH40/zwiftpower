@@ -9,7 +9,7 @@ import { openPopupForm } from '../../../redux/features/api/popupFormSlice';
 
 import styles from './PopupMenuInfoDev.module.css';
 
-function PopupMenuInfoDev({ isVisible, setIsVisible }) {
+function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete }) {
   const dispatch = useDispatch();
 
   const clickAddRelease = (e) => {
@@ -17,13 +17,14 @@ function PopupMenuInfoDev({ isVisible, setIsVisible }) {
     setIsVisible(false);
     dispatch(openPopupForm({ isVisible: true, form: {} }));
   };
-  const clickDeleteRelease = (e) => {
-    e.stopPropagation();
-    setIsVisible(false);
-  };
   const clickEditRelease = (e) => {
     e.stopPropagation();
     setIsVisible(false);
+  };
+  const clickDeleteRelease = (e) => {
+    e.stopPropagation();
+    setIsVisible(false);
+    setIsVisibleDelete(true);
   };
 
   return (

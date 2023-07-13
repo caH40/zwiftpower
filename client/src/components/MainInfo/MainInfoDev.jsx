@@ -1,30 +1,64 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import IconMenuInfoDev from '../UI/IconMenuInfoDev/IconMenuInfoDev';
 import PopupMenuInfoDev from '../UI/PopupMenuInfoDev/PopupMenuInfoDev';
 import { getLocalDate } from '../../utils/date-convert';
+import IconDelete from '../icons/IconDelete';
+import { getAlert } from '../../redux/features/alertMessageSlice';
+import { fetchDeleteInfoDev } from '../../redux/features/api/popupInfoDevDeleteSlice';
 
 import styles from './MainInfo.module.css';
 
 function MainInfoDev({ isModerator }) {
   const [isVisible, setIsVisible] = useState(false);
-  const informationDev = useSelector((state) => state.popupForm.informationDev);
+  const [isVisibleDelete, setIsVisibleDelete] = useState(false);
+  const informationDev = useSelector((state) => state.popupInfoDevGet.informationDev);
+
+  const dispatch = useDispatch();
+
+  const deleteInfoDev = (id, text) => {
+    const response = window.confirm(`Вы действительно хотите удалить релиз: "${text}"`);
+    if (!response) {
+      const message = `Отмена удаления релиза:  "${text}"`;
+      dispatch(getAlert({ message, type: 'warning', isOpened: true }));
+      setIsVisibleDelete(false);
+      return;
+    }
+    dispatch(fetchDeleteInfoDev({ id }));
+    setIsVisibleDelete(false);
+  };
 
   return (
     <div>
       <div className={styles.block}>
         {isModerator && <IconMenuInfoDev setIsVisible={setIsVisible} />}
-        <PopupMenuInfoDev isVisible={isVisible} setIsVisible={setIsVisible} />
+        <PopupMenuInfoDev
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          setIsVisibleDelete={setIsVisibleDelete}
+        />
         <h3 className={styles.title}>Изменения на сайте</h3>
-        <div className={styles.text}>
+        <div className={styles.block__text}>
           <ul className={styles.list__dev}>
             {informationDev.map((info) => (
               <li className={styles.item} key={info._id}>
-                <span className={styles.date}>
-                  {getLocalDate(info.releaseDate, 'onlyDate')}
-                </span>
-                <span>{info.text}</span>
+                <div className={styles.li__inner}>
+                  <div>
+                    <span className={styles.date}>
+                      {getLocalDate(info.releaseDate, 'onlyDate')}
+                    </span>
+                    <span className={styles.text}>{info.text}</span>
+                  </div>
+                  {isVisibleDelete && (
+                    <div
+                      className={styles.icon}
+                      onClick={() => deleteInfoDev(info._id, info.text)}
+                    >
+                      <IconDelete />
+                    </div>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

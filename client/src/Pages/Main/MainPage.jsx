@@ -8,7 +8,7 @@ import useBackground from '../../hook/useBackground';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
-import { fetchGetInfoDev } from '../../redux/features/api/popupFormSlice';
+import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 
 import styles from './MainPage.module.css';
 

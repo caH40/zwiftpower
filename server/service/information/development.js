@@ -26,3 +26,11 @@ export async function getDevelopmentService() {
     throw error;
   }
 }
+export async function deleteDevelopmentService(id) {
+  try {
+    const informationDev = await InfoDevelopment.findOneAndDelete({ _id: id });
+    return { message: `Релиз "${informationDev.text}" удалён!` };
+  } catch (error) {
+    throw error;
+  }
+}
