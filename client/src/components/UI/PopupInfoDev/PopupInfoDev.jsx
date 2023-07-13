@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closePopupForm, fetchInfoDev } from '../../../redux/features/popupFormSlice';
+import { closePopupForm, fetchPostInfoDev } from '../../../redux/features/api/popupFormSlice';
 import ButtonClose from '../ButtonClose/ButtonClose';
 import SimpleInput from '../SimpleInput/SimpleInput';
 import TextArea from '../TextArea/TextArea';
@@ -9,14 +9,17 @@ import Button from '../Button/Button';
 
 import styles from './PopupInfoDev.module.css';
 
+const clearData = { releaseDate: Date.now(), description: '', version: '' };
+
 function PopupInfoDev() {
-  const [form, setForm] = useState({ releaseDate: Date.now(), description: '', version: '' });
+  const [form, setForm] = useState(clearData);
   const { isVisible } = useSelector((state) => state.popupForm);
   const dispatch = useDispatch();
 
   const getClick = () => {
-    dispatch(fetchInfoDev(form));
-    // dispatch(closePopupForm());
+    dispatch(fetchPostInfoDev(form));
+    setForm(clearData);
+    dispatch(closePopupForm());
   };
   const closePopup = () => dispatch(closePopupForm());
 

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import IconRefresh from '../../icons/IconRefresh';
 import IconDelete from '../../icons/IconDelete';
 import IconEdit from '../../icons/IconEdit';
-import { openPopupForm } from '../../../redux/features/popupFormSlice';
+import { openPopupForm } from '../../../redux/features/api/popupFormSlice';
 
 import styles from './PopupMenuInfoDev.module.css';
 

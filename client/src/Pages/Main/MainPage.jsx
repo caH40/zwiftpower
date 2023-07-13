@@ -8,6 +8,7 @@ import useBackground from '../../hook/useBackground';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
+import { fetchGetInfoDev } from '../../redux/features/api/popupFormSlice';
 
 import styles from './MainPage.module.css';
 
@@ -23,9 +24,15 @@ function MainPage() {
 
   const navigate = useNavigate();
   const toLink = (id) => navigate(`/race/schedule/${id}`);
+
   useEffect(() => {
     dispatch(fetchEvents({ started: false, target: 'preview' }));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchGetInfoDev());
+  }, [dispatch]);
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__preview}>

@@ -1,9 +1,12 @@
-import { postDevelopmentService } from '../service/information/development.js';
+import {
+  getDevelopmentService,
+  postDevelopmentService,
+} from '../service/information/development.js';
 
 export async function getDevelopment(req, res) {
   try {
-    const x = await getDevelopmentService();
-    res.status(200).json(x);
+    const informationDev = await getDevelopmentService();
+    res.status(200).json(informationDev);
   } catch (error) {
     console.log(error);
     res

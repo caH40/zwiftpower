@@ -17,3 +17,12 @@ export async function postDevelopmentService(releaseData, userId) {
     throw error;
   }
 }
+export async function getDevelopmentService() {
+  try {
+    const informationDev = await InfoDevelopment.find();
+    informationDev.sort((a, b) => b.releaseDate - a.releaseDate);
+    return { informationDev };
+  } catch (error) {
+    throw error;
+  }
+}
