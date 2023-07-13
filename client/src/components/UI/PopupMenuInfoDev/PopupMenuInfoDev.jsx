@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import IconRefresh from '../../icons/IconRefresh';
+import IconAdd from '../../icons/IconAdd';
 import IconDelete from '../../icons/IconDelete';
 import IconEdit from '../../icons/IconEdit';
 import { openPopupForm } from '../../../redux/features/api/popupFormSlice';
@@ -32,7 +32,7 @@ function PopupMenuInfoDev({ isVisible, setIsVisible }) {
         <div className={styles.popup} onMouseLeave={() => setIsVisible(false)}>
           <ul className={styles.list}>
             <li className={styles.item} onClick={clickAddRelease}>
-              <IconRefresh />
+              <IconAdd />
               <span className={styles.label}>Добавление релиза</span>
             </li>
 
