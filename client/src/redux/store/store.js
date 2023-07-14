@@ -22,6 +22,13 @@ import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
 import seriesSlice from '../features/api/seriesSlice';
 import resultsSeriesSlice from '../features/api/resultsSeriesSlice';
+import popupFormSlice from '../features/popupFormSlice';
+// удаление информации о релизе из БД
+import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
+// получение всех релизов из БД
+import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
+import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
+import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 
 export default configureStore({
   reducer: {
@@ -44,8 +51,13 @@ export default configureStore({
     logsAdmins: logsAdminsSlice,
     fetchUserResults: userResultsSlice,
     getPopupInput: popupInputSlice,
+    popupForm: popupFormSlice,
     downloadResults: downloadResultsSlice,
     fetchSeries: seriesSlice,
     fetchResultsSeries: resultsSeriesSlice,
+    popupInfoDevDelete: popupInfoDevDeleteSlice,
+    popupInfoDevGet: popupInfoDevGetSlice,
+    popupInfoDevPost: popupInfoDevPostSlice,
+    popupInfoDevPut: popupInfoDevPutSlice,
   },
 });

@@ -8,6 +8,7 @@ import useBackground from '../../hook/useBackground';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
+import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 
 import styles from './MainPage.module.css';
 
@@ -15,15 +16,23 @@ const notFound = 'К сожалению, заезды не найдены ... ((
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
+  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const isModerator = ['admin', 'moderator'].includes(role);
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды');
   useBackground(false);
 
   const navigate = useNavigate();
   const toLink = (id) => navigate(`/race/schedule/${id}`);
+
   useEffect(() => {
     dispatch(fetchEvents({ started: false, target: 'preview' }));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchGetInfoDev());
+  }, [dispatch]);
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__preview}>
@@ -37,7 +46,7 @@ function MainPage() {
       <div className={styles.wrapper__info}>
         <h2 className={styles.title__info}>Информационный блок</h2>
         <MainInfo />
-        <MainInfoDev />
+        <MainInfoDev isModerator={isModerator} />
       </div>
     </section>
   );
