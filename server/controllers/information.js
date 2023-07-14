@@ -4,6 +4,7 @@ import {
   deleteDevelopmentService,
   putDevelopmentService,
 } from '../service/information/development.js';
+import { sendMessageToTelegramBot } from '../service/telegrambot.js';
 
 export async function getDevelopment(req, res) {
   try {
@@ -21,7 +22,11 @@ export async function postDevelopment(req, res) {
     const { releaseData } = req.body;
     const { userId } = req.params;
 
-    const response = await postDevelopmentService(releaseData, userId);
+    const { infoDevelopment, ...response } = await postDevelopmentService(releaseData, userId);
+
+    if (infoDevelopment) {
+      await sendMessageToTelegramBot(infoDevelopment);
+    }
     res.status(201).json(response);
   } catch (error) {
     console.log(error);

@@ -10,9 +10,12 @@ export async function postDevelopmentService(releaseData, userId) {
       isFromGitHubActions: releaseData.isFromGitHubActions,
       userPost: userId,
     };
-    await InfoDevelopment.create(body);
+    const infoDevelopmentDB = await InfoDevelopment.create(body);
 
-    return { message: 'Информация о релизе сохранена в БД' };
+    return {
+      infoDevelopment: infoDevelopmentDB,
+      message: 'Информация о релизе сохранена в БД',
+    };
   } catch (error) {
     throw error;
   }
