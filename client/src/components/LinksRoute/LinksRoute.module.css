@@ -1,0 +1,10 @@
+.block {
+  margin-bottom: 1em;
+}
+.link {
+  text-decoration: none;
+  color: var(--color-blue-4);
+}
+.link:hover {
+  text-decoration: underline;
+}

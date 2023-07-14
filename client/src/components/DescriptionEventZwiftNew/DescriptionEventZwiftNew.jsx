@@ -12,6 +12,7 @@ import CategoryBoxDescription from '../CategoryBoxDescription/CategoryBoxDescrip
 import RaceBoxDescription from '../RaceBoxDescription/RaceBoxDescription';
 import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
+import LinksRoute from '../LinksRoute/LinksRoute';
 
 import styles from './DescriptionEventZwiftNew.module.css';
 
@@ -70,6 +71,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
 
       {isOpened && (
         <div className={styles.block__text}>
+          <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
           <p
             className={styles.paragraph}
             dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
