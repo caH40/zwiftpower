@@ -35,8 +35,14 @@ export function prepareData(
   }
 
   if (event.categoryEnforcement) {
-    event.accessExpression =
-      '(subgroup.label == 1 && powerCurves.category == 0) || (powerCurves.category != 5 && powerCurves.category >= subgroup.label) || (powerCurves.category == 5 && subgroup.label == 5)'; // eslint-disable-line
+    // описание разрешенных групп при определенных категориях райдеров
+    const subgroupForFirstCat = '(subgroup.label == 1 && powerCurves.category == 0)';
+    const subgroupForCatExceptFifth =
+      '(powerCurves.category != 5 && powerCurves.category >= subgroup.label)';
+    const subgroupForFifthCat = '(powerCurves.category == 5 && subgroup.label == 5)';
+    const subgroupForFifthCatException = '(powerCurves.category == 5 && subgroup.label == 1)';
+
+    event.accessExpression = `${subgroupForFirstCat} || ${subgroupForCatExceptFifth} || ${subgroupForFifthCat} || ${subgroupForFifthCatException}`;
   } else {
     event.accessExpression = null;
   }
