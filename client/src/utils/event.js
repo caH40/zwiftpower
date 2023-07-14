@@ -11,6 +11,11 @@ export const map = (id) => {
 export const route = (id) => {
   return routes.find((route) => route.id === id)?.name;
 };
+export const routeLinks = (id) => {
+  const { whatsOnZwiftUrl, zwiftInsiderUrl, stravaSegmentUrl } =
+    routes.find((route) => route.id === id) || {};
+  return { whatsOnZwiftUrl, zwiftInsiderUrl, stravaSegmentUrl };
+};
 
 export const organizer = (value) => {
   return organizers.find((organizer) => organizer.value === value)?.name;
