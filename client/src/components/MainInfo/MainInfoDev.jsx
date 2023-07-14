@@ -32,7 +32,7 @@ function MainInfoDev({ isModerator }) {
     setIsVisibleDelete(false);
   };
 
-  const editInfoDev = (releaseData) => {
+  const openPopupFormRelease = (releaseData) => {
     dispatch(openPopupForm({ releaseData }));
     setIsVisibleDelete(false);
   };
@@ -74,7 +74,7 @@ function MainInfoDev({ isModerator }) {
                     </div>
                   )}
                   {isVisibleEdit && (
-                    <div className={styles.icon} onClick={() => editInfoDev(info)}>
+                    <div className={styles.icon} onClick={() => openPopupFormRelease(info)}>
                       <IconEdit />
                     </div>
                   )}

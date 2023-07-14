@@ -40,10 +40,14 @@ export async function putDevelopmentService(releaseData, userId) {
       releaseDate: releaseData.releaseDate,
       version: releaseData.version,
       updateDate: Date.now(),
-      text: releaseData.description,
+      text: releaseData.text,
       userEdit: userId,
     };
-    await InfoDevelopment.findOneAndUpdate({ _id: releaseData._id }, body);
+    const infoDevelopmentDB = await InfoDevelopment.findOneAndUpdate(
+      { _id: releaseData._id },
+      body
+    );
+    if (!infoDevelopmentDB) throw { message: 'Релиз не найден' };
 
     return { message: 'Изменение информации о релизе сохранены в БД' };
   } catch (error) {

@@ -16,7 +16,10 @@ function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete, setIsVi
     e.stopPropagation();
     setIsVisible(false);
     dispatch(
-      openPopupForm({ releaseData: { releaseDate: Date.now(), text: '', version: '' } })
+      openPopupForm({
+        releaseData: { releaseDate: Date.now(), text: '', version: '' },
+        method: 'post',
+      })
     );
   };
   const clickEditRelease = (e) => {

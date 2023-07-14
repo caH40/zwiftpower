@@ -28,6 +28,7 @@ import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
 // получение всех релизов из БД
 import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
 import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
+import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 
 export default configureStore({
   reducer: {
@@ -57,5 +58,6 @@ export default configureStore({
     popupInfoDevDelete: popupInfoDevDeleteSlice,
     popupInfoDevGet: popupInfoDevGetSlice,
     popupInfoDevPost: popupInfoDevPostSlice,
+    popupInfoDevPut: popupInfoDevPutSlice,
   },
 });

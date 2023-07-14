@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ButtonClose from '../ButtonClose/ButtonClose';
-import SimpleInput from '../SimpleInput/SimpleInput';
-import TextArea from '../TextArea/TextArea';
 import Button from '../Button/Button';
 import { fetchPostInfoDev } from '../../../redux/features/api/popupInfoDevPostSlice';
 import { closePopupForm } from '../../../redux/features/popupFormSlice';
+import RInputRelease from '../ReduxUI/RInputRelease/RInputRelease';
+import RTextareaRelease from '../ReduxUI/RTextareaRelease/RTextareaRelease';
+import { fetchPutInfoDev } from '../../../redux/features/api/popupInfoDevPutSlice';
 
-import styles from './PopupInfoDev.module.css';
+import styles from './PopupFormRelease.module.css';
 
-function PopupInfoDev() {
-  const { isVisible, releaseData } = useSelector((state) => state.popupForm);
+function PopupFormRelease() {
+  const { isVisible, releaseData, method } = useSelector((state) => state.popupForm);
 
-  const [form, setForm] = useState(() => releaseData);
   const dispatch = useDispatch();
 
   const getClick = () => {
-    dispatch(fetchPostInfoDev(form));
-    setForm({});
+    if (method === 'post') {
+      dispatch(fetchPostInfoDev(releaseData));
+    } else {
+      dispatch(fetchPutInfoDev(releaseData));
+    }
+
     dispatch(closePopupForm());
   };
   const closePopup = () => dispatch(closePopupForm());
@@ -32,26 +36,14 @@ function PopupInfoDev() {
               <ButtonClose getClick={closePopup} />
             </div>
             <form className={styles.form}>
-              <SimpleInput
-                name={'Дата релиза'}
-                type={'date'}
-                property={'releaseDate'}
-                state={form}
-                setState={setForm}
-              />
-              <SimpleInput
-                name={'Версия релиза (x.x.x)'}
+              <RInputRelease label={'Дата релиза'} type={'date'} property={'releaseDate'} />
+              <RInputRelease
+                label={'Версия релиза (x.x.x)'}
                 type={'text'}
                 property={'version'}
-                state={form}
-                setState={setForm}
               />
-              <TextArea
-                name={'Описание релиза'}
-                property={'text'}
-                state={form}
-                setState={setForm}
-              />
+              <RTextareaRelease label={'Описание релиза'} property={'text'} />
+
               <div className={styles.box__button}>
                 <Button getClick={getClick}>Отправить</Button>
               </div>
@@ -63,4 +55,4 @@ function PopupInfoDev() {
   );
 }
 
-export default PopupInfoDev;
+export default PopupFormRelease;
