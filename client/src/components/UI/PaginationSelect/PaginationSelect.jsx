@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './PaginationSelect.module.css';
 
-function PaginationSelect({ docsOnPage, setDocsOnPage, records }) {
+function PaginationSelect({ docsOnPage, setDocsOnPage, records, setPage }) {
   return (
     <>
       <select
@@ -10,6 +10,7 @@ function PaginationSelect({ docsOnPage, setDocsOnPage, records }) {
         className={styles.select}
         onChange={(e) => {
           setDocsOnPage(e.target.value);
+          setPage(1);
         }}
       >
         {records.map((record) => (

@@ -35,6 +35,7 @@ function LogsAdmin() {
           docsOnPage={docsOnPage}
           setDocsOnPage={setDocsOnPage}
           placeholder={'поиск'}
+          setPage={setPage}
         />
       </div>
       {logs[0] && (
