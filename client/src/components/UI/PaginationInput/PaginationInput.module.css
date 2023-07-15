@@ -1,0 +1,25 @@
+.input {
+  padding: 5px 10px;
+  min-width: 0;
+  flex: 0 0 180px;
+  height: 28px;
+  border: solid 1px black;
+  border-radius: 3px;
+  text-align: left;
+
+  color: #000;
+  background-color: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px var(--color-orange-main);
+}
+.input::placeholder {
+  font-weight: 400;
+  color: var(--color-text-minor);
+}

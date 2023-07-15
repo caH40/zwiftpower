@@ -9,13 +9,14 @@ const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',
-  async function ({ target, started, page, docsOnPage }, thunkAPI) {
+  async function ({ target, started, page, docsOnPage, search }, thunkAPI) {
     try {
       const targetCurrent = target ? `&target=${target}` : '';
       const pageStr = page ? `&page=${page}` : '';
       const docsOnPageStr = docsOnPage ? `&docsOnPage=${docsOnPage}` : '';
+      const searchStr = search ? `&search=${search}` : '';
 
-      const query = `started=${started}${targetCurrent}${pageStr}${docsOnPageStr}`;
+      const query = `started=${started}${targetCurrent}${pageStr}${docsOnPageStr}${searchStr}`;
       const response = await axios({
         url: `${serverExpress}/api/race/events?${query}`,
         method: 'get',
@@ -51,8 +52,8 @@ const eventsSlice = createSlice({
       state.error = null;
       state.eventsPreview = [];
       state.eventsSchedule = [];
-      state.eventsResults = [];
-      state.quantityPages = 0;
+      // state.eventsResults = [];
+      // state.quantityPages = 0;
       state.status = 'loading';
     });
     builder.addCase(fetchEvents.fulfilled, (state, action) => {

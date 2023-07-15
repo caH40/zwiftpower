@@ -36,26 +36,29 @@ export async function getEventService(eventId) {
     throw error;
   }
 }
-// получение всех эвентов для расписания (started:false) или для списка евентов с результатами
-export async function getEventsService(started, target, page = 1, docsOnPage = 20) {
+// получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
+export async function getEventsService(started, target, page = 1, docsOnPage = 20, search) {
   try {
     const eventsDB = await ZwiftEvent.find({ started })
       .populate('eventSubgroups')
       .populate('seriesId');
 
+    // фильтрация по имени
+    const eventsFiltered = getEventsFiltered(eventsDB, search);
+
     // сортировка заездов по возрастанию даты старта
-    for (const event of eventsDB) {
+    for (const event of eventsFiltered) {
       // сортировка групп по убыванию
       event.eventSubgroups.sort((a, b) => a.label - b.label);
     }
 
     // возвращаются только заезды, стартующие сегодня и завтра
     if (target === 'preview' && !started) {
-      eventsDB.sort(
+      eventsFiltered.sort(
         (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
       );
 
-      const events = eventsDB.filter((event) => {
+      const events = eventsFiltered.filter((event) => {
         const dateToday = new Date().toLocaleDateString();
 
         const millisecondsInDay = 24 * 60 * 60 * 1000;
@@ -73,7 +76,7 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
       return { events, message: 'Получены все заезды' };
     }
 
-    eventsDB.sort((a, b) => {
+    eventsFiltered.sort((a, b) => {
       if (started) {
         return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
       } else {
@@ -81,13 +84,27 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
       }
     });
 
-    const quantityPages = Math.ceil(eventsDB.length / docsOnPage);
+    const quantityPages = Math.ceil(eventsFiltered.length / docsOnPage);
 
     const sliceStart = page * docsOnPage - docsOnPage;
     const sliceEnd = docsOnPage * page;
-    const eventsFiltered = eventsDB.slice(sliceStart, sliceEnd);
+    const eventsSliced = eventsFiltered.slice(sliceStart, sliceEnd);
 
-    return { events: eventsFiltered, quantityPages, message: 'Получены все заезды' };
+    return { events: eventsSliced, quantityPages, message: 'Получены все заезды' };
+  } catch (error) {
+    throw error;
+  }
+}
+
+// фильтрация по названию найденных Эвентов согласно поисковому запросу search
+function getEventsFiltered(events, search) {
+  try {
+    const eventsFiltered = events.filter((event) => {
+      if (!search) return true;
+      if (event.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) return true;
+      return false;
+    });
+    return eventsFiltered;
   } catch (error) {
     throw error;
   }
