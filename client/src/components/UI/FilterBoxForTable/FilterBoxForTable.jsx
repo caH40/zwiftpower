@@ -3,7 +3,7 @@ import React from 'react';
 import PaginationSelect from '../PaginationSelect/PaginationSelect';
 import PaginationInput from '../PaginationInput/PaginationInput';
 
-import styles from './FilterBoxResultsList.module.css';
+import styles from './FilterBoxForTable.module.css';
 
 const records = [
   { id: 0, value: 5 },
@@ -14,11 +14,10 @@ const records = [
   { id: 5, value: 50 },
 ];
 
-function FilterBoxResultsList({ docsOnPage, setDocsOnPage, search, setSearch }) {
-  localStorage.setItem('recordsOnPageResults', docsOnPage);
+function FilterBoxForTable({ docsOnPage, setDocsOnPage, search, setSearch, placeholder }) {
   return (
     <div className={styles.block}>
-      <PaginationInput search={search} setSearch={setSearch} />
+      <PaginationInput search={search} setSearch={setSearch} placeholder={placeholder} />
       <PaginationSelect
         docsOnPage={docsOnPage}
         setDocsOnPage={setDocsOnPage}
@@ -28,4 +27,4 @@ function FilterBoxResultsList({ docsOnPage, setDocsOnPage, search, setSearch }) 
   );
 }
 
-export default FilterBoxResultsList;
+export default FilterBoxForTable;

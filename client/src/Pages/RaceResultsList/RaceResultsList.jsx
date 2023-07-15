@@ -11,7 +11,7 @@ import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
-import FilterBoxResultsList from '../../components/UI/FilterBoxResultsList/FilterBoxResultsList';
+import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 
 import styles from './RaceResultsList.module.css';
 
@@ -30,6 +30,7 @@ function RaceResultsList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    localStorage.setItem('recordsOnPageResults', docsOnPage);
     dispatch(fetchEvents({ started: true, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
 
@@ -70,11 +71,12 @@ function RaceResultsList() {
   return (
     <section>
       <div className={styles.align__right}>
-        <FilterBoxResultsList
+        <FilterBoxForTable
           search={search}
           setSearch={setSearch}
           docsOnPage={docsOnPage}
           setDocsOnPage={setDocsOnPage}
+          placeholder={'поиск по названию'}
         />
       </div>
       {eventsResults[0] && (

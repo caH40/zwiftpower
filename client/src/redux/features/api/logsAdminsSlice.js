@@ -5,9 +5,9 @@ import { getAlert } from '../alertMessageSlice';
 
 export const fetchLogsAdmins = createAsyncThunk(
   'logsGet/logsAdmins',
-  async function ({ page, docsOnPage }, thunkAPI) {
+  async function ({ page, docsOnPage, search }, thunkAPI) {
     try {
-      const query = `docsOnPage=${docsOnPage}&page=${page}`;
+      const query = `docsOnPage=${docsOnPage}&page=${page}&search=${search}`;
       const response = await myAxios({
         url: `/api/logs/admin?${query}`,
         method: 'get',
