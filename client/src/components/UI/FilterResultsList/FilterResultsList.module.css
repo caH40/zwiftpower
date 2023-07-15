@@ -1,0 +1,5 @@
+.block {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0 30px;
+}

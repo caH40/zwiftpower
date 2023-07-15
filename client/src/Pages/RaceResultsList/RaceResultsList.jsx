@@ -11,10 +11,16 @@ import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
+import FilterResultsList from '../../components/UI/FilterResultsList/FilterResultsList';
+
+import styles from './RaceResultsList.module.css';
 
 function RaceResultsList() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
+
+  const initialDocsOnPage = localStorage.getItem('recordsOnPageResults') || 20;
+  const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
   const { eventsResults, quantityPages } = useSelector((state) => state.fetchEvents);
 
@@ -23,8 +29,8 @@ function RaceResultsList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchEvents({ started: true, page, docsOnPage: 20 }));
-  }, [dispatch, trigger, page]);
+    dispatch(fetchEvents({ started: true, page, docsOnPage }));
+  }, [dispatch, trigger, page, docsOnPage]);
 
   // создание массива с меню модерации эвентов в таблице
   useEffect(() => {
@@ -64,6 +70,9 @@ function RaceResultsList() {
     <section>
       {eventsResults[0] && (
         <>
+          <div className={styles.align__right}>
+            <FilterResultsList docsOnPage={docsOnPage} setDocsOnPage={setDocsOnPage} />
+          </div>
           <TableResults
             events={eventsResults}
             updateResults={updateResults}
