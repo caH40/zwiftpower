@@ -43,13 +43,11 @@ function TableCatchup({ catchups }) {
             {lg && <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>}
             {lg && <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>}
             {lg && <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>}
-            {sm && (
-              <td>
-                <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
-                  этап
-                </Link>
-              </td>
-            )}
+            <td>
+              <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
+                этап
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>
