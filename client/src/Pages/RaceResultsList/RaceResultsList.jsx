@@ -77,6 +77,7 @@ function RaceResultsList() {
           docsOnPage={docsOnPage}
           setDocsOnPage={setDocsOnPage}
           placeholder={'поиск по названию'}
+          setPage={setPage}
         />
       </div>
       {eventsResults[0] && (

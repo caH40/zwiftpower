@@ -2,9 +2,12 @@ import React from 'react';
 import cn from 'classnames';
 
 import styles from './Pagination.module.css';
+import PaginationManyPages from './PaginationManyPages';
 
 const Pagination = ({ quantityPages, page, setPage }) => {
-  const pages = Array(quantityPages).fill('');
+  const pages = Array(quantityPages)
+    .fill('')
+    .map((_, index) => index + 1);
 
   const getClick = (item) => {
     if (item === '<<' && page !== 1) {
@@ -27,15 +30,21 @@ const Pagination = ({ quantityPages, page, setPage }) => {
         <li className={styles.item} onClick={() => getClick('<<')}>
           {'<<'}
         </li>
-        {pages.map((_, index) => (
-          <li
-            className={cn(styles.item, { [styles.active]: page === index + 1 })}
-            onClick={() => getClick(index + 1)}
-            key={index + 1}
-          >
-            {index + 1}
-          </li>
-        ))}
+        {/* если страниц больше 7 то изменяется строка пагинации */}
+        {pages.length > 7 ? (
+          <PaginationManyPages pages={pages} page={page} getClick={getClick} />
+        ) : (
+          pages.map((pageCurrent) => (
+            <li
+              className={cn(styles.item, { [styles.active]: page === pageCurrent })}
+              onClick={() => getClick(pageCurrent)}
+              key={pageCurrent}
+            >
+              {pageCurrent}
+            </li>
+          ))
+        )}
+
         <li className={styles.item} onClick={() => getClick('>>')}>
           {'>>'}
         </li>
