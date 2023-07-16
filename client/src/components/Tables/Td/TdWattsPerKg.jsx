@@ -10,7 +10,11 @@ function TdWattsPerKg({ valueRaw, valueAddition }) {
 
   return (
     <td className={styles.cursor__default}>
-      <HighlightValueMax value={valueRounded} dimensionValue={'вт/кг'} tooltip={valueRaw} />
+      <HighlightValueMax
+        valueCPRounded={valueRounded}
+        dimensionValue={'вт/кг'}
+        valueRaw={valueRaw}
+      />
     </td>
   );
 }

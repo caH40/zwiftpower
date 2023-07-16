@@ -12,13 +12,18 @@ import styles from './Td.module.css';
 
 function HighlightValueMax({ valueCPRounded, dimensionValue, valueRaw, interval }) {
   if (+valueCPRounded === 0 || valueCPRounded === '0max') return null;
+  // исключения для интервалов на которых определяется категория
   const isException = interval === zFTPInterval || interval === zMAPInterval;
 
   return (
     <>
       <MyTooltip tooltip={valueRaw}>
         {String(valueCPRounded).includes('max') ? (
-          <span className={cn(styles.max, { [styles.colorWhite]: isException })}>
+          <span
+            className={cn(styles.max, {
+              [styles.colorWhite]: isException && dimensionValue !== 'вт',
+            })}
+          >
             {isException ? valueRaw : valueCPRounded.replace('max', '')}
             <span className={styles.small}>{dimensionValue}</span>
           </span>
