@@ -73,3 +73,27 @@
     min-width: 180px;
   }
 }
+.categoryBox {
+  width: 65px;
+  padding: 2px 1px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: #ffffff;
+  text-align: center;
+}
+.categoryA {
+  background-color: var(--catA);
+}
+.categoryB {
+  background-color: var(--catB);
+}
+.categoryC {
+  background-color: var(--catC);
+}
+.categoryD {
+  background-color: var(--catD);
+}
+.colorWhite {
+  color: #ffffff;
+  font-weight: 500;
+}
