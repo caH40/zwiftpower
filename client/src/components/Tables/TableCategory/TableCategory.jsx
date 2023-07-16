@@ -36,7 +36,7 @@ function TableCategory() {
           </td>
           <td>
             <span className={cn(styles.categoryBox, styles.categoryB)}>
-              {'≥4,36Вт/кг и ≥200Вт'}
+              {'≥3,36Вт/кг и ≥200Вт'}
             </span>
           </td>
         </tr>
