@@ -25,7 +25,7 @@ function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <IconTelegram /> Группа разработки
+                <IconTelegram squareSize={20} /> Группа разработки
               </a>
             </div>
           </div>
@@ -75,7 +75,7 @@ function Footer() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <IconTelegram /> KOM-on группа
+                  <IconTelegram squareSize={20} /> KOM-on группа
                 </a>
               </div>
 
@@ -85,7 +85,7 @@ function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <IconTelegram /> KOM-on инфо
+                <IconTelegram squareSize={20} /> KOM-on инфо
               </a>
             </div>
             <div className={styles.column}>
