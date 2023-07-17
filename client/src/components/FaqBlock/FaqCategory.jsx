@@ -1,7 +1,8 @@
 import React from 'react';
 
 import IconCategoryEnforced from '../icons/IconCategoryEnforced';
-import TableCategory from '../Tables/TableCategory/TableCategory';
+import TableCategoryMale from '../Tables/TableCategory/TableCategoryMale';
+import TableCategoryFemale from '../Tables/TableCategory/TableCategoryFemale';
 
 import styles from './FaqBlock.module.css';
 
@@ -26,17 +27,19 @@ function FaqCategory() {
           <IconCategoryEnforced squareSize={50} />
         </div>
       </div>
-      <TableCategory />
+      <TableCategoryMale />
+      <TableCategoryFemale />
       <div className={styles.box}>
         <p className={styles.text}>
-          <strong>zMAP</strong> - Estimate of your Maximal Aerobic Power, i.e the power at which
-          you achieve peak oxygen consumption in a short duration effort 4-6 min.
+          <strong>zMAP</strong> - Оценочная Максимальная Аэробная Мощность (Maximal Aerobic
+          Power) <strong>для Звифта</strong>, то есть максимальная средняя мощность за 4-6 минут
         </p>
       </div>
       <div className={styles.box}>
         <p className={styles.text}>
-          <strong>zFTP</strong> - Estimate of your current Functional Threshold Power (FTP), the
-          power you can sustain for a long period of time, i.e. {'>'} 40 min.
+          <strong>zFTP</strong> - Оценочная Функциональную Пороговую Мощность (Functional
+          Threshold Power) <strong>для Звифта</strong>, то есть максимальная средняя мощность за
+          заезд более 40 минут
         </p>
       </div>
     </div>

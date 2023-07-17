@@ -4,6 +4,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
 }
+
 @media screen and (max-width: 576px) {
   .wrapper {
     gap: 10px;
