@@ -1,3 +1,11 @@
 .wrapper {
   display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 576px) {
+  .wrapper {
+    gap: 10px;
+  }
 }

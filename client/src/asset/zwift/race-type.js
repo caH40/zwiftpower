@@ -5,4 +5,5 @@ export const raceTypes = [
   { id: 3, value: 'classicGroup', name: 'Классическая', label: 'CG' },
   { id: 4, value: 'classicCommon', name: 'Классическая без групп', label: 'CT' },
   { id: 5, value: 'сriterium', name: 'Критериум', label: 'CR' },
+  { id: 6, value: 'longRide', name: 'Объем', label: 'LR' },
 ];

@@ -3,7 +3,7 @@ import React from 'react';
 import IconCategoryEnforced from '../icons/IconCategoryEnforced';
 import TableCategory from '../Tables/TableCategory/TableCategory';
 
-import styles from './FaqCategory.module.css';
+import styles from './FaqBlock.module.css';
 
 function FaqCategory() {
   return (
@@ -11,8 +11,8 @@ function FaqCategory() {
       <h3 className={styles.title}>Отображение категорий на основе zFTP, zMAP</h3>
       <div className={styles.box}>
         <p className={styles.text}>
-          Приблизительная оценка категории согласно информации, которая есть в открытом доступе
-          на сайте Звифта:{' '}
+          Приблизительная оценка категории согласно информации, которая размещена на сайте
+          Звифта:{' '}
           <a
             href="https://support.zwift.com/en_us/category-enforcement-faq-rJ5CQrpvc"
             className={styles.link}
