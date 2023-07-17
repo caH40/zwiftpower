@@ -18,7 +18,7 @@ import {
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import { useResize } from '../../../hook/use-resize';
-
+import TdSeries from '../Td/TdSeries';
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 
 import Thead from './Thead';
@@ -35,7 +35,8 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
-            <td>{getToday(event.eventStart)}</td>
+            <td className={styles.onlyContentSm}>{getToday(event.eventStart)}</td>
+            {lg && <TdSeries seriesName={event.seriesId?.name} />}
             <td>
               <Link className={styles.link} to={String(event.id)}>
                 <span className={styles.big}>{event.name}</span>

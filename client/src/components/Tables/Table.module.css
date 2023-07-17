@@ -67,6 +67,9 @@
 .onlyContent {
   width: 1%;
 }
+.onlyContentSm {
+  width: auto;
+}
 .bold {
   font-weight: 700;
 }
@@ -222,6 +225,9 @@
     min-width: 110px;
     /* max-width: 157px; */
     letter-spacing: 0;
+  }
+  .onlyContentSm {
+    width: 1%;
   }
 }
 @media screen and (max-width: 400px) {

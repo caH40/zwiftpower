@@ -61,6 +61,7 @@
 @media screen and (max-width: 576px) {
   .category {
     font-size: 11px;
+    min-width: 25px;
   }
   .circle {
     max-width: 22px;
