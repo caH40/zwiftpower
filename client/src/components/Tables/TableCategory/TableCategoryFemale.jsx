@@ -3,9 +3,10 @@ import cn from 'classnames';
 
 import styles from './TableCategory.module.css';
 
-function TableCategory() {
+function TableCategoryFemale() {
   return (
     <table className={styles.table}>
+      <caption>Женщины</caption>
       <thead>
         <tr>
           <th></th>
@@ -19,12 +20,10 @@ function TableCategory() {
             <span className={cn(styles.categoryBox, styles.categoryA)}>{'Категория А'}</span>
           </td>
           <td>
-            <span className={cn(styles.categoryBox, styles.categoryA)}>{'≥5,1Вт/кг'}</span>
+            <span className={cn(styles.categoryBox, styles.categoryA)}>{'≥4,8Вт/кг'}</span>
           </td>
           <td>
-            <span className={cn(styles.categoryBox, styles.categoryA)}>
-              {'≥4,2Вт/кг и ≥250Вт'}
-            </span>
+            <span className={cn(styles.categoryBox, styles.categoryA)}>{'≥3,88Вт/кг'}</span>
           </td>
         </tr>
         <tr>
@@ -35,9 +34,7 @@ function TableCategory() {
             <span className={cn(styles.categoryBox, styles.categoryB)}>{'≥4,1Вт/кг'}</span>
           </td>
           <td>
-            <span className={cn(styles.categoryBox, styles.categoryB)}>
-              {'≥3,36Вт/кг и ≥200Вт'}
-            </span>
+            <span className={cn(styles.categoryBox, styles.categoryB)}>{'≥3,36Вт/кг'}</span>
           </td>
         </tr>
         <tr>
@@ -48,9 +45,7 @@ function TableCategory() {
             <span className={cn(styles.categoryBox, styles.categoryC)}>{'≥3,2Вт/кг'}</span>
           </td>
           <td>
-            <span className={cn(styles.categoryBox, styles.categoryC)}>
-              {'≥2,625Вт/кг и ≥150Вт'}
-            </span>
+            <span className={cn(styles.categoryBox, styles.categoryC)}>{'≥2,62Вт/кг'}</span>
           </td>
         </tr>
         <tr>
@@ -61,9 +56,7 @@ function TableCategory() {
             <span className={cn(styles.categoryBox, styles.categoryD)}>{'<3,2Вт/кг'}</span>
           </td>
           <td>
-            <span className={cn(styles.categoryBox, styles.categoryD)}>
-              {'<2,625Вт/кг и <150Вт'}
-            </span>
+            <span className={cn(styles.categoryBox, styles.categoryD)}>{'<2,62Вт/кг'}</span>
           </td>
         </tr>
       </tbody>
@@ -71,4 +64,4 @@ function TableCategory() {
   );
 }
 
-export default TableCategory;
+export default TableCategoryFemale;
