@@ -123,7 +123,7 @@
     position: absolute;
     z-index: 10;
     right: 15px;
-    top: -35px;
+    top: -30px;
   }
 }
 @media screen and (max-width: 576px) {

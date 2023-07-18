@@ -7,10 +7,12 @@ import TimeToStart from '../TimeToStart/TimeToStart';
 import { getTodayTomorrow } from '../../utils/date-convert';
 import TdRaceType from '../Tables/Td/TdRaceType';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
+import { useResize } from '../../hook/use-resize';
 
 import styles from './CardRacePreview.module.css';
 
 function CardRacePreview({ event, getClick }) {
+  const { isScreenSm: sm } = useResize();
   return (
     <div className={styles.wrapper} onClick={() => getClick(event.id)}>
       <h3 className={styles.title__date}>{getTodayTomorrow(event.eventStart)}</h3>
@@ -33,20 +35,24 @@ function CardRacePreview({ event, getClick }) {
                   <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
                 </dd>
               </div>
-              <div className={styles.box__term}>
-                <dt className={styles.term}>Правила</dt>
-                <dd className={styles.term__description}>
-                  <RulesBox event={event} squareSize={18} />
-                </dd>
-              </div>
-              <div className={styles.box__term}>
-                <dt className={styles.term}>Тип</dt>
-                <dd className={styles.term__description}>{event.eventType}</dd>
-              </div>
-              <div className={styles.box__term}>
-                <dt className={styles.term}>Организатор</dt>
-                <dd className={styles.term__description}>{event.organizer}</dd>
-              </div>
+              {sm && (
+                <>
+                  <div className={styles.box__term}>
+                    <dt className={styles.term}>Правила</dt>
+                    <dd className={styles.term__description}>
+                      <RulesBox event={event} squareSize={18} />
+                    </dd>
+                  </div>
+                  <div className={styles.box__term}>
+                    <dt className={styles.term}>Тип</dt>
+                    <dd className={styles.term__description}>{event.eventType}</dd>
+                  </div>
+                  <div className={styles.box__term}>
+                    <dt className={styles.term}>Организатор</dt>
+                    <dd className={styles.term__description}>{event.organizer}</dd>
+                  </div>
+                </>
+              )}
             </dl>
           </div>
           <img className={styles.poster} src={event.imageUrl} alt="poster" />
