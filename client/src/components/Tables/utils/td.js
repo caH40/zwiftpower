@@ -1,4 +1,5 @@
 import { getHeightStr, getWeightStr } from '../../../utils/event';
+import { roundValue } from '../../../utils/round';
 import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
@@ -81,7 +82,7 @@ export function tdWatts(value) {
 
 export function tdCPWattsPerKg(value, interval) {
   let valueCP = value.find((cp) => cp.duration === interval)?.wattsKg.addition;
-  valueCP = roundValueToTenths(valueCP);
+  valueCP = roundValue(valueCP, 'ten');
   return highlightValueMax(valueCP, 'вт/кг');
 }
 export function tdHeartRate(value) {
@@ -96,12 +97,4 @@ export function tdHeight(value) {
 export function tdRank(value) {
   if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
   return value;
-}
-
-export function roundValueToTenths(value) {
-  if (String(value).includes('max')) {
-    return (Math.round(value.split('max')[0] * 10) / 10).toFixed(1) + 'max';
-  } else {
-    return (Math.round(value * 10) / 10).toFixed(1);
-  }
 }
