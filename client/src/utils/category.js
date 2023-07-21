@@ -1,3 +1,4 @@
+// определение категорий, согласно правилам getCategoryZFTP
 import { zFTP, zMAP } from '../asset/rule-category';
 
 export const getCategoryZFTP = (wattsPerKg, watts) => {
