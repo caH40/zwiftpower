@@ -1,5 +1,7 @@
+// округление строки где может быть слово "max" до нужной точности dimension:
+// integer целое число, ten до десятых, hundred - до сотых
 export function roundValue(value, dimension) {
-  if (!value) return null;
+  if (!value || value === '0') return null;
   const dimensions = { integer: 1, ten: 10, hundred: 100 };
   const sizes = { integer: 0, ten: 1, hundred: 2 };
 

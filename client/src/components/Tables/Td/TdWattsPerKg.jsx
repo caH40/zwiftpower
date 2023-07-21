@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { roundValueToTenths } from '../utils/td';
+import { roundValue } from '../../../utils/round';
 
 import styles from './Td.module.css';
 import HighlightValueMax from './HighlightValueMax';
 
 function TdWattsPerKg({ valueRaw, valueAddition }) {
-  const valueRounded = roundValueToTenths(valueAddition);
+  const valueRounded = roundValue(valueAddition, 'ten');
 
   return (
     <td className={styles.cursor__default}>

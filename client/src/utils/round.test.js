@@ -1,0 +1,31 @@
+import { roundValue } from './round.js';
+
+test('rounding to the desired bit depth and the result is a string', () => {
+  expect(roundValue(10.2334, 'ten')).toBe('10.2');
+  expect(roundValue(10, 'ten')).toBe('10.0');
+  expect(roundValue(11, 'integer')).toBe('11');
+  expect(roundValue(12, 'hundred')).toBe('12.00');
+  expect(roundValue(12.2, 'hundred')).toBe('12.20');
+  expect(roundValue(12.2985434, 'hundred')).toBe('12.30');
+  expect(roundValue(12.2949434, 'hundred')).toBe('12.29');
+  expect(roundValue('10.2334', 'ten')).toBe('10.2');
+  expect(roundValue('10', 'ten')).toBe('10.0');
+  expect(roundValue('11', 'integer')).toBe('11');
+  expect(roundValue('12', 'hundred')).toBe('12.00');
+  expect(roundValue('12.2', 'hundred')).toBe('12.20');
+  expect(roundValue('12.2985434', 'hundred')).toBe('12.30');
+  expect(roundValue('12.2949434', 'hundred')).toBe('12.29');
+  expect(roundValue('10.2334max', 'ten')).toBe('10.2max');
+  expect(roundValue('10max', 'ten')).toBe('10.0max');
+  expect(roundValue('11max', 'integer')).toBe('11max');
+  expect(roundValue('12max', 'hundred')).toBe('12.00max');
+  expect(roundValue('12.2max', 'hundred')).toBe('12.20max');
+  expect(roundValue('12.2985434max', 'hundred')).toBe('12.30max');
+  expect(roundValue('12.2949434max', 'hundred')).toBe('12.29max');
+  expect(roundValue(0, 'integer')).toBe(null);
+  expect(roundValue(0, 'ten')).toBe(null);
+  expect(roundValue(0, 'hundred')).toBe(null);
+  expect(roundValue('0', 'integer')).toBe(null);
+  expect(roundValue('0', 'ten')).toBe(null);
+  expect(roundValue('0', 'hundred')).toBe(null);
+});
