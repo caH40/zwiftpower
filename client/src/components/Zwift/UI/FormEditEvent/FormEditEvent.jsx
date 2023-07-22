@@ -10,7 +10,7 @@ import {
 } from '../../../../asset/select/event-edit';
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
-import { getLocalDate } from '../../../../utils/date-convert';
+import { getTimerLocal } from '../../../../utils/date-local';
 
 import styles from './FormEditEvent.module.css';
 
@@ -36,7 +36,7 @@ function FormEditEvent() {
               value: eventMainParams.eventStart,
             }}
           >
-            {getLocalDate(eventMainParams.eventStart)}
+            {getTimerLocal(eventMainParams.eventStart, 'YMDHM', true)}
           </BoxParameter>
 
           <BoxParameter

@@ -3,7 +3,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { jerseys, routes, worlds } from '../../../../asset/zwift/lib/esm/zwift-lib';
-import { getLocalDate } from '../../../../utils/date-convert';
+import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 
 import styles from './FormEditEventGroup.module.css';
@@ -29,7 +29,7 @@ function SubGroup({ subGroup, index }) {
                   subgroupIndex: index,
                 }}
               >
-                {getLocalDate(subGroup.eventSubgroupStart)}
+                {getTimerLocal(subGroup.eventSubgroupStart, 'YMDHM', true)}
               </BoxParameter>
 
               <BoxParameter

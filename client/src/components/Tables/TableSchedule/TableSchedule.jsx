@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
-import { getToday } from '../../../utils/date-convert';
+import { getToday } from '../../../utils/date-local';
 import {
   getDuration,
   getLaps,

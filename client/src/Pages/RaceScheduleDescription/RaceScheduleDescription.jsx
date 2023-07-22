@@ -6,7 +6,7 @@ import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
-import { getLocalDate } from '../../utils/date-convert';
+import { getTimerLocal } from '../../utils/date-local';
 import { fetchEventPreview } from '../../redux/features/api/eventPreviewSlice';
 
 import styles from './RaceScheduleDescription.module.css';
@@ -48,7 +48,7 @@ function RaceScheduleDescription() {
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>{getLocalDate(event.updated, 'short')}</span>
+            <span className={styles.service}>{getTimerLocal(event.updated, 'YMDHM')}</span>
           </div>
         </>
       )}

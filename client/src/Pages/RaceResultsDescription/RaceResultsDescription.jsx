@@ -7,7 +7,7 @@ import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
-import { getLocalDate } from '../../utils/date-convert';
+import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
 
@@ -36,7 +36,7 @@ function RaceResultsDescription() {
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>{getLocalDate(eventData.updated, 'short')}</span>
+            <span className={styles.service}>{getTimerLocal(eventData.updated, 'YMDHM')}</span>
           </div>
         </>
       )}

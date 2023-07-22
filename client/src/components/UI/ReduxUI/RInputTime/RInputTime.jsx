@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useBlockParameters from '../../../../hook/useBlockParameters';
-import { getDateTimeStart } from '../../../../utils/date-convert';
+import { getDateTimeStart } from '../../../../utils/date-local';
 
 import styles from './RInputTime.module.css';
 

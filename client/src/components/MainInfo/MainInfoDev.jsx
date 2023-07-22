@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import IconMenuInfoDev from '../UI/IconMenuInfoDev/IconMenuInfoDev';
 import PopupMenuInfoDev from '../UI/PopupMenuInfoDev/PopupMenuInfoDev';
-import { getLocalDate } from '../../utils/date-convert';
+
 import IconDelete from '../icons/IconDelete';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchDeleteInfoDev } from '../../redux/features/api/popupInfoDevDeleteSlice';
 import IconEdit from '../icons/IconEdit';
 import { openPopupForm } from '../../redux/features/popupFormSlice';
+import { getTimerLocal } from '../../utils/date-local';
 
 import styles from './MainInfo.module.css';
 
@@ -61,7 +62,7 @@ function MainInfoDev({ isModerator }) {
                 <div className={styles.li__inner}>
                   <div>
                     <span className={styles.date}>
-                      {getLocalDate(info.releaseDate, 'onlyDate')}
+                      {getTimerLocal(info.releaseDate, 'YMD')}
                     </span>
                     <span className={styles.text}>{info.text}</span>
                   </div>

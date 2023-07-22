@@ -7,7 +7,7 @@ import TdCpWatts from '../Td/TdCpWatts';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
-import { getLocalDate } from '../../../utils/date-convert';
+import { getTimerLocal } from '../../../utils/date-local';
 
 import styles from '../Table.module.css';
 
@@ -30,7 +30,7 @@ function TableUserResults({ results }) {
               </td>
             )}
 
-            <td>{getLocalDate(result.eventStart, 'onlyDate')}</td>
+            <td>{getTimerLocal(result.eventStart, 'YMD')}</td>
             <td>
               <Link className={styles.link} to={`/race/results/${result.eventId}`}>
                 <span className={styles.big}>{result.eventName}</span>
