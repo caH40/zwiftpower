@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 
 import styles from '../Table.module.css';
 
-import { getLocalDate, secondesToTime } from '../../../utils/date-convert';
-
+import { secondesToTime } from '../../../utils/date-convert';
+import { getTimerLocal } from '../../../utils/date-local';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -27,7 +27,7 @@ function TableCatchup({ catchups }) {
       <tbody>
         {catchups.map((catchupResult) => (
           <tr key={catchupResult.eventId}>
-            <td>{getLocalDate(catchupResult.eventStart, 'onlyDate')}</td>
+            <td>{getTimerLocal(catchupResult.eventStart, 'YMD')}</td>
             <td>
               <CategoryBox showLabel={true} label={catchupResult.subgroupLabel} circle={true} />
             </td>

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { gapStart, replaceWithBr } from '../../utils/event';
-import { getLocalDate } from '../../utils/date-convert';
+import { getTimerLocal } from '../../utils/date-local';
 import IconEdit from '../icons/IconEdit';
 
 import ParamsEvent from '../ParamsEvent/ParamsEvent';
@@ -49,7 +49,9 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
               )}
             </div>
             <PrivateEvent event={event} />
-            <h3 className={styles.subtitle}>{getLocalDate(event.eventStart)}</h3>
+            <h3 className={styles.subtitle}>
+              {getTimerLocal(event.eventStart, 'YMDHM', true)}
+            </h3>
           </div>
 
           {isOpened && (

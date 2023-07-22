@@ -2,8 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { getStringDate } from '../../../utils/format-date';
-import { convertToKBites } from '../../../utils/format-numbers';
+import { getTimerLocal } from '../../../utils/date-local';
+import { convertToKBytes } from '../../../utils/bytes';
 
 import styles from './DlFile.module.css';
 
@@ -16,11 +16,11 @@ function DlFile({ file, addCls }) {
       </div>
       <div className={styles.box}>
         <dt className={styles.title}>Размер:</dt>
-        <dl>{convertToKBites(file.size)} кБ</dl>
+        <dl>{convertToKBytes(file.size)} кБ</dl>
       </div>
       <div className={styles.box}>
         <dt className={styles.title}>Изменялся:</dt>
-        <dl>{getStringDate(file.lastModified)}</dl>
+        <dl>{getTimerLocal(file.lastModified, 'YMDHM')}</dl>
       </div>
     </dl>
   );

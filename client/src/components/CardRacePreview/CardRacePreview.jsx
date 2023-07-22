@@ -4,7 +4,7 @@ import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import RulesBox from '../RulesBox/RulesBox';
 import TimeToStart from '../TimeToStart/TimeToStart';
-import { getTodayTomorrow } from '../../utils/date-convert';
+import { getTodayTomorrow } from '../../utils/date-local';
 import TdRaceType from '../Tables/Td/TdRaceType';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import { useResize } from '../../hook/use-resize';
