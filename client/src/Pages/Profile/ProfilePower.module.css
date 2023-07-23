@@ -1,7 +1,3 @@
-.block {
-  width: 85%;
-  height: auto;
-}
 .chart {
   margin-bottom: 15px;
 }
@@ -11,9 +7,4 @@
   gap: 10px 40px;
   flex-wrap: wrap;
   font-size: 1.1em;
-}
-@media screen and (max-width: 992px) {
-  .block {
-    width: 100%;
-  }
 }
