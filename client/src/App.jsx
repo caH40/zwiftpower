@@ -53,8 +53,8 @@ function App() {
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile/:zwiftId" element={<Profile />}>
           <Route path="results" element={<ProfileResults />} />
-          <Route path="power" element={<ProfileWeight />} />
-          <Route path="weight" element={<ProfilePower />} />
+          <Route path="power" element={<ProfilePower />} />
+          <Route path="weight" element={<ProfileWeight />} />
           <Route path="settings" element={<ProfileSetting />} />
         </Route>
         <Route path="/race/results" element={<RaceResultsList />} />
