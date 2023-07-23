@@ -37,9 +37,7 @@ function ProfileWeight() {
   return (
     <section>
       <div className={styles.block}>
-        <div className={styles.chart}>
-          <Line options={options} data={data} />
-        </div>
+        <Line options={options} data={data} className={styles.chart} />
         <div className={styles.box__checkbox}>
           <SimpleCheckbox
             state={formShowCharts}
