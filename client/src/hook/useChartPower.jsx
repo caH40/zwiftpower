@@ -10,6 +10,8 @@ import {
   Filler,
 } from 'chart.js';
 
+import { durationLabelsNull } from '../asset/power-interval';
+
 ChartJS.register(
   CategoryScale, // x scale
   LinearScale, // y scale
@@ -19,20 +21,6 @@ ChartJS.register(
   Tooltip,
   Filler
 );
-
-const durationLabelsNull = [
-  5,
-  15,
-  30,
-  '1 мин',
-  '3 мин',
-  '5 мин',
-  '12 мин',
-  '20 мин',
-  '30 мин',
-  '10 мин',
-  '60 мин',
-];
 
 function useChartPower(isPortrait, formShowCharts) {
   const { results, powerCurve } = useSelector((state) => state.fetchUserResults);
