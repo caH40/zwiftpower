@@ -46,8 +46,11 @@ function useChartPower(isPortrait, formShowCharts) {
   });
   const labels = powerCurve.pointsWatts ? durationLabelsCurrent : durationLabelsNull;
 
+  // отношение ширины к высоте холста в зависимости от позиции экрана устройства
+  const aspectRatio = isPortrait ? 1 / 1.5 : 2.3;
+
   const options = {
-    aspectRatio: isPortrait ? 1 / 1.5 : null,
+    aspectRatio,
     plugins: {
       legend: {
         display: true,
