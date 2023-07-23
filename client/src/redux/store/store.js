@@ -29,6 +29,7 @@ import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
 import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
 import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
+import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
 
 export default configureStore({
   reducer: {
@@ -50,6 +51,7 @@ export default configureStore({
     popupTableResultsList: popupTableResultsListSlice,
     logsAdmins: logsAdminsSlice,
     fetchUserResults: userResultsSlice,
+    fetchUserPowerCurve: userPowerCurveSlice,
     getPopupInput: popupInputSlice,
     popupForm: popupFormSlice,
     downloadResults: downloadResultsSlice,

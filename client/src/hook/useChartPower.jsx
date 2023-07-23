@@ -23,9 +23,9 @@ ChartJS.register(
 );
 
 function useChartPower(isPortrait, formShowCharts) {
-  const { results, powerCurve } = useSelector((state) => state.fetchUserResults);
+  const { powerFromEvents, powerCurve } = useSelector((state) => state.fetchUserPowerCurve);
   const powerNull = Array(11).fill(0);
-
+  console.log(powerFromEvents, powerCurve);
   const durationLabelsCurrent = powerCurve.pointsWatts?.map((watt) => {
     if (watt.duration < 59) return watt.duration + ' сек';
     else {
@@ -92,7 +92,9 @@ function useChartPower(isPortrait, formShowCharts) {
   };
   const powerCurveDatasetsLastRide = {
     label: 'Последний заезд',
-    data: results[0] ? results[0].cpBestEfforts.map((watt) => watt.watts.value) : powerNull,
+    data: powerFromEvents[0]
+      ? powerFromEvents[0].cpBestEfforts.map((watt) => watt.watts)
+      : powerNull,
     backgroundColor: 'rgba(15, 79, 168, 0.8)',
     // borderColor: 'rgba(15, 79, 168, 0.9)',
     pointBorderColor: '#ffda73',

@@ -43,11 +43,14 @@ export async function getUserPowerService(zwiftId) {
       { profileId: zwiftId },
       { cpBestEfforts: true, zwiftEventId: true }
     ).populate('zwiftEventId');
+
     const powerFromEvents = resultsDB.map((result) => ({
       cpBestEfforts: result.cpBestEfforts,
       eventName: result.zwiftEventId.name,
-      eventStart: result.zwiftEventId.eventStart,
+      eventStart: new Date(result.zwiftEventId.eventStart).getTime(),
     }));
+
+    powerFromEvents.sort((a, b) => b.eventStart - a.eventStart);
 
     return {
       powerCurve: powerCurveDB,

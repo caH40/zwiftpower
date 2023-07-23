@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { Line } from 'react-chartjs-2';
 
-import { fetchUserResults } from '../../redux/features/api/userResultsSlice';
+import { fetchUserPowerCurve } from '../../redux/features/api/userPowerCurveSlice';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import useChartPower from '../../hook/useChartPower';
@@ -31,7 +31,7 @@ function ProfileWeight() {
   useEffect(() => {
     const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
     if (!currentZwiftId) return;
-    dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
+    dispatch(fetchUserPowerCurve({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, userAuth]);
 
   return (
