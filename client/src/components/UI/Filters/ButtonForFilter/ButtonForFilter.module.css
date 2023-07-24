@@ -38,3 +38,9 @@
   background-color: var(--color-yellow-5);
   transition: 0.2s;
 }
+
+@media screen and (max-width: 992px) {
+  .button {
+    padding: 0.2em 0.6em;
+  }
+}

@@ -24,19 +24,22 @@ ChartJS.register(
 );
 
 function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
-  const { powerCurve } = useSelector((state) => state.fetchUserPowerCurve);
-  const powerNull = Array(11).fill(0);
+  const { pointsWatts, pointsWattsPerKg } = useSelector(
+    (state) => state.fetchUserPowerCurve.powerCurve
+  );
 
-  const durationLabelsCurrent = powerCurve.pointsWatts?.map((watt) => {
+  const { value: chartValue } = useSelector((state) => state.filterWatts);
+
+  const durationLabelsCurrent = pointsWatts?.map((watt) => {
     if (watt.duration < 59) return watt.duration + ' сек';
     else {
       return watt.duration / 60 + ' мин';
     }
   });
-  const labels = powerCurve.pointsWatts ? durationLabelsCurrent : durationLabelsNull;
+  const labels = pointsWatts ? durationLabelsCurrent : durationLabelsNull;
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
-  const aspectRatio = isPortrait ? 1 / 1.5 : 2.3;
+  const aspectRatio = isPortrait ? 1 / 1.45 : 2.5;
 
   const options = {
     aspectRatio,
@@ -66,11 +69,9 @@ function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
         },
       },
       y: {
-        // min: 0,
-        max: powerCurve.pointsWatts ? null : 1000,
         title: {
           display: !isPortrait, // в мобильной версии не показывать
-          text: 'Мощность, ватты',
+          text: chartValue.column === 'watts' ? 'Мощность, ватты' : 'Удельная мощность, вт/кг ',
           font: { weight: 400, size: 14 },
         },
         ticks: {
@@ -85,16 +86,25 @@ function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
   const powerCurveDatasets90days = {
     filterWord: '90days',
     label: '90 дней',
-    data: powerCurve.pointsWatts ? powerCurve.pointsWatts.map((watt) => watt.value) : powerNull,
-    backgroundColor: 'rgba(255, 145, 0, 0.9)',
+    data:
+      chartValue.column === 'watts'
+        ? pointsWatts?.map((watt) => watt.value)
+        : pointsWattsPerKg?.map((watt) => watt.value),
+    backgroundColor:
+      chartValue.column === 'watts' ? 'rgba(249, 220, 22, 0.8)' : 'rgba(255, 136, 0, 0.8)',
     pointBorderColor: '#a65100',
     fill: true,
   };
+
   const powerCurveDatasetsLastRide = {
     filterWord: 'event',
     label: `${getTimerLocal(powerFromEvent?.eventStart, 'YMD')}, ${powerFromEvent?.eventName}`,
-    data: powerFromEvent ? powerFromEvent.cpBestEfforts?.map((watt) => watt.watts) : powerNull,
-    backgroundColor: 'rgba(15, 79, 168, 0.8)',
+    data:
+      chartValue.column === 'watts'
+        ? powerFromEvent.cpBestEfforts?.map((value) => value.watts)
+        : powerFromEvent.cpBestEfforts?.map((value) => value.wattsKg),
+    backgroundColor:
+      chartValue.column === 'watts' ? 'rgba(66, 10, 170, 0.8)' : 'rgba(15, 79, 168, 0.8)',
     pointBorderColor: '#ffda73',
     fill: true,
   };

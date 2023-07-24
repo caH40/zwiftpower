@@ -9,3 +9,8 @@
   flex-wrap: wrap;
   font-size: 1.1em;
 }
+
+.box__filter {
+  text-align: right;
+  margin-bottom: 5px;
+}
