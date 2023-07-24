@@ -11,12 +11,16 @@ import useChartPower from '../../hook/useChartPower';
 import useScreenOrientation from '../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../components/UI/SimpleCheckbox/SimpleCheckbox';
 import SelectForChart from '../../components/UI/SelectForChart/SelectForChart';
+import FilterWatts from '../../components/UI/Filters/FilterWatts/FilterWatts';
 
 import styles from './ProfilePower.module.css';
 
 function ProfileWeight() {
   const [formShowCharts, setFormShowCharts] = useState({ showChart90Days: true });
-  const { powerFromEvents } = useSelector((state) => state.fetchUserPowerCurve);
+
+  const { powerFromEvents, status: fetchStatus } = useSelector(
+    (state) => state.fetchUserPowerCurve
+  );
   const [eventPowerCurrent, setEventPowerCurrent] = useState({});
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
@@ -36,23 +40,30 @@ function ProfileWeight() {
 
   return (
     <section>
-      <div className={styles.block}>
-        <Line options={options} data={data} className={styles.chart} />
-        <form className={styles.box__checkbox}>
-          <SelectForChart
-            state={eventPowerCurrent}
-            setState={setEventPowerCurrent}
-            property={'event'}
-            optionsRaw={powerFromEvents}
-          />
-          <SimpleCheckbox
-            state={formShowCharts}
-            setState={setFormShowCharts}
-            property={'showChart90Days'}
-            title={'90 дней'}
-          />
-        </form>
-      </div>
+      {fetchStatus === 'resolved' && (
+        <>
+          <div className={styles.box__filter}>
+            <FilterWatts />
+          </div>
+          <div className={styles.block}>
+            <Line options={options} data={data} className={styles.chart} />
+            <form className={styles.box__checkbox}>
+              <SelectForChart
+                state={eventPowerCurrent}
+                setState={setEventPowerCurrent}
+                property={'event'}
+                optionsRaw={powerFromEvents}
+              />
+              <SimpleCheckbox
+                state={formShowCharts}
+                setState={setFormShowCharts}
+                property={'showChart90Days'}
+                title={'90 дней'}
+              />
+            </form>
+          </div>
+        </>
+      )}
     </section>
   );
 }

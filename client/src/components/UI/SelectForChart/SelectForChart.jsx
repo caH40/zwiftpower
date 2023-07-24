@@ -4,7 +4,7 @@ import { getTimerLocal } from '../../../utils/date-local';
 
 import styles from './SelectForChart.module.css';
 
-function SelectForChart({ state, setState, optionsRaw, name }) {
+function SelectForChart({ state, setState, optionsRaw }) {
   const options = optionsRaw.map((event) => ({
     cpBestEfforts: event.cpBestEfforts,
     id: event.id,
@@ -16,7 +16,7 @@ function SelectForChart({ state, setState, optionsRaw, name }) {
       onChange={(e) => setState(optionsRaw.find((event) => event.id === e.target.value))}
       value={state?.id || ''}
     >
-      <option value="" label={'Выбор заезда для сравнения'} />
+      <option value="" label={'Выбор заезда'} />
       {options.map((option) => (
         <option
           className={styles.option}
