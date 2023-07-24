@@ -45,6 +45,7 @@ export async function getUserPowerService(zwiftId) {
     ).populate('zwiftEventId');
 
     const powerFromEvents = resultsDB.map((result) => ({
+      id: result._id,
       cpBestEfforts: result.cpBestEfforts,
       eventName: result.zwiftEventId.name,
       eventStart: new Date(result.zwiftEventId.eventStart).getTime(),

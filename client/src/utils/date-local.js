@@ -1,7 +1,7 @@
 // формирование даты согласно локали 'ru'
 export function getTimerLocal(date, timeFormat, long) {
   const dateForFormat = new Date(date);
-  if (!date || date === 0) return 'Дата отсутствует, проверяйте старт заезда для каждой группы';
+  if (!date || date === 0) return 'Дата отсутствует...';
 
   const formatterHourAndMinutes = new Intl.DateTimeFormat('ru', {
     hour: '2-digit',

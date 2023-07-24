@@ -10,6 +10,7 @@ import useBackground from '../../hook/useBackground';
 import useChartPower from '../../hook/useChartPower';
 import useScreenOrientation from '../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../components/UI/SimpleCheckbox/SimpleCheckbox';
+import SelectForChart from '../../components/UI/SelectForChart/SelectForChart';
 
 import styles from './ProfilePower.module.css';
 
@@ -18,12 +19,19 @@ function ProfileWeight() {
     showChart90Days: true,
     showChartLastRide: true,
   });
+  const { powerFromEvents } = useSelector((state) => state.fetchUserPowerCurve);
+  const [eventPowerCurrent, setEventPowerCurrent] = useState({});
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
 
+  useEffect(() => {
+    if (!powerFromEvents[0]) return;
+    setEventPowerCurrent(powerFromEvents[0]);
+  }, [powerFromEvents]);
+
   const { isPortrait } = useScreenOrientation();
 
-  const { data, options } = useChartPower(isPortrait, formShowCharts);
+  const { data, options } = useChartPower(eventPowerCurrent, isPortrait, formShowCharts);
   useTitle('Профиль мощности');
   useBackground(false);
   const dispatch = useDispatch();
@@ -38,20 +46,20 @@ function ProfileWeight() {
     <section>
       <div className={styles.block}>
         <Line options={options} data={data} className={styles.chart} />
-        <div className={styles.box__checkbox}>
+        <form className={styles.box__checkbox}>
+          <SelectForChart
+            state={eventPowerCurrent}
+            setState={setEventPowerCurrent}
+            property={'event'}
+            optionsRaw={powerFromEvents}
+          />
           <SimpleCheckbox
             state={formShowCharts}
             setState={setFormShowCharts}
             property={'showChart90Days'}
             title={'90 дней'}
           />
-          <SimpleCheckbox
-            state={formShowCharts}
-            setState={setFormShowCharts}
-            property={'showChartLastRide'}
-            title={'Последний заезд'}
-          />
-        </div>
+        </form>
       </div>
     </section>
   );
