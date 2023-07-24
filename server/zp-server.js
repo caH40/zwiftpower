@@ -11,6 +11,7 @@ import { timers } from './service/timer.js';
 import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
 import { routerInformation } from './routes/information.js';
+import { routerProfile } from './routes/profile.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
@@ -33,6 +34,7 @@ app.use('/api', router);
 app.use('/api/zwift', routerZwift);
 app.use('/api/race', routerRace);
 app.use('/api/auth', routerAuth);
+app.use('/api/race/profile', routerProfile);
 app.use('/api/information', routerInformation);
 app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 app.get('*', (req, res) =>

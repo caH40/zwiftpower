@@ -10,6 +10,9 @@ import {
   Filler,
 } from 'chart.js';
 
+import { durationLabelsNull } from '../asset/power-interval';
+import { getTimerLocal } from '../utils/date-local';
+
 ChartJS.register(
   CategoryScale, // x scale
   LinearScale, // y scale
@@ -20,22 +23,8 @@ ChartJS.register(
   Filler
 );
 
-const durationLabelsNull = [
-  5,
-  15,
-  30,
-  '1 мин',
-  '3 мин',
-  '5 мин',
-  '12 мин',
-  '20 мин',
-  '30 мин',
-  '10 мин',
-  '60 мин',
-];
-
-function useChartPower(isPortrait, formShowCharts) {
-  const { results, powerCurve } = useSelector((state) => state.fetchUserResults);
+function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
+  const { powerCurve } = useSelector((state) => state.fetchUserPowerCurve);
   const powerNull = Array(11).fill(0);
 
   const durationLabelsCurrent = powerCurve.pointsWatts?.map((watt) => {
@@ -97,16 +86,16 @@ function useChartPower(isPortrait, formShowCharts) {
     label: '90 дней',
     data: powerCurve.pointsWatts ? powerCurve.pointsWatts.map((watt) => watt.value) : powerNull,
     backgroundColor: 'rgba(255, 145, 0, 0.9)',
-    // borderColor: 'rgba(255, 145, 0, 1)',
     pointBorderColor: '#a65100',
     fill: true,
     tension: 0.3,
   };
   const powerCurveDatasetsLastRide = {
-    label: 'Последний заезд',
-    data: results[0] ? results[0].cpBestEfforts.map((watt) => watt.watts.value) : powerNull,
+    label: `Заезд: ${getTimerLocal(powerFromEvent?.eventStart, 'YMD')}, ${
+      powerFromEvent?.eventName
+    }`,
+    data: powerFromEvent ? powerFromEvent.cpBestEfforts?.map((watt) => watt.watts) : powerNull,
     backgroundColor: 'rgba(15, 79, 168, 0.8)',
-    // borderColor: 'rgba(15, 79, 168, 0.9)',
     pointBorderColor: '#ffda73',
     fill: true,
     tension: 0.3,
@@ -117,7 +106,7 @@ function useChartPower(isPortrait, formShowCharts) {
     datasets: [powerCurveDatasetsLastRide, powerCurveDatasets90days].filter(
       (element) =>
         (element.label === '90 дней' && formShowCharts.showChart90Days) ||
-        (element.label === 'Последний заезд' && formShowCharts.showChartLastRide)
+        (element.label.includes('Заезд') && formShowCharts.showChartLastRide)
     ),
   };
 
