@@ -83,30 +83,28 @@ function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
   };
 
   const powerCurveDatasets90days = {
+    filterWord: '90days',
     label: '90 дней',
     data: powerCurve.pointsWatts ? powerCurve.pointsWatts.map((watt) => watt.value) : powerNull,
     backgroundColor: 'rgba(255, 145, 0, 0.9)',
     pointBorderColor: '#a65100',
     fill: true,
-    tension: 0.3,
   };
   const powerCurveDatasetsLastRide = {
-    label: `Заезд: ${getTimerLocal(powerFromEvent?.eventStart, 'YMD')}, ${
-      powerFromEvent?.eventName
-    }`,
+    filterWord: 'event',
+    label: `${getTimerLocal(powerFromEvent?.eventStart, 'YMD')}, ${powerFromEvent?.eventName}`,
     data: powerFromEvent ? powerFromEvent.cpBestEfforts?.map((watt) => watt.watts) : powerNull,
     backgroundColor: 'rgba(15, 79, 168, 0.8)',
     pointBorderColor: '#ffda73',
     fill: true,
-    tension: 0.3,
   };
 
   const data = {
     labels,
     datasets: [powerCurveDatasetsLastRide, powerCurveDatasets90days].filter(
       (element) =>
-        (element.label === '90 дней' && formShowCharts.showChart90Days) ||
-        (element.label.includes('Заезд') && formShowCharts.showChartLastRide)
+        (element.filterWord === '90days' && formShowCharts.showChart90Days) ||
+        (element.filterWord === 'event' && powerFromEvent?.id)
     ),
   };
 

@@ -16,7 +16,7 @@ function SelectForChart({ state, setState, optionsRaw, name }) {
       onChange={(e) => setState(optionsRaw.find((event) => event.id === e.target.value))}
       value={state?.id || ''}
     >
-      <option value="" />
+      <option value="" label={'Выбор заезда для сравнения'} />
       {options.map((option) => (
         <option
           className={styles.option}

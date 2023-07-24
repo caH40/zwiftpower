@@ -15,19 +15,11 @@ import SelectForChart from '../../components/UI/SelectForChart/SelectForChart';
 import styles from './ProfilePower.module.css';
 
 function ProfileWeight() {
-  const [formShowCharts, setFormShowCharts] = useState({
-    showChart90Days: true,
-    showChartLastRide: true,
-  });
+  const [formShowCharts, setFormShowCharts] = useState({ showChart90Days: true });
   const { powerFromEvents } = useSelector((state) => state.fetchUserPowerCurve);
   const [eventPowerCurrent, setEventPowerCurrent] = useState({});
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
-
-  useEffect(() => {
-    if (!powerFromEvents[0]) return;
-    setEventPowerCurrent(powerFromEvents[0]);
-  }, [powerFromEvents]);
 
   const { isPortrait } = useScreenOrientation();
 
