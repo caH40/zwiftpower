@@ -1,6 +1,6 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { createFitFiles } from '../zwift/fitfiles/fitfiles.js';
-import { updatePowerCurve } from '../zwift/power_curve/power-curve.js';
+import { updatePowerCurve } from '../zwift/power_curve/power-curve-update.js';
 
 export async function updateAllPowerCurve() {
   try {

@@ -1,65 +1,64 @@
+import { FitFile } from '../../../Model/FitFile.js';
 import { PowerCurve } from '../../../Model/PowerCurve.js';
+import { intervals } from './intervals-cp.js';
+import { getIntervals } from './powerintervals.js';
 
-// обновление данных мощности и удельной мощности в базе данных для райдера zwiftId
-export async function savePowerCurve(zwiftId, cpBestEfforts, date, name) {
+export async function updatePowerCurve(zwiftId) {
   try {
+    const fitFileDB = await FitFile.findOne({ zwiftId });
+    if (!fitFileDB) return console.log(`Не найден fitfile для ${zwiftId}`);
+
+    // кривая мощности из БД
     const powerCurveDB = await PowerCurve.findOne({ zwiftId });
-
     const millisecondsIn90Days = 90 * 24 * 60 * 60 * 1000;
-
     // брать из БД CP которые не старше 90 дней
     const pointsWattsFiltered = powerCurveDB.pointsWatts.filter(
       (cp) => Date.now() - millisecondsIn90Days < new Date(cp.date).getTime()
     );
-    const powerCPUpdated = [];
-
-    for (const power of cpBestEfforts) {
-      // поиск CP для ватт соответствующего интервала
-      const cpWattCurrent = pointsWattsFiltered.find((cp) => cp.duration === power.duration);
-      // если нет данных по данному интервалу, то добавить интервал
-      if (!cpWattCurrent) {
-        powerCPUpdated.push({ duration: power.duration, value: power.watts, date, name });
-        continue;
-      }
-      // обновлять CP если текущее значение больше или равно в БД
-      if (power.watts >= cpWattCurrent.value) {
-        powerCPUpdated.push({ duration: power.duration, value: power.watts, date, name });
-      } else {
-        powerCPUpdated.push(cpWattCurrent);
-      }
-    }
-
-    // для удельных ватт
-    const powerPerKgCPUpdated = [];
     const pointsWattsPerKgFiltered = powerCurveDB.pointsWattsPerKg.filter(
       (cp) => Date.now() - millisecondsIn90Days < new Date(cp.date).getTime()
     );
 
-    for (const power of cpBestEfforts) {
-      const cpWattPerKgCurrent = pointsWattsPerKgFiltered.find(
-        (cp) => cp.duration === power.duration
-      );
-      // если нет данных по данному интервалу, то добавить интервал
-      if (!cpWattPerKgCurrent) {
-        powerPerKgCPUpdated.push({
-          duration: power.duration,
-          value: power.wattsKg,
-          date,
-          name,
-        });
-        continue;
+    const cpWattsUpdated = [];
+    const cpWattsPerKgUpdated = [];
+
+    // для каждого временного интервала поиск максимального значения мощности и удельной мощности
+    for (const interval of intervals) {
+      // объект по мощности
+      let cpWattsCurrent = pointsWattsFiltered.find((cp) => cp.duration === interval);
+      if (!cpWattsCurrent)
+        cpWattsCurrent = { duration: interval, value: 0, date: Date.now(), name: '' };
+
+      // объект по удельной мощности
+      let cpWattsPerKgCurrent = pointsWattsPerKgFiltered.find((cp) => cp.duration === interval);
+      if (!cpWattsPerKgCurrent)
+        cpWattsPerKgCurrent = { duration: interval, value: 0, date: Date.now(), name: '' };
+
+      for (const activity of fitFileDB.activities) {
+        const powerInWatts = JSON.parse(activity.powerInWatts);
+        // поиск интервалов в "сырых данных" заезда
+        const cpBestEfforts = getIntervals(powerInWatts, activity.weightInGrams / 1000, [
+          interval,
+        ]);
+
+        if (cpBestEfforts[0].watts >= cpWattsCurrent.value)
+          cpWattsCurrent = {
+            duration: interval,
+            value: cpBestEfforts[0].watts,
+            date: activity.date,
+            name: activity.name,
+          };
+
+        if (cpBestEfforts[0].wattsKg >= cpWattsPerKgCurrent.value)
+          cpWattsPerKgCurrent = {
+            duration: interval,
+            value: cpBestEfforts[0].wattsKg,
+            date: activity.date,
+            name: activity.name,
+          };
       }
-      // обновлять CP если текущее значение больше или равно в БД
-      if (power.wattsKg >= cpWattPerKgCurrent.value) {
-        powerPerKgCPUpdated.push({
-          duration: power.duration,
-          value: power.wattsKg,
-          date,
-          name,
-        });
-      } else {
-        powerPerKgCPUpdated.push(cpWattPerKgCurrent);
-      }
+      cpWattsUpdated.push(cpWattsCurrent);
+      cpWattsPerKgUpdated.push(cpWattsPerKgCurrent);
     }
 
     await PowerCurve.findOneAndUpdate(
@@ -67,12 +66,12 @@ export async function savePowerCurve(zwiftId, cpBestEfforts, date, name) {
       {
         $set: {
           date: Date.now(),
-          pointsWatts: powerCPUpdated,
-          pointsWattsPerKg: powerPerKgCPUpdated,
+          pointsWatts: cpWattsUpdated,
+          pointsWattsPerKg: cpWattsPerKgUpdated,
         },
       }
     );
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
