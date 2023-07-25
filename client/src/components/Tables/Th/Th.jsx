@@ -108,7 +108,7 @@ const Th = ({ columnName }) => {
       case 'Средняя мощность за гонку':
         return <IconPower tooltip={name} />;
 
-      case 'Относительная средняя мощность за гонку':
+      case 'Удельная средняя мощность за гонку':
         return <IconPowerKg tooltip={name} />;
 
       case 'Описание':

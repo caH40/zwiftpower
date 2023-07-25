@@ -42,7 +42,7 @@ function FormRiderResult({ newResult, setNewResult, goBack, saveResult }) {
         disabled={true}
       />
       <SimpleInput
-        name="Относительная мощность ватты/кг"
+        name="Удельная мощность ватты/кг"
         state={newResult}
         setState={setNewResult}
         property="wattPerKg"
