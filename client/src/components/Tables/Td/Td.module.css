@@ -61,8 +61,6 @@
 }
 .box__flag {
   flex: 0 0 22px;
-  display: flex;
-  align-items: center;
 }
 .cursor__default {
   cursor: default;
