@@ -36,6 +36,10 @@ function Flag({ name = '' }) {
       nameShort = 'by';
       break;
 
+    case 'ata':
+      nameShort = 'aq';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
@@ -43,11 +47,7 @@ function Flag({ name = '' }) {
 
   return (
     <>
-      <img
-        className={StyleSheet.img}
-        src={`/images/flags/${nameShort}.svg`}
-        alt={`flag-${name}`}
-      />
+      <img src={`/images/flags/${nameShort}.svg`} alt={`flag-${name}`} />
     </>
   );
 }
