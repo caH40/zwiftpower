@@ -4,11 +4,11 @@ import Th from '../Th/Th';
 
 import { resultsColumns } from './column-titles';
 
-function Thead({ lg, sm, isModerator }) {
+function Thead({ lg, md, sm, isModerator }) {
   return (
     <thead>
       <tr>
-        {resultsColumns(lg, sm).map((column) => (
+        {resultsColumns(lg, md, sm).map((column) => (
           <Th key={column.id} columnName={column.name} />
         ))}
         {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
