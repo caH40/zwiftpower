@@ -8,7 +8,7 @@ function SelectForChart({ state, setState, optionsRaw }) {
   const options = optionsRaw.map((event) => ({
     cpBestEfforts: event.cpBestEfforts,
     id: event.id,
-    name: `${getTimerLocal(event.eventStart, 'YMD')}, ${event.eventName}`,
+    name: `${getTimerLocal(event.eventStart, 'DDMMYY')}, ${event.eventName}`,
   }));
   return (
     <select

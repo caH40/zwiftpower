@@ -50,7 +50,7 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
             </div>
             <PrivateEvent event={event} />
             <h3 className={styles.subtitle}>
-              {getTimerLocal(event.eventStart, 'YMDHM', true)}
+              {getTimerLocal(event.eventStart, 'DDMMYYHm', true)}
             </h3>
           </div>
 

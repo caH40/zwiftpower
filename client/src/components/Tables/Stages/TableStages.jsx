@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getStages } from '../../../api/stage';
 
 import styles from '../Table.module.css';
+import { getTimerLocal } from '../../../utils/date-local';
 
 function TableStages({ seriesId }) {
   const [stages, setStages] = useState([]);
@@ -52,7 +53,7 @@ function TableStages({ seriesId }) {
               onClick={() => myLink(stage._id, stage.hasResults)}
             >
               <th scope="row">{stage.number}</th>
-              <td>{new Date(stage.dateStart).toLocaleDateString()}</td>
+              <td>{getTimerLocal(stage.dateStart)}</td>
               <td>{stage.route}</td>
               <td>{stage.world}</td>
               <td>{stage.type}</td>
@@ -66,12 +67,12 @@ function TableStages({ seriesId }) {
               </td>
               <td>
                 <a href={stage.link} target="_blank" rel="noreferrer">
-									Звифт
+                  Звифт
                 </a>
               </td>
               <td>
                 <a href={stage.routeLink} target="_blank" rel="noreferrer">
-									Маршрут
+                  Маршрут
                 </a>
               </td>
             </tr>

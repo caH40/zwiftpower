@@ -7,18 +7,23 @@ export function getTimerLocal(date, timeFormat, long) {
     hour: '2-digit',
     minute: '2-digit',
   });
-  const formatterHMS = new Intl.DateTimeFormat('ru', {
+  const formatterHmS = new Intl.DateTimeFormat('ru', {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
   });
-  const formatterYMD = new Intl.DateTimeFormat('ru', {
+  const formatterDDMMYY = new Intl.DateTimeFormat('ru', {
     year: '2-digit',
     month: long ? 'long' : '2-digit',
     day: '2-digit',
     weekday: long && 'long',
   });
-  const formatterYMDHM = new Intl.DateTimeFormat('ru', {
+  const formatterDDMMYYYY = new Intl.DateTimeFormat('ru', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const formatterDDMMYYHm = new Intl.DateTimeFormat('ru', {
     year: '2-digit',
     month: long ? 'long' : '2-digit',
     day: '2-digit',
@@ -27,25 +32,19 @@ export function getTimerLocal(date, timeFormat, long) {
     weekday: long && 'long',
   });
 
-  let timeLocal = '00:00';
+  switch (timeFormat) {
+    case 'HM':
+      return formatterHourAndMinutes.format(dateForFormat);
+    case 'HmS':
+      return formatterHmS.format(dateForFormat);
+    case 'DDMMYYHm':
+      return formatterDDMMYYHm.format(dateForFormat);
+    case 'DDMMYY':
+      return formatterDDMMYY.format(dateForFormat);
 
-  if (timeFormat === 'HM') {
-    timeLocal = formatterHourAndMinutes.format(dateForFormat);
+    default:
+      return formatterDDMMYYYY.format(dateForFormat);
   }
-
-  if (timeFormat === 'HMS') {
-    timeLocal = formatterHMS.format(dateForFormat);
-  }
-
-  if (timeFormat === 'YMDHM') {
-    timeLocal = formatterYMDHM.format(dateForFormat);
-  }
-
-  if (timeFormat === 'YMD') {
-    timeLocal = formatterYMD.format(dateForFormat);
-  }
-
-  return timeLocal;
 }
 
 // формирование времени и даты для input
@@ -67,19 +66,19 @@ export function getDateTimeStart(dateRaw) {
 
 // дата с заменой сегодняшней даты на слово 'Сегодня', время остается
 export function getToday(data) {
-  const dataConverted = getTimerLocal(data, 'YMDHM');
-  const onlyDate = getTimerLocal(Date.now(), 'YMD');
+  const dataConverted = getTimerLocal(data, 'DDMMYYHm');
+  const onlyDate = getTimerLocal(Date.now(), 'DDMMYY');
   return dataConverted.replace(onlyDate, 'Сегодня');
 }
 
 // замена даты на слово 'Завтра' или 'Сегодня'
 export function getTodayTomorrow(data) {
-  const dataNow = getTimerLocal(data, 'YMD');
+  const dataNow = getTimerLocal(data, 'DDMMYY');
 
-  const onlyDateToday = getTimerLocal(Date.now(), 'YMD');
+  const onlyDateToday = getTimerLocal(Date.now(), 'DDMMYY');
 
   const millisecondsInDay = 24 * 60 * 60 * 1000;
-  const onlyDateTomorrow = getTimerLocal(Date.now() + millisecondsInDay, 'YMD');
+  const onlyDateTomorrow = getTimerLocal(Date.now() + millisecondsInDay, 'DDMMYY');
 
   let dateStr = 'Нет даты...';
 

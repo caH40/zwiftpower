@@ -62,7 +62,7 @@ function MainInfoDev({ isModerator }) {
                 <div className={styles.li__inner}>
                   <div>
                     <span className={styles.date}>
-                      {getTimerLocal(info.releaseDate, 'YMD')}
+                      {getTimerLocal(info.releaseDate, 'DDMMYY')}
                     </span>
                     <span className={styles.text}>{info.text}</span>
                   </div>

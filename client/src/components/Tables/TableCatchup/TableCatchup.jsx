@@ -27,7 +27,7 @@ function TableCatchup({ catchups }) {
       <tbody>
         {catchups.map((catchupResult) => (
           <tr key={catchupResult.eventId}>
-            <td>{getTimerLocal(catchupResult.eventStart, 'YMD')}</td>
+            <td>{getTimerLocal(catchupResult.eventStart, 'DDMMYY')}</td>
             <td>
               <CategoryBox showLabel={true} label={catchupResult.subgroupLabel} circle={true} />
             </td>

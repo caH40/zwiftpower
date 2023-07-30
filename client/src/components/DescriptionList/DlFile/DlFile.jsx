@@ -20,7 +20,7 @@ function DlFile({ file, addCls }) {
       </div>
       <div className={styles.box}>
         <dt className={styles.title}>Изменялся:</dt>
-        <dl>{getTimerLocal(file.lastModified, 'YMDHM')}</dl>
+        <dl>{getTimerLocal(file.lastModified, 'DDMMYYHm')}</dl>
       </div>
     </dl>
   );

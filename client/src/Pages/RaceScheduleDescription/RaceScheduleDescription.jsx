@@ -48,7 +48,7 @@ function RaceScheduleDescription() {
 
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>{getTimerLocal(event.updated, 'YMDHM')}</span>
+            <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>
           </div>
         </>
       )}

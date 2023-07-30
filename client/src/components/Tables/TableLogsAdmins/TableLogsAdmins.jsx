@@ -17,12 +17,12 @@ function TableLogsAdmin({ logs }) {
       <tbody>
         {logs?.map((log) => (
           <tr key={log._id}>
-            <td>{getTimerLocal(log.date, 'YMDHM')}</td>
+            <td>{getTimerLocal(log.date, 'DDMMYYHm')}</td>
             <td>{log.userId?.username || 'deleted'}</td>
             <td>{descriptionLogsAdmins[log.description]}</td>
             {sm && <td>{log.event.id}</td>}
             <td>{log.event.name}</td>
-            {sm && <td>{getTimerLocal(log.event.start, 'YMDHM')}</td>}
+            {sm && <td>{getTimerLocal(log.event.start, 'DDMMYYHm')}</td>}
           </tr>
         ))}
       </tbody>

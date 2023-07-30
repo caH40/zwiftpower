@@ -8,6 +8,7 @@ import Button from '../../UI/Button/Button';
 import ButtonLink from '../../UI/ButtonLink/ButtonLink';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
+import { getTimerLocal } from '../../../utils/date-local';
 
 function TableSeries({ target }) {
   const [series, setSeries] = useState([]);
@@ -99,7 +100,7 @@ function TableSeries({ target }) {
                 <th scope="row">{index + 1}</th>
                 <td>{seriesOne.name}</td>
                 <td>{seriesOne.organizer}</td>
-                <td>{new Date(seriesOne.dateStart).toLocaleDateString()}</td>
+                <td>{getTimerLocal(seriesOne.dateStart, 'DDMMYY')}</td>
                 <td>
                   <div className={classFinished}>{finished}</div>
                 </td>

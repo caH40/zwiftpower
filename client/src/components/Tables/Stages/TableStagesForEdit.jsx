@@ -9,6 +9,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../UI/Button/Button';
 import ClearTbody from '../ClearTbody/ClearTbody';
 import styles from '../Table.module.css';
+import { getTimerLocal } from '../../../utils/date-local';
 
 function TableStagesForEdit({ seriesId }) {
   const [stages, setStages] = useState([]);
@@ -138,7 +139,7 @@ function TableStagesForEdit({ seriesId }) {
             return (
               <tr className={styles.trLinkOff} key={stage._id}>
                 <th scope="row">{stage.number}</th>
-                <td>{new Date(stage.dateStart).toLocaleDateString()}</td>
+                <td>{getTimerLocal(stage.dateStart)}</td>
                 <td>{stage.route}</td>
                 <td>{stage.world}</td>
                 <td>{stage.type}</td>
