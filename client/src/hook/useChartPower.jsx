@@ -98,7 +98,9 @@ function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
 
   const powerCurveDatasetsLastRide = {
     filterWord: 'event',
-    label: `${getTimerLocal(powerFromEvent?.eventStart, 'YMD')}, ${powerFromEvent?.eventName}`,
+    label: `${getTimerLocal(powerFromEvent?.eventStart, 'DDMMYY')}, ${
+      powerFromEvent?.eventName
+    }`,
     data:
       chartValue.column === 'watts'
         ? powerFromEvent.cpBestEfforts?.map((value) => value.watts)

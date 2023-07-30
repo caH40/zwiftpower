@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 import useRatioBoxValue from '../../hook/useRatioBoxValue';
 import MyTooltip from '../../HOC/MyTooltip';
+import { getTimerLocal } from '../../utils/date-local';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ const Bar = styled.div`
 `;
 
 function CPBox({ value = 0, duration, date, name, label }) {
-  const dateCP = date ? `${new Date(date).toLocaleDateString()}, ${name}` : 'нет данных';
+  const dateCP = date ? `${getTimerLocal(date, 'DDMMYY')}, ${name}` : 'нет данных';
   const title = duration <= 60 ? `${duration} сек` : `${duration / 60} мин`;
   const ratio = useRatioBoxValue(duration, label);
   return (

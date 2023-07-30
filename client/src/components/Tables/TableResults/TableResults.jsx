@@ -33,7 +33,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
       <tbody>
         {events.map((event) => (
           <tr key={event._id}>
-            <td>{getTimerLocal(event.eventStart, 'YMD')}</td>
+            <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
             {md && <TdSeries seriesName={event.seriesId?.name} />}
             <td>
               <Link className={styles.link} to={String(event.id)}>

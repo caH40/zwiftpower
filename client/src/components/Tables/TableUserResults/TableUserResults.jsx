@@ -30,7 +30,7 @@ function TableUserResults({ results }) {
               </td>
             )}
 
-            <td>{getTimerLocal(result.eventStart, 'YMD')}</td>
+            <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
             <td>
               <Link className={styles.link} to={`/race/results/${result.eventId}`}>
                 <span className={styles.big}>{result.eventName}</span>
