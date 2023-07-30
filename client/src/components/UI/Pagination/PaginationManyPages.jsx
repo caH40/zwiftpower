@@ -11,8 +11,10 @@ function PaginationManyPages({ pages, getClick, page }) {
 
   return (
     <>
-      {page < 6 && <PaginationFirstPages pages={pages} getClick={getClick} page={page} />}
-      {isLastPage && <PaginationLastPages pages={pages} getClick={getClick} page={page} />}
+      {page <= 5 && <PaginationFirstPages pages={pages} getClick={getClick} page={page} />}
+      {isLastPage && page > 5 && (
+        <PaginationLastPages pages={pages} getClick={getClick} page={page} />
+      )}
       {isMiddlePage && <PaginationMiddlePages pages={pages} getClick={getClick} page={page} />}
     </>
   );
