@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_SERVER_EXPRESS;
+const API_URL = import.meta.env.VITE_SERVER_EXPRESS;
 
 export const myAxios = axios.create({
   // что бы куки цеплялись автоматически

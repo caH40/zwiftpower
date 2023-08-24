@@ -6,7 +6,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconRefresh({ isActive, getClick, tooltip, addCls = ' ' }) {
+function IconRefresh({ getClick, tooltip, addCls = ' ' }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div

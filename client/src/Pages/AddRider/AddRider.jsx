@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -53,6 +53,7 @@ function AddRider() {
 
   const getRiderData = async (zwiftId) => {
     const hasResult = await checkRiderResult(zwiftId, stageId)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((response) => false)
       .catch((error) => {
         dispatch(

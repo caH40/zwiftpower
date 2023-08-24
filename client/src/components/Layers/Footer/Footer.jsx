@@ -5,7 +5,7 @@ import IconTelegram from '../../icons/IconTelegram';
 
 import styles from './Footer.module.css';
 
-const server = process.env.REACT_APP_SERVER_FRONT;
+const server = import.meta.env.VITE_SERVER_FRONT;
 
 function Footer() {
   const { isScreenLg: lg } = useResize();

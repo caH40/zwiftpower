@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
+const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
 
 export async function postRegistration(dataForm) {
   try {

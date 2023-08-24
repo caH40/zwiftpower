@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { getAlert } from '../alertMessageSlice';
 
-const serverExpress = process.env.REACT_APP_SERVER_EXPRESS;
+const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',

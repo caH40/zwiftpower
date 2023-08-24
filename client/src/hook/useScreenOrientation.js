@@ -5,7 +5,7 @@ const getOrientation = () => window.screen?.orientation?.type;
 const useScreenOrientation = () => {
   const [orientation, setOrientation] = useState(getOrientation());
 
-  const updateOrientation = (event) => {
+  const updateOrientation = () => {
     setOrientation(getOrientation());
   };
 

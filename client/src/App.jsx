@@ -13,7 +13,7 @@ import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
 import NewPassword from './Pages/Auth/NewPassword';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import Profile from './Pages/Profile/Profile';
-import { AdminRoute } from './Route/AdminRoute';
+import { AdminRoute } from './Route/AdminRoute.jsx';
 import './css/App.css';
 import RaceResultsList from './Pages/RaceResultsList/RaceResultsList';
 import RaceScheduleList from './Pages/RaceScheduleList/RaceScheduleList';

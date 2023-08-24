@@ -10,6 +10,7 @@ export async function addCriticalPowers(results, nameAndDate) {
     for (const result of results) {
       const weightRider = result.profileData.weightInGrams / 1000;
 
+      // получение данных fit файла активности (заезда) райдера
       const fullDataUrl = await getFullDataUrl(result.activityData.activityId);
       // если ссылки на активность нет (райдер еще не закончил активность)
       if (!fullDataUrl) {

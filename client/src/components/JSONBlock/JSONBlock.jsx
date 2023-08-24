@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { syntaxHighlight } from '../../utils/hightlight';
 
-import styles from './JSONBlock.modules.css';
+import styles from './JSONBlock.module.css';
 
 function JSONBlock({ json }) {
   return (

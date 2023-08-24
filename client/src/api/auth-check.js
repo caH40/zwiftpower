@@ -1,5 +1,5 @@
 import axios from 'axios';
-const server = process.env.REACT_APP_SERVER_EXPRESS;
+const server = import.meta.env.VITE_SERVER_EXPRESS;
 
 export async function checkAuth() {
   try {

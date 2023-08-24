@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getRider, getRiders } from '../../../api/riders';
 import SimpleInput from '../SimpleInput/SimpleInput';
@@ -33,6 +33,12 @@ function BoxRider({ setRider, setIsVisibleModal }) {
       setRider(response.data.rider);
     });
 
+  const LiRider = (rider) => (
+    <li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
+      {`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
+    </li>
+  );
+
   return (
     <form className={styles.form} name="riders">
       <SimpleInput
@@ -43,16 +49,10 @@ function BoxRider({ setRider, setIsVisibleModal }) {
         placeholder="Введите имя (фамилию) райдера"
       />
       <ul className={styles.list}>
-        {riders.length
-          ? filteredRiders.map((rider) => (
-            <li className={styles.item} key={rider._id} onClick={() => getRiderData(rider._id)}>
-              {`${rider.lastName} ${rider.firstName} (${rider.firstNameZwift} ${rider.lastNameZwift})`}
-            </li>
-					  ))
-          : undefined}
+        {riders.length ? filteredRiders.map((rider) => LiCurrent(rider)) : undefined}
         {filteredRiders.length > 14 ? (
           <li className={styles.itemMore}>
-						...еще {riders.length - filteredRiders.length} райдеров
+            ...еще {riders.length - filteredRiders.length} райдеров
           </li>
         ) : undefined}
       </ul>

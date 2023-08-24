@@ -6,7 +6,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconDownload({ isActive, getClick, tooltip, addCls = ' ' }) {
+function IconDownload({ getClick, tooltip, addCls = ' ' }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div

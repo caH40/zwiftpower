@@ -6,7 +6,7 @@ import useBackground from '../../hook/useBackground';
 
 import styles from './Page404.module.css';
 
-const urlServer = process.env.REACT_APP_SERVER_FRONT;
+const urlServer = import.meta.env.VITE_SERVER_FRONT;
 
 function Page404() {
   const { '*': wrongUrl } = useParams();

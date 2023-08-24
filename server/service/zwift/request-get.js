@@ -13,6 +13,7 @@ const headersDefault = {
   'Accept-Encoding': 'gzip',
 };
 
+// запрос по url на открытое API Звифта
 export async function getRequest(url, isMainToken = true) {
   try {
     const token = await getAccessToken(isMainToken);
@@ -27,9 +28,9 @@ export async function getRequest(url, isMainToken = true) {
     }).catch((error) => {
       errorAxios(error, 'getRequest');
     });
-
     return response.data;
   } catch (error) {
-    throw error;
+    console.log(`${apiUrl}${url}`);
+    console.error(error);
   }
 }
