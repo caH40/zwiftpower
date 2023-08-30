@@ -8,7 +8,7 @@ import { getZwiftEvents, postEvent } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
-import { getSeriesActual } from '../../api/series';
+import { getSeriesActual } from '../../api/zwift/series';
 
 import styles from './ZwiftAddEvent.module.css';
 

@@ -22,8 +22,7 @@
     "react-router-dom": "^6.9.0",
     "react-transition-group": "^4.4.5",
     "styled-components": "^6.0.0-rc.3",
-    "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "dev": "vite",
