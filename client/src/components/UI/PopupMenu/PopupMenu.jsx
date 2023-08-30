@@ -20,21 +20,6 @@ function PopupMenu() {
           {isModerator && (
             <>
               <li className={styles.item}>
-                <Link to="/edit/series" className={styles.link}>
-                  Series
-                </Link>
-              </li>
-              <li className={styles.item}>
-                <Link to="/edit/upload" className={styles.link}>
-                  Загрузка
-                </Link>
-              </li>
-              <li className={styles.item}>
-                <Link to="/edit/riders" className={styles.link}>
-                  Райдеры
-                </Link>
-              </li>
-              <li className={styles.item}>
                 <Link to="/bot" className={styles.link}>
                   Бот
                 </Link>
