@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import MainLayer from './components/Layers/MainLayer';
 import MainPage from './Pages/Main/MainPage';
 import Page404 from './Pages/Page404/Page404';
-import StageResults from './Pages/StageResults';
+
 import Authorization from './Pages/Auth/Authorization';
 import Registration from './Pages/Auth/Registration';
 import Message from './Pages/Message/Message';
@@ -49,7 +49,7 @@ function App() {
         <Route path="/auth/reset" element={<ResetPassword />} />
         <Route path="/auth/confirm-email/:token" element={<ConfirmEmail />} />
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
-        <Route path="/results/stage/:stageId" element={<StageResults />} />
+
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/profile/:zwiftId" element={<Profile />}>
           <Route path="results" element={<ProfileResults />} />
