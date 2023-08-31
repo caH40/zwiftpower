@@ -1,7 +1,5 @@
 import React from 'react';
 
-import RaceRuleBox from '../RaceRuleBox/RaceRuleBox';
-
 import IconCategoryEnforced from '../icons/IconCategoryEnforced';
 import IconShowResults from '../icons/IconShowResults';
 import IconPowerUp from '../icons/IconPowerUp';
@@ -18,7 +16,6 @@ import IconLateJoin from '../icons/IconLateJoin';
 import IconDescription from './IconDescription';
 
 import styles from './FaqBlock.module.css';
-import Abbreviation from './Abbreviation';
 
 function FaqIcons() {
   return (
@@ -58,29 +55,6 @@ function FaqIcons() {
       <IconDescription Icon={IconLateJoin}>
         Позднее подключение. Возможность подключиться к заезду в течении 30 минут после старта
       </IconDescription>
-
-      <h4 className={styles.title__h4}>Типы заездов:</h4>
-      <Abbreviation Icon={<RaceRuleBox label={'CT'} showLabel={true} />}>
-        Классическая гонка без групп
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'CG'} showLabel={true} />}>
-        Классическая гонка с разделением по группам
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'CU'} showLabel={true} />}>
-        Догонялки
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'NE'} showLabel={true} />}>
-        Заезд для новичков, для групп "C", "D"
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'TT'} showLabel={true} />}>
-        Заезд с раздельным стартом
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'CR'} showLabel={true} />}>
-        Критериум
-      </Abbreviation>
-      <Abbreviation Icon={<RaceRuleBox label={'CU'} showLabel={true} />}>
-        Заезд на длинную дистанцию (объем)
-      </Abbreviation>
     </div>
   );
 }
