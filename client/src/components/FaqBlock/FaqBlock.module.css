@@ -5,6 +5,7 @@
   border: 1px solid var(--color-border-minor);
   border-radius: 5px;
   padding: 15px 15px 5px;
+  letter-spacing: 0.03em;
 }
 .title {
   font-weight: 700;
@@ -21,7 +22,6 @@
 .text {
   font-weight: 400;
   font-size: 14px;
-  letter-spacing: 0.03em;
 }
 .link {
   font-family: 'Roboto';
@@ -38,6 +38,12 @@
   justify-content: space-between;
   padding-bottom: 10px;
 }
+.box__question {
+  display: flex;
+  flex-direction: column;
+  gap: 5px 0px;
+  padding-bottom: 10px;
+}
 .box__iconsDescription {
   display: flex;
   gap: 0 15px;
@@ -48,6 +54,12 @@
 .abbreviation {
   flex: 0 0 30px;
   text-align: center;
+}
+.question {
+  font-style: italic;
+}
+.text__answer {
+  font-weight: 500;
 }
 @media screen and (max-width: 576px) {
   .block {
