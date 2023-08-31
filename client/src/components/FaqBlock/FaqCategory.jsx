@@ -37,7 +37,7 @@ function FaqCategory() {
       </div>
       <div className={styles.box}>
         <p className={styles.text}>
-          <strong>zFTP</strong> - Оценочная Функциональную Пороговую Мощность (Functional
+          <strong>zFTP</strong> - Оценочная Функциональная Пороговая Мощность (Functional
           Threshold Power) <strong>для Звифта</strong>, то есть максимальная средняя мощность за
           заезд более 40 минут
         </p>
