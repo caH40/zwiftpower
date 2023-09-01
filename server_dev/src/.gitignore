@@ -1,0 +1,9 @@
+node_modules
+*.xlsx
+.env
+info.txt
+src/*.json
+tasks.md
+logic.md
+src/images/*.png
+
