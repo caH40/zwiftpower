@@ -5,7 +5,7 @@ import { getSeriesActual, getLogsAdmins, putUserZwiftId } from '../controllers/c
 import { authAdmin } from '../middleware/authRole.js';
 import { checkAuth } from '../middleware/auth.js';
 
-export const router = new Router();
+export const router = Router();
 
 router.get('/series/actual', authAdmin, getSeriesActual); // вроде рабочий
 router.get('/logs/admin', authAdmin, getLogsAdmins); // вроде рабочий

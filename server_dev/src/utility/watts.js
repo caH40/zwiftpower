@@ -10,6 +10,6 @@ export function addWattsPerKg(results) {
 
     return resultsNew;
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
