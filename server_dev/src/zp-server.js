@@ -15,7 +15,7 @@ import { routerProfile } from './routes/profile.js';
 
 const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
-
+console.log('port from .env', process.env.SERVER_PORT);
 await mongoose
   .connect(process.env.MONGODB)
   .then(() => console.log('Connected to Mongo..'))
