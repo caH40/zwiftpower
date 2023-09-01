@@ -9,7 +9,7 @@ export async function updateZwiftIdService(userId, zwiftId) {
       const message = `Данный zwiftId "${zwiftId}" уже присвоен другому пользователю.`;
       throw { message };
     }
-    const userDB = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: userId },
       { $set: { zwiftId, photoProfile: riderData.imageSrc } }
     );
