@@ -1,6 +1,4 @@
-import { Result } from '../Model/Result.js';
 import { Series } from '../Model/Series.js';
-import { Stage } from '../Model/Stage.js';
 
 export async function getSeriesActualService() {
   try {

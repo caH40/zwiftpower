@@ -8,7 +8,5 @@ import { checkAuth } from '../middleware/auth.js';
 export const router = new Router();
 
 router.get('/series/actual', authAdmin, getSeriesActual); // вроде рабочий
-
 router.get('/logs/admin', authAdmin, getLogsAdmins); // вроде рабочий
-
 router.put('/user', checkAuth, putUserZwiftId); // вроде рабочий
