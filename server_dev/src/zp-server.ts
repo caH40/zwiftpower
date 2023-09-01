@@ -1,9 +1,10 @@
-import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+
+import { mongodb } from './config/env.js';
 
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';
@@ -17,7 +18,7 @@ const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
 
 await mongoose
-  .connect(process.env.MONGODB)
+  .connect(mongodb)
   .then(() => console.log('Connected to Mongo..'))
   .catch((error) => console.log(error));
 
@@ -37,17 +38,12 @@ app.use('/api/auth', routerAuth);
 app.use('/api/race/profile', routerProfile);
 app.use('/api/information', routerInformation);
 app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
-app.get('*', (req, res) =>
+app.get('*', (_, res) =>
   res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
 );
 
 const start = async () => {
   try {
-    await mongoose
-      .connect(process.env.MONGODB)
-      .then(() => console.log('Connected to Mongo..'))
-      .catch((error) => console.log(error));
-
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
 
     await timers();
