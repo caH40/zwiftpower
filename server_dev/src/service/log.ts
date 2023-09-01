@@ -1,5 +1,6 @@
 import { LogsAdmin } from '../Model/LogsAdmin.js';
 import { descriptionLogsAdmins } from '../asset/logs/admins.js';
+import { GetLogsAdmins } from '../types/http.interface.js';
 
 export async function loggingAdmin(eventId, eventName, eventStart, userId, description) {
   try {
@@ -18,7 +19,11 @@ export async function loggingAdmin(eventId, eventName, eventStart, userId, descr
     console.error(error);
   }
 }
-export async function getLogsAdminsService({ page = 1, docsOnPage = 20, search }) {
+export async function getLogsAdminsService({
+  page = 1,
+  docsOnPage = 20,
+  search,
+}: GetLogsAdmins) {
   try {
     const logsDB = await LogsAdmin.find()
       .sort({ date: -1 })
@@ -40,7 +45,7 @@ export async function getLogsAdminsService({ page = 1, docsOnPage = 20, search }
       message: 'Логи о действиях админов (модераторов)',
     };
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 }
 

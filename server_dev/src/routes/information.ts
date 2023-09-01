@@ -7,7 +7,7 @@ import {
 } from '../controllers/information.js';
 import { authAdmin } from '../middleware/authRole.js';
 
-export const routerInformation = new Router();
+export const routerInformation = Router();
 
 routerInformation.get('/development', getDevelopment);
 routerInformation.post('/development', authAdmin, postDevelopment);

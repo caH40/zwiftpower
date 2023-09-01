@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import {
-	registration,
-	authorization,
-	logout,
-	checkAuth,
-	refresh,
-	confirmEmail,
-	resetPassword,
-	checkRequestPassword,
-	newPassword,
+  registration,
+  authorization,
+  logout,
+  checkAuth,
+  refresh,
+  confirmEmail,
+  resetPassword,
+  checkRequestPassword,
+  newPassword,
 } from '../controllers/authentication.js';
 
-export const routerAuth = new Router();
+export const routerAuth = Router();
 
 routerAuth.post('/registration', registration);
 routerAuth.post('/authorization', authorization);

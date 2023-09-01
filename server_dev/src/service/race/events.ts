@@ -1,7 +1,7 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
-import { Series } from '../../Model/Series.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
+import { GetEvents } from '../../types/http.interface.js';
 
 export async function getEventService(eventId) {
   try {
@@ -33,13 +33,21 @@ export async function getEventService(eventId) {
 
     return { event: eventData };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
 // получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
-export async function getEventsService(started, target, page = 1, docsOnPage = 20, search) {
+export async function getEventsService({
+  started,
+  target,
+  page = 1,
+  docsOnPage = 20,
+  search,
+}: GetEvents) {
   try {
-    const eventsDB = await ZwiftEvent.find({ started })
+    const isStarted = started === 'true' ? true : false;
+
+    const eventsDB = await ZwiftEvent.find({ isStarted })
       .populate('eventSubgroups')
       .populate('seriesId');
 
@@ -53,7 +61,7 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
     }
 
     // возвращаются только заезды, стартующие сегодня и завтра
-    if (target === 'preview' && !started) {
+    if (target === 'preview' && !isStarted) {
       eventsFiltered.sort(
         (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
       );
@@ -77,7 +85,7 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
     }
 
     eventsFiltered.sort((a, b) => {
-      if (started) {
+      if (isStarted) {
         return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
       } else {
         return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
@@ -92,7 +100,7 @@ export async function getEventsService(started, target, page = 1, docsOnPage = 2
 
     return { events: eventsSliced, quantityPages, message: 'Получены все заезды' };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
 
@@ -106,6 +114,6 @@ function getEventsFiltered(events, search) {
     });
     return eventsFiltered;
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }

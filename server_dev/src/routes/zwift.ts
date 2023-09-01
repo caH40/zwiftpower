@@ -8,7 +8,7 @@ import {
   getZwiftEventResults,
 } from '../controllers/zwift.js';
 
-export const routerZwift = new Router();
+export const routerZwift = Router();
 
 routerZwift.get('/events/:eventId', authAdmin, getEvent);
 routerZwift.put('/events', authAdmin, putEvent);

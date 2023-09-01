@@ -1,20 +1,21 @@
+import { Request, Response } from 'express';
 import { getZwiftEventResultsService } from '../service/zwift/download.js';
 import { getEventZwiftService, putEventZwiftService } from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
 
-export async function getEvent(req, res) {
+export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId, userId } = req.params;
     const event = await getEventZwiftService(eventId, userId);
     res.status(200).json(event);
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .json(error.response ? { message: error.response?.data } : { message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 }
-export async function putEvent(req, res) {
+export async function putEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const { event } = req.body;
@@ -22,24 +23,24 @@ export async function putEvent(req, res) {
     res.status(200).json(eventChanged);
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .json(error.response ? { message: error.response?.data } : { message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 }
-export async function getZwiftRider(req, res) {
+export async function getZwiftRider(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
     const rider = await getZwiftRiderService(zwiftId);
     res.status(200).json(rider);
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .json(error.response ? { message: error.response?.data } : { message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 }
-export async function getZwiftEventResults(req, res) {
+export async function getZwiftEventResults(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
     const { results } = await getZwiftEventResultsService(eventId);
@@ -47,8 +48,8 @@ export async function getZwiftEventResults(req, res) {
     res.send(results);
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .json(error.response ? { message: error.response?.data } : { message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 }

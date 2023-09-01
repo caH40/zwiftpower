@@ -13,7 +13,7 @@ import {
   getResultsSeries,
 } from '../controllers/race.js';
 
-export const routerRace = new Router();
+export const routerRace = Router();
 
 routerRace.get('/events/:eventId', getEvent);
 routerRace.get('/events', getEvents);
