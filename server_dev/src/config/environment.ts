@@ -20,3 +20,4 @@ export const mailHost: string = parsed.MAIL_HOST;
 export const mailPort: number = +parsed.MAIL_PORT;
 export const mailSecure: boolean = parsed.MAIL_SECURE === 'true' ? true : false;
 export const serverFront: string = parsed.FRONT;
+export const telegramBotHost: string = parsed.TELEGRAM_BOT_HOST;

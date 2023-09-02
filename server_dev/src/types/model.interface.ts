@@ -293,6 +293,7 @@ export interface ZwiftEventSchema {
 //
 //
 export interface ZwiftResultSchema {
+  _id: Types.ObjectId;
   zwiftEventId: Types.ObjectId;
   subgroupId: Types.ObjectId; // зачем?
   profileId: number;

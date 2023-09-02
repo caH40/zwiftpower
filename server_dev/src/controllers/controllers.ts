@@ -36,7 +36,7 @@ export async function getLogsAdmins(req: Request, res: Response) {
 export async function putUserZwiftId(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { zwiftId } = req.body;
+    const zwiftId: string = req.body.zwiftId;
     const user = await updateZwiftIdService(userId, zwiftId);
 
     return res.status(200).json(user);

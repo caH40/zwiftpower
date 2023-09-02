@@ -12,7 +12,13 @@ import { Request, Response } from 'express';
 export async function registration(req: Request, res: Response) {
   try {
     const { username, email, password } = req.body;
+
     const response = await registrationService(username, email, password);
+
+    if (!response) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     res.cookie('refreshToken', response.refreshToken, {
       maxAge: 30 * 24 * 3600 * 1000,
       httpOnly: true,
@@ -31,6 +37,10 @@ export async function authorization(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
 
     const response = await authorizationService(username, password, refreshToken);
+
+    if (!response) {
+      return res.status(500).json({ message: 'Ошибка при авторизации' });
+    }
 
     res.cookie('refreshToken', response.refreshToken, {
       maxAge: 30 * 24 * 3600 * 1000,
@@ -62,7 +72,9 @@ export async function refresh(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
 
     const user = await refreshService(refreshToken);
-    if (!user) return res.status(401).json({ message: 'Не авторизован' });
+    if (!user) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
 
     res.status(201).json({ ...user });
   } catch (error) {

@@ -38,7 +38,7 @@ export async function postDevelopment(req: Request, res: Response) {
     const { infoDevelopment, ...response } = responsePosted;
 
     if (infoDevelopment) {
-      await sendMessageToTelegramBot(infoDevelopment);
+      await sendMessageToTelegramBot(infoDevelopment).catch((error) => console.log(error));
     }
     res.status(201).json(response);
   } catch (error) {
