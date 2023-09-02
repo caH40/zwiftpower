@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import pkg from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { ZwiftResultSchema } from '../types/model.interface.js';
 
-const zwiftResultSchema = new Schema({
+const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   zwiftEventId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent' },
   subgroupId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEventSubgroup' }, // зачем?
   profileId: { type: Number, default: null },
@@ -61,4 +60,4 @@ const zwiftResultSchema = new Schema({
   ],
 });
 
-export const ZwiftResult = model('ZwiftResult', zwiftResultSchema);
+export const ZwiftResult = model<ZwiftResultSchema>('ZwiftResult', zwiftResultSchema);

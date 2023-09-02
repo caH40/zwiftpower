@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import pkg from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { ZwiftEventSchema } from '../types/model.interface.js';
 
-const zwiftEventSchema = new Schema({
+const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', default: null },
   typeRaceCustom: { type: String, default: null },
   id: { type: Number, unique: true, required: true },
@@ -36,4 +35,4 @@ const zwiftEventSchema = new Schema({
   totalFinishedCount: { type: Number, default: 0 },
 });
 
-export const ZwiftEvent = model('ZwiftEvent', zwiftEventSchema);
+export const ZwiftEvent = model<ZwiftEventSchema>('ZwiftEvent', zwiftEventSchema);

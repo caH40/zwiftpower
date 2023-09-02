@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import pkg from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { SignedRidersSchema } from '../types/model.interface.js';
 
-const zwiftSignedRidersSchema = new Schema({
+const zwiftSignedRidersSchema = new Schema<SignedRidersSchema>({
   subgroup: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEventSubgroup', required: true },
   id: { type: Number, required: true },
   firstName: { type: String, default: null },
@@ -18,4 +17,7 @@ const zwiftSignedRidersSchema = new Schema({
   subgroupLabel: { type: String, default: 'E' },
 });
 
-export const ZwiftSignedRiders = model('ZwiftSignedRiders', zwiftSignedRidersSchema);
+export const ZwiftSignedRiders = model<SignedRidersSchema>(
+  'ZwiftSignedRiders',
+  zwiftSignedRidersSchema
+);

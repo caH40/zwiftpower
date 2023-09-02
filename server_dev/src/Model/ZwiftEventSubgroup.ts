@@ -1,8 +1,8 @@
-import pkg from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { ZwiftEventSchema } from '../types/model.interface.js';
 
-const zwiftEventSubgroupSchema = new Schema({
+const zwiftEventSubgroupSchema = new Schema<ZwiftEventSchema>({
   bikeHash: { type: Number, default: null },
   description: { type: String, default: null },
   eventSubgroupStart: { type: String, default: null },
@@ -31,4 +31,7 @@ const zwiftEventSubgroupSchema = new Schema({
   invitedSweepers: { type: [Number], default: [] },
 });
 
-export const ZwiftEventSubgroup = model('ZwiftEventSubgroup', zwiftEventSubgroupSchema);
+export const ZwiftEventSubgroup = model<ZwiftEventSchema>(
+  'ZwiftEventSubgroup',
+  zwiftEventSubgroupSchema
+);

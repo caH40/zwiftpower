@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = mongoose;
+import { TotalCatchupSchema } from '../types/model.interface.js';
 
-const totalCatchupSchema = new Schema({
+const totalCatchupSchema = new Schema<TotalCatchupSchema>({
   type: String,
   start: { type: Number, required: true },
   end: { type: Number },
@@ -23,7 +23,7 @@ const totalCatchupSchema = new Schema({
   ],
 });
 
-export const TotalCatchup = model('TotalCatchup', totalCatchupSchema);
+export const TotalCatchup = model<TotalCatchupSchema>('TotalCatchup', totalCatchupSchema);
 
 // ручное добавление модели
 // TotalCatchup.create({

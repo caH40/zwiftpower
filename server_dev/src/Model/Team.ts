@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import pkg from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { TeamSchema } from '../types/model.interface.js';
 
-const teamSchema = new Schema({
+const teamSchema = new Schema<TeamSchema>({
   name: { type: String, unique: true },
   riders: [
     {
@@ -19,8 +18,8 @@ const teamSchema = new Schema({
   groupName: String,
   link: String,
   isAllowed: { type: Boolean, default: false },
-  requestRiders: { type: Array },
+  requestRiders: [],
   deleted: { isDeleted: { type: Boolean, default: false }, date: { type: Number } },
 });
 
-export const Team = model('Team', teamSchema);
+export const Team = model<TeamSchema>('Team', teamSchema);

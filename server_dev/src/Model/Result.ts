@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
-import pkg from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { ResultSchema } from '../types/model.interface.js';
 
-const resultSchema = new Schema({
+const resultSchema = new Schema<ResultSchema>({
   stageId: { type: mongoose.Schema.Types.ObjectId, ref: 'Stage' },
   riderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Rider' },
   zwiftEventId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent' },
@@ -53,4 +52,4 @@ const resultSchema = new Schema({
   addedManually: { type: Boolean },
 });
 
-export const Result = model('Result', resultSchema);
+export const Result = model<ResultSchema>('Result', resultSchema);

@@ -1,7 +1,8 @@
-import pkg from 'mongoose';
-const { Schema, model } = pkg;
+import { Schema, model } from 'mongoose';
 
-const seriesSchema = new Schema({
+import { SeriesSchema } from '../types/model.interface.js';
+
+const seriesSchema = new Schema<SeriesSchema>({
   name: { type: String, unique: true, required: true },
   dateStart: Number,
   description: String,
@@ -13,4 +14,4 @@ const seriesSchema = new Schema({
   isFinished: { type: Boolean, default: false },
 });
 
-export const Series = model('Series', seriesSchema);
+export const Series = model<SeriesSchema>('Series', seriesSchema);

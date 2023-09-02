@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import prk from 'mongoose';
-const { Schema, model } = prk;
+import mongoose, { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
+import { TotalCatchupSchema } from '../types/model.interface.js';
+
+const userSchema = new Schema<TotalCatchupSchema>({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   riderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Rider' },
@@ -25,4 +25,4 @@ const userSchema = new Schema({
   bio: { type: String },
 });
 
-export const User = model('User', userSchema);
+export const User = model<TotalCatchupSchema>('User', userSchema);

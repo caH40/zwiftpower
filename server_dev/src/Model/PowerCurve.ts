@@ -1,8 +1,8 @@
-import pkg from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const { Schema, model } = pkg;
+import { PowerCurveSchema } from '../types/model.interface.js';
 
-const powerCurveSchema = new Schema({
+const powerCurveSchema = new Schema<PowerCurveSchema>({
   zwiftId: { type: Number, required: true, unique: true },
   date: { type: Number, default: null },
   pointsWatts: [
@@ -25,4 +25,4 @@ const powerCurveSchema = new Schema({
   ],
 });
 
-export const PowerCurve = model('PowerCurve', powerCurveSchema);
+export const PowerCurve = model<PowerCurveSchema>('PowerCurve', powerCurveSchema);

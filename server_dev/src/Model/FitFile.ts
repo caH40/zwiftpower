@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose';
 
-const fitFileSchema = new Schema({
+import { FitFileSchema } from '../types/model.interface.js';
+
+const fitFileSchema = new Schema<FitFileSchema>({
   zwiftId: { type: Number, unique: true },
   dateLastedActivity: { type: Number, default: null },
   dateUpdate: { type: Number },
@@ -15,4 +17,4 @@ const fitFileSchema = new Schema({
   ],
 });
 
-export const FitFile = model('FitFile', fitFileSchema);
+export const FitFile = model<FitFileSchema>('FitFile', fitFileSchema);
