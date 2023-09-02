@@ -7,7 +7,10 @@ import {
   putDevelopmentService,
 } from '../service/information/development.js';
 import { sendMessageToTelegramBot } from '../service/telegrambot.js';
-
+import { PostDevelopment } from '../types/http.interface.js';
+import { InfoDevelopmentSchema } from '../types/model.interface.js';
+//
+//
 export async function getDevelopment(req: Request, res: Response) {
   try {
     const informationDev = await getDevelopmentService();
@@ -19,12 +22,20 @@ export async function getDevelopment(req: Request, res: Response) {
     }
   }
 }
+//
+//
 export async function postDevelopment(req: Request, res: Response) {
   try {
-    const { releaseData } = req.body;
+    const releaseData: PostDevelopment = req.body.releaseData;
+
     const { userId } = req.params;
 
-    const { infoDevelopment, ...response } = await postDevelopmentService(releaseData, userId);
+    const responsePosted = await postDevelopmentService(releaseData, userId);
+    if (!responsePosted) {
+      throw new Error('Ошибка при сохранении релиза в БД');
+    }
+
+    const { infoDevelopment, ...response } = responsePosted;
 
     if (infoDevelopment) {
       await sendMessageToTelegramBot(infoDevelopment);
@@ -37,10 +48,13 @@ export async function postDevelopment(req: Request, res: Response) {
     }
   }
 }
+//
+//
 export async function putDevelopment(req: Request, res: Response) {
   try {
-    const { releaseData } = req.body;
+    const releaseData: InfoDevelopmentSchema = req.body.releaseData;
     const { userId } = req.params;
+
     const response = await putDevelopmentService(releaseData, userId);
     res.status(200).json(response);
   } catch (error) {
@@ -50,9 +64,11 @@ export async function putDevelopment(req: Request, res: Response) {
     }
   }
 }
+//
+//
 export async function deleteDevelopment(req: Request, res: Response) {
   try {
-    const { id } = req.body;
+    const id: string = req.body.id;
     const response = await deleteDevelopmentService(id);
     res.status(201).json(response);
   } catch (error) {

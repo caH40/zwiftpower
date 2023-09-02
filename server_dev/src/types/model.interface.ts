@@ -21,7 +21,8 @@ export interface FitFileSchema {
 }
 //
 //
-export interface DescriptionSchema {
+export interface InfoDevelopmentSchema {
+  _id?: Types.ObjectId;
   postDate: number;
   updateDate: number;
   releaseDate: number;

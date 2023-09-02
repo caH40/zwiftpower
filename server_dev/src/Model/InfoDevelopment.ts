@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
-import mongoose from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-const infoDevelopmentSchema = new Schema({
+import { InfoDevelopmentSchema } from '../types/model.interface.js';
+
+const infoDevelopmentSchema = new Schema<InfoDevelopmentSchema>({
   postDate: Number, // дата поста релиза
   updateDate: Number, // дата изменения текста релиза
   releaseDate: Number, // дата релиза текущей версии проекта
@@ -12,4 +13,7 @@ const infoDevelopmentSchema = new Schema({
   isFromGitHubActions: { type: Boolean, default: false }, // true если релиз пришел из github автоматически
 });
 
-export const InfoDevelopment = model('InfoDevelopment', infoDevelopmentSchema);
+export const InfoDevelopment = model<InfoDevelopmentSchema>(
+  'InfoDevelopment',
+  infoDevelopmentSchema
+);

@@ -14,3 +14,11 @@ export interface GetEvents {
   docsOnPage?: number;
   search?: string;
 }
+//
+// данные из body
+export interface PostDevelopment {
+  releaseDate: number;
+  text: string;
+  version: string;
+  isFromGitHubActions?: boolean;
+}

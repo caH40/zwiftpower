@@ -1,6 +1,8 @@
 import { InfoDevelopment } from '../../Model/InfoDevelopment.js';
+import { PostDevelopment } from '../../types/http.interface.js';
+import { InfoDevelopmentSchema } from '../../types/model.interface.js';
 
-export async function postDevelopmentService(releaseData, userId) {
+export async function postDevelopmentService(releaseData: PostDevelopment, userId: string) {
   try {
     const body = {
       releaseDate: releaseData.releaseDate,
@@ -17,27 +19,39 @@ export async function postDevelopmentService(releaseData, userId) {
       message: 'Информация о релизе сохранена в БД',
     };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
+//
+//
 export async function getDevelopmentService() {
   try {
     const informationDev = await InfoDevelopment.find();
     informationDev.sort((a, b) => b.releaseDate - a.releaseDate);
     return { informationDev };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
-export async function deleteDevelopmentService(id) {
+//
+//
+export async function deleteDevelopmentService(id: string) {
   try {
     const informationDev = await InfoDevelopment.findOneAndDelete({ _id: id });
+    if (!informationDev) {
+      throw new Error('Релиз не найден в БД');
+    }
     return { message: `Релиз "${informationDev.text}" удалён!` };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
-export async function putDevelopmentService(releaseData, userId) {
+//
+//
+export async function putDevelopmentService(
+  releaseData: InfoDevelopmentSchema,
+  userId: string
+) {
   try {
     const body = {
       releaseDate: releaseData.releaseDate,
@@ -46,6 +60,7 @@ export async function putDevelopmentService(releaseData, userId) {
       text: releaseData.text,
       userEdit: userId,
     };
+
     const infoDevelopmentDB = await InfoDevelopment.findOneAndUpdate(
       { _id: releaseData._id },
       body
@@ -54,6 +69,6 @@ export async function putDevelopmentService(releaseData, userId) {
 
     return { message: 'Изменение информации о релизе сохранены в БД' };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
