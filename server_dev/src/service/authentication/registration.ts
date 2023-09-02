@@ -6,7 +6,7 @@ import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
 import { generateToken, saveToken } from './token.js';
 
-export async function registrationService(username, email, password) {
+export async function registrationService(username: string, email: string, password: string) {
   try {
     const checkUsername = await User.findOne({ username });
     if (checkUsername) throw { message: `Username "${username}" уже занят` };
@@ -33,14 +33,19 @@ export async function registrationService(username, email, password) {
     });
 
     const target = 'registration'; //для отправки письма для активации
-    const sendedMail = await mailService(target, activationToken, email, username, password);
+    await mailService(target, activationToken, email, username, password);
 
     const tokens = await generateToken({ username, email, id, role });
+
+    if (!tokens) {
+      throw new Error('Ошибка при получении токенов');
+    }
+
     await saveToken(id, tokens.refreshToken);
 
     const message = 'Регистрация прошла успешно';
     return { ...tokens, message, user: { username, email, id, role } };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }

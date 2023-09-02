@@ -3,7 +3,11 @@ import bcrypt from 'bcrypt';
 import { User } from '../../Model/User.js';
 import { generateToken, removeToken, saveToken } from './token.js';
 
-export async function authorizationService(username, password, refreshToken) {
+export async function authorizationService(
+  username: string,
+  password: string,
+  refreshToken: string
+) {
   try {
     const userDB = await User.findOne({ username });
 
@@ -21,7 +25,12 @@ export async function authorizationService(username, password, refreshToken) {
       id: userDB._id,
       role: userDB.role,
     });
-    await saveToken(userDB._id, tokens.refreshToken);
+
+    if (tokens) {
+      await saveToken(userDB._id, tokens.refreshToken);
+    } else {
+      throw new Error('Ошибка при получении токенов');
+    }
 
     const message = 'Авторизация прошла успешно';
     return {
@@ -37,6 +46,6 @@ export async function authorizationService(username, password, refreshToken) {
       },
     };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }

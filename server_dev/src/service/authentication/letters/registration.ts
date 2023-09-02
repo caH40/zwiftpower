@@ -1,5 +1,13 @@
-export function htmlResetPassword(username, email, token, FRONT, date) {
-  const server = process.env.FRONT;
+import { server } from '../../../config/environment.js';
+
+export function htmlRegistration(
+  username: string,
+  password: string,
+  email: string,
+  token: string,
+  FRONT: string,
+  date: string
+) {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html
@@ -12,7 +20,7 @@ export function htmlResetPassword(username, email, token, FRONT, date) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Сброс пароля</title>
+    <title>Регистрация</title>
     <style type="text/css">
       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto&display=swap');
       p,
@@ -122,7 +130,7 @@ export function htmlResetPassword(username, email, token, FRONT, date) {
                         letter-spacing: 0.03em;
                       "
                     >
-                      Сброс пароля
+                      Подтверждение регистрации
                     </h1>
                   </td>
                 </tr>
@@ -134,25 +142,25 @@ export function htmlResetPassword(username, email, token, FRONT, date) {
                 <tr>
                   <td>
                     <p style="margin: 0; padding: 0 0 5px 0">
-                      Вы получили это письмо, так как ${date} был произведен запрос на сброс
-                      пароля для ${username} на сайте
-                      <a href="${server}" target="_blank">zwiftpower.ru</a>, и указан
+                      Вы получили это письмо, так как ${date} была произведена регистрация на
+                      сайте
+                      <a href="${server}" target="_blank">zwiftpower.ru</a>, где был указан
                       данный e-mail:
                     </p>
                     <p style="margin: 0; padding: 0 0 20px 0">${email}</p>
                     <p style="margin: 0; padding: 0 0 5px 0">
-                      Для сброса пароля перейдите по ссылке:
+                      Для активации учетной записи перейдите по ссылке:
                     </p>
                     <p style="margin: 0; padding: 0 0 20px 0">
-                      <a href="${FRONT}/auth/new-password/${token}" target="_blank"
-                        >${FRONT}/auth/new-password/${token}</a
-                      >
+                    <a href="${FRONT}/auth/confirm-email/${token}" target="_blank">${FRONT}/auth/confirm-email/${token}</a>
                     </p>
+                    <p style="margin: 0; padding: 0 0 5px 0">Логин: ${username}</p>
+                    <p style="margin: 0; padding: 0 0 20px 0">Пароль: ${password}</p>
                     <p style="margin: 0; padding: 0 0 20px 0">
-                      <strong>Внимание!</strong> Ссылка действительна 1 час. Если Вы не делали
-                      данного запроса, то просто проигнорируйте это письмо.
+                      <strong>Внимание!</strong> Ссылка действительна 72 часа. Без активации
+                      аккаунт будет удалён.
                     </p>
-                    <p style="margin: 0; padding: 0">С уважением, команда ZwiftPower.ru.</p>
+                    <p style="margin: 0; padding: 0">С уважением, команда ZwiftPower.ru</p>
                   </td>
                 </tr>
               </table>
@@ -161,18 +169,20 @@ export function htmlResetPassword(username, email, token, FRONT, date) {
           <!-- Body end-->
           <!-- Footer start -->
           <tr
-          style="
-            background: linear-gradient(90deg, #05316d -0.39%, #4380d3 100%);
-            height: 60px;
-          "
-        >
-          <td></td>
-        </tr>
+            style="
+              background: linear-gradient(90deg, #05316d -0.39%, #4380d3 100%);
+              height: 60px;
+            "
+          >
+            <td></td>
+          </tr>
           <!-- Footer end-->
         </table>
       </div>
     </center>
   </body>
 </html>
+
+
   `;
 }

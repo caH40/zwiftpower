@@ -1,9 +1,9 @@
-import { generateToken, saveToken, validateRefreshToken } from './token.js';
+import { generateToken, validateRefreshToken } from './token.js';
 
 import { Token } from '../../Model/Token.js';
 import { User } from '../../Model/User.js';
 
-export async function refreshService(refreshToken) {
+export async function refreshService(refreshToken: string) {
   try {
     if (!refreshToken) return;
 
@@ -16,15 +16,19 @@ export async function refreshService(refreshToken) {
     //обновляем данные пользователя если они изменились
     const userDB = await User.findById(userFromToken.id);
     if (!userDB) return;
-    const { accessToken } = await generateToken({
+    const tokens = await generateToken({
       id: userDB._id,
       email: userDB.email,
       username: userDB.username,
       role: userDB.role,
     });
 
+    if (!tokens) {
+      throw new Error('Ошибка при получении токенов');
+    }
+
     return {
-      accessToken,
+      accessToken: tokens.accessToken,
       user: {
         id: userDB._id,
         email: userDB.email,

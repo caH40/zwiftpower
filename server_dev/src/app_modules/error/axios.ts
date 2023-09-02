@@ -1,4 +1,6 @@
-export function errorAxios(error, functionName = '') {
+import { AxiosError } from 'axios';
+
+export function errorAxios(error: AxiosError, functionName = '') {
   if (error.response) {
     // Запрос был сделан, и сервер ответил кодом состояния, который
     // выходит за пределы 2xx
@@ -15,5 +17,6 @@ export function errorAxios(error, functionName = '') {
     // Произошло что-то при настройке запроса, вызвавшее ошибку
     console.log('Error', error.message);
   }
-  throw { message: error.response.data.message, functionName };
+
+  throw { message: error.message, functionName };
 }

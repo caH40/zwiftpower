@@ -195,7 +195,7 @@ export interface TotalCatchupSchema {
 }
 //
 //
-export interface TotalCatchupSchema {
+export interface UserConfirmSchema {
   userId: string;
   date: number;
   activationToken: string;
@@ -203,7 +203,7 @@ export interface TotalCatchupSchema {
 }
 //
 //
-export interface TotalCatchupSchema {
+export interface UserSchema {
   username: string;
   password: string;
   riderId: Types.ObjectId;

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 
-import { mongodb } from './config/env.js';
+import { mongodb } from './config/environment.js';
 
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';

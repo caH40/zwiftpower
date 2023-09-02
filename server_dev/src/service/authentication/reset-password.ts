@@ -4,13 +4,13 @@ import { PasswordReset } from '../../Model/Password-reset.js';
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
 
-export async function resetPasswordService(email) {
+export async function resetPasswordService(email: string) {
   try {
     const userDB = await User.findOne({ email });
     if (!userDB) throw { message: 'e-mail не найден' };
 
     const tokenReset = uuidv4();
-    const passwordResetDB = await PasswordReset.create({
+    await PasswordReset.create({
       userId: userDB._id,
       email,
       tokenReset,
@@ -22,6 +22,6 @@ export async function resetPasswordService(email) {
 
     return { message: `Сброс пароля `, email };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }

@@ -1,8 +1,8 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { TotalCatchupSchema } from '../types/model.interface.js';
+import { UserSchema } from '../types/model.interface.js';
 
-const userSchema = new Schema<TotalCatchupSchema>({
+const userSchema = new Schema<UserSchema>({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   riderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Rider' },
@@ -25,4 +25,4 @@ const userSchema = new Schema<TotalCatchupSchema>({
   bio: { type: String },
 });
 
-export const User = model<TotalCatchupSchema>('User', userSchema);
+export const User = model<UserSchema>('User', userSchema);
