@@ -4,7 +4,8 @@ import {
 } from '../service/race/events-delete.js';
 import { postEventService } from '../service/race/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
-import { getEventService } from '../service/race/events.js';
+
+import { getEventService } from '../service/race/event-get.js';
 import { getEventsService } from '../service/race/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 // import { getUserResultsService } from '../service/race/rider/rider-profile.js';
@@ -15,12 +16,16 @@ import { Request, Response } from 'express';
 
 import { GetEvents, PostEvent } from '../types/http.interface.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
+import { EventFetch } from '../../../common/types/event.interface.js';
 
+/**
+ * Получение Event (описание) и зарегистрировавшихся райдеров
+ */
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const event = await getEventService(eventId);
-    res.status(200).json(event);
+    const event: EventFetch | null = await getEventService(eventId);
+    res.status(200).json({ event });
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
@@ -41,16 +46,16 @@ export async function getEvents(req: Request, res: Response) {
     }
   }
 }
+
 /**
  * Создание(сохранение) нового Эвента в БД
  */
-
 export async function postEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const event: PostEvent = req.body.event;
 
-    // подготовка данных для работы
+    // подготовка данных для сервиса
     const eventAfterDto = eventParamsDto(event);
 
     const eventSaved = await postEventService(eventAfterDto, userId);

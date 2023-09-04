@@ -1,42 +1,11 @@
-import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
+
+// types
 import { GetEvents } from '../../types/http.interface.js';
 
-export async function getEventService(eventId) {
-  try {
-    const eventDataDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
-    if (!eventDataDB) return { event: [] };
-    // поиск и добавление в массив всех зарегистрированных райдеров в подгруппы
-    const signedRiders = [];
-    for (const subgroup of eventDataDB.eventSubgroups) {
-      const ridersInGroup = await ZwiftSignedRiders.find({ subgroup: subgroup._id });
-      signedRiders.push(...ridersInGroup);
-    }
-    const eventData = eventDataDB.toObject();
-    // сортировка групп по убыванию
-    eventData.eventSubgroups.sort((a, b) => a.label - b.label);
-    // сортировка списка райдеров по убыванию категории
-    signedRiders.sort((a, b) =>
-      a.subgroupLabel.toLowerCase().localeCompare(b.subgroupLabel.toLowerCase())
-    );
-
-    // добавление powerCurve каждому райдеру
-    const signedRidersArray = signedRiders.map((s) => s.toObject());
-    const powerCurvesDB = await PowerCurve.find();
-
-    for (const rider of signedRidersArray) {
-      rider.powerCurve = powerCurvesDB.find((cp) => cp.zwiftId === rider.id);
-    }
-
-    eventData.signedRiders = signedRidersArray;
-
-    return { event: eventData };
-  } catch (error) {
-    console.log(error);
-  }
-}
-// получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
+/**
+ * получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
+ */
 export async function getEventsService({
   started,
   target,

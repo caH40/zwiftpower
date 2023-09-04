@@ -1,6 +1,7 @@
 import {
   LogsAdminSchema,
   PowerCurveSchema,
+  SignedRidersSchema,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -89,4 +90,16 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
  */
 export interface LogsAdminUsername extends Omit<LogsAdminSchema, 'userId'> {
   userId: { username: string };
+}
+/**
+ * Логи по запросам админов(модераторов)
+ */
+export interface SignedRidersPowerCurves extends SignedRidersSchema {
+  powerCurve?: PowerCurveSchema;
+}
+/**
+ * Логи по запросам админов(модераторов)
+ */
+export interface EventWithSignedRiders extends EventWithSubgroup {
+  signedRiders: SignedRidersPowerCurves[];
 }

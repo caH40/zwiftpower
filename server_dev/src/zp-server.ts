@@ -18,6 +18,7 @@ const __dirname = path.resolve();
 const PORT = process.env.SERVER_PORT || 5000;
 
 await mongoose
+  .set('strictQuery', true) //в базе будут только данные которые есть в схеме
   .connect(mongodb)
   .then(() => console.log('Connected to Mongo..'))
   .catch((error) => console.log(error));
