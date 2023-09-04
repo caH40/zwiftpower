@@ -1,8 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
+import { LogsAdminSchema } from '../types/model.interface.js';
 
-const { Schema, model } = mongoose;
-
-const logsAdminSchema = new Schema({
+const logsAdminSchema = new Schema<LogsAdminSchema>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   date: { type: Number },
   description: { type: String },
@@ -13,4 +12,4 @@ const logsAdminSchema = new Schema({
   },
 });
 
-export const LogsAdmin = model('LogsAdmin', logsAdminSchema);
+export const LogsAdmin = model<LogsAdminSchema>('LogsAdmin', logsAdminSchema);

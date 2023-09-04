@@ -1,4 +1,4 @@
-export const descriptionLogsAdmins = {
+export const descriptionLogsAdmins: x = {
   postZwiftEvent: 'Сохранение (добавление) Эвента в БД сайта',
   getZwiftEventData: 'Получение данных Эвента с сайта Звифт',
   updateZwiftEventData: 'Обновление данных Эвента на сайте Звифт',
@@ -7,3 +7,7 @@ export const descriptionLogsAdmins = {
   updateEventResultsInDB:
     'Обновление данных Эвента и результатов заезда (протокола) в БД сайта',
 };
+
+interface x {
+  [key: string]: string;
+}

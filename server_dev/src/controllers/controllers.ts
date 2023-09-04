@@ -2,7 +2,10 @@ import { getSeriesActualService } from '../service/series.js';
 import { getLogsAdminsService } from '../service/log.js';
 import { updateZwiftIdService } from '../service/user.js';
 import { Request, Response } from 'express';
+
+// types
 import { GetLogsAdmins } from '../types/http.interface.js';
+import { LogsFetch } from '../../../common/types/logs.interface.js';
 
 export async function getSeriesActual(req: Request, res: Response) {
   try {
@@ -21,7 +24,7 @@ export async function getLogsAdmins(req: Request, res: Response) {
   try {
     const query: GetLogsAdmins = req.query;
 
-    const logs = await getLogsAdminsService(query);
+    const logs: LogsFetch = await getLogsAdminsService(query);
 
     return res.status(200).json(logs);
   } catch (error) {

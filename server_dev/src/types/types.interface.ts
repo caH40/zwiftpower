@@ -1,4 +1,5 @@
 import {
+  LogsAdminSchema,
   PowerCurveSchema,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
@@ -82,4 +83,10 @@ export interface LoggingAdminArg {
  */
 export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
+}
+/**
+ * Логи по запросам админов(модераторов)
+ */
+export interface LogsAdminUsername extends Omit<LogsAdminSchema, 'userId'> {
+  userId: { username: string };
 }

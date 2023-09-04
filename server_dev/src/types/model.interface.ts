@@ -171,6 +171,17 @@ export interface TeamSchema {
 }
 //
 //
+export interface LogsAdminSchema {
+  userId: Types.ObjectId;
+  date: number;
+  description: string;
+  event: {
+    id: number;
+    name: string;
+    start: number;
+  };
+}
+//
 export interface TokenSchema {
   user: Types.ObjectId;
   refreshToken: string;
