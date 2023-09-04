@@ -234,7 +234,7 @@ export interface UserSchema {
   team: string;
   role: string;
   photoFromZp: boolean;
-  photoProfile: string;
+  photoProfile?: string;
   bio: string;
 }
 //

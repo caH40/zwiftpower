@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getZwiftEventResultsService } from '../service/zwift/download.js';
 import { getEventZwiftService, putEventZwiftService } from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
+import { PutEvent } from '../types/http.interface.js';
 
 export async function getEvent(req: Request, res: Response) {
   try {
@@ -18,7 +19,7 @@ export async function getEvent(req: Request, res: Response) {
 export async function putEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { event } = req.body;
+    const event: PutEvent = req.body.event;
     const eventChanged = await putEventZwiftService(event, userId);
     res.status(200).json(eventChanged);
   } catch (error) {

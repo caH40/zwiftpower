@@ -65,7 +65,8 @@
 2.11.5 +типизация сервисов getUserPowerService;  
 2.11.6 +типизация сервисов getUserResultsService;  
 2.11.7 +типизация сервисов postEventService;  
-2.11.8 +типизация сервисов getLogsAdmins;
+2.11.8 +типизация сервисов getLogsAdmins;  
+2.11.9 +типизация сервисов zwiftToken;
 
 ---
 

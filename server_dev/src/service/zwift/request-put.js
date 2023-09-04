@@ -2,8 +2,10 @@ import axios from 'axios';
 
 import { getAccessToken } from './token.js';
 import { errorAxios } from '../../app_modules/error/axios.js';
+import { zwiftAPI } from '../../config/environment.js';
 
-const apiUrl = process.env.ZWIFT_API;
+const apiUrl = zwiftAPI;
+
 const headersDefault = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -18,23 +20,19 @@ const headersDefault = {
 };
 
 export async function putRequest(url, data, isMainToken = true) {
-  try {
-    const token = await getAccessToken(isMainToken);
+  const token = await getAccessToken(isMainToken);
 
-    const response = await axios({
-      method: 'put',
-      url: `${apiUrl}${url}`,
-      headers: {
-        ...headersDefault,
-        Authorization: 'Bearer ' + token,
-      },
-      data,
-    }).catch((error) => {
-      errorAxios(error, 'putRequest');
-    });
+  const response = await axios({
+    method: 'put',
+    url: `${apiUrl}${url}`,
+    headers: {
+      ...headersDefault,
+      Authorization: 'Bearer ' + token,
+    },
+    data,
+  }).catch((error) => {
+    errorAxios(error, 'putRequest');
+  });
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 }

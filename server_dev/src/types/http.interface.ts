@@ -32,3 +32,10 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   typeRaceCustom: string;
   seriesId?: string;
 }
+/**
+ * данные получаемые с фронтэнда для изменения данных Event
+ */
+export interface PutEvent {
+  eventTemplateId: number;
+  eventData: PostEvent;
+}

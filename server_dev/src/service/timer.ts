@@ -37,7 +37,7 @@ export async function timers() {
   }, millisecondsIn12Minutes);
 
   // запуск обновления фитфалов мощности в 2 часа каждую ночь
-  const job = new CronJob(
+  new CronJob(
     '0 0 2 * * *',
     async function () {
       console.log(new Date().toLocaleString(), 'Обновление токенов и фитфайлов мощности');
