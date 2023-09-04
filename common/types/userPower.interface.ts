@@ -1,3 +1,4 @@
+// общий тип, используемый на сервере и фронте, UserPower отправляемый/получаемый через API
 export interface UserPowerFetch {
   powerCurve: {
     zwiftId: number;
