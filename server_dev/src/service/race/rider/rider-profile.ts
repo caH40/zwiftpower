@@ -1,6 +1,7 @@
 import { PowerCurve } from '../../../Model/PowerCurve.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
-import { userPowerDto } from '../../../dto/user-power.js';
+import { userPowerDto } from '../../../dto/user-power.dto.js';
+import { userResultsDto } from '../../../dto/user-results.dto.js';
 
 import { ResultWithEvent } from '../../../types/types.interface.js';
 import { getProfile } from './profile.js';
@@ -13,14 +14,14 @@ export async function getUserResultsService(zwiftId: string) {
 
   const powerCurveDB = await PowerCurve.findOne({ zwiftId });
   const results = await getUserResultsFromDB(zwiftId);
-  const profile = await getProfile(zwiftId, powerCurveDB, results[0]);
+  const profile = await getProfile({
+    zwiftId,
+    powerCurve: powerCurveDB,
+    resultLast: results[0],
+  });
 
-  return {
-    userResults: results,
-    profile,
-    powerCurve: powerCurveDB || {},
-    message: 'Профайл и результаты райдера',
-  };
+  // подготовка данных для отправки при запросе API
+  return userResultsDto({ userResults: results, profile, powerCurve: powerCurveDB });
 }
 //
 // данные для страницы профиля райдера с кривой мощности
@@ -45,5 +46,6 @@ export async function getUserPowerService(zwiftId: string) {
 
   powerFromEvents.sort((a, b) => b.eventStart - a.eventStart);
 
+  // подготовка данных для отправки при запросе API
   return userPowerDto({ powerCurve: powerCurveDB, powerFromEvents });
 }

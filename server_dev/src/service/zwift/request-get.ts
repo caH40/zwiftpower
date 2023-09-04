@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { getAccessToken } from './token.js';
-import { errorAxios } from '../../app_modules/error/axios.js';
 
-const apiUrl = process.env.ZWIFT_API;
+import { errorAxios } from '../../app_modules/error/axios.js';
+import { zwiftAPI } from '../../config/environment.js';
+
+const apiUrl = zwiftAPI;
 const headersDefault = {
   'Content-Type': 'application/x-protobuf-lite',
   Accept: 'application/json',
@@ -14,7 +16,7 @@ const headersDefault = {
 };
 
 // запрос по url на открытое API Звифта
-export async function getRequest(url, isMainToken = true) {
+export async function getRequest(url: string, isMainToken = true) {
   try {
     const token = await getAccessToken(isMainToken);
 
@@ -28,9 +30,14 @@ export async function getRequest(url, isMainToken = true) {
     }).catch((error) => {
       errorAxios(error, 'getRequest');
     });
-    return response.data;
+
+    if (response) {
+      return response.data;
+    }
+    return null;
   } catch (error) {
     console.log(`${apiUrl}${url}`);
     console.error(error);
+    return null;
   }
 }

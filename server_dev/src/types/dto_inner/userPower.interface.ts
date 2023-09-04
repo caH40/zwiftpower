@@ -14,7 +14,7 @@ export interface PowerFromEvents {
   eventStart: number;
 }
 //
-//
+// интерфейс входящих аргументов ДТО для страницы профиль/мощность
 export interface UserPowerDtoArg {
   powerCurve: PowerCurveSchema | null;
   powerFromEvents: PowerFromEvents[];
