@@ -13,7 +13,8 @@ import { getSeriesService } from '../service/race/series.js';
 import { getResultsSeriesService } from '../service/race/results-series.js';
 import { Request, Response } from 'express';
 
-import { GetEvents } from '../types/http.interface.js';
+import { GetEvents, PostEvent } from '../types/http.interface.js';
+import { eventParamsDto } from '../dto/eventParams.dto.js';
 
 export async function getEvent(req: Request, res: Response) {
   try {
@@ -40,12 +41,19 @@ export async function getEvents(req: Request, res: Response) {
     }
   }
 }
+/**
+ * Создание(сохранение) нового Эвента в БД
+ */
+
 export async function postEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { event } = req.body;
+    const event: PostEvent = req.body.event;
 
-    const eventSaved = await postEventService(event, userId);
+    // подготовка данных для работы
+    const eventAfterDto = eventParamsDto(event);
+
+    const eventSaved = await postEventService(eventAfterDto, userId);
     res.status(201).json(eventSaved);
   } catch (error) {
     console.log(error);

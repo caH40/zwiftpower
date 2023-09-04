@@ -229,7 +229,8 @@ export interface UserSchema {
 //
 //
 export interface ZwiftEventSchema {
-  seriesId: Types.ObjectId;
+  _id?: Types.ObjectId | null;
+  seriesId: Types.ObjectId | null;
   typeRaceCustom: string;
   id: number;
   mapId: number;
@@ -255,15 +256,16 @@ export interface ZwiftEventSchema {
   clubName: string;
   hasResults: boolean;
   needCount: boolean;
-  updated: number;
-  creator: Types.ObjectId;
+  updated: number | null;
+  creator: Types.ObjectId | string;
   started: boolean;
   totalFinishedCount: number;
 }
 //
 //
-export interface ZwiftEventSchema {
-  bikeHash: number;
+export interface ZwiftEventSubgroupSchema {
+  _id?: Types.ObjectId | null;
+  bikeHash: number | null;
   description: string;
   eventSubgroupStart: string;
   id: number;
@@ -272,18 +274,18 @@ export interface ZwiftEventSchema {
   laps: number;
   distanceInMeters: number;
   durationInSeconds: number;
-  distanceSummary: {
+  distanceSummary?: {
     distanceInKilometers: number;
     elevationGainInMeters: number;
   };
-  zwiftInsiderUrl: string;
+  zwiftInsiderUrl?: string;
   mapId: number;
   name: string;
   routeId: number;
   rulesSet: string[];
   subgroupLabel: string;
   tags: string[];
-  timeTrialOptions: object;
+  timeTrialOptions: null;
   totalEntrantCount: number;
   totalJoinedCount: number;
   totalSignedUpCount: number;

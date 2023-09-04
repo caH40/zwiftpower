@@ -1,8 +1,15 @@
 import { LogsAdmin } from '../Model/LogsAdmin.js';
 import { descriptionLogsAdmins } from '../asset/logs/admins.js';
 import { GetLogsAdmins } from '../types/http.interface.js';
+import { LoggingAdminArg } from '../types/types.interface.js';
 
-export async function loggingAdmin(eventId, eventName, eventStart, userId, description) {
+export async function loggingAdmin({
+  eventId,
+  eventName,
+  eventStart,
+  userId,
+  description,
+}: LoggingAdminArg) {
   try {
     await LogsAdmin.create({
       userId,
@@ -19,6 +26,7 @@ export async function loggingAdmin(eventId, eventName, eventStart, userId, descr
     console.error(error);
   }
 }
+
 export async function getLogsAdminsService({
   page = 1,
   docsOnPage = 20,

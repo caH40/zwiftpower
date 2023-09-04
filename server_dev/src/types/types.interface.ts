@@ -1,4 +1,9 @@
-import { PowerCurveSchema, ZwiftEventSchema, ZwiftResultSchema } from './model.interface.js';
+import {
+  PowerCurveSchema,
+  ZwiftEventSchema,
+  ZwiftEventSubgroupSchema,
+  ZwiftResultSchema,
+} from './model.interface.js';
 
 export interface ResultWithEvent extends Omit<ZwiftResultSchema, 'zwiftEventId'> {
   zwiftEventId: ZwiftEventSchema;
@@ -63,4 +68,18 @@ export interface Profile {
   age: number;
   weightInGrams: number;
   bio?: string;
+}
+
+export interface LoggingAdminArg {
+  eventId: number;
+  eventName: string;
+  eventStart: string;
+  userId: string;
+  description: string;
+}
+/**
+ * Замена в свойстве eventSubgroups ссылки ObjectId на параметры подгрупп
+ */
+export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
+  eventSubgroups: ZwiftEventSubgroupSchema[];
 }

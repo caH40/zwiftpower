@@ -1,4 +1,5 @@
-//
+import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
+
 // данные из query параметров url
 export interface GetLogsAdmins {
   page?: number; // номер страницы при пагинации
@@ -21,4 +22,13 @@ export interface PostDevelopment {
   text: string;
   version: string;
   isFromGitHubActions?: boolean;
+}
+/**
+ * данные получаемые с фронтэнда для создания нового Event
+ */
+export interface PostEvent extends eventDataFromZwiftAPI {
+  creator: string;
+  organizer: string;
+  typeRaceCustom: string;
+  seriesId?: string;
 }

@@ -1,3 +1,7 @@
+/**
+ * данные полученные с API Zwift по запросу `profiles//${eventId}`
+ * параметры профайла райдера в Звифте
+ */
 export interface ProfileZwiftAPI {
   id: number;
   publicId: string;

@@ -63,7 +63,8 @@
 2.11.3 +типизация middleware;  
 2.11.4 +типизация сервисов по постингу сообщений о релизах разработки;  
 2.11.5 +типизация сервисов getUserPowerService;  
-2.11.6 +типизация сервисов getUserResultsService;
+2.11.6 +типизация сервисов getUserResultsService;  
+2.11.7 +типизация сервисов postEventService;
 
 ---
 

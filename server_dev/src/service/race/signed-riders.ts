@@ -1,11 +1,21 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
+import { ZwiftEventSchema } from '../../types/model.interface.js';
 import { getRequest } from '../zwift/request-get.js';
 
-export async function putSignedRidersService(eventId) {
+/**
+ * Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
+ */
+export async function putSignedRidersService(eventId: number) {
   try {
-    const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups');
+    const eventDB: ZwiftEventSchema | null = await ZwiftEvent.findOne({ id: eventId }).populate(
+      'eventSubgroups'
+    );
+
+    if (!eventDB) {
+      throw new Error(`Не найден Event ${eventId} в БД`);
+    }
 
     for (const eventSubgroup of eventDB.eventSubgroups) {
       // стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
@@ -46,6 +56,6 @@ export async function putSignedRidersService(eventId) {
 
     return { message: 'Изменения сохранены' };
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
