@@ -1,32 +1,45 @@
 import { Types } from 'mongoose';
-
 /**
- *  Event (описание) и зарегистрировавшиеся райдеры
+ *  Events для страниц расписания, анонса или результатов
  */
-export interface EventFetch {
+export interface EventListFetch {
   _id?: Types.ObjectId | null;
-  seriesId: Types.ObjectId | null;
+
+  seriesId: {
+    _id: Types.ObjectId;
+    name: string;
+    dateStart: number;
+    description: string;
+    descriptionShort?: string;
+    type: string;
+    organizer: string;
+    hasGeneral: boolean;
+    hasTeams: boolean;
+    isFinished: boolean;
+  };
+
   typeRaceCustom: string;
   id: number;
   mapId: number;
   categoryEnforcement: boolean;
   accessExpression: string;
-  cullingType: string;
+  cullingType?: string;
   description: string;
   eventStart: string;
   eventType: string;
   type: string;
   imageUrl: string;
   microserviceEventVisibility: string;
-  microserviceExternalResourceId: string;
+  microserviceExternalResourceId?: string;
   name: string;
   rulesSet: string[];
   organizer: string;
   tags: string[];
   visible: boolean;
-  totalEntrantCount: number;
-  totalJoinedCount: number;
+  totalEntrantCount?: number;
+  totalJoinedCount?: number;
   totalSignedUpCount: number;
+
   eventSubgroups: {
     _id?: Types.ObjectId | null;
     bikeHash: number | null;
@@ -63,34 +76,4 @@ export interface EventFetch {
   creator: Types.ObjectId | string;
   started: boolean;
   totalFinishedCount: number;
-  signedRiders: {
-    subgroup: Types.ObjectId;
-    id: number;
-    firstName: string;
-    lastName: string;
-    male: boolean;
-    countryAlpha3: string;
-    countryCode: number;
-    imageSrc: string;
-    age: number;
-    height: number;
-    weight: number;
-    subgroupLabel: string;
-    powerCurve?: {
-      zwiftId: number;
-      date: number;
-      pointsWatts: {
-        duration: number;
-        value: number;
-        date: number;
-        name: string;
-      }[];
-      pointsWattsPerKg: {
-        duration: number;
-        value: number;
-        date: number;
-        name: string;
-      }[];
-    };
-  }[];
 }

@@ -1,6 +1,7 @@
 import {
   LogsAdminSchema,
   PowerCurveSchema,
+  SeriesSchema,
   SignedRidersSchema,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
@@ -86,20 +87,34 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
   eventSubgroups: ZwiftEventSubgroupSchema[];
 }
 /**
+ * Данные Event с подгруппами и параметрами Series
+ */
+export interface EventWithSubgroupAndSeries extends Omit<EventWithSubgroup, 'seriesId'> {
+  seriesId: SeriesSchema;
+}
+/**
  * Логи по запросам админов(модераторов)
  */
 export interface LogsAdminUsername extends Omit<LogsAdminSchema, 'userId'> {
   userId: { username: string };
 }
 /**
- * Логи по запросам админов(модераторов)
+ * Зарегистрированные райдеры с мощностью (powerCurve) за последние 90 дней
  */
 export interface SignedRidersPowerCurves extends SignedRidersSchema {
   powerCurve?: PowerCurveSchema;
 }
 /**
- * Логи по запросам админов(модераторов)
+ * Данные Event с зарегистрированными райдерами
  */
 export interface EventWithSignedRiders extends EventWithSubgroup {
   signedRiders: SignedRidersPowerCurves[];
+}
+/**
+ * Параметры для функции eventsListDto
+ */
+export interface EventsListDtoArg {
+  events: EventWithSubgroupAndSeries[];
+  quantityPages?: number;
+  message: string;
 }

@@ -5,6 +5,7 @@ import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 // types
 import { EventWithSignedRiders, SignedRidersPowerCurves } from '../../types/types.interface.js';
 import { PowerCurveSchema } from '../../types/model.interface.js';
+import { eventSignedRidersDto } from '../../dto/eventSignedRiders.js';
 
 /**
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
@@ -50,7 +51,7 @@ export async function getEventService(eventId: string) {
 
     eventDataDB.signedRiders = signedRiders;
 
-    return eventDataDB;
+    return eventSignedRidersDto(eventDataDB);
   } catch (error) {
     console.log(error);
     return null;

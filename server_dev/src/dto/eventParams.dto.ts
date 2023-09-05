@@ -2,7 +2,8 @@ import { PostEvent } from '../types/http.interface.js';
 import { EventWithSubgroup } from '../types/types.interface.js';
 
 /**
- * @param event данные Event получаемые с фронтэнда для создания Event в БД
+ *
+ * DTO данных Event получаемые с фронтэнда для сохранения Event в БД
  */
 export const eventParamsDto = (event: PostEvent) => {
   const eventParams: EventWithSubgroup = {

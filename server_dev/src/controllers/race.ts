@@ -6,7 +6,7 @@ import { postEventService } from '../service/race/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
 
 import { getEventService } from '../service/race/event-get.js';
-import { getEventsService } from '../service/race/events.js';
+import { getEventsService } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 // import { getUserResultsService } from '../service/race/rider/rider-profile.js';
 import { getResultsService } from '../service/race/results.js';
@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 
 import { GetEvents, PostEvent } from '../types/http.interface.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
-import { EventFetch } from '../../../common/types/event.interface.js';
+import { EventSignedRidersFetch } from '../../../common/types/eventSignedRiders.interface.js';
 
 /**
  * Получение Event (описание) и зарегистрировавшихся райдеров
@@ -24,7 +24,7 @@ import { EventFetch } from '../../../common/types/event.interface.js';
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const event: EventFetch | null = await getEventService(eventId);
+    const event: EventSignedRidersFetch | null = await getEventService(eventId);
     res.status(200).json({ event });
   } catch (error) {
     console.log(error);

@@ -141,6 +141,7 @@ export interface RiderSchema {
 //
 //
 export interface SeriesSchema {
+  _id: Types.ObjectId;
   name: string;
   dateStart: number;
   description: string;
