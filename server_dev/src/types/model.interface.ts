@@ -268,10 +268,10 @@ export interface ZwiftEventSchema {
   clubName: string;
   hasResults: boolean;
   needCount: boolean;
-  updated: number | null;
+  updated?: number | null;
   creator: Types.ObjectId | string;
   started: boolean;
-  totalFinishedCount: number;
+  totalFinishedCount?: number;
 }
 //
 //

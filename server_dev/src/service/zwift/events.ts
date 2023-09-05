@@ -4,11 +4,12 @@ import { putRequest } from './request-put.js';
 
 // types
 import { PutEvent } from '../../types/http.interface.js';
+import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
 
 // запрос данных Эвента с сервера Zwift
-export async function getEventZwiftService(eventId: string, userId: string) {
+export async function getEventZwiftService(eventId: number, userId: string) {
   const urlEventData = `events/${eventId}?skip_cache=false`;
-  const eventData = await getRequest(urlEventData);
+  const eventData: eventDataFromZwiftAPI = await getRequest(urlEventData);
   // логирование действия
   if (userId) {
     const description = 'getZwiftEventData';

@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import {
   LogsAdminSchema,
   PowerCurveSchema,
@@ -117,4 +118,17 @@ export interface EventsListDtoArg {
   events: EventWithSubgroupAndSeries[];
   quantityPages?: number;
   message: string;
+}
+/**
+ * Дополнительные параметры Event к стандартным из API Zwift
+ */
+export interface AdditionalParamsEvent {
+  seriesId: Types.ObjectId | null;
+  organizer: string;
+  typeRaceCustom: string;
+  creator: string | Types.ObjectId;
+  hasResults: boolean;
+  needCount: boolean;
+  started: boolean;
+  clubName: string;
 }

@@ -67,10 +67,13 @@ export async function postEvent(req: Request, res: Response) {
     }
   }
 }
+/**
+ * Обновление данных Эвента и зарегистрированных райдеров в БД после запроса из API Zwift
+ */
 export async function putEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { eventId } = req.body;
+    const eventId: number = req.body.eventId;
 
     const eventUpdated = await putEventService(eventId, userId);
     res.status(201).json(eventUpdated);
