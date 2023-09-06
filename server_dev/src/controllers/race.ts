@@ -123,7 +123,7 @@ export async function putResults(req: Request, res: Response) {
 }
 
 /**
- *
+ * Удаления Эвента и зарегистрированных райдеров, результатов райдеров в БД
  */
 export async function deleteEventAndResults(req: Request, res: Response) {
   try {
@@ -141,7 +141,7 @@ export async function deleteEventAndResults(req: Request, res: Response) {
 }
 
 /**
- *
+ * Получение результатов райдеров в Эвенте
  */
 export async function getResults(req: Request, res: Response) {
   try {

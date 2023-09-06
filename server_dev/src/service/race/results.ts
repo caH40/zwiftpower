@@ -3,21 +3,34 @@ import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
 
+// types
+import { EventWithSubgroup } from '../../types/types.interface.js';
+import { eventResultsDto } from '../../dto/eventResults.dto.js';
+
+/**
+ * Получение результатов райдеров в Эвенте
+ */
 export async function getResultsService(eventId: number) {
-  const eventDB = await ZwiftEvent.findOne({ id: eventId }).populate('eventSubgroups').lean();
-  const event = eventDB.toObject();
+  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId })
+    .populate('eventSubgroups')
+    .lean();
 
-  let eventPrepared = {};
-
-  if (event.typeRaceCustom === 'catchUp') {
-    eventPrepared = await getResultsCatchup(event);
-  }
-  if (event.typeRaceCustom === 'newbies') {
-    eventPrepared = await getResultsNewbies(event);
-  }
-  if (event.typeRaceCustom === 'classicCommon') {
-    eventPrepared = await getResultsClassicCommon(event);
+  if (!eventDB) {
+    throw new Error(`Не найден Event (${eventId} в БД`);
   }
 
-  return { event: eventPrepared, message: 'Результаты заезда' };
+  let eventPrepared = <EventWithSubgroup>{};
+
+  switch (eventDB.typeRaceCustom) {
+    case 'catchUp':
+      eventPrepared = await getResultsCatchup(eventDB);
+      break;
+    case 'newbies':
+      eventPrepared = await getResultsNewbies(eventDB);
+      break;
+    default: // все остальные обрабатывать как 'classicCommon'
+      eventPrepared = await getResultsClassicCommon(eventDB);
+  }
+
+  return eventResultsDto({ event: eventPrepared, message: 'Эвент с результаты заезда' });
 }

@@ -1,4 +1,4 @@
-export function secondesToTimeThousandths(seconds) {
+export function secondesToTimeThousandths(seconds: number) {
   if (seconds > 3599000) {
     const hour = Math.trunc(seconds / 3600000);
     const minutes = Math.trunc((seconds - hour * 3600000) / 60000);
@@ -14,23 +14,31 @@ export function secondesToTimeThousandths(seconds) {
     const milliseconds = seconds - minutes * 60000 - second * 1000;
     return `${addNull(minutes)}:${addNull(second)}.${addNullThousandths(milliseconds)}`;
   } else {
-    return seconds;
+    return String(seconds);
   }
 }
-function addNull(number) {
-  number = String(number);
-  if (number.length === 1) {
-    return '0' + number;
+
+/**
+ * Добавление нулей впереди для числе от 0 до 9
+ */
+function addNull(number: number) {
+  const numberStr = String(number);
+  if (numberStr.length === 1) {
+    return '0' + numberStr;
   }
-  if (number.length === 2) {
-    return number;
+  if (numberStr.length === 2) {
+    return numberStr;
   } else {
-    return number;
+    return numberStr;
   }
 }
-function addNullThousandths(number) {
-  number = String(number);
-  if (number.length === 1) return '00' + number;
-  if (number.length === 2) return '0' + number;
-  return number;
+
+/**
+ * Добавление тысячных
+ */
+function addNullThousandths(number: number) {
+  const numberStr = String(number);
+  if (numberStr.length === 1) return '00' + numberStr;
+  if (numberStr.length === 2) return '0' + numberStr;
+  return numberStr;
 }

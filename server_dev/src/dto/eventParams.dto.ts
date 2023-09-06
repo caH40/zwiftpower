@@ -12,7 +12,7 @@ export const eventParamsDto = (event: PostEvent) => {
     clubName: '',
     hasResults: false,
     needCount: true,
-    updated: null,
+    updated: undefined,
     started: false,
     totalFinishedCount: 0,
     // eventSubgroups:event.eventSubgroups.map(subgroup => (...subgroup,))

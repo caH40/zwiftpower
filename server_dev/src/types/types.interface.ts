@@ -87,6 +87,7 @@ export interface LoggingAdminArg {
  */
 export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
+  results?: UserResult[];
 }
 /**
  * Данные Event с подгруппами и параметрами Series
@@ -161,4 +162,11 @@ export interface ResultEventAdditional extends ResultEvent {
  */
 export interface ResultsEventAdditional {
   entries: ResultEventAdditional[];
+}
+/**
+ * Параметры для функции eventResultsDto
+ */
+export interface EventResultsDtoArg {
+  event: EventWithSubgroup;
+  message: string;
 }

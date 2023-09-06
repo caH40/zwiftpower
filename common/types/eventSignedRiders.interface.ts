@@ -59,10 +59,10 @@ export interface EventSignedRidersFetch {
   clubName: string;
   hasResults: boolean;
   needCount: boolean;
-  updated: number | null;
+  updated?: number;
   creator: Types.ObjectId | string;
   started: boolean;
-  totalFinishedCount: number;
+  totalFinishedCount?: number;
   signedRiders: {
     subgroup: Types.ObjectId;
     id: number;

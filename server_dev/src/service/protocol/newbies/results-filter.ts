@@ -1,4 +1,7 @@
-export function filterByRank(results) {
+// types
+import { ZwiftResultSchema } from '../../../types/model.interface.js';
+
+export function filterByRank(results: ZwiftResultSchema[]) {
   try {
     const resultsCD = results
       .filter((result) => result.subgroupLabel === 'C' || result.subgroupLabel === 'D')
@@ -13,6 +16,7 @@ export function filterByRank(results) {
 
     return [...resultsCD, ...resultsE];
   } catch (error) {
-    throw error;
+    console.log(error);
+    return results;
   }
 }

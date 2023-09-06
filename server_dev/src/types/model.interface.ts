@@ -268,7 +268,7 @@ export interface ZwiftEventSchema {
   clubName: string;
   hasResults: boolean;
   needCount: boolean;
-  updated?: number | null;
+  updated?: number;
   creator: Types.ObjectId | string;
   started: boolean;
   totalFinishedCount?: number;
