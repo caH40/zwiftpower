@@ -1,4 +1,7 @@
 import { Types } from 'mongoose';
+
+// types
+import { UserResultForFetch } from './eventResults.interface';
 /**
  *  Events для страниц расписания, анонса или результатов
  */
@@ -72,8 +75,9 @@ export interface EventListFetch {
   clubName: string;
   hasResults: boolean;
   needCount: boolean;
-  updated: number | null;
+  updated?: number;
   creator: Types.ObjectId | string;
   started: boolean;
-  totalFinishedCount: number;
+  totalFinishedCount?: number;
+  results?: UserResultForFetch[];
 }

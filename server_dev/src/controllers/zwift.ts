@@ -7,7 +7,7 @@ import { PutEvent } from '../types/http.interface.js';
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId, userId } = req.params;
-    const event = await getEventZwiftService(eventId, userId);
+    const event = await getEventZwiftService(+eventId, userId);
     res.status(200).json(event);
   } catch (error) {
     console.log(error);

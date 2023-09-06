@@ -10,8 +10,34 @@ import {
 } from './model.interface.js';
 import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
 
+/**
+ * Результаты Эвента с параметрами Эвента в каждом результате
+ */
 export interface ResultWithEvent extends Omit<ZwiftResultSchema, 'zwiftEventId'> {
   zwiftEventId: ZwiftEventSchema;
+}
+/**
+ * Результаты Эвента с параметрами Эвента в каждом результате и с подгруппой
+ */
+export interface ResultWithEventAndSubgroup extends Omit<ResultWithEvent, 'subgroupId'> {
+  subgroupId: ZwiftEventSubgroupSchema;
+}
+/**
+ * Результаты Эвента с параметрами Эвента в каждом результате и с подгруппой только нужные свойства
+ */
+type PickedPropertyResultSeries =
+  | 'eventId'
+  | 'subgroupId'
+  | 'subgroupLabel'
+  | 'profileId'
+  | 'profileData';
+
+export interface ResultSeries
+  extends Pick<ResultWithEventAndSubgroup, PickedPropertyResultSeries> {
+  durationInMilliseconds: number;
+  eventSubgroup: ZwiftEventSubgroupSchema;
+  eventStart: number;
+  totalFinishedCount?: number;
 }
 /**
  * Изменение структуры ZwiftResult, изменение нескольких свойств с типа Number на Object
@@ -169,4 +195,15 @@ export interface ResultsEventAdditional {
 export interface EventResultsDtoArg {
   event: EventWithSubgroup;
   message: string;
+}
+/**
+ * Параметры для функции ResultsSeriesDto
+ */
+export interface ResultsSeriesDtoArg {
+  results: ResultSeries[];
+  resultsSummary: {
+    id: number;
+    groupCategory: string;
+    winsTotal: number;
+  }[];
 }
