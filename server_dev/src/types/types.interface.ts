@@ -149,6 +149,12 @@ export interface GetResultsArg {
 export interface ResultEventAdditional extends ResultEvent {
   subgroupLabel?: string;
   subgroupId?: Types.ObjectId;
+  cpBestEfforts?: {
+    watts: null | number;
+    wattsKg: null | number;
+    cpLabel: string;
+    duration: number;
+  }[];
 }
 /**
  * Результаты райдеров в Event с дополнительными параметрами

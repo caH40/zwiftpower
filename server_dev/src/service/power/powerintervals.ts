@@ -1,6 +1,6 @@
 import { intervals } from './intervals-cp.js';
 
-export const getIntervals = (powerInWatts, weightInKilogram) => {
+export const getIntervals = (powerInWatts: number[], weightInKilogram: number) => {
   const cpBestEfforts = [];
 
   for (const interval of intervals) {

@@ -69,7 +69,8 @@
 2.11.9 +типизация сервисов zwiftToken;  
 2.11.10 +типизация сервисов getEvent;  
 2.11.11 +типизация сервисов getEventsList;  
-2.11.12 +типизация сервисов putEventService;
+2.11.12 +типизация сервисов putEventService;  
+2.11.13 +типизация сервисов putResultsService;
 
 ---
 

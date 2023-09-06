@@ -105,7 +105,7 @@ export async function deleteEvent(req: Request, res: Response) {
 }
 
 /**
- *
+ * Обновление результатов Эвента
  */
 export async function putResults(req: Request, res: Response) {
   try {

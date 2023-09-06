@@ -1,10 +1,13 @@
 import { getRequest } from './request-get.js';
 
+// types
+import { ActivitiesDataFromZwiftAPI } from '../../types/zwiftAPI/activitiesFromZwift.interface.js';
+
 // получение данных fit файла активности (заезда) райдера
-export async function getFullDataUrl(activityId) {
+export async function getFullDataUrl(activityId: string) {
   try {
     const url = `activities/${activityId}`;
-    const activity = await getRequest(url, false);
+    const activity: ActivitiesDataFromZwiftAPI = await getRequest(url, false);
 
     // если нет данных активности (приватность аккаунта)
     if (!activity) {
@@ -13,6 +16,6 @@ export async function getFullDataUrl(activityId) {
 
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
