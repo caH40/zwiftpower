@@ -8,6 +8,7 @@ import {
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
 } from './model.interface.js';
+import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
 
 export interface ResultWithEvent extends Omit<ZwiftResultSchema, 'zwiftEventId'> {
   zwiftEventId: ZwiftEventSchema;
@@ -131,4 +132,27 @@ export interface AdditionalParamsEvent {
   needCount: boolean;
   started: boolean;
   clubName: string;
+}
+/**
+ * Аргументы функции получение результатов заезда из Звифта
+ */
+export interface GetResultsArg {
+  subgroupObj: {
+    subgroup_id?: Types.ObjectId;
+    subgroupId: number;
+  };
+  subgroupLabel: string;
+}
+/**
+ * Результат райдера в Event с дополнительными параметрами
+ */
+export interface ResultEventAdditional extends ResultEvent {
+  subgroupLabel?: string;
+  subgroupId?: Types.ObjectId;
+}
+/**
+ * Результаты райдеров в Event с дополнительными параметрами
+ */
+export interface ResultsEventAdditional {
+  entries: ResultEventAdditional[];
 }

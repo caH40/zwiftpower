@@ -39,6 +39,9 @@ export async function deleteEventService(eventId: number) {
   return additionalParams;
 }
 
+/**
+ * Удаления Эвента и зарегистрированных райдеров, результатов райдеров в БД
+ */
 export async function deleteEventAndResultsService(eventId: number, userId: string) {
   const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
     id: eventId,

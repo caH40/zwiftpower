@@ -85,10 +85,15 @@ export async function putEvent(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ * Удаления Эвента и зарегистрированных райдеров, результатов райдеров в БД
+ */
 export async function deleteEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { eventId } = req.body;
+    const eventId: number = req.body.eventId;
+
     const eventDeleted = await deleteEventAndResultsService(eventId, userId);
     res.status(200).json(eventDeleted);
   } catch (error) {
@@ -98,10 +103,15 @@ export async function deleteEvent(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ *
+ */
 export async function putResults(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { eventId } = req.body;
+    const eventId: number = req.body.eventId;
+
     const resultsUpdated = await putResultsService(eventId, userId);
     res.status(201).json(resultsUpdated);
   } catch (error) {
@@ -111,10 +121,15 @@ export async function putResults(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ *
+ */
 export async function deleteEventAndResults(req: Request, res: Response) {
   try {
     const { userId } = req.params;
-    const { eventId } = req.body;
+    const eventId: number = req.body.eventId;
+
     const eventDeleted = await deleteEventAndResultsService(eventId, userId);
     res.status(200).json(eventDeleted);
   } catch (error) {
@@ -124,10 +139,14 @@ export async function deleteEventAndResults(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ *
+ */
 export async function getResults(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const eventResults = await getResultsService(eventId);
+    const eventResults = await getResultsService(+eventId);
     res.status(200).json(eventResults);
   } catch (error) {
     console.log(error);
@@ -136,6 +155,10 @@ export async function getResults(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ *
+ */
 export async function getSeries(req: Request, res: Response) {
   try {
     const series = await getSeriesService();
@@ -147,6 +170,10 @@ export async function getSeries(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ *
+ */
 export async function getResultsSeries(req: Request, res: Response) {
   try {
     const { type, season } = req.params;

@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { getResults } from '../race/results.js';
+import { getResults } from '../zwift/results.js';
 
 export async function getZwiftEventResultsService(eventId, userId) {
   try {

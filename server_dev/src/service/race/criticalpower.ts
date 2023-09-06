@@ -35,7 +35,7 @@ export async function addCriticalPowers(results, nameAndDate) {
     }
     return resultsWithCP;
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
 
@@ -45,22 +45,18 @@ function sliceExcess(powerArray, time) {
 }
 // добавление данных мощности в заезде из fitfile в БД
 async function addToDB(powerInWatts, result, { name, eventStart }) {
-  try {
-    const power = {
-      name: name,
-      date: eventStart,
-      powerInWatts: JSON.stringify(powerInWatts),
-      weightInGrams: result.profileData.weightInGrams,
-    };
-    const zwiftId = result.profileId;
-    const fitFileDB = await FitFile.findOne({ zwiftId });
+  const power = {
+    name: name,
+    date: eventStart,
+    powerInWatts: JSON.stringify(powerInWatts),
+    weightInGrams: result.profileData.weightInGrams,
+  };
+  const zwiftId = result.profileId;
+  const fitFileDB = await FitFile.findOne({ zwiftId });
 
-    if (!fitFileDB) {
-      await FitFile.create({ zwiftId });
-    }
-
-    await FitFile.findOneAndUpdate({ zwiftId }, { $addToSet: { activities: power } });
-  } catch (error) {
-    throw error;
+  if (!fitFileDB) {
+    await FitFile.create({ zwiftId });
   }
+
+  await FitFile.findOneAndUpdate({ zwiftId }, { $addToSet: { activities: power } });
 }

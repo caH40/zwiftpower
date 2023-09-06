@@ -241,7 +241,7 @@ export interface UserSchema {
 //
 //
 export interface ZwiftEventSchema {
-  _id?: Types.ObjectId | null;
+  _id?: Types.ObjectId;
   seriesId: Types.ObjectId | null;
   typeRaceCustom: string;
   id: number;
@@ -276,7 +276,7 @@ export interface ZwiftEventSchema {
 //
 //
 export interface ZwiftEventSubgroupSchema {
-  _id?: Types.ObjectId | null;
+  _id?: Types.ObjectId;
   bikeHash: number | null;
   description: string;
   eventSubgroupStart: string;
