@@ -1,6 +1,9 @@
 // types
 import { ResultEventAdditional } from '../../../types/types.interface.js';
 
+/**
+ * Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
+ */
 export function filterByRank(results: ResultEventAdditional[]) {
   try {
     const resultsCD = results

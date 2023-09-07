@@ -27,6 +27,9 @@ export async function checkAuth(req: Request, res: Response, next: () => void) {
 export async function getAuth(req: Request, res: Response, next: () => void) {
   try {
     const { authorization } = req.headers;
+    if (!authorization) {
+      throw new Error('Не получены данные авторизации из headers.authorization');
+    }
     const accessToken = authorization?.split(' ')[1];
     const isValidAccessToken = validateAccessToken(accessToken);
     req.params.userId = isValidAccessToken?.id;

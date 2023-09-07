@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getAccessToken } from './token.js';
 import { errorAxios } from '../../app_modules/error/axios.js';
 import { zwiftAPI } from '../../config/environment.js';
+import { PutEvent } from '../../types/http.interface.js';
 
 const apiUrl = zwiftAPI;
 
@@ -19,7 +20,7 @@ const headersDefault = {
   Source: 'my-zwift',
 };
 
-export async function putRequest(url, data, isMainToken = true) {
+export async function putRequest(url: string, data: PutEvent, isMainToken = true) {
   const token = await getAccessToken(isMainToken);
 
   const response = await axios({
@@ -34,5 +35,8 @@ export async function putRequest(url, data, isMainToken = true) {
     errorAxios(error, 'putRequest');
   });
 
-  return response.data;
+  if (response) {
+    return response.data;
+  }
+  return null;
 }

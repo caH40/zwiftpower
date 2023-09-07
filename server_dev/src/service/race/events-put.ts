@@ -9,7 +9,7 @@ import { AdditionalParamsEvent, EventWithSubgroup } from '../../types/types.inte
 /**
  * Обновление данных Эвента и зарегистрированных райдеров в БД после запроса из API Zwift
  */
-export async function putEventService(eventId: number, userId: string) {
+export async function putEventService(eventId: number, userId?: string) {
   /**
    * Запрос данных Event (eventId) с API Zwift
    */

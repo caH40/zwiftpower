@@ -13,7 +13,7 @@ import { ZwiftEventSchema } from '../../types/model.interface.js';
 import { EventWithSubgroup } from '../../types/types.interface.js';
 
 // добавление эвента в БД zp.ru
-export async function postEventService(eventParams: EventWithSubgroup, userId: string) {
+export async function postEventService(eventParams: EventWithSubgroup, userId?: string) {
   await checkUnique(eventParams);
   const clubName = await getClubName(eventParams);
 

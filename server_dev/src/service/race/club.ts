@@ -1,5 +1,8 @@
-import { EventWithSubgroup } from '../../types/evets.interface.js';
 import { getRequest } from '../zwift/request-get.js';
+
+// types
+import { EventWithSubgroup } from '../../types/types.interface.js';
+
 /**
  *
  * @param event параметры сохраняемого Even в БД

@@ -42,21 +42,18 @@ export async function removeToken(refreshToken: string) {
 }
 
 export function validateAccessToken(token: string) {
-  try {
-    const userData = jwt.verify(token, jwtAccessSecret);
-    return userData;
-  } catch (error) {
-    return;
+  const userData = jwt.verify(token, jwtAccessSecret);
+  if (typeof userData === 'string') {
+    throw new Error('ошибка при проверке токена');
   }
+  return userData;
 }
 
 export function validateRefreshToken(token: string) {
-  try {
-    const userData = jwt.verify(token, jwtRefreshSecret);
-    if (typeof userData !== 'string') {
-      return userData;
-    }
-  } catch (error) {
-    return;
+  const userData = jwt.verify(token, jwtRefreshSecret);
+  if (typeof userData === 'string') {
+    throw new Error('ошибка при проверке токена');
   }
+
+  return userData;
 }

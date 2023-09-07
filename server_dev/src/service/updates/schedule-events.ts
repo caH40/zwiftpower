@@ -32,7 +32,7 @@ export async function updateStartInfoEvent(event: ZwiftEventSchema) {
 // обновление параметров заездов в расписании (еще не стартовавших)
 export async function updateScheduleEvents() {
   try {
-    const eventsDB = await ZwiftEvent.find({ started: false });
+    const eventsDB: ZwiftEventSchema[] = await ZwiftEvent.find({ started: false });
     for (const event of eventsDB) {
       await putEventService(event.id);
     }

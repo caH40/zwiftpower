@@ -1,17 +1,19 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
-import { ZwiftEventSchema } from '../../types/model.interface.js';
 import { getRequest } from '../zwift/request-get.js';
+
+// types
+import { EventWithSubgroup } from '../../types/types.interface.js';
 
 /**
  * Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
  */
 export async function putSignedRidersService(eventId: number) {
   try {
-    const eventDB: ZwiftEventSchema | null = await ZwiftEvent.findOne({ id: eventId }).populate(
-      'eventSubgroups'
-    );
+    const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+      id: eventId,
+    }).populate('eventSubgroups');
 
     if (!eventDB) {
       throw new Error(`Не найден Event ${eventId} в БД`);

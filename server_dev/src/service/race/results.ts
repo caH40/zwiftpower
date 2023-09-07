@@ -8,7 +8,7 @@ import { EventWithSubgroup } from '../../types/types.interface.js';
 import { eventResultsDto } from '../../dto/eventResults.dto.js';
 
 /**
- * Получение результатов райдеров в Эвенте
+ * Получение результатов райдеров в Эвенте из БД
  */
 export async function getResultsService(eventId: number) {
   const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId })
