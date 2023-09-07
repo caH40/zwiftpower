@@ -73,7 +73,8 @@
 2.11.13 +типизация сервисов putResultsService;  
 2.11.14 +типизация сервисов getResultsService;  
 2.11.15 +типизация сервисов resultsSeries;  
-2.11.16 +типизация сервисов addCriticalPowers;
+2.11.16 +типизация сервисов addCriticalPowers;  
+2.11.17 +типизация сервисов handlerCatchUp;
 
 ---
 

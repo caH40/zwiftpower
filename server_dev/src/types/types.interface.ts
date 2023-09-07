@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import {
   LogsAdminSchema,
   PowerCurveSchema,
@@ -116,17 +116,6 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
   results?: UserResult[];
 }
 /**
- * Типизация из Mongoose
- */
-export type EventWithSubgroupMongoose = Omit<
-  Document<unknown, ZwiftEventSchema> &
-    ZwiftEventSchema &
-    Required<{
-      _id: Types.ObjectId;
-    }>,
-  never
->;
-/**
  * Данные Event с подгруппами и параметрами Series
  */
 export interface EventWithSubgroupAndSeries extends Omit<EventWithSubgroup, 'seriesId'> {
@@ -184,7 +173,7 @@ export interface GetResultsArg {
 /**
  * Результат райдера в Event с дополнительными параметрами
  */
-export interface ResultEventAdditional extends ResultEvent {
+export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> {
   subgroupLabel?: string;
   subgroupId?: Types.ObjectId;
   cpBestEfforts?: {
@@ -193,6 +182,18 @@ export interface ResultEventAdditional extends ResultEvent {
     cpLabel: string;
     duration: number;
   }[];
+  profileData: {
+    firstName: string;
+    gender: string;
+    heightInCentimeters: number;
+    imageSrc: string;
+    lastName: string;
+    playerType: string;
+    weightInGrams: number;
+    age?: number;
+    countryAlpha3?: string;
+  };
+  wattsPerKg?: number;
 }
 /**
  * Результаты райдеров в Event с дополнительными параметрами
@@ -227,13 +228,25 @@ export interface ActivityFeedShort {
   name: string;
 }
 /**
- * Параметры для функции GetIntervals
+ * Параметры для функции getIntervals
  */
 export interface GetIntervalsArg {
   powerInWatts: number[];
   weightInKilogram: number;
   interval: number;
 }
+/**
+ * Параметры для функции handlerProtocol
+ */
+export interface HandlerProtocolArg {
+  eventId: Types.ObjectId;
+  results: ResultEventAdditional[];
+  typeRaceCustom: string;
+}
+/**
+ * Параметры для функции handlerProtocolCurrent
+ */
+export interface HandlerProtocolCurrentArg extends Omit<HandlerProtocolArg, 'typeRaceCustom'> {}
 /**
  * Данные по Critical power
  */

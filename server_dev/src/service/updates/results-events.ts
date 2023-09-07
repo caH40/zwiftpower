@@ -28,22 +28,38 @@ export async function updateResults() {
  * Ручное обновление результатов по запросу модератора
  */
 export async function updateResultsEvent(event: EventWithSubgroup) {
-  const resultsTotal = [];
+  try {
+    const resultsTotal = [];
 
-  for (const subgroup of event.eventSubgroups) {
-    const subgroupObj = { subgroup_id: subgroup._id, subgroupId: subgroup.id };
+    for (const subgroup of event.eventSubgroups) {
+      const subgroupObj = { subgroup_id: subgroup._id, subgroupId: subgroup.id };
 
-    // получение результатов заезда из Звифта
-    const resultsSubgroup = await getResults({
-      subgroupObj,
-      subgroupLabel: subgroup.subgroupLabel,
-    });
-    resultsTotal.push(...resultsSubgroup);
+      // получение результатов заезда из Звифта
+      const resultsSubgroup = await getResults({
+        subgroupObj,
+        subgroupLabel: subgroup.subgroupLabel,
+      });
+      resultsTotal.push(...resultsSubgroup);
+    }
+
+    // добавление CP в результаты райдеров
+    const nameAndDate = { name: event.name, eventStart: new Date(event.eventStart).getTime() };
+    const resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
+
+    if (!event._id) {
+      throw new Error(`Не найден event._id ${event._id}`);
+    }
+    if (!resultsWithCP) {
+      throw new Error(`Не найден resultsWithCP ${resultsWithCP}`);
+    }
+
+    const handlerProtocolArg = {
+      eventId: event._id,
+      results: resultsWithCP,
+      typeRaceCustom: event.typeRaceCustom,
+    };
+    await handlerProtocol(handlerProtocolArg);
+  } catch (error) {
+    console.log(error);
   }
-
-  // добавление CP в результаты райдеров
-  const nameAndDate = { name: event.name, eventStart: new Date(event.eventStart).getTime() };
-  const resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
-
-  await handlerProtocol(event._id, resultsWithCP, event.typeRaceCustom);
 }
