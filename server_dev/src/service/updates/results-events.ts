@@ -9,12 +9,14 @@ import { checkDurationUpdating } from './results-check.js';
 // обновление всех результатов заездов из Звифта
 export async function updateResults() {
   try {
+    // hasResults:true - прекращение обновлять результаты
     const eventsDB: EventWithSubgroup[] = await ZwiftEvent.find({
       $and: [{ started: true }, { hasResults: false }],
     }).populate('eventSubgroups');
 
     for (const event of eventsDB) {
-      await checkDurationUpdating(event); // обновление результатов заезда заканчивается после 2х часов после старта
+      // обновление результатов заезда заканчивается после 2х часов после старта
+      await checkDurationUpdating(event);
       await updateResultsEvent(event);
     }
   } catch (error) {

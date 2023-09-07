@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import {
   LogsAdminSchema,
   PowerCurveSchema,
@@ -116,6 +116,17 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
   results?: UserResult[];
 }
 /**
+ * Типизация из Mongoose
+ */
+export type EventWithSubgroupMongoose = Omit<
+  Document<unknown, ZwiftEventSchema> &
+    ZwiftEventSchema &
+    Required<{
+      _id: Types.ObjectId;
+    }>,
+  never
+>;
+/**
  * Данные Event с подгруппами и параметрами Series
  */
 export interface EventWithSubgroupAndSeries extends Omit<EventWithSubgroup, 'seriesId'> {
@@ -206,4 +217,29 @@ export interface ResultsSeriesDtoArg {
     groupCategory: string;
     winsTotal: number;
   }[];
+}
+/**
+ * Сокращенные данные активности с ленты активности райдера
+ */
+export interface ActivityFeedShort {
+  id: string;
+  date: number;
+  name: string;
+}
+/**
+ * Параметры для функции GetIntervals
+ */
+export interface GetIntervalsArg {
+  powerInWatts: number[];
+  weightInKilogram: number;
+  interval: number;
+}
+/**
+ * Данные по Critical power
+ */
+export interface CriticalPower {
+  duration: number;
+  value: number;
+  date: number;
+  name: string;
 }

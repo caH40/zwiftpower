@@ -17,5 +17,6 @@ export async function getFullDataUrl(activityId: string) {
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
