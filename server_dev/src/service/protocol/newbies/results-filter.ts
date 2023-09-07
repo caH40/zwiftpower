@@ -1,7 +1,7 @@
 // types
-import { ZwiftResultSchema } from '../../../types/model.interface.js';
+import { ResultEventAdditional } from '../../../types/types.interface.js';
 
-export function filterByRank(results: ZwiftResultSchema[]) {
+export function filterByRank(results: ResultEventAdditional[]) {
   try {
     const resultsCD = results
       .filter((result) => result.subgroupLabel === 'C' || result.subgroupLabel === 'D')

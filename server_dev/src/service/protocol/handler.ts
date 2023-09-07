@@ -16,9 +16,9 @@ export async function handlerProtocol({
       await handlerCatchUp({ eventId, results });
       break;
     case 'newbies':
-      await handlerNewbies(eventId, results);
+      await handlerNewbies({ eventId, results });
       break;
     default: // для всех остальных обрабатывать как 'classicCommon'
-      await handlerClassicCommon(eventId, results);
+      await handlerClassicCommon({ eventId, results });
   }
 }

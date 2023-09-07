@@ -244,6 +244,14 @@ export interface HandlerProtocolArg {
   typeRaceCustom: string;
 }
 /**
+ * Параметры для функции saveDocument
+ */
+export interface SaveDocumentArg {
+  eventId: Types.ObjectId;
+  result: ResultEventAdditional;
+  rankEvent: number;
+}
+/**
  * Параметры для функции handlerProtocolCurrent
  */
 export interface HandlerProtocolCurrentArg extends Omit<HandlerProtocolArg, 'typeRaceCustom'> {}
