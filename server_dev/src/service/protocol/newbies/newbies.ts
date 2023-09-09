@@ -20,7 +20,14 @@ export async function handlerNewbies({ eventId, results }: HandlerProtocolCurren
     throw new Error(`Не найден Event с eventId: ${eventId}`);
   }
 
+  /**
+   * Добавление флага страны и возраст каждому райдеру в его результат
+   */
   const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, results);
+
+  /**
+   *
+   */
   const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
   const resultsSorted = filterByRank(resultsWithWPK);

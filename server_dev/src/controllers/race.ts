@@ -141,7 +141,7 @@ export async function deleteEventAndResults(req: Request, res: Response) {
 }
 
 /**
- * Получение Эвента и результатов райдеров в Эвенте
+ * Получение Эвента и результатов райдеров в Эвенте из БД
  */
 export async function getResults(req: Request, res: Response) {
   try {

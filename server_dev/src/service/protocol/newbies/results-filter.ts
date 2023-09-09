@@ -1,10 +1,13 @@
 // types
+import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { ResultEventAdditional } from '../../../types/types.interface.js';
 
 /**
  * Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
  */
-export function filterByRank(results: ResultEventAdditional[]) {
+export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema>(
+  results: T[]
+): T[] => {
   try {
     const resultsCD = results
       .filter((result) => result.subgroupLabel === 'C' || result.subgroupLabel === 'D')
@@ -22,4 +25,4 @@ export function filterByRank(results: ResultEventAdditional[]) {
     console.log(error);
     return results;
   }
-}
+};

@@ -8,8 +8,10 @@ export async function addAgeAndFlag(
   event: EventWithSubgroup,
   results: ResultEventAdditional[]
 ) {
+  /**
+   * Данные по флагу страны и возрасту берется из зарегистрированных райдеров (signedRidersDB)
+   */
   const signedRiders: SignedRidersSchema[] = [];
-
   for (const subgroup of event.eventSubgroups) {
     const signedRidersDB = await ZwiftSignedRiders.find({ subgroup: subgroup._id });
     signedRiders.push(...signedRidersDB);

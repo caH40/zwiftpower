@@ -12,7 +12,7 @@ export function secondesToTime(seconds: number) {
     const second = Math.trunc(seconds - minutes * 60);
     return `${addNull(minutes)}:${addNull(second)}`;
   } else {
-    return seconds;
+    return String(seconds);
   }
 }
 /**
