@@ -21,7 +21,8 @@ export async function getEventsService({
 
   const eventsDB: EventWithSubgroupAndSeries[] = await ZwiftEvent.find({ isStarted })
     .populate('eventSubgroups')
-    .populate('seriesId');
+    .populate('seriesId')
+    .lean();
 
   // фильтрация по имени
   const eventsFiltered = getEventsFiltered(eventsDB, search);

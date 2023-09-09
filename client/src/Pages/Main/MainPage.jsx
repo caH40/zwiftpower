@@ -45,8 +45,8 @@ function MainPage() {
       </div>
       <div className={styles.wrapper__info}>
         <h2 className={styles.title__info}>Информационный блок</h2>
-        <MainInfo />
-        <MainInfoDev isModerator={isModerator} />
+        {/* <MainInfo />
+        <MainInfoDev isModerator={isModerator} /> */}
       </div>
     </section>
   );
