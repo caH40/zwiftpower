@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "envFile": "./src",
   "scripts": {
     "dev": "npx nodemon",
-    "build": "rimraf ./build && npx tsc",
+    "env": "cp .env ./build/.env",
+    "build": "rimraf ./build && npx tsc && npm run env",
     "start": "npm run build && node build/main",
     "lint": "npx eslint ./src"
   },
