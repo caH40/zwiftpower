@@ -1,6 +1,6 @@
 // types
 import { ResultsSeriesDtoArg } from '../types/types.interface.js';
-import { ResultsSeriesFetch } from '../../../common/types/resultsSeries.interface.js';
+import { ResultsSeriesFetch } from '../common/types/resultsSeries.interface.js';
 
 export const resultsSeriesDto = ({ results, resultsSummary }: ResultsSeriesDtoArg) => {
   // заготовка для дальнейшей оптимизации

@@ -1,4 +1,4 @@
-import { UserResultFetch } from '../../../common/types/userResults.interface.js';
+import { UserResultFetch } from '../common/types/userResults.interface.js';
 import { UserResultsDtoArg } from '../types/dto_inner/userResults.interface.js';
 import { PowerCurveSchema } from '../types/model.interface.js';
 import { Profile, UserResult } from '../types/types.interface.js';

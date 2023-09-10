@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 // types
-import { UserResultForFetch } from './eventResults.interface';
+import { UserResultForFetch } from './eventResults.interface.js';
 /**
  *  Events для страниц расписания, анонса или результатов
  */

@@ -1,5 +1,5 @@
 // types
-import { EventSignedRidersFetch } from '../../../common/types/eventSignedRiders.interface.js';
+import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
 import { EventWithSignedRiders } from '../types/types.interface.js';
 
 /**

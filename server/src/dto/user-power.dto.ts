@@ -1,4 +1,4 @@
-import { UserPowerFetch } from '../../../common/types/userPower.interface.js';
+import { UserPowerFetch } from '../common/types/userPower.interface.js';
 import { UserPowerDtoArg } from '../types/dto_inner/userPower.interface.js';
 import { PowerCurveSchema } from '../types/model.interface.js';
 

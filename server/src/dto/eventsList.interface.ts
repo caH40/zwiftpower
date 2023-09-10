@@ -1,4 +1,4 @@
-import { EventListFetch } from '../../../common/types/eventsList.interface.js';
+import { EventListFetch } from '../common/types/eventsList.interface.js';
 import { EventsListDtoArg } from '../types/types.interface.js';
 
 /**
