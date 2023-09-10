@@ -116,7 +116,7 @@ function useChartPower(powerFromEvent, isPortrait, formShowCharts) {
     datasets: [powerCurveDatasetsLastRide, powerCurveDatasets90days].filter(
       (element) =>
         (element.filterWord === '90days' && formShowCharts.showChart90Days) ||
-        (element.filterWord === 'event' && powerFromEvent?.id)
+        (element.filterWord === 'event' && powerFromEvent?._id)
     ),
   };
 

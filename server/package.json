@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx nodemon",
-    "build": "rimraf ../server && npx tsc",
+    "build": "rimraf ./build && npx tsc",
     "start": "npm run build && node build/main",
     "lint": "npx eslint ./src"
   },
