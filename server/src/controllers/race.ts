@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 
 import { GetEvents, PostEvent } from '../types/http.interface.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
-import { EventSignedRidersFetch } from '../../../common/types/eventSignedRiders.interface.js';
+import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
 
 /**
  * Получение Event (описание) и зарегистрировавшихся райдеров

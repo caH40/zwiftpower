@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 // types
 import { GetLogsAdmins } from '../types/http.interface.js';
-import { LogsFetch } from '../../../common/types/logs.interface.js';
+import { LogsFetch } from '../common/types/logs.interface.js';
 
 export async function getSeriesActual(req: Request, res: Response) {
   try {
