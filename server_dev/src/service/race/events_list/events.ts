@@ -19,7 +19,7 @@ export async function getEventsService({
 }: GetEvents) {
   const isStarted = started === 'true' ? true : false;
 
-  const eventsDB: EventWithSubgroupAndSeries[] = await ZwiftEvent.find({ isStarted })
+  const eventsDB: EventWithSubgroupAndSeries[] = await ZwiftEvent.find({ started: isStarted })
     .populate('eventSubgroups')
     .populate('seriesId')
     .lean();

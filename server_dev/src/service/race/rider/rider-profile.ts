@@ -7,12 +7,15 @@ import { ResultWithEvent } from '../../../types/types.interface.js';
 import { getProfile } from './profile.js';
 import { getUserResultsFromDB } from './results.js';
 
+/**
+ * Получение профайла райдера (анкеты), основных значений CriticalPower, всех результатов райдера
+ */
 export async function getUserResultsService(zwiftId: string) {
   if (zwiftId === 'undefined') {
     return null;
   }
 
-  const powerCurveDB = await PowerCurve.findOne({ zwiftId });
+  const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
   const results = await getUserResultsFromDB(zwiftId);
   const profile = await getProfile({
     zwiftId,
@@ -23,14 +26,17 @@ export async function getUserResultsService(zwiftId: string) {
   // подготовка данных для отправки при запросе API
   return userResultsDto({ userResults: results, profile, powerCurve: powerCurveDB });
 }
-//
-// данные для страницы профиля райдера с кривой мощности
+
+/**
+ * Сервис получения значений кривой CriticalPower за 90 дней
+ * для райдера (zwiftId) и CriticalPower со всех Заездов
+ */
 export async function getUserPowerService(zwiftId: string) {
   if (zwiftId === 'undefined') {
     return null;
   }
 
-  const powerCurveDB = await PowerCurve.findOne({ zwiftId });
+  const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
 
   const resultsDB: ResultWithEvent[] = await ZwiftResult.find(
     { profileId: zwiftId },

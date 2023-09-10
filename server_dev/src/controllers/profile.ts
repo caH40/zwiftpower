@@ -4,6 +4,10 @@ import {
   getUserPowerService,
 } from '../service/race/rider/rider-profile.js';
 
+/**
+ * Контролер получения профайла райдера (анкеты), основных значений CriticalPower,
+ * всех результатов райдера
+ */
 export async function getUserResults(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
@@ -17,6 +21,10 @@ export async function getUserResults(req: Request, res: Response) {
   }
 }
 
+/**
+ * Контролер получения значений кривой CriticalPower за 90 дней
+ * для райдера (zwiftId) и CriticalPower со всех Заездов
+ */
 export async function getUserPower(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
