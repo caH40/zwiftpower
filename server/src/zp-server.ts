@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 
-import { mongodb } from './config/environment.js';
+import { mongodb, serverFront, serverPort } from './config/environment.js';
 
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';
@@ -15,7 +15,7 @@ import { routerInformation } from './routes/information.js';
 import { routerProfile } from './routes/profile.js';
 
 const __dirname = path.resolve();
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = serverPort || 5000;
 
 await mongoose
   .set('strictQuery', true) //в базе будут только данные которые есть в схеме
@@ -27,7 +27,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.FRONT,
+    origin: serverFront,
   })
 );
 app.use(express.json());

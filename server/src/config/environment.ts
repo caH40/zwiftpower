@@ -10,6 +10,7 @@ if (!parsed) {
   throw new Error('Пустой файл .env');
 }
 
+export const serverPort: string = parsed.SERVER_PORT;
 export const mongodb: string = parsed.MONGODB;
 export const server: string = parsed.FRONT;
 export const jwtAccessSecret: string = parsed.JWT_ACCESS_SECRET;
