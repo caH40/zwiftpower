@@ -102,7 +102,8 @@
 - **distanceInKilometers** - (`Number`) - расстояние дистанции в километрах;
 - **elevationGainInMeters** - (`Number`) - суммарный набор высоты в метрах;
 
-**zwiftInsiderUrl** - (`String`) - ссылка на страницу zwiftInsider описания маршрута;  
+<!-- **zwiftInsiderUrl** - (`String`) - ссылка на страницу zwiftInsider описания маршрута;   -->
+
 **name** - (`String`) - название заезда;  
 **routeId** - (`Number`) - id маршрута `client\src\asset\zwift\lib\esm\routes.js`;  
 **rulesSet** - (`[String]`) - см.выше;  
