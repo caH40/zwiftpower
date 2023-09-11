@@ -1,6 +1,7 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { secondesToTimeThousandths } from '../../utility/thousandths.js';
 import { addPropertyAddition } from '../../utility/property-addition.js';
+import { sortAndFilterResults } from './sortAndFilter.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -14,11 +15,10 @@ export async function getResultsCatchup(event: EventWithSubgroup) {
     zwiftEventId: event._id,
   }).lean();
 
-  resultsDB.sort(
-    (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-  );
+  // Фильтрация и сортировка отправляемого протокола с результатами
+  const resultsFilteredAndSorted = sortAndFilterResults(resultsDB);
 
-  const resultsWithMaxValues = addPropertyAddition(resultsDB);
+  const resultsWithMaxValues = addPropertyAddition(resultsFilteredAndSorted);
 
   // добавление строки времени в addition durationInMilliseconds
   for (const result of resultsWithMaxValues) {

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import useLeader from '../../../hook/useLeaders';
-import { tdHeartRate, tdHeight, tdRank, tdTime, tdWatts, tdWeight } from '../utils/td';
+import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
@@ -10,6 +10,7 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
+import TdRank from '../Td/TdRank';
 
 import styles from '../Table.module.css';
 
@@ -35,7 +36,9 @@ function TableRaceResults({ results, event }) {
 
           return (
             <tr key={result._id}>
-              <td className={styles.center}>{tdRank(result.rankEvent)}</td>
+              <td className={styles.center}>
+                <TdRank value={result.rankEvent} dsq={result.disqualification} />
+              </td>
               {sm && (
                 <td>
                   <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />

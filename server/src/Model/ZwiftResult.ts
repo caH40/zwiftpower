@@ -58,6 +58,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
       duration: { type: Number, default: null },
     },
   ],
+  disqualification: String,
 });
 
 export const ZwiftResult = model<ZwiftResultSchema>('ZwiftResult', zwiftResultSchema);

@@ -361,6 +361,7 @@ export interface ZwiftResultSchema {
     cpLabel: string;
     duration: number;
   }[];
+  disqualification?: string;
 }
 //
 //

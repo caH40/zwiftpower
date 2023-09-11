@@ -1,6 +1,5 @@
 import { getHeightStr, getWeightStr } from '../../../utils/event';
 import { roundValue } from '../../../utils/round';
-import IconCupRank from '../../icons/IconCupRank';
 import styles from '../Table.module.css';
 
 export function tdRider(name, imageSrc) {
@@ -93,8 +92,4 @@ export function tdWeight(value) {
 }
 export function tdHeight(value) {
   return highlightValueMax(getHeightStr(value, 'cm'), 'см');
-}
-export function tdRank(value) {
-  if ([1, 2, 3].includes(value)) return <IconCupRank place={value} />;
-  return value;
 }
