@@ -2,10 +2,10 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { addGapStart } from '../../utility/gap.js';
 import { addWattsPerKg } from '../../utility/watts.js';
 import { addAgeAndFlag } from './age-and-flag.js';
-import { saveDocument } from './data-save.js';
 
 // types
 import { EventWithSubgroup, HandlerProtocolCurrentArg } from '../../types/types.interface.js';
+import { setRankResult } from './ranging.js';
 
 /**
  * Формирует финишный протокол для сохранения в БД, для гонки CatchUp
@@ -24,15 +24,8 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
   const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, resultsWithStartGap);
   const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
-  resultsWithWPK.sort(
-    (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-  );
-
-  let rankEvent = 0;
-  for (const result of resultsWithWPK) {
-    rankEvent += 1;
-    await saveDocument({ eventId: eventDB._id, result, rankEvent });
-  }
+  // Установка ранкинга райдерам. Сортировка по финишному времени. Сохранение в БД.
+  await setRankResult(eventDB, resultsWithWPK);
 
   // обновление данных Event
   const totalFinishedCount = resultsWithWPK.length;
