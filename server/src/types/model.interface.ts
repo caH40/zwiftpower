@@ -191,6 +191,7 @@ export interface TokenSchema {
 //
 export interface TotalCatchupSchema {
   type: string;
+  season: string;
   start: number;
   end: number;
   update: {

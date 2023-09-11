@@ -11,7 +11,7 @@ import { putResultsService } from '../service/race/results-put.js';
 // import { getUserResultsService } from '../service/race/rider/rider-profile.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
-import { getResultsSeriesService } from '../service/race/results-series.js';
+import { getResultsSeriesService } from '../service/race/series_catchup/results-series.js';
 import { Request, Response } from 'express';
 
 import { GetEvents, PostEvent } from '../types/http.interface.js';

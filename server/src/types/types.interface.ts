@@ -265,3 +265,11 @@ export interface CriticalPower {
   date: number;
   name: string;
 }
+/**
+ * Получение данных по Эвентам Серии за выбранный сезон с ДБ
+ */
+export interface getCurrentEventsSeries {
+  _id: Types.ObjectId;
+  totalFinishedCount: number;
+  eventStart: string;
+}
