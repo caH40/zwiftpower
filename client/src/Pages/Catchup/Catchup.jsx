@@ -11,7 +11,7 @@ import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColum
 import styles from './Catchup.module.css';
 
 function Catchup() {
-  const [form, setForm] = useState({ season: 'Сезон 2022-2023' });
+  const [form, setForm] = useState({ season: 'Сезон 2023-2024' });
   const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);
 
   useTitle('Догонялки');

@@ -4,6 +4,7 @@ import { TotalCatchupSchema } from '../types/model.interface.js';
 
 const totalCatchupSchema = new Schema<TotalCatchupSchema>({
   type: String,
+  season: String,
   start: { type: Number, required: true },
   end: { type: Number },
   update: {
