@@ -20,6 +20,7 @@ export async function handlerClassicCommon({ eventId, results }: HandlerProtocol
   const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
   // Установка ранкинга райдерам. Сортировка по финишному времени.
+  // Сохранение результатов в БД
   await setRankResult(eventDB, resultsWithWPK);
 
   // обновление данных Event

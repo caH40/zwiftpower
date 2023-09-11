@@ -340,6 +340,7 @@ export interface ZwiftResultSchema {
     heartRateData: { avgHeartRate: number };
     avgWatts: number;
     powerType: string;
+    pairedSteeringDevice: boolean;
   };
   wattsPerKg: number;
 

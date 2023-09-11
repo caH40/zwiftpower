@@ -39,6 +39,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
           heartRateData: { avgHeartRate: result.sensorData.heartRateData.avgHeartRate },
           avgWatts: result.sensorData.avgWatts,
           powerType: result.sensorData.powerType,
+          pairedSteeringDevice: result.sensorData.pairedSteeringDevice,
         },
         wattsPerKg: result.wattsPerKg,
 

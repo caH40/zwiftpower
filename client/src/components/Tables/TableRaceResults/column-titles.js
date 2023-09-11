@@ -35,6 +35,7 @@ export const raceResultsColumnsEnd = [
   { name: 'Вес', id: 10 },
   { name: 'Рост', id: 11 },
   { name: 'Возраст', id: 12 },
+  { name: 'Разное', id: 13 },
 ];
 
 export const raceResultsColumns = (isScreenLg, isScreenSm) => {
