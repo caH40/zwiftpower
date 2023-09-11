@@ -24,7 +24,8 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
   const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, resultsWithStartGap);
   const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
-  // Установка ранкинга райдерам. Сортировка по финишному времени. Сохранение в БД.
+  // Установка ранкинга райдерам. Сортировка по финишному времени.
+  // Сохранение результатов в БД
   await setRankResult(eventDB, resultsWithWPK);
 
   // обновление данных Event

@@ -34,6 +34,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     heartRateData: { avgHeartRate: { type: Number, default: null } },
     avgWatts: { type: Number, default: null },
     powerType: { type: String, default: null },
+    pairedSteeringDevice: { type: Boolean, default: false },
   },
   wattsPerKg: { type: Number, default: null },
 

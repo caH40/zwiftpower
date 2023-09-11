@@ -11,6 +11,7 @@ import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
+import TdDifferent from '../Td/TdDifferent';
 
 import styles from '../Table.module.css';
 
@@ -81,6 +82,9 @@ function TableRaceResults({ results, event }) {
                   <td>{tdWeight(profile.weightInGrams.addition)}</td>
                   <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
                   <td>{getAgeCategory(profile.age)}</td>
+                  <TdDifferent
+                    isPairedSteeringDevice={result.sensorData.pairedSteeringDevice}
+                  />
                 </>
               )}
             </tr>
