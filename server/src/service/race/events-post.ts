@@ -17,7 +17,7 @@ export async function postEventService(eventParams: EventWithSubgroup, userId?: 
   await checkUnique(eventParams);
   const clubName = await getClubName(eventParams);
 
-  // добавление названия клуба который создал заезд в в объект event
+  // добавление названия клуба в котором был создал заезд в объект event
   eventParams.clubName = clubName;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
@@ -129,10 +129,14 @@ async function saveEventToDB(eventParams: EventWithSubgroup) {
 async function checkUnique(event: EventWithSubgroup) {
   // проверка на уникальность id нового заезда
   const hasEvent = await ZwiftEvent.findOne({ id: event.id });
-  if (hasEvent) throw { message: `Event с id=${event.id} уже есть в БД` };
+  if (hasEvent) {
+    throw new Error(`Event с id=${event.id} уже есть в БД`);
+  }
   // проверка на уникальность id групп нового заезда
   for (const eventSubgroup of event.eventSubgroups) {
     const hasSubGroup = await ZwiftEventSubgroup.findOne({ id: eventSubgroup.id });
-    if (hasSubGroup) throw { message: `SubGroup с id=${eventSubgroup.id} уже есть в БД` };
+    if (hasSubGroup) {
+      throw new Error(`SubGroup с id=${eventSubgroup.id} уже есть в БД`);
+    }
   }
 }
