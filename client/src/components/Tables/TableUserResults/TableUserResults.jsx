@@ -2,12 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { tdHeartRate, tdRank, tdTime, tdWatts, tdWeight } from '../utils/td';
+import { tdHeartRate, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../utils/date-local';
+import TdRank from '../Td/TdRank';
 
 import styles from '../Table.module.css';
 
@@ -23,7 +24,9 @@ function TableUserResults({ results }) {
       <tbody>
         {results?.map((result) => (
           <tr key={result._id}>
-            <td className={styles.center}>{tdRank(result.rankEvent)}</td>
+            <td className={styles.center}>
+              <TdRank value={result.rankEvent} dsq={result.disqualification} />
+            </td>
             {sm && (
               <td>
                 <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />

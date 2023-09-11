@@ -22,6 +22,9 @@ export const setRankResult = async (
   for (const result of results) {
     // если с VIRTUAL_POWER то присваивается 0 место (вне ранкинга)
     const isNotRanking = result.sensorData.powerType === 'VIRTUAL_POWER';
+    if (isNotRanking) {
+      result.disqualification = 'VIRTUAL_POWER';
+    }
 
     await saveDocument({
       eventId: eventDB._id,

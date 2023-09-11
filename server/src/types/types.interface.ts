@@ -194,6 +194,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
     countryAlpha3?: string;
   };
   wattsPerKg?: number;
+  disqualification?: string;
 }
 /**
  * Результаты райдеров в Event с дополнительными параметрами

@@ -7,7 +7,7 @@ import styles from '../Table.module.css';
 
 import { useResize } from '../../../hook/use-resize';
 import CategoryBoxFull from '../../CategoryBoxFull/CategoryBoxFull';
-import { tdRank } from '../utils/td';
+import TdRank from '../Td/TdRank';
 
 import Thead from './Thead';
 
@@ -24,7 +24,9 @@ function TableCatchupSummary({ resultsSummary = [] }) {
       <tbody>
         {resultsSummary.map((result, index) => (
           <tr key={result.id}>
-            <td className={cn(styles.onlyContent, styles.centerTd)}>{tdRank(index + 1)}</td>
+            <td className={cn(styles.onlyContent, styles.centerTd)}>
+              <TdRank value={index + 1} />
+            </td>
             <td className={cn(styles.onlyContent, styles.centerTd, styles.bold)}>
               {result.winsTotal}
             </td>

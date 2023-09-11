@@ -61,3 +61,5 @@
 - **wattsKg** -(`Number`) относительная мощность;
 - **cpLabel** -(`String`) название CP;
 - **duration** -(`Number`) длительность в секундах;
+
+**disqualification** -(`String`) Причина дисквалификации;

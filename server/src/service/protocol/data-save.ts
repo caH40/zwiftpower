@@ -45,6 +45,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
         flaggedCheating: result.flaggedCheating,
         flaggedSandbagging: result.flaggedSandbagging,
         cpBestEfforts: result.cpBestEfforts,
+        disqualification: result.disqualification,
       },
     },
     {
