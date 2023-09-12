@@ -20,7 +20,7 @@ import Thead from './Thead';
 function TableRaceResults({ results, event }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const columnsCP = useSelector((state) => state.columnsCP.value);
-  const { isScreenLg: lg, isScreenSm: sm } = useResize();
+  const { isScreenSm: sm, isScreenMd: md } = useResize();
   const [getLeaders, getSweepers] = useLeader(event);
 
   const resultFiltered = useMemo(() => {
@@ -30,7 +30,7 @@ function TableRaceResults({ results, event }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <Thead lg={lg} sm={sm} columnsCP={columnsCP} />
+      <Thead md={md} sm={sm} columnsCP={columnsCP} />
       <tbody>
         {resultFiltered?.map((result) => {
           const profile = result.profileData;
@@ -53,8 +53,8 @@ function TableRaceResults({ results, event }) {
                 getSweepers={getSweepers}
               />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              {lg && <TdGap gap={result.gap} />}
-              {lg && <TdGap gap={result.gapPrev} />}
+              {md && <TdGap gap={result.gap} />}
+              {md && <TdGap gap={result.gapPrev} />}
               {sm && (
                 <TdWattsPerKg
                   valueRaw={result.wattsPerKg.value}
@@ -63,7 +63,7 @@ function TableRaceResults({ results, event }) {
               )}
               {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
-              {lg &&
+              {md &&
                 columnsCP.map((column) => {
                   if (column.isVisible) {
                     return (
@@ -76,7 +76,7 @@ function TableRaceResults({ results, event }) {
                   }
                   return null;
                 })}
-              {lg && (
+              {md && (
                 <>
                   <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
                   <td>{tdWeight(profile.weightInGrams.addition)}</td>

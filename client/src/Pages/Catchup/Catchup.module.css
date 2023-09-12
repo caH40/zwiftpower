@@ -6,10 +6,10 @@
 }
 .box__total {
   flex: 0 1 400px;
-  min-width: 300px;
 }
 .box__results {
   flex: 1 1 750px;
+  overflow-x: auto;
 }
 .box__filter {
   text-align: right;

@@ -16,14 +16,14 @@ import Thead from './Thead';
 
 function TableCatchup({ catchups }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
-  const { isScreenLg: lg, isScreenSm: sm } = useResize();
+  const { isScreenMd: md, isScreenSm: sm } = useResize();
 
   const isModerator = ['admin', 'moderator'].includes(role);
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
       <caption>Победители этапов</caption>
-      <Thead lg={lg} sm={sm} isModerator={isModerator} />
+      <Thead md={md} sm={sm} isModerator={isModerator} />
       <tbody>
         {catchups.map((catchupResult) => (
           <tr key={catchupResult.eventId}>
@@ -38,11 +38,11 @@ function TableCatchup({ catchups }) {
             />
             {sm && <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>}
             {sm && <td>{catchupResult.totalFinishedCount}</td>}
-            {lg && <td>{map(catchupResult.eventSubgroup.mapId)}</td>}
-            {lg && <td>{route(catchupResult.eventSubgroup.routeId)}</td>}
-            {lg && <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>}
-            {lg && <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>}
-            {lg && <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>}
+            {md && <td>{map(catchupResult.eventSubgroup.mapId)}</td>}
+            {md && <td>{route(catchupResult.eventSubgroup.routeId)}</td>}
+            {md && <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>}
+            {md && <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>}
+            {md && <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>}
             <td>
               <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
                 этап

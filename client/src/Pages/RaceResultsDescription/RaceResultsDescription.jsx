@@ -27,7 +27,7 @@ function RaceResultsDescription() {
   }, [eventId, dispatch]);
 
   return (
-    <section>
+    <section className={styles.wrapper}>
       {eventData?.id && (
         <>
           <DescriptionEventZwiftNew event={eventData} />
