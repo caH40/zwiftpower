@@ -73,6 +73,10 @@
 .bold {
   font-weight: 700;
 }
+.name {
+  display: block;
+  min-width: 200px;
+}
 .rider {
   display: flex;
   gap: 0 7px;

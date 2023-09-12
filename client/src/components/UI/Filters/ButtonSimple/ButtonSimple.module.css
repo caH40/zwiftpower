@@ -20,3 +20,11 @@
 .mb10 {
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 992px) {
+  .button {
+    padding: 0.2em 0.6em;
+    min-width: 120px;
+    text-align-last: left;
+  }
+}

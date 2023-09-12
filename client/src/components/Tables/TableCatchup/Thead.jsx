@@ -4,11 +4,11 @@ import Th from '../Th/Th';
 
 import { catchupColumns } from './column-titles';
 
-function Thead({ lg, sm, isModerator }) {
+function Thead({ md, sm, isModerator }) {
   return (
     <thead>
       <tr>
-        {catchupColumns(lg, sm).map((column) => (
+        {catchupColumns(md, sm).map((column) => (
           <Th key={column.id} columnName={column.name} />
         ))}
         {/* {isModerator && <Th key={'Управление'} columnName={'Управление'} />} */}

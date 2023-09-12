@@ -8,12 +8,12 @@ import { useResize } from '../../../hook/use-resize';
 import styles from './NavBarResultsRace.module.css';
 
 function NavBarResultsRace({ results, hideCategory }) {
-  const { isScreenLg } = useResize();
+  const { isScreenMd } = useResize();
   return (
     <div className={styles.box}>
       {hideCategory ? null : <FilterCategory results={results} />}
-      {isScreenLg && <FilterWatts />}
-      {isScreenLg && <FilterColumn />}
+      {isScreenMd && <FilterWatts />}
+      {isScreenMd && <FilterColumn />}
     </div>
   );
 }

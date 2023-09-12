@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import { tdHeartRate, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
@@ -16,11 +17,11 @@ import Thead from './Thead';
 
 function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
-  const { isScreenLg: lg, isScreenSm: sm } = useResize();
+  const { isScreenMd: md, isScreenSm: sm } = useResize();
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <Thead lg={lg} sm={sm} columnsCP={columnsCP} />
+      <Thead md={md} sm={sm} columnsCP={columnsCP} />
       <tbody>
         {results?.map((result) => (
           <tr key={result._id}>
@@ -35,7 +36,10 @@ function TableUserResults({ results }) {
 
             <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
             <td>
-              <Link className={styles.link} to={`/race/results/${result.eventId}`}>
+              <Link
+                className={cn(styles.link, styles.name)}
+                to={`/race/results/${result.eventId}`}
+              >
                 <span className={styles.big}>{result.eventName}</span>
               </Link>
             </td>
@@ -48,7 +52,7 @@ function TableUserResults({ results }) {
             )}
             {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
 
-            {lg &&
+            {md &&
               columnsCP.map((column) => {
                 if (column.isVisible) {
                   return (
@@ -61,7 +65,7 @@ function TableUserResults({ results }) {
                 }
                 return null;
               })}
-            {lg && (
+            {md && (
               <>
                 <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
                 <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
