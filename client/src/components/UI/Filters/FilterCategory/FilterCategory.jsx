@@ -6,18 +6,12 @@ import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setFilterCategory } from '../../../../redux/features/filterCategorySlice';
 
 import styles from './FilterCategory.module.css';
+import { getCategoriesSorted } from './categoriesSort';
 
 function FilterCategory({ results }) {
   const categoryState = useSelector((state) => state.filterCategory.value);
-  const categories = (() => {
-    const categoriesSet = new Set();
-    for (const result of results) {
-      categoriesSet.add('All');
-      categoriesSet.add(result.subgroupLabel);
-    }
-    return [...categoriesSet];
-  })();
 
+  const categories = getCategoriesSorted(results);
   const quantityCategories = categories.length;
 
   return (
