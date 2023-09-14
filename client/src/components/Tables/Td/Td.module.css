@@ -23,7 +23,9 @@
   font-style: italic;
   white-space: nowrap;
 }
-
+.gap__ms {
+  font-weight: 700;
+}
 .link {
   text-decoration: none;
   color: var(--color-blue-4);
