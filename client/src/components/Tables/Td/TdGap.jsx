@@ -5,17 +5,20 @@ import { gapWithStr, secondesToTime } from '../../../utils/gaptoseconds';
 
 import styles from './Td.module.css';
 
-function TdGap(gap) {
-  const gapTime = secondesToTime(gap.gap);
+function TdGap({ gap, dsq }) {
+  const gapTime = secondesToTime(gap);
   const gapTimeStr = gapWithStr(gapTime);
 
   const gapHasMs = gapTimeStr?.includes('мс');
 
   return (
     <td>
-      <div className={cn(styles.gap, { [styles.gap__ms]: gapHasMs })}>
-        {gapTimeStr ? <>{gapTimeStr}</> : ''}
-      </div>
+      {/* если имеется дисквалификация (dsq), то gap пустой */}
+      {!dsq && (
+        <div className={cn(styles.gap, { [styles.gap__ms]: gapHasMs })}>
+          {gapTimeStr ? <>{gapTimeStr}</> : ''}
+        </div>
+      )}
     </td>
   );
 }
