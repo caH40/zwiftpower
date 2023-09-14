@@ -34,11 +34,12 @@ function TableRaceResults({ results, event }) {
       <tbody>
         {resultFiltered?.map((result) => {
           const profile = result.profileData;
+          const dsq = result.disqualification;
 
           return (
             <tr key={result._id}>
               <td className={styles.center}>
-                <TdRank value={result.rankEvent} dsq={result.disqualification} />
+                <TdRank value={result.rankEvent} dsq={dsq} />
               </td>
               {sm && (
                 <td>
@@ -53,8 +54,8 @@ function TableRaceResults({ results, event }) {
                 getSweepers={getSweepers}
               />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              {md && <TdGap gap={result.gap} />}
-              {md && <TdGap gap={result.gapPrev} />}
+              {md && <TdGap gap={result.gap} dsq={dsq} />}
+              {md && <TdGap gap={result.gapPrev} dsq={dsq} />}
               {sm && (
                 <TdWattsPerKg
                   valueRaw={result.wattsPerKg.value}
