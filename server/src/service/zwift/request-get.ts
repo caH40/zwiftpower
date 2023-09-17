@@ -18,6 +18,7 @@ const headersDefault = {
 // запрос по url на открытое API Звифта
 export async function getRequest(url: string, isMainToken = true) {
   try {
+    // получение токена для API Zwift из БД
     const token = await getAccessToken(isMainToken);
 
     const response = await axios({
@@ -37,7 +38,6 @@ export async function getRequest(url: string, isMainToken = true) {
     return null;
   } catch (error) {
     console.log(`${apiUrl}${url}`);
-    console.error(error);
     return null;
   }
 }
