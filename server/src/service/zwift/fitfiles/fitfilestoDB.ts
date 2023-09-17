@@ -1,46 +1,22 @@
 import { FitFile } from '../../../Model/FitFile.js';
-import { ActivityFeedShort } from '../../../types/types.interface.js';
-import { getFullDataUrl } from '../activity.js';
-import { getPowers } from '../power.js';
 
-export async function saveFitFiles(
-  zwiftId: number,
-  activities: ActivityFeedShort[],
-  weightInGrams: number
-) {
-  if (!activities.length) return;
+// types
+import { PowerFitFiles } from '../../../types/types.interface.js';
 
-  const powers = [];
-  for (const activity of activities) {
-    // ссылка на fitFile активности
-    const fullDataUrl = await getFullDataUrl(activity.id);
-
-    if (!fullDataUrl) {
-      return;
-    }
-    // получение данных мощности из fitFile
-    const powerInWatts = await getPowers(fullDataUrl);
-    const power = {
-      name: activity.name,
-      date: activity.date,
-      powerInWatts: JSON.stringify(powerInWatts),
-      weightInGrams,
-    };
-    powers.push(power);
-  }
+/**
+ *  Получение и сохранение в данных из fitFiles в БД для Райдера zwiftId
+ */
+export async function saveFitFiles(powers: PowerFitFiles[], zwiftId: number) {
   // сортировка для нахождения последней активности
   powers.sort((a, b) => b.date - a.date);
   const dateLastedActivity = powers[0].date;
 
   // добавление фитфайла в БД
-  const fitFileDB = await FitFile.findOne({ zwiftId });
-
-  if (!fitFileDB) {
-    await FitFile.create({ zwiftId });
-  }
-
   await FitFile.findOneAndUpdate(
     { zwiftId },
-    { $addToSet: { activities: { $each: powers } }, $set: { dateLastedActivity } }
+    { $addToSet: { activities: { $each: powers } }, $set: { dateLastedActivity } },
+    {
+      upsert: true,
+    }
   );
 }

@@ -21,7 +21,7 @@ export async function updatePowerCurve(zwiftId: number) {
       return;
     }
 
-    // данные не старше 90 дней
+    // данные не старше 90 дней (была фильтрация в fitfiles, здесь зачем еще раз?)
     const { pointsWattsFiltered, pointsWattsPerKgFiltered } = filter90Days(powerCurveDB);
 
     // инициализация массивов для хранения CP
@@ -53,7 +53,7 @@ export async function updatePowerCurve(zwiftId: number) {
         const weightInKilogram = activity.weightInGrams / 1000;
         const cpBestEfforts = getInterval({ powerInWatts, weightInKilogram, interval });
 
-        if (cpBestEfforts.watts ?? 0 >= cpWattsCurrent.value)
+        if (cpBestEfforts.watts >= cpWattsCurrent.value)
           cpWattsCurrent = {
             duration: interval,
             value: cpBestEfforts.watts,

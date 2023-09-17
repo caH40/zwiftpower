@@ -43,6 +43,7 @@ app.get('*', (_, res) =>
   res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html'))
 );
 
+// запуск сервера на express и задач, запускаемых по таймеру
 const start = async () => {
   try {
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));

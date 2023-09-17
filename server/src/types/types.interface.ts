@@ -273,3 +273,12 @@ export interface getCurrentEventsSeries {
   totalFinishedCount: number;
   eventStart: string;
 }
+/**
+ * Power из fitfiles
+ */
+export interface PowerFitFiles {
+  name: string;
+  date: number;
+  powerInWatts: string;
+  weightInGrams: number;
+}
