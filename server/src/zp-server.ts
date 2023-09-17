@@ -13,7 +13,6 @@ import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
 import { routerInformation } from './routes/information.js';
 import { routerProfile } from './routes/profile.js';
-// import { updateAllPowerCurve } from './service/updates/power-curve.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -43,7 +42,8 @@ app.use(express.static(path.resolve(__dirname, '..', '..', 'client', 'build')));
 app.get('*', (_, res) =>
   res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html'))
 );
-// await updateAllPowerCurve();
+
+// запуск сервера на express и задач, запускаемых по таймеру
 const start = async () => {
   try {
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
