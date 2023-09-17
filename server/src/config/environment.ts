@@ -11,6 +11,7 @@ if (!parsed) {
 }
 
 export const serverPort: string = parsed.SERVER_PORT;
+export const serverUpdatePort: string = parsed.SERVER_UPDATE_PORT;
 export const mongodb: string = parsed.MONGODB;
 export const server: string = parsed.FRONT;
 export const jwtAccessSecret: string = parsed.JWT_ACCESS_SECRET;

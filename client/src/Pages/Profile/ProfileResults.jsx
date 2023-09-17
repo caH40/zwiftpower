@@ -32,8 +32,8 @@ function ProfileResults() {
         <>
           <ProfileBlock results={results} profile={profile} />
           <div className={styles.block__cp}>
-            <CPBlock criticalPowers={powerCurve.pointsWattsPerKg} label={'wattsPerKg'} />
-            <CPBlock criticalPowers={powerCurve.pointsWatts} label={'watts'} />
+            <CPBlock criticalPowers={powerCurve?.pointsWattsPerKg} label={'wattsPerKg'} />
+            <CPBlock criticalPowers={powerCurve?.pointsWatts} label={'watts'} />
           </div>
         </>
       )}
