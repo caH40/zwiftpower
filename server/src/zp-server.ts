@@ -5,10 +5,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 
 import { mongodb, serverFront, serverPort } from './config/environment.js';
-
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';
-import { timers } from './service/timer.js';
 import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
 import { routerInformation } from './routes/information.js';
@@ -43,12 +41,10 @@ app.get('*', (_, res) =>
   res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html'))
 );
 
-// запуск сервера на express и задач, запускаемых по таймеру
+// запуск сервера на express
 const start = async () => {
   try {
     app.listen(PORT, () => console.log('server started on PORT=' + PORT));
-
-    await timers();
   } catch (e) {
     console.log(e);
   }
