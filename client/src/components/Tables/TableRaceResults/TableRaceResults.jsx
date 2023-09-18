@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
@@ -20,7 +21,10 @@ import Thead from './Thead';
 function TableRaceResults({ results, event }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const columnsCP = useSelector((state) => state.columnsCP.value);
+  const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
+
   const { isScreenSm: sm, isScreenMd: md } = useResize();
+
   const [getLeaders, getSweepers] = useLeader(event);
 
   const resultFiltered = useMemo(() => {
@@ -29,15 +33,19 @@ function TableRaceResults({ results, event }) {
   }, [filterCategory, results]);
 
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={cn(styles.table, styles.table_striped)}>
       <Thead md={md} sm={sm} columnsCP={columnsCP} />
+
       <tbody>
         {resultFiltered?.map((result) => {
           const profile = result.profileData;
           const dsq = result.disqualification;
 
           return (
-            <tr key={result._id}>
+            <tr
+              className={cn({ [styles.current]: zwiftId === result.profileId })}
+              key={result._id}
+            >
               <td className={styles.center}>
                 <TdRank value={result.rankEvent} dsq={dsq} />
               </td>

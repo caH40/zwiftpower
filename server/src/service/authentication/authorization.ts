@@ -23,6 +23,7 @@ export async function authorizationService(
       username,
       email: userDB.email,
       id: userDB._id,
+      zwiftId: userDB.zwiftId,
       role: userDB.role,
     });
 

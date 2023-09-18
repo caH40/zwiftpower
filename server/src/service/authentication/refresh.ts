@@ -18,6 +18,7 @@ export async function refreshService(refreshToken: string) {
     if (!userDB) return;
     const tokens = await generateToken({
       id: userDB._id,
+      zwiftId: userDB.zwiftId,
       email: userDB.email,
       username: userDB.username,
       role: userDB.role,
