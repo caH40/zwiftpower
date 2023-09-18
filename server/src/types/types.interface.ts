@@ -282,3 +282,11 @@ export interface PowerFitFiles {
   powerInWatts: string;
   weightInGrams: number;
 }
+/**
+ * Аргументы для функции updatePowerCurveRider
+ */
+export interface UpdatePowerCurveRiderArg {
+  zwiftId: number;
+  cpWattsUpdated: CriticalPower[];
+  cpWattsPerKgUpdated: CriticalPower[];
+}
