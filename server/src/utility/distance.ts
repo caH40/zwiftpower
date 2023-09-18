@@ -14,11 +14,14 @@ export function countDistance(eventSubgroup: ZwiftEventSubgroupSchema) {
     let distanceInKilometers: number = 0;
     let elevationGainInMeters: number = 0;
 
-    if (route.leadInDistance && route.distance) {
+    // расчет дистанции с учетом выезда из гейта
+    if ((route.leadInDistance || route.leadInDistance === 0) && route.distance) {
       distanceInKilometers =
         +route.leadInDistance + Math.round(eventSubgroup.laps * +route.distance * 1000) / 1000;
     }
-    if (route.leadInElevation && route.elevation) {
+
+    // расчет набора высоты на дистанции с учетом выезда из гейта
+    if ((route.leadInElevation || route.leadInElevation === 0) && route.elevation) {
       elevationGainInMeters =
         +route.leadInElevation +
         Math.round(eventSubgroup.laps * +route.elevation * 1000) / 1000;
