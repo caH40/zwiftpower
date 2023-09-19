@@ -1,4 +1,5 @@
 import { getRequest } from './request-get.js';
+import { errorHandler } from '../../errors/error.js';
 
 // types
 import { ActivitiesDataFromZwiftAPI } from '../../types/zwiftAPI/activitiesFromZwift.interface.js';
@@ -18,7 +19,7 @@ export async function getFullDataUrl(activityId: string) {
 
     return activity.fitnessData.fullDataUrl;
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     return null;
   }
 }

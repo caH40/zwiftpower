@@ -1,9 +1,9 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { errorHandler } from '../../errors/error.js';
 import { EventWithSubgroup } from '../../types/types.interface.js';
 import { handlerProtocol } from '../protocol/handler.js';
 import { addCriticalPowers } from '../race/criticalpower.js';
 import { getResults } from '../zwift/results.js';
-
 import { checkDurationUpdating } from './results-check.js';
 
 // обновление всех результатов заездов из Звифта
@@ -20,7 +20,7 @@ export async function updateResults() {
       await updateResultsEvent(event);
     }
   } catch (error) {
-    console.error(error);
+    errorHandler(error);
   }
 }
 
@@ -60,6 +60,6 @@ export async function updateResultsEvent(event: EventWithSubgroup) {
     };
     await handlerProtocol(handlerProtocolArg);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

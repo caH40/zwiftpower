@@ -9,6 +9,7 @@ import {
   usernameZwift,
   usernameZwiftSecondary,
 } from '../../config/environment.js';
+import { errorHandler } from '../../errors/error.js';
 
 const zwiftUsers = [
   {
@@ -62,6 +63,6 @@ export async function updateAccessToken() {
       );
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

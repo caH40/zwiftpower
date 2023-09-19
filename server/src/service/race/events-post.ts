@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
-import { countDistance } from '../../utility/distance.js';
+import { countDistance } from '../../utils/distance.js';
 // import { getZwiftInsiderUrl } from '../../utility/route.js';
 import { loggingAdmin } from '../log.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';

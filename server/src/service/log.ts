@@ -1,9 +1,10 @@
 import { LogsAdmin } from '../Model/LogsAdmin.js';
+import { errorHandler } from '../errors/error.js';
+import { filterLogs } from './log-filter.js';
 
 // types
 import { GetLogsAdmins } from '../types/http.interface.js';
 import { LoggingAdminArg, LogsAdminUsername } from '../types/types.interface.js';
-import { filterLogs } from './log-filter.js';
 
 export async function loggingAdmin({
   eventId,
@@ -25,7 +26,7 @@ export async function loggingAdmin({
     });
     return { message: 'Успешное сохранение информации о действии админа (модератора)' };
   } catch (error) {
-    console.error(error);
+    errorHandler(error);
   }
 }
 

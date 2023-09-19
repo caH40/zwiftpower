@@ -1,5 +1,6 @@
 import { UserConfirm } from '../../Model/User-confirm.js';
 import { User } from '../../Model/User.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function confirmEmailService(activationToken: string) {
   try {
@@ -15,6 +16,6 @@ export async function confirmEmailService(activationToken: string) {
 
     return { message: `Ссылка для активации устарела!` };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

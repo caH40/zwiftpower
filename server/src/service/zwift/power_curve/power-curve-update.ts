@@ -2,6 +2,7 @@ import { intervals } from './intervals-cp.js';
 import { getInterval } from './powerintervals.js';
 import { getFitFile, getPowerCurve, updatePowerCurveRider } from './power-curve-updateDB.js';
 import { dateBefore90Days } from '../../../asset/date.js';
+import { errorHandler } from '../../../errors/error.js';
 
 // types
 import { filter90Days } from './update/filter.js';
@@ -12,7 +13,7 @@ export async function updatePowerCurve(zwiftId: number) {
     // получение актуальных фитфайлов райдера (zwiftId) из БД
     const fitFile = await getFitFile(zwiftId);
     if (!fitFile) {
-      return console.log(`Не найден fitfile для ${zwiftId}`);
+      return;
     }
 
     // получение кривой мощности райдера (zwiftId) из БД
@@ -83,6 +84,6 @@ export async function updatePowerCurve(zwiftId: number) {
       cpWattsPerKgUpdated,
     });
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

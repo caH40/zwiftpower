@@ -1,4 +1,5 @@
 import { PasswordReset } from '../../Model/Password-reset.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function checkRequestPasswordService(tokenReset: string) {
   try {
@@ -12,6 +13,6 @@ export async function checkRequestPasswordService(tokenReset: string) {
       userId,
     };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

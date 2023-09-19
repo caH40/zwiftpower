@@ -12,6 +12,7 @@ import {
   mailSecure,
   serverFront,
 } from '../../config/environment.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function mailService(
   target: string,
@@ -52,7 +53,7 @@ export async function mailService(
 
     const result = await transporter.sendMail({ from, to, subject, html });
 
-    console.log('Message sent: %s', result.messageId);
+    // console.log('Message sent: %s', result.messageId);
 
     if (result.response.includes('250 OK')) {
       return true;
@@ -60,6 +61,6 @@ export async function mailService(
       return false;
     }
   } catch (error) {
-    console.error;
+    errorHandler(error);
   }
 }

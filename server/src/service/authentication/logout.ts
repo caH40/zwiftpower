@@ -1,3 +1,4 @@
+import { errorHandler } from '../../errors/error.js';
 import { removeToken } from './token.js';
 
 export async function logoutService(refreshToken: string) {
@@ -5,7 +6,7 @@ export async function logoutService(refreshToken: string) {
     await removeToken(refreshToken);
     return { message: 'Вы вышли из сервиса!' };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     throw error;
   }
 }

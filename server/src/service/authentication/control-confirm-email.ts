@@ -1,5 +1,6 @@
 import { User } from '../../Model/User.js';
 import { UserConfirm } from '../../Model/User-confirm.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function controlConfirmEmail() {
   try {
@@ -19,15 +20,9 @@ export async function controlConfirmEmail() {
         if (!userDeleted) {
           throw new Error(`Не найден аккаунт _id:${userId} для удаления`);
         }
-
-        console.log(
-          `${new Date().toLocaleString()} Аккаунт удалён, так как не был активирован ${
-            userDeleted.username
-          } ${userDeleted.email}`
-        );
       }
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

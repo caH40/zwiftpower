@@ -1,6 +1,7 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { createFitFiles } from '../zwift/fitfiles/fitfiles.js';
 import { updatePowerCurve } from '../zwift/power_curve/power-curve-update.js';
+import { errorHandler } from '../../errors/error.js';
 
 // types
 import { PowerCurveSchema } from '../../types/model.interface.js';
@@ -14,8 +15,8 @@ export async function updateAllPowerCurve() {
     for (const powerCurve of powerCurvesDB) {
       await updatePowerCurve(powerCurve.zwiftId);
     }
-    console.log(new Date().toLocaleString(), 'Обновление fitFiles and powerCurve');
+    console.log(new Date().toLocaleString(), 'Обновление fitFiles and powerCurve'); // eslint-disable-line
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

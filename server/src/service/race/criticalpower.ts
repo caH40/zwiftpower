@@ -3,6 +3,7 @@ import { getEmptyCP } from '../power/empty-cp.js';
 import { getIntervals } from '../power/powerintervals.js';
 import { getFullDataUrl } from '../zwift/activity.js';
 import { getPowers } from '../zwift/power.js';
+import { errorHandler } from '../../errors/error.js';
 
 // types
 import { ResultEventAdditional } from '../../types/types.interface.js';
@@ -44,7 +45,7 @@ export async function addCriticalPowers(
     }
     return resultsWithCP;
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 

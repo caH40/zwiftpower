@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 import { getAccessToken } from './token.js';
-import { errorAxios } from '../../app_modules/error/axios.js';
 import { zwiftAPI } from '../../config/environment.js';
+import { errorHandler } from '../../errors/error.js';
+
+//types
 import { PutEvent } from '../../types/http.interface.js';
 
 const apiUrl = zwiftAPI;
@@ -32,7 +34,7 @@ export async function putRequest(url: string, data: PutEvent, isMainToken = true
     },
     data,
   }).catch((error) => {
-    errorAxios(error, 'putRequest');
+    errorHandler(error);
   });
 
   if (response) {

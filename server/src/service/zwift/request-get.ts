@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { getAccessToken } from './token.js';
 
-import { errorAxios } from '../../app_modules/error/axios.js';
+import { getAccessToken } from './token.js';
 import { zwiftAPI } from '../../config/environment.js';
+import { errorHandler } from '../../errors/error.js';
 
 const apiUrl = zwiftAPI;
 const headersDefault = {
@@ -29,7 +29,7 @@ export async function getRequest(url: string, isMainToken = true) {
         Authorization: 'Bearer ' + token,
       },
     }).catch((error) => {
-      errorAxios(error, 'getRequest');
+      errorHandler(error);
     });
 
     if (response) {
@@ -37,7 +37,6 @@ export async function getRequest(url: string, isMainToken = true) {
     }
     return null;
   } catch (error) {
-    console.log(`${apiUrl}${url}`);
     return null;
   }
 }

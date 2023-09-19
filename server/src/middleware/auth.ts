@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
+
 import { validateAccessToken } from '../service/authentication/token.js';
+import { errorHandler } from '../errors/error.js';
 
 export async function checkAuth(req: Request, res: Response, next: () => void) {
   try {
@@ -19,7 +21,7 @@ export async function checkAuth(req: Request, res: Response, next: () => void) {
     // const isValidRefreshToken = validateRefreshToken(refreshToken);
     // if (isValidRefreshToken) return next();
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
   }
 }
@@ -35,7 +37,7 @@ export async function getAuth(req: Request, res: Response, next: () => void) {
     req.params.userId = isValidAccessToken?.id;
     return next();
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     return next();
   }
 }

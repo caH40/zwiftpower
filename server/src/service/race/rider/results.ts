@@ -1,8 +1,8 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { ZwiftEventSchema } from '../../../types/model.interface.js';
-import { secondesToTime } from '../../../utility/date-convert.js';
-import { addPropertyAddition } from '../../../utility/property-addition.js';
+import { secondesToTime } from '../../../utils/date-convert.js';
+import { addPropertyAddition } from '../../../utils/property-addition.js';
 
 export async function getUserResultsFromDB(zwiftId: string) {
   const resultsDB = await ZwiftResult.find({ profileId: zwiftId });

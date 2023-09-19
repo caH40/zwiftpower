@@ -1,6 +1,6 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { addPropertyAddition } from '../../utility/property-addition.js';
-import { secondesToTimeThousandths } from '../../utility/thousandths.js';
+import { addPropertyAddition } from '../../utils/property-addition.js';
+import { secondesToTimeThousandths } from '../../utils/thousandths.js';
 import { sortAndFilterResults } from './sortAndFilter.js';
 
 // types

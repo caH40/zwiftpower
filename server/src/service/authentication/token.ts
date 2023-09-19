@@ -1,10 +1,13 @@
+import { Types } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+
 import { Token } from '../../Model/Token.js';
 import { jwtAccessSecret, jwtRefreshSecret } from '../../config/environment.js';
+import { errorHandler } from '../../errors/error.js';
 
+// types
 import { GenerateToken } from '../../types/auth.interface.js';
-import { Types } from 'mongoose';
 
 export async function generateToken(payload: GenerateToken) {
   try {
@@ -13,7 +16,7 @@ export async function generateToken(payload: GenerateToken) {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 
@@ -28,7 +31,7 @@ export async function saveToken(userId: Types.ObjectId, refreshToken: string) {
     const newTokenDB = await Token.create({ user: userId, refreshToken });
     return newTokenDB;
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 
@@ -37,7 +40,7 @@ export async function removeToken(refreshToken: string) {
     const tokenDB = await Token.findOneAndDelete({ refreshToken });
     return tokenDB;
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 

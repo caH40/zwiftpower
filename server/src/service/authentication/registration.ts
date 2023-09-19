@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { UserConfirm } from '../../Model/User-confirm.js';
 
+import { UserConfirm } from '../../Model/User-confirm.js';
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
 import { generateToken, saveToken } from './token.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function registrationService(username: string, email: string, password: string) {
   try {
@@ -46,6 +47,6 @@ export async function registrationService(username: string, email: string, passw
     const message = 'Регистрация прошла успешно';
     return { ...tokens, message, user: { username, email, id, role } };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

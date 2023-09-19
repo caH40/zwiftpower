@@ -6,6 +6,7 @@ import { updateAllPowerCurve } from './updates/power-curve.js';
 import { updateResults } from './updates/results-events.js';
 import { updateScheduleEvents, updateStartInfo } from './updates/schedule-events.js';
 import { updateAccessToken } from './zwift/token.js';
+import { errorHandler } from '../errors/error.js';
 
 export async function setTimers() {
   const millisecondsInDay = 24 * 60 * 60 * 1000;
@@ -16,7 +17,7 @@ export async function setTimers() {
       await controlConfirmEmail();
       await controlNewPasswords();
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
     }
   }, millisecondsInDay);
 
@@ -25,7 +26,7 @@ export async function setTimers() {
       await updateScheduleEvents();
       await updateStartInfo();
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
     }
   }, millisecondsIn23Minutes);
 
@@ -33,7 +34,7 @@ export async function setTimers() {
     try {
       await updateResults();
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
     }
   }, millisecondsIn12Minutes);
 
@@ -41,7 +42,7 @@ export async function setTimers() {
   new CronJob(
     '0 0 2 * * *',
     async function () {
-      console.log(new Date().toLocaleString(), 'Обновление токенов и фитфайлов мощности');
+      console.log(new Date().toLocaleString(), 'Обновление токенов и фитфайлов мощности'); // eslint-disable-line
       await updateAccessToken();
       await updateAllPowerCurve();
     },

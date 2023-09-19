@@ -1,6 +1,9 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { ZwiftEventSchema } from '../../types/model.interface.js';
+import { errorHandler } from '../../errors/error.js';
 import { putEventService } from '../race/events-put.js';
+
+// types
+import { ZwiftEventSchema } from '../../types/model.interface.js';
 
 // изменение свойства started, если заезд стартовал
 export async function updateStartInfo() {
@@ -11,7 +14,7 @@ export async function updateStartInfo() {
       await updateStartInfoEvent(event);
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 
@@ -25,7 +28,7 @@ export async function updateStartInfoEvent(event: ZwiftEventSchema) {
       await ZwiftEvent.findByIdAndUpdate(event._id, { $set: { started: true } });
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }
 
@@ -37,6 +40,6 @@ export async function updateScheduleEvents() {
       await putEventService(event.id);
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

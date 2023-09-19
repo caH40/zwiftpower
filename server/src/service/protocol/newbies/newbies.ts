@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { addWattsPerKg } from '../../../utility/watts.js';
+import { addWattsPerKg } from '../../../utils/watts.js';
 import { addAgeAndFlag } from '../age-and-flag.js';
 import { saveDocument } from '../data-save.js';
 import { filterByRank } from './results-filter.js';

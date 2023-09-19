@@ -1,6 +1,6 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { addGapStart } from '../../utility/gap.js';
-import { addWattsPerKg } from '../../utility/watts.js';
+import { addGapStart } from '../../utils/gap.js';
+import { addWattsPerKg } from '../../utils/watts.js';
 import { addAgeAndFlag } from './age-and-flag.js';
 
 // types
