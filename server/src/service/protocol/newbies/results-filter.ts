@@ -1,3 +1,5 @@
+import { errorHandler } from '../../../errors/error.js';
+
 // types
 import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { ResultEventAdditional } from '../../../types/types.interface.js';
@@ -22,7 +24,7 @@ export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema
 
     return [...resultsCD, ...resultsE];
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     return results;
   }
 };

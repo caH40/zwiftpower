@@ -1,11 +1,12 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
+import { errorHandler } from '../../errors/error.js';
+import { eventSignedRidersDto } from '../../dto/eventSignedRiders.dto.js';
 
 // types
 import { EventWithSignedRiders, SignedRidersPowerCurves } from '../../types/types.interface.js';
 import { PowerCurveSchema } from '../../types/model.interface.js';
-import { eventSignedRidersDto } from '../../dto/eventSignedRiders.dto.js';
 
 /**
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
@@ -53,7 +54,7 @@ export async function getEventService(eventId: string) {
 
     return eventSignedRidersDto(eventDataDB);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     return null;
   }
 }

@@ -2,6 +2,7 @@ import { generateToken, validateRefreshToken } from './token.js';
 
 import { Token } from '../../Model/Token.js';
 import { User } from '../../Model/User.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function refreshService(refreshToken: string) {
   try {
@@ -40,6 +41,6 @@ export async function refreshService(refreshToken: string) {
       },
     };
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

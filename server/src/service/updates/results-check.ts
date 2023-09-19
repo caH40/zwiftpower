@@ -1,4 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { errorHandler } from '../../errors/error.js';
+
+// types
 import { EventWithSubgroup } from '../../types/types.interface.js';
 
 export async function checkDurationUpdating(event: EventWithSubgroup) {
@@ -11,6 +14,6 @@ export async function checkDurationUpdating(event: EventWithSubgroup) {
       await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
     }
   } catch (error) {
-    console.error(error);
+    errorHandler(error);
   }
 }

@@ -1,4 +1,5 @@
 import { PasswordReset } from '../../Model/Password-reset.js';
+import { errorHandler } from '../../errors/error.js';
 
 export async function controlNewPasswords() {
   try {
@@ -16,6 +17,6 @@ export async function controlNewPasswords() {
       }
     }
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
   }
 }

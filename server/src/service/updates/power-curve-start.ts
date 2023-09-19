@@ -1,5 +1,6 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
+import { errorHandler } from '../../errors/error.js';
 
 /**
  * Инициализация PowerCurve в БД для всех финишировавших райдеров
@@ -22,7 +23,8 @@ export const initPowerCurve = async () => {
 
   // will fail fast on the first error encountered. If false,
   // will insert all the documents it can and report errors later
-  await PowerCurve.insertMany(resultsForDB, { ordered: false }).catch((error) =>
-    console.log(`Ошибка в initPowerCurve при insertMany, code=${error.code}`)
+  await PowerCurve.insertMany(resultsForDB, { ordered: false }).catch(
+    (error) => errorHandler(error)
+    // console.log(`Ошибка в initPowerCurve при insertMany, code=${error.code}`)
   );
 };
