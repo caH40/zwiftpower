@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { errorHandler } from '../errors/error.js';
 import {
   getDevelopmentService,
   postDevelopmentService,
@@ -7,8 +8,11 @@ import {
   putDevelopmentService,
 } from '../service/information/development.js';
 import { sendMessageToTelegramBot } from '../service/telegrambot.js';
+
+// types
 import { PostDevelopment } from '../types/http.interface.js';
 import { InfoDevelopmentSchema } from '../types/model.interface.js';
+
 //
 //
 export async function getDevelopment(req: Request, res: Response) {
@@ -16,7 +20,7 @@ export async function getDevelopment(req: Request, res: Response) {
     const informationDev = await getDevelopmentService();
     res.status(200).json(informationDev);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -38,11 +42,11 @@ export async function postDevelopment(req: Request, res: Response) {
     const { infoDevelopment, ...response } = responsePosted;
 
     if (infoDevelopment) {
-      await sendMessageToTelegramBot(infoDevelopment).catch((error) => console.log(error));
+      await sendMessageToTelegramBot(infoDevelopment).catch((error) => errorHandler(error));
     }
     res.status(201).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -58,7 +62,7 @@ export async function putDevelopment(req: Request, res: Response) {
     const response = await putDevelopmentService(releaseData, userId);
     res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -72,7 +76,7 @@ export async function deleteDevelopment(req: Request, res: Response) {
     const response = await deleteDevelopmentService(id);
     res.status(201).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }

@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+
 import {
   getUserResultsService,
   getUserPowerService,
 } from '../service/race/rider/rider-profile.js';
+import { errorHandler } from '../errors/error.js';
 
 /**
  * Контролер получения профайла райдера (анкеты), основных значений CriticalPower,
@@ -14,7 +16,7 @@ export async function getUserResults(req: Request, res: Response) {
     const userResults = await getUserResultsService(zwiftId);
     res.status(200).json(userResults);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -31,7 +33,7 @@ export async function getUserPower(req: Request, res: Response) {
     const userPower = await getUserPowerService(zwiftId);
     res.status(200).json(userPower);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }

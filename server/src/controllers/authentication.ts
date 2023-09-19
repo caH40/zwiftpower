@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 import { authorizationService } from '../service/authentication/authorization.js';
 import { logoutService } from '../service/authentication/logout.js';
 import { registrationService } from '../service/authentication/registration.js';
@@ -7,7 +9,7 @@ import { confirmEmailService } from '../service/authentication/confirm-email.js'
 import { resetPasswordService } from '../service/authentication/reset-password.js';
 import { checkRequestPasswordService } from '../service/authentication/checkRequestPassword.js';
 import { newPasswordService } from '../service/authentication/new-password.js';
-import { Request, Response } from 'express';
+import { errorHandler } from '../errors/error.js';
 
 export async function registration(req: Request, res: Response) {
   try {
@@ -26,7 +28,7 @@ export async function registration(req: Request, res: Response) {
     });
     res.status(201).json({ ...response, refreshToken: undefined });
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(401).json(error);
   }
 }
@@ -62,7 +64,7 @@ export async function logout(req: Request, res: Response) {
     res.clearCookie('refreshToken');
     res.status(201).json({ ...token });
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json('Непредвиденная ошибка');
   }
 }
@@ -78,7 +80,7 @@ export async function refresh(req: Request, res: Response) {
 
     res.status(201).json({ ...user });
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(401).json({ message: 'Не авторизован' });
   }
 }
@@ -97,7 +99,7 @@ export async function checkAuth(req: Request, res: Response) {
 
     res.status(201).json({ user });
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json({ message: 'Непредвиденная ошибка' });
   }
 }
@@ -107,7 +109,7 @@ export async function confirmEmail(req: Request, res: Response) {
     const response = await confirmEmailService(token);
     res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json({ message: 'Непредвиденная ошибка' });
   }
 }
@@ -118,7 +120,7 @@ export async function resetPassword(req: Request, res: Response) {
     const response = await resetPasswordService(email);
     res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json(error);
   }
 }
@@ -129,7 +131,7 @@ export async function checkRequestPassword(req: Request, res: Response) {
     const response = await checkRequestPasswordService(token);
     res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json(error);
   }
 }
@@ -141,7 +143,7 @@ export async function newPassword(req: Request, res: Response) {
     const response = await newPasswordService(userId, newPassword);
     res.status(201).json(response);
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     res.status(400).json(error);
   }
 }

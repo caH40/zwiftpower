@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAccessToken } from './token.js';
 
-import { errorAxios } from '../../app_modules/error/axios.js';
+import { errorAxios } from '../../errors/axios.js';
 import { zwiftAPI } from '../../config/environment.js';
 
 const apiUrl = zwiftAPI;
