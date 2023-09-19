@@ -1,7 +1,7 @@
 import { intervals } from './intervals-cp.js';
 import { getInterval } from './powerintervals.js';
 import { getFitFile, getPowerCurve, updatePowerCurveRider } from './power-curve-updateDB.js';
-import { dateBefore90Days } from '../../../asset/date.js';
+import { dateBefore90Days } from '../../../assets/date.js';
 import { errorHandler } from '../../../errors/error.js';
 
 // types

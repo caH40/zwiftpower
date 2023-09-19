@@ -10,7 +10,7 @@ import {
   Filler,
 } from 'chart.js';
 
-import { durationLabelsNull } from '../asset/power-interval';
+import { durationLabelsNull } from '../assets/power-interval';
 import { getTimerLocal } from '../utils/date-local';
 
 ChartJS.register(

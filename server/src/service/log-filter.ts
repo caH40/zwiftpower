@@ -1,4 +1,4 @@
-import { descriptionLogsAdmins } from '../asset/logs/admins.js';
+import { descriptionLogsAdmins } from '../assets/logs/admins.js';
 
 // types
 import { LogsAdminUsername } from '../types/types.interface.js';

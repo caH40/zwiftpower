@@ -7,7 +7,7 @@ import {
   optionPrivate,
   optionsCulling,
   optionsEventType,
-} from '../../../../asset/select/event-edit';
+} from '../../../../assets/select/event-edit';
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';

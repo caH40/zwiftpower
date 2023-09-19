@@ -1,4 +1,4 @@
-import { routes } from '../asset/zwift/lib/esm/routes.js';
+import { routes } from '../assets/zwift/lib/esm/routes.js';
 import { errorHandler } from '../errors/error.js';
 import { ZwiftEventSubgroupSchema } from '../types/model.interface.js';
 

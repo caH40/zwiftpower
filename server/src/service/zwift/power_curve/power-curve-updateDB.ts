@@ -1,5 +1,5 @@
 import { FitFile } from '../../../Model/FitFile.js';
-import { dateBefore90Days } from '../../../asset/date.js';
+import { dateBefore90Days } from '../../../assets/date.js';
 import { PowerCurve } from '../../../Model/PowerCurve.js';
 
 // types

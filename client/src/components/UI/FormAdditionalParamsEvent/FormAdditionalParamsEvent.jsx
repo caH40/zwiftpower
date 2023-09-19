@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '../Button/Button';
-import { raceTypes } from '../../../asset/zwift/race-type';
-import { organizers } from '../../../asset/zwift/organizer';
+import { raceTypes } from '../../../assets/zwift/race-type';
+import { organizers } from '../../../assets/zwift/organizer';
 import SimpleSelectArray from '../SimpleSelectArray/SimpleSelectArray';
 
 import styles from './FormAdditionalParamsEvent.module.css';

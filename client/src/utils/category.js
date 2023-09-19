@@ -1,5 +1,5 @@
 // определение категорий, согласно правилам getCategoryZFTP
-import { zFTP, zMAP } from '../asset/rule-category';
+import { zFTP, zMAP } from '../assets/rule-category';
 
 export const getCategoryZFTP = (wattsPerKg, watts) => {
   if (wattsPerKg >= zFTP.A.wattsPerKg && watts >= zFTP.A.watts) return 'A';

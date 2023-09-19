@@ -4,7 +4,7 @@ import styles from '../Table.module.css';
 
 import { useResize } from '../../../hook/use-resize';
 import { getTimerLocal } from '../../../utils/date-local';
-import { descriptionLogsAdmins } from '../../../asset/logs/admins';
+import { descriptionLogsAdmins } from '../../../assets/logs/admins';
 
 import Thead from './Thead';
 

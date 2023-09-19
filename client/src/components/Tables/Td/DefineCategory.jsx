@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { getCategoryZMAP, getCategoryZFTP } from '../../../utils/category';
-import { zFTPInterval, zMAPInterval } from '../../../asset/rule-category';
+import { zFTPInterval, zMAPInterval } from '../../../assets/rule-category';
 
 import styles from './Td.module.css';
 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { rules } from '../../asset/zwift/rule';
+import { rules } from '../../assets/zwift/rule';
 
 const initialState = {
   eventMainParams: { id: 0 },

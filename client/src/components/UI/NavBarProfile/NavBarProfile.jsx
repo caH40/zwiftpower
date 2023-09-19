@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { profileButtons } from '../../../asset/profile-buttons';
+import { profileButtons } from '../../../assets/profile-buttons';
 
 import styles from './NavBarProfile.module.css';
 

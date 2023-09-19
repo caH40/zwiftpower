@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SimpleSelect from '../../SimpleSelect/SimpleSelect';
-import { optionsSeasons } from '../../../../asset/seasons';
+import { optionsSeasons } from '../../../../assets/seasons';
 
 import styles from './FilterCatchup.module.css';
 

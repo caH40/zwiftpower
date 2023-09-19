@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import MyTooltip from '../../../HOC/MyTooltip';
 
-import { zFTPInterval, zMAPInterval } from '../../../asset/rule-category';
+import { zFTPInterval, zMAPInterval } from '../../../assets/rule-category';
 
 import styles from './Td.module.css';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import cn from 'classnames';
 
-import { jerseys, routes, worlds } from '../../../../asset/zwift/lib/esm/zwift-lib';
+import { jerseys, routes, worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 

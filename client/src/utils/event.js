@@ -1,6 +1,6 @@
-import { worlds } from '../asset/zwift/lib/esm/worlds';
-import { routes } from '../asset/zwift/lib/esm/routes';
-import { organizers } from '../asset/zwift/organizer';
+import { worlds } from '../assets/zwift/lib/esm/worlds';
+import { routes } from '../assets/zwift/lib/esm/routes';
+import { organizers } from '../assets/zwift/organizer';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';

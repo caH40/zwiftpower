@@ -1,4 +1,4 @@
-import { millisecondsIn90Days } from '../../../../asset/date.js';
+import { millisecondsIn90Days } from '../../../../assets/date.js';
 
 // types
 import { PowerCurveSchema } from '../../../../types/model.interface.js';

@@ -1,4 +1,4 @@
-import { dsqValues } from '../../../asset/dsq';
+import { dsqValues } from '../../../assets/dsq';
 import DSQBox from '../../DSQBox/DSQBox';
 import IconCupRank from '../../icons/IconCupRank';
 

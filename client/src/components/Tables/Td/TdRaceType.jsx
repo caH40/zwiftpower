@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { raceTypes } from '../../../asset/zwift/race-type';
+import { raceTypes } from '../../../assets/zwift/race-type';
 import RaceRuleBox from '../../RaceRuleBox/RaceRuleBox';
 
 // nameFull:true  возвращает только название типа гонки
