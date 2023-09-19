@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 # .env.development
 # .env.production
+
+# temp хранение временной информации
+temp.*

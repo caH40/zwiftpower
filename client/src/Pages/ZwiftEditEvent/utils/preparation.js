@@ -10,7 +10,10 @@ export function prepareData(
   checkboxRules
 ) {
   const event = { ...eventMainParams };
-  const dateNow = [`timestamp=${Date.now()}`];
+  const dateNow = `timestamp=${Date.now()}`;
+
+  // дополнительные правила для Эвента и подгрупп
+  const tags = [dateNow, 'steering_disabled'];
 
   const eventSubgroups = [
     { ...eventSubgroup_0 },
@@ -26,9 +29,9 @@ export function prepareData(
   event.rulesSet = rulesSet;
 
   // изменение тэга времени
-  event.tags = dateNow;
+  event.tags = tags;
   for (const subGroup of eventSubgroups) {
-    subGroup.tags = dateNow;
+    subGroup.tags = tags;
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
     subGroup.rulesId = null;
