@@ -11,8 +11,8 @@ export const errorHandler = (error: unknown): void => {
     }
     // если разработка, то выводить ошибку в консоль
     if (nodeEnvType === 'development') {
-      console.log(error);
-    } // eslint-disable-line
+      console.log(error); // eslint-disable-line
+    }
 
     const errorParsed = parseError(error);
 

@@ -11,6 +11,7 @@ import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
 import { routerInformation } from './routes/information.js';
 import { routerProfile } from './routes/profile.js';
+import { errorHandler } from './errors/error.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -18,8 +19,8 @@ const PORT = serverPort || 5000;
 await mongoose
   .set('strictQuery', true) //в базе будут только данные которые есть в схеме
   .connect(mongodb)
-  .then(() => console.log('Connected to Mongo..'))
-  .catch((error) => console.log(error));
+  .then(() => console.log('Connected to Mongo..')) // eslint-disable-line
+  .catch((error) => errorHandler(error));
 
 const app = express();
 app.use(
@@ -44,9 +45,10 @@ app.get('*', (_, res) =>
 // запуск сервера на express
 const start = async () => {
   try {
-    app.listen(PORT, () => console.log('server started on PORT=' + PORT));
-  } catch (e) {
-    console.log(e);
+    // throw new Error('testing errors');
+    app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
+  } catch (error) {
+    errorHandler(error);
   }
 };
 start();
