@@ -10,6 +10,7 @@ if (!parsed) {
   throw new Error('Пустой файл .env');
 }
 
+export const nodeEnvType: string = parsed.NODE_ENV;
 export const serverPort: string = parsed.SERVER_PORT;
 export const serverUpdatePort: string = parsed.SERVER_UPDATE_PORT;
 export const mongodb: string = parsed.MONGODB;
