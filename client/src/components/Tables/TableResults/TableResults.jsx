@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames/bind';
 
 import styles from '../Table.module.css';
 
@@ -22,6 +23,8 @@ import { useResize } from '../../../hook/use-resize';
 
 import Thead from './Thead';
 
+const cx = classnames.bind(styles);
+
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const { isScreenLg: lg, isScreenSm: sm, isScreenMd: md } = useResize();
@@ -29,6 +32,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption className={cx('caption', 'hidden')}>
+        Результаты заездов российского сообщества в Zwift (Звифт)
+      </caption>
       <Thead lg={lg} md={md} sm={sm} isModerator={isModerator} />
       <tbody>
         {events.map((event) => (

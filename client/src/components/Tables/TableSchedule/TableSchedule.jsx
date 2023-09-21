@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames/bind';
 
 import styles from '../Table.module.css';
 
@@ -23,6 +24,8 @@ import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleLi
 
 import Thead from './Thead';
 
+const cx = classnames.bind(styles);
+
 function TableSchedule({ events, updateEvent, removeEvent }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
@@ -31,6 +34,9 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption className={cx('caption', 'hidden')}>
+        Расписание заездов российского сообщества в Zwift (Звифт)
+      </caption>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {events.map((event) => (
