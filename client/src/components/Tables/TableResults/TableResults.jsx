@@ -31,37 +31,33 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
 
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={cx('table', 'table_striped')}>
       <caption className={cx('caption', 'hidden')}>
         Результаты заездов российского сообщества в Zwift (Звифт)
       </caption>
-      <Thead lg={lg} md={md} sm={sm} isModerator={isModerator} />
+      <Thead isModerator={isModerator} />
       <tbody>
         {events.map((event) => (
-          <tr key={event._id}>
+          <tr className={cx('hover')} key={event._id}>
             <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
-            {md && <TdSeries seriesName={event.seriesId?.name} />}
-            <td>
-              <Link className={styles.link} to={String(event.id)}>
-                <span className={styles.big}>{event.name}</span>
+            <TdSeries seriesName={event.seriesId?.name} />
+            <td className={cx('td__nowrap')}>
+              <Link className={cx('link')} to={String(event.id)}>
+                <span className={cx('big')}>{event.name}</span>
               </Link>
             </td>
 
-            {md && <td>{organizer(event.organizer)}</td>}
-            {md && <TdRaceType typeRaceCustom={event.typeRaceCustom} />}
+            <td className={cx('td__nowrap')}>{organizer(event.organizer)}</td>
+            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
             </td>
-            {sm && <td>{map(event.eventSubgroups[0]?.mapId)}</td>}
-            {sm && <td>{route(event.eventSubgroups[0]?.routeId)}</td>}
-            {md && (
-              <>
-                <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-                <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
-                <td>{getElevationForTd(event.eventSubgroups[0])}</td>
-              </>
-            )}
-            {lg && <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>}
+            <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+            <td className={cx('td__nowrap')}>{route(event.eventSubgroups[0]?.routeId)}</td>
+            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
+            <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
+            <td>{getElevationForTd(event.eventSubgroups[0])}</td>
+            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
             {isModerator && (
               <TdScheduleMenuTableResultList
                 event={event}

@@ -12,21 +12,21 @@ export const scheduleListColumnsFull = [
   { name: 'Подъем', id: 10 },
   { name: 'Длительность', id: 11 },
 ];
-export const scheduleListColumnsLg = [
-  { name: 'Дата', id: 0 },
-  { name: 'Название', id: 2 },
-  { name: 'Зарегистрировались', id: 5 },
-  { name: 'Карта', id: 6 },
-  { name: 'Маршрут', id: 7 },
-];
-export const scheduleListColumnsSm = [
-  { name: 'Дата', id: 0 },
-  { name: 'Название', id: 2 },
-  { name: 'Зарегистрировались', id: 5 },
-];
+// export const scheduleListColumnsLg = [
+//   { name: 'Дата', id: 0 },
+//   { name: 'Название', id: 2 },
+//   { name: 'Зарегистрировались', id: 5 },
+//   { name: 'Карта', id: 6 },
+//   { name: 'Маршрут', id: 7 },
+// ];
+// export const scheduleListColumnsSm = [
+//   { name: 'Дата', id: 0 },
+//   { name: 'Название', id: 2 },
+//   { name: 'Зарегистрировались', id: 5 },
+// ];
 
-export const scheduleListColumns = (isScreenLg, isScreenSm) => {
-  if (!isScreenLg && isScreenSm) return scheduleListColumnsLg;
-  if (!isScreenSm) return scheduleListColumnsSm;
+export const scheduleListColumns = () => {
+  // if (!isScreenLg && isScreenSm) return scheduleListColumnsLg;
+  // if (!isScreenSm) return scheduleListColumnsSm;
   return scheduleListColumnsFull;
 };
