@@ -7,7 +7,7 @@ import { setEventRules } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './RCheckbox.module.css';
 
-function RCheckboxArray({ label, value, property, tooltip, disabled }) {
+function RCheckboxArray({ reducer, label, value, property, tooltip, disabled }) {
   const dispatch = useDispatch();
   return (
     <label className={styles.label}>
@@ -18,7 +18,7 @@ function RCheckboxArray({ label, value, property, tooltip, disabled }) {
         className={styles.input}
         checked={value}
         type="checkbox"
-        onChange={(e) => dispatch(setEventRules({ property, checked: e.target.checked }))}
+        onChange={(e) => dispatch(reducer({ property, checked: e.target.checked }))}
         disabled={disabled}
       />
     </label>

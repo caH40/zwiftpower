@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { rules } from '../../assets/zwift/rule';
+import { tags } from '../../assets/zwift/tags';
 
 const initialState = {
   eventMainParams: { id: 0 },
@@ -10,6 +11,7 @@ const initialState = {
   eventSubgroup_3: {},
   eventSubgroup_4: {},
   checkboxRules: [],
+  checkboxTags: [],
 };
 
 const eventParamsSlice = createSlice({
@@ -32,6 +34,10 @@ const eventParamsSlice = createSlice({
       state.checkboxRules = rules.map((rule) => {
         return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
       });
+
+      state.checkboxTags = tags.map((tag) => {
+        return { ...tag, checked: action.payload.tags.includes(tag.value) };
+      });
     },
 
     // установка правил и сохранение в состояние checkboxRules
@@ -41,6 +47,17 @@ const eventParamsSlice = createSlice({
           return { ...rule, checked: action.payload.checked };
         } else {
           return rule;
+        }
+      });
+    },
+
+    // установка тэгов и сохранение в состояние checkboxTags
+    setEventTags(state, action) {
+      state.checkboxTags = state.checkboxTags.map((tag) => {
+        if (tag.value === action.payload.property) {
+          return { ...tag, checked: action.payload.checked };
+        } else {
+          return tag;
         }
       });
     },
@@ -75,6 +92,7 @@ const eventParamsSlice = createSlice({
       state.eventSubgroup_4 = {};
       state.eventMainParams = { id: 0 };
       state.checkboxRules = [];
+      state.checkboxTags = [];
     },
 
     // установка нового параметра в настройках Эвента
@@ -103,6 +121,7 @@ export const {
   setSubgroupParams,
   resetParams,
   setEventRules,
+  setEventTags,
   setSameParameter,
 } = eventParamsSlice.actions;
 

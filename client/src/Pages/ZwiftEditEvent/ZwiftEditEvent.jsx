@@ -34,6 +34,7 @@ function ZwiftEditEvent() {
     eventSubgroup_3,
     eventSubgroup_4,
     checkboxRules,
+    checkboxTags,
   } = useSelector((state) => state.eventParams);
   useTitle('Zwift - Редактирование заезда');
   useBackground(false);
@@ -71,7 +72,8 @@ function ZwiftEditEvent() {
       eventSubgroup_2,
       eventSubgroup_3,
       eventSubgroup_4,
-      checkboxRules
+      checkboxRules,
+      checkboxTags
     );
 
     changeZwiftEvents(eventForPost)

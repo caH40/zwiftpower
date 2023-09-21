@@ -7,13 +7,13 @@ export function prepareData(
   eventSubgroup_2,
   eventSubgroup_3,
   eventSubgroup_4,
-  checkboxRules
+  checkboxRules,
+  checkboxTags
 ) {
   const event = { ...eventMainParams };
   const dateNow = `timestamp=${Date.now()}`;
 
   // дополнительные правила для Эвента и подгрупп
-  const tags = [dateNow, 'steering_disabled'];
 
   const eventSubgroups = [
     { ...eventSubgroup_0 },
@@ -25,6 +25,8 @@ export function prepareData(
 
   event.rulesId = null;
   const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
+  const tags = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
+  tags.push(dateNow);
 
   event.rulesSet = rulesSet;
 
