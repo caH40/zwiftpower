@@ -4,24 +4,22 @@ import Th from '../Th/Th';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
-function Thead({ md, sm, columnsCP }) {
+function Thead({ columnsCP }) {
   return (
     <thead>
       <tr>
-        {raceResultsColumns(md, sm).map((column) => (
+        {raceResultsColumns().map((column) => (
           <Th key={column.id} columnName={column.name} />
         ))}
-        {md &&
-          columnsCP.map((column) => {
-            if (column.isVisible) {
-              return <th key={column.id}>{column.name}</th>;
-            }
-            return null;
-          })}
-        {md &&
-          raceResultsColumnsEnd.map((column) => (
-            <Th key={column.id} columnName={column.name} />
-          ))}
+        {columnsCP.map((column) => {
+          if (column.isVisible) {
+            return <th key={column.id}>{column.name}</th>;
+          }
+          return null;
+        })}
+        {raceResultsColumnsEnd.map((column) => (
+          <Th key={column.id} columnName={column.name} />
+        ))}
       </tr>
     </thead>
   );
