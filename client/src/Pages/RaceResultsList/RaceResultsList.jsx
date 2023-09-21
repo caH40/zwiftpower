@@ -82,12 +82,14 @@ function RaceResultsList() {
       </div>
       {eventsResults[0] && (
         <>
-          <TableResults
-            events={eventsResults}
-            updateResults={updateResults}
-            removeEvent={removeEvent}
-            updateEventAndSinged={updateEventAndSinged}
-          />
+          <section className={styles.wrapper__wide}>
+            <TableResults
+              events={eventsResults}
+              updateResults={updateResults}
+              removeEvent={removeEvent}
+              updateEventAndSinged={updateEventAndSinged}
+            />
+          </section>
           {quantityPages > 1 && (
             <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
           )}

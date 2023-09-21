@@ -57,14 +57,16 @@ function RaceScheduleList() {
   };
 
   return (
-    <section>
+    <div>
       {eventsSchedule?.[0] && status === 'resolved' && (
-        <TableSchedule
-          events={eventsSchedule}
-          updateEvent={updateEventAndSinged}
-          removeEvent={removeEvent}
-          setTrigger={setTrigger}
-        />
+        <section className={styles.wrapper__wide}>
+          <TableSchedule
+            events={eventsSchedule}
+            updateEvent={updateEventAndSinged}
+            removeEvent={removeEvent}
+            setTrigger={setTrigger}
+          />
+        </section>
       )}
       {quantityPages > 1 && (
         <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
@@ -72,7 +74,7 @@ function RaceScheduleList() {
       {!eventsSchedule?.[0] && status === 'resolved' && (
         <div className={styles.title__notFound}>{notFound}</div>
       )}
-    </section>
+    </div>
   );
 }
 

@@ -27,13 +27,13 @@ function RaceResultsDescription() {
   }, [eventId, dispatch]);
 
   return (
-    <section className={styles.wrapper}>
+    <div className={styles.wrapper}>
       {eventData?.id && (
         <>
           <DescriptionEventZwiftNew event={eventData} />
           <NavBarResultsRace results={resultsPrepared} />
 
-          <div className={styles.wrapper__wide}>
+          <section className={styles.wrapper__wide}>
             <TableRaceResults results={resultsPrepared} event={eventData} />
             <div className={styles.right}>
               <span className={styles.service}>Обновлено:</span>
@@ -41,10 +41,10 @@ function RaceResultsDescription() {
                 {getTimerLocal(eventData.updated, 'DDMMYYHm')}
               </span>
             </div>
-          </div>
+          </section>
         </>
       )}
-    </section>
+    </div>
   );
 }
 

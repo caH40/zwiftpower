@@ -12,3 +12,9 @@
   color: var(--color-yellow-main);
   user-select: none;
 }
+@media screen and (max-width: 576px) {
+  .box {
+    font-size: 12px;
+    min-width: 30px;
+  }
+}

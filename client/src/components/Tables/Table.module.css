@@ -93,6 +93,9 @@ tbody .current {
   display: block;
   min-width: 200px;
 }
+.td__nowrap {
+  white-space: nowrap;
+}
 .rider {
   display: flex;
   gap: 0 7px;
