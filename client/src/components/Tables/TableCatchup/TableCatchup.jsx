@@ -22,7 +22,7 @@ function TableCatchup({ catchups }) {
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
-      <caption>Победители этапов</caption>
+      <caption className={styles.caption}>Победители этапов</caption>
       <Thead md={md} sm={sm} isModerator={isModerator} />
       <tbody>
         {catchups.map((catchupResult) => (
