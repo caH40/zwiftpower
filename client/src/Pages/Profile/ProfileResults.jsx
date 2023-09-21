@@ -38,10 +38,12 @@ function ProfileResults() {
         </>
       )}
       {results?.length && status === 'resolved' ? (
-        <section className={styles.block__results}>
+        <>
           <NavBarResultsRace results={results} hideCategory={true} />
-          <TableUserResults results={results} />
-        </section>
+          <section className={styles.block__results}>
+            <TableUserResults results={results} />
+          </section>
+        </>
       ) : null}
 
       {!results?.length && status === 'resolved' ? (
