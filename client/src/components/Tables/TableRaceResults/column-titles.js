@@ -8,19 +8,19 @@ export const raceResultsColumnsStartFull = [
   { name: 'Удельная средняя мощность за гонку', id: 7 },
   { name: 'Средняя мощность за гонку', id: 8 },
 ];
-export const raceResultsColumnsStartLg = [
-  { name: '', id: 1 },
-  { name: 'Категория', id: 2 },
-  { name: 'Райдер', id: 3 },
-  { name: 'Время', id: 4 },
-  { name: 'Удельная средняя мощность за гонку', id: 7 },
-  { name: 'Средняя мощность за гонку', id: 8 },
-];
-export const raceResultsColumnsStartSm = [
-  { name: '', id: 1 },
-  { name: 'Райдер', id: 3 },
-  { name: 'Время', id: 4 },
-];
+// export const raceResultsColumnsStartLg = [
+//   { name: '', id: 1 },
+//   { name: 'Категория', id: 2 },
+//   { name: 'Райдер', id: 3 },
+//   { name: 'Время', id: 4 },
+//   { name: 'Удельная средняя мощность за гонку', id: 7 },
+//   { name: 'Средняя мощность за гонку', id: 8 },
+// ];
+// export const raceResultsColumnsStartSm = [
+//   { name: '', id: 1 },
+//   { name: 'Райдер', id: 3 },
+//   { name: 'Время', id: 4 },
+// ];
 export const raceResultsColumnsCP = [
   { name: '5с', id: 100 },
   { name: '30с', id: 101 },
@@ -38,8 +38,8 @@ export const raceResultsColumnsEnd = [
   { name: 'Разное', id: 13 },
 ];
 
-export const raceResultsColumns = (isScreenLg, isScreenSm) => {
-  if (!isScreenLg && isScreenSm) return raceResultsColumnsStartLg;
-  if (!isScreenSm) return raceResultsColumnsStartSm;
+export const raceResultsColumns = () => {
+  // if (!isScreenLg && isScreenSm) return raceResultsColumnsStartLg;
+  // if (!isScreenSm) return raceResultsColumnsStartSm;
   return raceResultsColumnsStartFull;
 };

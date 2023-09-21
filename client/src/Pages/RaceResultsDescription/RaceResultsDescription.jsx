@@ -32,13 +32,15 @@ function RaceResultsDescription() {
         <>
           <DescriptionEventZwiftNew event={eventData} />
           <NavBarResultsRace results={resultsPrepared} />
-          <TableRaceResults results={resultsPrepared} event={eventData} />
 
-          <div className={styles.right}>
-            <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>
-              {getTimerLocal(eventData.updated, 'DDMMYYHm')}
-            </span>
+          <div className={styles.wrapper__wide}>
+            <TableRaceResults results={resultsPrepared} event={eventData} />
+            <div className={styles.right}>
+              <span className={styles.service}>Обновлено:</span>
+              <span className={styles.service}>
+                {getTimerLocal(eventData.updated, 'DDMMYYHm')}
+              </span>
+            </div>
           </div>
         </>
       )}

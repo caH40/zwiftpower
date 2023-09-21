@@ -49,11 +49,11 @@ function TableRaceResults({ results, event }) {
               <td className={styles.center}>
                 <TdRank value={result.rankEvent} dsq={dsq} />
               </td>
-              {sm && (
-                <td>
-                  <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
-                </td>
-              )}
+
+              <td>
+                <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
+              </td>
+
               <TdRider
                 profile={profile}
                 profileId={result.profileId}
@@ -62,30 +62,29 @@ function TableRaceResults({ results, event }) {
                 getSweepers={getSweepers}
               />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              {md && <TdGap gap={result.gap} dsq={dsq} />}
-              {md && <TdGap gap={result.gapPrev} dsq={dsq} />}
-              {sm && (
-                <TdWattsPerKg
-                  valueRaw={result.wattsPerKg.value}
-                  valueAddition={result.wattsPerKg.addition}
-                />
-              )}
-              {sm && <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>}
+              <TdGap gap={result.gap} dsq={dsq} />
+              <TdGap gap={result.gapPrev} dsq={dsq} />
 
-              {md &&
-                columnsCP.map((column) => {
-                  if (column.isVisible) {
-                    return (
-                      <TdCpWatts
-                        cpBestEfforts={result.cpBestEfforts}
-                        interval={column.interval}
-                        key={column.id}
-                      />
-                    );
-                  }
-                  return null;
-                })}
-              {md && (
+              <TdWattsPerKg
+                valueRaw={result.wattsPerKg.value}
+                valueAddition={result.wattsPerKg.addition}
+              />
+
+              <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
+
+              {columnsCP.map((column) => {
+                if (column.isVisible) {
+                  return (
+                    <TdCpWatts
+                      cpBestEfforts={result.cpBestEfforts}
+                      interval={column.interval}
+                      key={column.id}
+                    />
+                  );
+                }
+                return null;
+              })}
+              {
                 <>
                   <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
                   <td>{tdWeight(profile.weightInGrams.addition)}</td>
@@ -95,7 +94,7 @@ function TableRaceResults({ results, event }) {
                     isPairedSteeringDevice={result.sensorData.pairedSteeringDevice}
                   />
                 </>
-              )}
+              }
             </tr>
           );
         })}
