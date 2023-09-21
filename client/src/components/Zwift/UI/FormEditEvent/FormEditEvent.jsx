@@ -11,11 +11,14 @@ import {
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
+import { setEventRules, setEventTags } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './FormEditEvent.module.css';
 
 function FormEditEvent() {
-  const { eventMainParams, checkboxRules } = useSelector((state) => state.eventParams);
+  const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
+    (state) => state.eventParams
+  );
 
   return (
     <>
@@ -129,10 +132,20 @@ function FormEditEvent() {
           />
           {checkboxRules.map((checkboxRule) => (
             <RCheckboxArray
+              reducer={setEventRules}
               key={checkboxRule.id}
               label={checkboxRule.translate}
               value={checkboxRule.checked}
               property={checkboxRule.value}
+            />
+          ))}
+          {checkboxTags.map((checkboxTag) => (
+            <RCheckboxArray
+              reducer={setEventTags}
+              key={checkboxTag.id}
+              label={checkboxTag.translate}
+              value={checkboxTag.checked}
+              property={checkboxTag.value}
             />
           ))}
         </div>
