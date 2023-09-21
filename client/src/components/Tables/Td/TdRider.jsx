@@ -9,7 +9,7 @@ import IconFemale from '../../icons/IconFemale';
 
 import styles from './Td.module.css';
 
-function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
+function TdRider({ profile, profileId, getLeaders, getSweepers }) {
   return (
     <td>
       <Link className={styles.link} to={`/profile/${profileId}/results`}>
@@ -21,17 +21,16 @@ function TdRider({ profile, profileId, showIcons, getLeaders, getSweepers }) {
           ) : (
             <div className={styles.box__flag} />
           )}
-          {showIcons.sm && (
-            <div className={styles.rider__logo}>
-              {profile.imageSrc ? (
-                <img className={styles.rider__img} src={profile.imageSrc} alt="Ph" />
-              ) : (
-                <div className={styles.rider__img__empty}>
-                  {profile.firstName.slice(0, 1) + profile.lastName.slice(0, 1)}
-                </div>
-              )}
-            </div>
-          )}
+
+          <div className={styles.rider__logo}>
+            {profile.imageSrc ? (
+              <img className={styles.rider__img} src={profile.imageSrc} alt="Ph" />
+            ) : (
+              <div className={styles.rider__img__empty}>
+                {profile.firstName.slice(0, 1) + profile.lastName.slice(0, 1)}
+              </div>
+            )}
+          </div>
 
           <div className={styles.name}>
             {`${profile.firstName} ${profile.lastName}`}

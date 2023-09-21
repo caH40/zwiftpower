@@ -16,3 +16,6 @@
 .link:hover {
   text-decoration: underline;
 }
+.wrapper__wide {
+  overflow-x: auto;
+}

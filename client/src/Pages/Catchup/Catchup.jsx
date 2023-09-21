@@ -32,9 +32,9 @@ function Catchup() {
           <div className={styles.box__total}>
             <TableCatchupSummary resultsSummary={resultsSummary} />
           </div>
-          <div className={styles.box__results}>
+          <section className={styles.wrapper__wide}>
             <TableCatchup catchups={results} />
-          </div>
+          </section>
         </div>
       )}
     </section>
