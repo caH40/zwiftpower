@@ -43,9 +43,9 @@ function RaceScheduleDescription() {
           >
             Регистрация в Zwift
           </Link>
-
-          <TableSignedRiders riders={event.signedRiders} event={event} />
-
+          <section className={styles.wrapper__wide}>
+            <TableSignedRiders riders={event.signedRiders} event={event} />
+          </section>
           <div className={styles.right}>
             <span className={styles.service}>Обновлено:</span>
             <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>

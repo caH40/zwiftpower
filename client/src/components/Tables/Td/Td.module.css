@@ -37,7 +37,7 @@
   display: flex;
   gap: 0 7px;
   align-items: center;
-  min-width: 200px;
+  min-width: 240px;
 }
 .rider__logo {
   flex: 0 0 33px;
@@ -68,11 +68,6 @@
   cursor: default;
 }
 
-@media screen and (max-width: 576px) {
-  .rider {
-    min-width: 180px;
-  }
-}
 .categoryBox {
   width: 65px;
   padding: 2px 1px;

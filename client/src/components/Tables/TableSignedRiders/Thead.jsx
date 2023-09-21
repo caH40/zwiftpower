@@ -1,14 +1,12 @@
-import React from 'react';
-
 import Th from '../Th/Th';
 
 import { signedRidersColumns } from './column-titles';
 
-function Thead({ lg, sm }) {
+function Thead() {
   return (
     <thead>
       <tr>
-        {signedRidersColumns(lg, sm).map((column) => (
+        {signedRidersColumns().map((column) => (
           <Th key={column.id} columnName={column.name} />
         ))}
       </tr>
