@@ -6,9 +6,17 @@
   border-collapse: collapse;
   font-size: 15px;
 }
-.table caption {
+.caption {
   font-size: 18px;
   text-align: left;
+}
+.hidden {
+  width: 0px;
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  line-height: 0px;
 }
 .table thead {
   display: table-header-group;
@@ -30,6 +38,9 @@
 }
 .table .trLink {
   cursor: pointer;
+}
+.hover:hover {
+  background-color: var(--color-yellow-main);
 }
 .table .trLink:hover {
   background: #ffda73;
@@ -237,6 +248,9 @@ tbody .current {
   }
   .onlyContentSm {
     width: 1%;
+  }
+  .caption {
+    font-size: 16px;
   }
 }
 @media screen and (max-width: 400px) {

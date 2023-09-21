@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
+import classnames from 'classnames/bind';
 
 import { tdHeartRate, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
@@ -13,16 +13,20 @@ import TdRank from '../Td/TdRank';
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
+import { getCaption } from './utils';
+
+const cx = classnames.bind(styles);
 
 function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
 
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>
         {results?.map((result) => (
-          <tr key={result._id}>
+          <tr className={styles.hover} key={result._id}>
             <td className={styles.center}>
               <TdRank value={result.rankEvent} dsq={result.disqualification} />
             </td>
@@ -33,10 +37,7 @@ function TableUserResults({ results }) {
 
             <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
             <td>
-              <Link
-                className={cn(styles.link, styles.name)}
-                to={`/race/results/${result.eventId}`}
-              >
+              <Link className={cx('link', 'name')} to={`/race/results/${result.eventId}`}>
                 <span className={styles.big}>{result.eventName}</span>
               </Link>
             </td>

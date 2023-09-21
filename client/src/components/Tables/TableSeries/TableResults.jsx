@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames/bind';
 
 import styles from '../Table.module.css';
 
 import { useResize } from '../../../hook/use-resize';
 
 import Thead from './Thead';
+
+const cx = classnames.bind(styles);
 
 function TableSeries({ series }) {
   const navigate = useNavigate();
@@ -18,6 +21,9 @@ function TableSeries({ series }) {
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
     <table className={`${styles.table} ${styles.table_striped}`}>
+      <caption className={cx('caption', 'hidden')}>
+        Общие зачеты серий и туров на zwiftpower.ru
+      </caption>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>
         {series.map((seriesOne) => (

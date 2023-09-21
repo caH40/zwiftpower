@@ -40,6 +40,7 @@ function ProfileResults() {
       {results?.length && status === 'resolved' ? (
         <>
           <NavBarResultsRace results={results} hideCategory={true} />
+
           <section className={styles.block__results}>
             <TableUserResults results={results} />
           </section>

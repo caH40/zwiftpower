@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
+import classnames from 'classnames/bind';
 
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
@@ -17,6 +17,9 @@ import TdDifferent from '../Td/TdDifferent';
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
+import { getCaption } from './utils';
+
+const cx = classnames.bind(styles);
 
 function TableRaceResults({ results, event }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
@@ -33,7 +36,8 @@ function TableRaceResults({ results, event }) {
   }, [filterCategory, results]);
 
   return (
-    <table className={cn(styles.table, styles.table_striped)}>
+    <table className={cx('table', 'table_striped')}>
+      <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
       <Thead md={md} sm={sm} columnsCP={columnsCP} />
 
       <tbody>
@@ -43,7 +47,7 @@ function TableRaceResults({ results, event }) {
 
           return (
             <tr
-              className={cn({ [styles.current]: zwiftId === result.profileId })}
+              className={cx('hover', { current: zwiftId === result.profileId })}
               key={result._id}
             >
               <td className={styles.center}>
