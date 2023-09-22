@@ -12,7 +12,7 @@ function TableLogsAdmin({ logs }) {
   const { isScreenLg: lg, isScreenSm: sm } = useResize();
 
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={styles.table}>
       <Thead lg={lg} sm={sm} />
       <tbody>
         {logs?.map((log) => (

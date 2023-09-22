@@ -31,7 +31,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
   const isModerator = ['admin', 'moderator'].includes(role);
 
   return (
-    <table className={cx('table', 'table_striped')}>
+    <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>
         Расписание заездов российского сообщества в Zwift (Звифт)
       </caption>

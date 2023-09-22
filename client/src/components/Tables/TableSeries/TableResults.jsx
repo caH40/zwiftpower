@@ -20,7 +20,7 @@ function TableSeries({ series }) {
 
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={styles.table}>
       <caption className={cx('caption', 'hidden')}>
         Общие зачеты серий и туров на zwiftpower.ru
       </caption>

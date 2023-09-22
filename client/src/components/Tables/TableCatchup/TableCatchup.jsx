@@ -21,7 +21,7 @@ function TableCatchup({ catchups }) {
   const isModerator = ['admin', 'moderator'].includes(role);
 
   return (
-    <table className={cx('table', 'table_striped')}>
+    <table className={cx('table')}>
       <caption className={styles.caption}>Победители этапов</caption>
       <Thead isModerator={isModerator} />
       <tbody>

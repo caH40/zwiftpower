@@ -17,7 +17,7 @@ function TableSignedRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
 
   return (
-    <table className={cx('table', 'table_striped')}>
+    <table className={cx('table')}>
       <Thead />
       <tbody>
         {riders.map((rider, index) => (
