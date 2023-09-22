@@ -7,7 +7,10 @@ import useBackground from '../../hook/useBackground';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import { getTimerLocal } from '../../utils/date-local';
-import { fetchEventPreview } from '../../redux/features/api/eventPreviewSlice';
+import {
+  fetchEventPreview,
+  resetPreviewEventData,
+} from '../../redux/features/api/eventPreviewSlice';
 
 import styles from './RaceScheduleDescription.module.css';
 
@@ -26,6 +29,9 @@ function RaceScheduleDescription() {
 
   useEffect(() => {
     if (event.started) {
+      // обнуление state.event
+      // баг при переходе с schedule на results
+      dispatch(resetPreviewEventData());
       navigate(`/race/results/${eventId}`, { replace: true });
     }
   }, [event, navigate, eventId]);

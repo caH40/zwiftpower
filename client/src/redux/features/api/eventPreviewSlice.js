@@ -30,7 +30,11 @@ const eventPreviewSlice = createSlice({
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetPreviewEventData: (state) => {
+      state.event = {};
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchEventPreview.pending, (state) => {
       state.event = {};
@@ -48,4 +52,5 @@ const eventPreviewSlice = createSlice({
   },
 });
 
+export const { resetPreviewEventData } = eventPreviewSlice.actions;
 export default eventPreviewSlice.reducer;
