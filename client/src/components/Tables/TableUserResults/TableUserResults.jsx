@@ -21,7 +21,7 @@ function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
 
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={styles.table}>
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>

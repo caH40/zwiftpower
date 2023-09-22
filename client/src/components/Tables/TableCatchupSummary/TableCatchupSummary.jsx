@@ -18,7 +18,7 @@ function TableCatchupSummary({ resultsSummary = [] }) {
   const isModerator = ['admin', 'moderator'].includes(role);
 
   return (
-    <table className={`${styles.table} ${styles.table_striped}`}>
+    <table className={styles.table}>
       <caption className={styles.caption}>Общий зачет сезона</caption>
       <Thead lg={lg} sm={sm} isModerator={isModerator} />
       <tbody>

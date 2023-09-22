@@ -36,7 +36,7 @@ function TableRaceResults({ results, event }) {
   }, [filterCategory, results]);
 
   return (
-    <table className={cx('table', 'table_striped')}>
+    <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
       <Thead md={md} sm={sm} columnsCP={columnsCP} />
 

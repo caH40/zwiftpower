@@ -31,7 +31,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
 
   const isModerator = ['admin', 'moderator'].includes(role);
   return (
-    <table className={cx('table', 'table_striped')}>
+    <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>
         Результаты заездов российского сообщества в Zwift (Звифт)
       </caption>
