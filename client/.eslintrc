@@ -1,4 +1,8 @@
 {
+  "env": {
+    "browser": true,
+    "jest": true
+  },
   "ignorePatterns": ["**/lib/esm/*.js", "**/build/*"],
   "extends": [
     "eslint:recommended",
@@ -33,7 +37,7 @@
   "plugins": ["react", "import"],
   "rules": {
     "no-useless-catch": 0,
-    "no-undef": 0,
+    // "no-undef": 0,
     "no-console": "warn",
     "prefer-const": "error",
     "quotes": ["error", "single"],

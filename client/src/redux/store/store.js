@@ -30,6 +30,7 @@ import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
 import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
+import sortTableSlice from '../features/sortTableSlice';
 
 export default configureStore({
   reducer: {
@@ -61,6 +62,7 @@ export default configureStore({
     popupInfoDevGet: popupInfoDevGetSlice,
     popupInfoDevPost: popupInfoDevPostSlice,
     popupInfoDevPut: popupInfoDevPutSlice,
+    sortTable: sortTableSlice,
   },
 });
 
