@@ -139,6 +139,9 @@ const Th = ({ columnName }) => {
       case '20м':
         return '20м';
 
+      case '40м':
+        return '40м';
+
       default:
         return '';
     }

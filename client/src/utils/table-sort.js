@@ -1,12 +1,12 @@
+import { columnsWithSorting } from '../assets/table-sort';
+
 /**
  * Сортировка таблицы в зависимости от выбранного столбца и направления (возрастание/убывание)
  */
-const columnsWithSorting = ['Время'];
-
 export const sortTable = (data, activeSorting, filterWatts) => {
   // выбор сортировки watts или watsPerKg
   const powerTarget = filterWatts.column;
-  if (columnsWithSorting.includes(activeSorting.columnName)) {
+  if (columnsWithSorting.results.includes(activeSorting.columnName)) {
     return sortColumns(data, activeSorting, powerTarget);
   } else {
     return sortColumnsCP(data, activeSorting, powerTarget);

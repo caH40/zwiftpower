@@ -3,6 +3,7 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 import { errorHandler } from '../../errors/error.js';
 import { eventSignedRidersDto } from '../../dto/eventSignedRiders.dto.js';
+import { addPropertyAdditionCP } from '../../utils/property-additionCP.js';
 
 // types
 import { EventWithSignedRiders, SignedRidersPowerCurves } from '../../types/types.interface.js';
@@ -47,7 +48,16 @@ export async function getEventService(eventId: string) {
 
     for (const rider of signedRiders) {
       // powerCurve для райдера с zwiftId
-      rider.powerCurve = powerCurvesDB.find((cp) => cp.zwiftId === rider.id);
+      const powerCurve = powerCurvesDB.find((cp) => cp.zwiftId === rider.id);
+
+      if (!powerCurve) {
+        rider.cpBestEfforts = undefined;
+        continue;
+      }
+      // изменение powerCurve на cpBestEfforts
+      const cpBestEfforts = addPropertyAdditionCP(powerCurve);
+
+      rider.cpBestEfforts = cpBestEfforts;
     }
 
     eventDataDB.signedRiders = signedRiders;

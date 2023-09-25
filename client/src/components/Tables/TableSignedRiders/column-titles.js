@@ -5,12 +5,11 @@ export const signedRidersColumnsFull = [
   { name: 'Команда', id: 3 },
   { name: '15с', id: 4 },
   { name: '5м', id: 5 },
-  { name: '20м', id: 6 },
+  { name: '40м', id: 6 },
   { name: 'Вес', id: 7 },
   { name: 'Рост', id: 8 },
   { name: 'Возраст', id: 9 },
-  { name: 'Пол', id: 10 },
-  { name: 'zp.com', id: 11 },
+  { name: 'zp.com', id: 10 },
 ];
 // export const signedRidersColumnsLg = [
 //   { name: '#', id: 0 },

@@ -1,3 +1,4 @@
+// types
 import { ZwiftResultSchema } from '../types/model.interface.js';
 import { UserResult } from '../types/types.interface.js';
 
@@ -66,36 +67,3 @@ export function addPropertyAddition(results: ZwiftResultSchema[]) {
 
   return resultsNew;
 }
-
-// for (const result of resultsNew) {
-//   result.activityData.durationInMilliseconds = {
-//     value: result.activityData.durationInMilliseconds,
-//     addition: '',
-//   };
-//   result.profileData.weightInGrams = {
-//     value: result.profileData.weightInGrams,
-//     addition: '',
-//   };
-//   result.profileData.heightInCentimeters = {
-//     value: result.profileData.heightInCentimeters,
-//     addition: '',
-//   };
-//   result.sensorData.heartRateData.avgHeartRate = {
-//     value: result.sensorData.heartRateData.avgHeartRate,
-//     addition: '',
-//   };
-//   result.sensorData.avgWatts = {
-//     value: result.sensorData.avgWatts,
-//     addition: '',
-//   };
-//   result.wattsPerKg = {
-//     value: result.wattsPerKg,
-//     addition: '',
-//   };
-//   result.cpBestEfforts = result.cpBestEfforts.map((cp) => ({
-//     watts: { value: cp.watts, addition: '' },
-//     wattsKg: { value: cp.wattsKg, addition: '' },
-//     cpLabel: cp.cpLabel,
-//     duration: cp.duration,
-//   }));
-// }
