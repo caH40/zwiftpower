@@ -10,6 +10,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
+import { resetSorting } from '../../redux/features/sortTableSlice';
 
 import styles from './RaceResultsDescription.module.css';
 
@@ -23,6 +24,7 @@ function RaceResultsDescription() {
 
   useEffect(() => {
     dispatch(resetFilterCategory());
+    dispatch(resetSorting());
     dispatch(fetchResultEvent(eventId));
   }, [eventId, dispatch]);
 

@@ -10,8 +10,11 @@ const sortTableSlice = createSlice({
 
       state.activeSorting = { columnName, isRasing: !isRasing };
     },
+    resetSorting(state) {
+      state.activeSorting = { columnName: 'Время', isRasing: true };
+    },
   },
 });
 
-export const { sortColumnTable } = sortTableSlice.actions;
+export const { sortColumnTable, resetSorting } = sortTableSlice.actions;
 export default sortTableSlice.reducer;
