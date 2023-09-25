@@ -1,12 +1,16 @@
+import classNames from 'classnames/bind';
+
 import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconArrows({ squareSize = 24, getClick, tooltip, columnName, activeDate }) {
+const cx = classNames.bind(styles);
+
+function IconArrows({ squareSize = 24, getClick, columnName, activeDate }) {
   return (
-    <MyTooltip tooltip={tooltip}>
+    <MyTooltip tooltip={'Сортировка'}>
       <div
-        className={styles.box__rules}
+        className={cx('box__rules', 'pointer')}
         style={{ width: squareSize, height: squareSize }}
         onClick={() => getClick(columnName)}
       >

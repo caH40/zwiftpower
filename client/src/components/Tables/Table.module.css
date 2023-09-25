@@ -239,6 +239,7 @@ tbody .current {
 .th__box {
   display: flex;
   gap: 0 3px;
+  align-items: center;
 }
 @media screen and (max-width: 992px) {
   .big {
