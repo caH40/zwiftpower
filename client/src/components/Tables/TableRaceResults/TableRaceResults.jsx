@@ -13,6 +13,7 @@ import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
+import { sortTable } from '../../../utils/table-sort';
 
 import styles from '../Table.module.css';
 
@@ -23,6 +24,8 @@ const cx = classnames.bind(styles);
 
 function TableRaceResults({ results, event }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
+  const filterWatts = useSelector((state) => state.filterWatts.value);
+  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
@@ -30,10 +33,19 @@ function TableRaceResults({ results, event }) {
 
   const [getLeaders, getSweepers] = useLeader(event);
 
-  const resultFiltered = useMemo(() => {
-    if (filterCategory.name === 'All') return results;
-    return [...results].filter((result) => result.subgroupLabel === filterCategory.name);
-  }, [filterCategory, results]);
+  const resultSortedAndFiltered = useMemo(() => {
+    let filteredResults = [];
+    if (filterCategory.name === 'All') {
+      filteredResults = results;
+    } else {
+      filteredResults = [...results].filter(
+        (result) => result.subgroupLabel === filterCategory.name
+      );
+    }
+    const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
+
+    return sortedAndFilteredResults;
+  }, [filterCategory, filterWatts, activeSorting, results]);
 
   return (
     <table className={cx('table')}>
@@ -41,7 +53,7 @@ function TableRaceResults({ results, event }) {
       <Thead md={md} sm={sm} columnsCP={columnsCP} />
 
       <tbody>
-        {resultFiltered?.map((result) => {
+        {resultSortedAndFiltered?.map((result) => {
           const profile = result.profileData;
           const dsq = result.disqualification;
 

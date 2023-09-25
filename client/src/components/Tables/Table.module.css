@@ -236,6 +236,11 @@ tbody .current {
   font-size: 0.65em;
   white-space: nowrap;
 }
+.th__box {
+  display: flex;
+  gap: 0 3px;
+  align-items: center;
+}
 @media screen and (max-width: 992px) {
   .big {
     font-size: 1em;
