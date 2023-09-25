@@ -17,6 +17,7 @@
   align-items: center;
   gap: 3px;
   flex-flow: wrap;
+  font-weight: 500;
 }
 .gap {
   font-size: 11px;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
 
 import Flag from '../../Flag/Flag';
 import Leader from '../../Leader/Leader';
@@ -9,30 +10,32 @@ import IconFemale from '../../icons/IconFemale';
 
 import styles from './Td.module.css';
 
+const cx = classNames.bind(styles);
+
 function TdRider({ profile, profileId, getLeaders, getSweepers }) {
   return (
     <td>
-      <Link className={styles.link} to={`/profile/${profileId}/results`}>
-        <div className={styles.rider}>
+      <Link className={cx('link')} to={`/profile/${profileId}/results`}>
+        <div className={cx('rider')}>
           {profile.countryAlpha3 ? (
-            <div className={styles.box__flag}>
+            <div className={cx('box__flag')}>
               <Flag name={profile.countryAlpha3} />
             </div>
           ) : (
-            <div className={styles.box__flag} />
+            <div className={cx('box__flag')} />
           )}
 
-          <div className={styles.rider__logo}>
+          <div className={cx('rider__logo')}>
             {profile.imageSrc ? (
-              <img className={styles.rider__img} src={profile.imageSrc} alt="Ph" />
+              <img className={cx('rider__img')} src={profile.imageSrc} alt="Ph" />
             ) : (
-              <div className={styles.rider__img__empty}>
+              <div className={cx('rider__img__empty')}>
                 {profile.firstName.slice(0, 1) + profile.lastName.slice(0, 1)}
               </div>
             )}
           </div>
 
-          <div className={styles.name}>
+          <div className={cx('name')}>
             {`${profile.firstName} ${profile.lastName}`}
             {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
             {getLeaders && <Leader getLeaders={getLeaders} profileId={profileId} />}

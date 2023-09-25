@@ -54,6 +54,7 @@
 .link {
   text-decoration: none;
   color: var(--color-blue-4);
+  font-weight: 500;
 }
 .link:hover {
   text-decoration: underline;
