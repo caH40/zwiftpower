@@ -11,9 +11,13 @@ function DefineCategory({ children, cpBestEfforts, interval }) {
   const { column } = useSelector((state) => state.filterWatts.value);
   if (column === 'watts') return children; // для ватт возвращаем без преобразований
 
-  const { watts, wattsKg } = cpBestEfforts.find((cp) => cp.duration === interval);
+  const { watts, wattsKg } = cpBestEfforts.find((cp) => cp.duration === interval) || {};
 
-  if (!wattsKg.value) return null; // при отсутствии значения вт/кг ничего не рендерить
+  // при отсутствии значения вт/кг ничего не рендерить
+  if (!wattsKg?.value) {
+    return null;
+  }
+
   return (
     <>
       {interval === zMAPInterval && (

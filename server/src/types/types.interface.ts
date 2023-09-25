@@ -72,12 +72,7 @@ export interface UserResult
     powerType: string;
   };
   wattsPerKg: Additional;
-  cpBestEfforts: {
-    watts: Additional;
-    wattsKg: Additional;
-    cpLabel: string;
-    duration: number;
-  }[];
+  cpBestEfforts: CpBestEffortsAdditional[];
 
   eventName?: string;
   eventStart?: number;
@@ -127,11 +122,21 @@ export interface EventWithSubgroupAndSeries extends Omit<EventWithSubgroup, 'ser
 export interface LogsAdminUsername extends Omit<LogsAdminSchema, 'userId'> {
   userId: { username: string };
 }
+
 /**
- * Зарегистрированные райдеры с мощностью (powerCurve) за последние 90 дней
+ * Кривая мощности (за последние 90 дней с дополнительными свойствами
+ */
+export interface CpBestEffortsAdditional {
+  watts: Additional;
+  wattsKg: Additional;
+  cpLabel: string;
+  duration: number;
+}
+/**
+ * Зарегистрированные райдеры с мощностью (cpBestEfforts) за последние 90 дней
  */
 export interface SignedRidersPowerCurves extends SignedRidersSchema {
-  powerCurve?: PowerCurveSchema;
+  cpBestEfforts?: CpBestEffortsAdditional[];
 }
 /**
  * Данные Event с зарегистрированными райдерами

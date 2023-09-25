@@ -11,7 +11,9 @@ import { zFTPInterval, zMAPInterval } from '../../../assets/rule-category';
 import styles from './Td.module.css';
 
 function HighlightValueMax({ valueCPRounded, dimensionValue, valueRaw, interval }) {
-  if (+valueCPRounded === 0 || valueCPRounded === '0max') return null;
+  if (+valueCPRounded === 0 || valueCPRounded === '0max') {
+    return null;
+  }
   // исключения для интервалов на которых определяется категория
   const isException = interval === zFTPInterval || interval === zMAPInterval;
 
