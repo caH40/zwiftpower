@@ -114,7 +114,8 @@
 2.20.1 +добавление robot.txt и генерацию sitemap.xml;  
 2.20.2 +исправление url до sitemap.xml;  
 2.20.3 +исправление robot.txt;  
-2.20.4 +первоначальное создание createSitemap после build server;
+2.20.4 +первоначальное создание createSitemap после build server;  
+2.20.5 +добавление lastmod к некоторым ссылкам в sitemap.xml;
 
 ---
 

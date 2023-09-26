@@ -12,7 +12,7 @@ import {
   millisecondsIn90Days,
   millisecondsIn23Minutes,
   millisecondsIn12Minutes,
-  millisecondsIn10Minutes,
+  millisecondsInHour,
 } from '../assets/date.js';
 
 // создание sitemap.xml
@@ -20,7 +20,7 @@ await createSitemap(); // первоначальная инициализаци�
 export async function setTimers() {
   setInterval(async () => {
     await createSitemap();
-  }, millisecondsIn10Minutes);
+  }, millisecondsInHour);
 
   setInterval(async () => {
     try {

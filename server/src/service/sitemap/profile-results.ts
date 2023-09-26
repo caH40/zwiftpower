@@ -16,11 +16,11 @@ export async function getUrlsProfileResults() {
 
     const urlsResults = [...profileIdUnique].map((profileId) => {
       return `
-    <url>
-      <loc>https://zwiftpower.ru/profile/${profileId}/results</loc>
-      <priority>0.8</priority>
-      <changefreq>always</changefreq>
-    </url>`;
+<url>
+  <loc>https://zwiftpower.ru/profile/${profileId}/results</loc>
+  <priority>0.8</priority>
+  <changefreq>always</changefreq>
+</url>`;
     });
 
     return urlsResults.join('');
