@@ -295,3 +295,23 @@ export interface UpdatePowerCurveRiderArg {
   cpWattsUpdated: CriticalPower[];
   cpWattsPerKgUpdated: CriticalPower[];
 }
+
+/**
+ * Данные для графика количества участвующих райдеров в заездах
+ */
+export interface StatisticsRidersInEvent {
+  eventId: number;
+  eventStart: number;
+  organizer: string;
+  typeRaceCustom: string; // тип заезда. Влияет на распределение мест и подсчет очков в итоговом протоколе
+  riders: {
+    male: number; // количество финишировавших мужчин
+    female: number; // количество финишировавших женщин
+  };
+}
+/**
+ * Аргументы для функции getRidersInEventsServiceArg
+ */
+export interface GetRidersInEventsServiceArg {
+  period: number; // количество дней для запроса данных от текущей даты
+}
