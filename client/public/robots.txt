@@ -1,7 +1,8 @@
 User-agent: * #указывает, для каких роботов установлены директивы
-Disallow: /zwift/edit/event/ 
-Disallow: /zwift/add/event/ 
-Disallow: /bot/
+Disallow: /zwift/edit/event
+Disallow: /zwift/add/event
+Disallow: /bot
 Disallow: /profile/me/
 Disallow: /admin/ # запрещает ссылки из панели администратора
+Disallow: /logs/admin # запрещает ссылки из панели администратора
 Sitemap: https://zwiftpower.ru/sitemap.xml # указывает роботу на файл Sitemap для сайта
