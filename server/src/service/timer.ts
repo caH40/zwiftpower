@@ -7,11 +7,20 @@ import { updateResults } from './updates/results-events.js';
 import { updateScheduleEvents, updateStartInfo } from './updates/schedule-events.js';
 import { updateAccessToken } from './zwift/token.js';
 import { errorHandler } from '../errors/error.js';
+import { createSitemap } from './sitemap/generate-sitemap.js';
+import {
+  millisecondsIn90Days,
+  millisecondsIn23Minutes,
+  millisecondsIn12Minutes,
+  millisecondsIn10Minutes,
+} from '../assets/date.js';
 
 export async function setTimers() {
-  const millisecondsInDay = 24 * 60 * 60 * 1000;
-  const millisecondsIn23Minutes = 23 * 60 * 1000;
-  const millisecondsIn12Minutes = 12 * 60 * 1000;
+  // создание sitemap.xml
+  setInterval(async () => {
+    createSitemap();
+  }, millisecondsIn10Minutes);
+
   setInterval(async () => {
     try {
       await controlConfirmEmail();
@@ -19,7 +28,7 @@ export async function setTimers() {
     } catch (error) {
       errorHandler(error);
     }
-  }, millisecondsInDay);
+  }, millisecondsIn90Days);
 
   setInterval(async () => {
     try {
