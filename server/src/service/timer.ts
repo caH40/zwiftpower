@@ -15,10 +15,11 @@ import {
   millisecondsIn10Minutes,
 } from '../assets/date.js';
 
+// создание sitemap.xml
+await createSitemap(); // первоначальная инициализация, чтобы сразу был после build
 export async function setTimers() {
-  // создание sitemap.xml
   setInterval(async () => {
-    createSitemap();
+    await createSitemap();
   }, millisecondsIn10Minutes);
 
   setInterval(async () => {
