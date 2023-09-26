@@ -300,7 +300,7 @@ export interface UpdatePowerCurveRiderArg {
  * Данные для графика количества участвующих райдеров в заездах
  */
 export interface StatisticsRidersInEvent {
-  eventId: number;
+  id: number;
   eventStart: number;
   organizer: string;
   typeRaceCustom: string; // тип заезда. Влияет на распределение мест и подсчет очков в итоговом протоколе

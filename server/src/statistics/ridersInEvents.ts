@@ -15,33 +15,49 @@ export const getRidersInEventsService = async ({ period }: GetRidersInEventsServ
   const eventsStartFromDate = Date.now() - period;
 
   type EventData = {
-    eventId: number;
+    id: number;
     eventStart: number;
     organizer: string;
     typeRaceCustom: string;
   }[];
 
-  // получение Эвентов за запрашиваемый период period
+  // получение Эвентов
   const eventsDB: EventData = await ZwiftEvent.find(
-    { eventStart: { $gt: eventsStartFromDate } },
-    { eventId: true, eventStart: true, organizer: true, typeRaceCustom: true, _id: false }
+    { started: true },
+    { id: true, eventStart: true, organizer: true, typeRaceCustom: true, _id: false }
   ).lean();
+
+  // фильтрация Эвентов за запрашиваемый период period
+  const eventIds = eventsDB
+    .filter((event) => new Date(event.eventStart).getTime() > eventsStartFromDate)
+    .map((event) => event.id);
 
   // инициализация итогового массива
   const ridersInEvents: StatisticsRidersInEvent[] = [];
 
-  // подсчет финишировавших райдеров в Эвенте и создание итогового массива статистики
-  for (const event of eventsDB) {
-    const zwiftResultDB = await ZwiftResult.find(
-      { eventId: event.eventId },
-      { profileData: true, _id: false }
-    );
+  const zwiftResultsDB = await ZwiftResult.find(
+    { eventId: eventIds },
+    { profileData: true, eventId: true, _id: false }
+  );
 
+  // подсчет количества мужчин/женщин в Эвенте и формирование итогового массива для фронта
+  for (const event of eventsDB) {
     const riders = {
       // подсчет мужчин
-      male: zwiftResultDB.filter((result) => result.profileData.gender === 'male').length,
+      male: zwiftResultsDB.filter((result) => {
+        const isMale = result.profileData.gender.toLowerCase() === 'male';
+        // поиск текущего Эвента с event.id
+        const currentEvent = result.eventId === event.id;
+        return isMale && currentEvent;
+      }).length,
+
       // подсчет женщин
-      female: zwiftResultDB.filter((result) => result.profileData.gender === 'female').length,
+      female: zwiftResultsDB.filter((result) => {
+        const isFemale = result.profileData.gender.toLowerCase() === 'female';
+        // поиск текущего Эвента с event.id
+        const currentEvent = result.eventId === event.id;
+        return isFemale && currentEvent;
+      }).length,
     };
 
     ridersInEvents.push({ ...event, riders });
