@@ -23,11 +23,15 @@ export async function createSitemap() {
     ${urlsProfileResults}
   </urlset>	`;
 
-    fs.writeFile(path.join(__dirname, '..', 'client', 'build', 'sitemap.xml'), data, (err) => {
-      if (err) {
-        throw err;
+    fs.writeFile(
+      path.join(__dirname, '..', '..', 'client', 'build', 'sitemap.xml'),
+      data,
+      (err) => {
+        if (err) {
+          throw err;
+        }
       }
-    });
+    );
   } catch (error) {
     errorHandler(error);
   }
