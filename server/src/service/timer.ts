@@ -9,7 +9,7 @@ import { updateAccessToken } from './zwift/token.js';
 import { errorHandler } from '../errors/error.js';
 import { createSitemap } from './sitemap/generate-sitemap.js';
 import {
-  millisecondsIn90Days,
+  millisecondsInDay,
   millisecondsIn23Minutes,
   millisecondsIn12Minutes,
   millisecondsInHour,
@@ -29,7 +29,7 @@ export async function setTimers() {
     } catch (error) {
       errorHandler(error);
     }
-  }, millisecondsIn90Days);
+  }, millisecondsInDay);
 
   setInterval(async () => {
     try {
