@@ -7,7 +7,7 @@ import { Line } from 'react-chartjs-2';
 import { fetchUserPowerCurve } from '../../redux/features/api/userPowerCurveSlice';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
-import useChartPower from '../../hook/useChartPower';
+import useChartPower from '../../hook/chart/useChartPower';
 import useScreenOrientation from '../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../components/UI/SimpleCheckbox/SimpleCheckbox';
 import SelectForChart from '../../components/UI/SelectForChart/SelectForChart';

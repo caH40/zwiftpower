@@ -10,8 +10,8 @@ import {
   Filler,
 } from 'chart.js';
 
-import { durationLabelsNull } from '../assets/power-interval';
-import { getTimerLocal } from '../utils/date-local';
+import { durationLabelsNull } from '../../assets/power-interval';
+import { getTimerLocal } from '../../utils/date-local';
 
 ChartJS.register(
   CategoryScale, // x scale
