@@ -1,11 +1,17 @@
-export const useChartRiders = (isPortrait) => {
-  const labels = ['0', '1'];
+import { getTimerLocal } from '../utils/date-local';
+
+export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
+  const labels = ridersInEvents.map((elm) => getTimerLocal(elm.eventStart, 'DDMMYY'));
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
   const aspectRatio = isPortrait ? 1 / 1.45 : 2.5;
 
   const options = {
     aspectRatio,
+    // cubicInterpolationMode: 'monotone',
+    pointRadius: 0,
+    tension: 0.4,
+    // borderColor: 'orange',
     plugins: {
       legend: {
         display: true,
@@ -22,7 +28,7 @@ export const useChartRiders = (isPortrait) => {
       x: {
         title: {
           display: !isPortrait, // в мобильной версии не показывать
-          text: 'Длительность',
+          text: 'Дата',
           font: { weight: 400, size: 14 },
         },
         ticks: {
@@ -47,10 +53,11 @@ export const useChartRiders = (isPortrait) => {
   };
 
   const riders = {
-    filterWord: '90days',
-    label: '90 дней',
-    data: [1, 2],
-    backgroundColor: '#a65100',
+    // filterWord: '90days',
+    label: 'за всё время',
+    data: ridersInEvents.map((elm) => elm.riders.male + elm.riders.female),
+    backgroundColor: '#1a9c00',
+    fill: true,
   };
 
   const data = {

@@ -14,7 +14,7 @@ export const fetchRidersInEvents = createAsyncThunk(
         method: 'get',
       });
 
-      return { ridersInEvents: response.data };
+      return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
