@@ -7,6 +7,9 @@ const useLoader = () => {
   const { status: statusChangeEvent } = useSelector((state) => state.fetchChangeEvent);
   const { status: statusEventPreview } = useSelector((state) => state.fetchEventPreview);
   const { status: statusDownloadResults } = useSelector((state) => state.downloadResults);
+  const { status: statusRidersInEventsFetch } = useSelector(
+    (state) => state.ridersInEventsFetch
+  );
 
   if (
     statusEvents === 'loading' ||
@@ -14,7 +17,8 @@ const useLoader = () => {
     statusResults === 'loading' ||
     statusChangeEvent === 'loading' ||
     statusEventPreview === 'loading' ||
-    statusDownloadResults === 'loading'
+    statusDownloadResults === 'loading' ||
+    statusRidersInEventsFetch === 'loading'
   ) {
     return { isLoading: true };
   }

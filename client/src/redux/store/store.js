@@ -32,6 +32,8 @@ import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
 import sortTableSlice from '../features/sortTableSlice';
 
+import { statisticsReducers } from './statistics';
+
 export default configureStore({
   reducer: {
     alertMessage: alertMessageSlice,
@@ -63,6 +65,7 @@ export default configureStore({
     popupInfoDevPost: popupInfoDevPostSlice,
     popupInfoDevPut: popupInfoDevPutSlice,
     sortTable: sortTableSlice,
+    ...statisticsReducers,
   },
 });
 
