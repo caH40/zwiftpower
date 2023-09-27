@@ -29,6 +29,7 @@ import ProfilePower from './Pages/Profile/ProfilePower';
 import ProfileWeight from './Pages/Profile/ProfileWeight';
 import { sendMetrika } from './metrika/yandex';
 import Catchup from './Pages/Catchup/Catchup';
+import RidersInEvents from './Pages/RaceStatistics/RidersInEvents';
 
 function App() {
   useFirstAuth();
@@ -63,7 +64,9 @@ function App() {
         <Route path="/race/schedule/:eventId" element={<RaceScheduleDescription />} />
         <Route path="/race/series" element={<RaceSeries />} />
         <Route path="/race/series/catchup" element={<Catchup />} />
-        <Route path="/race/statistics" element={<RaceStatistics />} />
+        <Route path="/race/statistics" element={<RaceStatistics />}>
+          <Route index element={<RidersInEvents />} />
+        </Route>
         <Route path="/logs/admin" element={<LogsAdmin />} />
         <Route path="/faq" element={<Faq />} />
         {isModerator ? AdminRoute() : ''}

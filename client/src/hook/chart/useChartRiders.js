@@ -1,4 +1,4 @@
-import { getTimerLocal } from '../utils/date-local';
+import { getTimerLocal } from '../../utils/date-local';
 
 export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
   const labels = ridersInEvents.map((elm) => getTimerLocal(elm.eventStart, 'DDMMYY'));
