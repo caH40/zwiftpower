@@ -60,6 +60,9 @@ export const getRidersInEventsService = async ({ period }: GetRidersInEventsServ
       }).length,
     };
 
+    // замена строки времени на число
+    event.eventStart = new Date(event.eventStart).getTime();
+
     ridersInEvents.push({ ...event, riders });
   }
 
