@@ -6,7 +6,7 @@ import { resetRidersInEvents } from '../../redux/features/api/statistics/ridersI
 import ChartRidersInEvents from '../../components/ChartRidersInEvents/ChartRidersInEvents';
 
 function RidersInEvents() {
-  const { ridersInEvents, status: fetchStatus } = useSelector(
+  const { ridersInEventsPrepared, status: fetchStatus } = useSelector(
     (state) => state.ridersInEventsFetch
   );
 
@@ -23,7 +23,9 @@ function RidersInEvents() {
 
   return (
     <section>
-      {fetchStatus === 'resolved' && <ChartRidersInEvents ridersInEvents={ridersInEvents} />}
+      {fetchStatus === 'resolved' && (
+        <ChartRidersInEvents ridersInEventsPrepared={ridersInEventsPrepared} />
+      )}
     </section>
   );
 }
