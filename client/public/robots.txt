@@ -3,6 +3,9 @@ Disallow: /zwift/edit/event
 Disallow: /zwift/add/event
 Disallow: /bot
 Disallow: /profile/me/
+Disallow: /auth/confirm-email/
+Disallow: /images/background/
+Disallow: /message/
 Disallow: /admin/ # запрещает ссылки из панели администратора
 Disallow: /logs/admin # запрещает ссылки из панели администратора
 Sitemap: https://zwiftpower.ru/sitemap.xml # указывает роботу на файл Sitemap для сайта
