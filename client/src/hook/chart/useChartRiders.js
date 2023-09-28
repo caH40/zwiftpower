@@ -1,17 +1,19 @@
 import { getTimerLocal } from '../../utils/date-local';
 
 export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
-  const labels = ridersInEvents.map((elm) => getTimerLocal(elm.eventStart, 'DDMMYY'));
+  // исключение результатов в которых никто не участвовал
+  const dataFiltered = [...ridersInEvents].filter(
+    (elm) => elm.riders.male + elm.riders.female !== 0
+  );
+
+  const labels = dataFiltered.map((elm) => getTimerLocal(elm.eventStart, 'DDMMYY'));
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
   const aspectRatio = isPortrait ? 1 / 1.45 : 2.5;
 
   const options = {
     aspectRatio,
-    // cubicInterpolationMode: 'monotone',
     pointRadius: 0,
-    tension: 0.4,
-    // borderColor: 'orange',
     plugins: {
       legend: {
         display: true,
@@ -26,6 +28,7 @@ export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
     },
     scales: {
       x: {
+        stacked: true,
         title: {
           display: !isPortrait, // в мобильной версии не показывать
           text: 'Дата',
@@ -38,6 +41,7 @@ export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
         },
       },
       y: {
+        stacked: true,
         title: {
           display: !isPortrait, // в мобильной версии не показывать
           text: 'Количество участников',
@@ -52,17 +56,20 @@ export const useChartRiders = ({ ridersInEvents, isPortrait }) => {
     },
   };
 
-  const riders = {
-    // filterWord: '90days',
-    label: 'за всё время',
-    data: ridersInEvents.map((elm) => elm.riders.male + elm.riders.female),
-    backgroundColor: '#1a9c00',
-    fill: true,
-  };
-
   const data = {
-    datasets: [riders],
     labels,
+    datasets: [
+      {
+        label: 'Мужчины',
+        data: dataFiltered.map((elm) => elm.riders.male),
+        backgroundColor: 'rgba(1, 107, 10, 0.5)',
+      },
+      {
+        label: 'Женщины',
+        data: dataFiltered.map((elm) => elm.riders.female),
+        backgroundColor: 'rgba(121, 3, 255, 0.5)',
+      },
+    ],
   };
 
   return { data, options };
