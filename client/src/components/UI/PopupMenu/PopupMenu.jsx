@@ -19,11 +19,11 @@ function PopupMenu() {
         <ul className={styles.list}>
           {isModerator && (
             <>
-              <li className={styles.item}>
+              {/* <li className={styles.item}>
                 <Link to="/bot" className={styles.link}>
                   Бот
                 </Link>
-              </li>
+              </li> */}
               <li className={styles.item}>
                 <Link to="/logs/admin" className={styles.link}>
                   Логи по Эвентам
