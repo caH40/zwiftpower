@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { fetchRidersInEvents } from '../../redux/features/api/statistics/fetchRidersInEvents';
 import { resetRidersInEvents } from '../../redux/features/api/statistics/ridersInEventsSlice';
 import ChartRidersInEvents from '../../components/ChartRidersInEvents/ChartRidersInEvents';
+import { millisecondsYear } from '../../assets/dates';
 
 function RidersInEvents() {
   const { ridersInEventsPrepared, status: fetchStatus } = useSelector(
@@ -13,7 +14,7 @@ function RidersInEvents() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchRidersInEvents(36000000000));
+    dispatch(fetchRidersInEvents(millisecondsYear));
 
     // обнуление стора при уходе со страницы
     return () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SimpleSelect from '../../SimpleSelect/SimpleSelect';
-import { optionsSeasons } from '../../../../assets/seasons';
+import { optionsSeasons } from '../../../../assets/options';
 
 import styles from './FilterCatchup.module.css';
 
@@ -13,6 +13,7 @@ function FilterCatchup({ form, setForm }) {
         setState={setForm}
         property="season"
         options={optionsSeasons}
+        closeEmptyOption={true}
       />
     </form>
   );

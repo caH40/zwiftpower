@@ -2,10 +2,10 @@ import FilterPeriods from '../FilterPeriods/FilterPeriods';
 
 import styles from './NavBarRidersInEvent.module.css';
 
-function NavBarRidersInEvent() {
+function NavBarRidersInEvent({ form, setForm }) {
   return (
     <div className={styles.block}>
-      <FilterPeriods />
+      <FilterPeriods form={form} setForm={setForm} />
     </div>
   );
 }
