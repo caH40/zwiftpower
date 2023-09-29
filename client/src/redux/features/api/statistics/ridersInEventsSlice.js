@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { filterForMonth } from '../../../../hook/chart/riders/filter-year';
+import { filterForMonth } from '../../../../hook/chart/riders/filter-month';
 
 import { fetchRidersInEvents } from './fetchRidersInEvents';
 

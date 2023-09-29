@@ -26,3 +26,5 @@ export const months = [
   'Ноябрь',
   'Декабрь',
 ];
+
+export const millisecondsIn28Days = 13 * 7 * 24 * 60 * 60 * 1000;
