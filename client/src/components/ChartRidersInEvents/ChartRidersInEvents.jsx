@@ -40,7 +40,7 @@ function ChartRidersInEvents({ ridersInEventsPrepared }) {
 
   return (
     <>
-      <h2>Количество участников в заездах</h2>
+      <h2 className={styles.title}>Количество участников в заездах</h2>
       <NavBarRidersInEvent form={form} setForm={setForm} />
       <div className={styles.block}>
         <Bar options={options} data={data} className={styles.chart} />
