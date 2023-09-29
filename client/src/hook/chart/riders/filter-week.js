@@ -1,4 +1,4 @@
-import { millisecondsIn28Days } from '../../../assets/dates';
+import { millisecondsIn3Month } from '../../../assets/dates';
 import { getWeek } from '../../../utils/week';
 /**
  * Группирование данных по неделям, за последние 3 месяца,
@@ -7,7 +7,7 @@ import { getWeek } from '../../../utils/week';
 export const filterForWeek = (data) => {
   const dataFiltered = data.filter((elm) => {
     const notNull = elm.riders.male + elm.riders.female !== 0;
-    const isCurrentPeriod = elm.eventStart > Date.now() - millisecondsIn28Days;
+    const isCurrentPeriod = elm.eventStart > Date.now() - millisecondsIn3Month;
     return notNull && isCurrentPeriod;
   });
 
