@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { filterForMonth } from '../../../../hook/chart/riders/filter-month';
+import { filterForWeek } from '../../../../hook/chart/riders/filter-week';
+import { filterForDay } from '../../../../hook/chart/riders/filter-day';
 
 import { fetchRidersInEvents } from './fetchRidersInEvents';
 
@@ -18,10 +20,21 @@ const ridersInEventsSlice = createSlice({
     resetRidersInEvents(state) {
       state.ridersInEvents = [];
     },
-    setPeriods(state, action) {
-      // необходимый период
+
+    // обработка результатов согласно периода запроса
+    getRidersInEventsPrepared(state, action) {
       const periodCurrent = action.payload;
-      state.periods = state.ridersInEvents.map((elm) => elm.startEvent);
+      switch (periodCurrent) {
+        case '3 месяца':
+          state.ridersInEventsPrepared = filterForWeek(state.ridersInEvents);
+          break;
+        case '30 дней':
+          state.ridersInEventsPrepared = filterForDay(state.ridersInEvents);
+          break;
+        default:
+          state.ridersInEventsPrepared = filterForMonth(state.ridersInEvents);
+          break;
+      }
     },
   },
 
@@ -48,5 +61,5 @@ const ridersInEventsSlice = createSlice({
   },
 });
 
-export const { resetRidersInEvents } = ridersInEventsSlice.actions;
+export const { resetRidersInEvents, getRidersInEventsPrepared } = ridersInEventsSlice.actions;
 export default ridersInEventsSlice.reducer;

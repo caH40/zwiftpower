@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
 
 import {
@@ -12,6 +14,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+import { getRidersInEventsPrepared } from '../../redux/features/api/statistics/ridersInEventsSlice';
 import { useChartRiders } from '../../hook/chart/riders/useChartRiders';
 import useScreenOrientation from '../../hook/useScreenOrientation';
 import NavBarRidersInEvent from '../UI/NavBarRidersInEvent/NavBarRidersInEvent';
@@ -25,14 +28,20 @@ import styles from './ChartRidersInEvents.module.css';
  * фильтром выбирается общий период данных
  */
 function ChartRidersInEvents({ ridersInEventsPrepared }) {
+  const [form, setForm] = useState({ period: 'Год' });
   const { isPortrait } = useScreenOrientation();
-
   const { data, options } = useChartRiders({ ridersInEventsPrepared, isPortrait });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRidersInEventsPrepared(form.period));
+  }, [form]);
 
   return (
     <>
       <h2>Количество участников в заездах</h2>
-      <NavBarRidersInEvent />
+      <NavBarRidersInEvent form={form} setForm={setForm} />
       <div className={styles.block}>
         <Bar options={options} data={data} className={styles.chart} />
       </div>
