@@ -1,5 +1,3 @@
-import { getTimerLocal } from '../../../utils/date-local';
-
 /**
  * монтирование диаграммы происходит с периодом за год, с lables по месяцам
  */
