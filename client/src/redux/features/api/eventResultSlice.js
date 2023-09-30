@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { prepareResults } from '../../../Pages/RaceResultsDescription/service';
+import { prepareResults } from '../../../Pages/ResultsDescription/service';
 
 import { getAlert } from '../alertMessageSlice';
 

@@ -12,9 +12,9 @@ import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
 import { resetSorting } from '../../redux/features/sortTableSlice';
 
-import styles from './RaceResultsDescription.module.css';
+import styles from './ResultsDescription.module.css';
 
-function RaceResultsDescription() {
+function ResultsDescription() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
   useTitle('Результаты заезда');
   useBackground(false);
@@ -50,4 +50,4 @@ function RaceResultsDescription() {
   );
 }
 
-export default RaceResultsDescription;
+export default ResultsDescription;

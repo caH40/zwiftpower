@@ -10,11 +10,11 @@ import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 
-import styles from './RaceScheduleList.module.css';
+import styles from './ScheduleList.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
-function RaceScheduleList() {
+function ScheduleList() {
   const [page, setPage] = useState(1);
   const [trigger, setTrigger] = useState(false);
   const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
@@ -78,4 +78,4 @@ function RaceScheduleList() {
   );
 }
 
-export default RaceScheduleList;
+export default ScheduleList;

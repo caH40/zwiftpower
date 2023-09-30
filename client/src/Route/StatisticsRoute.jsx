@@ -1,8 +1,8 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
-const RaceStatistics = lazy(() => import('../Pages/RaceStatistics/RaceStatistics'));
-const RidersInEvents = lazy(() => import('../Pages/RaceStatistics/RidersInEvents'));
+const Statistics = lazy(() => import('../Pages/Statistics/Statistics'));
+const RidersInEvents = lazy(() => import('../Pages/Statistics/RidersInEvents'));
 
 import MySuspense from '../HOC/Se';
 
@@ -13,7 +13,7 @@ export function StatisticsRoute() {
         path="/race/statistics"
         element={
           <MySuspense>
-            <RaceStatistics />
+            <Statistics />
           </MySuspense>
         }
       >

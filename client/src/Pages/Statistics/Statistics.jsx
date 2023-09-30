@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 
-import styles from './RaceStatistics.module.css';
+import styles from './Statistics.module.css';
 
-function RaceStatistics() {
+function Statistics() {
   useTitle('Статистика');
   useBackground(false);
   return (
@@ -14,4 +14,4 @@ function RaceStatistics() {
     </section>
   );
 }
-export default RaceStatistics;
+export default Statistics;
