@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 function MySuspense({ children }) {
-  return <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>;
+  // добавить спинер или найти возможность перевести отображение Z-спинера
+  return <Suspense>{children}</Suspense>;
 }
 
 export default MySuspense;
