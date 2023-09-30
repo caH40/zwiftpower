@@ -13,9 +13,9 @@ import { createResultListMenus } from '../../redux/features/popupTableResultsLis
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 
-import styles from './RaceResultsList.module.css';
+import styles from './ResultsList.module.css';
 
-function RaceResultsList() {
+function ResultsList() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -99,4 +99,4 @@ function RaceResultsList() {
   );
 }
 
-export default RaceResultsList;
+export default ResultsList;

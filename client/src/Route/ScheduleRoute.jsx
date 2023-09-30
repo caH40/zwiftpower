@@ -1,9 +1,9 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
-const RaceScheduleList = lazy(() => import('../Pages/RaceScheduleList/RaceScheduleList'));
-const RaceScheduleDescription = lazy(() =>
-  import('../Pages/RaceScheduleDescription/RaceScheduleDescription')
+const ScheduleList = lazy(() => import('../Pages/ScheduleList/ScheduleList'));
+const ScheduleDescription = lazy(() =>
+  import('../Pages/ScheduleDescription/ScheduleDescription')
 );
 import MySuspense from '../HOC/Se';
 
@@ -14,7 +14,7 @@ export function ScheduleRouteRoute() {
         path="/race/schedule"
         element={
           <MySuspense>
-            <RaceScheduleList />
+            <ScheduleList />
           </MySuspense>
         }
       />
@@ -22,7 +22,7 @@ export function ScheduleRouteRoute() {
         path="/race/schedule/:eventId"
         element={
           <MySuspense>
-            <RaceScheduleDescription />
+            <ScheduleDescription />
           </MySuspense>
         }
       />

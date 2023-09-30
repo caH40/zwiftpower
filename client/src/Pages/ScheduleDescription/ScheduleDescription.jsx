@@ -12,9 +12,9 @@ import {
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
 
-import styles from './RaceScheduleDescription.module.css';
+import styles from './ScheduleDescription.module.css';
 
-function RaceScheduleDescription() {
+function ScheduleDescription() {
   const { event } = useSelector((state) => state.fetchEventPreview);
   const navigate = useNavigate();
 
@@ -62,4 +62,4 @@ function RaceScheduleDescription() {
   );
 }
 
-export default RaceScheduleDescription;
+export default ScheduleDescription;
