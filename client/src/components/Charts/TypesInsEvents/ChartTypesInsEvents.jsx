@@ -10,8 +10,8 @@ import styles from './ChartTypesInsEvents.module.css';
 /**
  * Диаграмма суммарного количества райдеров по типам Эвентов
  */
-function ChartTypesInsEvents() {
-  const { data } = useChartTypesRace();
+function ChartTypesInsEvents({ form }) {
+  const { data } = useChartTypesRace({ period: form.period });
   return (
     <section className={styles.wrapper}>
       <h3 className={styles.title}>Типы заездов</h3>
