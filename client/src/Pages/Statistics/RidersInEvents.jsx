@@ -1,15 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { fetchRidersInEvents } from '../../redux/features/api/statistics/fetchRidersInEvents';
-import { resetRidersInEvents } from '../../redux/features/api/statistics/ridersInEventsSlice';
-import ChartRidersInEvents from '../../components/ChartRidersInEvents/ChartRidersInEvents';
+import {
+  getRidersInEventsPrepared,
+  resetRidersInEvents,
+} from '../../redux/features/api/statistics/ridersInEventsSlice';
+import ChartRidersInEvents from '../../components/Charts/RidersInEvents/ChartRidersInEvents';
 import { millisecondsYear } from '../../assets/dates';
+import ChartTypesInsEvents from '../../components/Charts/TypesInsEvents/ChartTypesInsEvents';
+import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
+
+import styles from './RidersInEvents.module.css';
 
 function RidersInEvents() {
-  const { ridersInEventsPrepared, status: fetchStatus } = useSelector(
-    (state) => state.ridersInEventsFetch
-  );
+  const [form, setForm] = useState({ period: 'Год' });
+  const { status: fetchStatus } = useSelector((state) => state.ridersInEventsFetch);
 
   const dispatch = useDispatch();
 
@@ -22,10 +28,19 @@ function RidersInEvents() {
     };
   }, []);
 
+  useEffect(() => {
+    dispatch(getRidersInEventsPrepared(form.period));
+  }, [form]);
+
   return (
     <section>
       {fetchStatus === 'resolved' && (
-        <ChartRidersInEvents ridersInEventsPrepared={ridersInEventsPrepared} />
+        <>
+          <h2 className={styles.title}>Количество участников</h2>
+          <NavBarRidersInEvent form={form} setForm={setForm} />
+          <ChartRidersInEvents />
+          <ChartTypesInsEvents />
+        </>
       )}
     </section>
   );
