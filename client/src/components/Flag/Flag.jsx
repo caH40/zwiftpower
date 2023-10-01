@@ -40,6 +40,10 @@ function Flag({ name = '' }) {
       nameShort = 'aq';
       break;
 
+    case 'kaz':
+      nameShort = 'kz';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;

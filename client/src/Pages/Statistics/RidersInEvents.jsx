@@ -41,7 +41,7 @@ function RidersInEvents() {
           <ChartRidersInEvents />
           <ChartTypesInsEvents form={form} />
           <p className={styles.annotation}>
-            * при клике на параметре, исключается данный параметр из диаграммы
+            * при клике на параметре исключается данный параметр из диаграммы
           </p>
         </>
       )}
