@@ -39,7 +39,10 @@ function RidersInEvents() {
           <h2 className={styles.title}>Количество участников</h2>
           <NavBarRidersInEvent form={form} setForm={setForm} />
           <ChartRidersInEvents />
-          <ChartTypesInsEvents />
+          <ChartTypesInsEvents form={form} />
+          <p className={styles.annotation}>
+            * при клике на параметре, исключается данный параметр из диаграммы
+          </p>
         </>
       )}
     </section>
