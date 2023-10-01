@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
@@ -11,17 +10,27 @@ import {
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
-import { setEventRules, setEventTags } from '../../../../redux/features/eventParamsSlice';
+import SimpleSelectFunction from '../../../UI/SimpleSelect/SimpleSelectFunction';
+import { optionsEventPattern } from '../../../../assets/options';
+import {
+  setEventRules,
+  setEventTags,
+} from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 
 import styles from './FormEditEvent.module.css';
 
-function FormEditEvent() {
+function FormEditEvent({ setPattern }) {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
 
   return (
     <>
+      <div className={styles.pattern}>
+        <h4 className={styles.title}>Выбор пакета настроек для Эвента</h4>
+        <SimpleSelectFunction reducer={setPattern} options={optionsEventPattern} />
+      </div>
+
       <h4 className={styles.title}>Общие настройки заезда</h4>
       <div className={styles.form} name="zwiftEvent">
         <div className={styles.box__inputs}>

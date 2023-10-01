@@ -4,7 +4,8 @@ import alertMessageSlice from '../features/alertMessageSlice';
 import authSlice from '../features/authSlice';
 import menuBurgerSlice from '../features/menuBurgerSlice';
 import titleSlice from '../features/titleSlice';
-import eventParamsSlice from '../features/eventParamsSlice';
+// import eventParamsSlice from '../features/eventParamsSlice';
+import zwiftEventParamsSlice from '../features/api/zwift_event_params/zwiftEventParamsSlice';
 import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterWattsSlice from '../features/filterWattsSlice';
@@ -40,7 +41,7 @@ export default configureStore({
     titlePage: titleSlice,
     checkAuth: authSlice,
     menuBurger: menuBurgerSlice,
-    eventParams: eventParamsSlice,
+    eventParams: zwiftEventParamsSlice,
     background: backgroundSlice,
     filterCategory: filterCategorySlice,
     filterWatts: filterWattsSlice,

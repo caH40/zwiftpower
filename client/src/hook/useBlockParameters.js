@@ -1,6 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import { setMainParams, setSubgroupParams } from '../redux/features/eventParamsSlice';
+import {
+  setMainParams,
+  setSubgroupParams,
+} from '../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+
 // выбор соответствующего изменяемого блока с параметрами и соответствующего обработчика (reducer)
 function useBlockParameters(subgroupIndex) {
   const {

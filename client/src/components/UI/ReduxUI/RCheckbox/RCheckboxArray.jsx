@@ -3,7 +3,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import MyTooltip from '../../../../HOC/MyTooltip';
-import { setEventRules } from '../../../../redux/features/eventParamsSlice';
 
 import styles from './RCheckbox.module.css';
 

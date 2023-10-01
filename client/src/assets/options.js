@@ -16,3 +16,12 @@ export const optionsPeriodsRidersInEvent = [
   { id: 1, name: '3 месяца' },
   { id: 2, name: '30 дней' },
 ];
+
+/**
+ * Названия паттернов настроек для Эвентов
+ */
+export const optionsEventPattern = [
+  { id: 0, name: 'CatchUp' },
+  { id: 1, name: 'Series' },
+  { id: 2, name: 'Сброс настройки' },
+];
