@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { rules } from '../../assets/zwift/rule';
-import { tags } from '../../assets/zwift/tags';
+import { rules } from '../../../../assets/zwift/rule';
+import { tags } from '../../../../assets/zwift/tags';
 
+import { builderZwiftEventParams } from './builder';
+
+// eventSubgroup_ порядковый номер массива в свойстве  eventSubgroups
 const initialState = {
+  eventParamsRaw: {},
   eventMainParams: { id: 0 },
   eventSubgroup_0: {},
   eventSubgroup_1: {},
@@ -14,31 +18,31 @@ const initialState = {
   checkboxTags: [],
 };
 
-const eventParamsSlice = createSlice({
+const zwiftEventParamsSlice = createSlice({
   name: 'eventParams',
-  // eventSubgroup_ порядковый номер массива в свойстве  eventSubgroups
   initialState,
   reducers: {
-    // первоначальная установка (инициализация) сущностей после загрузки данных эвента с сервера Звифта
-    setEventParams(state, action) {
-      [
-        state.eventSubgroup_0,
-        state.eventSubgroup_1,
-        state.eventSubgroup_2,
-        state.eventSubgroup_3,
-        state.eventSubgroup_4,
-      ] = action.payload.eventSubgroups;
+    // // первоначальная установка (инициализация) сущностей после загрузки
+    // // данных эвента с сервера Звифта
+    // setEventParams(state, action) {
+    //   [
+    //     state.eventSubgroup_0,
+    //     state.eventSubgroup_1,
+    //     state.eventSubgroup_2,
+    //     state.eventSubgroup_3,
+    //     state.eventSubgroup_4,
+    //   ] = action.payload.eventSubgroups;
 
-      state.eventMainParams = action.payload;
+    //   state.eventMainParams = action.payload;
 
-      state.checkboxRules = rules.map((rule) => {
-        return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
-      });
+    //   state.checkboxRules = rules.map((rule) => {
+    //     return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
+    //   });
 
-      state.checkboxTags = tags.map((tag) => {
-        return { ...tag, checked: action.payload.tags.includes(tag.value) };
-      });
-    },
+    //   state.checkboxTags = tags.map((tag) => {
+    //     return { ...tag, checked: action.payload.tags.includes(tag.value) };
+    //   });
+    // },
 
     // установка правил и сохранение в состояние checkboxRules
     setEventRules(state, action) {
@@ -85,6 +89,7 @@ const eventParamsSlice = createSlice({
 
     // сброс всех состояний
     resetParams(state) {
+      state.eventParamsRaw = {};
       state.eventSubgroup_0 = {};
       state.eventSubgroup_1 = {};
       state.eventSubgroup_2 = {};
@@ -113,6 +118,7 @@ const eventParamsSlice = createSlice({
       };
     },
   },
+  extraReducers: (builder) => builderZwiftEventParams(builder),
 });
 
 export const {
@@ -123,6 +129,6 @@ export const {
   setEventRules,
   setEventTags,
   setSameParameter,
-} = eventParamsSlice.actions;
+} = zwiftEventParamsSlice.actions;
 
-export default eventParamsSlice.reducer;
+export default zwiftEventParamsSlice.reducer;

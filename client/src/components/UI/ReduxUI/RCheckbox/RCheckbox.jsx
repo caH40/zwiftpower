@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import MyTooltip from '../../../../HOC/MyTooltip';
-import { setMainParams } from '../../../../redux/features/eventParamsSlice';
+import { setMainParams } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 
 import styles from './RCheckbox.module.css';
 

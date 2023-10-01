@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getPopupInput } from '../../../../redux/features/popupInputSlice';
 import IconSample from '../../../icons/IconSample';
 import IconPen from '../../../icons/IconPen';
-import { setSameParameter } from '../../../../redux/features/eventParamsSlice';
+import { setSameParameter } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 
 import styles from './BoxParameter.module.css';
 
