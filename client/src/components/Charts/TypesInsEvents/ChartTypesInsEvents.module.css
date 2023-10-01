@@ -1,0 +1,35 @@
+.wrapper {
+  width: 30%;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+.chart {
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 1200px) {
+  .wrapper {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 992px) {
+  .wrapper {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .wrapper {
+    width: 100%;
+  }
+  .block {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 576px) {
+  .block {
+    width: 90%;
+  }
+}

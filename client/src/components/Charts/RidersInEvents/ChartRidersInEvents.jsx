@@ -14,10 +14,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-import { getRidersInEventsPrepared } from '../../redux/features/api/statistics/ridersInEventsSlice';
-import { useChartRiders } from '../../hook/chart/riders/useChartRiders';
-import useScreenOrientation from '../../hook/useScreenOrientation';
-import NavBarRidersInEvent from '../UI/NavBarRidersInEvent/NavBarRidersInEvent';
+import { useChartRiders } from '../../../hook/chart/riders/useChartRiders';
 
 import styles from './ChartRidersInEvents.module.css';
 
@@ -27,25 +24,16 @@ import styles from './ChartRidersInEvents.module.css';
  * ось y: суммарное количество участников во всех заездах вне зависимости от организатора и типа заезда
  * фильтром выбирается общий период данных
  */
-function ChartRidersInEvents({ ridersInEventsPrepared }) {
-  const [form, setForm] = useState({ period: 'Год' });
-  const { isPortrait } = useScreenOrientation();
-  const { data, options } = useChartRiders({ ridersInEventsPrepared, isPortrait });
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getRidersInEventsPrepared(form.period));
-  }, [form]);
+function ChartRidersInEvents() {
+  const { data, options } = useChartRiders();
 
   return (
-    <>
-      <h2 className={styles.title}>Количество участников в заездах</h2>
-      <NavBarRidersInEvent form={form} setForm={setForm} />
+    <section>
+      <h3 className={styles.title}>В заездах</h3>
       <div className={styles.block}>
         <Bar options={options} data={data} className={styles.chart} />
       </div>
-    </>
+    </section>
   );
 }
 

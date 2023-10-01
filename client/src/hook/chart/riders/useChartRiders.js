@@ -1,7 +1,17 @@
+import { useSelector } from 'react-redux';
+
+import useScreenOrientation from '../../useScreenOrientation';
+
 /**
  * монтирование диаграммы происходит с периодом за год, с lables по месяцам
  */
-export const useChartRiders = ({ ridersInEventsPrepared: dataForChart, isPortrait }) => {
+export const useChartRiders = () => {
+  const { ridersInEventsPrepared: dataForChart } = useSelector(
+    (state) => state.ridersInEventsFetch
+  );
+  const { isPortrait } = useScreenOrientation();
+
+  // названия названия по оси X
   const labels = dataForChart.map((elm) => elm.label);
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
