@@ -5,5 +5,5 @@ export const seriesType = [
   { name: 'newbies', id: '3', label: 'Новички' },
   { name: 'classicGroup', id: '4', label: 'Классическая' },
   { name: 'classicCommon', id: '5', label: 'Классическая без групп' },
-  { name: 'сriterium', id: '6', label: 'Критериум' },
+  { name: 'criterium', id: '6', label: 'Критериум' },
 ];

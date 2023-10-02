@@ -9,7 +9,6 @@ export const fetchZwiftEventParams = createAsyncThunk(
   'zwift/eventParams',
   async function (eventId, thunkAPI) {
     try {
-      // console.log('fetchRequest');
       const response = await myAxios({
         url: `${serverExpress}/api/zwift/events/${eventId}`,
         method: 'get',

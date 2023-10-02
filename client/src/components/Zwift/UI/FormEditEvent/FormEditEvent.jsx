@@ -10,8 +10,7 @@ import {
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
-import SimpleSelectFunction from '../../../UI/SimpleSelect/SimpleSelectFunction';
-import { optionsEventPattern } from '../../../../assets/options';
+
 import {
   setEventRules,
   setEventTags,
@@ -19,18 +18,13 @@ import {
 
 import styles from './FormEditEvent.module.css';
 
-function FormEditEvent({ setPattern }) {
+function FormEditEvent() {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
 
   return (
     <>
-      <div className={styles.pattern}>
-        <h4 className={styles.title}>Выбор пакета настроек для Эвента</h4>
-        <SimpleSelectFunction reducer={setPattern} options={optionsEventPattern} />
-      </div>
-
       <h4 className={styles.title}>Общие настройки заезда</h4>
       <div className={styles.form} name="zwiftEvent">
         <div className={styles.box__inputs}>

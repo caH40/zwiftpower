@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { rules } from '../../../../assets/zwift/rule';
-import { tags } from '../../../../assets/zwift/tags';
-
 import { builderZwiftEventParams } from './builder';
+import { setPatternReducer } from './reducers/pattern';
 
 // eventSubgroup_ порядковый номер массива в свойстве  eventSubgroups
 const initialState = {
@@ -22,28 +20,6 @@ const zwiftEventParamsSlice = createSlice({
   name: 'eventParams',
   initialState,
   reducers: {
-    // // первоначальная установка (инициализация) сущностей после загрузки
-    // // данных эвента с сервера Звифта
-    // setEventParams(state, action) {
-    //   [
-    //     state.eventSubgroup_0,
-    //     state.eventSubgroup_1,
-    //     state.eventSubgroup_2,
-    //     state.eventSubgroup_3,
-    //     state.eventSubgroup_4,
-    //   ] = action.payload.eventSubgroups;
-
-    //   state.eventMainParams = action.payload;
-
-    //   state.checkboxRules = rules.map((rule) => {
-    //     return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
-    //   });
-
-    //   state.checkboxTags = tags.map((tag) => {
-    //     return { ...tag, checked: action.payload.tags.includes(tag.value) };
-    //   });
-    // },
-
     // установка правил и сохранение в состояние checkboxRules
     setEventRules(state, action) {
       state.checkboxRules = state.checkboxRules.map((rule) => {
@@ -117,6 +93,11 @@ const zwiftEventParamsSlice = createSlice({
         ...action.payload,
       };
     },
+
+    // установка параметров Эвента согласно выбранному паттерну (набору правил)
+    setPattern(state, action) {
+      setPatternReducer(state, action);
+    },
   },
   extraReducers: (builder) => builderZwiftEventParams(builder),
 });
@@ -129,6 +110,7 @@ export const {
   setEventRules,
   setEventTags,
   setSameParameter,
+  setPattern,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;
