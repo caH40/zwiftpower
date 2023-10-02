@@ -1,3 +1,5 @@
+import { requiredLabelsForCatchup } from '../../../../../assets/subgroups';
+
 import { checkingRequiredSubgroups } from './subgroups';
 
 /**
@@ -5,7 +7,7 @@ import { checkingRequiredSubgroups } from './subgroups';
  */
 export const patternCatchUp = (rawEventParams) => {
   // проверка наличия обязательных подгрупп в созданном Эвенте
-  checkingRequiredSubgroups(rawEventParams);
+  checkingRequiredSubgroups(rawEventParams, requiredLabelsForCatchup);
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
@@ -45,7 +47,6 @@ export const patternCatchUp = (rawEventParams) => {
     switch (subgroup.label) {
       // группа A
       case 1:
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:36:00.000+0000`;
         subgroup.registrationStart = `${eventStartDate}T16:06:00.000+0000`;
         subgroup.registrationEnd = `${eventStartDate}T16:36:00.000+0000`;
         subgroup.lineUpStart = `${eventStartDate}T16:31:00.000+0000`;
@@ -56,7 +57,6 @@ export const patternCatchUp = (rawEventParams) => {
 
       // группа B
       case 2:
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:34:00.000+0000`;
         subgroup.registrationStart = `${eventStartDate}T16:04:00.000+0000`;
         subgroup.registrationEnd = `${eventStartDate}T16:34:00.000+0000`;
         subgroup.lineUpStart = `${eventStartDate}T16:29:00.000+0000`;
@@ -67,7 +67,6 @@ export const patternCatchUp = (rawEventParams) => {
 
       // группа C
       case 3:
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
         subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
@@ -78,7 +77,6 @@ export const patternCatchUp = (rawEventParams) => {
 
       // группа E
       default:
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
         subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
