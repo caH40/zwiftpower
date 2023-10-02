@@ -16,7 +16,7 @@ function SimpleSelectFunction({ reducer, name, disabled, options, closeEmptyOpti
         {!closeEmptyOption && <option className={styles.option} value=""></option>}
         {options.map((element) => (
           <option className={styles.option} value={element.name} key={element.id}>
-            {element.name}
+            {element.label}
           </option>
         ))}
       </select>

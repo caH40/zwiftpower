@@ -13,7 +13,11 @@ import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/For
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
 import useBackground from '../../hook/useBackground';
 import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
-import { resetParams } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import {
+  resetParams,
+  setPattern,
+} from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -82,6 +86,15 @@ function ZwiftEditEvent() {
       });
     return false;
   };
+
+  const activatePattern = (pattern) => {
+    try {
+      dispatch(setPattern(pattern));
+    } catch (error) {
+      dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
+    }
+  };
+
   return (
     <section className={styles.block}>
       <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
@@ -90,6 +103,9 @@ function ZwiftEditEvent() {
       </div>
       {eventMainParams.worldId ? (
         <>
+          <div className={styles.group}>
+            <FormPattern activatePattern={activatePattern} />
+          </div>
           <div className={styles.group}>
             <FormEditEvent />
           </div>

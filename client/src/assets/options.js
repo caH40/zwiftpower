@@ -1,5 +1,7 @@
 // options for selects
 
+import { seriesType } from './series-type';
+
 /**
  * Сезоны для CatchUp
  */
@@ -21,7 +23,6 @@ export const optionsPeriodsRidersInEvent = [
  * Названия паттернов настроек для Эвентов
  */
 export const optionsEventPattern = [
-  { id: 0, name: 'CatchUp' },
-  { id: 1, name: 'Series' },
-  { id: 2, name: 'Сброс настройки' },
+  ...seriesType,
+  { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
 ];
