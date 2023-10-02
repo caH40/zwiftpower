@@ -18,3 +18,8 @@ export const requiredLabelsForCatchup = [
   { subgroupLabel: 'C', label: 3 },
   { subgroupLabel: 'E', label: 5 },
 ];
+
+/**
+ * необходимые подгруппы в Эвенте Series (Серия)
+ */
+export const requiredLabelsForSeries = [...labelsSubgroups];

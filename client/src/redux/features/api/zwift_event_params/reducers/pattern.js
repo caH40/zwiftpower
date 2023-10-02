@@ -2,6 +2,7 @@ import { rules } from '../../../../../assets/zwift/rule';
 import { tags } from '../../../../../assets/zwift/tags';
 
 import { patternCatchUp } from './pattern-catchup';
+import { patternSeries } from './pattern-series';
 
 export const setPatternReducer = (state, action) => {
   // название паттерна
@@ -12,6 +13,9 @@ export const setPatternReducer = (state, action) => {
   switch (pattern) {
     case 'catchUp':
       eventPrepared = patternCatchUp(state.eventParamsRaw);
+      break;
+    case 'series':
+      eventPrepared = patternSeries(state.eventParamsRaw);
       break;
     case 'Сброс настроек':
       eventPrepared = state.eventParamsRaw;

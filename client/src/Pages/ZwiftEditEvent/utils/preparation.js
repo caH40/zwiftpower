@@ -1,4 +1,9 @@
+import { getAccessExpression } from './accessExpression';
 import { changeTime } from './time-start';
+
+/**
+ * Дополнительные правила для Эвента и подгрупп
+ */
 
 export function prepareData(
   eventMainParams,
@@ -12,8 +17,6 @@ export function prepareData(
 ) {
   const event = { ...eventMainParams };
   const dateNow = `timestamp=${Date.now()}`;
-
-  // дополнительные правила для Эвента и подгрупп
 
   const eventSubgroups = [
     { ...eventSubgroup_0 },
@@ -33,40 +36,38 @@ export function prepareData(
   // изменение тэга времени
   event.tags = tags;
   for (const subGroup of eventSubgroups) {
+    if (subGroup.label === 1) {
+      subGroup.fromPaceValue = 4.0;
+      subGroup.toPaceValue = 4.59;
+    }
+    if (subGroup.label === 2) {
+      subGroup.fromPaceValue = 3.2;
+      subGroup.toPaceValue = 3.99;
+    }
+    if (subGroup.label === 3) {
+      subGroup.fromPaceValue = 1;
+      subGroup.toPaceValue = 3.19;
+    }
+    if (subGroup.label === 4) {
+      subGroup.fromPaceValue = 4.6;
+      subGroup.toPaceValue = 7;
+    }
+    if (subGroup.label === 5) {
+      subGroup.fromPaceValue = 1;
+      subGroup.toPaceValue = 7;
+    }
     subGroup.tags = tags;
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
     subGroup.rulesId = null;
   }
 
-  if (event.categoryEnforcement) {
-    // описание разрешенных групп при определенных категориях райдеров
-
-    // для райдера категория "А" присвоена: powerCurves.category == 0
-    // может подключиться только к группе "А": subgroup.label == 1
-    const subgroupForFirstCat = '(powerCurves.category == 0 && subgroup.label == 1)';
-
-    // может подключиться к группе большей или равной своей категории,
-    // но кроме группы "E" powerCurves.category != 5
-    const subgroupForCatExceptFifth =
-      '(powerCurves.category != 5 && powerCurves.category >= subgroup.label)';
-
-    // для райдера категория "E" присвоена: powerCurves.category == 5
-    // может подключиться только к группе "E": subgroup.label == 5
-    const subgroupForFifthCat = '(powerCurves.category == 5 && subgroup.label == 5)';
-
-    // для райдера категория "E" присвоена: powerCurves.category == 5
-    // может подключиться также к группе "A": subgroup.label == 1
-    const subgroupForFifthCatException = '(powerCurves.category == 5 && subgroup.label == 1)';
-
-    // суммарное правило подключение райдеров к группам
-    event.accessExpression = `${subgroupForFirstCat} || ${subgroupForCatExceptFifth} || ${subgroupForFifthCat} || ${subgroupForFifthCatException}`;
-  } else {
+  // если включен categoryEnforcement, но не задан accessExpression
+  if (event.categoryEnforcement && !event.accessExpression) {
+    event.accessExpression = getAccessExpression();
+  } else if (!event.categoryEnforcement) {
     event.accessExpression = null;
   }
-  // event.microserviceExternalResourceId = null;
-  // event.microserviceEventVisibility = null;
-  // event.microserviceName = null;
 
   return {
     eventTemplateId: event.eventTemplateId,

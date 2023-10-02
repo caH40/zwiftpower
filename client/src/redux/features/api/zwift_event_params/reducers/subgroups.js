@@ -1,18 +1,16 @@
-import { labelsSubgroups, requiredLabelsForCatchup } from '../../../../../assets/subgroups';
+import { labelsSubgroups } from '../../../../../assets/subgroups';
 
 /**
  * Проверка наличия обязательных подгрупп в Эвенте для данного паттерна,
  * или наличие лишних поддгрупп
  */
-export const checkingRequiredSubgroups = (eventParams) => {
+export const checkingRequiredSubgroups = (eventParams, requiredLabels) => {
   // массив с номерами подгрупп в Эвенте
   const labelsInRaw = eventParams.eventSubgroups.map((subgroup) => subgroup.label);
 
   // поиск отсутствующий подгрупп в Эвенте
-  // requiredLabelsForCatchup необходимые подгруппы в текущем Эвенте
-  const absentSubgroups = requiredLabelsForCatchup.filter(
-    (elm) => !labelsInRaw.includes(elm.label)
-  );
+  // requiredLabels необходимые подгруппы в текущем Эвенте
+  const absentSubgroups = requiredLabels.filter((elm) => !labelsInRaw.includes(elm.label));
 
   const lengthAbs = absentSubgroups.length;
   if (lengthAbs) {
@@ -23,7 +21,7 @@ export const checkingRequiredSubgroups = (eventParams) => {
 
   // поиск лишних подгрупп в Эвенте
   const excessSubgroups = labelsInRaw.filter(
-    (elm) => !requiredLabelsForCatchup.map((label) => label.label).includes(elm)
+    (elm) => !requiredLabels.map((label) => label.label).includes(elm)
   );
 
   const lengthExc = excessSubgroups.length;
