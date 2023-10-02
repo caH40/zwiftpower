@@ -16,12 +16,9 @@ export const checkingRequiredSubgroups = (eventParams) => {
 
   const lengthAbs = absentSubgroups.length;
   if (lengthAbs) {
-    const wordEnd = lengthAbs === 1 ? 'а' : 'ы';
-    throw Error(
-      `Отсутствуют обязательные групп${wordEnd}: ${absentSubgroups
-        .map((elm) => elm.subgroupLabel)
-        .join(', ')}`
-    );
+    const message =
+      lengthAbs === 1 ? 'Отсутствует обязательная группа' : 'Отсутствуют обязательные группы';
+    throw Error(`${message}: ${absentSubgroups.map((elm) => elm.subgroupLabel).join(', ')}`);
   }
 
   // поиск лишних подгрупп в Эвенте
@@ -31,9 +28,10 @@ export const checkingRequiredSubgroups = (eventParams) => {
 
   const lengthExc = excessSubgroups.length;
   if (lengthExc) {
-    const wordEnd = lengthExc === 1 ? 'а' : 'ы';
+    const message =
+      lengthExc === 1 ? 'Присутствует лишняя группа' : 'Присутствуют лишние группы';
     throw Error(
-      `Присутствуют лишние групп${wordEnd}: ${excessSubgroups
+      `${message}: ${excessSubgroups
         .map((elm) => labelsSubgroups.find((label) => label.label === elm).subgroupLabel)
         .join(', ')}`
     );
