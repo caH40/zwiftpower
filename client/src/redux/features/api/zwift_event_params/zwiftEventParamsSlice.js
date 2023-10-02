@@ -14,6 +14,8 @@ const initialState = {
   eventSubgroup_4: {},
   checkboxRules: [],
   checkboxTags: [],
+  status: null,
+  error: null,
 };
 
 const zwiftEventParamsSlice = createSlice({

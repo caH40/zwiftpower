@@ -4,7 +4,6 @@ import alertMessageSlice from '../features/alertMessageSlice';
 import authSlice from '../features/authSlice';
 import menuBurgerSlice from '../features/menuBurgerSlice';
 import titleSlice from '../features/titleSlice';
-// import eventParamsSlice from '../features/eventParamsSlice';
 import zwiftEventParamsSlice from '../features/api/zwift_event_params/zwiftEventParamsSlice';
 import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
@@ -32,6 +31,7 @@ import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
 import sortTableSlice from '../features/sortTableSlice';
+import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 
 import { statisticsReducers } from './statistics';
 
@@ -66,6 +66,7 @@ export default configureStore({
     popupInfoDevPost: popupInfoDevPostSlice,
     popupInfoDevPut: popupInfoDevPutSlice,
     sortTable: sortTableSlice,
+    fetchActualSeries: actualSeriesSlice,
     ...statisticsReducers,
   },
 });
