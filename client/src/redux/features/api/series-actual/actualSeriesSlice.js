@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchActualSeries } from './fetchActualSeries';
 
 const initialState = {
-  series: [{ id: 0, value: '', name: '' }],
+  series: [],
   status: null,
   error: null,
 };
@@ -11,7 +11,11 @@ const initialState = {
 const actualSeriesSlice = createSlice({
   name: 'actualSeries',
   initialState,
-  reducers: {},
+  reducers: {
+    resetSeries: (state) => {
+      state.series = [];
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchActualSeries.pending, (state) => {
@@ -41,4 +45,5 @@ const actualSeriesSlice = createSlice({
   },
 });
 
+export const { resetSeries } = actualSeriesSlice.actions;
 export default actualSeriesSlice.reducer;

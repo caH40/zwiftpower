@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import useTitle from '../../hook/useTitle';
 import useBackground from '../../hook/useBackground';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
-import { postEvent } from '../../api/zwift/events';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
 import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import { resetParams } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import { fetchActualSeries } from '../../redux/features/api/series-actual/fetchActualSeries';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { resetSeries } from '../../redux/features/api/series-actual/actualSeriesSlice';
+import { fetchEventPost } from '../../redux/features/api/event-add/fetchEventPost';
 
 import styles from './ZwiftAddEvent.module.css';
 
@@ -26,6 +27,7 @@ function ZwiftAddEvent() {
   useBackground(false);
   const dispatch = useDispatch();
 
+  // запрос параметров Эвента
   useEffect(() => {
     if (eventId.id === 0) {
       return undefined;
@@ -36,13 +38,18 @@ function ZwiftAddEvent() {
     };
   }, [eventId, dispatch]);
 
+  // запрос актуальных серий
   useEffect(() => {
     if (!eventMainParams?.name) {
-      return;
+      return undefined;
     }
     dispatch(fetchActualSeries());
+    return () => {
+      dispatch(resetSeries());
+    };
   }, [eventMainParams, dispatch]);
 
+  // добавление Эвента в БД
   const addEvent = () => {
     const isFilledFields = additionalParams.typeRaceCustom && additionalParams.organizer;
     if (!isFilledFields) {
@@ -55,32 +62,12 @@ function ZwiftAddEvent() {
       );
       return;
     }
-    const eventForSend = { creator: userId, ...eventMainParams, ...additionalParams };
-    postEvent(eventForSend)
-      .then((response) => {
-        setEventId({ id: 0 });
 
-        setAdditionalParams({});
-        dispatch(
-          getAlert({
-            message: response.data.message,
-            type: 'success',
-            isOpened: true,
-          })
-        );
-      })
-      .catch((error) => {
-        const message = error.response
-          ? JSON.stringify(error.response.data.message || error.message)
-          : 'Непредвиденная ошибка';
-        dispatch(
-          getAlert({
-            message,
-            type: 'error',
-            isOpened: true,
-          })
-        );
-      });
+    const eventForSend = { creator: userId, ...eventMainParams, ...additionalParams };
+    dispatch(fetchEventPost(eventForSend));
+
+    setEventId({ id: 0 });
+    setAdditionalParams({});
   };
 
   return (
