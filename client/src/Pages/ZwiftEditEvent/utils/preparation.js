@@ -36,26 +36,6 @@ export function prepareData(
   // изменение тэга времени
   event.tags = tags;
   for (const subGroup of eventSubgroups) {
-    if (subGroup.label === 1) {
-      subGroup.fromPaceValue = 4.0;
-      subGroup.toPaceValue = 4.59;
-    }
-    if (subGroup.label === 2) {
-      subGroup.fromPaceValue = 3.2;
-      subGroup.toPaceValue = 3.99;
-    }
-    if (subGroup.label === 3) {
-      subGroup.fromPaceValue = 1;
-      subGroup.toPaceValue = 3.19;
-    }
-    if (subGroup.label === 4) {
-      subGroup.fromPaceValue = 4.6;
-      subGroup.toPaceValue = 7;
-    }
-    if (subGroup.label === 5) {
-      subGroup.fromPaceValue = 1;
-      subGroup.toPaceValue = 7;
-    }
     subGroup.tags = tags;
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);

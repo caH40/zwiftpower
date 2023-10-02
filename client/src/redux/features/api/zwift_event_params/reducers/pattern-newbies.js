@@ -1,13 +1,13 @@
-import { requiredLabelsForSeries } from '../../../../../assets/subgroups';
+import { requiredLabelsForNewbies } from '../../../../../assets/subgroups';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
 /**
  * Установка паттерна настроек для Эвента Series
  */
-export const patternSeries = (rawEventParams) => {
+export const patternNewbies = (rawEventParams) => {
   // проверка наличия обязательных подгрупп в созданном Эвенте
-  checkingRequiredSubgroups(rawEventParams, requiredLabelsForSeries);
+  checkingRequiredSubgroups(rawEventParams, requiredLabelsForNewbies);
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
@@ -30,7 +30,7 @@ export const patternSeries = (rawEventParams) => {
   }
 
   // изменение времени для mainEvent
-  eventParams.eventStart = `${eventStartDate}T08:00:00.000+0000`;
+  eventParams.eventStart = `${eventStartDate}T16:00:00.000+0000`;
 
   eventParams.eventSubgroups.forEach((subgroup) => {
     subgroup.tags = [];
@@ -46,41 +46,32 @@ export const patternSeries = (rawEventParams) => {
     subgroup.laps = eventSubgroupE.laps;
     subgroup.startLocation = eventSubgroupE.startLocation;
 
-    subgroup.registrationStart = `${eventStartDate}T07:30:00.000+0000`;
-    subgroup.registrationEnd = `${eventStartDate}T08:00:00.000+0000`;
-    subgroup.lineUpStart = `${eventStartDate}T07:55:00.000+0000`;
-    subgroup.lineUpEnd = `${eventStartDate}T08:00:00.000+0000`;
-    subgroup.eventSubgroupStart = `${eventStartDate}T08:00:00.000+0000`;
+    subgroup.registrationStart = `${eventStartDate}T15:30:00.000+0000`;
+    subgroup.registrationEnd = `${eventStartDate}T16:00:00.000+0000`;
+    subgroup.lineUpStart = `${eventStartDate}T15:55:00.000+0000`;
+    subgroup.lineUpEnd = `${eventStartDate}T16:00:00.000+0000`;
+    subgroup.eventSubgroupStart = `${eventStartDate}T16:00:00.000+0000`;
 
     switch (subgroup.label) {
-      // группа A
-      case 1:
-        subgroup.fromPaceValue = 4.0;
-        subgroup.toPaceValue = 4.59;
-        break;
-
-      // группа B
-      case 2:
-        subgroup.fromPaceValue = 3.2;
-        subgroup.toPaceValue = 3.99;
-        break;
-
       // группа C
       case 3:
-        subgroup.fromPaceValue = 1;
+        subgroup.fromPaceValue = 2.5;
         subgroup.toPaceValue = 3.19;
+        subgroup.jerseyHash = 2439396652;
         break;
 
-      // группа C
+      // группа D
       case 4:
-        subgroup.fromPaceValue = 4.6;
-        subgroup.toPaceValue = 7;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 2.49;
+        subgroup.jerseyHash = 2808241362;
         break;
 
       // группа E
       default:
         subgroup.fromPaceValue = 1;
         subgroup.toPaceValue = 7;
+        subgroup.jerseyHash = 2214060235;
     }
   });
 
@@ -89,12 +80,8 @@ export const patternSeries = (rawEventParams) => {
 
 // создание правил categoryEnforcement для категорий райдеров и групп Эвента
 const getAccessExpression = () => {
-  const APlusSeries = 'powerCurves.zFTPwkg >= 4.84 && subgroup.label == 4';
-  const ASeries =
-    'powerCurves.category == 1 && powerCurves.zFTPwkg < 4.84 && (subgroup.label == 1 || subgroup.label == 4)';
-  const BSeries = 'powerCurves.category == 2 && (subgroup.label < 3  || subgroup.label == 4)';
-  const CSeries = 'powerCurves.category == 3 && (subgroup.label < 4  || subgroup.label == 4)';
-  const DSeries = 'powerCurves.category == 4 && subgroup.label < 5';
+  const CSeries = 'powerCurves.category == 3 && subgroup.label == 3';
+  const DSeries = 'powerCurves.category == 4 && (subgroup.label == 4 || subgroup.label == 3)';
   const ISeries = 'powerCurves.category == 5';
-  return `${APlusSeries} || ${ASeries} || ${BSeries} || ${CSeries} || ${DSeries} || ${ISeries}`;
+  return `${CSeries} || ${DSeries} || ${ISeries}`;
 };
