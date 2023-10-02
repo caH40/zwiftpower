@@ -16,6 +16,7 @@ export const patternSeries = (rawEventParams) => {
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
+  eventParams.microserviceEventVisibility = 'DEFINED_BY_RESOURCE_ID';
   eventParams.tags = [];
   const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
 

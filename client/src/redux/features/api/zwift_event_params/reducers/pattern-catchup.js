@@ -17,6 +17,7 @@ export const patternCatchUp = (rawEventParams) => {
   eventParams.eventType = 'RACE';
   eventParams.type = 'EVENT_TYPE_RACE';
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
+  eventParams.microserviceEventVisibility = 'SHAREABLE';
   eventParams.tags = [];
   const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
 

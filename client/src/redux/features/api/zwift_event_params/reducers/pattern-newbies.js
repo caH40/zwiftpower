@@ -16,6 +16,7 @@ export const patternNewbies = (rawEventParams) => {
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
+  eventParams.microserviceEventVisibility = 'SHAREABLE';
   eventParams.tags = [];
   const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
 
