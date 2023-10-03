@@ -4,8 +4,7 @@ import { changeTime } from './time-start';
 /**
  * Дополнительные правила для Эвента и подгрупп
  */
-
-export function prepareData(
+export function prepareData({
   eventMainParams,
   eventSubgroup_0,
   eventSubgroup_1,
@@ -13,8 +12,8 @@ export function prepareData(
   eventSubgroup_3,
   eventSubgroup_4,
   checkboxRules,
-  checkboxTags
-) {
+  checkboxTags,
+}) {
   const event = { ...eventMainParams };
   const dateNow = `timestamp=${Date.now()}`;
 

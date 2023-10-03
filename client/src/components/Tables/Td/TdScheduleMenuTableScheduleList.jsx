@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import IconEdit from '../../icons/IconEdit';
@@ -7,6 +6,10 @@ import { showScheduleMenu } from '../../../redux/features/popupTableScheduleSlic
 
 import styles from './Td.module.css';
 
+/**
+ * TD элемент с
+ * popup меню для взаимодействия с выбранным Эвентом на странице Расписания Эвентов
+ */
 function TdScheduleMenuTableScheduleList({ event, updateEvent, removeEvent }) {
   const dispatch = useDispatch();
   return (

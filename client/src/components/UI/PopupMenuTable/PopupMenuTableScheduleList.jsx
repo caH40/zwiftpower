@@ -7,6 +7,9 @@ import IconDelete from '../../icons/IconDelete';
 
 import styles from './PopupMenuTable.module.css';
 
+/**
+ * popup меню для взаимодействия с выбранным Эвентом на странице Расписания Эвентов
+ */
 function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
   const { menus } = useSelector((state) => state.popupTableSchedule);
   const dispatch = useDispatch();

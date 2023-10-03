@@ -1,4 +1,4 @@
-// пост запрос (добавление информации о релизе)
+// пут запрос (обновление информации о релизе)
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -18,6 +18,7 @@ import {
   setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
+import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -26,8 +27,12 @@ function ZwiftEditEvent() {
   const { id } = useParams();
   const [eventId, setEventId] = useState({ id: id || 0 });
 
+  useTitle('Zwift - Редактирование заезда');
+  useBackground(false);
+  const eventParams = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const goBack = () => navigate(-1);
 
   useEffect(() => {
     if (eventId.id === 0) {
@@ -40,38 +45,14 @@ function ZwiftEditEvent() {
     };
   }, [eventId, dispatch]);
 
-  const {
-    eventMainParams,
-    eventSubgroup_0,
-    eventSubgroup_1,
-    eventSubgroup_2,
-    eventSubgroup_3,
-    eventSubgroup_4,
-    checkboxRules,
-    checkboxTags,
-  } = useSelector((state) => state.eventParams);
-
-  useTitle('Zwift - Редактирование заезда');
-  useBackground(false);
-
-  const goBack = () => navigate(-1);
-
   const sendNewEventParams = () => {
-    const eventForPost = prepareData(
-      eventMainParams,
-      eventSubgroup_0,
-      eventSubgroup_1,
-      eventSubgroup_2,
-      eventSubgroup_3,
-      eventSubgroup_4,
-      checkboxRules,
-      checkboxTags
-    );
+    const eventForPost = prepareData(eventParams);
 
     changeZwiftEvents(eventForPost)
       .then((data) => {
         dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
         dispatch(resetParams());
+        // dispatch(fetchChangeEvent({ operation: 'put', eventId: eventId.id }));
       })
       .catch((error) => {
         dispatch(
@@ -101,7 +82,7 @@ function ZwiftEditEvent() {
       <div className={styles.group}>
         <FormRequest name={'Id изменяемого Event'} setState={setEventId} />
       </div>
-      {eventMainParams.worldId ? (
+      {eventParams?.eventMainParams.worldId ? (
         <>
           <div className={styles.group}>
             <FormPattern activatePattern={activatePattern} />
@@ -113,7 +94,7 @@ function ZwiftEditEvent() {
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
-      <JSONBlock json={eventMainParams} />
+      <JSONBlock json={eventParams?.eventMainParams} />
     </section>
   );
 }
