@@ -46,14 +46,17 @@ const eventsSlice = createSlice({
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetEventsInfo: (state) => {
+      state.eventsPreview = [];
+      state.eventsSchedule = [];
+      state.eventsResults = [];
+      state.quantityPages = 0;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchEvents.pending, (state) => {
       state.error = null;
-      state.eventsPreview = [];
-      state.eventsSchedule = [];
-      // state.eventsResults = [];
-      // state.quantityPages = 0;
       state.status = 'loading';
     });
     builder.addCase(fetchEvents.fulfilled, (state, action) => {
@@ -77,6 +80,6 @@ const eventsSlice = createSlice({
   },
 });
 
-export const { resetEventData } = eventsSlice.actions;
+export const { resetEventData, resetEventsInfo } = eventsSlice.actions;
 
 export default eventsSlice.reducer;

@@ -6,7 +6,7 @@ import useBackground from '../../hook/useBackground';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
-import { fetchEvents } from '../../redux/features/api/eventsSlice';
+import { fetchEvents, resetEventsInfo } from '../../redux/features/api/eventsSlice';
 import { fetchUpdateResult } from '../../redux/features/api/resultsUpdateSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
@@ -32,6 +32,8 @@ function ResultsList() {
   useEffect(() => {
     localStorage.setItem('recordsOnPageResults', docsOnPage);
     dispatch(fetchEvents({ started: true, page, docsOnPage, search }));
+
+    return () => dispatch(resetEventsInfo());
   }, [dispatch, trigger, page, docsOnPage, search]);
 
   // создание массива с меню модерации эвентов в таблице

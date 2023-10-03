@@ -5,6 +5,7 @@ import { putRequest } from './request-put.js';
 // types
 import { PutEvent } from '../../types/http.interface.js';
 import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
+import { putEventService } from '../race/events-put.js';
 
 // запрос данных Эвента с сервера Zwift
 export async function getEventZwiftService(eventId: number, userId?: string) {
@@ -19,10 +20,19 @@ export async function getEventZwiftService(eventId: number, userId?: string) {
 
   return eventData;
 }
-// обновление данных заезда на сервере Zwift
+
+/**
+ * Сервис внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
+ */
 export async function putEventZwiftService(event: PutEvent, userId?: string) {
   const urlEventData = `events/${event.eventData.id}`;
   const eventData = await putRequest(urlEventData, event);
+
+  // после внесения изменений на сервере Звифт => запрос новых данны и сохранения в БД
+  // задержка нужная, что бы на сервере Звифта данные Эвента успели обновиться
+  const eventId = event.eventData.id;
+  setTimeout(async () => await putEventService(eventId, userId), 3000);
+
   // логирование действия
   if (userId) {
     const description = 'updateZwiftEventData';

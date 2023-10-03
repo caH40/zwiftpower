@@ -20,6 +20,10 @@ export async function getEvent(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ * Контроллер для внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
+ */
 export async function putEvent(req: Request, res: Response) {
   try {
     const { userId } = req.params;

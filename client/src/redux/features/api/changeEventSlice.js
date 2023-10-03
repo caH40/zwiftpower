@@ -1,5 +1,8 @@
 // при operation: 'delete' - удаления Эвента и соответствующих результатов, зарегистрированных райдеров из БД
-// при operation: 'put' - обновление данных Эвента и данных зарегистрированных райдеров
+/**
+ * 'put'
+ * Обновление данных Эвента и зарегистрированных райдеров в БД после запроса из API Zwift
+ */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';
