@@ -12,8 +12,8 @@ function TrBlock({ result, index, type }) {
           <TdRank value={index + 1} />{' '}
         </td>
         <td className={styles.td__nowrap}>
-          <strong>{result[type]}</strong>
-          <small> ватт</small>
+          <strong>{type === 'watts' ? result[type] : result[type]?.toFixed(2)}</strong>
+          <small>{type === 'watts' ? '  ватт' : ' вт/кг'}</small>
         </td>
         <TdRider profileId={result.zwiftId} profile={result.profileData} />
         <td className={styles.td__name}>{result.eventName}</td>
