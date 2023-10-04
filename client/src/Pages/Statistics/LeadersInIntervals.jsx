@@ -33,7 +33,7 @@ function LeadersInIntervals() {
       ) : null}
       {maxWatts?.length ? (
         <section>
-          <h2>Лидеры по удельным ваттам</h2>
+          <h2>Лидеры по удельной мощности</h2>
           <article className={styles.block__table}>
             <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
           </article>
