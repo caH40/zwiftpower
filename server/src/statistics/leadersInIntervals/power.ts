@@ -6,23 +6,38 @@ import { RiderMaxWatt } from '../../types/types.interface.js';
  * Поиск райдера с максимальным значением мощности на интервале
  */
 export const getRiderWithMaxPowerInInterval = (
-  rider: RiderMaxWatt,
-  powerCurve: PowerCurveSchema,
+  powerCurveDB: PowerCurveSchema[],
   interval: number
 ) => {
-  const pointWatts = powerCurve.pointsWatts.find((elm) => elm.duration === interval);
+  const powerCurveDBCurrentInterval = powerCurveDB.map((elm) => ({
+    zwiftId: elm.zwiftId,
+    pointsWatts: elm.pointsWatts.find((power) => power.duration === interval),
+  }));
 
-  if (!pointWatts) {
-    return;
+  powerCurveDBCurrentInterval.sort(
+    (a, b) => (b.pointsWatts?.value || 0) - (a.pointsWatts?.value || 0)
+  );
+
+  // количество мест (лучших результатов) для поиска
+  const places = 3;
+
+  const wattsInInterval = [];
+  for (let i = 0; i < places; i++) {
+    const riderMaxWatt: RiderMaxWatt = {
+      id: 0,
+      zwiftId: 0,
+      interval: 0,
+      watts: 0,
+      eventStart: 0,
+      eventName: '',
+    };
+
+    riderMaxWatt.zwiftId = powerCurveDBCurrentInterval[i].zwiftId;
+    riderMaxWatt.interval = interval;
+    riderMaxWatt.watts = powerCurveDBCurrentInterval[i].pointsWatts?.value || 0;
+    riderMaxWatt.eventStart = powerCurveDBCurrentInterval[i].pointsWatts?.date || 0;
+    riderMaxWatt.eventName = powerCurveDBCurrentInterval[i].pointsWatts?.name || '';
+    wattsInInterval.push(riderMaxWatt);
   }
-
-  if (pointWatts.value > rider.watts) {
-    rider.interval = interval;
-    rider.zwiftId = powerCurve.zwiftId;
-    rider.watts = pointWatts.value;
-    rider.eventStart = pointWatts.date;
-    rider.eventName = pointWatts.name;
-  }
-
-  return rider;
+  return wattsInInterval;
 };

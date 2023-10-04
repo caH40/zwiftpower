@@ -7,6 +7,9 @@ import { RiderMaxWatt, RiderMaxWattsPerKg } from '../../types/types.interface.js
 import { getRiderWithMaxWattsPerKgInInterval } from './powerPerKg.js';
 import { addProfile } from './profile.js';
 
+// интервалы для которых ищутся максимальные данные ваттов и удельных ваттов
+const intervals = [15, 60, 300, 1200];
+
 export const getLeadersInIntervalsService = async () => {
   // получение powerCurve всех райдеров
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find().lean();
@@ -15,37 +18,11 @@ export const getLeadersInIntervalsService = async () => {
   const maxWatts: RiderMaxWatt[] = [];
   const maxWattsPerKg: RiderMaxWattsPerKg[] = [];
 
-  // интервалы для которых ищутся максимальные данные ваттов и удельных ваттов
-  const intervals = [15, 60, 300, 1200];
-
-  // итерация по интервалам для которых ищутся максимальные значения
   for (const interval of intervals) {
-    const riderMaxWatt: RiderMaxWatt = {
-      id: 0,
-      zwiftId: 0,
-      interval: 0,
-      watts: 0,
-      eventStart: 0,
-      eventName: '',
-    };
-
-    const riderMaxWattsPerKgt: RiderMaxWattsPerKg = {
-      id: 0,
-      zwiftId: 0,
-      interval: 0,
-      wattsPerKg: 0,
-      eventStart: 0,
-      eventName: '',
-    };
-
-    // powerCurve кривая мощности райдера
-    for (const powerCurve of powerCurveDB) {
-      // происходит мутация riderMaxWatt в пределах одного цикла interval
-      getRiderWithMaxPowerInInterval(riderMaxWatt, powerCurve, interval);
-      getRiderWithMaxWattsPerKgInInterval(riderMaxWattsPerKgt, powerCurve, interval);
-    }
-    maxWatts.push(riderMaxWatt);
-    maxWattsPerKg.push(riderMaxWattsPerKgt);
+    const riderMaxWatt = getRiderWithMaxPowerInInterval(powerCurveDB, interval);
+    const riderMaxWattsPerKg = getRiderWithMaxWattsPerKgInInterval(powerCurveDB, interval);
+    maxWatts.push(...riderMaxWatt);
+    maxWattsPerKg.push(...riderMaxWattsPerKg);
   }
 
   // добавление данных профиля
