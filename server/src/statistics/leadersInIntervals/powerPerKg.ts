@@ -20,8 +20,8 @@ export const getRiderWithMaxWattsPerKgInInterval = (
     rider.interval = interval;
     rider.zwiftId = powerCurve.zwiftId;
     rider.wattsPerKg = pointsWattsPerKg.value;
-    rider.date = pointsWattsPerKg.date;
-    rider.name = pointsWattsPerKg.name;
+    rider.eventStart = pointsWattsPerKg.date;
+    rider.eventName = pointsWattsPerKg.name;
   }
 
   return rider;

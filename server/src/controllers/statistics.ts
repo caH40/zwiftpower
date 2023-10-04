@@ -24,7 +24,7 @@ export const getRidersInEvents = async (req: Request, res: Response) => {
 };
 
 /**
- * Получение лучших результатов райдеров на интервалах в Эвентах зха 90 дней
+ * Получение лучших результатов райдеров на интервалах в Эвентах за 90 дней
  */
 export const getLeadersInIntervals = async (req: Request, res: Response) => {
   try {

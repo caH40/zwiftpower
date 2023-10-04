@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IconParamsAscent from '../../icons/Params/IconParamsAscent';
 import IconParamsDistance from '../../icons/Params/IconParamsDistance';
 import IconParamsDuration from '../../icons/Params/IconParamsDuration';
@@ -109,7 +107,13 @@ const Th = ({ columnName }) => {
       case 'Средняя мощность за гонку':
         return <IconPower tooltip={name} />;
 
+      case 'Средняя мощность за интервал':
+        return <IconPower tooltip={name} />;
+
       case 'Удельная средняя мощность за гонку':
+        return <IconPowerKg tooltip={name} />;
+
+      case 'Удельная средняя мощность за интервал':
         return <IconPowerKg tooltip={name} />;
 
       case 'Описание':

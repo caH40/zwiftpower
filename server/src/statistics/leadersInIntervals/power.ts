@@ -20,8 +20,8 @@ export const getRiderWithMaxPowerInInterval = (
     rider.interval = interval;
     rider.zwiftId = powerCurve.zwiftId;
     rider.watts = pointWatts.value;
-    rider.date = pointWatts.date;
-    rider.name = pointWatts.name;
+    rider.eventStart = pointWatts.date;
+    rider.eventName = pointWatts.name;
   }
 
   return rider;

@@ -320,12 +320,13 @@ export interface GetRidersInEventsServiceArg {
  * райдер (zwiftId) с максимальными ваттами (watts) на интервале (interval)
  */
 export interface RiderMaxWatt {
+  id: number;
   zwiftId: number;
   interval: number;
   watts: number;
-  date: number;
-  name: string;
-  profile?: {
+  eventStart: number;
+  eventName: string;
+  profileData?: {
     firstName: string;
     gender: string;
     heightInCentimeters: number;

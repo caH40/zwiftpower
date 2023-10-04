@@ -242,6 +242,12 @@ tbody .current {
   gap: 0 3px;
   align-items: center;
 }
+.td__interval {
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.1rem;
+  background-color: #dadada;
+}
 @media screen and (max-width: 992px) {
   .big {
     font-size: 1em;

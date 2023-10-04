@@ -35,18 +35,21 @@ export const addProfile = async (
     { profileId: true, profileData: true, _id: false }
   ).lean();
 
+  let index = 0;
   // добавление данный райдера в объект максимальной мощности
   for (const interval of maxWatts) {
-    interval.profile = ridersDB.find(
+    interval.profileData = ridersDB.find(
       (rider) => rider.profileId === interval.zwiftId
     )?.profileData;
+    interval.id = index++;
   }
 
   // добавление данный райдера в объект максимальной удельной мощности
   for (const interval of maxWattsPerKg) {
-    interval.profile = ridersDB.find(
+    interval.profileData = ridersDB.find(
       (rider) => rider.profileId === interval.zwiftId
     )?.profileData;
+    interval.id = index++;
   }
 
   return { maxWattsWithProfile: [...maxWatts], maxWattsPerKgWithProfile: [...maxWattsPerKg] };
