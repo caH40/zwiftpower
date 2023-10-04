@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
-import { getRidersInEventsService } from '../statistics/ridersInEvents.js';
 import { errorHandler } from '../errors/error.js';
+import { getRidersInEventsService } from '../statistics/ridersInEvents.js';
+import { getLeadersInIntervalsService } from '../statistics/leadersInIntervals/leadersInIntervals.js';
 
 export const getRidersInEvents = async (req: Request, res: Response) => {
   try {
@@ -18,6 +19,23 @@ export const getRidersInEvents = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     } else {
       res.status(400).json('Непредвиденная ошибка в getRidersInEvents');
+    }
+  }
+};
+
+/**
+ * Получение лучших результатов райдеров на интервалах в Эвентах зха 90 дней
+ */
+export const getLeadersInIntervals = async (req: Request, res: Response) => {
+  try {
+    const leadersInIntervals = await getLeadersInIntervalsService();
+    res.status(200).json(leadersInIntervals);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json('Непредвиденная ошибка в getLeadersInIntervals');
     }
   }
 };
