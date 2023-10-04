@@ -7,6 +7,8 @@ import { fetchLeadersInIntervals } from '../../redux/features/api/leadersInInter
 import { resetLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/leadersInIntervalsSlice';
 import TableLeadersInIntervals from '../../components/Tables/TableLeadersInIntervals/TableLeadersInIntervals';
 
+import styles from './Statistics.module.css';
+
 function LeadersInIntervals() {
   useTitle('Рейтинг райдеров по мощности');
   useBackground(false);
@@ -22,16 +24,20 @@ function LeadersInIntervals() {
   return (
     <div>
       {maxWatts?.length ? (
-        <>
+        <section>
           <h2>Лидеры по абсолютным ваттам</h2>
-          <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
-        </>
+          <article className={styles.block__table}>
+            <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
+          </article>
+        </section>
       ) : null}
       {maxWatts?.length ? (
-        <>
+        <section>
           <h2>Лидеры по удельным ваттам</h2>
-          <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
-        </>
+          <article className={styles.block__table}>
+            <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
+          </article>
+        </section>
       ) : null}
     </div>
   );

@@ -19,7 +19,7 @@ export function StatisticsRoute() {
         }
       >
         <Route
-          index
+          path="main"
           element={
             <MySuspense>
               <RidersInEvents />
