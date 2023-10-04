@@ -52,4 +52,16 @@ export const urlsStatic = `
 <priority>0.1</priority>
 <changefreq>always</changefreq>
 </url>
+
+<url>
+<loc>https://zwiftpower.ru/race/statistics/leaders</loc>
+<priority>0.1</priority>
+<changefreq>always</changefreq>
+</url>
+
+<url>
+<loc>https://zwiftpower.ru/race/statistics/main</loc>
+<priority>0.1</priority>
+<changefreq>always</changefreq>
+</url>
 `;
