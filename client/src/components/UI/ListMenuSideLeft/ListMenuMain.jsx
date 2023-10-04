@@ -1,7 +1,6 @@
-import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-import IconCup from '../../icons/IconCup';
+import IconDiagram from '../../icons/IconDiagram';
 import IconWorld from '../../icons/IconWorld';
 import IconResults from '../../icons/IconResults';
 import IconSchedule from '../../icons/IconSchedule';
@@ -71,7 +70,7 @@ function ListMenuMain({ state }) {
       <li>
         <NavLink to="/race/statistics/main" className={activeLinkStatistics}>
           <div className={styles.link__box}>
-            <IconCup isActive={isActivePageStatistics} />
+            <IconDiagram isActive={isActivePageStatistics} />
             <span className={`${styles.link__name} ${styles[state]}`}>Статистика</span>
           </div>
         </NavLink>
