@@ -315,3 +315,30 @@ export interface StatisticsRidersInEvent {
 export interface GetRidersInEventsServiceArg {
   period: number; // количество дней для запроса данных от текущей даты
 }
+
+/**
+ * райдер (zwiftId) с максимальными ваттами (watts) на интервале (interval)
+ */
+export interface RiderMaxWatt {
+  zwiftId: number;
+  interval: number;
+  watts: number;
+  date: number;
+  name: string;
+  profile?: {
+    firstName: string;
+    gender: string;
+    heightInCentimeters: number;
+    imageSrc: string;
+    lastName: string;
+    playerType: string;
+    weightInGrams: number;
+  };
+}
+
+/**
+ * райдер (zwiftId) с максимальными удельными ваттами (watts) на интервале (interval)
+ */
+export interface RiderMaxWattsPerKg extends Omit<RiderMaxWatt, 'watts'> {
+  wattsPerKg: number;
+}
