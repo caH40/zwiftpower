@@ -3,6 +3,7 @@ import { lazy } from 'react';
 
 const Statistics = lazy(() => import('../Pages/Statistics/Statistics'));
 const RidersInEvents = lazy(() => import('../Pages/Statistics/RidersInEvents'));
+const LeadersInIntervals = lazy(() => import('../Pages/Statistics/LeadersInIntervals'));
 
 import MySuspense from '../HOC/Se';
 
@@ -22,6 +23,15 @@ export function StatisticsRoute() {
           element={
             <MySuspense>
               <RidersInEvents />
+            </MySuspense>
+          }
+        />
+
+        <Route
+          path="leaders"
+          element={
+            <MySuspense>
+              <LeadersInIntervals />
             </MySuspense>
           }
         />

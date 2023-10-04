@@ -21,19 +21,21 @@ export const getLeadersInIntervalsService = async () => {
   // итерация по интервалам для которых ищутся максимальные значения
   for (const interval of intervals) {
     const riderMaxWatt: RiderMaxWatt = {
+      id: 0,
       zwiftId: 0,
       interval: 0,
       watts: 0,
-      date: 0,
-      name: '',
+      eventStart: 0,
+      eventName: '',
     };
 
     const riderMaxWattsPerKgt: RiderMaxWattsPerKg = {
+      id: 0,
       zwiftId: 0,
       interval: 0,
       wattsPerKg: 0,
-      date: 0,
-      name: '',
+      eventStart: 0,
+      eventName: '',
     };
 
     // powerCurve кривая мощности райдера
