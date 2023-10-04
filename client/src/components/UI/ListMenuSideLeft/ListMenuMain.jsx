@@ -60,7 +60,7 @@ function ListMenuMain({ state }) {
       </li>
 
       <li>
-        <NavLink to="/race/statistics" className={activeLink}>
+        <NavLink to="/race/statistics/main" className={activeLink}>
           {({ isActive }) => (
             <div className={styles.link__box}>
               <IconCup isActive={isActive} />

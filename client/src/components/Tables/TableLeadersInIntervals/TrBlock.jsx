@@ -1,13 +1,15 @@
 import TdRider from '../Td/TdRider';
 import { getTimerLocal } from '../../../utils/date-local';
 
+import styles from '../Table.module.css';
+
 function TrBlock({ result, index, type }) {
   return (
     <tr>
       <td>{index + 1}</td>
-      <td>{result[type]} ватт</td>
+      <td className={styles.td__nowrap}>{result[type]} ватт</td>
       <TdRider profileId={result.zwiftId} profile={result.profileData} />
-      <td>{result.eventName}</td>
+      <td className={styles.td__nowrap}>{result.eventName}</td>
       <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
     </tr>
   );
