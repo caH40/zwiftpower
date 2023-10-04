@@ -6,6 +6,7 @@ import styles from '../Table.module.css';
 import Thead from './Thead';
 import TrBlock from './TrBlock';
 
+// отображаемые интервалы, соответствуют данным, приходящим с сервера
 const intervals = [15, 60, 300, 1200];
 
 function TableLeadersInIntervals({ leadersInIntervals, type }) {
