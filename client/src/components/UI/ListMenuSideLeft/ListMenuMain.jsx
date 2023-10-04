@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import IconCup from '../../icons/IconCup';
 import IconWorld from '../../icons/IconWorld';
@@ -11,8 +11,17 @@ import IconHome from '../../icons/IconHome';
 import styles from './ListMenu.module.css';
 
 function ListMenuMain({ state }) {
+  const { pathname } = useLocation();
+
   const activeLink = ({ isActive }) =>
     isActive ? `${styles.link} ${styles.active}` : styles.link;
+
+  // отслеживания вложенных страниц Статистики
+  const isActivePageStatistics = pathname.includes('race/statistics');
+  const activeLinkStatistics = isActivePageStatistics
+    ? `${styles.link} ${styles.active}`
+    : styles.link;
+
   return (
     <ul className={styles.list}>
       <li>
@@ -60,13 +69,11 @@ function ListMenuMain({ state }) {
       </li>
 
       <li>
-        <NavLink to="/race/statistics/main" className={activeLink}>
-          {({ isActive }) => (
-            <div className={styles.link__box}>
-              <IconCup isActive={isActive} />
-              <span className={`${styles.link__name} ${styles[state]}`}>Статистика</span>
-            </div>
-          )}
+        <NavLink to="/race/statistics/main" className={activeLinkStatistics}>
+          <div className={styles.link__box}>
+            <IconCup isActive={isActivePageStatistics} />
+            <span className={`${styles.link__name} ${styles[state]}`}>Статистика</span>
+          </div>
         </NavLink>
       </li>
       <li>
