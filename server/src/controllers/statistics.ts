@@ -28,7 +28,10 @@ export const getRidersInEvents = async (req: Request, res: Response) => {
  */
 export const getLeadersInIntervals = async (req: Request, res: Response) => {
   try {
-    const leadersInIntervals = await getLeadersInIntervalsService();
+    const { male } = req.params;
+    const isMale = male === 'false' ? false : true;
+
+    const leadersInIntervals = await getLeadersInIntervalsService(isMale);
     res.status(200).json(leadersInIntervals);
   } catch (error) {
     errorHandler(error);
