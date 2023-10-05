@@ -13,7 +13,7 @@ export const fetchLeadersInIntervals = createAsyncThunk(
   async function (_, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/statistics/leaders-intervals`,
+        url: `${serverExpress}/api/statistics/leaders-intervals/true`,
         method: 'get',
       });
 
