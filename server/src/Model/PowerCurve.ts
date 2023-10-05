@@ -5,6 +5,7 @@ import { PowerCurveSchema } from '../types/model.interface.js';
 // лучшие показатели мощности и удельной мощности на последние 90 дней
 const powerCurveSchema = new Schema<PowerCurveSchema>({
   zwiftId: { type: Number, required: true, unique: true },
+  isMale: { type: Boolean, default: true },
   date: { type: Number, default: null },
   pointsWatts: [
     {

@@ -50,7 +50,7 @@ export async function putSignedRidersService(eventId: number) {
           subgroupLabel: eventSubgroup.subgroupLabel,
         });
         // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
-        await PowerCurve.create({ zwiftId: rider.id }).catch((error) => {
+        await PowerCurve.create({ zwiftId: rider.id, isMale: rider.male }).catch((error) => {
           if (error.code === 11000) return true;
           errorHandler(error);
         });

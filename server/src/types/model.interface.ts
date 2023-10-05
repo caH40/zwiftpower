@@ -44,6 +44,7 @@ export interface PasswordResetSchema {
 //
 export interface PowerCurveSchema {
   zwiftId: number;
+  isMale: boolean;
   date: number;
   pointsWatts: {
     duration: number;
