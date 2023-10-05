@@ -49,16 +49,19 @@ function Footer() {
                 <a className={styles.link} href={`${server}/race/series`}>
                   Серии заездов
                 </a>
-                <a className={styles.link} href={`${server}/race/statistics`}>
+                <a className={styles.link} href={`${server}/race/statistics/main`}>
                   Статистика
                 </a>
-                <a className={styles.link} href={`${server}/faq`}>
-                  Часто задаваемые вопросы
+                <a className={styles.link} href={`${server}/race/statistics/leaders`}>
+                  Лидеры мощности
                 </a>
               </div>
               <div className={styles.column}>
                 <a className={styles.link} href={`${server}/race/series/catchup`}>
                   Догонялки
+                </a>
+                <a className={styles.link} href={`${server}/faq`}>
+                  Часто задаваемые вопросы
                 </a>
               </div>
             </div>
