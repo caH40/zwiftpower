@@ -3,22 +3,23 @@ import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setIntervalsForLeaders } from '../../../../redux/features/filterIntervalsForLeaderSlice';
-import { getIntervalName } from '../../../../utils/intervals';
+import { intervalsForLeader } from '../../../../assets/filters';
 
 import styles from './FilterIntervalsForLeader.module.css';
 
-function FilterIntervalsForLeader({ intervals }) {
+/**
+ * Выбор интервала на котором замеряются значения мощности
+ */
+function FilterIntervalsForLeader() {
   const intervalState = useSelector((state) => state.filterIntervalsForLeader.value);
 
-  const buttonsInterval = intervals.map((interval) => getIntervalName(interval));
-
-  const quantityButtonsInterval = buttonsInterval.length;
+  const quantityButtonsInterval = intervalsForLeader.length;
   return (
     <nav className={styles.box}>
-      {buttonsInterval.map((intervalName, index) => {
+      {intervalsForLeader.map((intervalName, index) => {
         return (
           <ButtonForFilter
-            key={intervalName}
+            key={intervalName.name}
             position={cn({
               left: index === 0,
               center:
@@ -27,10 +28,10 @@ function FilterIntervalsForLeader({ intervals }) {
                 index + 1 !== quantityButtonsInterval,
               right: index !== 0 && index + 1 === quantityButtonsInterval,
             })}
-            active={intervalState.name === intervalName}
+            active={intervalState.name === intervalName.name}
             reducer={setIntervalsForLeaders}
           >
-            {intervalName}
+            {intervalName.name}
           </ButtonForFilter>
         );
       })}
