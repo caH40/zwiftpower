@@ -6,6 +6,7 @@ import {
   getRidersInEventsPrepared,
   resetRidersInEvents,
 } from '../../redux/features/api/statistics/ridersInEventsSlice';
+import useTitle from '../../hook/useTitle';
 import ChartRidersInEvents from '../../components/Charts/RidersInEvents/ChartRidersInEvents';
 import { millisecondsYear } from '../../assets/dates';
 import ChartTypesInsEvents from '../../components/Charts/TypesInsEvents/ChartTypesInsEvents';
@@ -14,6 +15,7 @@ import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarR
 import styles from './RidersInEvents.module.css';
 
 function RidersInEvents() {
+  useTitle('Статистика');
   const [form, setForm] = useState({ period: 'Год' });
   const { status: fetchStatus } = useSelector((state) => state.ridersInEventsFetch);
 
