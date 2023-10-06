@@ -11,9 +11,6 @@ import FilterIntervalsForLeader from '../../components/UI/Filters/FilterInterval
 
 import styles from './Statistics.module.css';
 
-// отображаемые интервалы, соответствуют данным, приходящим с сервера
-const intervals = [15, 60, 300, 1200];
-
 function LeadersInIntervals() {
   useTitle('Рейтинг райдеров по мощности');
 
@@ -34,17 +31,13 @@ function LeadersInIntervals() {
     <div>
       <div className={styles.navigation}>
         <NavBarLeadersGender addCls={'mb15'} />
-        <FilterIntervalsForLeader intervals={intervals} />
+        <FilterIntervalsForLeader />
       </div>
       {maxWatts?.length ? (
         <section>
           <h2>Лидеры по абсолютным ваттам за 90 дней </h2>
           <article className={styles.block__table}>
-            <TableLeadersInIntervals
-              leadersInIntervals={maxWatts}
-              intervals={intervals}
-              type={'watts'}
-            />
+            <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
           </article>
         </section>
       ) : null}
@@ -52,11 +45,7 @@ function LeadersInIntervals() {
         <section>
           <h2>Лидеры по удельной мощности за 90 дней</h2>
           <article className={styles.block__table}>
-            <TableLeadersInIntervals
-              leadersInIntervals={maxWattsPerKg}
-              intervals={intervals}
-              type={'wattsPerKg'}
-            />
+            <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
           </article>
         </section>
       ) : null}
