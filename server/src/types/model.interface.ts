@@ -13,6 +13,7 @@ export interface FitFileSchema {
   dateLastedActivity: number;
   dateUpdate: number;
   activities: {
+    isVirtualPower: boolean;
     name: string;
     date: number;
     powerInWatts: string;
@@ -47,12 +48,14 @@ export interface PowerCurveSchema {
   isMale: boolean;
   date: number;
   pointsWatts: {
+    isVirtualPower: boolean;
     duration: number;
     value: number;
     date: number;
     name: string;
   }[];
   pointsWattsPerKg: {
+    isVirtualPower: boolean;
     duration: number;
     value: number;
     date: number;

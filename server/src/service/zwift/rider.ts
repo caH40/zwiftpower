@@ -10,7 +10,7 @@ export async function getZwiftRiderService(zwiftId: string): Promise<ProfileZwif
   }
 
   const urlRiderData = `profiles/${zwiftId}`;
-  const riderData: ProfileZwiftAPI = await getRequest(urlRiderData, false);
+  const riderData: ProfileZwiftAPI = await getRequest(urlRiderData);
 
   return riderData;
 }

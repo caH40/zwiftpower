@@ -9,6 +9,7 @@ const powerCurveSchema = new Schema<PowerCurveSchema>({
   date: { type: Number, default: null },
   pointsWatts: [
     {
+      isVirtualPower: { type: Boolean, default: false },
       duration: { type: Number, default: null },
       value: { type: Number, default: null },
       date: { type: Number, default: null },
@@ -18,6 +19,7 @@ const powerCurveSchema = new Schema<PowerCurveSchema>({
   ],
   pointsWattsPerKg: [
     {
+      isVirtualPower: { type: Boolean, default: false },
       duration: { type: Number, default: null },
       value: { type: Number, default: null },
       date: { type: Number, default: null },
