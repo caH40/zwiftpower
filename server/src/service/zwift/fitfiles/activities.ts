@@ -5,7 +5,7 @@ import { activityFeedFromZwiftAPI } from '../../../types/zwiftAPI/activity-feedF
 
 export async function getActivities(zwiftId: number) {
   const url = `activity-feed/feed/?feedType=OTHER_PROFILE&profile_id=${zwiftId}&limit=50`;
-  const response: activityFeedFromZwiftAPI[] = await getRequest(url, false);
+  const response: activityFeedFromZwiftAPI[] = await getRequest(url);
 
   // выход, если ошибка при получении активностей
   if (!response) {

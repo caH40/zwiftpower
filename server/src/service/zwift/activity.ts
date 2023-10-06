@@ -10,7 +10,7 @@ import { ActivitiesDataFromZwiftAPI } from '../../types/zwiftAPI/activitiesFromZ
 export async function getFullDataUrl(activityId: string) {
   try {
     const url = `activities/${activityId}`;
-    const activity: ActivitiesDataFromZwiftAPI = await getRequest(url, false);
+    const activity: ActivitiesDataFromZwiftAPI = await getRequest(url);
 
     // если нет данных активности (приватность аккаунта)
     if (!activity) {

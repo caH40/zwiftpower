@@ -36,7 +36,13 @@ export async function updatePowerCurve(zwiftId: number) {
 
       // если интервал с CP не найден, то создается с нулевыми значениями
       if (!cpWattsCurrent) {
-        cpWattsCurrent = { duration: interval, value: 0, date: Date.now(), name: '' };
+        cpWattsCurrent = {
+          isVirtualPower: false,
+          duration: interval,
+          value: 0,
+          date: Date.now(),
+          name: '',
+        };
       }
 
       // объект по удельной мощности
@@ -44,7 +50,13 @@ export async function updatePowerCurve(zwiftId: number) {
 
       // если интервал с CP не найден, то создается с нулевыми значениями
       if (!cpWattsPerKgCurrent) {
-        cpWattsPerKgCurrent = { duration: interval, value: 0, date: Date.now(), name: '' };
+        cpWattsPerKgCurrent = {
+          isVirtualPower: false,
+          duration: interval,
+          value: 0,
+          date: Date.now(),
+          name: '',
+        };
       }
 
       // поиск данных для интервала в "сырых данных" заезда
@@ -56,6 +68,7 @@ export async function updatePowerCurve(zwiftId: number) {
 
         if (cpBestEfforts.watts >= cpWattsCurrent.value && activity.date >= dateBefore90Days)
           cpWattsCurrent = {
+            isVirtualPower: activity.isVirtualPower,
             duration: interval,
             value: cpBestEfforts.watts,
             date: activity.date,
@@ -67,6 +80,7 @@ export async function updatePowerCurve(zwiftId: number) {
           activity.date >= dateBefore90Days
         )
           cpWattsPerKgCurrent = {
+            isVirtualPower: activity.isVirtualPower,
             duration: interval,
             value: cpBestEfforts.wattsKg,
             date: activity.date,

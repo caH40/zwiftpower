@@ -265,6 +265,7 @@ export interface HandlerProtocolCurrentArg extends Omit<HandlerProtocolArg, 'typ
  * Данные по Critical power
  */
 export interface CriticalPower {
+  isVirtualPower: boolean;
   duration: number;
   value: number;
   date: number;

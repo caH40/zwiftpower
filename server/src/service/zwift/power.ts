@@ -8,6 +8,6 @@ import { FitfileFullDataFromZwiftAPI } from '../../types/zwiftAPI/fitfileFullDat
  */
 export async function getPowers(fullDataUrl: string) {
   const url = fullDataUrl.split('https://us-or-rly101.zwift.com/api/')[1];
-  const fitFile: FitfileFullDataFromZwiftAPI = await getRequest(url, false);
+  const fitFile: FitfileFullDataFromZwiftAPI = await getRequest(url);
   return fitFile.powerInWatts;
 }

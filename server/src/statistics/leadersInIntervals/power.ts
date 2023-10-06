@@ -9,10 +9,12 @@ export const getRiderWithMaxPowerInInterval = (
   powerCurveDB: PowerCurveSchema[],
   interval: number
 ) => {
-  const powerCurveDBCurrentInterval = powerCurveDB.map((elm) => ({
-    zwiftId: elm.zwiftId,
-    pointsWatts: elm.pointsWatts.find((power) => power.duration === interval),
-  }));
+  const powerCurveDBCurrentInterval = powerCurveDB
+    .map((elm) => ({
+      zwiftId: elm.zwiftId,
+      pointsWatts: elm.pointsWatts.find((power) => power.duration === interval),
+    }))
+    .filter((power) => !power.pointsWatts?.isVirtualPower);
 
   powerCurveDBCurrentInterval.sort(
     (a, b) => (b.pointsWatts?.value || 0) - (a.pointsWatts?.value || 0)

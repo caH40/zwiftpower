@@ -8,6 +8,7 @@ const fitFileSchema = new Schema<FitFileSchema>({
   dateUpdate: { type: Number },
   activities: [
     {
+      isVirtualPower: { type: Boolean, default: false },
       name: { type: String, default: null },
       date: { type: Number, default: null },
       powerInWatts: { type: String },
