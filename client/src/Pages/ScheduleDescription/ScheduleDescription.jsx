@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import { getTimerLocal } from '../../utils/date-local';
@@ -20,7 +19,6 @@ function ScheduleDescription() {
 
   const dispatch = useDispatch();
   useTitle('Описание заезда');
-  useBackground(false);
   const { eventId } = useParams();
 
   useEffect(() => {

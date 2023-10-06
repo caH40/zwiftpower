@@ -4,14 +4,12 @@ import useTitle from '../../hook/useTitle';
 import SimpleInput from '../../components/UI/SimpleInput/SimpleInput';
 import Button from '../../components/UI/Button/Button';
 import { postNotice } from '../../api/bot-notice';
-import useBackground from '../../hook/useBackground';
 
 import styles from './Bot.module.css';
 
 function Bot() {
   const [message, setMessage] = useState({ text: '' });
   useTitle('Взаимодействие с ботом Race Info | KOM-on');
-  useBackground(false);
 
   const sendMessage = () => {
     postNotice(message).catch((error) => console.log(error)); // eslint-disable-line

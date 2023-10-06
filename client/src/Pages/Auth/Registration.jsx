@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -14,16 +14,20 @@ import {
 import Button from '../../components/UI/Button/Button';
 import { postRegistration } from '../../api/registration';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import useBackground from '../../hook/useBackground';
+import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Auth.module.css';
 
 function Registration() {
   useTitle('Регистрация');
-  useBackground(true, 1);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(setBackground({ isActive: true, opacity: 1 }));
+    return () => dispatch(setBackground({ isActive: false }));
+  }, []);
 
   const {
     register,

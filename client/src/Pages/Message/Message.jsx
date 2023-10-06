@@ -1,15 +1,20 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import t from '../../locales/ru.json';
-import useBackground from '../../hook/useBackground';
+import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Message.module.css';
 
 function Message() {
   const { messageId, additional } = useParams();
   const message = t.message[messageId];
-  useBackground(true, 1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setBackground({ isActive: true, opacity: 1 }));
+    return () => dispatch(setBackground({ isActive: false }));
+  }, []);
 
   return (
     <main className={styles.wrapper}>

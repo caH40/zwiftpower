@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { fetchEvents, resetEventsInfo } from '../../redux/features/api/eventsSlice';
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
@@ -20,7 +19,6 @@ function MainPage() {
   const isModerator = ['admin', 'moderator'].includes(role);
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды');
-  useBackground(false);
 
   const navigate = useNavigate();
   const toLink = (id) => navigate(`/race/schedule/${id}`);
