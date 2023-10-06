@@ -36,8 +36,12 @@ function TdRider({ profile, profileId, getLeaders, getSweepers }) {
           </div>
 
           <div className={cx('name')}>
-            {`${profile.firstName} ${profile.lastName}`}
-            {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
+            <span>
+              {`${profile.firstName} ${profile.lastName}`}
+              <span className={cx('female')}>
+                {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
+              </span>
+            </span>
             {getLeaders && <Leader getLeaders={getLeaders} profileId={profileId} />}
             {getSweepers && <Sweeper getSweepers={getSweepers} profileId={profileId} />}
           </div>

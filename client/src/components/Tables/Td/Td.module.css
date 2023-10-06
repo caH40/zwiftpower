@@ -19,6 +19,10 @@
   flex-flow: wrap;
   font-weight: 500;
 }
+.female {
+  margin-left: 5px;
+  vertical-align: middle;
+}
 .gap {
   font-size: 11px;
   font-style: italic;
