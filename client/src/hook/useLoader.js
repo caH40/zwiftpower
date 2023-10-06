@@ -10,6 +10,13 @@ const useLoader = () => {
   const { status: statusRidersInEventsFetch } = useSelector(
     (state) => state.ridersInEventsFetch
   );
+  const { status: statusLeadersInIntervals } = useSelector(
+    (state) => state.leadersInIntervalsFetch
+  );
+  const { status: statusResultsSeries } = useSelector((state) => state.fetchResultsSeries);
+  const { status: statusSeries } = useSelector((state) => state.fetchSeries);
+  const { status: statusUserResults } = useSelector((state) => state.fetchUserResults);
+  const { status: statusUserPowerCurve } = useSelector((state) => state.fetchUserPowerCurve);
 
   if (
     statusEvents === 'loading' ||
@@ -18,7 +25,12 @@ const useLoader = () => {
     statusChangeEvent === 'loading' ||
     statusEventPreview === 'loading' ||
     statusDownloadResults === 'loading' ||
-    statusRidersInEventsFetch === 'loading'
+    statusRidersInEventsFetch === 'loading' ||
+    statusLeadersInIntervals === 'loading' ||
+    statusResultsSeries === 'loading' ||
+    statusSeries === 'loading' ||
+    statusUserResults === 'loading' ||
+    statusUserPowerCurve === 'loading'
   ) {
     return { isLoading: true };
   }
