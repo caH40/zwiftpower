@@ -19,7 +19,7 @@ export const getRiderWithMaxWattsPerKgInInterval = (
   );
 
   // количество мест (лучших результатов) для поиска
-  const places = 3;
+  const places = 10;
 
   const wattsPerKgInInterval = [];
   for (let i = 0; i < places; i++) {

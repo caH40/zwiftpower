@@ -8,7 +8,7 @@ function TrBlock({ result, index, type }) {
   return (
     result.profileData && (
       <tr>
-        <td>
+        <td className={styles.center}>
           <TdRank value={index + 1} />{' '}
         </td>
         <td className={styles.td__nowrap}>
