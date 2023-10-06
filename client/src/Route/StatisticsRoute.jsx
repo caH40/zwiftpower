@@ -28,7 +28,16 @@ export function StatisticsRoute() {
         />
 
         <Route
-          path="leaders"
+          path="leaders/male"
+          element={
+            <MySuspense>
+              <LeadersInIntervals />
+            </MySuspense>
+          }
+        />
+
+        <Route
+          path="leaders/female"
           element={
             <MySuspense>
               <LeadersInIntervals />
