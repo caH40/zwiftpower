@@ -10,10 +10,10 @@ const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
  */
 export const fetchLeadersInIntervals = createAsyncThunk(
   'statistics/leadersInIntervals',
-  async function (_, thunkAPI) {
+  async function (gender, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/statistics/leaders-intervals/true`,
+        url: `${serverExpress}/api/statistics/leaders-intervals/${gender}`,
         method: 'get',
       });
 
