@@ -19,7 +19,7 @@ export const getRiderWithMaxPowerInInterval = (
   );
 
   // количество мест (лучших результатов) для поиска
-  const places = 3;
+  const places = 10;
 
   const wattsInInterval = [];
   for (let i = 0; i < places; i++) {

@@ -7,8 +7,12 @@ import { fetchLeadersInIntervals } from '../../redux/features/api/leadersInInter
 import { resetLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/leadersInIntervalsSlice';
 import TableLeadersInIntervals from '../../components/Tables/TableLeadersInIntervals/TableLeadersInIntervals';
 import NavBarLeadersGender from '../../components/UI/NavBarLeadersGender/NavBarLeadersGender';
+import FilterIntervalsForLeader from '../../components/UI/Filters/FilterInterval/FilterIntervalsForLeader';
 
 import styles from './Statistics.module.css';
+
+// отображаемые интервалы, соответствуют данным, приходящим с сервера
+const intervals = [15, 60, 300, 1200];
 
 function LeadersInIntervals() {
   useTitle('Рейтинг райдеров по мощности');
@@ -28,20 +32,31 @@ function LeadersInIntervals() {
 
   return (
     <div>
-      <NavBarLeadersGender addCls={'mb15'} />
+      <div className={styles.navigation}>
+        <NavBarLeadersGender addCls={'mb15'} />
+        <FilterIntervalsForLeader intervals={intervals} />
+      </div>
       {maxWatts?.length ? (
         <section>
-          <h2>Лидеры по абсолютным ваттам</h2>
+          <h2>Лидеры по абсолютным ваттам за 90 дней </h2>
           <article className={styles.block__table}>
-            <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
+            <TableLeadersInIntervals
+              leadersInIntervals={maxWatts}
+              intervals={intervals}
+              type={'watts'}
+            />
           </article>
         </section>
       ) : null}
       {maxWatts?.length ? (
         <section>
-          <h2>Лидеры по удельной мощности</h2>
+          <h2>Лидеры по удельной мощности за 90 дней</h2>
           <article className={styles.block__table}>
-            <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
+            <TableLeadersInIntervals
+              leadersInIntervals={maxWattsPerKg}
+              intervals={intervals}
+              type={'wattsPerKg'}
+            />
           </article>
         </section>
       ) : null}

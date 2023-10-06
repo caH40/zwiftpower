@@ -33,6 +33,7 @@ import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
 import sortTableSlice from '../features/sortTableSlice';
 import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 import eventPostSlice from '../features/api/event-add/eventPostSlice';
+import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
 
 import { statisticsReducers } from './statistics';
 
@@ -69,6 +70,7 @@ export default configureStore({
     sortTable: sortTableSlice,
     fetchActualSeries: actualSeriesSlice,
     fetchEventPost: eventPostSlice,
+    filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     ...statisticsReducers,
   },
 });

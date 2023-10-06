@@ -2,3 +2,9 @@
   overflow-x: auto;
   min-height: 350px;
 }
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0 15px;
+  flex-wrap: wrap;
+}
