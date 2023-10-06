@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -11,18 +11,23 @@ import Button from '../../components/UI/Button/Button';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { putNewPassword } from '../../api/new-password';
 import { checkRequestPassword } from '../../api/check-request-password';
-import useBackground from '../../hook/useBackground';
+import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Auth.module.css';
 
 function ResetPassword() {
   const [userId, setUserId] = useState();
   useTitle('Создание нового пароля');
-  useBackground(true, 1);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { token } = useParams();
+
+  useEffect(() => {
+    dispatch(setBackground({ isActive: true, opacity: 1 }));
+    return () => dispatch(setBackground({ isActive: false }));
+  }, []);
 
   useEffect(() => {
     checkRequestPassword(token).then((response) => {

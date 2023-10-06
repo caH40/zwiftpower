@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
@@ -24,7 +23,6 @@ function ZwiftAddEvent() {
   const { id: userId } = useSelector((state) => state.checkAuth.value.user);
   const { series } = useSelector((state) => state.fetchActualSeries);
 
-  useBackground(false);
   const dispatch = useDispatch();
 
   // запрос параметров Эвента

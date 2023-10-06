@@ -1,8 +1,10 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
+
+import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Page404.module.css';
 
@@ -11,7 +13,12 @@ const urlServer = import.meta.env.VITE_SERVER_FRONT;
 function Page404() {
   const { '*': wrongUrl } = useParams();
   useTitle('404');
-  useBackground(true, 0.7);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setBackground({ isActive: true, opacity: 0.7 }));
+    return () => dispatch(setBackground({ isActive: false }));
+  }, []);
 
   return (
     <section className={styles.page404}>

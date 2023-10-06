@@ -1,7 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-
 import { useDispatch } from 'react-redux';
 
 import InputAuth from '../../components/UI/InputAuth/InputAuth';
@@ -11,15 +10,19 @@ import Button from '../../components/UI/Button/Button';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postAuthorization } from '../../api/authorization';
 import { getAuth } from '../../redux/features/authSlice';
-import useBackground from '../../hook/useBackground';
+import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Auth.module.css';
 
 function Authorization() {
   useTitle('Авторизация');
-  useBackground(true, 1);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(setBackground({ isActive: true, opacity: 1 }));
+    return () => dispatch(setBackground({ isActive: false }));
+  }, []);
 
   const {
     register,

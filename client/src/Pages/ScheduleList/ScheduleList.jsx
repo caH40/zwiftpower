@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
@@ -20,7 +19,6 @@ function ScheduleList() {
   const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
 
   useTitle('Расписание заездов');
-  useBackground(false);
   const dispatch = useDispatch();
 
   useEffect(() => {

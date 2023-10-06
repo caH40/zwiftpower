@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
 import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice';
 import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
@@ -15,7 +14,7 @@ function Catchup() {
   const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);
 
   useTitle('Догонялки');
-  useBackground(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

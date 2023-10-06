@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
@@ -17,7 +16,6 @@ import styles from './ResultsDescription.module.css';
 function ResultsDescription() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
   useTitle('Результаты заезда');
-  useBackground(false);
 
   const { eventId } = useParams();
   const dispatch = useDispatch();

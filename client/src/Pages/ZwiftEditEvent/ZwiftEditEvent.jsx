@@ -11,7 +11,6 @@ import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
-import useBackground from '../../hook/useBackground';
 import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import {
   resetParams,
@@ -28,7 +27,6 @@ function ZwiftEditEvent() {
   const [eventId, setEventId] = useState({ id: id || 0 });
 
   useTitle('Zwift - Редактирование заезда');
-  useBackground(false);
   const eventParams = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
   const navigate = useNavigate();

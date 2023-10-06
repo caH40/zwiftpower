@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
@@ -26,7 +25,6 @@ function ResultsList() {
   const { eventsResults, quantityPages } = useSelector((state) => state.fetchEvents);
 
   useTitle('Результаты заездов');
-  useBackground(false);
   const dispatch = useDispatch();
 
   useEffect(() => {

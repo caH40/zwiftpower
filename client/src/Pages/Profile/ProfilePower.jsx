@@ -6,7 +6,6 @@ import { Line } from 'react-chartjs-2';
 
 import { fetchUserPowerCurve } from '../../redux/features/api/userPowerCurveSlice';
 import useTitle from '../../hook/useTitle';
-import useBackground from '../../hook/useBackground';
 import useChartPower from '../../hook/chart/useChartPower';
 import useScreenOrientation from '../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../components/UI/SimpleCheckbox/SimpleCheckbox';
@@ -29,7 +28,7 @@ function ProfileWeight() {
 
   const { data, options } = useChartPower(eventPowerCurrent, isPortrait, formShowCharts);
   useTitle('Профиль мощности');
-  useBackground(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

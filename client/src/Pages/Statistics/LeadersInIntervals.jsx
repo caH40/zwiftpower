@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import useBackground from '../../hook/useBackground';
 import useTitle from '../../hook/useTitle';
 import { fetchLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/fetchLeadersInIntervals';
 import { resetLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/leadersInIntervalsSlice';
@@ -13,7 +12,6 @@ import styles from './Statistics.module.css';
 
 function LeadersInIntervals() {
   useTitle('Рейтинг райдеров по мощности');
-  useBackground(false);
 
   // определение страницы для мужчин или женщин
   const { pathname } = useLocation();
