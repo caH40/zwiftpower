@@ -1,11 +1,12 @@
 import classnames from 'classnames/bind';
 
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
-import { getAgeCategory, getGenderStr } from '../../../utils/event';
+import { getAgeCategory } from '../../../utils/event';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWattsSchedule from '../Td/TdCpWattsSchedule';
+import { sortRidersByFirstName } from '../../../utils/sort';
 
 import styles from '../Table.module.css';
 
@@ -17,11 +18,13 @@ const intervalsForDisplay = [15, 300, 2400];
 function TableSignedRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
 
+  const riderSortedByName = sortRidersByFirstName(riders);
+
   return (
     <table className={cx('table')}>
       <Thead />
       <tbody>
-        {riders.map((rider, index) => (
+        {riderSortedByName.map((rider, index) => (
           <tr className={cx('hover')} key={rider._id}>
             <td>{index + 1}</td>
             <td>
