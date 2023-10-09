@@ -4,16 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/UI/Button/Button';
 import { fetchZwiftId } from '../../redux/features/api/zwift_id/fetchZwiftId';
 import LogoRider from '../../components/LogoRider/LogoRider';
-import { updateZwiftId } from '../../api/user';
-import { checkAuth } from '../../api/auth-check';
-import { getAuth } from '../../redux/features/authSlice';
-import { getAlert } from '../../redux/features/alertMessageSlice';
 import RSimpleInput from '../../components/UI/ReduxUI/RInput/RSimpleInput';
 import {
   resetProfileZwift,
   resetZwiftId,
   setZwiftId,
 } from '../../redux/features/api/zwift_id/zwiftIdSlice';
+import { fetchUserPut } from '../../redux/features/api/user/fetchUser';
 
 import styles from './Profile.module.css';
 
@@ -33,27 +30,9 @@ function ProfileSetting() {
   };
 
   const saveZwiftId = () => {
-    updateZwiftId(zwiftId)
-      .then((response) => {
-        // обновление данных юзера в БД после обновления zwiftId
-        checkAuth()
-          .then((response) => {
-            if (!response) return;
-            dispatch(getAuth({ status: true, user: response.data.user }));
-            localStorage.setItem('accessToken', response.data.accessToken);
-          })
-          .catch((error) => {
-            dispatch(getAuth({ status: false, user: {} }));
-            localStorage.setItem('accessToken', '');
-          });
-
-        dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
-      })
-      .catch((error) => {
-        dispatch(
-          getAlert({ message: error.response.data.message, type: 'error', isOpened: true })
-        );
-      });
+    dispatch(fetchUserPut(profile.id));
+    dispatch(resetZwiftId());
+    dispatch(resetProfileZwift());
   };
 
   return (

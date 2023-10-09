@@ -13,12 +13,12 @@ export async function updateZwiftIdService(userId: string, zwiftId: string) {
    */
   if (userWithZwiftId) {
     const message = `Данный zwiftId "${zwiftId}" уже присвоен другому пользователю.`;
-    throw { message };
+    throw new Error(message);
   }
 
   const photoProfile = riderData ? riderData.imageSrc : undefined;
 
   await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId, photoProfile } });
 
-  return { message: 'ZwiftId обновлён!' };
+  return { message: 'ZwiftId  обновлён!' };
 }

@@ -34,7 +34,6 @@ const zwiftIdSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       state.profile = action.payload;
-      state.zwiftId = 0;
     });
 
     builder.addCase(fetchZwiftId.rejected, (state, action) => {
