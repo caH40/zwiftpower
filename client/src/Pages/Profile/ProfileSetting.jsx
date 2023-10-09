@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SimpleInput from '../../components/UI/SimpleInput/SimpleInput';
 import Button from '../../components/UI/Button/Button';
-import { getZwiftRider } from '../../api/zwift/rider';
+import { fetchZwiftId } from '../../redux/features/api/zwift_id/fetchZwiftId';
 import LogoRider from '../../components/LogoRider/LogoRider';
 import { updateZwiftId } from '../../api/user';
 import { checkAuth } from '../../api/auth-check';
 import { getAuth } from '../../redux/features/authSlice';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import RSimpleInput from '../../components/UI/ReduxUI/RInput/RSimpleInput';
+import {
+  resetProfileZwift,
+  resetZwiftId,
+  setZwiftId,
+} from '../../redux/features/api/zwift_id/zwiftIdSlice';
 
 import styles from './Profile.module.css';
 
 function ProfileSetting() {
-  const [form, setForm] = useState({ zwiftId: 0 });
-  const [rider, setRider] = useState({});
+  const { zwiftId, profile } = useSelector((state) => state.getZwiftId);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetZwiftId());
+      dispatch(resetProfileZwift());
+    };
+  }, []);
+
   const findRider = () => {
-    getZwiftRider(form.zwiftId).then((response) => setRider(response.data));
+    dispatch(fetchZwiftId(zwiftId));
   };
 
   const saveZwiftId = () => {
-    updateZwiftId(form.zwiftId)
+    updateZwiftId(zwiftId)
       .then((response) => {
-        // обновление данный юзера после обновления zwiftId
+        // обновление данных юзера в БД после обновления zwiftId
         checkAuth()
           .then((response) => {
             if (!response) return;
@@ -36,8 +47,6 @@ function ProfileSetting() {
             localStorage.setItem('accessToken', '');
           });
 
-        setForm({ zwiftId: 0 });
-        setRider({});
         dispatch(getAlert({ message: response.data.message, type: 'success', isOpened: true }));
       })
       .catch((error) => {
@@ -52,29 +61,27 @@ function ProfileSetting() {
       <span>Добавление Zwift Id в профиль пользователя</span>
       <form className={styles.block__zwiftId}>
         <div className={styles.box__zwiftId}>
-          <SimpleInput
-            name={'Zwift Id'}
-            state={form}
-            setState={setForm}
-            property="zwiftId"
-            type="number"
-          />
+          <RSimpleInput value={zwiftId} name={'Zwift Id'} reducer={setZwiftId} type="number" />
           <Button getClick={findRider}>НАЙТИ</Button>
         </div>
 
-        {rider.id && (
+        {profile.id && (
           <>
             <div className={styles.box__rider}>
               <div className={styles.box__img}>
                 <LogoRider
-                  source={rider.imageSrc}
-                  firstName={rider.firstName}
-                  lastName={rider.lastName}
+                  source={profile?.imageSrc}
+                  firstName={profile.firstName}
+                  lastName={profile?.lastName}
                 />
               </div>
               <div className={styles.box__name}>
-                <span>{rider.firstName}</span>
-                <span>{rider.lastName}</span>
+                <span>{profile.firstName}</span>
+                <span>{profile.lastName}</span>
+                <div>
+                  <span>zwiftId:</span>
+                  <span>{profile.id}</span>
+                </div>
               </div>
             </div>
             <Button getClick={saveZwiftId}>СОХРАНИТЬ</Button>
