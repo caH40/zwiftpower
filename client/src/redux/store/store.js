@@ -36,6 +36,7 @@ import eventPostSlice from '../features/api/event-add/eventPostSlice';
 import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
 
 import { statisticsReducers } from './statistics';
+import { userReducers } from './user';
 
 export default configureStore({
   reducer: {
@@ -72,6 +73,7 @@ export default configureStore({
     fetchEventPost: eventPostSlice,
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     ...statisticsReducers,
+    ...userReducers,
   },
 });
 

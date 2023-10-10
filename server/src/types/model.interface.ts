@@ -226,6 +226,7 @@ export interface UserSchema {
   password: string;
   riderId: Types.ObjectId;
   zwiftId: number;
+  zwiftIdAdditional: number[];
   telegramId: number;
   date: number;
   email: string;

@@ -87,6 +87,7 @@ export interface GetProfileArg {
 //
 //
 export interface Profile {
+  zwiftId: number;
   ftp: number | null;
   imageSrc: string | null;
   firstName: string;

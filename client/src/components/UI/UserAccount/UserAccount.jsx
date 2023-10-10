@@ -10,12 +10,14 @@ const UserAccount = ({ userAuth }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const zwiftIdAuth = userAuth.user.zwiftId;
+
   const avatar = userAuth?.user.photoProfile
     ? userAuth.user.photoProfile
     : '/images/avatar.svg';
 
   const getClick = () => {
-    const url = userAuth.user.zwiftId ? '/profile/me/results' : '/profile/me/settings';
+    const url = zwiftIdAuth ? `/profile/${zwiftIdAuth}/results` : '/profile/0/settings';
 
     if (userAuth.status) {
       navigate(url);

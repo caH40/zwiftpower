@@ -19,11 +19,14 @@ function ProfileResults() {
   const { results, powerCurve, profile, status } = useSelector(
     (state) => state.fetchUserResults
   );
+  // console.log(profile);
+  // console.log(userAuth);
 
   useEffect(() => {
-    const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
-    if (!currentZwiftId) return;
-    dispatch(fetchUserResults({ zwiftId: currentZwiftId }));
+    // const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
+    // const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
+    // if (!currentZwiftId) return;
+    dispatch(fetchUserResults({ zwiftId }));
   }, [dispatch, zwiftId, userAuth]);
 
   return (

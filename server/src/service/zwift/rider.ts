@@ -12,5 +12,9 @@ export async function getZwiftRiderService(zwiftId: string): Promise<ProfileZwif
   const urlRiderData = `profiles/${zwiftId}`;
   const riderData: ProfileZwiftAPI = await getRequest(urlRiderData);
 
+  if (!riderData) {
+    throw new Error('Не найден профиль на сервере Zwift');
+  }
+
   return riderData;
 }
