@@ -44,6 +44,10 @@ function Flag({ name = '' }) {
       nameShort = 'kz';
       break;
 
+    case 'isr':
+      nameShort = 'il';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
