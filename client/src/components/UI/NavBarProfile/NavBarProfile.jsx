@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -10,19 +10,20 @@ import styles from './NavBarProfile.module.css';
 
 function NavBarProfile({ zwiftId, addCls }) {
   const [buttons, setButtons] = useState(profileButtons);
-  const userAuth = useSelector((state) => state.checkAuth.value);
+  const { status, user } = useSelector((state) => state.checkAuth.value);
 
   useEffect(() => {
-    if (zwiftId !== 'me') {
+    if (status && zwiftId !== user.zwiftId && zwiftId !== 0) {
       // исключение меню Настройки если просматривается не свой профиль
       setButtons(profileButtons.filter((button) => button.page !== 'settings'));
-    } else if (zwiftId === 'me' && !userAuth.user.zwiftId) {
-      // если просматривается свой профиль, но не добавлен zwiftid, то показывать только меню настроек
+    } else if (status && !user.zwiftId) {
+      // если просматривается свой профиль, но не добавлен zwiftId,
+      // то показывать только меню настроек
       setButtons(profileButtons.filter((button) => button.page === 'settings'));
     } else {
       setButtons(profileButtons);
     }
-  }, [zwiftId, userAuth]);
+  }, [zwiftId, user]);
 
   const getStyle = (isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили

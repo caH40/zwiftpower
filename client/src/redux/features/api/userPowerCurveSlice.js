@@ -44,7 +44,7 @@ const userPowerCurveSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       state.powerFromEvents = action.payload.powerFromEvents;
-      state.powerCurve = action.payload.powerCurve;
+      state.powerCurve = action.payload.powerCurve || {};
     });
     builder.addCase(fetchUserPowerCurve.rejected, (state, action) => {
       state.status = 'rejected';

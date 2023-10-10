@@ -13,10 +13,14 @@ export async function authorizationService(
     const userDB = await User.findOne({ username });
 
     const wrongAuth = { message: `Неверный Логин или Пароль`, status: 'wrong' };
-    if (!userDB) throw wrongAuth;
+    if (!userDB) {
+      throw wrongAuth;
+    }
 
     const isValidPassword = await bcrypt.compare(password, userDB.password);
-    if (!isValidPassword) throw wrongAuth;
+    if (!isValidPassword) {
+      throw wrongAuth;
+    }
 
     await removeToken(refreshToken);
 

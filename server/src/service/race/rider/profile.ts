@@ -7,6 +7,7 @@ import { getZwiftRiderService } from '../../zwift/rider.js';
  */
 export async function getProfile({ zwiftId, powerCurve, resultLast }: GetProfileArg) {
   const profile: Profile = {
+    zwiftId: +zwiftId,
     ftp: null,
     imageSrc: null,
     firstName: '',
@@ -45,6 +46,7 @@ export async function getProfile({ zwiftId, powerCurve, resultLast }: GetProfile
     return profile;
   }
 
+  profile.zwiftId = +zwiftId;
   profile.imageSrc = resultLast.profileData.imageSrc;
   profile.firstName = resultLast.profileData.firstName;
   profile.lastName = resultLast.profileData.lastName;

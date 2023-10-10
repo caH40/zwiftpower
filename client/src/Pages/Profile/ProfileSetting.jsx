@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/UI/Button/Button';
 import { fetchZwiftId } from '../../redux/features/api/zwift_id/fetchZwiftId';
@@ -17,6 +18,7 @@ import styles from './Profile.module.css';
 function ProfileSetting() {
   const { zwiftId, profile } = useSelector((state) => state.getZwiftId);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -31,13 +33,13 @@ function ProfileSetting() {
 
   const saveZwiftId = () => {
     dispatch(fetchUserPut(profile.id));
-    dispatch(resetZwiftId());
     dispatch(resetProfileZwift());
+    navigate(`/profile/${zwiftId}/settings`);
   };
 
   return (
     <section className={styles.wrapper}>
-      <span>Добавление Zwift Id в профиль пользователя</span>
+      <span>Привязать Zwift Id к профилю пользователя</span>
       <form className={styles.block__zwiftId}>
         <div className={styles.box__zwiftId}>
           <RSimpleInput value={zwiftId} name={'Zwift Id'} reducer={setZwiftId} type="number" />

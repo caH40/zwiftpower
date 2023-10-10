@@ -20,5 +20,5 @@ export async function updateZwiftIdService(userId: string, zwiftId: string) {
 
   await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId, photoProfile } });
 
-  return { message: 'ZwiftId  обновлён!' };
+  return { message: `ZwiftId ${zwiftId} привязан к профилю` };
 }
