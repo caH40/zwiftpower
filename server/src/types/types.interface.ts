@@ -9,6 +9,7 @@ import {
   ZwiftResultSchema,
 } from './model.interface.js';
 import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
+import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате
@@ -344,4 +345,21 @@ export interface RiderMaxWatt {
  */
 export interface RiderMaxWattsPerKg extends Omit<RiderMaxWatt, 'watts'> {
   wattsPerKg: number;
+}
+
+/**
+ * Данные райдера с сервера ZwiftAPI, только необходимые параметры
+ */
+export interface ZwiftRiderShot
+  extends Pick<
+    ProfileZwiftAPI,
+    'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryCode'
+  > {}
+
+/**
+ * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
+ */
+export interface ZwiftRidersShort {
+  zwiftRiderMain: ZwiftRiderShot;
+  zwiftRiderAdditional: ZwiftRiderShot[];
 }
