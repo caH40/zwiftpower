@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
@@ -57,7 +57,7 @@ function ScheduleList() {
   };
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {eventsSchedule?.[0] && status === 'resolved' && (
         <section className={styles.wrapper__wide}>
           <TableSchedule

@@ -16,3 +16,15 @@
     padding: 10px 5px 10px 45px;
   }
 }
+
+@media screen and (min-width: 1650px) {
+  .container {
+    padding: 20px 136px 20px 186px;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .container {
+    padding: 20px 236px 20px 286px;
+  }
+}
