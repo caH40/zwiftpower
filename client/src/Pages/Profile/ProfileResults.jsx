@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -19,13 +19,8 @@ function ProfileResults() {
   const { results, powerCurve, profile, status } = useSelector(
     (state) => state.fetchUserResults
   );
-  // console.log(profile);
-  // console.log(userAuth);
 
   useEffect(() => {
-    // const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
-    // const currentZwiftId = zwiftId === 'me' ? userAuth.user.zwiftId : zwiftId;
-    // if (!currentZwiftId) return;
     dispatch(fetchUserResults({ zwiftId }));
   }, [dispatch, zwiftId, userAuth]);
 
