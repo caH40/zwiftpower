@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
+import { useSelector } from 'react-redux';
 
 import MySuspense from '../HOC/Se';
 
@@ -10,6 +11,8 @@ const ProfilePower = lazy(() => import('../Pages/Profile/ProfilePower'));
 const ProfileWeight = lazy(() => import('../Pages/Profile/ProfileWeight'));
 
 export function ProfileRoute() {
+  const { status } = useSelector((state) => state.checkAuth.value);
+
   return (
     <>
       <Route
@@ -44,14 +47,16 @@ export function ProfileRoute() {
             </MySuspense>
           }
         />
-        <Route
-          path="settings"
-          element={
-            <MySuspense>
-              <ProfileSetting />
-            </MySuspense>
-          }
-        />
+        {status && (
+          <Route
+            path="settings"
+            element={
+              <MySuspense>
+                <ProfileSetting />
+              </MySuspense>
+            }
+          />
+        )}
       </Route>
     </>
   );
