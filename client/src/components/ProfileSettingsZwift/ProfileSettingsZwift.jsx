@@ -23,8 +23,8 @@ function ProfileSettingsZwift() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // при открытии isOpened блока и авторизации идет запрос данных
-    if (!zwiftIdAuth && !isOpened) {
+    // при открытии isOpened блока и наличии zwiftId в профиле при авторизации - идет запрос данных
+    if (!zwiftIdAuth || !isOpened) {
       return undefined;
     }
     dispatch(fetchZwiftProfiles(zwiftIdAuth));
@@ -69,7 +69,7 @@ function ProfileSettingsZwift() {
             </>
           )}
 
-          <FindZwiftProfile />
+          <FindZwiftProfile showAdditionalCheckbox={zwiftIdAuth} />
         </>
       )}
     </section>

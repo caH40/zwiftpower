@@ -15,7 +15,7 @@ import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 
 import styles from './FindZwiftProfile.module.css';
 
-function FindZwiftProfile() {
+function FindZwiftProfile({ showAdditionalCheckbox }) {
   const [form, setForm] = useState({ isAdditional: false });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,8 +49,10 @@ function FindZwiftProfile() {
               property={'isAdditional'}
               title={'Дополнительный профиль'}
               tooltip={'Привязать как дополнительный (неосновной) профиль из Звифта'}
+              disabled={!showAdditionalCheckbox}
             />
           </div>
+
           <div className={styles.box__rider}>
             <div className={styles.box__img}>
               <LogoRider

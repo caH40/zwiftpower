@@ -27,5 +27,8 @@
   margin-right: 5px;
 }
 .box__checkbox {
+  width: 300px;
+  text-align: left;
   margin-top: 15px;
+  position: relative;
 }

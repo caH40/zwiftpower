@@ -20,6 +20,9 @@ function NavBarProfile({ zwiftId, addCls }) {
       // если просматривается свой профиль, но не добавлен zwiftId,
       // то показывать только меню настроек
       setButtons(profileButtons.filter((button) => button.page === 'settings'));
+    } else if (!status) {
+      // исключение меню Настройки если не авторизован
+      setButtons(profileButtons.filter((button) => button.page !== 'settings'));
     } else {
       setButtons(profileButtons);
     }

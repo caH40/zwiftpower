@@ -30,3 +30,6 @@
 .label span {
   margin-right: 10px;
 }
+.input:disabled {
+  border: 1px solid red;
+}
