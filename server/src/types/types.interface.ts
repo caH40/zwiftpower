@@ -350,16 +350,16 @@ export interface RiderMaxWattsPerKg extends Omit<RiderMaxWatt, 'watts'> {
 /**
  * Данные райдера с сервера ZwiftAPI, только необходимые параметры
  */
-export interface ZwiftRiderShot
+export interface ZwiftProfileShort
   extends Pick<
     ProfileZwiftAPI,
-    'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryCode'
+    'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryAlpha3'
   > {}
 
-/**
- * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
- */
+// /**
+//  * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
+//  */
 export interface ZwiftRidersShort {
-  zwiftRiderMain: ZwiftRiderShot;
-  zwiftRiderAdditional: ZwiftRiderShot[];
+  zwiftProfileMain: ZwiftProfileShort;
+  zwiftProfilesAdditional: ZwiftProfileShort[];
 }

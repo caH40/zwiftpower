@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const zwiftIdSlice = createSlice({
-  name: 'eventPost',
+  name: 'zwiftRider',
   initialState,
   reducers: {
     setZwiftId: (state, action) => {

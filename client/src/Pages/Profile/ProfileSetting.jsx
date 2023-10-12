@@ -1,74 +1,54 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
-import Button from '../../components/UI/Button/Button';
-import { fetchZwiftId } from '../../redux/features/api/zwift_id/fetchZwiftId';
-import LogoRider from '../../components/LogoRider/LogoRider';
-import RSimpleInput from '../../components/UI/ReduxUI/RInput/RSimpleInput';
+import { fetchZwiftRiders } from '../../redux/features/api/zwift_id/fetchZwiftId';
 import {
   resetProfileZwift,
   resetZwiftId,
-  setZwiftId,
 } from '../../redux/features/api/zwift_id/zwiftIdSlice';
-import { fetchUserPut } from '../../redux/features/api/user/fetchUser';
+import ProfileBlockZwift from '../../components/ProfileBlock/ProfileBlockZwift';
+import FindZwiftProfile from '../../components/UI/FindZwiftProfile/FindZwiftProfile';
 
-import styles from './Profile.module.css';
+import styles from './ProfileSetting.module.css';
 
 function ProfileSetting() {
-  const { zwiftId, profile } = useSelector((state) => state.getZwiftId);
+  const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
+  const { zwiftProfiles } = useSelector((state) => state.zwiftProfiles);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!zwiftIdAuth) {
+      return undefined;
+    }
+    dispatch(fetchZwiftRiders(zwiftIdAuth));
     return () => {
       dispatch(resetZwiftId());
       dispatch(resetProfileZwift());
     };
-  }, []);
-
-  const findRider = () => {
-    dispatch(fetchZwiftId(zwiftId));
-  };
-
-  const saveZwiftId = () => {
-    dispatch(fetchUserPut(profile.id));
-    dispatch(resetProfileZwift());
-    navigate(`/profile/${zwiftId}/settings`);
-  };
+  }, [zwiftIdAuth]);
 
   return (
     <section className={styles.wrapper}>
-      <span>Привязать Zwift Id к профилю пользователя</span>
-      <form className={styles.block__zwiftId}>
-        <div className={styles.box__zwiftId}>
-          <RSimpleInput value={zwiftId} name={'Zwift Id'} reducer={setZwiftId} type="number" />
-          <Button getClick={findRider}>НАЙТИ</Button>
-        </div>
+      {zwiftProfiles.zwiftProfileMain && (
+        <>
+          <ProfileBlockZwift
+            zwiftProfile={zwiftProfiles.zwiftProfileMain}
+            title={'Основной аккаунт из Звифта (ZwiftId)'}
+          />
 
-        {profile.id && (
-          <>
-            <div className={styles.box__rider}>
-              <div className={styles.box__img}>
-                <LogoRider
-                  source={profile?.imageSrc}
-                  firstName={profile.firstName}
-                  lastName={profile?.lastName}
-                />
-              </div>
-              <div className={styles.box__name}>
-                <span>{profile.firstName}</span>
-                <span>{profile.lastName}</span>
-                <div>
-                  <span>zwiftId:</span>
-                  <span>{profile.id}</span>
-                </div>
-              </div>
+          {zwiftProfiles.zwiftProfilesAdditional.map((zwiftProfile) => (
+            <div className={styles.block} key={zwiftProfile.id}>
+              <ProfileBlockZwift
+                zwiftProfile={zwiftProfile}
+                title={'Дополнительный аккаунт из Звифта (ZwiftId)'}
+                removable={true}
+              />
             </div>
-            <Button getClick={saveZwiftId}>СОХРАНИТЬ</Button>
-          </>
-        )}
-      </form>
+          ))}
+        </>
+      )}
+
+      <FindZwiftProfile />
     </section>
   );
 }
