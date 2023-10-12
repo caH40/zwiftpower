@@ -15,6 +15,7 @@
 .title {
   font-size: 17px;
   margin-bottom: 10px;
+  padding-right: 35px;
 }
 .params {
   display: flex;
