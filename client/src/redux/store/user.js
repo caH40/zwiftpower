@@ -1,10 +1,10 @@
 import userSettingDeleteZwiftIdSlice from '../features/api/user/userSettingDeleteZwiftIdSlice';
 import userSettingSlice from '../features/api/user/userSettingSlice';
-import zwiftIdSlice from '../features/api/zwift_id/zwiftIdSlice';
-import zwiftProfilesSliceSlice from '../features/api/zwift_id/zwiftProfilesSliceSlice';
+import zwiftProfileSlice from '../features/api/zwiftProfiles/zwiftProfileSlice';
+import zwiftProfilesSliceSlice from '../features/api/zwiftProfiles/zwiftProfilesSliceSlice';
 
 export const userReducers = {
-  getZwiftId: zwiftIdSlice,
+  getZwiftProfile: zwiftProfileSlice,
   userSetting: userSettingSlice,
   zwiftProfiles: zwiftProfilesSliceSlice,
   userSettingDeleteZwiftId: userSettingDeleteZwiftIdSlice,

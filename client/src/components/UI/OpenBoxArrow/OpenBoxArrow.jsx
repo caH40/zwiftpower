@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IconOpenBox from '../../icons/IconOpenBox';
 import IconCloseBox from '../../icons/IconCloseBox';
 

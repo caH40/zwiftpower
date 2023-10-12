@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import {
   resetProfileZwift,
   setZwiftId,
-} from '../../../redux/features/api/zwift_id/zwiftIdSlice';
+} from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
 import LogoRider from '../../LogoRider/LogoRider';
 import Button from '../Button/Button';
 import RSimpleInput from '../ReduxUI/RInput/RSimpleInput';
-import { fetchZwiftId } from '../../../redux/features/api/zwift_id/fetchZwiftId';
+import { fetchZwiftProfile } from '../../../redux/features/api/zwiftProfiles/fetchZwiftProfile';
 import { fetchUserPut } from '../../../redux/features/api/user/fetchUser';
 import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 
@@ -19,10 +19,11 @@ function FindZwiftProfile() {
   const [form, setForm] = useState({ isAdditional: false });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { zwiftId, profile } = useSelector((state) => state.getZwiftId);
+
+  const { zwiftId, profile } = useSelector((state) => state.getZwiftProfile);
 
   const findRider = () => {
-    dispatch(fetchZwiftId(zwiftId));
+    dispatch(fetchZwiftProfile(zwiftId));
   };
 
   const saveZwiftId = () => {
