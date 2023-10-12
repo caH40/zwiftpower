@@ -1,7 +1,12 @@
 .wrapper {
   position: relative;
   flex: 1 1 auto;
-  width: 500px;
+  padding: 10px;
+}
+.wrapper__border {
+  position: relative;
+  flex: 1 1 auto;
+
   border-radius: 5px;
   padding: 10px;
   background-color: var(--color-bg-minor);
@@ -72,5 +77,8 @@
   }
   .box__term + .box__term {
     margin-top: 3px;
+  }
+  .term {
+    flex-basis: 50px;
   }
 }

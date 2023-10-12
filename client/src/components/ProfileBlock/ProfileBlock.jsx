@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getAgeCategory, getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';

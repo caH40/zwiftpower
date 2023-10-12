@@ -41,8 +41,8 @@ function ProfileSettingsZwift() {
   };
   return (
     <section className={styles.wrapper}>
-      <div className={styles.title}>
-        <h3>Добавление профиля Звифт к аккаунту zwiftpower.ru</h3>
+      <div className={styles.box__title}>
+        <h3 className={styles.title}>Добавление профиля Звифт к аккаунту zwiftpower.ru</h3>
         <div className={styles.box__arrow}>
           <OpenBoxArrow getClick={openDetailed} isOpened={isOpened} />
         </div>
