@@ -8,7 +8,6 @@ function SimpleCheckbox({ state, property, setState, title, tooltip, disabled })
   return (
     <MyTooltip tooltip={tooltip}>
       <label className={styles.label}>
-        <span>{title}</span>
         <input
           className={styles.input}
           checked={state[property]}
@@ -16,6 +15,7 @@ function SimpleCheckbox({ state, property, setState, title, tooltip, disabled })
           onChange={(e) => setState((prev) => ({ ...prev, [property]: e.target.checked }))}
           disabled={disabled}
         />
+        <span>{title}</span>
       </label>
     </MyTooltip>
   );
