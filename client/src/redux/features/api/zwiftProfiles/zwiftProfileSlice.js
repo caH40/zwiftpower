@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchZwiftId } from './fetchZwiftId';
+import { fetchZwiftProfile } from './fetchZwiftProfile';
 
 const initialState = {
   zwiftId: 0,
@@ -25,18 +25,18 @@ const zwiftIdSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchZwiftId.pending, (state) => {
+    builder.addCase(fetchZwiftProfile.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
 
-    builder.addCase(fetchZwiftId.fulfilled, (state, action) => {
+    builder.addCase(fetchZwiftProfile.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
       state.profile = action.payload;
     });
 
-    builder.addCase(fetchZwiftId.rejected, (state, action) => {
+    builder.addCase(fetchZwiftProfile.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

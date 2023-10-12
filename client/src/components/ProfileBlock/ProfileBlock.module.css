@@ -1,13 +1,13 @@
-.wrapper__zwift {
+.wrapper {
   position: relative;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   width: 500px;
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px;
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
 }
-.title__zwift {
+.title {
   font-size: 17px;
   margin-bottom: 10px;
 }

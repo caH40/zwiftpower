@@ -12,8 +12,8 @@ function ProfileBlockZwift({ zwiftProfile, title, removable }) {
   const gender = zwiftProfile.male ? 'мужской' : 'женский';
 
   return (
-    <div className={styles.wrapper__zwift}>
-      <h3 className={styles.title__zwift}>{title}</h3>
+    <div className={styles.wrapper}>
+      <h3 className={styles.title}>{title}</h3>
       {removable && (
         <div
           className={styles.remove}

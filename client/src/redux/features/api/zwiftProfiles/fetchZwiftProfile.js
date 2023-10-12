@@ -8,8 +8,8 @@ const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
 /**
  * запрос данных райдера Звифта с сервера ZwiftAPI по zwiftId
  */
-export const fetchZwiftId = createAsyncThunk(
-  'zwift/zwiftId',
+export const fetchZwiftProfile = createAsyncThunk(
+  'zwift/profile',
   async function (zwiftId, thunkAPI) {
     try {
       const response = await axios({
@@ -29,8 +29,8 @@ export const fetchZwiftId = createAsyncThunk(
 /**
  * запрос данных райдеров Звифта с сервера ZwiftAPI по основному zwiftId
  */
-export const fetchZwiftRiders = createAsyncThunk(
-  'zwift/zwiftRiders',
+export const fetchZwiftProfiles = createAsyncThunk(
+  'zwift/profiles',
   async function (zwiftId, thunkAPI) {
     try {
       const response = await axios({

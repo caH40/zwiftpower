@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchZwiftRiders } from './fetchZwiftId';
+import { fetchZwiftProfiles } from './fetchZwiftProfile';
 
 const initialState = {
   zwiftProfiles: {},
@@ -12,24 +12,24 @@ const zwiftProfilesSlice = createSlice({
   name: 'zwiftRiders',
   initialState,
   reducers: {
-    resetZwiftRiders: (state) => {
+    resetZwiftProfiles: (state) => {
       state.zwiftProfiles = {};
     },
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchZwiftRiders.pending, (state) => {
+    builder.addCase(fetchZwiftProfiles.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
 
-    builder.addCase(fetchZwiftRiders.fulfilled, (state, action) => {
+    builder.addCase(fetchZwiftProfiles.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
       state.zwiftProfiles = action.payload;
     });
 
-    builder.addCase(fetchZwiftRiders.rejected, (state, action) => {
+    builder.addCase(fetchZwiftProfiles.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
