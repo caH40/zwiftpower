@@ -6,8 +6,9 @@ import styles from '../Table.module.css';
 import Thead from './Thead';
 import TrBlock from './TrBlock';
 
-function TableLeadersInIntervals({ leadersInIntervals, intervals, type }) {
+function TableLeadersInIntervals({ leadersInIntervals, type }) {
   const { column: interval } = useSelector((state) => state.filterIntervalsForLeader.value);
+  const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
   return (
     <table className={styles.table}>
       <caption className={styles.hidden}>Лидеры по мощности за определенные интервалы</caption>
@@ -21,7 +22,13 @@ function TableLeadersInIntervals({ leadersInIntervals, intervals, type }) {
         {leadersInIntervals
           .filter((result) => result.interval === interval)
           .map((result, index) => (
-            <TrBlock result={result} index={index} type={type} key={result.id} />
+            <TrBlock
+              result={result}
+              index={index}
+              type={type}
+              zwiftId={zwiftId}
+              key={result.id}
+            />
           ))}
       </tbody>
     </table>
