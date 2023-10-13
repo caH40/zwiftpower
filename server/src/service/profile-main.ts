@@ -6,8 +6,16 @@ import { ZwiftResultSchema } from '../types/model.interface.js';
 export const changeProfileData = (results: ZwiftResultSchema[]): ZwiftResultSchema[] => {
   return results.map((result) => {
     if (result.profileDataMain) {
+      // подмена zwiftId
       result.profileId = result.profileDataMain.profileIdMain;
-      result.profileData = result.profileDataMain;
+
+      // подмена данных профиля
+      result.profileData = {
+        ...result.profileDataMain,
+        weightInGrams: result.profileData.weightInGrams,
+        heightInCentimeters: result.profileData.heightInCentimeters,
+        gender: result.profileData.gender,
+      };
       return result;
     } else {
       return result;
