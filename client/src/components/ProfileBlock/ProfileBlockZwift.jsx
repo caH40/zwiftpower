@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { fetchUserDeleteZwiftId } from '../../redux/features/api/user/fetchUser';
 import Flag from '../Flag/Flag';
@@ -6,6 +7,8 @@ import LogoRider from '../LogoRider/LogoRider';
 import IconDelete from '../icons/IconDelete';
 
 import styles from './ProfileBlock.module.css';
+
+const cx = classNames.bind(styles);
 
 function ProfileBlockZwift({ zwiftProfile, title, removable }) {
   const dispatch = useDispatch();
