@@ -6,7 +6,7 @@ import styles from './icon.module.css';
 
 function IconPowerUp({ squareSize = 24 }) {
   return (
-    <MyTooltip tooltip={'Запрет использования PowerUps'}>
+    <MyTooltip tooltip={'PowerUps отключены'}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
         <svg
           width="24"
