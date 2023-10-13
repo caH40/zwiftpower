@@ -1,20 +1,12 @@
 import { Types } from 'mongoose';
+import { ProfileDataInResult } from '../../types/model.interface.js';
 
 export interface ResultsSeriesFetch {
   results: {
     eventId: number;
     subgroupLabel: string;
     profileId: number;
-    profileData: {
-      firstName: string;
-      lastName: string;
-      gender: string;
-      weightInGrams: number;
-      heightInCentimeters: number;
-      imageSrc: string;
-      countryAlpha3: string;
-      age: number;
-    };
+    profileData: ProfileDataInResult;
 
     durationInMilliseconds: number;
     eventSubgroup: {

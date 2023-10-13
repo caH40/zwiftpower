@@ -60,6 +60,17 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     },
   ],
   disqualification: String,
+  profileDataMain: {
+    profileIdMain: Number,
+    firstName: String,
+    lastName: String,
+    gender: String,
+    weightInGrams: Number,
+    heightInCentimeters: Number,
+    imageSrc: String,
+    countryAlpha3: String,
+    age: Number,
+  },
 });
 
 export const ZwiftResult = model<ZwiftResultSchema>('ZwiftResult', zwiftResultSchema);
