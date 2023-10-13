@@ -19,7 +19,7 @@ export async function getResultsService(eventId: number) {
     throw new Error(`Не найден Event (${eventId} в БД`);
   }
 
-  let eventPrepared = <EventWithSubgroup>{};
+  let eventPrepared = {} as EventWithSubgroup;
 
   switch (eventDB.typeRaceCustom) {
     case 'catchUp':

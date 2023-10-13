@@ -2,6 +2,7 @@ import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { secondesToTimeThousandths } from '../../utils/thousandths.js';
 import { addPropertyAddition } from '../../utils/property-addition.js';
 import { sortAndFilterResults } from './sortAndFilter.js';
+import { changeProfileData } from '../profile-main.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -15,8 +16,11 @@ export async function getResultsCatchup(event: EventWithSubgroup) {
     zwiftEventId: event._id,
   }).lean();
 
+  // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
+  const results = changeProfileData(resultsDB);
+
   // Фильтрация и сортировка отправляемого протокола с результатами
-  const resultsFilteredAndSorted = sortAndFilterResults(resultsDB);
+  const resultsFilteredAndSorted = sortAndFilterResults(results);
 
   const resultsWithMaxValues = addPropertyAddition(resultsFilteredAndSorted);
 
