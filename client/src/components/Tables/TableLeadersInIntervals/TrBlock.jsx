@@ -1,13 +1,17 @@
+import classNames from 'classnames/bind';
+
 import TdRider from '../Td/TdRider';
 import { getTimerLocal } from '../../../utils/date-local';
 
 import styles from '../Table.module.css';
 import TdRank from '../Td/TdRank';
 
-function TrBlock({ result, index, type }) {
+const cx = classNames.bind(styles);
+
+function TrBlock({ result, zwiftId, index, type }) {
   return (
     result.profileData && (
-      <tr>
+      <tr className={cx('hover', { current: zwiftId === result.zwiftId })}>
         <td className={styles.center}>
           <TdRank value={index + 1} />{' '}
         </td>

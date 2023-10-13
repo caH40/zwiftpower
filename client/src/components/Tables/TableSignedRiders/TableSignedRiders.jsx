@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
@@ -17,6 +18,7 @@ const intervalsForDisplay = [15, 300, 2400];
 
 function TableSignedRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
+  const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
   const riderSortedByName = sortRidersByFirstName(riders);
 
@@ -25,7 +27,7 @@ function TableSignedRiders({ riders = [], event }) {
       <Thead />
       <tbody>
         {riderSortedByName.map((rider, index) => (
-          <tr className={cx('hover')} key={rider._id}>
+          <tr className={cx('hover', { current: zwiftId === rider.id })} key={rider._id}>
             <td>{index + 1}</td>
             <td>
               <CategoryBox showLabel={true} label={rider.subgroupLabel} circle={true} />
