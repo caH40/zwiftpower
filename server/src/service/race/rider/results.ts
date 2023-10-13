@@ -1,9 +1,12 @@
 import { User } from '../../../Model/User.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
-import { ZwiftEventSchema } from '../../../types/model.interface.js';
 import { secondesToTime } from '../../../utils/date-convert.js';
 import { addPropertyAddition } from '../../../utils/property-addition.js';
+import { changeProfileData } from '../../profile-main.js';
+
+// types
+import { ZwiftEventSchema } from '../../../types/model.interface.js';
 
 /**
  * Получение результатов райдера zwiftId и результатов с дополнительных профилей Звифт
@@ -16,15 +19,9 @@ export async function getUserResultsFromDB(zwiftId: string) {
   const resultsDB = await ZwiftResult.find({
     profileId: [zwiftId, ...zwiftIdAdditional],
   }).lean();
-  const results = resultsDB.map((result) => {
-    // если результат показан с дополнительного профиля Звифт, то подменять profileData
-    if (result.profileDataMain) {
-      result.profileData = result.profileDataMain;
-      return result;
-    } else {
-      return result;
-    }
-  });
+
+  // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
+  const results = changeProfileData(resultsDB);
 
   const resultsWithMaxValues = addPropertyAddition(results);
   for (const result of resultsWithMaxValues) {
