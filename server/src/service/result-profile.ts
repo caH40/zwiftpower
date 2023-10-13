@@ -52,3 +52,15 @@ export const addMainProfileZwift = async ({
     { new: true }
   );
 };
+
+/**
+ * Удаление Основного профиля Zwift (данных) из результата Эвента,
+ * который был показан дополнительным профилем Zwift
+ * @param zwiftIdAdditional zwiftId дополнительного профиля Райдера из Звифт
+ */
+export const deleteMainProfileZwift = async (zwiftIdAdditional: number): Promise<void> => {
+  await ZwiftResult.updateMany(
+    { profileId: zwiftIdAdditional },
+    { $unset: { profileDataMain: '' } }
+  );
+};
