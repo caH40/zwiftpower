@@ -1,4 +1,5 @@
 import { User } from '../Model/User.js';
+import { addMainProfileZwift } from './result-profile.js';
 import { getZwiftRiderService } from './zwift/rider.js';
 
 /**
@@ -9,9 +10,6 @@ export async function updateZwiftIdService(
   zwiftId: number,
   isAdditional: boolean
 ) {
-  // запрос данных Райдера с сервера Zwift
-  const riderData = await getZwiftRiderService(String(zwiftId));
-
   const userWithZwiftId = await User.findOne({
     $or: [{ zwiftId }, { zwiftIdAdditional: [zwiftId] }],
   });
@@ -27,11 +25,20 @@ export async function updateZwiftIdService(
       { _id: userId },
       { $addToSet: { zwiftIdAdditional: zwiftId } }
     );
+
+    if (!userDB) {
+      throw new Error('Ошибка при добавлении дополнительного профиля Zwift');
+    }
+
+    await addMainProfileZwift({ zwiftIdMain: userDB?.zwiftId, zwiftIdAdditional: zwiftId });
     return {
       message: `Дополнительный ZwiftId ${zwiftId} привязан к профилю`,
       zwiftIdMain: userDB!.zwiftId,
     };
   } else {
+    // запрос данных Райдера с сервера Zwift
+    const riderData = await getZwiftRiderService(String(zwiftId));
+
     const photoProfile = riderData ? riderData.imageSrc : undefined;
     await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId, photoProfile } });
     return {

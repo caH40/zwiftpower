@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import {
   LogsAdminSchema,
   PowerCurveSchema,
+  ProfileDataInResult,
   SeriesSchema,
   SignedRidersSchema,
   ZwiftEventSchema,
@@ -63,7 +64,7 @@ export interface UserResult
     gender: string;
     weightInGrams: Additional;
     heightInCentimeters: Additional;
-    imageSrc: string;
+    imageSrc: string | null;
     countryAlpha3: string;
     age: number;
   };
@@ -356,10 +357,18 @@ export interface ZwiftProfileShort
     'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryAlpha3'
   > {}
 
-// /**
-//  * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
-//  */
+/**
+ * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
+ */
 export interface ZwiftRidersShort {
   zwiftProfileMain: ZwiftProfileShort;
   zwiftProfilesAdditional: ZwiftProfileShort[];
+}
+
+/**
+ * Данные Основного профиля райдера с сервера ZwiftAPI,
+ * которые добавляются в результат Дополнительного профиля райдера
+ */
+export interface ProfileDataInResultWithId extends ProfileDataInResult {
+  profileIdMain: number;
 }

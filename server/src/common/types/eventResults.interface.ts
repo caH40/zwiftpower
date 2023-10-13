@@ -91,7 +91,7 @@ export interface UserResultForFetch {
     gender: string;
     weightInGrams: Additional;
     heightInCentimeters: Additional;
-    imageSrc: string;
+    imageSrc: string | null;
     countryAlpha3: string;
     age: number;
   };

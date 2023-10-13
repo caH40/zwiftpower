@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { ProfileDataInResultWithId } from './types.interface.js';
 // типизация схемы и модели документов mongodb
 //
 //
@@ -312,22 +313,25 @@ export interface ZwiftEventSubgroupSchema {
 }
 //
 //
+export interface ProfileDataInResult {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  weightInGrams: number;
+  heightInCentimeters: number;
+  imageSrc: string | null;
+  countryAlpha3: string;
+  age: number;
+}
+//
+//
 export interface ZwiftResultSchema {
   _id: Types.ObjectId;
   zwiftEventId: Types.ObjectId;
   subgroupId: Types.ObjectId; // зачем?
   profileId: number;
 
-  profileData: {
-    firstName: string;
-    lastName: string;
-    gender: string;
-    weightInGrams: number;
-    heightInCentimeters: number;
-    imageSrc: string;
-    countryAlpha3: string;
-    age: number;
-  };
+  profileData: ProfileDataInResult;
 
   eventSubgroupId: number;
   subgroupLabel: string;
@@ -369,6 +373,7 @@ export interface ZwiftResultSchema {
     duration: number;
   }[];
   disqualification?: string;
+  profileDataMain?: ProfileDataInResultWithId;
 }
 //
 //
