@@ -41,7 +41,8 @@
   cursor: pointer;
 }
 .hover:hover {
-  background-color: var(--color-yellow-main);
+  background-color: var(--color-yellow-5-transparent);
+  transition: 0.3s;
 }
 .table .trLink:hover {
   background: #ffda73;
@@ -64,7 +65,7 @@ tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 tbody .current {
-  background-color: var(--color-yellow-5-transparent);
+  background-color: var(--color-yellow-main);
 }
 .table thead th {
   vertical-align: center;
