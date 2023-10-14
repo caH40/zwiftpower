@@ -5,7 +5,9 @@ import { handlerNewbies } from './newbies/newbies.js';
 // types
 import { HandlerProtocolArg } from '../../types/types.interface.js';
 
-// выбор соответствующего обработчика результатов согласно типу гонки
+/**
+ * Выбор соответствующего обработчика результатов согласно типу гонки
+ */
 export async function handlerProtocol({
   eventId,
   results,

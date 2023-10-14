@@ -3,6 +3,7 @@ import { addWattsPerKg } from '../../../utils/watts.js';
 import { addAgeAndFlag } from '../age-and-flag.js';
 import { saveDocument } from '../data-save.js';
 import { filterByRank } from './results-filter.js';
+import { addMainProfileZwiftToRaw } from '../../profile_additional/main-add-row.js';
 
 // types
 import {
@@ -10,7 +11,9 @@ import {
   HandlerProtocolCurrentArg,
 } from '../../../types/types.interface.js';
 
-// формирует финишный протокол для сохранения в БД, для гонки newbies
+/**
+ * Формирование финишного протокола для сохранения в БД, для гонки newbies
+ */
 export async function handlerNewbies({ eventId, results }: HandlerProtocolCurrentArg) {
   const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ _id: eventId }).populate(
     'eventSubgroups'
@@ -32,8 +35,11 @@ export async function handlerNewbies({ eventId, results }: HandlerProtocolCurren
 
   const resultsSorted = filterByRank(resultsWithWPK);
 
+  // добавление данных основного профиля Zwift райдера в результат Эвента
+  const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsSorted);
+
   let rankEvent = 0;
-  for (const result of resultsSorted) {
+  for (const result of resultsWithMainProfiles) {
     if (result.subgroupLabel === 'C' || result.subgroupLabel === 'D') {
       rankEvent += 1;
     } else {

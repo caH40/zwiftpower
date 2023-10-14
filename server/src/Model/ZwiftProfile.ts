@@ -5,7 +5,7 @@ import { ZwiftProfileSchema } from '../types/model.interface.js';
 
 /**
  * Данные из Звифта, создаются при первом результате райдера в Эвенте БД,
- * обновляется с каждым новым результатом
+ * обновляется с каждым новым результатом !!!проверить реализацию!!!
  */
 const zwiftProfileSchema = new Schema<ZwiftProfileSchema>({
   id: { type: Number, unique: true },
