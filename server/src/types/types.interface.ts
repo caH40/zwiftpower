@@ -203,6 +203,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   };
   wattsPerKg?: number;
   disqualification?: string;
+  profileDataMain?: ProfileDataInResultWithId;
 }
 /**
  * Результаты райдеров в Event с дополнительными параметрами

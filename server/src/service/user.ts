@@ -1,5 +1,6 @@
 import { User } from '../Model/User.js';
-import { addMainProfileZwift, deleteMainProfileZwift } from './result-profile.js';
+import { addMainProfileZwift } from './profile_additional/main-add.js';
+import { deleteMainProfileZwift } from './profile_additional/main-delete.js';
 import { getZwiftRiderService } from './zwift/rider.js';
 
 /**

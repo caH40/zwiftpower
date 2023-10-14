@@ -1,10 +1,12 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { errorHandler } from '../../errors/error.js';
-import { EventWithSubgroup } from '../../types/types.interface.js';
 import { handlerProtocol } from '../protocol/handler.js';
 import { addCriticalPowers } from '../race/criticalpower.js';
 import { getResults } from '../zwift/results.js';
 import { checkDurationUpdating } from './results-check.js';
+
+// types
+import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';
 
 // обновление всех результатов заездов из Звифта
 export async function updateResults() {
@@ -29,7 +31,7 @@ export async function updateResults() {
  */
 export async function updateResultsEvent(event: EventWithSubgroup) {
   try {
-    const resultsTotal = [];
+    const resultsTotal = [] as ResultEventAdditional[];
 
     for (const subgroup of event.eventSubgroups) {
       const subgroupObj = { subgroup_id: subgroup._id, subgroupId: subgroup.id };
@@ -53,11 +55,15 @@ export async function updateResultsEvent(event: EventWithSubgroup) {
       throw new Error(`Не найден resultsWithCP ${resultsWithCP}`);
     }
 
+    // параметры для функции handlerProtocol
     const handlerProtocolArg = {
       eventId: event._id,
       results: resultsWithCP,
       typeRaceCustom: event.typeRaceCustom,
     };
+
+    // обработка результатов, согласно типа (typeRaceCustom) Эвента
+    // и сохранение в БД
     await handlerProtocol(handlerProtocolArg);
   } catch (error) {
     errorHandler(error);

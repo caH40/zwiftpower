@@ -1,9 +1,9 @@
-import { getZwiftRiderService } from './zwift/rider.js';
+import { getZwiftRiderService } from '../zwift/rider.js';
 
 // types
-import { ProfileZwiftAPI } from '../types/zwiftAPI/profileFromZwift.interface.js';
-import { ZwiftResult } from '../Model/ZwiftResult.js';
-import { ProfileDataInResultWithId } from '../types/types.interface.js';
+import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface.js';
+import { ZwiftResult } from '../../Model/ZwiftResult.js';
+import { ProfileDataInResultWithId } from '../../types/types.interface.js';
 
 interface Params {
   zwiftIdMain: number;
@@ -11,7 +11,8 @@ interface Params {
 }
 /**
  * Добавление Основного профиля Zwift (данных) в результат Эвента,
- * который был показан дополнительным профилем Zwift
+ * который был показан дополнительным профилем Zwift,
+ * после привязки дополнительного профиля Zwift к аккаунту на сайте zwiftpower.ru
  * @param zwiftIdMain zwiftId основного профиля Райдера из Звифт
  * @param zwiftIdAdditional zwiftId дополнительного профиля Райдера из Звифт
  */
@@ -50,17 +51,5 @@ export const addMainProfileZwift = async ({
     { profileId: zwiftIdAdditional },
     { $set: { profileDataMain } },
     { new: true }
-  );
-};
-
-/**
- * Удаление Основного профиля Zwift (данных) из результата Эвента,
- * который был показан дополнительным профилем Zwift
- * @param zwiftIdAdditional zwiftId дополнительного профиля Райдера из Звифт
- */
-export const deleteMainProfileZwift = async (zwiftIdAdditional: number): Promise<void> => {
-  await ZwiftResult.updateMany(
-    { profileId: zwiftIdAdditional },
-    { $unset: { profileDataMain: '' } }
   );
 };
