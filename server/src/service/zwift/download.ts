@@ -1,9 +1,13 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResults } from './results.js';
+import { addAgeAndFlag } from '../protocol/age-and-flag.js';
 
 // types
-import { EventWithSubgroup } from '../../types/types.interface.js';
+import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';
 
+/**
+ * Получение результатов Эвента для скачивания
+ */
 export async function getZwiftEventResultsService(eventId: string) {
   const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId }).populate(
     'eventSubgroups'
@@ -13,7 +17,7 @@ export async function getZwiftEventResultsService(eventId: string) {
     throw new Error(`Не найден Event ${eventId}`);
   }
 
-  const resultsTotal = [];
+  const resultsTotal = [] as ResultEventAdditional[];
   for (const subgroup of eventDB.eventSubgroups) {
     const subgroupObj = { subgroup_id: subgroup._id, subgroupId: subgroup.id };
 
@@ -24,5 +28,8 @@ export async function getZwiftEventResultsService(eventId: string) {
     resultsTotal.push(...resultsSubgroup);
   }
 
-  return { results: resultsTotal };
+  // добавление данных страны и возраста в результаты райдеров
+  const results = await addAgeAndFlag(eventDB, resultsTotal);
+
+  return { results };
 }
