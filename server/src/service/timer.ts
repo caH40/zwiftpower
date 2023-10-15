@@ -14,6 +14,7 @@ import {
   millisecondsIn12Minutes,
   millisecondsInHour,
 } from '../assets/date.js';
+import { addZwiftProfile } from './updates/addZwiftProfile.js';
 
 // создание sitemap.xml
 await createSitemap(); // первоначальная инициализация, чтобы сразу был после build
@@ -53,6 +54,7 @@ export async function setTimers() {
     '0 0 2 * * *',
     async function () {
       console.log(new Date().toLocaleString(), 'Обновление токенов и фитфайлов мощности'); // eslint-disable-line
+      await addZwiftProfile();
       await updateAccessToken();
       await updateAllPowerCurve();
     },
