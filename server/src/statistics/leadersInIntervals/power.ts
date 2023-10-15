@@ -6,10 +6,10 @@ import { RiderMaxWatt } from '../../types/types.interface.js';
  * Поиск райдера с максимальным значением мощности на интервале
  */
 export const getRiderWithMaxPowerInInterval = (
-  powerCurveDB: PowerCurveSchema[],
+  powerCurvesDB: PowerCurveSchema[],
   interval: number
 ) => {
-  const powerCurveDBCurrentInterval = powerCurveDB
+  const powerCurveDBCurrentInterval = powerCurvesDB
     .map((elm) => ({
       zwiftId: elm.zwiftId,
       pointsWatts: elm.pointsWatts.find((power) => power.duration === interval),
