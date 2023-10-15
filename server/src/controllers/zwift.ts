@@ -49,6 +49,10 @@ export async function getZwiftRider(req: Request, res: Response) {
     }
   }
 }
+
+/**
+ * Получение результатов Эвента для скачивания
+ */
 export async function getZwiftEventResults(req: Request, res: Response) {
   try {
     const { eventId } = req.params;

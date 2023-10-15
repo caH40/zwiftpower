@@ -16,7 +16,7 @@ export async function addCriticalPowers(
   }
 ) {
   try {
-    const resultsWithCP = [];
+    const resultsWithCP = [] as ResultEventAdditional[];
     for (const result of results) {
       const weightRider = result.profileData.weightInGrams / 1000;
 
