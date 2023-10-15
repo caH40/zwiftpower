@@ -9,7 +9,7 @@ function TdGap({ gap, dsq }) {
   const gapTime = secondesToTime(gap);
   const gapTimeStr = gapWithStr(gapTime);
 
-  const gapHasMs = gapTimeStr?.includes('мс');
+  const gapHasMs = gapTimeStr ? gapTimeStr.includes('мс') : null;
 
   return (
     <td>
