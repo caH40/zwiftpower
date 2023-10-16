@@ -373,3 +373,40 @@ export interface ZwiftRidersShort {
 export interface ProfileDataInResultWithId extends ProfileDataInResult {
   profileIdMain: number;
 }
+
+/**
+ * Данные Основного профиля райдера с сервера ZwiftAPI,
+ 
+ */
+export interface UsersWithAdditionalProfiles {
+  zwiftId: number;
+  zwiftIdAdditional: number[];
+}
+
+/**
+ * Данные PowerCurve определенного интервала для нахождения Лидеров мощности
+ */
+export interface PowerCurvesCurrentInterval {
+  zwiftId: number;
+  pointsWatts: {
+    isVirtualPower: boolean;
+    duration: number;
+    value: number;
+    date: number;
+    name: string;
+  };
+}
+
+/**
+ * Данные PowerCurve определенного интервала для нахождения Лидеров мощности WattsPerKg
+ */
+export interface PowerPerKgCurvesCurrentInterval {
+  zwiftId: number;
+  pointsWattsPerKg: {
+    isVirtualPower: boolean;
+    duration: number;
+    value: number;
+    date: number;
+    name: string;
+  };
+}
