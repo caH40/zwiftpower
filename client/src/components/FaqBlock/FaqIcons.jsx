@@ -12,6 +12,7 @@ import IconHeartMonitor from '../icons/IconHeartMonitor';
 import IconDD from '../icons/IconDD';
 import IconRubberBanding from '../icons/IconRubberBanding';
 import IconLateJoin from '../icons/IconLateJoin';
+import IconSteeringDisabled from '../icons/IconSteeringDisabled';
 
 import IconDescription from './IconDescription';
 
@@ -20,8 +21,7 @@ import styles from './FaqBlock.module.css';
 function FaqIcons() {
   return (
     <div className={styles.block}>
-      <h3 className={styles.title}>Иконки и аббревиатуры</h3>
-      <h4 className={styles.title__h4}>Правила в заездах:</h4>
+      <h3 className={styles.title}>Правила в заездах:</h3>
       <IconDescription Icon={IconShowResults}>
         показывать таблицу результатов при финишировании в заезде
       </IconDescription>
@@ -35,7 +35,9 @@ function FaqIcons() {
       <IconDescription Icon={IconViewGroup}>
         Видны только участники своей группы
       </IconDescription>
-
+      <IconDescription Icon={IconSteeringDisabled}>
+        Отключено рулевое управление
+      </IconDescription>
       <IconDescription Icon={IconTT}>Драфтинг отключен</IconDescription>
       <IconDescription Icon={IconTTLock}>
         Запрет выбора велосипедов для раздельного старта (TT)
