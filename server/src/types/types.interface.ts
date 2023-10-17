@@ -32,7 +32,8 @@ type PickedPropertyResultSeries =
   | 'subgroupId'
   | 'subgroupLabel'
   | 'profileId'
-  | 'profileData';
+  | 'profileData'
+  | 'profileDataMain';
 
 export interface ResultSeries
   extends Pick<ResultWithEventAndSubgroup, PickedPropertyResultSeries> {
