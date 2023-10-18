@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { deleteEventAndResultsService } from '../service/race/events-delete.js';
 import { postEventService } from '../service/race/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
-import { getEventService } from '../service/race/event-get.js';
+import { getEventService } from '../service/race/event_get/event-get.js';
 import { getEventsService } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
