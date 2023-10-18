@@ -24,11 +24,10 @@ export async function addCriticalPowers(
   }
 ) {
   try {
+    // инициализация массива для итоговых результатов
     const resultsWithCP = [] as ResultEventAdditional[];
 
     for (const result of results) {
-      const weightRider = result.profileData.weightInGrams / 1000;
-
       // получение данных fit файла активности (заезда) райдера
       const fullDataUrl = await getFullDataUrl(result.activityData.activityId);
 
@@ -53,6 +52,7 @@ export async function addCriticalPowers(
       );
 
       // получение critical powers гонки
+      const weightRider = result.profileData.weightInGrams / 1000;
       const cpBestEfforts = getIntervals(powerInWattsCorrect, weightRider);
 
       result.cpBestEfforts = cpBestEfforts;
