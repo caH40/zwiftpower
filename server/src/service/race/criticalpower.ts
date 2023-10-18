@@ -1,5 +1,5 @@
 import { FitFile } from '../../Model/FitFile.js';
-import { getEmptyCP } from '../power/empty-cp.js';
+import { getCPFromResult } from '../power/empty-cp.js';
 import { getIntervals } from '../power/powerintervals.js';
 import { getFullDataUrl } from '../zwift/activity.js';
 import { getPowers } from '../zwift/power.js';
@@ -22,21 +22,26 @@ export async function addCriticalPowers(
 
       // получение данных fit файла активности (заезда) райдера
       const fullDataUrl = await getFullDataUrl(result.activityData.activityId);
+
       // если ссылки на активность нет (райдер еще не закончил активность)
       if (!fullDataUrl) {
-        result.cpBestEfforts = getEmptyCP();
+        result.cpBestEfforts = getCPFromResult(result);
+
         resultsWithCP.push(result);
         continue;
       }
 
       const powerInWatts: number[] = await getPowers(fullDataUrl);
+
       // добавление фитфайла в БД ======
       await addToDB({ powerInWatts, result, nameAndDate });
+
       // обрезка заезда после завершения гонки
       const powerInWattsCorrect = sliceExcess(
         powerInWatts,
         result.activityData.durationInMilliseconds
       );
+
       // получение critical powers гонки
       const cpBestEfforts = getIntervals(powerInWattsCorrect, weightRider);
 
