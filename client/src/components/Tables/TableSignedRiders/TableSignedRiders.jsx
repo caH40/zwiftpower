@@ -7,7 +7,6 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWattsSchedule from '../Td/TdCpWattsSchedule';
-import { sortRidersByFirstName } from '../../../utils/sort';
 
 import styles from '../Table.module.css';
 
@@ -20,13 +19,11 @@ function TableSignedRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
-  const riderSortedByName = sortRidersByFirstName(riders);
-
   return (
     <table className={cx('table')}>
       <Thead />
       <tbody>
-        {riderSortedByName.map((rider, index) => (
+        {riders.map((rider, index) => (
           <tr className={cx('hover', { current: zwiftId === rider.id })} key={rider._id}>
             <td>{index + 1}</td>
             <td>

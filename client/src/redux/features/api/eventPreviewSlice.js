@@ -44,6 +44,9 @@ const eventPreviewSlice = createSlice({
     builder.addCase(fetchEventPreview.fulfilled, (state, action) => {
       state.status = 'resolved';
       state.event = action.payload;
+
+      // сортировка райдеров
+      // const riderSortedByName = sortRidersByFirstName(riders);
     });
     builder.addCase(fetchEventPreview.rejected, (state, action) => {
       state.status = 'rejected';
