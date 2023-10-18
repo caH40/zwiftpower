@@ -1,5 +1,5 @@
 import { handlerProtocol } from '../../protocol/handler.js';
-import { addCriticalPowers } from '../../race/criticalpower.js';
+import { addCriticalPowers } from './criticalpower/criticalpower.js';
 import { banUpdating } from './update-ban.js';
 
 // types
@@ -11,7 +11,7 @@ import { getResultsFromZwift } from './resultsFromZwift.js';
  */
 export async function updateResultsEvent(event: EventWithSubgroup) {
   // запрет на обновление результатов Эвента который старше 7 дней
-  const periodActual = 7;
+  const periodActual = 30;
   banUpdating(event.eventStart, periodActual);
 
   // получение результатов заезда из ZwiftAPI
