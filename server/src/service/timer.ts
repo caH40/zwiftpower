@@ -3,7 +3,7 @@ import { CronJob } from 'cron';
 import { controlConfirmEmail } from './authentication/control-confirm-email.js';
 import { controlNewPasswords } from './authentication/control-newpassword.js';
 import { updateAllPowerCurve } from './updates/power-curve.js';
-import { updateResults } from './updates/results-events.js';
+import { updateResults } from './updates/results_event/results-events.js';
 import { updateScheduleEvents, updateStartInfo } from './updates/schedule-events.js';
 import { updateAccessToken } from './zwift/token.js';
 import { errorHandler } from '../errors/error.js';

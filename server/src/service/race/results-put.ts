@@ -1,7 +1,9 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { EventWithSubgroup } from '../../types/types.interface.js';
 import { loggingAdmin } from '../log.js';
-import { updateResultsEvent } from '../updates/results-events.js';
+import { updateResultsEvent } from '../updates/results_event/result-event.js';
+
+// types
+import { EventWithSubgroup } from '../../types/types.interface.js';
 
 /**
  * Ручное обновление результатов по запросу модератора
@@ -16,6 +18,7 @@ export async function putResultsService(eventId: number, userId: string) {
   }
 
   await updateResultsEvent(eventDB);
+
   // логирование действия
   if (userId) {
     const description = 'updateEventResultsInDB';
