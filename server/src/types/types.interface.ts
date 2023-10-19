@@ -200,6 +200,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   wattsPerKg?: number;
   disqualification?: string;
   profileDataMain?: ProfileDataInResultWithId;
+  errorAccess?: boolean; // 403 ошибка при запросе с ZwiftAPI
 }
 export interface CpBestEfforts {
   watts: null | number;

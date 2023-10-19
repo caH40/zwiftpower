@@ -6,7 +6,7 @@ import { updateResultsEvent } from '../updates/results_event/result-event.js';
 import { EventWithSubgroup } from '../../types/types.interface.js';
 
 /**
- * Ручное обновление результатов по запросу модератора
+ * Ручное обновление результатов Эвента по запросу модератора
  */
 export async function putResultsService(eventId: number, userId: string) {
   const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId }).populate(
@@ -17,7 +17,7 @@ export async function putResultsService(eventId: number, userId: string) {
     throw new Error(`Не найден Эвент ${eventId} для удаления из БД`);
   }
 
-  await updateResultsEvent(eventDB);
+  await updateResultsEvent(eventDB, false);
 
   // логирование действия
   if (userId) {
