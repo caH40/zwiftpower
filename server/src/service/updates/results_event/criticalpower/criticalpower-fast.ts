@@ -19,7 +19,6 @@ export const addCriticalPowersFast = (
   for (const result of results) {
     result.cpBestEfforts = getCPFromResult(result);
     resultsWithCP.push(result);
-    resultsWithCP.push(result);
   }
 
   return resultsWithCP;
