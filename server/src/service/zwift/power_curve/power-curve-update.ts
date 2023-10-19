@@ -8,7 +8,11 @@ import { errorHandler } from '../../../errors/error.js';
 import { filter90Days } from './update/filter.js';
 import { CriticalPower } from '../../../types/types.interface.js';
 
-export async function updatePowerCurve(zwiftId: number) {
+/**
+ * Обновление Кривой мощности для райдера с zwiftId
+ * @param zwiftId zwiftId профиля райдера
+ */
+export async function updatePowerCurve(zwiftId: number): Promise<void> {
   try {
     // получение актуальных фитфайлов райдера (zwiftId) из БД
     const fitFile = await getFitFile(zwiftId);

@@ -185,12 +185,7 @@ export interface GetResultsArg {
 export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> {
   subgroupLabel?: string;
   subgroupId?: Types.ObjectId;
-  cpBestEfforts?: {
-    watts: null | number;
-    wattsKg: null | number;
-    cpLabel: string;
-    duration: number;
-  }[];
+  cpBestEfforts?: CpBestEfforts[];
   profileData: {
     firstName: string;
     gender: string;
@@ -205,6 +200,12 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   wattsPerKg?: number;
   disqualification?: string;
   profileDataMain?: ProfileDataInResultWithId;
+}
+export interface CpBestEfforts {
+  watts: null | number;
+  wattsKg: null | number;
+  cpLabel: string;
+  duration: number;
 }
 /**
  * Результаты райдеров в Event с дополнительными параметрами

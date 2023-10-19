@@ -16,13 +16,13 @@ import { ResultEventAdditional } from '../../../../types/types.interface.js';
  * @param nameAndDate название и время старта Эвента
  * @returns результаты Эвента с добавленными CriticalPowers
  */
-export async function addCriticalPowers(
+export const addCriticalPowers = async (
   results: ResultEventAdditional[],
   nameAndDate: {
     name: string;
     eventStart: number;
   }
-) {
+): Promise<ResultEventAdditional[] | undefined> => {
   try {
     // инициализация массива для итоговых результатов
     const resultsWithCP = [] as ResultEventAdditional[];
@@ -31,10 +31,10 @@ export async function addCriticalPowers(
       // получение данных fit файла активности (заезда) райдера
       const fullDataUrl = await getFullDataUrl(result.activityData.activityId);
 
-      // если ссылки на активность нет (райдер еще не закончил активность)
+      // если ссылки на активность нет,
+      // райдер еще не закончил активность или закрыт доступ к активностям
       if (!fullDataUrl) {
         result.cpBestEfforts = getCPFromResult(result);
-
         resultsWithCP.push(result);
         continue;
       }
@@ -63,4 +63,4 @@ export async function addCriticalPowers(
   } catch (error) {
     errorHandler(error);
   }
-}
+};
