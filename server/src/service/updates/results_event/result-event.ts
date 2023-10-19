@@ -7,6 +7,7 @@ import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.i
 import { getResultsFromZwift } from './resultsFromZwift.js';
 import { updatePowerCurveResults } from './criticalpower/criticalpower-update.js';
 import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
+import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -26,12 +27,15 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   const nameAndDate = { name: event.name, eventStart: new Date(event.eventStart).getTime() };
 
   let resultsWithCP = [] as ResultEventAdditional[];
+  // выбор как обновлять результаты
   if (isFast) {
     resultsWithCP = addCriticalPowersFast(resultsTotal);
   } else {
     resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
     // обновление CP райдеров в БД
     await updatePowerCurveResults(resultsWithCP);
+    // после полного обновления результатов остановить автоматическое быстрое обновление результатов
+    await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
 
   // параметры для функции handlerProtocol

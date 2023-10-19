@@ -21,10 +21,10 @@ export async function updateResults() {
       // isLastUpdate:false в течении 3х часов после старта происходит быстрое обновление результатов
       const { isLastUpdate, needUpdate } = await checkDurationUpdating(event);
 
-      if (isLastUpdate && needUpdate) {
-        await updateResultsEvent(event, false);
-      } else {
-        await updateResultsEvent(event, true);
+      // обновляются результаты после 30 минут после старта и пока  hasResults: false
+      // isLastUpdate: true происходит быстрое обновление результатов
+      if (needUpdate) {
+        await updateResultsEvent(event, isLastUpdate);
       }
     }
   } catch (error) {
