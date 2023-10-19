@@ -1,21 +1,7 @@
-import { ResultEventAdditional } from '../../types/types.interface.js';
 import { intervals } from './intervals-cp.js';
 
-/**
- * Формирования массива пустых CP по заданным интервалам
- */
-export function getEmptyCP() {
-  const cpBestEfforts = [];
-  for (const interval of intervals) {
-    cpBestEfforts.push({
-      watts: null,
-      wattsKg: null,
-      cpLabel: `${interval} sec`,
-      duration: interval,
-    });
-  }
-  return cpBestEfforts;
-}
+// types
+import { ResultEventAdditional } from '../../types/types.interface.js';
 
 /**
  * Формирования CP при отсутствии активности у райдера (запрет доступа к активности)
@@ -51,5 +37,21 @@ export function getCPFromResult(result: ResultEventAdditional) {
     });
   }
 
+  return cpBestEfforts;
+}
+
+/**
+ * Формирования массива пустых CP по заданным интервалам
+ */
+export function getEmptyCP() {
+  const cpBestEfforts = [];
+  for (const interval of intervals) {
+    cpBestEfforts.push({
+      watts: null,
+      wattsKg: null,
+      cpLabel: `${interval} sec`,
+      duration: interval,
+    });
+  }
   return cpBestEfforts;
 }

@@ -17,9 +17,15 @@ export async function updateResults() {
     }).populate('eventSubgroups');
 
     for (const event of eventsDB) {
-      // обновление результатов заезда заканчивается после 2х часов после старта
-      await checkDurationUpdating(event);
-      await updateResultsEvent(event);
+      // обновление результатов заезда заканчивается после 3х часов после старта
+      // isLastUpdate:false в течении 3х часов после старта происходит быстрое обновление результатов
+      const { isLastUpdate, needUpdate } = await checkDurationUpdating(event);
+
+      if (isLastUpdate && needUpdate) {
+        await updateResultsEvent(event, false);
+      } else {
+        await updateResultsEvent(event, true);
+      }
     }
   } catch (error) {
     errorHandler(error);

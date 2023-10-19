@@ -11,7 +11,7 @@ import { createSitemap } from './sitemap/generate-sitemap.js';
 import {
   millisecondsInDay,
   millisecondsIn23Minutes,
-  millisecondsIn12Minutes,
+  millisecondsIn5Minutes,
   millisecondsInHour,
 } from '../assets/date.js';
 import { addZwiftProfile } from './updates/addZwiftProfile.js';
@@ -42,13 +42,14 @@ export async function setTimers() {
     }
   }, millisecondsIn23Minutes);
 
+  // обновление результатов Эвентов
   setInterval(async () => {
     try {
       await updateResults();
     } catch (error) {
       errorHandler(error);
     }
-  }, millisecondsIn12Minutes);
+  }, millisecondsIn5Minutes);
 
   // запуск обновления фитфалов мощности в 2 часа каждую ночь
   new CronJob(
