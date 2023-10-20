@@ -6,10 +6,10 @@ import styles from './Td.module.css';
 import HighlightValueMax from './HighlightValueMax';
 
 function TdWattsPerKg({ valueRaw, valueAddition }) {
-  const valueRounded = roundValue(valueAddition, 'ten');
+  const valueRounded = roundValue(valueAddition, 'hundred');
 
   return (
-    <td className={styles.cursor__default}>
+    <td>
       <HighlightValueMax
         valueCPRounded={valueRounded}
         dimensionValue={'вт/кг'}
