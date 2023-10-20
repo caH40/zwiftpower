@@ -24,7 +24,9 @@ export async function updateResults() {
       // обновляются результаты после 30 минут после старта и пока  hasResults: false
       // isLastUpdate: true происходит быстрое обновление результатов
       if (needUpdate) {
-        await updateResultsEvent(event, isLastUpdate);
+        // быстро обновлять результаты, если не последнее обновление
+        const isFast = !isLastUpdate;
+        await updateResultsEvent(event, isFast);
       }
     }
   } catch (error) {

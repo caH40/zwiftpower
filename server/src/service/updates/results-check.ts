@@ -6,6 +6,7 @@ import { errorHandler } from '../../errors/error.js';
 import { EventWithSubgroup } from '../../types/types.interface.js';
 
 /**
+ * Проверка необходимости обновления результатов в Эвенте
  * после 3 часов hasResults изменяется на true и Эвент больше не попадёт в данный блок,
  * isLastUpdate: true  => произойдет полное обновление CriticalPower в результатах с сохранением
  * PowerCurve и FirFiles райдеров в БД
@@ -21,7 +22,9 @@ export const checkDurationUpdating = async (event: EventWithSubgroup) => {
     // начинать обновлять после 30 минут после старта
     const needUpdate = timeCurrent - eventStart > millisecondsIn30Minutes;
 
-    if (timeCurrent - eventStart > millisecondsIn3Hours) {
+    // время для обновления результатов закончилось
+    const timesUp = timeCurrent - eventStart > millisecondsIn3Hours;
+    if (timesUp) {
       event.hasResults = true;
 
       await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
