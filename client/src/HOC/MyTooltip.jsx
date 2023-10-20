@@ -1,4 +1,3 @@
-import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 
 function MyTooltip({ children, tooltip, disabled, placement }) {
@@ -8,18 +7,7 @@ function MyTooltip({ children, tooltip, disabled, placement }) {
       {disabled ? (
         <>{children}</>
       ) : (
-        <Tooltip
-          title={tooltip}
-          placement={placement}
-          // componentsProps={{
-          //   tooltip: {
-          //     sx: {
-          //       bgcolor: '#ffbb00',
-          //       color: '#000000',
-          //     },
-          //   },
-          // }}
-        >
+        <Tooltip title={tooltip} placement={placement}>
           {children}
         </Tooltip>
       )}
