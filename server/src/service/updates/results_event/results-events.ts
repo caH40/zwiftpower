@@ -11,6 +11,7 @@ import { EventWithSubgroup } from '../../../types/types.interface.js';
  */
 export async function updateResults() {
   try {
+    console.log({ startUpdate: new Date().toLocaleTimeString() });
     // hasResults:true - прекращение обновлять результаты
     const eventsDB: EventWithSubgroup[] = await ZwiftEvent.find({
       $and: [{ started: true }, { hasResults: false }],
@@ -20,6 +21,7 @@ export async function updateResults() {
       // обновление результатов заезда заканчивается после 3х часов после старта
       // isLastUpdate:false в течении 3х часов после старта происходит быстрое обновление результатов
       const { isLastUpdate, needUpdate } = await checkDurationUpdating(event);
+      console.log({ isLastUpdate, needUpdate });
 
       // обновляются результаты после 30 минут после старта и пока  hasResults: false
       // isLastUpdate: true происходит быстрое обновление результатов

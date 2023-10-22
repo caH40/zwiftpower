@@ -22,13 +22,13 @@ export const checkDurationUpdating = async (event: EventWithSubgroup) => {
     // начинать обновлять после 30 минут после старта
     const needUpdate = timeCurrent - eventStart > millisecondsIn30Minutes;
 
-    // время для обновления результатов закончилось
+    // время для обновления результатов закончилось timesUp:true
     const timesUp = timeCurrent - eventStart > millisecondsIn3Hours;
     if (timesUp) {
       event.hasResults = true;
 
       await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
-      return { isLastUpdate: true, needUpdate };
+      return { isLastUpdate: true, needUpdate: true };
     } else {
       return { isLastUpdate: false, needUpdate };
     }
