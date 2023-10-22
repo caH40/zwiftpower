@@ -1,10 +1,9 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import styles from '../Table.module.css';
-
+import { resetEventsResults } from '../../../redux/features/api/eventsSlice';
 import { getTimerLocal } from '../../../utils/date-local';
 import {
   getDuration,
@@ -19,7 +18,8 @@ import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
-import { useResize } from '../../../hook/use-resize';
+
+import styles from '../Table.module.css';
 
 import Thead from './Thead';
 
@@ -27,7 +27,11 @@ const cx = classnames.bind(styles);
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
-  const { isScreenLg: lg, isScreenSm: sm, isScreenMd: md } = useResize();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(resetEventsResults());
+  }, []);
 
   const isModerator = ['admin', 'moderator'].includes(role);
   return (

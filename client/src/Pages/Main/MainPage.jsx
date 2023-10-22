@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchEvents, resetEventsInfo } from '../../redux/features/api/eventsSlice';
+import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
@@ -26,7 +26,7 @@ function MainPage() {
   useEffect(() => {
     dispatch(fetchEvents({ started: false, target: 'preview' }));
 
-    return () => dispatch(resetEventsInfo());
+    return () => dispatch(resetEventsPreview());
   }, [dispatch]);
 
   useEffect(() => {

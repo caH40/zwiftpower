@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import styles from '../Table.module.css';
@@ -15,7 +15,7 @@ import {
   getDistanceForTd,
   getElevationForTd,
 } from '../../../utils/event';
-
+import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
@@ -29,6 +29,11 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
 
   const isModerator = ['admin', 'moderator'].includes(role);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(resetEventsSchedule());
+  }, []);
 
   return (
     <table className={cx('table')}>
