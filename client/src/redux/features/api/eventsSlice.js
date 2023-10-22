@@ -47,9 +47,14 @@ const eventsSlice = createSlice({
     error: null,
   },
   reducers: {
-    resetEventsInfo: (state) => {
+    resetEventsPreview: (state) => {
       state.eventsPreview = [];
+    },
+    resetEventsSchedule: (state) => {
       state.eventsSchedule = [];
+      state.quantityPages = 0;
+    },
+    resetEventsResults: (state) => {
       state.eventsResults = [];
       state.quantityPages = 0;
     },
@@ -80,6 +85,7 @@ const eventsSlice = createSlice({
   },
 });
 
-export const { resetEventData, resetEventsInfo } = eventsSlice.actions;
+export const { resetEventData, resetEventsPreview, resetEventsSchedule, resetEventsResults } =
+  eventsSlice.actions;
 
 export default eventsSlice.reducer;

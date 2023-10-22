@@ -5,7 +5,7 @@ import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
-import { fetchEvents, resetEventsInfo } from '../../redux/features/api/eventsSlice';
+import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 
@@ -23,8 +23,6 @@ function ScheduleList() {
 
   useEffect(() => {
     dispatch(fetchEvents({ started: false, page, docsOnPage: 20 }));
-
-    return () => dispatch(resetEventsInfo());
   }, [dispatch, trigger, page]);
 
   useEffect(() => {
