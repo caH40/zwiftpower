@@ -1,6 +1,13 @@
 import { server } from '../../../config/environment.js';
 
-export function htmlRefreshPassword(date: string, username: string, password: string) {
+/**
+ * Обновление пароля профиля
+ * @param date дата обновление пароля
+ * @param username логин пользователя, меняющего пароль
+ * @param password новый пароль пользователя
+ * @returns письмо с html разметкой
+ */
+export function htmlRefreshPassword(date: string, username: string, password: string): string {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html
