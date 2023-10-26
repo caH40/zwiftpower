@@ -9,7 +9,11 @@
 
 export const getActivePage = (pathname, page, notNestedPath, nestedPath) => {
   // данный блок для страниц в pathname которых нет 'main'
-  if (page.includes(nestedPath) && !pathname.includes(notNestedPath)) {
+  if (
+    page.includes(nestedPath) &&
+    !pathname.includes(notNestedPath) &&
+    !pathname.includes('ftp')
+  ) {
     // если в pathname есть
     return true;
   }

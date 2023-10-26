@@ -1,3 +1,11 @@
+.title {
+  display: inline-block;
+  cursor: default;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  /* padding-bottom: 10px; */
+}
 .block__table {
   overflow-x: auto;
   min-height: 350px;

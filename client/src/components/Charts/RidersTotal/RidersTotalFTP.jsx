@@ -14,19 +14,18 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 import { useChartRidersTotal } from '../../../hook/chart/riders/useChartRidersTotal';
 
-import styles from './RidersTotal.module.css';
+import styles from './RidersTotalFTP.module.css';
 
 /**
  * Распределение всех райдеров по удельной мощности
  * ось x: 0.1 ватт
  * ось y: суммарное количество участников
  */
-function ChartRidersTotal() {
-  const { data, options } = useChartRidersTotal();
+function ChartRidersTotalFTP({ isMale }) {
+  const { data, options } = useChartRidersTotal(isMale);
 
   return (
     <section>
-      <h3 className={styles.title}>По удельной мощности</h3>
       <div className={styles.block}>
         <Bar options={options} data={data} className={styles.chart} />
       </div>
@@ -34,4 +33,4 @@ function ChartRidersTotal() {
   );
 }
 
-export default ChartRidersTotal;
+export default ChartRidersTotalFTP;
