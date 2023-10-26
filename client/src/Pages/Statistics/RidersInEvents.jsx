@@ -8,8 +8,10 @@ import {
 } from '../../redux/features/api/statistics/ridersInEventsSlice';
 import useTitle from '../../hook/useTitle';
 import ChartRidersInEvents from '../../components/Charts/RidersInEvents/ChartRidersInEvents';
-import { millisecondsYear } from '../../assets/dates';
+import ChartRidersTotal from '../../components/Charts/RidersTotal/RidersTotal';
 import ChartTypesInsEvents from '../../components/Charts/TypesInsEvents/ChartTypesInsEvents';
+import { millisecondsYear } from '../../assets/dates';
+
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 
 import styles from './RidersInEvents.module.css';
@@ -41,6 +43,7 @@ function RidersInEvents() {
           <h2 className={styles.title}>Количество участников</h2>
           <NavBarRidersInEvent form={form} setForm={setForm} />
           <ChartRidersInEvents />
+          <ChartRidersTotal />
           <ChartTypesInsEvents form={form} />
           <p className={styles.annotation}>
             * при клике на параметре исключается данный параметр из диаграммы
