@@ -413,3 +413,12 @@ export interface PowerPerKgCurvesCurrentInterval {
     name: string;
   };
 }
+
+/**
+ * Распределение райдеров по ФТП
+ */
+export interface TotalRidersFTP {
+  ftp: number;
+  quantityMale: number;
+  quantityFemale: number;
+}
