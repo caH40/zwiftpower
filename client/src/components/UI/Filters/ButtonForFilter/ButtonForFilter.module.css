@@ -9,6 +9,7 @@
   letter-spacing: 0.06em;
   user-select: none;
   background-color: var(--color-text-main);
+  color: var(--color-text-dark);
 }
 .button:not(.active) {
   color: var(--color-border-minor);

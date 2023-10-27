@@ -18,6 +18,7 @@
   user-select: none;
   background-color: var(--color-text-main);
   text-decoration: none;
+  color: var(--color-text-dark);
 }
 .button:not(.active) {
   color: var(--color-border-minor);
