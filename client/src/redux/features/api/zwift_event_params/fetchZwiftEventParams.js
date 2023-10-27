@@ -2,8 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
-
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../../../config/environment';
 
 export const fetchZwiftEventParams = createAsyncThunk(
   'zwift/eventParams',

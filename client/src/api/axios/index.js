@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../config/environment';
 
 export const myAxios = axios.create({
   // что бы куки цеплялись автоматически
   withCredentials: true,
-  baseURL: API_URL,
+  baseURL: serverExpress,
 });
 
 myAxios.interceptors.request.use((config) => {

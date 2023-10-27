@@ -5,8 +5,7 @@ import { myAxios } from '../../../../api/axios';
 import { getAuth } from '../../authSlice';
 import { checkAuth } from '../../../../api/auth-check';
 import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
-
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../../../config/environment';
 
 // привязка ZwiftId к аккаунту
 export const fetchUserPut = createAsyncThunk(

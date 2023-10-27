@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const server = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../config/environment';
 
 export async function checkRequestPassword(token) {
   try {
     const response = await axios({
       method: 'get',
-      url: `${server}/api/auth/check-request-password/${token}`,
+      url: `${serverExpress}/api/auth/check-request-password/${token}`,
     });
     return response;
   } catch (error) {

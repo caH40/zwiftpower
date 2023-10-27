@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const server = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../config/environment';
 
 export async function postLogout() {
   try {
     const response = await axios({
       method: 'post',
-      url: `${server}/api/auth/logout`,
+      url: `${serverExpress}/api/auth/logout`,
       withCredentials: true,
     });
     return response.data;

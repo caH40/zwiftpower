@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import { getAlert } from '../alertMessageSlice';
 import { setValueMax } from '../../../utils/value-max';
-
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../../config/environment';
 
 export const fetchUserResults = createAsyncThunk(
   'userResultsGet/profile',

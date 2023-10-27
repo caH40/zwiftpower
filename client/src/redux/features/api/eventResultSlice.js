@@ -3,10 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { prepareResults } from '../../../Pages/ResultsDescription/service';
-
 import { getAlert } from '../alertMessageSlice';
-
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../../config/environment';
 
 export const fetchResultEvent = createAsyncThunk(
   'eventGet/fetchResultEvent',

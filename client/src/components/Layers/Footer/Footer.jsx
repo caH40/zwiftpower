@@ -1,11 +1,8 @@
-import React from 'react';
-
 import { useResize } from '../../../hook/use-resize';
 import IconTelegram from '../../icons/IconTelegram';
+import { serverFront } from '../../../config/environment';
 
 import styles from './Footer.module.css';
-
-const server = import.meta.env.VITE_SERVER_FRONT;
 
 function Footer() {
   const { isScreenLg: lg } = useResize();
@@ -35,32 +32,32 @@ function Footer() {
             <h3 className={styles.title}>Карта сайта:</h3>
             <div className={styles.box}>
               <div className={styles.column}>
-                <a className={styles.link} href={`${server}`}>
+                <a className={styles.link} href={`${serverFront}`}>
                   Анонсы ближайших заездов
                 </a>
-                <a className={styles.link} href={`${server}/race/schedule`}>
+                <a className={styles.link} href={`${serverFront}/race/schedule`}>
                   Расписание всех заездов
                 </a>
-                <a className={styles.link} href={`${server}/race/results`}>
+                <a className={styles.link} href={`${serverFront}/race/results`}>
                   Результаты заездов
                 </a>
               </div>
               <div className={styles.column}>
-                <a className={styles.link} href={`${server}/race/series`}>
+                <a className={styles.link} href={`${serverFront}/race/series`}>
                   Серии заездов
                 </a>
-                <a className={styles.link} href={`${server}/race/statistics/main`}>
+                <a className={styles.link} href={`${serverFront}/race/statistics/main`}>
                   Статистика
                 </a>
-                <a className={styles.link} href={`${server}/race/statistics/leaders`}>
+                <a className={styles.link} href={`${serverFront}/race/statistics/leaders`}>
                   Лидеры мощности
                 </a>
               </div>
               <div className={styles.column}>
-                <a className={styles.link} href={`${server}/race/series/catchup`}>
+                <a className={styles.link} href={`${serverFront}/race/series/catchup`}>
                   Догонялки
                 </a>
-                <a className={styles.link} href={`${server}/faq`}>
+                <a className={styles.link} href={`${serverFront}/faq`}>
                   Часто задаваемые вопросы
                 </a>
               </div>

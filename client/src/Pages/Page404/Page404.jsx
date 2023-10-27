@@ -3,12 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
-
+import { serverFront } from '../../config/environment';
 import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Page404.module.css';
-
-const urlServer = import.meta.env.VITE_SERVER_FRONT;
 
 function Page404() {
   const { '*': wrongUrl } = useParams();
@@ -25,7 +23,7 @@ function Page404() {
       <h3 className={styles.title}>Ошибка 404</h3>
       <p className={styles.text}>
         Мы не смогли найти страницу{' '}
-        <span className={styles.text__wrong}>{`${urlServer}/${wrongUrl}`}</span>
+        <span className={styles.text__wrong}>{`${serverFront}/${wrongUrl}`}</span>
       </p>
       <p className={styles.text}>Не расстраивайтесь, у нас много других интересных страниц!</p>
       <Link to="/" className={styles.text__link}>

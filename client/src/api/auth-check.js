@@ -1,5 +1,6 @@
 import axios from 'axios';
-const server = import.meta.env.VITE_SERVER_EXPRESS;
+
+import { serverExpress } from '../config/environment';
 
 export async function checkAuth() {
   try {
@@ -7,7 +8,7 @@ export async function checkAuth() {
     // и произойдет авторизация авторизация в браузере
     const response = await axios({
       method: 'post',
-      url: `${server}/api/auth/refresh`,
+      url: `${serverExpress}/api/auth/refresh`,
       withCredentials: true,
     });
     return response;

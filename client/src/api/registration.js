@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../config/environment';
 
 export async function postRegistration(dataForm) {
   try {

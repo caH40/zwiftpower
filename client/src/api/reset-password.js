@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const server = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../config/environment';
 
 export async function resetPassword(dataForm) {
   try {
     const response = await axios({
       method: 'put',
-      url: `${server}/api/auth/reset-password`,
+      url: `${serverExpress}/api/auth/reset-password`,
       data: { email: dataForm.email },
     });
 

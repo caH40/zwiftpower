@@ -2,8 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { getAlert } from '../../alertMessageSlice';
-
-const serverExpress = import.meta.env.VITE_SERVER_EXPRESS;
+import { serverExpress } from '../../../../config/environment';
 
 /**
  * Получение лучших результатов райдеров на интервалах в Эвентах за 90 дней
