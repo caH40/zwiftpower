@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { millisecondsIn3Hours, millisecondsIn30Minutes } from '../../assets/date.js';
+import { millisecondsIn2Hours, millisecondsIn30Minutes } from '../../assets/date.js';
 import { errorHandler } from '../../errors/error.js';
 
 // types
@@ -15,15 +15,15 @@ import { EventWithSubgroup } from '../../types/types.interface.js';
  */
 export const checkDurationUpdating = async (event: EventWithSubgroup) => {
   try {
-    // millisecondsIn2Hours длительность обновления результатов
     const eventStart = new Date(event.eventStart).getTime();
     const timeCurrent = new Date().getTime();
 
     // начинать обновлять после 30 минут после старта
     const needUpdate = timeCurrent - eventStart > millisecondsIn30Minutes;
 
+    // millisecondsIn2Hours длительность обновления результатов
     // время для обновления результатов закончилось timesUp:true
-    const timesUp = timeCurrent - eventStart > millisecondsIn3Hours;
+    const timesUp = timeCurrent - eventStart > millisecondsIn2Hours;
     if (timesUp) {
       event.hasResults = true;
 
