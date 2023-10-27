@@ -87,10 +87,10 @@ select {
   --success: #58c34e;
   --wafer-white: rgba(255, 255, 255, 0.8);
 
-  --catA: #dc4119;
-  --catB: #58c34e;
-  --catC: #3ec0e9;
-  --catD: #fccf0b;
+  --catA: rgb(220, 65, 25);
+  --catB: rgb(88, 195, 78);
+  --catC: rgb(62, 192, 233);
+  --catD: rgb(252, 207, 11);
   --catE: #943e5e;
   --catW: #9422ae;
   --catWA: #9422ae;

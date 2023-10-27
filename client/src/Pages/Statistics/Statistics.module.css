@@ -4,7 +4,9 @@
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.03em;
-  /* padding-bottom: 10px; */
+}
+.title span {
+  vertical-align: middle;
 }
 .block__table {
   overflow-x: auto;

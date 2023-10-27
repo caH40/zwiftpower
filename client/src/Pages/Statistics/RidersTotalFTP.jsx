@@ -5,7 +5,7 @@ import ChartRidersTotalFTP from '../../components/Charts/RidersTotal/RidersTotal
 import useTitle from '../../hook/useTitle';
 import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fetchRidersTotalFTP';
 import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/ridersTotalFTPSlice';
-import MyTooltip from '../../HOC/MyTooltip';
+import IconQuestion from '../../components/icons/IconQuestion';
 
 import styles from './Statistics.module.css';
 
@@ -23,9 +23,18 @@ function RidersTotalFTP() {
 
   return (
     <section>
-      <MyTooltip tooltip={'FTP = CP20 * 0.95'}>
-        <h2 className={styles.title}>Распределение райдеров по FTP</h2>
-      </MyTooltip>
+      <h2 className={styles.title}>
+        Распределение райдеров по FTP{' '}
+        <span>
+          <IconQuestion
+            squareSize={18}
+            tooltip={
+              'Категории рассчитываются по правилам с сайта zwiftpower.com, FTP рассчитывается как CP20 * 0.95 '
+            }
+          />
+        </span>
+      </h2>
+
       <ChartRidersTotalFTP isMale={true} />
       <ChartRidersTotalFTP isMale={false} />
     </section>

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import useScreenOrientation from '../../useScreenOrientation';
+import { getCategoryColors } from '../../../utils/category-colors';
 
 /**
  * монтирование диаграммы распределения участников по ваттам
@@ -24,10 +25,17 @@ export const useChartRidersTotal = (isMale = true) => {
     aspectRatio,
     pointRadius: 0,
     plugins: {
+      data: {
+        labels: {
+          color: 'black',
+        },
+      },
       legend: {
         display: true,
         labels: {
           color: 'black',
+          boxHeight: 0, // скрыть бокс Легенды, так как окрашивается в первый цвет Бара
+          boxWidth: 0,
         },
       },
       tooltip: {
@@ -69,7 +77,7 @@ export const useChartRidersTotal = (isMale = true) => {
       {
         label: isMale ? 'Мужчины' : 'Женщины',
         data: dataForChart.map((elm) => (isMale ? elm.quantityMale : elm.quantityFemale)),
-        backgroundColor: isMale ? 'rgba(1, 107, 10, 0.5)' : 'rgba(121, 3, 255, 0.5)',
+        backgroundColor: getCategoryColors(dataForChart, isMale),
       },
     ],
   };
