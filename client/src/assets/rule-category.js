@@ -8,5 +8,24 @@ export const zMAP = {
   B: { wattsPerKg: 4.1 },
   C: { wattsPerKg: 3.2 },
 };
+
+/**
+ * Категории из ZwiftPower для мужчин
+ */
+export const ftpMale = {
+  APlusLow: 4.6,
+  ALow: 4.0,
+  BLow: 3.2,
+  CLow: 2.5,
+};
+
+/**
+ * Категории из ZwiftPower для женщин
+ */
+export const ftpFemale = {
+  ALow: 3.7,
+  BLow: 3.2,
+  CLow: 2.5,
+};
 export const zFTPInterval = 2400;
 export const zMAPInterval = 300;
