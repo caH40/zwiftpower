@@ -10,6 +10,7 @@ import { resetPasswordService } from '../service/authentication/reset-password.j
 import { checkRequestPasswordService } from '../service/authentication/checkRequestPassword.js';
 import { newPasswordService } from '../service/authentication/new-password.js';
 import { errorHandler } from '../errors/error.js';
+import { AxiosError } from 'axios';
 
 export async function registration(req: Request, res: Response) {
   try {
@@ -51,7 +52,12 @@ export async function authorization(req: Request, res: Response) {
     });
     res.status(201).json({ ...response, refreshToken: undefined });
   } catch (error) {
-    res.status(401).json(error);
+    errorHandler(error);
+    if (error instanceof AxiosError || error instanceof Error) {
+      res.status(401).json({ message: error.message });
+    } else {
+      res.status(401).json(error);
+    }
   }
 }
 
