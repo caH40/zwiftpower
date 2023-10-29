@@ -2,7 +2,11 @@ export function validateUsername(register) {
   return {
     ...register('username', {
       required: 'Обязательное поле',
-      minLength: { value: 5, message: 'Больше 4х символов' },
+      pattern: {
+        value: /^[a-z0-9_.-@]+$/i,
+        message: 'Разрешены a-Z 0-9 Символы . _ - @',
+      },
+      minLength: { value: 4, message: 'Больше 3х символов' },
       maxLength: { value: 15, message: 'Не больше 15 символов' },
     }),
   };
@@ -25,7 +29,7 @@ export function validatePassword(register) {
     ...register('password', {
       required: 'Обязательное поле',
       minLength: { value: 6, message: 'Больше 5ти символов' },
-      maxLength: { value: 15, message: 'Не больше 15 символов' },
+      maxLength: { value: 20, message: 'Не больше 20 символов' },
     }),
   };
 }
