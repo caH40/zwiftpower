@@ -30,7 +30,11 @@ export async function registration(req: Request, res: Response) {
     res.status(201).json({ ...response, refreshToken: undefined });
   } catch (error) {
     errorHandler(error);
-    res.status(401).json(error);
+    if (error instanceof AxiosError || error instanceof Error) {
+      res.status(401).json({ message: error.message });
+    } else {
+      res.status(401).json(error);
+    }
   }
 }
 

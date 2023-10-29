@@ -10,19 +10,24 @@ import { generateToken, saveToken } from './token.js';
  * Регистрация нового пользователя
  */
 export async function registrationService(username: string, email: string, password: string) {
+  // !!! проверять на все разрешенные символы
+  if (username.includes(' ')) {
+    throw new Error('В логине не должно быть пробелов');
+  }
+
   const checkUsername = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
   });
 
   // проверка уникальности Логина
   if (checkUsername) {
-    throw { message: `Username "${username}" уже занят` };
+    throw new Error(`Username "${username}" уже занят`);
   }
 
   // проверка уникальности e-mail
   const checkEmail = await User.findOne({ email });
   if (checkEmail) {
-    throw { message: `Пользователь с "${email}" уже существует` };
+    throw new Error(`Пользователь с "${email}" уже существует`);
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -33,8 +38,6 @@ export async function registrationService(username: string, email: string, passw
     password: hashPassword,
     role: 'user',
     date: Date.now(),
-  }).catch((error) => {
-    throw error;
   });
 
   // создание документа для контроля подтверждения e-mail при регистрации
