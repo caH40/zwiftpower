@@ -8,13 +8,16 @@ export async function authorizationService(
   password: string,
   refreshToken: string
 ) {
-  const userDB = await User.findOne({ username });
+  const userDB = await User.findOne({
+    username: { $regex: '\\b' + username + '\\b', $options: 'i' },
+  });
 
   if (!userDB) {
     throw new Error(`Неверный Логин или Пароль`);
   }
 
   const isValidPassword = await bcrypt.compare(password, userDB.password);
+
   if (!isValidPassword) {
     throw new Error(`Неверный Логин или Пароль`);
   }
