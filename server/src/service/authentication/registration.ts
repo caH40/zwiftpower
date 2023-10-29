@@ -10,7 +10,9 @@ import { generateToken, saveToken } from './token.js';
  * Регистрация нового пользователя
  */
 export async function registrationService(username: string, email: string, password: string) {
-  const checkUsername = await User.findOne({ username });
+  const checkUsername = await User.findOne({
+    username: { $regex: '\\b' + username + '\\b', $options: 'i' },
+  });
 
   // проверка уникальности Логина
   if (checkUsername) {
