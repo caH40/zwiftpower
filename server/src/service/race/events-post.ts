@@ -3,7 +3,6 @@ import { Types } from 'mongoose';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftEventSubgroup } from '../../Model/ZwiftEventSubgroup.js';
 import { countDistance } from '../../utils/distance.js';
-// import { getZwiftInsiderUrl } from '../../utility/route.js';
 import { loggingAdmin } from '../log.js';
 import { updateStartInfoEvent } from '../updates/schedule-events.js';
 import { getClubName } from './club.js';
@@ -55,8 +54,6 @@ async function saveEventToDB(eventParams: EventWithSubgroup) {
      * Расчет общей дистанции и набора высоты согласно маршрута и количества кругов
      */
     const { distanceInKilometers, elevationGainInMeters } = countDistance(eventSubgroup);
-
-    // const zwiftInsiderUrl = getZwiftInsiderUrl(eventSubgroup.routeId);
 
     const { _id } = await ZwiftEventSubgroup.create({
       bikeHash: eventSubgroup.bikeHash,
