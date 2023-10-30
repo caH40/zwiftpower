@@ -12,6 +12,17 @@ import { useResize } from '../../hook/use-resize';
 import styles from './CardRacePreview.module.css';
 
 function CardRacePreview({ event, getClick }) {
+  const eventType = (type) => {
+    switch (type) {
+      case 'RACE':
+        return 'Race';
+      case 'GROUP_RIDE':
+        return 'Ride';
+      default:
+        return type;
+    }
+  };
+
   const { isScreenSm: sm } = useResize();
   return (
     <div className={styles.wrapper} onClick={() => getClick(event.id)}>
@@ -30,22 +41,18 @@ function CardRacePreview({ event, getClick }) {
             </div>
             <dl className={styles.list}>
               <div className={styles.box__term}>
-                <dt className={styles.term}>Формат</dt>
+                <dt className={styles.term}>Правила</dt>
                 <dd className={styles.term__description}>
-                  <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
+                  <RulesBox event={event} squareSize={18} />
                 </dd>
               </div>
               {sm && (
                 <>
                   <div className={styles.box__term}>
-                    <dt className={styles.term}>Правила</dt>
+                    <dt className={styles.term}>Формат</dt>
                     <dd className={styles.term__description}>
-                      <RulesBox event={event} squareSize={18} />
+                      <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
                     </dd>
-                  </div>
-                  <div className={styles.box__term}>
-                    <dt className={styles.term}>Тип</dt>
-                    <dd className={styles.term__description}>{event.eventType}</dd>
                   </div>
                   <div className={styles.box__term}>
                     <dt className={styles.term}>Организатор</dt>
@@ -55,7 +62,10 @@ function CardRacePreview({ event, getClick }) {
               )}
             </dl>
           </div>
-          <img className={styles.poster} src={event.imageUrl} alt="poster" />
+          <div className={styles.box__img}>
+            <img className={styles.poster} src={event.imageUrl} alt="poster" />
+            <span className={styles.title__img}>{eventType(event.eventType)}</span>
+          </div>
         </div>
         <div className={styles.card__bottom}>
           <ParamsEvent event={event} />
