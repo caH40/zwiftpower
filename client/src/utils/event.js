@@ -17,6 +17,22 @@ export const routeLinks = (id) => {
   return { whatsOnZwiftUrl, zwiftInsiderUrl, stravaSegmentUrl };
 };
 
+/**
+ * Получение типа Эвента (Race, Ride ...)
+ * @param {string} type
+ * @returns {string}
+ */
+export const getEventType = (type) => {
+  switch (type) {
+    case 'RACE':
+      return 'Race';
+    case 'GROUP_RIDE':
+      return 'Ride';
+    default:
+      return type;
+  }
+};
+
 export const organizer = (value) => {
   return organizers.find((organizer) => organizer.value === value)?.name;
 };

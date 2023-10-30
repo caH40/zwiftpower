@@ -93,13 +93,6 @@
   aspect-ratio: 2.5/1;
   border-radius: 5px;
   overflow: hidden;
-  /* background-color: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 26.02%,
-    rgba(0, 0, 0, 1) 72.89%,
-    rgba(0, 0, 0, 1) 100%
-  ); */
 }
 .box__img::before {
   content: '';
@@ -131,7 +124,7 @@
   top: 10px;
   left: 10px;
   z-index: 10;
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 @media screen and (max-width: 992px) {
