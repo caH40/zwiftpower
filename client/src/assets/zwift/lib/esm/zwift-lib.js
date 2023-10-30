@@ -9,7 +9,6 @@ export { headgears } from './headgears';
 export { jerseys } from './jerseys';
 export { notableMomentTypes } from './notableMomentTypes';
 export { paintJobs } from './paintJobs';
-export { routes } from './routes';
 export { runShirts } from './runShirts';
 export { runShoes } from './runShoes';
 export { runShorts } from './runShorts';

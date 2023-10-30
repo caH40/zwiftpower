@@ -11,7 +11,7 @@ import {
   getLaps,
   map,
   organizer,
-  route,
+  routeName,
   getDistanceForTd,
   getElevationForTd,
 } from '../../../utils/event';
@@ -57,7 +57,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
               <CategoriesBox event={event} addCls={'nowrap'} />
             </td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-            <td className={cx('td__nowrap')}>{route(event.eventSubgroups[0]?.routeId)}</td>
+            <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>
             <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
             <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
             <td>{getElevationForTd(event.eventSubgroups[0])}</td>

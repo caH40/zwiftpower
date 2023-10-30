@@ -8,10 +8,11 @@ import IconParamsDistance from '../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../icons/Params/IconParamsAscent';
 import IconParamsDuration from '../icons/Params/IconParamsDuration';
 import IconParamsLap from '../icons/Params/IconParamsLap';
-import { distanceObject, map, route } from '../../utils/event';
+import { distanceObject, map, routeName } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
+// отображение блока основных параметров Эвента
 function ParamsEvent({ event, addCls, bgColor }) {
   const [subgroup] = event.eventSubgroups;
 
@@ -30,7 +31,7 @@ function ParamsEvent({ event, addCls, bgColor }) {
         <div className={styles.box}>
           <IconParamsRoute squareSize={30} bgColor={bgColor} />
           <div className={styles.description}>
-            <h4 className={styles.title}>{route(subgroup.routeId)}</h4>
+            <h4 className={styles.title}>{routeName(subgroup.routeId)}</h4>
             <p className={styles.title__sub}>МАРШРУТ</p>
           </div>
         </div>
