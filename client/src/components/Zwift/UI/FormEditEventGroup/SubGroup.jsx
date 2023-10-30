@@ -1,8 +1,7 @@
-import React from 'react';
-
 import cn from 'classnames';
 
-import { jerseys, routes, worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
+import { jerseys, worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
+import { routes } from '../../../../assets/zwift/raw/routes';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 
@@ -113,8 +112,8 @@ function SubGroup({ subGroup, index }) {
                   options: routes
                     .filter(
                       (route) =>
-                        route.world ===
-                        worlds.find((world) => world.id === subGroup.mapId)?.slug
+                        route.mapName.toLowerCase() ===
+                        worlds.find((world) => world.id === subGroup.mapId)?.name.toLowerCase()
                     )
                     .sort((a, b) =>
                       a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')

@@ -1,6 +1,6 @@
 import { worlds } from '../assets/zwift/lib/esm/worlds';
-import { routes } from '../assets/zwift/lib/esm/routes';
 import { organizers } from '../assets/zwift/organizer';
+import { routes } from '../assets/zwift/raw/routes';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';
@@ -8,7 +8,7 @@ import { getLapsString } from './declination';
 export const map = (id) => {
   return worlds.find((map) => map.id === id)?.name;
 };
-export const route = (id) => {
+export const routeName = (id) => {
   return routes.find((route) => route.id === id)?.name;
 };
 export const routeLinks = (id) => {
