@@ -11,12 +11,12 @@ import styles from './ChartTypesInsEvents.module.css';
  * Диаграмма суммарного количества райдеров по типам Эвентов
  */
 function ChartTypesInsEvents({ form }) {
-  const { data } = useChartTypesRace({ period: form.period });
+  const { data, options } = useChartTypesRace({ period: form.period });
   return (
-    <section className={styles.wrapper}>
+    <section>
       <h3 className={styles.title}>Типы заездов</h3>
       <div className={styles.block}>
-        <Pie data={data} />
+        <Pie data={data} options={options} />
       </div>
     </section>
   );
