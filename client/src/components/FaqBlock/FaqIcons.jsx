@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IconCategoryEnforced from '../icons/IconCategoryEnforced';
 import IconShowResults from '../icons/IconShowResults';
 import IconPowerUp from '../icons/IconPowerUp';
@@ -21,7 +19,7 @@ import styles from './FaqBlock.module.css';
 function FaqIcons() {
   return (
     <div className={styles.block}>
-      <h3 className={styles.title}>Правила в заездах:</h3>
+      <h3 className={styles.title}>Правила в заездах</h3>
       <IconDescription Icon={IconShowResults}>
         показывать таблицу результатов при финишировании в заезде
       </IconDescription>

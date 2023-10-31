@@ -1,0 +1,87 @@
+.block {
+  flex: 0 1 470px;
+  min-width: 300px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 5px;
+  padding: 15px 15px 5px;
+  letter-spacing: 0.03em;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.03em;
+  padding-bottom: 15px;
+}
+.box__jersey {
+  margin-bottom: 20px;
+}
+.image {
+  width: 140px;
+  height: 140px;
+}
+
+.nav {
+  margin-bottom: 10px;
+}
+.label {
+  padding: 0;
+  margin: 0;
+  color: var(--color-text-minor);
+}
+.input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  background-color: var(--color-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--color-border-minor);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px var(--color-orange-main);
+}
+.input:disabled {
+  background-color: var(--color-bg-minor);
+}
+.input::placeholder {
+  font-weight: 400;
+  color: var(--color-text-minor);
+}
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  background-clip: padding-box;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid var(--color-border-minor);
+  border-radius: 0.4em;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  user-select: none;
+  background-color: var(--color-text-main);
+  text-decoration: none;
+  overflow: hidden;
+}
+.select:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px var(--color-orange-main);
+}
+.option {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background: var(--color-bg-minor);
+}
