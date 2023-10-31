@@ -36,7 +36,7 @@ export const getLinksRouteDescription = (routeId) => {
   if (!routeName) {
     return null;
   }
-  const routeNameForLink = route.name.replace(' ', '-').toLowerCase();
+  const routeNameForLink = route.name.replace(/\s/g, '-').toLowerCase();
 
   let mapNameForLink = null;
   switch (route.mapName) {
