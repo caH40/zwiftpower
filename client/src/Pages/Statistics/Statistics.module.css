@@ -4,9 +4,24 @@
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.03em;
+  margin-bottom: 10px;
 }
 .title span {
   vertical-align: middle;
+}
+.annotation {
+  font-size: 9px;
+  text-align: right;
+}
+.wrapper__chart {
+  flex: 0 1 470px;
+  min-width: 300px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 5px;
+  padding: 15px 15px 5px;
+  letter-spacing: 0.03em;
+  margin-bottom: 15px;
 }
 .block__table {
   overflow-x: auto;
@@ -17,4 +32,18 @@
   justify-content: flex-end;
   gap: 0 15px;
   flex-wrap: wrap;
+}
+.wrapper__charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.wrapper__chart {
+  flex: 1 1 500px;
+  min-width: 300px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 5px;
+  padding: 15px 15px 5px;
+  letter-spacing: 0.03em;
 }

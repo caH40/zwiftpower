@@ -6,7 +6,7 @@ import styles from './Statistics.module.css';
 
 function Statistics() {
   return (
-    <section className={styles.wrapper}>
+    <section>
       <NavBarStatistics addCls={'mb15'} />
       <Outlet />
     </section>

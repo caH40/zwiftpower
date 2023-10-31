@@ -31,8 +31,18 @@ export const useChartTypesRace = ({ period }) => {
   // исключение типов Эвентов в которых не было райдеров
   const typesRaceFiltered = [...typesRace].filter((type) => type.ridersQuantity);
 
+  const aspectRatio = 2 / 1;
   // названия типов Эвентов
   const labels = typesRaceFiltered.map((type) => type.label);
+  const options = {
+    aspectRatio,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+      },
+    },
+  };
 
   const data = {
     labels,
@@ -54,5 +64,5 @@ export const useChartTypesRace = ({ period }) => {
     ],
   };
 
-  return { data };
+  return { data, options };
 };

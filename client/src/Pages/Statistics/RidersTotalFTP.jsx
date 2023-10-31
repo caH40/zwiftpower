@@ -34,9 +34,14 @@ function RidersTotalFTP() {
           />
         </span>
       </h2>
-
-      <ChartRidersTotalFTP isMale={true} />
-      <ChartRidersTotalFTP isMale={false} />
+      <div className={styles.wrapper__charts}>
+        <div className={styles.wrapper__chart}>
+          <ChartRidersTotalFTP isMale={true} />
+        </div>
+        <div className={styles.wrapper__chart}>
+          <ChartRidersTotalFTP isMale={false} />
+        </div>
+      </div>
     </section>
   );
 }

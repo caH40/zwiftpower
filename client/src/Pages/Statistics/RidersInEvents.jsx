@@ -13,7 +13,7 @@ import { millisecondsYear } from '../../assets/dates';
 
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 
-import styles from './RidersInEvents.module.css';
+import styles from './Statistics.module.css';
 
 function RidersInEvents() {
   useTitle('Статистика');
@@ -41,8 +41,14 @@ function RidersInEvents() {
         <>
           <h2 className={styles.title}>Количество участников</h2>
           <NavBarRidersInEvent form={form} setForm={setForm} />
-          <ChartRidersInEvents />
-          <ChartTypesInsEvents form={form} />
+          <div className={styles.wrapper__charts}>
+            <div className={styles.wrapper__chart}>
+              <ChartRidersInEvents />
+            </div>
+            <div className={styles.wrapper__chart}>
+              <ChartTypesInsEvents form={form} />
+            </div>
+          </div>
           <p className={styles.annotation}>
             * при клике на параметре исключается данный параметр из диаграммы
           </p>
