@@ -6,16 +6,40 @@
   font-size: 11px;
   margin-right: 3px;
 }
-.link {
-  display: block;
-  text-decoration: none;
-  font-size: 16px;
-  color: var(--color-blue-4);
-  margin: 0px 0px 10px 0px;
-}
+
 .link:hover {
   text-decoration: underline;
 }
 .wrapper__wide {
   overflow-x: auto;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid var(--color-blue-main);
+  border-radius: 0.4em;
+  padding: 0.4em 0.8em;
+  margin-bottom: 10px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  user-select: none;
+  background-color: var(--color-text-main);
+  text-decoration: none;
+  color: var(--color-blue-4);
+}
+
+.button:hover {
+  background-color: var(--color-yellow-5);
+  color: var(--color-text-minor);
+  transition: 0.2s;
+}
+.button:active {
+  background-color: var(--color-yellow-4);
+  transition: 0.2s;
 }

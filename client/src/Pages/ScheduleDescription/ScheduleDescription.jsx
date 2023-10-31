@@ -40,7 +40,7 @@ function ScheduleDescription() {
         <>
           <DescriptionEventZwiftNew event={event} forSchedule={true} />
           <Link
-            className={styles.link}
+            className={styles.button}
             to={`https://www.zwift.com/eu/events/view/${event.id}`}
             target="_blank"
             rel="noreferrer"
