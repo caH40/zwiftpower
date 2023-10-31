@@ -57,9 +57,11 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
           {isOpened && (
             <div className={styles.box__right}>
               <RaceBoxDescription event={event} />
-              {event?.eventSubgroups?.map((subgroup) => (
-                <CategoryBoxDescription key={subgroup.id} subgroup={subgroup} gaps={gaps} />
-              ))}
+              <div className={styles.wrapper__categories}>
+                {event?.eventSubgroups?.map((subgroup) => (
+                  <CategoryBoxDescription key={subgroup.id} subgroup={subgroup} gaps={gaps} />
+                ))}
+              </div>
             </div>
           )}
         </div>
