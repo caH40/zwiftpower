@@ -110,4 +110,7 @@
   .box__params {
     padding: 10px 10px;
   }
+  .wrapper__categories {
+    max-width: none;
+  }
 }
