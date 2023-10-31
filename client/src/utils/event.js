@@ -11,11 +11,6 @@ export const map = (id) => {
 export const routeName = (id) => {
   return routes.find((route) => route.id === id)?.name;
 };
-export const routeLinks = (id) => {
-  const { whatsOnZwiftUrl, zwiftInsiderUrl, stravaSegmentUrl } =
-    routes.find((route) => route.id === id) || {};
-  return { whatsOnZwiftUrl, zwiftInsiderUrl, stravaSegmentUrl };
-};
 
 /**
  * Получение типа Эвента (Race, Ride ...)
@@ -31,6 +26,34 @@ export const getEventType = (type) => {
     default:
       return type;
   }
+};
+
+/**
+ * Линки на описание маршрутов на сторонних маршрутах
+ */
+export const getLinksRouteDescription = (routeId) => {
+  const route = routes.find((route) => route.id === routeId);
+  if (!routeName) {
+    return null;
+  }
+  const routeNameForLink = route.name.replace(' ', '-').toLowerCase();
+
+  let mapNameForLink = null;
+  switch (route.mapName) {
+    case 'MAKURIISLANDS':
+      mapNameForLink = 'MAKURI-ISLANDS'.toLocaleLowerCase();
+      break;
+    case 'NEWYORK':
+      mapNameForLink = 'NEW-YORK'.toLocaleLowerCase();
+      break;
+    default:
+      mapNameForLink = route.mapName.toLocaleLowerCase();
+  }
+
+  const linkWhatsonzwift = `https://whatsonzwift.com/world/${mapNameForLink}/route/${routeNameForLink}`;
+  const linkZwiftinsider = `https://zwiftinsider.com/route/${routeNameForLink}`;
+  const linkZwifterbikes = `https://zwifterbikes.web.app/route/${routeNameForLink}`;
+  return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift };
 };
 
 export const organizer = (value) => {
