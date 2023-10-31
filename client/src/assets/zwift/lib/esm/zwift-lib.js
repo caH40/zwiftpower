@@ -6,7 +6,6 @@ export { bikeShoes } from './bikeShoes';
 export { challenges } from './challenges';
 export { glasses } from './glasses';
 export { headgears } from './headgears';
-export { jerseys } from './jerseys';
 export { notableMomentTypes } from './notableMomentTypes';
 export { paintJobs } from './paintJobs';
 export { runShirts } from './runShirts';

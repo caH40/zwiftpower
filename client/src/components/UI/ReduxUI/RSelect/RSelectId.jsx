@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import useBlockParameters from '../../../../hook/useBlockParameters';
@@ -14,7 +13,7 @@ function RSelectId({ subgroupIndex, label, property, disabled, options }) {
       <label className={styles.label}>{label || property}</label>
       <select
         className={styles.select}
-        value={blockWithParameters()[property]} // select не может быть null
+        value={blockWithParameters()[property] || ''} // select не может быть null
         onChange={(e) => {
           dispatch(inputHandler({ [property]: +e.target.value, index: subgroupIndex }));
         }}

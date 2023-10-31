@@ -1,6 +1,7 @@
 import cn from 'classnames';
 
-import { jerseys, worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
+import { jerseys } from '../../../../assets/zwift/raw/jerseys';
+import { worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
 import { routes } from '../../../../assets/zwift/raw/routes';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
