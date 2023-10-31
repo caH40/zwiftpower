@@ -1,6 +1,13 @@
 .wrapper {
   margin-bottom: 10px;
 }
+.wrapper__categories {
+  flex: 1 0 220px;
+  max-width: 300px;
+  background-color: var(--wafer-white);
+  border-radius: 5px;
+  padding: 7px 10px;
+}
 .block__main {
   position: relative;
   width: 100%;
