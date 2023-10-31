@@ -18,10 +18,11 @@ import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
 import NewPassword from './Pages/Auth/NewPassword';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import RaceSeries from './Pages/RaceSeries/RaceSeries';
-import Faq from './Pages/Faq/Faq';
+
 import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
 
 const Catchup = lazy(() => import('./Pages/Catchup/Catchup'));
+const Faq = lazy(() => import('./Pages/Faq/Faq'));
 
 import { sendMetrika } from './metrika/yandex';
 import MySuspense from './HOC/Se';
@@ -56,7 +57,14 @@ function App() {
           }
         />
         <Route path="/logs/admin" element={<LogsAdmin />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route
+          path="/faq"
+          element={
+            <MySuspense>
+              <Faq />
+            </MySuspense>
+          }
+        />
         {isModerator ? AdminRoute() : ''}
         <Route path="*" element={<Page404 />} />
         {ResultsRoute()}
