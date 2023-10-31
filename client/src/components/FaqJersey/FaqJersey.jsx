@@ -18,27 +18,32 @@ const jerseyFirst = {
 // Просмотр Jersey которые можно выбрать в Звифте
 const FaqJersey = () => {
   const [jersey, setJersey] = useState(jerseyFirst);
+  const [jerseys, setJerseys] = useState(jerseysFromAPISorted);
   const [search, setSearch] = useState('');
 
-  const filterJerseys = () => {
-    return [...jerseysFromAPISorted].filter((jersey) =>
-      jersey.name.toLowerCase().includes(search.toLowerCase())
+  const filterJerseys = (e) => {
+    setSearch(e.target.value);
+    const filtered = [...jerseysFromAPISorted].filter((jersey) =>
+      jersey.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
+    setJerseys(filtered);
+    setJersey(filtered[0]);
   };
+
   return (
     <div className={styles.block}>
       <h3 className={styles.title}>Поиск джерси в Zwift</h3>
       <div className={styles.box__jersey}>
-        <img className={styles.image} src={jersey.imageUrl} alt={jersey.name} />
+        <img
+          className={styles.image}
+          src={jersey ? jersey.imageUrl : jerseyFirst.imageUrl}
+          alt={jersey ? jersey.name : jerseyFirst.name}
+        />
       </div>
 
       <nav className={styles.nav}>
         <label className={styles.label}>Фильтр</label>
-        <input
-          className={styles.input}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <input className={styles.input} value={search} onChange={filterJerseys} />
 
         <label className={styles.label}>Выбор</label>
         <select
@@ -47,8 +52,8 @@ const FaqJersey = () => {
             setJersey(jerseysFromAPISorted.find((elm) => elm.name === e.target.value))
           }
         >
-          {/* <option value={''} label={' '}></option> */}
-          {filterJerseys().map((jersey, index) => (
+          <option value={''} label={' '} disabled></option>
+          {jerseys.map((jersey, index) => (
             <option
               className={styles.option}
               value={jersey.name}
