@@ -31,7 +31,7 @@ export const useChartRidersTotal = (isMale = true) => {
         },
       },
       legend: {
-        display: true,
+        display: false,
         labels: {
           color: 'black',
           boxHeight: 0, // скрыть бокс Легенды, так как окрашивается в первый цвет Бара
