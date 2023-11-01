@@ -48,6 +48,14 @@ function Flag({ name = '' }) {
       nameShort = 'il';
       break;
 
+    case 'arm':
+      nameShort = 'am';
+      break;
+
+    case 'est':
+      nameShort = 'ee';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
