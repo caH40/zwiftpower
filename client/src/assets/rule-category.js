@@ -29,3 +29,23 @@ export const ftpFemale = {
 };
 export const zFTPInterval = 2400;
 export const zMAPInterval = 300;
+
+/**
+ * Цвета в зависимости от категорий
+ */
+export const getColorCategory = (isMale, opacity = 1) => {
+  const colors = [
+    `rgba(0, 0, 0, ${opacity})`,
+    `rgba(220, 65, 25, ${opacity})`,
+    `rgba(88, 195, 78,${opacity})`,
+    `rgba(62, 192, 233, ${opacity})`,
+    `rgba(252, 207, 11, ${opacity})`,
+  ];
+
+  if (isMale) {
+    return colors;
+  } else {
+    colors.shift();
+    return colors;
+  }
+};

@@ -5,6 +5,7 @@ import ChartRidersTotalFTP from '../../components/Charts/RidersTotal/RidersTotal
 import useTitle from '../../hook/useTitle';
 import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fetchRidersTotalFTP';
 import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/ridersTotalFTPSlice';
+import ChartRidersTotalFTPPie from '../../components/Charts/RidersTotalPie/ChartRidersTotalFTPPie';
 import IconQuestion from '../../components/icons/IconQuestion';
 
 import styles from './Statistics.module.css';
@@ -40,6 +41,14 @@ function RidersTotalFTP() {
         </div>
         <div className={styles.wrapper__chart}>
           <ChartRidersTotalFTP isMale={false} />
+        </div>
+      </div>
+      <div className={styles.wrapper__charts}>
+        <div className={styles.wrapper__chart}>
+          <ChartRidersTotalFTPPie isMale={true} />
+        </div>
+        <div className={styles.wrapper__chart}>
+          <ChartRidersTotalFTPPie isMale={false} />
         </div>
       </div>
     </section>

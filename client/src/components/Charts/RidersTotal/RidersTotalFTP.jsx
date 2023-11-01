@@ -26,6 +26,7 @@ function ChartRidersTotalFTP({ isMale }) {
 
   return (
     <section>
+      <h3 className={styles.title}>{isMale ? 'Мужчины' : 'Женщины'}</h3>
       <div className={styles.block}>
         <Bar options={options} data={data} className={styles.chart} />
       </div>
