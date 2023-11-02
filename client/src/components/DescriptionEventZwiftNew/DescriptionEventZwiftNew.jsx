@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { gapStart, replaceWithBr } from '../../utils/event';
 import { getTimerLocal } from '../../utils/date-local';
 import IconEdit from '../icons/IconEdit';
+import IconModify from '../icons/IconModify';
 
 import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import CategoryBoxDescription from '../CategoryBoxDescription/CategoryBoxDescription';
@@ -16,13 +17,18 @@ import LinksRoute from '../LinksRoute/LinksRoute';
 
 import styles from './DescriptionEventZwiftNew.module.css';
 
-function DescriptionEventZwiftNew({ event, forSchedule }) {
+function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
   const [isOpened, setIsOpened] = useState(false);
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
+  const navigate = useNavigate();
 
   const openDetailed = () => {
     setIsOpened((prev) => !prev);
+  };
+
+  const modifyResultsEvent = () => {
+    navigate(`/admin/results/edit/${eventId}`);
   };
 
   const gaps = gapStart(event);
@@ -33,7 +39,16 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
         className={cn(styles.block__main, { [styles.block__mainClosed]: !isOpened })}
         style={{ backgroundImage: `url(${event.imageUrl})` }}
       >
-        <OpenBoxArrow getClick={openDetailed} isOpened={isOpened} />
+        <div className={styles.box__open}>
+          <OpenBoxArrow getClick={openDetailed} isOpened={isOpened} />
+        </div>
+
+        {/* показывать только для страницы результатов */}
+        {!forSchedule && (
+          <div className={styles.box__modify}>
+            <IconModify getClick={modifyResultsEvent} bgColor={'white'} />
+          </div>
+        )}
         <div
           className={cn(styles.main__inner, {
             [styles.main__innerClosed]: !isOpened,
@@ -65,7 +80,6 @@ function DescriptionEventZwiftNew({ event, forSchedule }) {
             </div>
           )}
         </div>
-
         {isOpened && (
           <div className={styles.box__params}>
             <ParamsEvent event={event} />
