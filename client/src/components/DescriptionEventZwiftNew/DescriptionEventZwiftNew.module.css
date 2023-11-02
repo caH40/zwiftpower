@@ -78,6 +78,19 @@
 .main__innerClosed {
   padding-bottom: 10px;
 }
+.box__open,
+.box__modify {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  cursor: pointer;
+}
+.box__modify {
+  top: unset;
+  bottom: 15px;
+}
+
 @media screen and (max-width: 992px) {
   .block__main {
     padding: 20px 20px 0px 20px;
@@ -112,5 +125,13 @@
   }
   .wrapper__categories {
     max-width: none;
+  }
+  .box__open {
+    top: 10px;
+    right: 10px;
+  }
+  .box__modify {
+    bottom: 10px;
+    right: 10px;
   }
 }

@@ -6,6 +6,7 @@ import MySuspense from '../HOC/Se';
 const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
+const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 
 export function AdminRoute() {
   return (
@@ -39,6 +40,14 @@ export function AdminRoute() {
         element={
           <MySuspense>
             <ZwiftAddEvent />
+          </MySuspense>
+        }
+      />
+      <Route
+        path="/admin/results/edit/:eventId"
+        element={
+          <MySuspense>
+            <EditResults />
           </MySuspense>
         }
       />
