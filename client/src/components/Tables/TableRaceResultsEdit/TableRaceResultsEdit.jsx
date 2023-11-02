@@ -1,19 +1,19 @@
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import { fetchResultEdit } from '../../../redux/features/api/result_edit/fetchResultEdit';
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/event';
-import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
-import { sortTable } from '../../../utils/table-sort';
+import Checkbox from '../../UI/Checkbox/Checkbox';
 
 import styles from '../Table.module.css';
 
@@ -23,37 +23,19 @@ import { getCaption } from './utils';
 const cx = classnames.bind(styles);
 
 function TableRaceResultsEdit({ results, event }) {
-  const filterCategory = useSelector((state) => state.filterCategory.value);
-  const filterWatts = useSelector((state) => state.filterWatts.value);
-  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
+  console.log(results);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
-  const { isScreenSm: sm, isScreenMd: md } = useResize();
-
   const [getLeaders, getSweepers] = useLeader(event);
-
-  const resultSortedAndFiltered = useMemo(() => {
-    let filteredResults = [];
-    if (filterCategory.name === 'All') {
-      filteredResults = results;
-    } else {
-      filteredResults = [...results].filter(
-        (result) => result.subgroupLabel === filterCategory.name
-      );
-    }
-    const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
-
-    return sortedAndFilteredResults;
-  }, [filterCategory, filterWatts, activeSorting, results]);
 
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
-      <Thead md={md} sm={sm} columnsCP={columnsCP} />
+      <Thead columnsCP={columnsCP} />
 
       <tbody>
-        {resultSortedAndFiltered?.map((result) => {
+        {results?.map((result) => {
           const profile = result.profileData;
           const dsq = result.disqualification;
 
@@ -65,6 +47,15 @@ function TableRaceResultsEdit({ results, event }) {
               <td className={styles.center}>
                 <TdRank value={result.rankEvent} dsq={dsq} />
               </td>
+              <td>
+                <Checkbox
+                  state={result.isDisqualification}
+                  property={'disqualification'}
+                  resultId={result._id}
+                  tooltip={'Дисквалификация райдера'}
+                  apiRequest={fetchResultEdit}
+                />
+              </td>
 
               <td>
                 <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
@@ -73,7 +64,6 @@ function TableRaceResultsEdit({ results, event }) {
               <TdRider
                 profile={profile}
                 profileId={result.profileId}
-                showIcons={{ sm }}
                 getLeaders={getLeaders}
                 getSweepers={getSweepers}
               />
