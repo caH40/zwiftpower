@@ -12,6 +12,7 @@ import {
   getSeries,
   getResultsSeries,
 } from '../controllers/race.js';
+import { putResult } from '../controllers/result.js';
 
 export const routerRace = Router();
 
@@ -24,3 +25,4 @@ routerRace.put('/results', authAdmin, putResults);
 routerRace.get('/results/:eventId', getResults);
 routerRace.get('/series', getSeries);
 routerRace.get('/series/results/:type/:season', getResultsSeries);
+routerRace.put('/result', authAdmin, putResult);

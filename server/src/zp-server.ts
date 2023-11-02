@@ -39,6 +39,7 @@ app.use('/api/auth', routerAuth);
 app.use('/api/race/profile', routerProfile);
 app.use('/api/statistics', statisticsRouter);
 app.use('/api/information', routerInformation);
+
 app.use(express.static(path.resolve(__dirname, '..', '..', 'client', 'build')));
 app.get('*', (_, res) =>
   res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html'))

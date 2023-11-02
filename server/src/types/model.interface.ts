@@ -281,7 +281,11 @@ export interface ZwiftEventSchema {
   totalFinishedCount?: number;
   modifiedResults?: {
     hasModified: boolean;
-    moderators: { id: Types.ObjectId; date: number }[];
+    moderators: {
+      id: Types.ObjectId;
+      date: number;
+      action: { property: string; value: string; rider: string; message?: string };
+    }[];
   };
 }
 //

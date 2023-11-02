@@ -39,3 +39,12 @@ export interface PutEvent {
   eventTemplateId: number;
   eventData: PostEvent;
 }
+
+/**
+ * данные получаемые с фронтэнда для изменения результата Райдера в Эвенте
+ */
+export interface PutResult {
+  property: string;
+  data: { value: string; message: string };
+  id: string;
+}

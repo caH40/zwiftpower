@@ -23,7 +23,6 @@ import { getCaption } from './utils';
 const cx = classnames.bind(styles);
 
 function TableRaceResultsEdit({ results, event }) {
-  console.log(results);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
@@ -50,7 +49,7 @@ function TableRaceResultsEdit({ results, event }) {
               <td>
                 <Checkbox
                   state={result.isDisqualification}
-                  property={'disqualification'}
+                  property={'isDisqualification'}
                   resultId={result._id}
                   tooltip={'Дисквалификация райдера'}
                   apiRequest={fetchResultEdit}

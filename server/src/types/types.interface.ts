@@ -11,6 +11,7 @@ import {
 } from './model.interface.js';
 import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
+import { PutResult } from './http.interface.js';
 
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате
@@ -421,4 +422,11 @@ export interface TotalRidersFTP {
   ftp: number;
   quantityMale: number;
   quantityFemale: number;
+}
+
+/**
+ * Параметры сервиса для изменения результата Райдера в Эвенте
+ */
+export interface PutResultParams extends PutResult {
+  userId: string;
 }
