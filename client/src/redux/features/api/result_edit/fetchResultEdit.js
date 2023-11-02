@@ -9,15 +9,18 @@ import { serverExpress } from '../../../../config/environment';
  * data : {
  *           _id: ObjectId изменяемого результата,
  *           property название изменяемого параметра,
- *           value новое значение изменяемого параметра
+ *           data: {
+ *                  value новое значение изменяемого параметра
+ *                  message комментарий к изменению
+ *                  }
+ *
  * }
  */
 export const fetchResultEdit = createAsyncThunk('results/resultPut', async (data, thunkAPI) => {
   try {
-    console.log(data);
     const response = await myAxios({
-      url: `${serverExpress}/api/result/edit`,
-      method: 'post',
+      url: `${serverExpress}/api/race/result`,
+      method: 'put',
       data: data,
     });
 

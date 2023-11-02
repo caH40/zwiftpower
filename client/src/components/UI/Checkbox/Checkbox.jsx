@@ -5,7 +5,7 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './Checkbox.module.css';
 
-function Checkbox({ state, apiRequest, property, setUpdate, resultId, tooltip }) {
+function Checkbox({ state, apiRequest, property, message, setUpdate, resultId, tooltip }) {
   const [check, setCheck] = useState(() => state);
 
   const dispatch = useDispatch();
@@ -14,7 +14,13 @@ function Checkbox({ state, apiRequest, property, setUpdate, resultId, tooltip })
     setCheck((prev) => !prev);
 
     // check отправляется как !check так как на текущем рендере еще не изменилось состояние check
-    dispatch(apiRequest({ property, value: !check, id: resultId }));
+    dispatch(
+      apiRequest({
+        property,
+        data: { value: String(!check), message: message },
+        id: resultId,
+      })
+    );
   };
 
   return (
