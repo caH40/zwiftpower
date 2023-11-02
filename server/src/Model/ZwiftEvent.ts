@@ -33,6 +33,10 @@ const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   started: { type: Boolean, default: false },
   totalFinishedCount: { type: Number, default: 0 },
+  modifiedResults: {
+    hasModified: { type: Boolean, default: false },
+    moderators: [{ id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, date: Number }],
+  },
 });
 
 export const ZwiftEvent = model<ZwiftEventSchema>('ZwiftEvent', zwiftEventSchema);
