@@ -37,6 +37,7 @@ import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderS
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
+import { adminReducers } from './admin';
 
 export default configureStore({
   reducer: {
@@ -74,6 +75,7 @@ export default configureStore({
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     ...statisticsReducers,
     ...userReducers,
+    ...adminReducers,
   },
 });
 

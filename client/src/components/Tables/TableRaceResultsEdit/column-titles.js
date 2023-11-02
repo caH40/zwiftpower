@@ -1,5 +1,6 @@
 export const raceResultsColumnsStartFull = [
-  { name: '', id: 1 },
+  { name: '', id: 0 },
+  { name: 'Dsq', id: 1 },
   { name: 'Категория', id: 2 },
   { name: 'Райдер', id: 3 },
   { name: 'Время', id: 4 },
@@ -8,19 +9,6 @@ export const raceResultsColumnsStartFull = [
   { name: 'Удельная средняя мощность за гонку', id: 7 },
   { name: 'Средняя мощность за гонку', id: 8 },
 ];
-// export const raceResultsColumnsStartLg = [
-//   { name: '', id: 1 },
-//   { name: 'Категория', id: 2 },
-//   { name: 'Райдер', id: 3 },
-//   { name: 'Время', id: 4 },
-//   { name: 'Удельная средняя мощность за гонку', id: 7 },
-//   { name: 'Средняя мощность за гонку', id: 8 },
-// ];
-// export const raceResultsColumnsStartSm = [
-//   { name: '', id: 1 },
-//   { name: 'Райдер', id: 3 },
-//   { name: 'Время', id: 4 },
-// ];
 export const raceResultsColumnsCP = [
   { name: '5с', id: 100 },
   { name: '30с', id: 101 },
@@ -39,7 +27,5 @@ export const raceResultsColumnsEnd = [
 ];
 
 export const raceResultsColumns = () => {
-  // if (!isScreenLg && isScreenSm) return raceResultsColumnsStartLg;
-  // if (!isScreenSm) return raceResultsColumnsStartSm;
   return raceResultsColumnsStartFull;
 };
