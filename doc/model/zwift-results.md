@@ -63,3 +63,16 @@
 - **duration** -(`Number`) длительность в секундах;
 
 **disqualification** -(`String`) Причина дисквалификации;
+
+  **profileDataMain** -(`Object`) данные Главного профиля, если текущий результат показан дополнитеьным профилем:
+  
+- **profileIdMain** -(`Number`) zwiftId Главного профиля, к которому прявязан текущий profileId;  
+- **firstName** -(`String`);  
+- **lastName** -(`String`);  
+- **gender** -(`String`);  
+- **weightInGrams** -(`Number`);  
+- **heightInCentimeters** -(`Number`);  
+- **imageSrc** -(`String`);  
+- **countryAlpha3** -(`String`);  
+- **age** -(`Number`);  
+  
