@@ -16,10 +16,16 @@ export const setDisqualification = async ({
   // значение дисквалификации
   const isDisqualification = data.value === 'true' ? true : false;
 
-  // внесение данных в Результат райдера
+  // внесение данных дисквалификации (или снятия дисквл.) в Результат райдера
   const resultDB = await ZwiftResult.findOneAndUpdate(
     { _id: id },
-    { $set: { isDisqualification, disqualification: data.message } },
+    {
+      $set: {
+        isDisqualification,
+        disqualificationDescription: data.message,
+        disqualification: 'DSQ',
+      },
+    },
     { new: true }
   );
 

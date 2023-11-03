@@ -199,6 +199,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
     countryAlpha3?: string;
   };
   wattsPerKg?: number;
+  isDisqualification: boolean;
   disqualification?: string;
   disqualificationDescription?: string;
   profileDataMain?: ProfileDataInResultWithId;
