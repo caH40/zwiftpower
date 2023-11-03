@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -22,7 +21,7 @@ import { getCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
-function TableRaceResultsEdit({ results, event }) {
+function TableRaceResultsEdit({ results, event, setUpdate }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
@@ -36,7 +35,9 @@ function TableRaceResultsEdit({ results, event }) {
       <tbody>
         {results?.map((result) => {
           const profile = result.profileData;
-          const dsq = result.disqualification;
+          const isDsq = result.isDisqualification;
+          const dsqType = result.disqualification;
+          const dsqDescription = result.disqualificationDescription;
 
           return (
             <tr
@@ -44,7 +45,12 @@ function TableRaceResultsEdit({ results, event }) {
               key={result._id}
             >
               <td className={styles.center}>
-                <TdRank value={result.rankEvent} dsq={dsq} />
+                <TdRank
+                  value={result.rankEvent}
+                  isDsq={isDsq}
+                  dsqType={dsqType}
+                  dsqDescription={dsqDescription}
+                />
               </td>
               <td>
                 <Checkbox
@@ -53,6 +59,7 @@ function TableRaceResultsEdit({ results, event }) {
                   resultId={result._id}
                   tooltip={'Дисквалификация райдера'}
                   apiRequest={fetchResultEdit}
+                  setUpdate={setUpdate}
                 />
               </td>
 
@@ -67,8 +74,8 @@ function TableRaceResultsEdit({ results, event }) {
                 getSweepers={getSweepers}
               />
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              <TdGap gap={result.gap} dsq={dsq} />
-              <TdGap gap={result.gapPrev} dsq={dsq} />
+              <TdGap gap={result.gap} dsq={isDsq} />
+              <TdGap gap={result.gapPrev} dsq={isDsq} />
 
               <TdWattsPerKg
                 valueRaw={result.wattsPerKg.value}

@@ -2,6 +2,7 @@ import { saveDocument } from './data-save.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';
+import { setDSQWithVirtualPower } from './virtual-power.js';
 
 /**
  * Установка ранкинга райдерам. Сортировка по финишному времени.  Сохранение в БД.
@@ -20,17 +21,13 @@ export const setRankResult = async (
 
   let rankEvent = 1;
   for (const result of results) {
-    // если с VIRTUAL_POWER то присваивается 0 место (вне ранкинга)
-    const isNotRanking = result.sensorData.powerType === 'VIRTUAL_POWER';
-    if (isNotRanking) {
-      result.disqualification = 'VIRTUAL_POWER';
-      result.disqualificationDescription = 'Виртуальная мощность zPower';
-    }
+    // установка данных дисквалификации при использовании VirtualPower
+    const resultWithDSQ = setDSQWithVirtualPower<ResultEventAdditional>(result);
 
     await saveDocument({
       eventId: eventDB._id,
-      result,
-      rankEvent: isNotRanking ? 0 : rankEvent++,
+      result: resultWithDSQ,
+      rankEvent: resultWithDSQ.isDisqualification ? 0 : rankEvent++,
     });
   }
 };
