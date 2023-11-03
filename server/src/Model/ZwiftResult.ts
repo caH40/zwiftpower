@@ -41,9 +41,10 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   flaggedCheating: { type: Boolean, default: false },
   flaggedSandbagging: { type: Boolean, default: false },
   // свойства из предыдущей модели
-  rankAbsolute: { type: Number, default: null },
   penalty: { fairPlay: { type: Number, default: 0 } },
   isDisqualification: { type: Boolean, default: false },
+  disqualification: String,
+  disqualificationDescription: String,
   isDidNotFinish: { type: Boolean, default: false },
   category: { type: String, default: null },
   categoryCurrent: { type: String, default: null },
@@ -59,7 +60,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
       duration: { type: Number, default: null },
     },
   ],
-  disqualification: String,
+
   profileDataMain: {
     profileIdMain: Number,
     firstName: String,

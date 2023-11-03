@@ -37,7 +37,7 @@ const zwiftEventSchema = new Schema<ZwiftEventSchema>({
     hasModified: { type: Boolean, default: false },
     moderators: [
       {
-        id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         date: Number,
         action: { property: String, value: String, rider: String, message: String },
       },

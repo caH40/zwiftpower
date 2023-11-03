@@ -282,7 +282,7 @@ export interface ZwiftEventSchema {
   modifiedResults?: {
     hasModified: boolean;
     moderators: {
-      id: Types.ObjectId;
+      moderatorId: Types.ObjectId;
       date: number;
       action: { property: string; value: string; rider: string; message?: string };
     }[];
@@ -364,9 +364,10 @@ export interface ZwiftResultSchema {
   flaggedCheating: boolean;
   flaggedSandbagging: boolean;
   // свойства из предыдущей модели
-  rankAbsolute: number;
   penalty: { fairPlay: number };
   isDisqualification: boolean;
+  disqualification?: string;
+  disqualificationDescription?: string;
   isDidNotFinish: boolean;
   category: string;
   categoryCurrent: string;
@@ -380,7 +381,7 @@ export interface ZwiftResultSchema {
     cpLabel: string;
     duration: number;
   }[];
-  disqualification?: string;
+
   profileDataMain?: ProfileDataInResultWithId;
 }
 //

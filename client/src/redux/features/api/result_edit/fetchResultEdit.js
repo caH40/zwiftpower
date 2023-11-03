@@ -6,15 +6,7 @@ import { serverExpress } from '../../../../config/environment';
 
 /**
  * Запросы на изменение параметров результата Райдера
- * data : {
- *           _id: ObjectId изменяемого результата,
- *           property название изменяемого параметра,
- *           data: {
- *                  value новое значение изменяемого параметра
- *                  message комментарий к изменению
- *                  }
- *
- * }
+ * data : {_id, property,data: {value, message}
  */
 export const fetchResultEdit = createAsyncThunk('results/resultPut', async (data, thunkAPI) => {
   try {

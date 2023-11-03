@@ -24,6 +24,7 @@ export const setRankResult = async (
     const isNotRanking = result.sensorData.powerType === 'VIRTUAL_POWER';
     if (isNotRanking) {
       result.disqualification = 'VIRTUAL_POWER';
+      result.disqualificationDescription = 'Виртуальная мощность zPower';
     }
 
     await saveDocument({

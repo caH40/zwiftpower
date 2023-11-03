@@ -19,7 +19,7 @@
 
 **eventSubgroupId** -(`Number`) id подгруппы (группы категорий в заезде) в Звифте;  
 **subgroupLabel** -(`String`) буквенное обозначение подгруппы (группы категорий в заезде);  
-**rank** -(`Number`) финишная позиция в группе;  
+**rank** -(`Number`) финишная позиция в группе (сырая);  
 **rankEvent** -(`Number`) финишная позиция в заезде согласно правилам заезда;  
 **eventId** -(`Number`) id заезда в Звифте;  
 **activityData** -(`Object`) объект профиля райдера:
@@ -40,13 +40,15 @@
 **wattsPerKg** -(`Number`) относительная мощность вт/кг;  
 **flaggedCheating** -(`Boolean`) пойман на читинге;  
 **flaggedSandbagging** -(`Boolean`) пойман на сэндбэгинге;  
-**rankAbsolute** -(`Number`) место в абсолюте (необходимость?);
 
 **penalty** -(`Object`) штрафы (необходимость?):
 
 - **fairPlay** -(`Number`) штраф за "нечестные" действия, единица измерения равная 30секундам;
 
 **isDisqualification** -(`Boolean`) дисквалифицирован, аннулирование результата текущей гонки;  
+**disqualification** -(`String`) Тип дисквалификации;  
+**disqualificationDescription** -(`String`) Описание дисквалификации;  
+
 **isDidNotFinish** -(`Boolean`) не финишировал;  
 **category** -(`Number`) (необходимость?);  
 **categoryCurrent** -(`Number`) категория согласно результата текущего заезда
@@ -62,7 +64,7 @@
 - **cpLabel** -(`String`) название CP;
 - **duration** -(`Number`) длительность в секундах;
 
-**disqualification** -(`String`) Причина дисквалификации;
+
 
   **profileDataMain** -(`Object`) данные Главного профиля, если текущий результат показан дополнитеьным профилем:
   
