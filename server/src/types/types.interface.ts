@@ -200,8 +200,8 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   };
   wattsPerKg?: number;
   isDisqualification: boolean;
-  disqualification?: string;
-  disqualificationDescription?: string;
+  disqualification: string | null;
+  disqualificationDescription: string | null;
   profileDataMain?: ProfileDataInResultWithId;
   errorAccess?: boolean; // 403 ошибка при запросе с ZwiftAPI
 }

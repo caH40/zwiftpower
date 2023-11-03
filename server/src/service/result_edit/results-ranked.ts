@@ -5,8 +5,7 @@ import { handlerCatchUpModified } from './handlers/catchup.js';
 
 // types
 import { ZwiftResultSchema } from '../../types/model.interface.js';
-// import { handlerClassicCommonModified } from './handlers/classic-common.js';
-// import { handlerNewbiesModified } from './handlers/newbies.js';
+import { handlerNewbiesModified } from './handlers/newbies.js';
 
 /**
  * Изменение ранкингов Райдеров в результатах Эвента
@@ -25,10 +24,11 @@ export const changeRankResults = async (
     case 'catchUp':
       await handlerCatchUpModified(resultsDB);
       break;
-    // case 'newbies':
-    //   await handlerNewbiesModified({ eventId, results });
-    //   break;
-    // default: // для всех остальных обрабатывать как 'classicCommon'
-    //   await handlerClassicCommonModified({ eventId, results });
+    case 'newbies':
+      await handlerNewbiesModified(resultsDB);
+      break;
+    default: // для всех остальных обрабатывать как 'classicCommon'
+      // изменение ранкинга такое же как и в 'catchUp'
+      await handlerCatchUpModified(resultsDB);
   }
 };

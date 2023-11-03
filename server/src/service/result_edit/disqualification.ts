@@ -22,8 +22,8 @@ export const setDisqualification = async ({
     {
       $set: {
         isDisqualification,
-        disqualificationDescription: data.message,
-        disqualification: 'DSQ',
+        disqualificationDescription: isDisqualification ? data.message : null,
+        disqualification: isDisqualification ? 'DSQ' : null,
       },
     },
     { new: true }

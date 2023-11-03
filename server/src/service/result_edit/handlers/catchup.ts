@@ -4,6 +4,10 @@ import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { setDSQWithVirtualPower } from '../../protocol/virtual-power.js';
 
+/**
+ * изменения ранкинга в протоколе в зависимости от дисквалификации райдера модератором
+ * для заезда CatchUp
+ */
 export const handlerCatchUpModified = async (results: ZwiftResultSchema[]) => {
   results.sort(
     (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds

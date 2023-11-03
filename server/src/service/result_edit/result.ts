@@ -4,7 +4,7 @@ import { setDisqualification } from './disqualification.js';
 import { PutResultParams } from '../../types/types.interface.js';
 
 /**
- * Сервис изменения результата Райдера
+ * Сервис изменения параметра property в результате Райдера и пересчет протокола Эвента
  */
 export const putResultService = async ({
   userId,
