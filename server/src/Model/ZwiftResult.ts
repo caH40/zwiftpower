@@ -43,8 +43,8 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   // свойства из предыдущей модели
   penalty: { fairPlay: { type: Number, default: 0 } },
   isDisqualification: { type: Boolean, default: false },
-  disqualification: String,
-  disqualificationDescription: String,
+  disqualification: { type: String, default: null },
+  disqualificationDescription: { type: String, default: null },
   isDidNotFinish: { type: Boolean, default: false },
   category: { type: String, default: null },
   categoryCurrent: { type: String, default: null },

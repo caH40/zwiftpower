@@ -366,8 +366,8 @@ export interface ZwiftResultSchema {
   // свойства из предыдущей модели
   penalty: { fairPlay: number };
   isDisqualification: boolean;
-  disqualification?: string;
-  disqualificationDescription?: string;
+  disqualification: string | null;
+  disqualificationDescription: string | null;
   isDidNotFinish: boolean;
   category: string;
   categoryCurrent: string;
