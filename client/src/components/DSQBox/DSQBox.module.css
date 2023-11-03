@@ -8,7 +8,7 @@
   font-size: 13px;
   line-height: 1.2;
   font-weight: 700;
-  background-color: var(--color-text-dark);
+  background-color: var(--menu-side);
   color: var(--color-text-main);
   user-select: none;
 }

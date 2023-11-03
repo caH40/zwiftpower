@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
@@ -25,47 +24,57 @@ function TableUserResults({ results }) {
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>
-        {results?.map((result) => (
-          <tr className={styles.hover} key={result._id}>
-            <td className={styles.center}>
-              <TdRank value={result.rankEvent} dsq={result.disqualification} />
-            </td>
+        {results?.map((result) => {
+          const isDsq = result.isDisqualification;
+          const dsqType = result.disqualification;
+          const dsqDescription = result.disqualificationDescription;
+          return (
+            <tr className={styles.hover} key={result._id}>
+              <td className={styles.center}>
+                <TdRank
+                  value={result.rankEvent}
+                  isDsq={isDsq}
+                  dsqType={dsqType}
+                  dsqDescription={dsqDescription}
+                />
+              </td>
 
-            <td>
-              <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
-            </td>
+              <td>
+                <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
+              </td>
 
-            <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
-            <td>
-              <Link className={cx('link', 'name')} to={`/race/results/${result.eventId}`}>
-                <span className={styles.big}>{result.eventName}</span>
-              </Link>
-            </td>
-            <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
+              <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
+              <td>
+                <Link className={cx('link', 'name')} to={`/race/results/${result.eventId}`}>
+                  <span className={styles.big}>{result.eventName}</span>
+                </Link>
+              </td>
+              <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
 
-            <TdWattsPerKg
-              valueRaw={result.wattsPerKg.value}
-              valueAddition={result.wattsPerKg.addition}
-            />
+              <TdWattsPerKg
+                valueRaw={result.wattsPerKg.value}
+                valueAddition={result.wattsPerKg.addition}
+              />
 
-            <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
+              <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
 
-            {columnsCP.map((column) => {
-              if (column.isVisible) {
-                return (
-                  <TdCpWatts
-                    cpBestEfforts={result.cpBestEfforts}
-                    interval={column.interval}
-                    key={column.id}
-                  />
-                );
-              }
-              return null;
-            })}
-            <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-            <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
-          </tr>
-        ))}
+              {columnsCP.map((column) => {
+                if (column.isVisible) {
+                  return (
+                    <TdCpWatts
+                      cpBestEfforts={result.cpBestEfforts}
+                      interval={column.interval}
+                      key={column.id}
+                    />
+                  );
+                }
+                return null;
+              })}
+              <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
+              <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
