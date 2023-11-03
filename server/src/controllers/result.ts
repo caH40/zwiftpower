@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { putResultService } from '../service/result.js';
+import { putResultService } from '../service/result_edit/result.js';
 import { errorHandler } from '../errors/error.js';
 
 // types

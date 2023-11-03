@@ -122,7 +122,6 @@ export interface UserResultForFetch {
   flaggedCheating: boolean;
   flaggedSandbagging: boolean;
   // свойства из предыдущей модели
-  rankAbsolute: number;
   penalty: { fairPlay: number };
   isDisqualification: boolean;
   isDidNotFinish: boolean;
