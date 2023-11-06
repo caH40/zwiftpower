@@ -1,28 +1,17 @@
 import { FitFile } from '../../../../Model/FitFile.js';
 
 // types
-import { ResultEventAdditional } from '../../../../types/types.interface.js';
-
-/**
- * Сохранение данных мощности из заезда в FitFile в БД
- */
-interface SaveToDB {
-  powerInWatts: number[];
-  result: ResultEventAdditional;
-  nameAndDate: {
-    name: string;
-    eventStart: number;
-  };
-}
+import { FitFileToDBParams } from '../../../../types/types.interface.js';
 
 /**
  * Сохранение фитфайла в БД
  * @param param0
  */
-export async function saveFitFile({ powerInWatts, result, nameAndDate }: SaveToDB) {
+export async function saveFitFile({ powerInWatts, result, nameAndDate }: FitFileToDBParams) {
   const power = {
     name: nameAndDate.name,
     date: nameAndDate.eventStart,
+    eventId: nameAndDate.eventId,
     powerInWatts: JSON.stringify(powerInWatts),
     weightInGrams: result.profileData.weightInGrams,
   };

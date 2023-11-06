@@ -10,6 +10,7 @@ const fitFileSchema = new Schema<FitFileSchema>({
     {
       isVirtualPower: { type: Boolean, default: false },
       name: { type: String, default: null },
+      eventId: { type: Number, default: null },
       date: { type: Number, default: null },
       powerInWatts: { type: String },
       weightInGrams: { type: Number, default: null },

@@ -242,6 +242,7 @@ export interface ActivityFeedShort {
   id: string;
   date: number;
   name: string;
+  eventId: number | null;
 }
 /**
  * Параметры для функции getIntervals
@@ -280,6 +281,7 @@ export interface CriticalPower {
   value: number;
   date: number;
   name: string;
+  isDisqualification: boolean;
 }
 /**
  * Получение данных по Эвентам Серии за выбранный сезон с ДБ
@@ -294,6 +296,7 @@ export interface getCurrentEventsSeries {
  */
 export interface PowerFitFiles {
   name: string;
+  eventId: number | null; // id Эвента, если заезд был в организованном Эвенте, а не на тренеровке
   date: number;
   powerInWatts: string;
   weightInGrams: number;
@@ -400,6 +403,7 @@ export interface PowerCurvesCurrentInterval {
     value: number;
     date: number;
     name: string;
+    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
   };
 }
 
@@ -414,6 +418,7 @@ export interface PowerPerKgCurvesCurrentInterval {
     value: number;
     date: number;
     name: string;
+    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
   };
 }
 
@@ -431,4 +436,17 @@ export interface TotalRidersFTP {
  */
 export interface PutResultParams extends PutResult {
   userId: string;
+}
+
+/**
+ * Сохранение данных мощности из заезда в FitFile в БД
+ */
+export interface FitFileToDBParams {
+  powerInWatts: number[];
+  result: ResultEventAdditional;
+  nameAndDate: {
+    name: string;
+    eventId: number;
+    eventStart: number;
+  };
 }

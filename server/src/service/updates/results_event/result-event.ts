@@ -23,14 +23,19 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   // получение результатов заезда из ZwiftAPI
   const resultsTotal = await getResultsFromZwift(event.eventSubgroups);
 
-  // добавление CP в результаты райдеров, сохранение FitFiles
-  const nameAndDate = { name: event.name, eventStart: new Date(event.eventStart).getTime() };
+  // дополнительные данные для фитфайла текущей активности добавляемого коллекцию FitFile в БД райдера
+  const nameAndDate = {
+    name: event.name,
+    eventId: event.id,
+    eventStart: new Date(event.eventStart).getTime(),
+  };
 
   let resultsWithCP = [] as ResultEventAdditional[];
   // выбор как обновлять результаты
   if (isFast) {
     resultsWithCP = addCriticalPowersFast(resultsTotal);
   } else {
+    // добавление CP в результаты райдеров, сохранение FitFiles
     resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
     // обновление CP райдеров в БД
     await updatePowerCurveResults(resultsWithCP);

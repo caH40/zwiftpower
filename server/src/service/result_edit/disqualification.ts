@@ -1,8 +1,9 @@
-// types
+import { changeRankResults } from './results-ranked.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
+
+// types
 import { PutResultParams } from '../../types/types.interface.js';
-import { changeRankResults } from './results-ranked.js';
 
 /**
  * Обработка запроса на дисквалификацию(снятие дискв.) райдера
