@@ -15,6 +15,7 @@ export interface FitFileSchema {
   dateUpdate: number;
   activities: {
     isVirtualPower: boolean;
+    eventId: number | null;
     name: string;
     date: number;
     powerInWatts: string;
@@ -42,8 +43,11 @@ export interface PasswordResetSchema {
   tokenReset: string;
   email: string;
 }
-//
-//
+
+/**
+ * Кривая мощности райдера.
+ * Несколько точек измерения мощности и удельной мощности за последние 90 дней
+ */
 export interface PowerCurveSchema {
   zwiftId: number;
   isMale: boolean;
@@ -54,6 +58,8 @@ export interface PowerCurveSchema {
     value: number;
     date: number;
     name: string;
+    eventId: number | null;
+    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
   }[];
   pointsWattsPerKg: {
     isVirtualPower: boolean;
@@ -61,6 +67,8 @@ export interface PowerCurveSchema {
     value: number;
     date: number;
     name: string;
+    eventId: number | null;
+    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
   }[];
 }
 //

@@ -10,7 +10,7 @@ import { ActivityFeedShort, PowerFitFiles } from '../../../types/types.interface
 export async function getFitFilesFromZwift(
   activities: ActivityFeedShort[],
   weightInGrams: number
-) {
+): Promise<PowerFitFiles[] | undefined> {
   if (!activities.length) {
     return;
   }
@@ -29,6 +29,7 @@ export async function getFitFilesFromZwift(
     const powerInWatts = await getPowers(fullDataUrl);
     const power = {
       name: activity.name,
+      eventId: activity.eventId,
       date: activity.date,
       powerInWatts: JSON.stringify(powerInWatts),
       weightInGrams,

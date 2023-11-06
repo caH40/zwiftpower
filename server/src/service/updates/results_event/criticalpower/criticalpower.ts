@@ -21,6 +21,7 @@ export const addCriticalPowers = async (
   nameAndDate: {
     name: string;
     eventStart: number;
+    eventId: number;
   }
 ): Promise<ResultEventAdditional[]> => {
   // инициализация массива для итоговых результатов

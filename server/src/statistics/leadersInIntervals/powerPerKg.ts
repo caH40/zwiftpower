@@ -12,6 +12,7 @@ const pointsWattsPerKgEmpty = {
   value: 0,
   date: 0,
   name: '',
+  isDisqualification: false,
 };
 
 /**
@@ -30,7 +31,10 @@ export const getRiderWithMaxWattsPerKgInInterval = (
         elm.pointsWattsPerKg.find((power) => power.duration === interval) ||
         pointsWattsPerKgEmpty,
     }))
-    .filter((power) => !power.pointsWattsPerKg?.isVirtualPower);
+    .filter(
+      (power) =>
+        !power.pointsWattsPerKg?.isVirtualPower || !power.pointsWattsPerKg?.isDisqualification
+    );
 
   // количество мест (лучших результатов) для поиска, первые places будут лидерами мощности
   const places = 10;
@@ -75,6 +79,10 @@ export const getRiderWithMaxWattsPerKgInInterval = (
       eventStart: 0,
       eventName: '',
     };
+
+    if (!powerCurvesFiltered[i]) {
+      continue;
+    }
 
     riderMaxWattsPerKgt.zwiftId = powerCurvesFiltered[i].zwiftId;
     riderMaxWattsPerKgt.interval = interval;

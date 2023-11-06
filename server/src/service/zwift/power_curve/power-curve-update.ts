@@ -16,6 +16,7 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
   try {
     // получение актуальных фитфайлов райдера (zwiftId) из БД
     const fitFile = await getFitFile(zwiftId);
+
     if (!fitFile) {
       return;
     }
@@ -46,6 +47,8 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
           value: 0,
           date: Date.now(),
           name: '',
+          eventId: null,
+          isDisqualification: false,
         };
       }
 
@@ -60,6 +63,8 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
           value: 0,
           date: Date.now(),
           name: '',
+          eventId: null,
+          isDisqualification: false,
         };
       }
 
@@ -70,17 +75,19 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
         const weightInKilogram = activity.weightInGrams / 1000;
         const cpBestEfforts = getInterval({ powerInWatts, weightInKilogram, interval });
 
-        if (cpBestEfforts.watts >= cpWattsCurrent.value && activity.date >= dateBefore90Days)
+        if (cpBestEfforts.watts >= cpWattsCurrent!.value && activity.date >= dateBefore90Days)
           cpWattsCurrent = {
             isVirtualPower: activity.isVirtualPower,
             duration: interval,
             value: cpBestEfforts.watts,
             date: activity.date,
             name: activity.name,
+            eventId: activity.eventId,
+            isDisqualification: false,
           };
 
         if (
-          cpBestEfforts.wattsKg >= cpWattsPerKgCurrent.value &&
+          cpBestEfforts.wattsKg >= cpWattsPerKgCurrent!.value &&
           activity.date >= dateBefore90Days
         )
           cpWattsPerKgCurrent = {
@@ -89,6 +96,8 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
             value: cpBestEfforts.wattsKg,
             date: activity.date,
             name: activity.name,
+            eventId: activity.eventId,
+            isDisqualification: false,
           };
       }
       cpWattsUpdated.push(cpWattsCurrent);
