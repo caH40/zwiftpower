@@ -31,6 +31,15 @@ export function getTimerLocal(date, timeFormat, long) {
     minute: '2-digit',
     weekday: long && 'long',
   });
+  const formatterDDMMYYHms = new Intl.DateTimeFormat('ru', {
+    year: '2-digit',
+    month: long ? 'long' : '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    weekday: long && 'long',
+  });
 
   switch (timeFormat) {
     case 'HM':
@@ -39,6 +48,8 @@ export function getTimerLocal(date, timeFormat, long) {
       return formatterHmS.format(dateForFormat);
     case 'DDMMYYHm':
       return formatterDDMMYYHm.format(dateForFormat);
+    case 'DDMMYYHms':
+      return formatterDDMMYYHms.format(dateForFormat);
     case 'DDMMYY':
       return formatterDDMMYY.format(dateForFormat);
 
@@ -50,14 +61,17 @@ export function getTimerLocal(date, timeFormat, long) {
 // формирование времени и даты для input
 export function getDateTimeStart(dateRaw) {
   const dateRawNumber = new Date(dateRaw).getTime();
+
   const formatter = new Intl.DateTimeFormat('ru', {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
+    second: '2-digit',
   });
   const dateFormatted = formatter.format(dateRawNumber);
+
   const date = dateFormatted.slice(0, 10).split('.').reverse().join('-');
   const time = dateFormatted.slice(12);
 

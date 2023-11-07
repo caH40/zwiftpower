@@ -28,7 +28,14 @@ export function convertTime(time = '00:00') {
   }
   return false;
 }
-export function secondesToTime(rowSeconds) {
+/**
+ * Получение времени из миллисекунд
+ * @param {*} rowSeconds
+ * @param {boolean} isShort короткая запись, с нулями с одной цифрой или без
+ * @returns
+ */
+
+export function secondesToTime(rowSeconds, isShort) {
   if (rowSeconds === null) return '';
   let seconds = rowSeconds;
   seconds /= 1000;
@@ -41,7 +48,12 @@ export function secondesToTime(rowSeconds) {
   if (seconds <= 3600) {
     const minutes = Math.trunc(seconds / 60);
     const second = Math.trunc(seconds - minutes * 60);
-    return `${addNull(minutes)}:${addNull(second)}`;
+
+    if (isShort) {
+      return `${minutes}:${addNull(second)}`;
+    } else {
+      return `${addNull(minutes)}:${addNull(second)}`;
+    }
   } else {
     return null;
   }

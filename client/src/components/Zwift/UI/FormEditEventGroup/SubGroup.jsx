@@ -29,7 +29,7 @@ function SubGroup({ subGroup, index }) {
                   subgroupIndex: index,
                 }}
               >
-                {getTimerLocal(subGroup.eventSubgroupStart, 'DDMMYYHm', true)}
+                {getTimerLocal(subGroup.eventSubgroupStart, 'DDMMYYHms', true)}
               </BoxParameter>
 
               <BoxParameter

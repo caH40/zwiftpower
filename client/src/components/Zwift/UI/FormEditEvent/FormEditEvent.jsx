@@ -42,7 +42,7 @@ function FormEditEvent() {
               value: eventMainParams.eventStart,
             }}
           >
-            {getTimerLocal(eventMainParams.eventStart, 'DDMMYYHm', true)}
+            {getTimerLocal(eventMainParams.eventStart, 'DDMMYYHms', true)}
           </BoxParameter>
 
           <BoxParameter

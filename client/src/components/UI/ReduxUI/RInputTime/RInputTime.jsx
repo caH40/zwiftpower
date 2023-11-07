@@ -37,8 +37,9 @@ function RInputTime({ subgroupIndex, label, value, property, disabled }) {
           className={styles.input}
           type={'time'}
           value={time}
+          step={1}
           onChange={(e) => {
-            const dateStr = `${date} ${e.target.value || '00:00'}`;
+            const dateStr = `${date} ${e.target.value || '00:00:00'}`;
             setTime(e.target.value);
             dispatch(
               inputHandler({
