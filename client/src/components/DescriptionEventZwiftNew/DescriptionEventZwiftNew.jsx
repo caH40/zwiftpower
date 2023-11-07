@@ -44,7 +44,7 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
         </div>
 
         {/* показывать только для страницы результатов */}
-        {!forSchedule && (
+        {!forSchedule && isModerator && (
           <div className={styles.box__modify}>
             <IconModify getClick={modifyResultsEvent} bgColor={'white'} />
           </div>
