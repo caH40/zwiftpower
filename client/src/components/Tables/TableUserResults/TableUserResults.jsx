@@ -30,7 +30,7 @@ function TableUserResults({ results }) {
           const dsqDescription = result.disqualificationDescription;
           return (
             <tr className={styles.hover} key={result._id}>
-              <td className={styles.center}>
+              <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}
                   isDsq={isDsq}

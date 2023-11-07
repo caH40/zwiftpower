@@ -12,7 +12,7 @@ function TrBlock({ result, zwiftId, index, type }) {
   return (
     result.profileData && (
       <tr className={cx('hover', { current: zwiftId === result.zwiftId })}>
-        <td className={styles.center}>
+        <td className={styles.centerTd}>
           <TdRank value={index + 1} />{' '}
         </td>
         <td className={styles.td__nowrap}>

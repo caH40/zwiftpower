@@ -159,10 +159,7 @@ tbody .current {
   font-weight: bold;
   background: #6d6d6d;
 }
-.center {
-  text-align: center;
-  width: 24px;
-}
+
 .centerTd {
   text-align: center;
 }

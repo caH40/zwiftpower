@@ -64,7 +64,7 @@ function TableRaceResults({ results, event }) {
               className={cx('hover', { current: zwiftId === result.profileId })}
               key={result._id}
             >
-              <td className={styles.center}>
+              <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}
                   isDsq={isDsq}

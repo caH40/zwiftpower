@@ -5,7 +5,8 @@
   max-width: 70px;
   min-width: 30px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 12px;
+
   line-height: 1.2;
   font-weight: 700;
   background-color: var(--menu-side);
