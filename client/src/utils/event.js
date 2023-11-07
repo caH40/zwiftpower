@@ -4,6 +4,7 @@ import { routes } from '../assets/zwift/raw/routes';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';
+import { checkSeconds } from './seconds';
 
 export const map = (id) => {
   return worlds.find((map) => map.id === id)?.name;
@@ -59,6 +60,10 @@ export const getLinksRouteDescription = (routeId) => {
 export const organizer = (value) => {
   return organizers.find((organizer) => organizer.value === value)?.name;
 };
+
+/**
+ * Получение объекта Гэпов на старте между началом Эвента и стартом соответствующей группы
+ */
 export const gapStart = (eventParams) => {
   if (!eventParams.id) return {};
   const gaps = {};
@@ -71,9 +76,14 @@ export const gapStart = (eventParams) => {
   return gaps;
 };
 
+/**
+ * Расчет Гэпа на старте между началом Эвента (dateStart) и стартом группы (dateStartGroup)
+ */
 const gap = (dateStart, dateStartGroup) => {
   const gapMilliseconds = new Date(dateStartGroup).getTime() - new Date(dateStart).getTime();
-  return secondesToMinutes(gapMilliseconds);
+  return checkSeconds(dateStartGroup)
+    ? secondesToTime(gapMilliseconds, true)
+    : secondesToMinutes(gapMilliseconds);
 };
 
 export const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
