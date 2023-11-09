@@ -3,6 +3,9 @@ import { ZwiftResult } from '../../Model/ZwiftResult.js';
 // types
 import { SaveDocumentArg } from '../../types/types.interface.js';
 
+/**
+ * Подготовка структуры данных и сохранение результата (result) в БД
+ */
 export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentArg) {
   await ZwiftResult.findOneAndUpdate(
     { $and: [{ profileId: result.profileId }, { zwiftEventId: eventId }] },
@@ -26,7 +29,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
         eventSubgroupId: result.eventSubgroupId,
         subgroupLabel: result.subgroupLabel,
         rank: result.rank,
-        rankEvent,
+        rankEvent: rankEvent ? rankEvent : result.rankEvent,
         eventId: result.eventId,
 
         activityData: {

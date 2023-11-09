@@ -1,4 +1,4 @@
-import { handlerCatchUp } from './catchup.js';
+import { handlerCatchUp } from './catchup/catchup.js';
 import { handlerClassicCommon } from './classic-common.js';
 import { handlerNewbies } from './newbies/newbies.js';
 
