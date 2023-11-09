@@ -9,7 +9,7 @@ import { ResultEventAdditional } from '../../../types/types.interface.js';
  * Сортировка результатов в зачётных категориях (A,B,C) по финишному времени,
  * далее сортировка результатов в категории "E", участники участвуют вне зачета
  */
-export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema>(
+export const filterByRankCatchup = <T extends ResultEventAdditional | ZwiftResultSchema>(
   results: T[]
 ): T[] => {
   try {
