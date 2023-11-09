@@ -2,7 +2,6 @@ export const worlds = [
   {
     id: 1,
     name: 'Watopia',
-    name: 'Watopia',
     slug: 'watopia',
     bounds: [
       [-11.62597, 166.87747],

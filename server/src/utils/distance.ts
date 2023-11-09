@@ -1,4 +1,4 @@
-import { routes } from '../assets/zwift/raw/routes.js';
+import { routes } from '../assets/zwift/lib/cjs/routes.js';
 import { errorHandler } from '../errors/error.js';
 import { ZwiftEventSubgroupSchema } from '../types/model.interface.js';
 
@@ -16,24 +16,16 @@ export function countDistance(eventSubgroup: ZwiftEventSubgroupSchema) {
     let elevationGainInMeters: number = 0;
 
     // расчет дистанции с учетом выезда из гейта
-    if (
-      (route.leadinDistanceInMeters || route.leadinDistanceInMeters === 0) &&
-      route.distanceInMeters
-    ) {
+    if ((route.leadInDistance || route.leadInDistance === 0) && route.distance) {
       distanceInKilometers =
-        Math.round(
-          (+route.leadinDistanceInMeters + eventSubgroup.laps * +route.distanceInMeters) / 100
-        ) / 10;
+        +route.leadInDistance + Math.round(eventSubgroup.laps * +route.distance * 1000) / 1000;
     }
 
     // расчет набора высоты на дистанции с учетом выезда из гейта
-    if (
-      (route.leadinAscentInMeters || route.leadinAscentInMeters === 0) &&
-      route.ascentInMeters
-    ) {
-      elevationGainInMeters = Math.round(
-        +route.leadinAscentInMeters + eventSubgroup.laps * +route.ascentInMeters
-      );
+    if ((route.leadInElevation || route.leadInElevation === 0) && route.elevation) {
+      elevationGainInMeters =
+        +route.leadInElevation +
+        Math.round(eventSubgroup.laps * +route.elevation * 1000) / 1000;
     }
 
     return { distanceInKilometers, elevationGainInMeters };

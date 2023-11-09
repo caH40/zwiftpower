@@ -1,6 +1,6 @@
+import { routes } from '../assets/zwift/lib/esm/routes';
 import { worlds } from '../assets/zwift/lib/esm/worlds';
 import { organizers } from '../assets/zwift/organizer';
-import { routes } from '../assets/zwift/raw/routes';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';
@@ -8,9 +8,6 @@ import { checkSeconds } from './seconds';
 
 export const map = (id) => {
   return worlds.find((map) => map.id === id)?.name;
-};
-export const routeName = (id) => {
-  return routes.find((route) => route.id === id)?.name;
 };
 
 /**
@@ -30,32 +27,54 @@ export const getEventType = (type) => {
 };
 
 /**
+ * Название маршрута по ID
+ */
+export const routeName = (id) => {
+  return routes.find((route) => route.id === id)?.name;
+};
+/**
  * Линки на описание маршрутов на сторонних маршрутах
  */
 export const getLinksRouteDescription = (routeId) => {
   const route = routes.find((route) => route.id === routeId);
-  if (!routeName) {
+  if (!route) {
     return null;
   }
-  const routeNameForLink = route.name.replace(/\s/g, '-').toLowerCase();
 
-  let mapNameForLink = null;
-  switch (route.mapName) {
-    case 'MAKURIISLANDS':
-      mapNameForLink = 'MAKURI-ISLANDS'.toLocaleLowerCase();
-      break;
-    case 'NEWYORK':
-      mapNameForLink = 'NEW-YORK'.toLocaleLowerCase();
-      break;
-    default:
-      mapNameForLink = route.mapName.toLocaleLowerCase();
-  }
-
-  const linkWhatsonzwift = `https://whatsonzwift.com/world/${mapNameForLink}/route/${routeNameForLink}`;
-  const linkZwiftinsider = `https://zwiftinsider.com/route/${routeNameForLink}`;
-  const linkZwifterbikes = `https://zwifterbikes.web.app/route/${routeNameForLink}`;
-  return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift };
+  const linkWhatsonzwift = route.whatsOnZwiftUrl;
+  const linkZwiftinsider = route.zwiftInsiderUrl;
+  const linkZwifterbikes = route.zwifterBikesUrl;
+  const linkStravaSegment = route.stravaSegmentUrl;
+  return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift, linkStravaSegment };
 };
+
+// /**
+//  * Линки на описание маршрутов на сторонних маршрутах !!! для row routes from Zwift
+//  */
+// export const getLinksRouteDescription = (routeId) => {
+//   const route = routes.find((route) => route.id === routeId);
+//   if (!routeName) {
+//     return null;
+//   }
+//   const routeNameForLink = route.name.replace(/\s/g, '-').toLowerCase();
+
+//   let mapNameForLink = null;
+//   switch (route.mapName) {
+//     case 'MAKURIISLANDS':
+//       mapNameForLink = 'MAKURI-ISLANDS'.toLocaleLowerCase();
+//       break;
+//     case 'NEWYORK':
+//       mapNameForLink = 'NEW-YORK'.toLocaleLowerCase();
+//       break;
+//     default:
+//       mapNameForLink = route.mapName.toLocaleLowerCase();
+//   }
+
+//   const linkWhatsonzwift = `https://whatsonzwift.com/world/${mapNameForLink}/route/${routeNameForLink}`;
+//   const linkZwiftinsider = `https://zwiftinsider.com/route/${routeNameForLink}`;
+//   const linkZwifterbikes = `https://zwifterbikes.web.app/route/${routeNameForLink}`;
+//   return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift };
+// };
 
 export const organizer = (value) => {
   return organizers.find((organizer) => organizer.value === value)?.name;

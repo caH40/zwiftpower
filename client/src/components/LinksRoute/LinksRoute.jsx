@@ -3,7 +3,7 @@ import { getLinksRouteDescription } from '../../utils/event';
 import styles from './LinksRoute.module.css';
 
 function LinksRoute({ routeId }) {
-  const { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift } =
+  const { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift, linkStravaSegment } =
     getLinksRouteDescription(routeId);
   return (
     <div className={styles.block}>
@@ -21,15 +21,13 @@ function LinksRoute({ routeId }) {
           </a>
         </p>
       )}
-      {/* 
-      {stravaSegmentUrl && (
+      {linkStravaSegment && (
         <p className={styles.route__p}>
-          <a className={styles.link} href={stravaSegmentUrl} target="_blank" rel="noreferrer">
+          <a className={styles.link} href={linkStravaSegment} target="_blank" rel="noreferrer">
             Сегмент на strava.com
           </a>
         </p>
       )}{' '}
-     */}
       {linkZwifterbikes && (
         <p className={styles.route__p}>
           <a className={styles.link} href={linkZwifterbikes} target="_blank" rel="noreferrer">
