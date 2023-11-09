@@ -3,7 +3,7 @@ import { addGapStart } from '../../../utils/gap.js';
 import { addWattsPerKg } from '../../../utils/watts.js';
 import { addAgeAndFlag } from '../age-and-flag.js';
 import { addMainProfileZwiftToRaw } from '../../profile_additional/main-add-row.js';
-import { filterByRank } from './results-filter.js';
+import { filterByRankCatchup } from './results-filter.js';
 import { setRankResult } from './ranging.js';
 import { saveResults } from './results-save.js';
 import { setUpdatedToEvent } from './event-update.js';
@@ -40,7 +40,7 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
   const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsWithWPK);
 
   // Фильтрация категорий, сортировка по финишному времени
-  const resultsSorted = filterByRank(resultsWithMainProfiles);
+  const resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
 
   // Установка ранкинга райдерам
   const resultsWithRank = await setRankResult(resultsSorted);

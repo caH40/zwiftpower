@@ -2,10 +2,11 @@ import { Types } from 'mongoose';
 
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { handlerCatchUpModified } from './handlers/catchup.js';
+import { handlerNewbiesModified } from './handlers/newbies.js';
+import { handlerDefaultModified } from './handlers/default.js';
 
 // types
 import { ZwiftResultSchema } from '../../types/model.interface.js';
-import { handlerNewbiesModified } from './handlers/newbies.js';
 
 /**
  * Изменение ранкингов Райдеров в результатах Эвента
@@ -28,7 +29,6 @@ export const changeRankResults = async (
       await handlerNewbiesModified(resultsDB);
       break;
     default: // для всех остальных обрабатывать как 'classicCommon'
-      // изменение ранкинга такое же как и в 'catchUp'
-      await handlerCatchUpModified(resultsDB);
+      await handlerDefaultModified(resultsDB);
   }
 };
