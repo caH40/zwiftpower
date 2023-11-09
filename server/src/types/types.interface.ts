@@ -202,9 +202,11 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   isDisqualification: boolean;
   disqualification: string | null;
   disqualificationDescription: string | null;
+  rankEvent?: number;
   profileDataMain?: ProfileDataInResultWithId;
   errorAccess?: boolean; // 403 ошибка при запросе с ZwiftAPI
 }
+
 export interface CpBestEfforts {
   watts: null | number;
   wattsKg: null | number;
@@ -266,7 +268,7 @@ export interface HandlerProtocolArg {
 export interface SaveDocumentArg {
   eventId: Types.ObjectId;
   result: ResultEventAdditional;
-  rankEvent: number;
+  rankEvent?: number;
 }
 /**
  * Параметры для функции handlerProtocolCurrent
