@@ -1,6 +1,6 @@
 // options for selects
 
-import { seriesType } from './series-type';
+import { raceTypes } from './zwift/race-type';
 
 /**
  * Сезоны для CatchUp
@@ -22,7 +22,13 @@ export const optionsPeriodsRidersInEvent = [
 /**
  * Названия паттернов настроек для Эвентов
  */
+const optionsRaceTypes = raceTypes.map((option) => ({
+  id: option.id,
+  label: option.name,
+  name: option.value,
+}));
+
 export const optionsEventPattern = [
-  ...seriesType,
+  ...optionsRaceTypes,
   { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
 ];
