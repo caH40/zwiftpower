@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { seriesType } from '../../../assets/series-type';
 import { convertPeriodToMilliseconds } from '../../../utils/filter-charts';
+import { raceTypes } from '../../../assets/zwift/race-type';
 
 /**
  * Формирование данных для диаграммы суммарного количества райдеров по типам Эвентов
@@ -18,10 +18,10 @@ export const useChartTypesRace = ({ period }) => {
   );
 
   // в каждый элемент добавляется количество райдеров ridersQuantity
-  const typesRace = seriesType.map((type) => ({ ...type, ridersQuantity: 0 }));
+  const typesRace = raceTypes.map((type) => ({ ...type, ridersQuantity: 0 }));
 
   for (const event of filteredDataForChart) {
-    const currentType = typesRace.find((type) => type.name === event.typeRaceCustom);
+    const currentType = typesRace.find((type) => type.value === event.typeRaceCustom);
 
     if (currentType) {
       currentType.ridersQuantity += event.riders.male + event.riders.female;
@@ -33,7 +33,7 @@ export const useChartTypesRace = ({ period }) => {
 
   const aspectRatio = 2 / 1;
   // названия типов Эвентов
-  const labels = typesRaceFiltered.map((type) => type.label);
+  const labels = typesRaceFiltered.map((type) => type.name);
   const options = {
     aspectRatio,
     plugins: {
