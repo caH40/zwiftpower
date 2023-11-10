@@ -42,7 +42,7 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
   // Фильтрация категорий, сортировка по финишному времени
   const resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
 
-  // Установка ранкинга райдерам
+  // Установка ранкинга райдерам, дисквалификация райдеров с "Виртуальной мощностью"
   const resultsWithRank = await setRankResult(resultsSorted);
 
   // Сохранение результатов в БД
