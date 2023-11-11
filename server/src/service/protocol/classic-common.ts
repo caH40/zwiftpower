@@ -4,7 +4,7 @@ import { addAgeAndFlag } from './age-and-flag.js';
 
 // types
 import { EventWithSubgroup, HandlerProtocolCurrentArg } from '../../types/types.interface.js';
-import { setRankResult } from './ranging.js';
+import { setRankResult } from './rangingOld.js';
 import { addMainProfileZwiftToRaw } from '../profile_additional/main-add-row.js';
 
 // формирует финишный протокол для сохранения в БД, для гонки CatchUp

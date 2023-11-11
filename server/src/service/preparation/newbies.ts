@@ -1,7 +1,7 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { addPropertyAddition } from '../../utils/property-addition.js';
 import { secondesToTimeThousandths } from '../../utils/thousandths.js';
-import { filterByRank } from '../protocol/newbies/results-filter.js';
+import { filterByRankNewbies } from '../protocol/newbies/results-filter.js';
 import { changeProfileData } from '../profile-main.js';
 
 // types
@@ -22,7 +22,7 @@ export async function getResultsNewbies(event: EventWithSubgroup) {
   /**
    * Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
    */
-  const resultsFiltered = filterByRank(results);
+  const resultsFiltered = filterByRankNewbies(results);
 
   /**
    * Замена некоторых свойств с number на object (string and object)

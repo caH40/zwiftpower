@@ -1,3 +1,4 @@
+import { setDSQWithVirtualPower } from '../virtual-power.js';
 import { errorHandler } from '../../../errors/error.js';
 
 // types
@@ -5,13 +6,19 @@ import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { ResultEventAdditional } from '../../../types/types.interface.js';
 
 /**
- * Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
+ * Фильтрация и сортировка категорий для Эвента Новички (newbies)
+ * Сортировка результатов в зачётных категориях (C,D) по финишному времени,
+ * далее сортировка результатов в категории "E", участники участвуют вне зачета
+ * дисквалификация райдеров с "Виртуальной мощностью"
  */
-export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema>(
+export const filterByRankNewbies = <T extends ResultEventAdditional | ZwiftResultSchema>(
   results: T[]
 ): T[] => {
   try {
-    const resultsCD = results
+    // установка данных дисквалификации при использовании VirtualPower
+    const resultsWithVP = results.map((result) => setDSQWithVirtualPower(result));
+
+    const resultsCD = resultsWithVP
       .filter(
         (result) =>
           (result.subgroupLabel === 'C' || result.subgroupLabel === 'D') &&
@@ -22,7 +29,7 @@ export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema
       );
 
     // для группы Е дисквал, так как участвуют вне зачёнта
-    const resultsE = results
+    const resultsE = resultsWithVP
       .filter((result) => result.subgroupLabel === 'E')
       .sort(
         (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
@@ -34,8 +41,8 @@ export const filterByRank = <T extends ResultEventAdditional | ZwiftResultSchema
         disqualificationDescription: 'Участвует вне зачёта',
       }));
 
-    // для группы Е дисквал, так как участвуют вне зачёнта
-    const resultsOthers = results.filter(
+    // для всех дисквалифицированных результатов, кроме группы Е
+    const resultsOthers = resultsWithVP.filter(
       (result) => result.subgroupLabel !== 'E' && result.isDisqualification
     );
 

@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
 
-import { saveDocument } from '../data-save.js';
+import { saveDocument } from './data-save.js';
 
 // types
-import { ResultEventAdditional } from '../../../types/types.interface.js';
+import { ResultEventAdditional } from '../../types/types.interface.js';
 
 /**
  * Отправка результатов (по одному) на сохранение в БД

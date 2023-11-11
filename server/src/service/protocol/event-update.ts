@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
 
-import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
+import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 
 // types
-import { ResultEventAdditional } from '../../../types/types.interface.js';
+import { ResultEventAdditional } from '../../types/types.interface.js';
 
 /**
  * Обновление данных Event: даты обновления и количества финишировавших райдеров
