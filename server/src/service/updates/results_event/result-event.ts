@@ -1,4 +1,4 @@
-import { handlerProtocol } from '../../protocol/handler.js';
+import { handlerProtocol } from '../../protocol/handler-protocol.js';
 import { addCriticalPowers } from './criticalpower/criticalpower.js';
 import { banUpdating } from './update-ban.js';
 
