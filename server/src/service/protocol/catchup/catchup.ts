@@ -27,25 +27,26 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
     throw new Error(`Не найден Event с eventId: ${eventId}`);
   }
 
-  // Добавление стартовых гэпов к результатам
+  // добавление стартовых гэпов к результатам
   const resultsWithStartGap = addGapStart(eventDB, results);
 
-  // Добавление данных страны и возраста в результаты райдеров
+  // добавление данных страны и возраста в результаты райдеров
   const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, resultsWithStartGap);
 
-  // Добавление данных удельной мощности
+  // добавление данных удельной мощности
   const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
 
   // добавление данных основного профиля Zwift райдера в результат Эвента
   const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsWithWPK);
 
-  // Фильтрация категорий, сортировка по финишному времени
+  // фильтрация категорий, сортировка по финишному времени
+  // дисквалификация райдеров с "Виртуальной мощностью"
   const resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
 
-  // Установка ранкинга райдерам, дисквалификация райдеров с "Виртуальной мощностью"
+  // установка ранкинга райдерам
   const resultsWithRank = await setRankResult(resultsSorted);
 
-  // Сохранение результатов в БД
+  // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);
 
   // обновление данных Event
