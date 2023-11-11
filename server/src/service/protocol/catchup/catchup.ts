@@ -4,9 +4,9 @@ import { addWattsPerKg } from '../../../utils/watts.js';
 import { addAgeAndFlag } from '../age-and-flag.js';
 import { addMainProfileZwiftToRaw } from '../../profile_additional/main-add-row.js';
 import { filterByRankCatchup } from './results-filter.js';
-import { setRankResult } from './ranging.js';
-import { saveResults } from './results-save.js';
-import { setUpdatedToEvent } from './event-update.js';
+import { setRankResultTotal } from '../ranging.js';
+import { saveResults } from '../results-save.js';
+import { setUpdatedToEvent } from '../event-update.js';
 
 // types
 import {
@@ -44,7 +44,7 @@ export async function handlerCatchUp({ eventId, results }: HandlerProtocolCurren
   const resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
 
   // установка ранкинга райдерам
-  const resultsWithRank = await setRankResult(resultsSorted);
+  const resultsWithRank = await setRankResultTotal(resultsSorted);
 
   // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);

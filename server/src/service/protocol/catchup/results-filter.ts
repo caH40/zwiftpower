@@ -1,9 +1,9 @@
+import { setDSQWithVirtualPower } from '../virtual-power.js';
 import { errorHandler } from '../../../errors/error.js';
 
 // types
 import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { ResultEventAdditional } from '../../../types/types.interface.js';
-import { setDSQWithVirtualPower } from '../virtual-power.js';
 
 /**
  * Фильтрация и сортировка категорий для Эвента Догонялок (catchup)
