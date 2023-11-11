@@ -9,6 +9,7 @@ import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
 import { resetSorting } from '../../redux/features/sortTableSlice';
+import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
 import styles from './EditResults.module.css';
 
@@ -37,12 +38,10 @@ function EditResults() {
 
           <section className={styles.wrapper__wide}>
             <TableRaceResultsEdit results={resultsPrepared} event={eventData} />
-            <div className={styles.right}>
-              <span className={styles.service}>Обновлено:</span>
-              <span className={styles.service}>
-                {getTimerLocal(eventData.updated, 'DDMMYYHm')}
-              </span>
-            </div>
+            <ServiceBox
+              updated={eventData.updated}
+              modifiedResults={eventData.modifiedResults}
+            />
           </section>
         </>
       )}
