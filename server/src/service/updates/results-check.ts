@@ -1,5 +1,4 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { millisecondsIn2Hours, millisecondsIn30Minutes } from '../../assets/date.js';
 import { errorHandler } from '../../errors/error.js';
 
 // types
@@ -11,19 +10,25 @@ import { EventWithSubgroup } from '../../types/types.interface.js';
  * isLastUpdate: true  => произойдет полное обновление CriticalPower в результатах с сохранением
  * PowerCurve и FirFiles райдеров в БД
  * @param event Эвент в котором происходит автоматическое обновление результатов
+ * @param timeForUpdateResults время в миллисекундах в течении которого происходит автоматическое обновление
+ * @param delayBeforeUpdating время в миллисекундах после старта когда начинается обновление результатов
  * @returns
  */
-export const checkDurationUpdating = async (event: EventWithSubgroup) => {
+export const checkDurationUpdating = async (
+  event: EventWithSubgroup,
+  timeForUpdateResults: number,
+  delayBeforeUpdating: number
+) => {
   try {
     const eventStart = new Date(event.eventStart).getTime();
     const timeCurrent = new Date().getTime();
 
-    // начинать обновлять после 30 минут после старта
-    const needUpdate = timeCurrent - eventStart > millisecondsIn30Minutes;
+    // начинать обновлять после delayBeforeUpdating после старта
+    const needUpdate = timeCurrent - eventStart > delayBeforeUpdating;
 
-    // millisecondsIn2Hours длительность обновления результатов
+    // timeForUpdateResults длительность обновления результатов
     // время для обновления результатов закончилось timesUp:true
-    const timesUp = timeCurrent - eventStart > millisecondsIn2Hours;
+    const timesUp = timeCurrent - eventStart > timeForUpdateResults;
     if (timesUp) {
       event.hasResults = true;
 
