@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,10 +6,11 @@ import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
-import { getTimerLocal } from '../../utils/date-local';
+
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
 import { resetSorting } from '../../redux/features/sortTableSlice';
+import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
 import styles from './ResultsDescription.module.css';
 
@@ -35,12 +36,10 @@ function ResultsDescription() {
 
           <section className={styles.wrapper__wide}>
             <TableRaceResults results={resultsPrepared} event={eventData} />
-            <div className={styles.right}>
-              <span className={styles.service}>Обновлено:</span>
-              <span className={styles.service}>
-                {getTimerLocal(eventData.updated, 'DDMMYYHm')}
-              </span>
-            </div>
+            <ServiceBox
+              updated={eventData.updated}
+              modifiedResults={eventData.modifiedResults}
+            />
           </section>
         </>
       )}
