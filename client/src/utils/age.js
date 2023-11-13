@@ -21,3 +21,26 @@ export const getAgeCategory = (age) => {
   }
   return '60+';
 };
+
+/**
+ * Получение Названий (labels) возрастов для диаграммы "Возрастные категории"
+ * @param {[{label:string},{value:number}]} dataForChart данные для диаграммы "Возрастные категории"
+ * @returns {[string]} массив названий возрастных категорий
+ */
+export const getAgeCategoryLabels = (dataForChart) => {
+  return dataForChart.map((data) => {
+    switch (data.label) {
+      case 'Master':
+        return '30-39 лет';
+      case 'Veteran':
+        return '40-49 лет';
+      case '50+':
+        return '50-59 лет';
+      case '60+':
+        return '>= 60 лет';
+      // по умолчанию всех в Senior
+      default:
+        return '< 30 лет';
+    }
+  });
+};
