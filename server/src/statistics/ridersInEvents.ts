@@ -37,29 +37,26 @@ export const getRidersInEventsService = async ({ period }: GetRidersInEventsServ
 
   const zwiftResultsDB = await ZwiftResult.find(
     { eventId: eventIds },
-    { profileData: true, eventId: true, _id: false }
+    { 'profileData.gender': true, eventId: true, _id: false }
   );
 
   // подсчет количества мужчин/женщин в Эвенте и формирование итогового массива для фронта
   for (const event of eventsDB) {
-    const riders = {
-      // подсчет мужчин
-      male: zwiftResultsDB.filter((result) => {
-        const isMale = result.profileData.gender.toLowerCase() === 'male';
-        // поиск текущего Эвента с event.id
-        const currentEvent = result.eventId === event.id;
-        return isMale && currentEvent;
-      }).length,
+    let male = 0;
+    let female = 0;
 
-      // подсчет женщин
-      female: zwiftResultsDB.filter((result) => {
-        const isFemale = result.profileData.gender.toLowerCase() === 'female';
-        // поиск текущего Эвента с event.id
-        const currentEvent = result.eventId === event.id;
-        return isFemale && currentEvent;
-      }).length,
-    };
-
+    for (const result of zwiftResultsDB) {
+      if (result.eventId === event.id) {
+        // подсчет мужчин
+        if (result.profileData.gender.toLowerCase() === 'male') {
+          male++;
+        } else {
+          // подсчет женщин
+          female++;
+        }
+      }
+    }
+    const riders = { male, female };
     // замена строки времени на число
     event.eventStart = new Date(event.eventStart).getTime();
 
