@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
 
 import { fetchRidersInEvents } from '../../redux/features/api/statistics/fetchRidersInEvents';
 import {
@@ -14,6 +15,7 @@ import { millisecondsYear } from '../../assets/dates';
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 
 import styles from './Statistics.module.css';
+const cx = classNames.bind(styles);
 
 function RidersInEvents() {
   useTitle('Статистика');
@@ -39,17 +41,21 @@ function RidersInEvents() {
     <section>
       {fetchStatus === 'resolved' && (
         <>
-          <h2 className={styles.title}>Количество участников</h2>
+          <h2 className={cx('title')}>Количество участников</h2>
           <NavBarRidersInEvent form={form} setForm={setForm} />
-          <div className={styles.wrapper__charts}>
-            <div className={styles.wrapper__chart}>
+          <div className={cx('wrapper__charts')}>
+            <div className={cx('wrapper__chart')}>
               <ChartRidersInEvents />
             </div>
-            <div className={styles.wrapper__chart}>
+            <div className={cx('wrapper__chart')}>
               <ChartTypesInsEvents form={form} />
             </div>
+            <div className={cx('wrapper__chart')}>
+              <ChartTypesInsEvents form={form} />
+            </div>
+            <div className={cx('wrapper__chart', 'invisible')}></div>
           </div>
-          <p className={styles.annotation}>
+          <p className={cx('annotation')}>
             * при клике на параметре исключается данный параметр из диаграммы
           </p>
         </>

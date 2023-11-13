@@ -452,3 +452,10 @@ export interface FitFileToDBParams {
     eventStart: number;
   };
 }
+/**
+ * Распределение райдеров по возрастным категориям
+ */
+export interface AgeCategories {
+  label: string;
+  value: number;
+}

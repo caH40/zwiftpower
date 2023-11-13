@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
-import { getAgeCategory } from '../../../utils/event';
+import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';

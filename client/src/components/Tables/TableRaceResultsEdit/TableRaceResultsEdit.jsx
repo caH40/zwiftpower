@@ -5,7 +5,7 @@ import { fetchResultEdit } from '../../../redux/features/api/result_edit/fetchRe
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
-import { getAgeCategory } from '../../../utils/event';
+import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
