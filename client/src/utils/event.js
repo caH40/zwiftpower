@@ -107,15 +107,6 @@ const gap = (dateStart, dateStartGroup) => {
 
 export const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
 
-export const getAgeCategory = (age) => {
-  if (!age) return '';
-  if (age < 30) return 'Snr';
-  if (age >= 30 && age < 40) return 'Mas';
-  if (age >= 40 && age < 50) return 'Vet';
-  if (age >= 50 && age < 60) return '50+';
-  return '60+';
-};
-
 export const getWeightStr = (weight) => {
   if (String(weight).includes('max')) {
     // отделение слова 'max', что изменить вес

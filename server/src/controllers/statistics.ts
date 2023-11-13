@@ -6,7 +6,8 @@ import { getLeadersInIntervalsService } from '../statistics/leadersInIntervals/l
 import { getRidersTotalService } from '../statistics/ridersTotal.js';
 
 // types
-import { TotalRidersFTP } from '../types/types.interface.js';
+import { AgeCategories, TotalRidersFTP } from '../types/types.interface.js';
+import { getRidersTotalAgeService } from '../statistics/ridersAge.js';
 
 export const getRidersInEvents = async (req: Request, res: Response) => {
   try {
@@ -60,6 +61,22 @@ export const getRidersTotal = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     } else {
       res.status(400).json('Непредвиденная ошибка в getRidersTotal');
+    }
+  }
+};
+/**
+ * Получение всех райдеров с распределением по 0.1 вт/кг за последние 90 дней
+ */
+export const getRidersTotalAge = async (req: Request, res: Response) => {
+  try {
+    const ridersTotalAge: AgeCategories[] = await getRidersTotalAgeService();
+    res.status(200).json(ridersTotalAge);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json('Непредвиденная ошибка в ridersTotalAge');
     }
   }
 };

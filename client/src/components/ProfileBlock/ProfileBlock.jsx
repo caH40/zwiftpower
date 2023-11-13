@@ -1,6 +1,7 @@
-import { getAgeCategory, getWeightStr } from '../../utils/event';
+import { getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
+import { getAgeCategory } from '../../utils/age';
 
 import styles from './ProfileBlock.module.css';
 
@@ -23,11 +24,11 @@ function ProfileBlock({ results, profile }) {
               className={styles.term__description}
             >{`${profile.firstName} ${profile.lastName}`}</dd>
           </div>
-
+          {/* 
           <div className={styles.box__term}>
             <dt className={styles.term}>КОМАНДА</dt>
             <dd className={styles.term__description}>{profile?.team}</dd>
-          </div>
+          </div> */}
 
           <div className={styles.box__term}>
             <dt className={styles.term}>FTP</dt>
@@ -49,10 +50,10 @@ function ProfileBlock({ results, profile }) {
             <dd className={styles.term__description}>{getAgeCategory(profile.age)}</dd>
           </div>
 
-          {/* <div className={styles.box__term}>
+          <div className={styles.box__term}>
             <dt className={styles.term}>ZWIFTID</dt>
             <dd className={styles.term__description}>{results[0]?.profileId}</dd>
-          </div> */}
+          </div>
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ЗАЕЗДОВ</dt>

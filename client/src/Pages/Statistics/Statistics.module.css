@@ -21,7 +21,6 @@
   border-radius: 5px;
   padding: 15px 15px 5px;
   letter-spacing: 0.03em;
-  margin-bottom: 15px;
 }
 .block__table {
   overflow-x: auto;
@@ -37,13 +36,21 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
+  margin-bottom: 10px;
 }
 .wrapper__chart {
-  flex: 1 1 500px;
+  flex: 1 1 600px;
   min-width: 300px;
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
   border-radius: 5px;
   padding: 15px 15px 5px;
   letter-spacing: 0.03em;
+}
+.invisible {
+  height: 0px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0px;
+  opacity: 0;
 }

@@ -5,7 +5,6 @@ import classnames from 'classnames/bind';
 import useLeader from '../../../hook/useLeaders';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
-import { getAgeCategory } from '../../../utils/event';
 import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -14,6 +13,7 @@ import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
 import { sortTable } from '../../../utils/table-sort';
+import { getAgeCategory } from '../../../utils/age';
 
 import styles from '../Table.module.css';
 
