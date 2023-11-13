@@ -11,10 +11,12 @@ import useTitle from '../../hook/useTitle';
 import ChartRidersInEvents from '../../components/Charts/RidersInEvents/ChartRidersInEvents';
 import ChartTypesInsEvents from '../../components/Charts/TypesInsEvents/ChartTypesInsEvents';
 import { millisecondsYear } from '../../assets/dates';
-
+import ChartRidersTotalAge from '../../components/Charts/RidersTotalAge/ChartRidersTotalAge';
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
+import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
 
 import styles from './Statistics.module.css';
+
 const cx = classNames.bind(styles);
 
 function RidersInEvents() {
@@ -26,6 +28,7 @@ function RidersInEvents() {
 
   useEffect(() => {
     dispatch(fetchRidersInEvents(millisecondsYear));
+    dispatch(fetchRidersTotalAge());
 
     // обнуление стора при уходе со страницы
     return () => {
@@ -51,7 +54,7 @@ function RidersInEvents() {
               <ChartTypesInsEvents form={form} />
             </div>
             <div className={cx('wrapper__chart')}>
-              <ChartTypesInsEvents form={form} />
+              <ChartRidersTotalAge />
             </div>
             <div className={cx('wrapper__chart', 'invisible')}></div>
           </div>
