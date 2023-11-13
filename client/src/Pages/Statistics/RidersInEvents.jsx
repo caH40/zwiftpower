@@ -14,6 +14,7 @@ import { millisecondsYear } from '../../assets/dates';
 import ChartRidersTotalAge from '../../components/Charts/RidersTotalAge/ChartRidersTotalAge';
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
+import { resetRidersTotalAge } from '../../redux/features/api/statistics_age/ridersTotalAgeSlice';
 
 import styles from './Statistics.module.css';
 
@@ -33,6 +34,7 @@ function RidersInEvents() {
     // обнуление стора при уходе со страницы
     return () => {
       dispatch(resetRidersInEvents());
+      dispatch(resetRidersTotalAge());
     };
   }, []);
 

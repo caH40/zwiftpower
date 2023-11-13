@@ -56,6 +56,10 @@ function Flag({ name = '' }) {
       nameShort = 'ee';
       break;
 
+    case 'spm':
+      nameShort = 'pm';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
