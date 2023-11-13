@@ -15,8 +15,8 @@
 }
 .box__arrow {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 10px;
+  right: 10px;
 }
 @media screen and (max-width: 1200px) {
   .wrapper {
