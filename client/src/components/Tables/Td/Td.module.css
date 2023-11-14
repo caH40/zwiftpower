@@ -50,6 +50,12 @@
   border-radius: 5px;
   overflow: hidden;
 }
+.rider__logo__block {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+}
 .rider__img {
   width: 100%;
   height: 100%;
@@ -99,4 +105,8 @@
 }
 .rank {
   display: inline-block;
+}
+.zwiftIdAdditional {
+  white-space: wrap;
+  max-width: 150px;
 }
