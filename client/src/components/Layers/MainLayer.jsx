@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import CustomizedSnackbars from '../UI/Snackbars/CustomizedSnackbars';
@@ -16,7 +15,9 @@ function MainLayer() {
       <CustomizedSnackbars>
         <Header />
         <Body>
-          <Outlet />
+          <Suspense>
+            <Outlet />
+          </Suspense>
         </Body>
         <Footer />
         <PopupInput />

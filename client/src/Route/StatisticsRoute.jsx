@@ -6,54 +6,14 @@ const RidersInEvents = lazy(() => import('../Pages/Statistics/RidersInEvents'));
 const LeadersInIntervals = lazy(() => import('../Pages/Statistics/LeadersInIntervals'));
 const RidersTotalFTP = lazy(() => import('../Pages/Statistics/RidersTotalFTP'));
 
-import MySuspense from '../HOC/Se';
-
 export function StatisticsRoute() {
   return (
     <>
-      <Route
-        path="/race/statistics"
-        element={
-          <MySuspense>
-            <Statistics />
-          </MySuspense>
-        }
-      >
-        <Route
-          path="main"
-          element={
-            <MySuspense>
-              <RidersInEvents />
-            </MySuspense>
-          }
-        />
-
-        <Route
-          path="leaders/male"
-          element={
-            <MySuspense>
-              <LeadersInIntervals />
-            </MySuspense>
-          }
-        />
-
-        <Route
-          path="leaders/female"
-          element={
-            <MySuspense>
-              <LeadersInIntervals />
-            </MySuspense>
-          }
-        />
-
-        <Route
-          path="riders-ftp"
-          element={
-            <MySuspense>
-              <RidersTotalFTP />
-            </MySuspense>
-          }
-        />
+      <Route path="/race/statistics" element={<Statistics />}>
+        <Route path="main" element={<RidersInEvents />} />
+        <Route path="leaders/male" element={<LeadersInIntervals />} />
+        <Route path="leaders/female" element={<LeadersInIntervals />} />
+        <Route path="riders-ftp" element={<RidersTotalFTP />} />
       </Route>
     </>
   );
