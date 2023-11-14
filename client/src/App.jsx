@@ -33,6 +33,7 @@ function App() {
   const userAuth = useSelector((state) => state.checkAuth.value.user);
 
   const isModerator = ['admin', 'moderator'].includes(userAuth.role);
+  const isAdmin = ['admin'].includes(userAuth.role);
 
   const location = useLocation();
   sendMetrika('hit', location.pathname);
@@ -65,7 +66,7 @@ function App() {
             </MySuspense>
           }
         />
-        {isModerator ? AdminRoute() : ''}
+        {isModerator ? AdminRoute(isAdmin) : ''}
         <Route path="*" element={<Page404 />} />
         {ResultsRoute()}
         {ScheduleRouteRoute()}

@@ -7,8 +7,9 @@ const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
 const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
+const Users = lazy(() => import('../Pages/Users/Users'));
 
-export function AdminRoute() {
+export function AdminRoute(isAdmin) {
   return (
     <>
       <Route
@@ -51,6 +52,16 @@ export function AdminRoute() {
           </MySuspense>
         }
       />
+      {isAdmin && (
+        <Route
+          path="/admin/users"
+          element={
+            <MySuspense>
+              <Users />
+            </MySuspense>
+          }
+        />
+      )}
     </>
   );
 }

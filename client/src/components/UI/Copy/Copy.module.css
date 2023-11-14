@@ -1,0 +1,12 @@
+.box {
+  cursor: copy;
+  color: var(--color-blue-main);
+  transition: all 0.4s;
+}
+.box:hover {
+  color: var(--color-blue-4);
+  transition: all 0.4s;
+}
+.box:active {
+  color: var(--color-blue-2);
+}

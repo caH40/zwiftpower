@@ -1,4 +1,9 @@
-// формирование даты согласно локали 'ru'
+/**
+ * Формирование даты согласно локали 'ru'
+ * @param {string | number} date дата в миллисекундах или в виде строки
+ * @param {'HM' | 'HmS' | 'DDMMYYHm' | 'DDMMYYHms' | 'DDMMYY'} timeFormat формат возвращаемой даты
+ * @param {boolean} long название месяца (true) или цифрами
+ */
 export function getTimerLocal(date, timeFormat, long) {
   const dateForFormat = new Date(date);
   if (!date || date === 0) return 'Дата отсутствует...';
