@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authAdmin, authModerator } from '../middleware/authRole.js';
+import { authModerator } from '../middleware/authRole.js';
 import {
   getEvent,
   getEvents,
@@ -19,10 +19,10 @@ export const routerRace = Router();
 routerRace.get('/events/:eventId', getEvent);
 routerRace.get('/events', getEvents);
 routerRace.post('/events', authModerator, postEvent);
-routerRace.put('/events', authAdmin, putEvent);
-routerRace.delete('/events', authAdmin, deleteEventAndResults);
-routerRace.put('/results', authAdmin, putResults);
+routerRace.put('/events', authModerator, putEvent); // ручное обновление Эвента
+routerRace.delete('/events', authModerator, deleteEventAndResults); // ручное удаление Эвента и результатов
+routerRace.put('/results', authModerator, putResults); // ручное обновление результатов
 routerRace.get('/results/:eventId', getResults);
 routerRace.get('/series', getSeries);
 routerRace.get('/series/results/:type/:season', getResultsSeries);
-routerRace.put('/result', authAdmin, putResult);
+routerRace.put('/result', authModerator, putResult);

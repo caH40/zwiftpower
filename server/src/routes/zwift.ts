@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authAdmin, authModerator } from '../middleware/authRole.js';
+import { authModerator } from '../middleware/authRole.js';
 import {
   getEvent,
   getZwiftRider,
@@ -13,4 +13,4 @@ export const routerZwift = Router();
 routerZwift.get('/events/:eventId', authModerator, getEvent);
 routerZwift.put('/events', authModerator, putEvent);
 routerZwift.get('/rider/:zwiftId', getZwiftRider);
-routerZwift.get('/download/event-results/:eventId', authAdmin, getZwiftEventResults);
+routerZwift.get('/download/event-results/:eventId', authModerator, getZwiftEventResults);
