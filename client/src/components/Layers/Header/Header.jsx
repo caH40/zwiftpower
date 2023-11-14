@@ -15,7 +15,7 @@ function Header() {
   const { isLoading } = useLoader();
   const { user } = useSelector((state) => state.checkAuth.value);
 
-  const isModerator = ['admin', 'moderator'].includes(user.role);
+  const isAdmin = ['admin'].includes(user.role);
 
   return (
     <header className={styles.header}>
@@ -26,7 +26,7 @@ function Header() {
       </div>
       <div className={styles.header__right}>
         <NavBar />
-        {isModerator && <Hamburger />}
+        {isAdmin && <Hamburger />}
       </div>
     </header>
   );

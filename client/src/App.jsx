@@ -19,8 +19,6 @@ import NewPassword from './Pages/Auth/NewPassword';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import RaceSeries from './Pages/RaceSeries/RaceSeries';
 
-import LogsAdmin from './Pages/LogsAdmin/LogsAdmin';
-
 const Catchup = lazy(() => import('./Pages/Catchup/Catchup'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
 
@@ -57,7 +55,7 @@ function App() {
             </MySuspense>
           }
         />
-        <Route path="/logs/admin" element={<LogsAdmin />} />
+
         <Route
           path="/faq"
           element={
