@@ -5,27 +5,12 @@ const ScheduleList = lazy(() => import('../Pages/ScheduleList/ScheduleList'));
 const ScheduleDescription = lazy(() =>
   import('../Pages/ScheduleDescription/ScheduleDescription')
 );
-import MySuspense from '../HOC/Se';
 
 export function ScheduleRouteRoute() {
   return (
     <>
-      <Route
-        path="/race/schedule"
-        element={
-          <MySuspense>
-            <ScheduleList />
-          </MySuspense>
-        }
-      />
-      <Route
-        path="/race/schedule/:eventId"
-        element={
-          <MySuspense>
-            <ScheduleDescription />
-          </MySuspense>
-        }
-      />
+      <Route path="/race/schedule" element={<ScheduleList />} />
+      <Route path="/race/schedule/:eventId" element={<ScheduleDescription />} />
     </>
   );
 }

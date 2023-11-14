@@ -25,7 +25,7 @@ function TableUsers({ users }) {
             <TdLogo srcPicture={user.photoProfile} />
 
             <td>
-              <Copy name={`e-mail "${user.username}"`} showValue={true}>
+              <Copy name={`username "${user.username}"`} showValue={true}>
                 {user.username}
               </Copy>
             </td>

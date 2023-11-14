@@ -2,8 +2,6 @@ import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 import { useSelector } from 'react-redux';
 
-import MySuspense from '../HOC/Se';
-
 const Profile = lazy(() => import('../Pages/Profile/Profile'));
 const ProfileResults = lazy(() => import('../Pages/Profile/ProfileResults'));
 const ProfileSetting = lazy(() => import('../Pages/Profile/ProfileSetting'));
@@ -15,48 +13,11 @@ export function ProfileRoute() {
 
   return (
     <>
-      <Route
-        path="/profile/:zwiftId"
-        element={
-          <MySuspense>
-            <Profile />
-          </MySuspense>
-        }
-      >
-        <Route
-          path="results"
-          element={
-            <MySuspense>
-              <ProfileResults />
-            </MySuspense>
-          }
-        />
-        <Route
-          path="power"
-          element={
-            <MySuspense>
-              <ProfilePower />
-            </MySuspense>
-          }
-        />
-        <Route
-          path="weight"
-          element={
-            <MySuspense>
-              <ProfileWeight />
-            </MySuspense>
-          }
-        />
-        {status && (
-          <Route
-            path="settings"
-            element={
-              <MySuspense>
-                <ProfileSetting />
-              </MySuspense>
-            }
-          />
-        )}
+      <Route path="/profile/:zwiftId" element={<Profile />}>
+        <Route path="results" element={<ProfileResults />} />
+        <Route path="power" element={<ProfilePower />} />
+        <Route path="weight" element={<ProfileWeight />} />
+        {status && <Route path="settings" element={<ProfileSetting />} />}
       </Route>
     </>
   );

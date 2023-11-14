@@ -23,7 +23,7 @@ const Catchup = lazy(() => import('./Pages/Catchup/Catchup'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
 
 import { sendMetrika } from './metrika/yandex';
-import MySuspense from './HOC/Se';
+
 import './css/App.css';
 
 function App() {
@@ -47,23 +47,9 @@ function App() {
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/race/series" element={<RaceSeries />} />
-        <Route
-          path="/race/series/catchup"
-          element={
-            <MySuspense>
-              <Catchup />
-            </MySuspense>
-          }
-        />
+        <Route path="/race/series/catchup" element={<Catchup />} />
 
-        <Route
-          path="/faq"
-          element={
-            <MySuspense>
-              <Faq />
-            </MySuspense>
-          }
-        />
+        <Route path="/faq" element={<Faq />} />
         {isModerator ? AdminRoute(isAdmin) : ''}
         <Route path="*" element={<Page404 />} />
         {ResultsRoute()}

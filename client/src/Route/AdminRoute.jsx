@@ -1,8 +1,6 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
-import MySuspense from '../HOC/Se';
-
 const LogsAdmin = lazy(() => import('../Pages/LogsAdmin/LogsAdmin'));
 const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
@@ -13,66 +11,13 @@ const Users = lazy(() => import('../Pages/Users/Users'));
 export function AdminRoute(isAdmin) {
   return (
     <>
-      <Route
-        path="/bot"
-        element={
-          <MySuspense>
-            <Bot />
-          </MySuspense>
-        }
-      />
-      <Route
-        path="/zwift/edit/event"
-        element={
-          <MySuspense>
-            <ZwiftEditEvent />
-          </MySuspense>
-        }
-      />
-      <Route
-        path="/zwift/edit/event/:id"
-        element={
-          <MySuspense>
-            <ZwiftEditEvent />
-          </MySuspense>
-        }
-      />
-      <Route
-        path="/zwift/add/event"
-        element={
-          <MySuspense>
-            <ZwiftAddEvent />
-          </MySuspense>
-        }
-      />
-      <Route
-        path="/admin/results/edit/:eventId"
-        element={
-          <MySuspense>
-            <EditResults />
-          </MySuspense>
-        }
-      />
-      {isAdmin && (
-        <Route
-          path="/admin/users"
-          element={
-            <MySuspense>
-              <Users />
-            </MySuspense>
-          }
-        />
-      )}
-      {isAdmin && (
-        <Route
-          path="/logs/admin"
-          element={
-            <MySuspense>
-              <LogsAdmin />
-            </MySuspense>
-          }
-        />
-      )}
+      <Route path="/bot" element={<Bot />} />
+      <Route path="/zwift/edit/event" element={<ZwiftEditEvent />} />
+      <Route path="/zwift/edit/event/:id" element={<ZwiftEditEvent />} />
+      <Route path="/zwift/add/event" element={<ZwiftAddEvent />} />
+      <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
+      {isAdmin && <Route path="/admin/users" element={<Users />} />}
+      {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}
     </>
   );
 }
