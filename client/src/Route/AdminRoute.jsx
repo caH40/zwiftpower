@@ -3,6 +3,7 @@ import { lazy } from 'react';
 
 import MySuspense from '../HOC/Se';
 
+const LogsAdmin = lazy(() => import('../Pages/LogsAdmin/LogsAdmin'));
 const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
@@ -58,6 +59,16 @@ export function AdminRoute(isAdmin) {
           element={
             <MySuspense>
               <Users />
+            </MySuspense>
+          }
+        />
+      )}
+      {isAdmin && (
+        <Route
+          path="/logs/admin"
+          element={
+            <MySuspense>
+              <LogsAdmin />
             </MySuspense>
           }
         />
