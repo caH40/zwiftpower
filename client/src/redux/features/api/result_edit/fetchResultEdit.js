@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
+import { fetchResultEvent } from '../eventResultSlice';
 
 /**
  * Запросы на изменение параметров результата Райдера
@@ -24,6 +25,9 @@ export const fetchResultEdit = createAsyncThunk('results/resultPut', async (data
         isOpened: true,
       })
     );
+
+    // запрос данных с внесенными изменениями
+    thunkAPI.dispatch(fetchResultEvent(response.data.eventId));
 
     return response.data;
   } catch (error) {

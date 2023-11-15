@@ -13,7 +13,7 @@ export const setDisqualification = async ({
   data,
   id,
   property,
-}: PutResultParams): Promise<{ message: string }> => {
+}: PutResultParams): Promise<{ message: string; eventId: number }> => {
   // значение дисквалификации
   const isDisqualification = data.value === 'true' ? true : false;
 
@@ -61,8 +61,8 @@ export const setDisqualification = async ({
   await changeRankResults(eventDB._id, eventDB.typeRaceCustom);
 
   if (resultDB.isDisqualification) {
-    return { message: `Райдер ${rider} дисквалифицирован` };
+    return { message: `Райдер ${rider} дисквалифицирован`, eventId: resultDB.eventId };
   } else {
-    return { message: `С райдера ${rider} снята дисквалификация` };
+    return { message: `С райдера ${rider} снята дисквалификация`, eventId: resultDB.eventId };
   }
 };
