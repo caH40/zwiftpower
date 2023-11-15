@@ -7,7 +7,7 @@ import TableRaceResultsEdit from '../../components/Tables/TableRaceResultsEdit/T
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
-import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
+import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { resetSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
@@ -24,6 +24,8 @@ function EditResults() {
     dispatch(resetFilterCategory());
     dispatch(resetSorting());
     dispatch(fetchResultEvent(eventId));
+
+    return () => dispatch(resetResults());
   }, [eventId, dispatch]);
 
   return (

@@ -8,7 +8,7 @@ import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
-import { fetchResultEvent } from '../../redux/features/api/eventResultSlice';
+import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { resetSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
@@ -25,6 +25,8 @@ function ResultsDescription() {
     dispatch(resetFilterCategory());
     dispatch(resetSorting());
     dispatch(fetchResultEvent(eventId));
+
+    return () => dispatch(resetResults());
   }, [eventId, dispatch]);
 
   return (
