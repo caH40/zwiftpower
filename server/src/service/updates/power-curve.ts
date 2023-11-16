@@ -6,6 +6,10 @@ import { errorHandler } from '../../errors/error.js';
 // types
 import { PowerCurveSchema } from '../../types/model.interface.js';
 
+/**
+ * Создание/обновления (FitFiles) фитфалов активностей райдера и
+ * обновление кривой мощности за последние 90 дней
+ */
 export async function updateAllPowerCurve() {
   try {
     const powerCurvesDB: PowerCurveSchema[] = await PowerCurve.find();

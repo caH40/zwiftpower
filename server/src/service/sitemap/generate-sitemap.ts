@@ -9,6 +9,9 @@ import { urlsStatic } from './static.js';
 
 const __dirname = path.resolve();
 
+/**
+ * Создание файла sitemap.xml со страницами сайта, которые должны проверять поисковые роботы
+ */
 export async function createSitemap() {
   try {
     const urlsScheduleDescription = await getUrlsScheduleDescription();

@@ -9,8 +9,9 @@ export const millisecondsIn30Minutes = 30 * millisecondsInMinute;
 export const millisecondsIn5Minutes = 5 * millisecondsInMinute;
 export const millisecondsIn12Minutes = 12 * millisecondsInMinute;
 export const millisecondsInHour = 60 * millisecondsInMinute;
-export const millisecondsIn2Hours = 3 * millisecondsInHour;
+export const millisecondsIn2Hours = 2 * millisecondsInHour;
 
+export const millisecondsIn3Days = 3 * millisecondsInDay;
 export const millisecondsInWeekDays = 7 * millisecondsInDay;
 export const millisecondsIn90Days = 90 * millisecondsInDay;
 
