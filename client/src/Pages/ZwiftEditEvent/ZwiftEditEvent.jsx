@@ -17,7 +17,6 @@ import {
   setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
-import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -50,7 +49,6 @@ function ZwiftEditEvent() {
       .then((data) => {
         dispatch(getAlert({ message: data.data?.message, type: 'success', isOpened: true }));
         dispatch(resetParams());
-        // dispatch(fetchChangeEvent({ operation: 'put', eventId: eventId.id }));
       })
       .catch((error) => {
         dispatch(
