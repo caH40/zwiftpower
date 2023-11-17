@@ -7,6 +7,7 @@ import { errorHandler } from '../errors/error.js';
 
 //types
 import { PutEvent } from '../types/http.interface.js';
+import { AxiosError } from 'axios';
 
 export async function getEvent(req: Request, res: Response) {
   try {
@@ -15,7 +16,12 @@ export async function getEvent(req: Request, res: Response) {
     res.status(200).json(event);
   } catch (error) {
     errorHandler(error);
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        error.response.data.message;
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
   }
@@ -32,7 +38,12 @@ export async function putEvent(req: Request, res: Response) {
     res.status(200).json(eventChanged);
   } catch (error) {
     errorHandler(error);
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        error.response.data.message;
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
   }
@@ -44,7 +55,12 @@ export async function getZwiftRider(req: Request, res: Response) {
     res.status(200).json(rider);
   } catch (error) {
     errorHandler(error);
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        error.response.data.message;
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
   }
@@ -61,7 +77,12 @@ export async function getZwiftEventResults(req: Request, res: Response) {
     res.send(results);
   } catch (error) {
     errorHandler(error);
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        error.response.data.message;
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
   }

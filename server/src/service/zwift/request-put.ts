@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { getAccessToken } from './token.js';
 import { zwiftAPI } from '../../config/environment.js';
-import { errorHandler } from '../../errors/error.js';
 
 //types
 import { PutEvent } from '../../types/http.interface.js';
@@ -33,8 +32,6 @@ export async function putRequest(url: string, data: PutEvent, isMainToken = true
       Authorization: 'Bearer ' + token,
     },
     data,
-  }).catch((error) => {
-    errorHandler(error);
   });
 
   if (response) {
