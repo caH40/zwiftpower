@@ -2533,7 +2533,7 @@ export const routes = [
     'https://www.strava.com/segments/21738724',
     'https://zwiftinsider.com/route/2019-uci-worlds-harrogate-circuit',
     'https://whatsonzwift.com/world/yorkshire/route/2019-uci-worlds-harrogate-circuit',
-    undefined,
+    'https://zwifterbikes.web.app/route/2019-uci-worlds-harrogate-circuit',
   ],
   [
     2128890027,
