@@ -1,40 +1,33 @@
 import { getLinksRouteDescription } from '../../utils/event';
 
 import styles from './LinksRoute.module.css';
+import LinkRouter from './LinkRouter';
 
 function LinksRoute({ routeId }) {
   const { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift, linkStravaSegment } =
     getLinksRouteDescription(routeId);
   return (
     <div className={styles.block}>
-      {linkZwiftinsider && (
-        <p className={styles.route__p}>
-          <a className={styles.link} href={linkZwiftinsider} target="_blank" rel="noreferrer">
-            Описание маршрута на zwiftInsider.com
-          </a>
-        </p>
-      )}
-      {linkWhatsonzwift && (
-        <p className={styles.route__p}>
-          <a className={styles.link} href={linkWhatsonzwift} target="_blank" rel="noreferrer">
-            Описание маршрута на whatsonzwift.com
-          </a>
-        </p>
-      )}
-      {linkStravaSegment && (
-        <p className={styles.route__p}>
-          <a className={styles.link} href={linkStravaSegment} target="_blank" rel="noreferrer">
-            Сегмент на strava.com
-          </a>
-        </p>
-      )}{' '}
-      {linkZwifterbikes && (
-        <p className={styles.route__p}>
-          <a className={styles.link} href={linkZwifterbikes} target="_blank" rel="noreferrer">
-            Выбор велосипеда для маршрута zwifterbikes.web.app
-          </a>
-        </p>
-      )}
+      <LinkRouter
+        link={linkZwiftinsider}
+        linkFavicon={'https://zwiftinsider.com/wp-content/uploads/2021/11/favicon.png'}
+        text={'Описание маршрута на zwiftInsider.com'}
+      />
+      <LinkRouter
+        link={linkWhatsonzwift}
+        linkFavicon={'https://whatsonzwift.com/favicon-32x32.png'}
+        text={'Описание маршрута на whatsonzwift.com'}
+      />
+      <LinkRouter
+        link={linkStravaSegment}
+        linkFavicon={'/images/strava-favicon.png'}
+        text={'Сегмент на strava.com'}
+      />
+      <LinkRouter
+        link={linkZwifterbikes}
+        linkFavicon={'https://zwifterbikes.web.app/assets/icons/favicon-32x32.png'}
+        text={'Выбор велосипеда для маршрута zwifterbikes.web.app'}
+      />
     </div>
   );
 }
