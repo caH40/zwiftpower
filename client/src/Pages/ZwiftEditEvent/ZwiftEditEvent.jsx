@@ -21,12 +21,17 @@ import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
 
+/**
+ * Страница "Редактирования заезда". Изменение параметров Эвента, подгрупп, выбор пакета настроек
+ * с последующим сохранением на сервере в Zwift
+ */
 function ZwiftEditEvent() {
   const { id } = useParams();
   const [eventId, setEventId] = useState({ id: id || 0 });
 
   useTitle('Zwift - Редактирование заезда');
   const eventParams = useSelector((state) => state.eventParams);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);

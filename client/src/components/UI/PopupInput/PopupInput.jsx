@@ -1,9 +1,10 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Transition } from 'react-transition-group';
+import classNames from 'classnames/bind';
 
 import RInput from '../ReduxUI/RInput/RInput';
 import RTextarea from '../ReduxUI/RTextarea/RTextarea';
-import { closePopupInput } from '../../../redux/features/popupInputSlice';
+import { closePopupInput, resetPopupInput } from '../../../redux/features/popupInputSlice';
 import ButtonClose from '../ButtonClose/ButtonClose';
 import RSelect from '../ReduxUI/RSelect/RSelect';
 import RInputTime from '../ReduxUI/RInputTime/RInputTime';
@@ -11,6 +12,11 @@ import RSelectId from '../ReduxUI/RSelect/RSelectId';
 
 import styles from './PopupInput.module.css';
 
+const cx = classNames.bind(styles);
+
+/**
+ * модальное окно изменения параметров Эвена
+ */
 function PopupInput() {
   const { isVisible, inputParams } = useSelector((state) => state.getPopupInput);
 
@@ -19,9 +25,14 @@ function PopupInput() {
   const closePopup = () => dispatch(closePopupInput());
 
   return (
-    <>
-      {isVisible && (
-        <div className={styles.wrapper} onClick={closePopup}>
+    <Transition
+      in={isVisible}
+      unmountOnExit
+      timeout={250}
+      onExited={() => dispatch(resetPopupInput())}
+    >
+      {(state) => (
+        <div className={cx('wrapper', state)} onClick={closePopup}>
           <div className={styles.block} onClick={(e) => e.stopPropagation()}>
             <div className={styles.close}>
               <ButtonClose getClick={closePopup} />
@@ -72,7 +83,7 @@ function PopupInput() {
           </div>
         </div>
       )}
-    </>
+    </Transition>
   );
 }
 

@@ -41,3 +41,18 @@
     flex: 0 1 90%;
   }
 }
+
+.wrapper.entering {
+  opacity: 0;
+}
+.wrapper.entered {
+  opacity: 1;
+  transition: opacity 250ms ease-in-out;
+}
+.wrapper.exiting {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+.wrapper.exited {
+  opacity: 0;
+}
