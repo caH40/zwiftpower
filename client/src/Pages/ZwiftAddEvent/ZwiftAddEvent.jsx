@@ -18,7 +18,7 @@ function ZwiftAddEvent() {
   useTitle('Zwift - Добавление заезда');
   const [eventId, setEventId] = useState({ id: 0 });
   const { eventMainParams } = useSelector((state) => state.eventParams);
-  const [additionalParams, setAdditionalParams] = useState({});
+  const [additionalParams, setAdditionalParams] = useState({ seriesId: null });
 
   const { id: userId } = useSelector((state) => state.checkAuth.value.user);
   const { series } = useSelector((state) => state.fetchActualSeries);

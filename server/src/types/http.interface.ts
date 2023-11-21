@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 
 // данные из query параметров url
@@ -30,7 +31,7 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   creator: string;
   organizer: string;
   typeRaceCustom: string;
-  seriesId?: string;
+  seriesId: Types.ObjectId | null;
 }
 /**
  * данные получаемые с фронтэнда для изменения данных Event
