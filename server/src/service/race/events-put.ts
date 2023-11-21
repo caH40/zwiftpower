@@ -1,7 +1,7 @@
 import { loggingAdmin } from '../log.js';
 import { getEventZwiftService } from '../zwift/events.js';
 import { deleteEventService } from './events-delete.js';
-import { postEventService } from './events-post.js';
+import { postEventService } from './event_post/events-post.js';
 
 // types
 import { AdditionalParamsEvent, EventWithSubgroup } from '../../types/types.interface.js';

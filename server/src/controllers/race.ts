@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { deleteEventAndResultsService } from '../service/race/events-delete.js';
-import { postEventService } from '../service/race/events-post.js';
+import { postEventService } from '../service/race/event_post/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
 import { getEventService } from '../service/race/event_get/event-get.js';
 import { getEventsService } from '../service/race/events_list/events.js';
