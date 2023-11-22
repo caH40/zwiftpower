@@ -5,8 +5,17 @@
   border: 1px solid var(--color-border-minor);
   border-radius: 5px;
 }
+.block {
+  display: flex;
+  gap: 0 10px;
+}
 .title {
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
+}
+.box__leaders {
+  display: flex;
+  align-items: center;
+  gap: 0px;
 }

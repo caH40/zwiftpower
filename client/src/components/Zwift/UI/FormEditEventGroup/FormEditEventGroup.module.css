@@ -22,7 +22,9 @@
   padding: 15px 10px;
   margin-bottom: 15px;
 }
-
+.text__array {
+  margin-right: 5px;
+}
 .A {
   background-color: #dc401920;
 }
