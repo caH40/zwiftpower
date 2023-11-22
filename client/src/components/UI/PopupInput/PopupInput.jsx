@@ -9,6 +9,7 @@ import ButtonClose from '../ButtonClose/ButtonClose';
 import RSelect from '../ReduxUI/RSelect/RSelect';
 import RInputTime from '../ReduxUI/RInputTime/RInputTime';
 import RSelectId from '../ReduxUI/RSelect/RSelectId';
+import RInvitedLeaders from '../ReduxUI/RInvitedLeaders/RInvitedLeaders';
 
 import styles from './PopupInput.module.css';
 
@@ -78,6 +79,12 @@ function PopupInput() {
                 label={inputParams.label}
                 value={inputParams.value}
                 property={inputParams.property}
+              />
+            )}
+            {inputParams?.type === 'leaders' && (
+              <RInvitedLeaders
+                property={inputParams.property}
+                subgroupIndex={inputParams.subgroupIndex}
               />
             )}
           </div>

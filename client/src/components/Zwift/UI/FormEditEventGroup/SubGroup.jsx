@@ -155,6 +155,20 @@ function SubGroup({ subGroup, index }) {
               >
                 {subGroup.startLocation}
               </BoxParameter>
+
+              <BoxParameter
+                title={'Приглашенные лидеры в группе'}
+                sample={false}
+                pen={true}
+                inputParams={{
+                  label: 'Приглашенные лидеры в группе',
+                  type: 'leaders',
+                  property: 'invitedLeaders',
+                  subgroupIndex: index,
+                }}
+              >
+                {subGroup.invitedLeaders}
+              </BoxParameter>
             </div>
           </div>
         </div>
