@@ -10,12 +10,13 @@ import SimpleCheckbox from '../SimpleCheckbox/SimpleCheckbox';
 
 import styles from './FindZwiftProfile.module.css';
 
+// * @param {{showAdditionalCheckbox:boolean,hideAdditionalBlock:boolean,saveZwiftId:function}}
+
 /**
- *
- * @param {boolean} showAdditionalCheckbox сделать заблокированным checkout дополнительного профиля
- * @param {boolean} hideAdditionalBlock скрыть блок отметки дополнительного профиля
- * @param {function} saveZwiftId функция обработки полученного ZwiftId
- * @returns
+ * @param {Object} props пропсы
+ * @param {boolean} props.showAdditionalCheckbox сделать заблокированным checkout дополнительного профиля
+ * @param {boolean} props.hideAdditionalBlock скрыть блок отметки дополнительного профиля
+ * @param {function} props.saveZwiftId функция обработки полученного ZwiftId
  */
 function FindZwiftProfileNew({ showAdditionalCheckbox, hideAdditionalBlock, saveZwiftId }) {
   const [form, setForm] = useState({ isAdditional: false });

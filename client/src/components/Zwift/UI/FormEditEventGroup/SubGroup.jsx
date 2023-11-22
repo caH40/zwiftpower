@@ -9,8 +9,12 @@ import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 
 import styles from './FormEditEventGroup.module.css';
 
+/**
+ *
+ */
 function SubGroup({ subGroup, index }) {
   const quantityLeaders = subGroup?.invitedLeaders?.length;
+  const quantitySweepers = subGroup?.invitedSweepers?.length;
   return (
     <>
       {subGroup?.subgroupLabel ? (
@@ -163,7 +167,7 @@ function SubGroup({ subGroup, index }) {
                 pen={true}
                 inputParams={{
                   label: 'Приглашенные лидеры',
-                  type: 'leaders',
+                  type: 'leaders&sweepers',
                   property: 'invitedLeaders',
                   subgroupIndex: index,
                 }}
@@ -174,6 +178,28 @@ function SubGroup({ subGroup, index }) {
                     <span className={styles.text__array} key={leader}>
                       {leader}
                       {quantityLeaders === index + 1 ? '' : ','}
+                    </span>
+                  );
+                })}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Приглашенные замыкающие'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Приглашенные замыкающие',
+                  type: 'leaders&sweepers',
+                  property: 'invitedSweepers',
+                  subgroupIndex: index,
+                }}
+              >
+                {quantitySweepers === 0 && 'нет'}
+                {subGroup.invitedSweepers.map((leader, index) => {
+                  return (
+                    <span className={styles.text__array} key={leader}>
+                      {leader}
+                      {quantitySweepers === index + 1 ? '' : ','}
                     </span>
                   );
                 })}

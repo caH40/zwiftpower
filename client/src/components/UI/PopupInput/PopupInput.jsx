@@ -81,7 +81,7 @@ function PopupInput() {
                 property={inputParams.property}
               />
             )}
-            {inputParams?.type === 'leaders' && (
+            {inputParams?.type === 'leaders&sweepers' && (
               <RInvitedLeaders
                 property={inputParams.property}
                 subgroupIndex={inputParams.subgroupIndex}
