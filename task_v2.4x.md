@@ -2,10 +2,15 @@
 
 2.41.1 +интерфейс добавления лидеров в подгруппу Эвента;  
 2.41.2 +удаление "приглашенного лидера";  
+2.41.3 +исправление бага при сохранении изменений в Эвенте, который не добавлен на сайт;  
 
 
 
 ---
+-ошибка после сохранения изменений в Эвенте, который не добавлен на сайт 
+`Error: Не найден Эвент 3952886 для удаления из БД
+    at deleteEventService (file:///F:/JavaScript/React/zwiftpower/server/src/service/race/events-delete.ts:18:11)`
+    F:\JavaScript\React\zwiftpower\server\src\service\zwift\events.ts;  
 -обработка ошибки при сохранении изменений с новыми лидерами Эвента "not.member.of.external.resource";  
 -сделать универсальным компонент FindZwiftProfileNew;  
 -сохранение powerCurve для райдеров с закрытыми профилями в Звифте;  
