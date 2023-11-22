@@ -10,6 +10,7 @@ import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import styles from './FormEditEventGroup.module.css';
 
 function SubGroup({ subGroup, index }) {
+  const quantityLeaders = subGroup?.invitedLeaders?.length;
   return (
     <>
       {subGroup?.subgroupLabel ? (
@@ -154,6 +155,28 @@ function SubGroup({ subGroup, index }) {
                 }}
               >
                 {subGroup.startLocation}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Приглашенные лидеры'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Приглашенные лидеры',
+                  type: 'leaders',
+                  property: 'invitedLeaders',
+                  subgroupIndex: index,
+                }}
+              >
+                {quantityLeaders === 0 && 'нет'}
+                {subGroup.invitedLeaders.map((leader, index) => {
+                  return (
+                    <span className={styles.text__array} key={leader}>
+                      {leader}
+                      {quantityLeaders === index + 1 ? '' : ','}
+                    </span>
+                  );
+                })}
               </BoxParameter>
             </div>
           </div>
