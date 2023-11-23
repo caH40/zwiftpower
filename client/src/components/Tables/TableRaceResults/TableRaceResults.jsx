@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import useLeader from '../../../hook/useLeaders';
+import { useSortResults } from '../../../hook/useSortResults';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { useResize } from '../../../hook/use-resize';
@@ -12,7 +12,7 @@ import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
-import { sortTable } from '../../../utils/table_sort/table-sort';
+
 import { getAgeCategory } from '../../../utils/age';
 
 import styles from '../Table.module.css';
@@ -23,9 +23,6 @@ import { getCaption } from './utils';
 const cx = classnames.bind(styles);
 
 function TableRaceResults({ results, event }) {
-  const filterCategory = useSelector((state) => state.filterCategory.value);
-  const filterWatts = useSelector((state) => state.filterWatts.value);
-  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
@@ -33,33 +30,7 @@ function TableRaceResults({ results, event }) {
 
   const [getLeaders, getSweepers] = useLeader(event);
 
-  const resultSortedAndFiltered = useMemo(() => {
-    let filteredResults = [...results];
-
-    //
-    if (filterCategory.name !== 'All') {
-      filteredResults = [...results].filter(
-        (result) => result.subgroupLabel === filterCategory.name
-      );
-    }
-
-    const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
-
-    // убирать гэпы, кроме сортировки по общему времени с возрастанием
-    if (
-      activeSorting.columnName !== 'Время' ||
-      (activeSorting.columnName === 'Время' && activeSorting.isRasing === false)
-    ) {
-      return sortedAndFilteredResults.map((result) => {
-        const newResult = { ...result };
-        newResult.gap = '';
-        newResult.gapPrev = '';
-        return newResult;
-      });
-    }
-
-    return sortedAndFilteredResults;
-  }, [filterCategory, filterWatts, activeSorting, results]);
+  const resultSortedAndFiltered = useSortResults(results);
 
   return (
     <table className={cx('table')}>
