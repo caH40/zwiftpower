@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -23,6 +24,9 @@ import { getCaption } from './utils';
 const cx = classnames.bind(styles);
 
 function TableRaceResults({ results, event }) {
+  // показывать сквозную нумерацию в таблице
+  const [showIndex, setShowIndex] = useState(false);
+
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
@@ -30,15 +34,15 @@ function TableRaceResults({ results, event }) {
 
   const [getLeaders, getSweepers] = useLeader(event);
 
-  const resultSortedAndFiltered = useSortResults(results);
+  const resultSortedAndFiltered = useSortResults(results, setShowIndex);
 
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
-      <Thead md={md} sm={sm} columnsCP={columnsCP} />
+      <Thead md={md} sm={sm} columnsCP={columnsCP} showIndex={showIndex} />
 
       <tbody>
-        {resultSortedAndFiltered?.map((result) => {
+        {resultSortedAndFiltered?.map((result, index) => {
           const profile = result.profileData;
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;
@@ -49,6 +53,7 @@ function TableRaceResults({ results, event }) {
               className={cx('hover', { current: zwiftId === result.profileId })}
               key={result._id}
             >
+              {showIndex && <td className={cx('centerTd')}>{index + 1}</td>}
               <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}

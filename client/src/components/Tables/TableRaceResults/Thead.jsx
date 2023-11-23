@@ -10,7 +10,7 @@ import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
-function Thead({ columnsCP }) {
+function Thead({ columnsCP, showIndex }) {
   const dispatch = useDispatch();
 
   const setSortTable = (columnCPInterval) => {
@@ -22,7 +22,7 @@ function Thead({ columnsCP }) {
   return (
     <thead>
       <tr>
-        {raceResultsColumns().map((column) => (
+        {raceResultsColumns(showIndex).map((column) => (
           <th key={column.id}>
             <div className={styles.th__box}>
               <ColumnName columnName={column.name} />
