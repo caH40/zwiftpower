@@ -15,7 +15,7 @@ import styles from './EditResults.module.css';
 
 function EditResults() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
-  useTitle('Модификация результатов заезда');
+  useTitle('Модерация результатов заезда');
 
   const { eventId } = useParams();
   const dispatch = useDispatch();
