@@ -34,15 +34,29 @@ function TableRaceResults({ results, event }) {
   const [getLeaders, getSweepers] = useLeader(event);
 
   const resultSortedAndFiltered = useMemo(() => {
-    let filteredResults = [];
-    if (filterCategory.name === 'All') {
-      filteredResults = results;
-    } else {
+    let filteredResults = [...results];
+
+    //
+    if (filterCategory.name !== 'All') {
       filteredResults = [...results].filter(
         (result) => result.subgroupLabel === filterCategory.name
       );
     }
+
     const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
+
+    // убирать гэпы, кроме сортировки по общему времени с возрастанием
+    if (
+      activeSorting.columnName !== 'Время' ||
+      (activeSorting.columnName === 'Время' && activeSorting.isRasing === false)
+    ) {
+      return sortedAndFilteredResults.map((result) => {
+        const newResult = { ...result };
+        newResult.gap = '';
+        newResult.gapPrev = '';
+        return newResult;
+      });
+    }
 
     return sortedAndFilteredResults;
   }, [filterCategory, filterWatts, activeSorting, results]);
