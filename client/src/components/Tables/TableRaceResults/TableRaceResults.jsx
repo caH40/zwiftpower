@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -12,7 +12,7 @@ import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
-import { sortTable } from '../../../utils/table-sort';
+import { sortTable } from '../../../utils/table_sort/table-sort';
 import { getAgeCategory } from '../../../utils/age';
 
 import styles from '../Table.module.css';
