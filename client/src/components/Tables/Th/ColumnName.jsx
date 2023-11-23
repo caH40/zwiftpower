@@ -118,6 +118,9 @@ const ColumnName = ({ columnName }) => {
       case 'Победа':
         return <IconCupRank tooltip={name} place={0} />;
 
+      case 'Место':
+        return <IconCupRank tooltip={name} place={0} />;
+
       case 'Результаты':
         return <IconResultsSmall tooltip={name} place={0} />;
 
