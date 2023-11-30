@@ -18,7 +18,7 @@ export const patternCatchUp = (rawEventParams) => {
   eventParams.type = 'EVENT_TYPE_RACE';
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
   eventParams.microserviceEventVisibility = 'SHAREABLE';
-  eventParams.tags = [];
+  eventParams.tags = ['ttbikesdraft'];
   const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
 
   if (!eventSubgroupE) {
@@ -31,8 +31,11 @@ export const patternCatchUp = (rawEventParams) => {
     throw new Error('Не найдена дата старта');
   }
 
+  // время старта Эвента
+  eventParams.eventStart = `${eventStartDate}T16:30:00.000+0000`;
+
   eventParams.eventSubgroups.forEach((subgroup) => {
-    subgroup.tags = [];
+    subgroup.tags = ['ttbikesdraft'];
     subgroup.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
     // копирование данных из группы E в остальные группы
     subgroup.worldId = eventSubgroupE.worldId;
@@ -48,21 +51,21 @@ export const patternCatchUp = (rawEventParams) => {
     switch (subgroup.label) {
       // группа A
       case 1:
-        subgroup.registrationStart = `${eventStartDate}T16:06:00.000+0000`;
-        subgroup.registrationEnd = `${eventStartDate}T16:36:00.000+0000`;
-        subgroup.lineUpStart = `${eventStartDate}T16:31:00.000+0000`;
-        subgroup.lineUpEnd = `${eventStartDate}T16:36:00.000+0000`;
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:36:00.000+0000`;
+        subgroup.registrationStart = `${eventStartDate}T16:08:30.000+0000`;
+        subgroup.registrationEnd = `${eventStartDate}T16:38:30.000+0000`;
+        subgroup.lineUpStart = `${eventStartDate}T16:33:30.000+0000`;
+        subgroup.lineUpEnd = `${eventStartDate}T16:38:30.000+0000`;
+        subgroup.eventSubgroupStart = `${eventStartDate}T16:38:30.000+0000`;
         subgroup.jerseyHash = 3090729076;
         break;
 
       // группа B
       case 2:
-        subgroup.registrationStart = `${eventStartDate}T16:04:00.000+0000`;
-        subgroup.registrationEnd = `${eventStartDate}T16:34:00.000+0000`;
-        subgroup.lineUpStart = `${eventStartDate}T16:29:00.000+0000`;
-        subgroup.lineUpEnd = `${eventStartDate}T16:34:00.000+0000`;
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:34:00.000+0000`;
+        subgroup.registrationStart = `${eventStartDate}T16:06:00.000+0000`;
+        subgroup.registrationEnd = `${eventStartDate}T16:36:00.000+0000`;
+        subgroup.lineUpStart = `${eventStartDate}T16:31:00.000+0000`;
+        subgroup.lineUpEnd = `${eventStartDate}T16:36:00.000+0000`;
+        subgroup.eventSubgroupStart = `${eventStartDate}T16:36:00.000+0000`;
         subgroup.jerseyHash = 4288197284;
         break;
 
