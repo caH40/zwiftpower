@@ -13,6 +13,7 @@ import IconRubberBanding from '../icons/IconRubberBanding';
 import IconViewEvent from '../icons/IconViewEvent';
 import IconViewGroup from '../icons/IconViewGroup';
 import IconSteeringDisabled from '../icons/IconSteeringDisabled';
+import IconTTT from '../icons/IconTTT';
 
 import { enabledRule, enabledRuleInTag } from './utils';
 
@@ -40,6 +41,7 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         {enabledRuleInTag(event, 'steering_disabled') && (
           <IconSteeringDisabled squareSize={squareSize} />
         )}
+        {enabledRuleInTag(event, 'ttbikesdraft') && <IconTTT squareSize={squareSize} />}
       </>
     </div>
   );
