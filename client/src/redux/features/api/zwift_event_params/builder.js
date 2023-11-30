@@ -28,8 +28,17 @@ export const builderZwiftEventParams = (builder) => {
       return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
     });
 
+    // массив tags в настройках Эвента
+    const tagsInEven = action.payload.tags;
+    // массив tags в настройках "нулевой" подгруппы
+    // наличие tag проверяется в любой группе, так как tag должны быть одинаковы у всех групп
+    const tagsInEventSubgroup = action.payload.eventSubgroups[0].tags;
+
     state.checkboxTags = tags.map((tag) => {
-      return { ...tag, checked: action.payload.tags.includes(tag.value) };
+      return {
+        ...tag,
+        checked: tagsInEven.includes(tag.value) || tagsInEventSubgroup.includes(tag.value),
+      };
     });
   });
 
