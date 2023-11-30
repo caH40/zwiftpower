@@ -18,6 +18,9 @@ import {
 
 import styles from './FormEditEvent.module.css';
 
+/**
+ * Форма добавления настроек для всего Эвента
+ */
 function FormEditEvent() {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
