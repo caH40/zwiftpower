@@ -60,6 +60,14 @@ function Flag({ name = '' }) {
       nameShort = 'pm';
       break;
 
+    case 'srb':
+      nameShort = 'rs';
+      break;
+
+    case 'jam':
+      nameShort = 'jm';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
