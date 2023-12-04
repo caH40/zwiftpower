@@ -220,11 +220,6 @@ tbody .current {
   display: flex;
   gap: 0 10px;
 }
-.box__flag {
-  flex: 0 0 22px;
-  display: flex;
-  align-items: center;
-}
 .text__additional {
   font-size: 10px;
 }

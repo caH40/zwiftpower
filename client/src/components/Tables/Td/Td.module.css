@@ -74,6 +74,9 @@
 }
 .box__flag {
   flex: 0 0 22px;
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 3px 1px rgba(34, 60, 80, 0.2);
 }
 .cursor__default {
   cursor: default;

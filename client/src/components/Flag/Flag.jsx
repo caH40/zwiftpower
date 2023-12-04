@@ -1,4 +1,4 @@
-import React from 'react';
+import styles from './Flag.module.css';
 
 function Flag({ name = '' }) {
   let nameShort = '';
@@ -74,9 +74,7 @@ function Flag({ name = '' }) {
   }
 
   return (
-    <>
-      <img src={`/images/flags/${nameShort}.svg`} alt={`flag-${name}`} />
-    </>
+    <img className={styles.box} src={`/images/flags/${nameShort}.svg`} alt={`flag-${name}`} />
   );
 }
 
