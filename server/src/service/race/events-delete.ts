@@ -22,6 +22,7 @@ export async function deleteEventService(eventId: number) {
     await ZwiftSignedRiders.deleteMany({ subgroup: eventSubgroup._id });
     await ZwiftEventSubgroup.deleteOne({ _id: eventSubgroup._id });
   }
+
   await ZwiftEvent.findByIdAndDelete(eventDB._id);
   await ZwiftResult.deleteMany({ zwiftEventId: eventDB._id });
 

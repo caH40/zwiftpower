@@ -66,7 +66,7 @@ export async function postEvent(req: Request, res: Response) {
   }
 }
 /**
- * Обновление данных Эвента и зарегистрированных райдеров в БД после запроса из API Zwift
+ * Обновление данных Эвента и зарегистрированных райдеров в БД после запроса Модератора
  */
 export async function putEvent(req: Request, res: Response) {
   try {
