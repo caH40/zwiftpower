@@ -34,7 +34,7 @@ export async function putEventZwiftService(event: PutEvent, userId?: string) {
   const eventId = event.eventData.id;
   setTimeout(
     async () => await putEventService(eventId, userId).catch((e) => errorHandler(e)),
-    3000
+    2000
   );
 
   // логирование действия
