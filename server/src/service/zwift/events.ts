@@ -11,7 +11,12 @@ import { errorHandler } from '../../errors/error.js';
 // запрос данных Эвента с сервера Zwift
 export async function getEventZwiftService(eventId: number, userId?: string) {
   const urlEventData = `events/${eventId}?skip_cache=false`;
-  const eventData: eventDataFromZwiftAPI = await getRequest(urlEventData);
+  const eventData: eventDataFromZwiftAPI | null = await getRequest(urlEventData);
+
+  if (!eventData) {
+    throw new Error(`Не найден Эвент id:${eventId}`);
+  }
+
   // логирование действия
   if (userId) {
     const description = 'getZwiftEventData';

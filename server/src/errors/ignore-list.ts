@@ -1,1 +1,1 @@
-export const ignoreList = [];
+export const ignoreList = ['Неверный Логин или Пароль'];
