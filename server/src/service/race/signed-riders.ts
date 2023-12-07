@@ -6,6 +6,7 @@ import { errorHandler } from '../../errors/error.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
+import { SignedRiderFromZwiftAPI } from '../../types/zwiftAPI/signedRidersFromZwift.interface.js';
 
 /**
  * Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
@@ -27,7 +28,10 @@ export async function putSignedRidersService(eventId: number) {
       let start = 0;
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
-        const signedData = await getRequest(urlSignedData);
+        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
+        if (!signedData) {
+          continue;
+        }
         signedDataTotal.push(...signedData);
 
         ridersQuantity = signedData.length;
