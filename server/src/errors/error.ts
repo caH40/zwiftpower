@@ -4,7 +4,9 @@
 // import { parseError } from './parse.js';
 
 export const errorHandler = (error: unknown): void => {
-  console.log(error);
+  if (error instanceof Error) {
+    console.log(error.message); //eslint-disable-line
+  }
 
   // try {
   //   // выход, если ошибка из списка игнорируемых

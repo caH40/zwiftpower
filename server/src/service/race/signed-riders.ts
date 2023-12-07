@@ -17,14 +17,14 @@ export async function putSignedRidersService(eventId: number) {
       id: eventId,
     }).populate('eventSubgroups');
 
-    console.log(
-      'DB',
-      'get eventDB',
-      '===',
-      new Date().toLocaleDateString(),
-      '===',
-      eventDB?.name
-    );
+    // console.log(
+    //   'DB',
+    //   'get eventDB',
+    //   '===',
+    //   new Date().toLocaleDateString(),
+    //   '===',
+    //   eventDB?.name
+    // );
 
     if (!eventDB) {
       throw new Error(`Не найден Event ${eventId} в БД`);
@@ -38,14 +38,14 @@ export async function putSignedRidersService(eventId: number) {
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
         const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
-        console.log(
-          'ZwiftAPI',
-          'signedData',
-          '===',
-          new Date().toLocaleDateString(),
-          '===',
-          signedData?.length
-        );
+        // console.log(
+        //   'ZwiftAPI',
+        //   'signedData',
+        //   '===',
+        //   new Date().toLocaleDateString(),
+        //   '===',
+        //   signedData?.length
+        // );
         if (!signedData) {
           continue;
         }
@@ -70,27 +70,27 @@ export async function putSignedRidersService(eventId: number) {
           weight: rider.weight,
           subgroupLabel: eventSubgroup.subgroupLabel,
         });
-        console.log(
-          'DB',
-          'create ZwiftSignedRiders',
-          '===',
-          new Date().toLocaleDateString(),
-          '===',
-          'без ответа'
-        );
+        // console.log(
+        //   'DB',
+        //   'create ZwiftSignedRiders',
+        //   '===',
+        //   new Date().toLocaleDateString(),
+        //   '===',
+        //   'без ответа'
+        // );
         // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
         await PowerCurve.create({ zwiftId: rider.id, isMale: rider.male }).catch((error) => {
           if (error.code === 11000) return true;
           errorHandler(error);
         });
-        console.log(
-          'DB',
-          'create PowerCurve',
-          '===',
-          new Date().toLocaleDateString(),
-          '===',
-          'без ответа'
-        );
+        // console.log(
+        //   'DB',
+        //   'create PowerCurve',
+        //   '===',
+        //   new Date().toLocaleDateString(),
+        //   '===',
+        //   'без ответа'
+        // );
       }
     }
 
