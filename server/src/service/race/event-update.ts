@@ -23,10 +23,15 @@ export async function updateEventAndSubgroups(
   // сохранение новых подгрупп в Эвенте
   const subgroupsSaved = await ZwiftEventSubgroup.insertMany(eventSubgroups);
 
+  const updated = new Date().getTime();
   // обновление данны Эвента и данных подгрупп в БД
   const eventUpdated = await ZwiftEvent.findOneAndUpdate(
     { id: eventData.id },
-    { ...eventData, eventSubgroups: subgroupsSaved }
+    {
+      ...eventData,
+      eventSubgroups: subgroupsSaved,
+      updated,
+    }
   );
 
   if (!eventUpdated) {
