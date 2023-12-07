@@ -14,6 +14,7 @@ import { putSignedRidersService } from './signed-riders.js';
 export async function putEventService(eventId: number, userId?: string) {
   // Запрос данных Event (eventId) с API Zwift
   const event = await getEventZwiftService(eventId, userId);
+  console.log('ZwiftAPI', new Date().toLocaleDateString(), event.name);
 
   if (!event) {
     throw new Error(`Не найден Эвент с id:${eventId} на сервере Zwift`);

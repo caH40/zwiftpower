@@ -12,6 +12,8 @@ export async function updateScheduleEvents() {
   try {
     const eventsDB: ZwiftEventSchema[] = await ZwiftEvent.find({ started: false });
     for (const event of eventsDB) {
+      console.log('DataBase', new Date().toLocaleDateString(), event.name);
+
       await putEventService(event.id);
     }
   } catch (error) {
