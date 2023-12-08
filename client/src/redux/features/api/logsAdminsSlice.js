@@ -31,7 +31,12 @@ const logsAdminsSlice = createSlice({
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetLogsAdmins: (state) => {
+      state.logs = [];
+      state.quantityPages = 0;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchLogsAdmins.pending, (state) => {
       state.error = null;
@@ -50,6 +55,6 @@ const logsAdminsSlice = createSlice({
   },
 });
 
-export const { getLogs } = logsAdminsSlice.actions;
+export const { resetLogsAdmins } = logsAdminsSlice.actions;
 
 export default logsAdminsSlice.reducer;

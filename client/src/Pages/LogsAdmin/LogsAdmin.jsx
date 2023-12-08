@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import TableLogsAdmin from '../../components/Tables/TableLogsAdmins/TableLogsAdmins';
-import { fetchLogsAdmins } from '../../redux/features/api/logsAdminsSlice';
+import { fetchLogsAdmins, resetLogsAdmins } from '../../redux/features/api/logsAdminsSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 
@@ -22,6 +22,12 @@ function LogsAdmin() {
     localStorage.setItem('recordsOnPageLogs', docsOnPage);
     dispatch(fetchLogsAdmins({ page, docsOnPage, search }));
   }, [dispatch, page, docsOnPage, search]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetLogsAdmins());
+    };
+  }, []);
   return (
     <section className={styles.wrapper}>
       <div className={styles.align__right}>
