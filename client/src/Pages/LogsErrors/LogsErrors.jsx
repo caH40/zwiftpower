@@ -21,11 +21,13 @@ function LogsErrors() {
   useEffect(() => {
     localStorage.setItem('recordsOnPageLogs', docsOnPage);
     dispatch(fetchLogsErrors({ page, docsOnPage, search }));
+  }, [dispatch, page, docsOnPage, search]);
 
+  useEffect(() => {
     return () => {
       dispatch(resetLogsErrors());
     };
-  }, [dispatch, page, docsOnPage, search]);
+  }, []);
   return (
     <section className={styles.wrapper}>
       <div className={styles.align__right}>
