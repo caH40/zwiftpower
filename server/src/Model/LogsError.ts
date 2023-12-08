@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 
 // types
-import { LogErrorSchema } from '../types/model.interface.js';
+import { LogsErrorSchema } from '../types/model.interface.js';
 
-const logErrorSchema = new Schema<LogErrorSchema>({
+const logsErrorSchema = new Schema<LogsErrorSchema>({
   timestamp: Number,
   type: String,
   message: String,
@@ -12,4 +12,4 @@ const logErrorSchema = new Schema<LogErrorSchema>({
   config: { type: Object, default: null },
 });
 
-export const LogError = model('LogError', logErrorSchema);
+export const LogsError = model('LogsError', logsErrorSchema);

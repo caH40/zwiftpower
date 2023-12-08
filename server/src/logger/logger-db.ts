@@ -1,17 +1,17 @@
-import { LogError } from '../Model/LogError.js';
+import { LogsError } from '../Model/LogsError.js';
 import { parseError } from '../errors/parse.js';
 import { logError } from './logger.js';
 
 // types
-import { LogErrorSchema } from '../types/model.interface.js';
+import { LogsErrorSchema } from '../types/model.interface.js';
 
 /**
  * Сохраняет данные об ошибке в БД
  * @param error распарсенные данные об ошибке
  */
-export async function logErrorToDB(error: Omit<LogErrorSchema, 'timestamp'>): Promise<void> {
+export async function logErrorToDB(error: Omit<LogsErrorSchema, 'timestamp'>): Promise<void> {
   try {
-    const response = await LogError.create({ ...error, timestamp: Date.now() });
+    const response = await LogsError.create({ ...error, timestamp: Date.now() });
     if (!response) {
       throw new Error('Ошибка при сохранении лога в БД');
     }

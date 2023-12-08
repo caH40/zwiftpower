@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
-import { LogErrorSchema } from '../types/model.interface.js';
+import { LogsErrorSchema } from '../types/model.interface.js';
 
 /**
  * Обработка получаемого error и возврат в нужном формате
  */
-export const parseError = (error: unknown): Omit<LogErrorSchema, 'timestamp'> => {
+export const parseError = (error: unknown): Omit<LogsErrorSchema, 'timestamp'> => {
   if (error instanceof Error) {
     const message = error?.message || 'Нет описания ошибки';
     switch (error.name) {
