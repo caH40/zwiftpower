@@ -3,6 +3,9 @@ import { lazy } from 'react';
 
 const LogsAdmin = lazy(() => import('../Pages/LogsAdmin/LogsAdmin'));
 const LogsErrors = lazy(() => import('../Pages/LogsErrors/LogsErrors'));
+const LogErrorDescription = lazy(() =>
+  import('../Pages/LogErrorDescription/LogErrorDescription')
+);
 const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
@@ -20,6 +23,7 @@ export function AdminRoute(isAdmin) {
       {isAdmin && <Route path="/admin/users" element={<Users />} />}
       {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}
       {isAdmin && <Route path="/logs/errors" element={<LogsErrors />} />}
+      {isAdmin && <Route path="/logs/errors/:id" element={<LogErrorDescription />} />}
     </>
   );
 }

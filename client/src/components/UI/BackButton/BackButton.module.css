@@ -1,0 +1,33 @@
+.button {
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-blue-main);
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 0.6em 1em 0.5em;
+  color: var(--color-text-main);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  user-select: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.button:hover {
+  background-color: var(--color-blue-4);
+  transition: all 0.3s;
+}
+.button:active {
+  background-color: var(--color-yellow-main);
+}
+.back {
+  background-color: var(--color-orange-3);
+}
+.back:hover {
+  background-color: var(--color-orange-4);
+}
+.back:active {
+  background-color: var(--color-yellow-main);
+}
