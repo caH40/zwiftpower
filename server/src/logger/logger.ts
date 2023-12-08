@@ -3,6 +3,9 @@ import winston, { format } from 'winston';
 
 import { getTimerLocal } from '../utils/date-local.js';
 
+// types
+import { LogErrorSchema } from '../types/model.interface.js';
+
 const __dirname = path.resolve();
 const filename = path.join(__dirname, 'src/logs/error', 'errors.log');
 
@@ -16,7 +19,7 @@ const optionsFile = {
 //
 // формирования логирования ошибок в файл
 //
-export const logError = (errorParsed: object) => {
+export const logError = (errorParsed: Omit<LogErrorSchema, 'timestamp'>) => {
   const logger = winston.createLogger({
     format: format.json(),
     transports: [new winston.transports.File(optionsFile)],
