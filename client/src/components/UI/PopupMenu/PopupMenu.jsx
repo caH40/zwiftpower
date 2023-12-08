@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +9,6 @@ function PopupMenu() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.checkAuth.value);
 
-  // const isAdmin = ['admin'].includes(user.role);
   const isModerator = ['admin', 'moderator'].includes(user.role);
 
   return (
@@ -27,6 +25,11 @@ function PopupMenu() {
               <li className={styles.item}>
                 <Link to="/logs/admin" className={styles.link}>
                   Логи по Эвентам
+                </Link>
+              </li>
+              <li className={styles.item}>
+                <Link to="/logs/errors" className={styles.link}>
+                  Логи по ошибкам
                 </Link>
               </li>
             </>
