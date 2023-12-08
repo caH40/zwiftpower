@@ -436,7 +436,7 @@ export interface ZwiftProfileSchema {
 }
 //
 //
-export interface LogErrorSchema {
+export interface LogsErrorSchema {
   timestamp: number; // время создания ошибки
   type?: string; // тип ошибки
   responseData?: string; // ответ при ошибки Axios
