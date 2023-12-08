@@ -28,7 +28,7 @@ export const getRiderWithMaxWattsPerKgInInterval = (
     .map((elm) => ({
       zwiftId: elm.zwiftId,
       pointsWattsPerKg:
-        elm.pointsWattsPerKg.find((power) => power.duration === interval) ||
+        elm.pointsWattsPerKg?.find((power) => power.duration === interval) ||
         pointsWattsPerKgEmpty,
     }))
     .filter(

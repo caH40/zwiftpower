@@ -12,7 +12,7 @@ export const getRidersTotalService = async () => {
   const ridersTotal = powerCurvesDB
     .map((powerCurve) => {
       // данные по интервалу 1200 секунд (20 минут)
-      const pointWithDuration1200 = powerCurve.pointsWattsPerKg.find(
+      const pointWithDuration1200 = powerCurve.pointsWattsPerKg?.find(
         (point) => point.duration === 1200
       );
 

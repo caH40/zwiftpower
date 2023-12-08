@@ -28,7 +28,7 @@ export const getRiderWithMaxPowerInInterval = (
     .map((elm) => ({
       zwiftId: elm.zwiftId,
       pointsWatts:
-        elm.pointsWatts.find((power) => power.duration === interval) || pointsWattsEmpty,
+        elm.pointsWatts?.find((power) => power.duration === interval) || pointsWattsEmpty,
     }))
     .filter(
       (power) => !power.pointsWatts?.isVirtualPower || !power.pointsWatts?.isDisqualification
