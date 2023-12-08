@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { getSeriesActualService } from '../service/series.js';
-import { getLogsAdminsService } from '../service/log.js';
+import { getLogsAdminsService } from '../service/logs_service/admins.js';
 import { errorHandler } from '../errors/error.js';
 
 // types
