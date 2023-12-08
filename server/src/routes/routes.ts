@@ -9,4 +9,4 @@ export const router = Router();
 
 router.get('/series/actual', authModerator, getSeriesActual); // вроде рабочий
 router.get('/logs/admin', authAdmin, getLogsAdmins);
-router.get('/logs/errors', getLogsErrors);
+router.get('/logs/errors', authAdmin, getLogsErrors);

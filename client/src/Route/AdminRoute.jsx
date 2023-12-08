@@ -2,6 +2,7 @@ import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 const LogsAdmin = lazy(() => import('../Pages/LogsAdmin/LogsAdmin'));
+const LogsErrors = lazy(() => import('../Pages/LogsErrors/LogsErrors'));
 const ZwiftEditEvent = lazy(() => import('../Pages/ZwiftEditEvent/ZwiftEditEvent'));
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
@@ -18,6 +19,7 @@ export function AdminRoute(isAdmin) {
       <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
       {isAdmin && <Route path="/admin/users" element={<Users />} />}
       {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}
+      {isAdmin && <Route path="/logs/errors" element={<LogsErrors />} />}
     </>
   );
 }

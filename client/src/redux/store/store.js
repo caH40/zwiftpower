@@ -17,6 +17,7 @@ import eventResultSlice from '../features/api/eventResultSlice';
 import popupTableScheduleSlice from '../features/popupTableScheduleSlice';
 import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
 import logsAdminsSlice from '../features/api/logsAdminsSlice';
+import logsErrorsSlice from '../features/api/logsErrorsSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
@@ -58,6 +59,7 @@ export default configureStore({
     popupTableSchedule: popupTableScheduleSlice,
     popupTableResultsList: popupTableResultsListSlice,
     logsAdmins: logsAdminsSlice,
+    logsErrors: logsErrorsSlice,
     fetchUserResults: userResultsSlice,
     fetchUserPowerCurve: userPowerCurveSlice,
     getPopupInput: popupInputSlice,
