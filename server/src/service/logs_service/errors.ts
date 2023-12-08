@@ -31,3 +31,12 @@ export async function getLogsErrorsService({
     message: 'Логи ошибок на сервере',
   };
 }
+
+/**
+ * Сервис по обработке запроса логов Ошибок
+ */
+export async function getLogErrorService(id: string) {
+  const logsDB: LogsErrorSchema | null = await LogsError.findById(id).lean();
+
+  return logsDB;
+}
