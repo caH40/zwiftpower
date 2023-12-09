@@ -11,8 +11,8 @@ export interface ResultsSeriesFetch {
     durationInMilliseconds: number;
     eventSubgroup: {
       distanceSummary?: {
-        distanceInKilometers: number;
-        elevationGainInMeters: number;
+        distanceInKilometers: number | null;
+        elevationGainInMeters: number | null;
       };
 
       _id?: Types.ObjectId;

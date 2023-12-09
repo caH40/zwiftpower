@@ -12,6 +12,7 @@ import {
 import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { PutResult } from './http.interface.js';
+import { EventSubgroupFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате
@@ -458,4 +459,13 @@ export interface FitFileToDBParams {
 export interface AgeCategories {
   label: string;
   value: number;
+}
+/**
+ * Добавление в subgroupFromZwiftAPI дополнительного свойства distanceSummary
+ */
+export interface EventSubgroupFromZwiftAPIAdditional extends EventSubgroupFromZwiftAPI {
+  distanceSummary?: {
+    distanceInKilometers: number | null;
+    elevationGainInMeters: number | null;
+  };
 }
