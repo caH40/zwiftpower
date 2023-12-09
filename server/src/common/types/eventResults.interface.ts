@@ -40,8 +40,8 @@ export interface EventResultsFetch {
     distanceInMeters: number;
     durationInSeconds: number;
     distanceSummary?: {
-      distanceInKilometers: number;
-      elevationGainInMeters: number;
+      distanceInKilometers: number | null;
+      elevationGainInMeters: number | null;
     };
     zwiftInsiderUrl?: string;
     mapId: number;

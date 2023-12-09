@@ -30,7 +30,7 @@ export interface eventDataFromZwiftAPI {
   totalSignedUpCount: number;
   followeeJoinedCount: number;
   totalJoinedCount: number;
-  eventSubgroups: eventSubgroup[];
+  eventSubgroups: EventSubgroupFromZwiftAPI[];
   eventSeries: null;
   auxiliaryUrl: string;
   imageS3Name: null;
@@ -65,7 +65,7 @@ export interface eventDataFromZwiftAPI {
   eventType: string;
 }
 
-interface eventSubgroup {
+export interface EventSubgroupFromZwiftAPI {
   id: number;
   name: string;
   description: string;
