@@ -14,20 +14,27 @@ export async function getLogsErrorsService({
   search,
 }: GetLogsAdmins) {
   const logsDB: LogsErrorSchema[] = await LogsError.find().lean().sort({ timestamp: -1 });
+  let currentPage = page;
 
   // фильтрация найденных логов по ключевому слову search
   const logsFiltered = filterLogsErrors(logsDB, search);
 
   const quantityPages = Math.ceil(logsFiltered.length / docsOnPage);
 
-  const sliceStart = page * docsOnPage - docsOnPage;
-  const sliceEnd = docsOnPage * page;
+  // если запрашиваемая страница page больше количество страниц quantityPages
+  if (quantityPages - page < 0) {
+    currentPage = quantityPages;
+  }
+
+  const sliceStart = currentPage * docsOnPage - docsOnPage;
+  const sliceEnd = docsOnPage * currentPage;
+
   const logsSliced = logsFiltered.slice(sliceStart, sliceEnd);
 
   return {
     logs: logsSliced,
     quantityPages,
-    page,
+    page: currentPage,
     message: 'Логи ошибок на сервере',
   };
 }
