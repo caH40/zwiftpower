@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames/bind';
 
 import { CheckBoxTotal } from '../../components/UI/CheckBoxForArray/CheckboxTotal';
 import BoxAction from '../../components/UI/BoxAction/BoxAction';
@@ -14,8 +13,6 @@ import { fetchLogDeleteError } from '../../redux/features/api/logErrorDeleteSlic
 
 import styles from './LogsErrors.module.css';
 
-const cx = classNames.bind(styles);
-
 function LogsErrors() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -26,12 +23,20 @@ function LogsErrors() {
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
   useTitle('Логи ошибок на сервере');
   const { logs, quantityPages } = useSelector((state) => state.logsErrors);
+  const { trigger } = useSelector((state) => state.logErrorDelete);
   const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem('recordsOnPageLogs', docsOnPage);
     dispatch(fetchLogsErrors({ page, docsOnPage, search }));
-  }, [dispatch, page, docsOnPage, search]);
+    setArrayId([]);
+  }, [dispatch, page, docsOnPage, search, trigger]);
+
+  // очистка setCheckedTotal и массива logs errors
+  useEffect(() => {
+    setCheckedTotal(false);
+    setArrayId([]);
+  }, [logs]);
 
   useEffect(() => {
     return () => {
