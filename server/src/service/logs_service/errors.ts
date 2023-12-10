@@ -40,3 +40,12 @@ export async function getLogErrorService(id: string) {
 
   return logsDB;
 }
+
+/**
+ * Сервис удаления лого ошибок
+ */
+export async function deleteLogErrorService(ids: string[]) {
+  const response = await LogsError.deleteMany({ _id: ids });
+
+  return { message: `Удалено логов ошибок: ${response?.deletedCount} шт.` };
+}
