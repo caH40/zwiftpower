@@ -1,11 +1,19 @@
+import classNames from 'classnames/bind';
+
+import styles from '../Table.module.css';
+
 import { logsErrorsColumns } from './column-titles';
 
-function Thead({ lg, sm }) {
+const cx = classNames.bind(styles);
+
+function Thead() {
   return (
     <thead>
       <tr>
-        {logsErrorsColumns(lg, sm).map((column) => (
-          <th key={column.id}>{column.name}</th>
+        {logsErrorsColumns().map((column, index) => (
+          <th className={cx({ clear: index === 0 })} key={column.id}>
+            {column.name}
+          </th>
         ))}
       </tr>
     </thead>

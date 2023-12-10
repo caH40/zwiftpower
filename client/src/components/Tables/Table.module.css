@@ -30,7 +30,7 @@
   text-align: inherit;
   padding: 0.5em 0.35em;
   vertical-align: middle;
-  border-top: 1px solid #dee2e6;
+  /* border-top: 1px solid #dee2e6; */
 }
 .table tbody {
   display: table-row-group;
@@ -69,7 +69,7 @@ tbody .current {
 }
 .table thead th {
   vertical-align: center;
-  border-bottom: 2px solid #dee2e6;
+  /* border-bottom: 2px solid #dee2e6; */
 }
 .table tr {
   display: table-row;
@@ -79,7 +79,7 @@ tbody .current {
 .table td {
   padding: 0.3em 0.35em;
   vertical-align: middle;
-  border-top: 1px solid #dee2e6;
+  /* border-top: 1px solid #dee2e6; */
   max-width: 400px;
 }
 
@@ -244,6 +244,10 @@ tbody .current {
   font-style: italic;
   font-size: 1.1rem;
   background-color: #dadada;
+}
+.clear {
+  background-color: white;
+  width: 10px;
 }
 @media screen and (max-width: 992px) {
   .big {
