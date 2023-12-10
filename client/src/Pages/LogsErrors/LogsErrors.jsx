@@ -10,6 +10,7 @@ import { fetchLogsErrors, resetLogsErrors } from '../../redux/features/api/logsE
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import IconTrash from '../../components/icons/IconTrash';
+import { fetchLogDeleteError } from '../../redux/features/api/logErrorDeleteSlice';
 
 import styles from './LogsErrors.module.css';
 
@@ -43,6 +44,7 @@ function LogsErrors() {
     if (!arrayId[0]) {
       return;
     }
+    dispatch(fetchLogDeleteError(arrayId));
   };
 
   const ids = logs?.map((log) => log._id);
