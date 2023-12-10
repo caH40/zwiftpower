@@ -16,9 +16,6 @@ import eventPreviewSlice from '../features/api/eventPreviewSlice';
 import eventResultSlice from '../features/api/eventResultSlice';
 import popupTableScheduleSlice from '../features/popupTableScheduleSlice';
 import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
-import logsAdminsSlice from '../features/api/logsAdminsSlice';
-import logsErrorsSlice from '../features/api/logsErrorsSlice';
-import logErrorSlice from '../features/api/logErrorSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
@@ -40,6 +37,7 @@ import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderS
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
 import { adminReducers } from './admin';
+import { logsReducers } from './logs';
 
 export default configureStore({
   reducer: {
@@ -59,9 +57,6 @@ export default configureStore({
     fetchEventPreview: eventPreviewSlice,
     popupTableSchedule: popupTableScheduleSlice,
     popupTableResultsList: popupTableResultsListSlice,
-    logsAdmins: logsAdminsSlice,
-    logsErrors: logsErrorsSlice,
-    logError: logErrorSlice,
     fetchUserResults: userResultsSlice,
     fetchUserPowerCurve: userPowerCurveSlice,
     getPopupInput: popupInputSlice,
@@ -80,6 +75,7 @@ export default configureStore({
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,
+    ...logsReducers,
   },
 });
 
