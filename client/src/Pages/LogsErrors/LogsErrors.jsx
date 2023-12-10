@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames/bind';
 
 import { CheckBoxTotal } from '../../components/UI/CheckBoxForArray/CheckboxTotal';
 import BoxAction from '../../components/UI/BoxAction/BoxAction';
@@ -14,8 +13,6 @@ import { fetchLogDeleteError } from '../../redux/features/api/logErrorDeleteSlic
 
 import styles from './LogsErrors.module.css';
 
-const cx = classNames.bind(styles);
-
 function LogsErrors() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -25,13 +22,41 @@ function LogsErrors() {
   const initialDocsOnPage = localStorage.getItem('recordsOnPageLogs') || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
   useTitle('Логи ошибок на сервере');
-  const { logs, quantityPages } = useSelector((state) => state.logsErrors);
+  const {
+    logs,
+    page: pageFromServer,
+    quantityPages,
+  } = useSelector((state) => state.logsErrors);
+  const { trigger } = useSelector((state) => state.logErrorDelete);
   const dispatch = useDispatch();
 
+  // если page больше чем общее количество страниц,
+  // то текущая страница равна общему количеству страниц, то есть последней
+  // такой случай возможен, отображается последняя страница и после удаления логов
+  // количество страниц уменьшается, то то есть  quantityPages < page
   useEffect(() => {
+    if (quantityPages >= page) {
+      return;
+    }
+    setPage(pageFromServer);
+  }, [quantityPages, pageFromServer, page]);
+
+  useEffect(() => {
+    // не делать запрос на API так как необходимо только поменять номер
+    // активной страницы в пагинации
+    if (quantityPages < page && quantityPages !== 0) {
+      return;
+    }
     localStorage.setItem('recordsOnPageLogs', docsOnPage);
     dispatch(fetchLogsErrors({ page, docsOnPage, search }));
-  }, [dispatch, page, docsOnPage, search]);
+    setArrayId([]);
+  }, [dispatch, page, docsOnPage, search, trigger]);
+
+  // очистка setCheckedTotal и массива logs errors
+  useEffect(() => {
+    setCheckedTotal(false);
+    setArrayId([]);
+  }, [logs]);
 
   useEffect(() => {
     return () => {

@@ -27,6 +27,7 @@ const logsErrorsSlice = createSlice({
   initialState: {
     logs: [],
     quantityPages: 0,
+    page: 1,
 
     status: null,
     error: null,
@@ -46,6 +47,7 @@ const logsErrorsSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       state.logs = action.payload.logs;
+      state.page = +action.payload.page;
       state.quantityPages = +action.payload.quantityPages;
     });
     builder.addCase(fetchLogsErrors.rejected, (state, action) => {

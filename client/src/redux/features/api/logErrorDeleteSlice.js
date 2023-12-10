@@ -17,7 +17,11 @@ export const fetchLogDeleteError = createAsyncThunk(
       });
 
       thunkAPI.dispatch(
-        getAlert({ message: response.data.message, type: 'success', isOpened: true })
+        getAlert({
+          message: response.data.message,
+          type: 'success',
+          isOpened: true,
+        })
       );
       return true;
     } catch (error) {
@@ -31,6 +35,7 @@ export const fetchLogDeleteError = createAsyncThunk(
 const logErrorDeleteSlice = createSlice({
   name: 'logErrorDelete',
   initialState: {
+    trigger: false,
     status: null,
     error: null,
   },
@@ -43,6 +48,7 @@ const logErrorDeleteSlice = createSlice({
     builder.addCase(fetchLogDeleteError.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
+      state.trigger = !state.trigger;
     });
     builder.addCase(fetchLogDeleteError.rejected, (state, action) => {
       state.status = 'rejected';
