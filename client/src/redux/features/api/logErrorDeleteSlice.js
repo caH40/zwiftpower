@@ -11,7 +11,7 @@ export const fetchLogDeleteError = createAsyncThunk(
   async function (ids, thunkAPI) {
     try {
       const response = await myAxios({
-        url: '/api/logs/error',
+        url: '/api/logs/errors',
         method: 'delete',
         data: ids,
       });
