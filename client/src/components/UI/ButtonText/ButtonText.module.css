@@ -1,0 +1,10 @@
+.button {
+  display: block;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  border: none;
+  cursor: inherit;
+}
+.button:disabled {
+  color: rgb(185, 185, 185);
+}

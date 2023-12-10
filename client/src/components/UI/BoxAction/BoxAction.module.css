@@ -1,0 +1,15 @@
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 8px 5px 5px;
+  user-select: none;
+}
+.box.notDisabled {
+  cursor: pointer;
+}
+.box.notDisabled:hover {
+  background-color: #c7c7c7;
+  transition: all 0.3s;
+}
