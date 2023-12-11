@@ -1,3 +1,4 @@
+import profileRefreshSlice from '../features/api/profileRefreshSlice';
 import userSettingDeleteZwiftIdSlice from '../features/api/user/userSettingDeleteZwiftIdSlice';
 import userSettingSlice from '../features/api/user/userSettingSlice';
 import zwiftProfileSlice from '../features/api/zwiftProfiles/zwiftProfileSlice';
@@ -8,4 +9,5 @@ export const userReducers = {
   userSetting: userSettingSlice,
   zwiftProfiles: zwiftProfilesSliceSlice,
   userSettingDeleteZwiftId: userSettingDeleteZwiftIdSlice,
+  profileRefresh: profileRefreshSlice,
 };

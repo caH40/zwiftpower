@@ -244,6 +244,21 @@ export interface UserSchema {
   firstName: string;
   patronymic: string;
   lastName: string;
+  zwiftData: {
+    firstName: string;
+    lastName: string;
+    category: string;
+    categoryWomen: string;
+    ftp: number;
+    weight: number;
+    height: number;
+    age: number;
+    countryAlpha3: string;
+    imageSrc: string;
+    male: boolean;
+    publicId: string;
+  };
+
   gender: string;
   birthday: number;
   city: string;

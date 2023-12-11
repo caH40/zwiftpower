@@ -6,7 +6,11 @@ import {
 } from '../service/race/rider/rider-profile.js';
 import { errorHandler } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
-import { deleteUserZwiftIdService, updateZwiftIdService } from '../service/user.js';
+import {
+  deleteUserZwiftIdService,
+  refreshProfileService,
+  updateZwiftIdService,
+} from '../service/user.js';
 
 /**
  * Контролер получения профайла райдера (анкеты), основных значений CriticalPower,
@@ -87,6 +91,23 @@ export async function deleteUserZwiftId(req: Request, res: Response) {
 
     const zwiftId: number = +req.body.zwiftId;
     const user = await deleteUserZwiftIdService(userId, zwiftId);
+
+    return res.status(200).json(user);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof Error) {
+      res.status(401).json({ message: error.message });
+    }
+  }
+}
+/**
+ * Обновление данных пользователя на сайте zwiftpower.ru с данных zwiftAPI
+ */
+export async function refreshProfile(req: Request, res: Response) {
+  try {
+    const { userId } = req.params;
+
+    const user = await refreshProfileService(userId);
 
     return res.status(200).json(user);
   } catch (error) {
