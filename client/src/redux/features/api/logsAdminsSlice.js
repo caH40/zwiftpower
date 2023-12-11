@@ -9,7 +9,7 @@ export const fetchLogsAdmins = createAsyncThunk(
     try {
       const query = `docsOnPage=${docsOnPage}&page=${page}&search=${search}`;
       const response = await myAxios({
-        url: `/api/logs/admin?${query}`,
+        url: `/api/logs/admins?${query}`,
         method: 'get',
       });
 
@@ -27,6 +27,7 @@ const logsAdminsSlice = createSlice({
   initialState: {
     logs: [],
     quantityPages: 0,
+    page: 1,
 
     status: null,
     error: null,
@@ -46,6 +47,7 @@ const logsAdminsSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
       state.logs = action.payload.logs;
+      state.page = +action.payload.page;
       state.quantityPages = +action.payload.quantityPages;
     });
     builder.addCase(fetchLogsAdmins.rejected, (state, action) => {
