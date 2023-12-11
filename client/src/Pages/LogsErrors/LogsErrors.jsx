@@ -10,6 +10,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import IconTrash from '../../components/icons/IconTrash';
 import { fetchLogDeleteError } from '../../redux/features/api/logErrorDeleteSlice';
+import { useLastPage } from '../../hook/useLastPage';
 
 import styles from './LogsErrors.module.css';
 
@@ -30,16 +31,7 @@ function LogsErrors() {
   const { trigger } = useSelector((state) => state.logErrorDelete);
   const dispatch = useDispatch();
 
-  // если page больше чем общее количество страниц,
-  // то текущая страница равна общему количеству страниц, то есть последней
-  // такой случай возможен, отображается последняя страница и после удаления логов
-  // количество страниц уменьшается, то то есть  quantityPages < page
-  useEffect(() => {
-    if (quantityPages >= page) {
-      return;
-    }
-    setPage(pageFromServer);
-  }, [quantityPages, pageFromServer, page]);
+  useLastPage(setPage, quantityPages, pageFromServer, page);
 
   useEffect(() => {
     // не делать запрос на API так как необходимо только поменять номер
