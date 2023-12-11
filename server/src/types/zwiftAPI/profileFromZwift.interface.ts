@@ -109,4 +109,9 @@ export interface ProfileZwiftAPI {
     { propertyName: 'DATE_OF_BIRTH'; changeCount: number; maxChanges: number },
     { propertyName: 'GENDER'; changeCount: number; maxChanges: number }
   ];
+  competitionMetrics: {
+    racingScore: number;
+    category: string;
+    categoryWomen: string;
+  };
 }

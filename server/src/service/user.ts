@@ -53,7 +53,6 @@ export async function updateZwiftIdService(
  * Сервис удаления дополнительного zwiftId у пользователя
  */
 export async function deleteUserZwiftIdService(userId: string, zwiftId: number) {
-  // запрос данных Райдера с сервера Zwift
   const userWithZwiftId = await User.findOneAndUpdate(
     { _id: userId },
     { $pull: { zwiftIdAdditional: zwiftId } },
@@ -71,5 +70,48 @@ export async function deleteUserZwiftIdService(userId: string, zwiftId: number) 
   return {
     message: `Дополнительный ZwiftId ${zwiftId} удалён из профиля`,
     zwiftIdMain: userWithZwiftId.zwiftId,
+  };
+}
+
+/**
+ * Сервис обновление данных пользователя на сайте zwiftpower.ru с данных zwiftAPI
+ */
+export async function refreshProfileService(userId: string) {
+  const userDB = await User.findOne({ _id: userId });
+  if (!userDB) {
+    throw new Error('Не найден профиль в БД');
+  }
+  // запрос данных Райдера с сервера Zwift
+  const riderData = await getZwiftRiderService(String(userDB.zwiftId));
+
+  if (!riderData) {
+    throw new Error(`Ошибка при получении данных профиля ${userDB.zwiftId} с ZwiftAPI`);
+  }
+
+  await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        'zwiftData.firstName': riderData.firstName,
+        'zwiftData.lastName': riderData.lastName,
+        'zwiftData.category': riderData.competitionMetrics?.category,
+        'zwiftData.categoryWomen': riderData.competitionMetrics?.categoryWomen,
+        'zwiftData.ftp': riderData.ftp,
+        'zwiftData.weight': riderData.weight,
+        'zwiftData.height': riderData.height,
+        'zwiftData.age': riderData.age,
+        'zwiftData.countryAlpha3': riderData.countryAlpha3,
+        'zwiftData.imageSrc': riderData.imageSrc,
+        'zwiftData.male': riderData.male,
+        'zwiftData.publicId': riderData.publicId,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return {
+    message: `Обновлены данные профайла на zwiftpower.ru `,
   };
 }

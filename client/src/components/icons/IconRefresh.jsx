@@ -1,4 +1,3 @@
-import React from 'react';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../utils/additional-classes';
