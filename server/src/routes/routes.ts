@@ -8,7 +8,7 @@ import {
   getLogError,
   deleteLogError,
   deleteLogAdmin,
-} from '../controllers/Logs.js';
+} from '../controllers/logs.js';
 
 export const router = Router();
 
