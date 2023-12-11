@@ -11,6 +11,7 @@ import { errorHandler } from '../errors/error.js';
 import { GetLogsAdmins } from '../types/http.interface.js';
 import { LogsErrorFetch } from '../common/types/logs.interface.js';
 import { LogsErrorSchema } from '../types/model.interface.js';
+import { deleteLogAdminService } from '../service/logs_service/admins.js';
 
 /**
  * Запрос логов ошибок на сервере
@@ -57,6 +58,21 @@ export async function deleteLogError(req: Request, res: Response) {
   try {
     const ids = req.body;
     const response = await deleteLogErrorService(ids);
+    return res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof Error) {
+      res.status(401).json({ message: error.message });
+    }
+  }
+}
+/**
+ * Удаление логов админов
+ */
+export async function deleteLogAdmin(req: Request, res: Response) {
+  try {
+    const ids = req.body;
+    const response = await deleteLogAdminService(ids);
     return res.status(200).json(response);
   } catch (error) {
     errorHandler(error);

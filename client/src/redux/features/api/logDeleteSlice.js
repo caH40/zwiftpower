@@ -4,14 +4,14 @@ import { myAxios } from '../../../api/axios';
 import { getAlert } from '../alertMessageSlice';
 
 /**
- * удаление логов ошибок, перечисленных в массиве ids
+ * удаление логов ошибок (логов модераторов), перечисленных в массиве ids
  */
-export const fetchLogDeleteError = createAsyncThunk(
+export const fetchLogDelete = createAsyncThunk(
   'logsDelete/logError',
-  async function (ids, thunkAPI) {
+  async function ({ ids, path }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: '/api/logs/errors',
+        url: `/api/logs/${path}`,
         method: 'delete',
         data: ids,
       });
@@ -32,8 +32,8 @@ export const fetchLogDeleteError = createAsyncThunk(
   }
 );
 
-const logErrorDeleteSlice = createSlice({
-  name: 'logErrorDelete',
+const logDeleteSlice = createSlice({
+  name: 'logDelete',
   initialState: {
     trigger: false,
     status: null,
@@ -41,20 +41,20 @@ const logErrorDeleteSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchLogDeleteError.pending, (state) => {
+    builder.addCase(fetchLogDelete.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
-    builder.addCase(fetchLogDeleteError.fulfilled, (state) => {
+    builder.addCase(fetchLogDelete.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
       state.trigger = !state.trigger;
     });
-    builder.addCase(fetchLogDeleteError.rejected, (state, action) => {
+    builder.addCase(fetchLogDelete.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
   },
 });
 
-export default logErrorDeleteSlice.reducer;
+export default logDeleteSlice.reducer;

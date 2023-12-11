@@ -9,7 +9,7 @@ import { fetchLogsErrors, resetLogsErrors } from '../../redux/features/api/logsE
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import IconTrash from '../../components/icons/IconTrash';
-import { fetchLogDeleteError } from '../../redux/features/api/logErrorDeleteSlice';
+import { fetchLogDelete } from '../../redux/features/api/logDeleteSlice';
 import { useLastPage } from '../../hook/useLastPage';
 
 import styles from './LogsErrors.module.css';
@@ -61,7 +61,7 @@ function LogsErrors() {
     if (!arrayId[0]) {
       return;
     }
-    dispatch(fetchLogDeleteError(arrayId));
+    dispatch(fetchLogDelete({ ids: arrayId, path: 'errors' }));
   };
 
   const ids = logs?.map((log) => log._id);

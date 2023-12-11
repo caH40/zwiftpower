@@ -17,19 +17,34 @@ export async function getLogsAdminsService({
     .sort({ date: -1 })
     .populate({ path: 'userId', select: 'username' });
 
+  let currentPage = page;
+
   // фильтрация найденных логов по ключевому слову search
   const logsFiltered = filterLogs(logsDB, search);
 
   const quantityPages = Math.ceil(logsFiltered.length / docsOnPage);
 
-  const sliceStart = page * docsOnPage - docsOnPage;
-  const sliceEnd = docsOnPage * page;
+  // если запрашиваемая страница page больше количество страниц quantityPages
+  if (quantityPages - page < 0) {
+    currentPage = quantityPages;
+  }
+
+  const sliceStart = currentPage * docsOnPage - docsOnPage;
+  const sliceEnd = docsOnPage * currentPage;
   const logsSliced = logsFiltered.slice(sliceStart, sliceEnd);
 
   return {
     logs: logsSliced,
     quantityPages,
-    page,
+    page: currentPage,
     message: 'Логи о действиях админов (модераторов)',
   };
+}
+/**
+ * Сервис удаления лого ошибок
+ */
+export async function deleteLogAdminService(ids: string[]) {
+  const response = await LogsAdmin.deleteMany({ _id: ids });
+
+  return { message: `Удалено логов админов: ${response?.deletedCount} шт.` };
 }
