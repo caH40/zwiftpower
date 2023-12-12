@@ -81,6 +81,9 @@ export async function refreshProfileService(userId: string) {
   if (!userDB) {
     throw new Error('Не найден профиль в БД');
   }
+  if (!userDB.zwiftId) {
+    throw new Error('zwiftId не привязан к профилю');
+  }
   // запрос данных Райдера с сервера Zwift
   const riderData = await getZwiftRiderService(String(userDB.zwiftId));
 
@@ -112,6 +115,6 @@ export async function refreshProfileService(userId: string) {
   );
 
   return {
-    message: `Обновлены данные профайла на zwiftpower.ru `,
+    message: `Обновлены данные профиля ${userDB.zwiftId} на zwiftpower.ru `,
   };
 }

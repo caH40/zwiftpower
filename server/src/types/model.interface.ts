@@ -231,6 +231,7 @@ export interface UserConfirmSchema {
 //
 //
 export interface UserSchema {
+  _id?: Types.ObjectId;
   username: string;
   password: string;
   riderId: Types.ObjectId;
