@@ -2,10 +2,11 @@ import { getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
 import { getAgeCategory } from '../../utils/age';
+import CategoryBox from '../CategoryBox/CategoryBox';
 
 import styles from './ProfileBlock.module.css';
 
-function ProfileBlock({ results, profile }) {
+function ProfileBlock({ quantityRace, profile }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.bio}>{profile?.bio}</div>
@@ -24,23 +25,20 @@ function ProfileBlock({ results, profile }) {
               className={styles.term__description}
             >{`${profile.firstName} ${profile.lastName}`}</dd>
           </div>
-          {/* 
-          <div className={styles.box__term}>
-            <dt className={styles.term}>КОМАНДА</dt>
-            <dd className={styles.term__description}>{profile?.team}</dd>
-          </div> */}
 
-          <div className={styles.box__term}>
-            <dt className={styles.term}>FTP</dt>
-            <MyTooltip tooltip={'95% от CP20'} placement={'right'}>
-              <dd className={styles.term__description}>{profile?.ftp}</dd>
+          {/* <div className={styles.box__term}>
+            <MyTooltip tooltip={'Категория, присвоенная Звифтом '}>
+              <dt className={styles.term}>zКатегория</dt>
             </MyTooltip>
-          </div>
+            <dd className={styles.term__description}>
+              <CategoryBox label={profile?.zCategory} showLabel={true} circle={true} />{' '}
+            </dd>
+          </div> */}
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ВЕС</dt>
             <dd className={styles.term__description}>
-              {getWeightStr(profile.weightInGrams)}
+              {getWeightStr(profile.weight)}
               {'кг'}
             </dd>
           </div>
@@ -52,12 +50,12 @@ function ProfileBlock({ results, profile }) {
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ZWIFTID</dt>
-            <dd className={styles.term__description}>{results[0]?.profileId}</dd>
+            <dd className={styles.term__description}>{profile.zwiftId}</dd>
           </div>
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ЗАЕЗДОВ</dt>
-            <dd className={styles.term__description}>{results?.length}</dd>
+            <dd className={styles.term__description}>{quantityRace}</dd>
           </div>
         </dl>
       </div>

@@ -30,6 +30,7 @@ const userSchema = new Schema<UserSchema>({
     male: Boolean,
     publicId: String,
   },
+  category: String,
   gender: { type: String },
   birthday: { type: Number },
   city: { type: String },

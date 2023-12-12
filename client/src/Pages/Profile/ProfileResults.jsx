@@ -28,7 +28,7 @@ function ProfileResults() {
     <div>
       {status === 'resolved' && (
         <>
-          <ProfileBlock results={results} profile={profile} />
+          <ProfileBlock quantityRace={results?.length || 0} profile={profile} />
           <div className={styles.block__cp}>
             <CPBlock criticalPowers={powerCurve?.pointsWattsPerKg} label={'wattsPerKg'} />
             <CPBlock criticalPowers={powerCurve?.pointsWatts} label={'watts'} />

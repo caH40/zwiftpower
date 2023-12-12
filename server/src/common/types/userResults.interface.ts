@@ -84,7 +84,13 @@ export interface UserResultFetch {
     firstName: string;
     lastName: string;
     age: number;
-    weightInGrams: number;
+    weight: number;
+    height: number;
+    countryAlpha3: string;
+    male: boolean;
+    zCategory: string;
+    zCategoryWomen: string;
+    category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
     bio?: string;
   };
 

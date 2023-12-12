@@ -1,11 +1,14 @@
 import { User } from '../../../Model/User.js';
-import { GetProfileArg, Profile } from '../../../types/types.interface.js';
 import { getZwiftRiderService } from '../../zwift/rider.js';
+
+// types
+import { Profile } from '../../../types/types.interface.js';
+import { getCategory } from './category.js';
 
 /**
  * Формирование данный профайла райдера (анкета)
  */
-export async function getProfile({ zwiftId, powerCurve, resultLast }: GetProfileArg) {
+export async function getProfileService(zwiftId: string) {
   const profile: Profile = {
     zwiftId: +zwiftId,
     ftp: null,
@@ -13,25 +16,20 @@ export async function getProfile({ zwiftId, powerCurve, resultLast }: GetProfile
     firstName: '',
     lastName: '',
     age: 0,
-    weightInGrams: 0,
+    weight: 0,
+    height: 0,
+    countryAlpha3: 'rus',
+    male: true,
+    zCategory: 'E',
+    zCategoryWomen: 'E',
   };
-
-  // добавление ftp в объект профиля
-  if (powerCurve) {
-    const cp = powerCurve.pointsWattsPerKg.find((cp) => cp.duration === 1200);
-
-    // ftp рассчитывается как 95% от результата за 20 минут
-    const ftp = cp ? Math.trunc(cp.value * 95) / 100 : null;
-    profile.ftp = ftp;
-  } else {
-    profile.ftp = null;
-  }
 
   // Получение данных зарегистрированного райдера для отображения таких как bio
   const userDB = await User.findOne({ zwiftId });
 
   // если нет результатов райдера в БД берутся данные из API Zwift
-  if (!resultLast) {
+  if (!userDB || userDB.lastName === undefined) {
+    const category = await getCategory(zwiftId);
     const rider = await getZwiftRiderService(zwiftId);
 
     if (!rider) {
@@ -41,17 +39,29 @@ export async function getProfile({ zwiftId, powerCurve, resultLast }: GetProfile
     profile.firstName = rider.firstName;
     profile.lastName = rider.lastName;
     profile.age = rider.age;
-    profile.weightInGrams = rider.weight;
+    profile.weight = rider.weight;
+    profile.height = rider.height;
+    profile.countryAlpha3 = rider.countryAlpha3;
+    profile.male = rider.male;
+    profile.zCategory = rider.competitionMetrics?.category || 'E';
+    profile.zCategoryWomen = rider.competitionMetrics?.categoryWomen || 'E';
+    profile.category = category;
 
     return profile;
   }
 
   profile.zwiftId = +zwiftId;
-  profile.imageSrc = resultLast.profileData.imageSrc;
-  profile.firstName = resultLast.profileData.firstName;
-  profile.lastName = resultLast.profileData.lastName;
-  profile.age = resultLast.profileData.age;
-  profile.weightInGrams = resultLast.profileData.weightInGrams.value;
+  profile.imageSrc = userDB.zwiftData.imageSrc;
+  profile.firstName = userDB.zwiftData.firstName;
+  profile.lastName = userDB.zwiftData.lastName;
+  profile.age = userDB.zwiftData.age;
+  profile.weight = userDB.zwiftData.weight;
+  profile.height = userDB.zwiftData.height;
+  profile.countryAlpha3 = userDB.zwiftData.countryAlpha3;
+  profile.male = userDB.zwiftData.male;
+  profile.zCategory = userDB.zwiftData.category;
+  profile.zCategoryWomen = userDB.zwiftData.categoryWomen;
+  profile.category = userDB.category;
   profile.bio = userDB?.bio;
 
   return profile;

@@ -1,7 +1,6 @@
 import { Types } from 'mongoose';
 import {
   LogsAdminSchema,
-  PowerCurveSchema,
   ProfileDataInResult,
   SeriesSchema,
   SignedRidersSchema,
@@ -82,13 +81,7 @@ export interface UserResult
   eventName?: string;
   eventStart?: number;
 }
-//
-//
-export interface GetProfileArg {
-  zwiftId: string;
-  powerCurve: PowerCurveSchema | null;
-  resultLast: UserResult;
-}
+
 //
 //
 export interface Profile {
@@ -98,7 +91,13 @@ export interface Profile {
   firstName: string;
   lastName: string;
   age: number;
-  weightInGrams: number;
+  weight: number;
+  height: number;
+  countryAlpha3: string;
+  male: boolean;
+  zCategory: string;
+  zCategoryWomen: string;
+  category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
   bio?: string;
 }
 
