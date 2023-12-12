@@ -28,7 +28,7 @@ export async function getProfileService(zwiftId: string) {
   const userDB = await User.findOne({ zwiftId });
 
   // если нет результатов райдера в БД берутся данные из API Zwift
-  if (!userDB || userDB.lastName === undefined) {
+  if (!userDB || userDB.zwiftData?.lastName === undefined) {
     const category = await getCategory(zwiftId);
     const rider = await getZwiftRiderService(zwiftId);
 
