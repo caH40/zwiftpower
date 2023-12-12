@@ -4,7 +4,7 @@ import { userPowerDto } from '../../../dto/user-power.dto.js';
 import { userResultsDto } from '../../../dto/user-results.dto.js';
 
 import { ResultWithEvent } from '../../../types/types.interface.js';
-import { getProfile } from './profile.js';
+import { getProfileService } from './profile.js';
 import { getUserResultsFromDB } from './results.js';
 
 /**
@@ -17,11 +17,7 @@ export async function getUserResultsService(zwiftId: string) {
 
   const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
   const results = await getUserResultsFromDB(zwiftId);
-  const profile = await getProfile({
-    zwiftId,
-    powerCurve: powerCurveDB,
-    resultLast: results[0],
-  });
+  const profile = await getProfileService(zwiftId);
 
   // подготовка данных для отправки при запросе API
   return userResultsDto({ userResults: results, profile, powerCurve: powerCurveDB });

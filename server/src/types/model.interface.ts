@@ -258,7 +258,7 @@ export interface UserSchema {
     male: boolean;
     publicId: string;
   };
-
+  category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
   gender: string;
   birthday: number;
   city: string;
