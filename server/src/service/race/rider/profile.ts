@@ -20,8 +20,6 @@ export async function getProfileService(zwiftId: string) {
     height: 0,
     countryAlpha3: 'rus',
     male: true,
-    zCategory: 'E',
-    zCategoryWomen: 'E',
   };
 
   // Получение данных зарегистрированного райдера для отображения таких как bio
@@ -43,8 +41,8 @@ export async function getProfileService(zwiftId: string) {
     profile.height = rider.height;
     profile.countryAlpha3 = rider.countryAlpha3;
     profile.male = rider.male;
-    profile.zCategory = rider.competitionMetrics?.category || 'E';
-    profile.zCategoryWomen = rider.competitionMetrics?.categoryWomen || 'E';
+    profile.zCategory = rider.competitionMetrics?.category;
+    profile.zCategoryWomen = rider.competitionMetrics?.categoryWomen;
     profile.category = category;
 
     return profile;

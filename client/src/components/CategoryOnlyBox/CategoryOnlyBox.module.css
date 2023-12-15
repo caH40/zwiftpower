@@ -1,0 +1,30 @@
+.category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  padding: 0.2em 0.5em;
+  font-weight: 700;
+  color: #ffffff;
+
+  user-select: none;
+}
+.A {
+  background-color: var(--catA);
+}
+.B {
+  background-color: var(--catB);
+}
+.C {
+  background-color: var(--catC);
+}
+.D {
+  background-color: var(--catD);
+}
+.E {
+  background-color: var(--catE);
+}
+.W {
+  background-color: var(--catW);
+}

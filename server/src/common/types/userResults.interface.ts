@@ -88,8 +88,8 @@ export interface UserResultFetch {
     height: number;
     countryAlpha3: string;
     male: boolean;
-    zCategory: string;
-    zCategoryWomen: string;
+    zCategory?: string;
+    zCategoryWomen?: string;
     category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
     bio?: string;
   };

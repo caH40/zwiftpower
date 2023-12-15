@@ -2,7 +2,7 @@ import { getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
 import { getAgeCategory } from '../../utils/age';
-import CategoryBox from '../CategoryBox/CategoryBox';
+import CategoryOnlyBox from '../CategoryOnlyBox/CategoryOnlyBox';
 
 import styles from './ProfileBlock.module.css';
 
@@ -26,14 +26,31 @@ function ProfileBlock({ quantityRace, profile }) {
             >{`${profile.firstName} ${profile.lastName}`}</dd>
           </div>
 
-          {/* <div className={styles.box__term}>
-            <MyTooltip tooltip={'Категория, присвоенная Звифтом '}>
-              <dt className={styles.term}>zКатегория</dt>
-            </MyTooltip>
-            <dd className={styles.term__description}>
-              <CategoryBox label={profile?.zCategory} showLabel={true} circle={true} />{' '}
-            </dd>
-          </div> */}
+          {profile.zCategory && (
+            <div className={styles.box__term}>
+              <MyTooltip tooltip={'Категория, присвоенная Звифтом '}>
+                <dt className={styles.term}>z-Категория</dt>
+              </MyTooltip>
+              <dd className={styles.term__description}>
+                <div className={styles.flex}>
+                  {profile.male ? (
+                    <CategoryOnlyBox
+                      label={profile.zCategory}
+                      squareSize={18}
+                      // tooltip={'Мужская категория'}
+                    />
+                  ) : (
+                    <CategoryOnlyBox
+                      label={profile.zCategoryWomen}
+                      squareSize={18}
+                      female={true}
+                      // tooltip={'Женская категория'}
+                    />
+                  )}
+                </div>
+              </dd>
+            </div>
+          )}
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ВЕС</dt>

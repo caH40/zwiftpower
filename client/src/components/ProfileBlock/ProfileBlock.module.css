@@ -70,6 +70,10 @@
   right: 10px;
   cursor: pointer;
 }
+.flex {
+  display: flex;
+  gap: 5px;
+}
 
 @media screen and (max-width: 576px) {
   .wrapper {
