@@ -6,11 +6,9 @@ import {
 } from '../service/race/rider/rider-profile.js';
 import { errorHandler } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
-import {
-  deleteUserZwiftIdService,
-  refreshProfileService,
-  updateZwiftIdService,
-} from '../service/user.js';
+import { refreshProfileService } from '../service/profile/zwiftid/update-zwiftdata.js';
+import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
+import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 
 /**
  * Контролер получения профайла райдера (анкеты), основных значений CriticalPower,
