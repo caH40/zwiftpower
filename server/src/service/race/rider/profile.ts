@@ -6,7 +6,7 @@ import { Profile } from '../../../types/types.interface.js';
 import { getCategory } from './category.js';
 
 /**
- * Формирование данный профайла райдера (анкета)
+ * Формирование данных профайла райдера (анкета)
  */
 export async function getProfileService(zwiftId: string) {
   const profile: Profile = {

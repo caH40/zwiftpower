@@ -8,6 +8,7 @@ import { getResultsFromZwift } from './resultsFromZwift.js';
 import { updatePowerCurveResults } from './criticalpower/criticalpower-update.js';
 import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
+import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -35,6 +36,10 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   if (isFast) {
     resultsWithCP = addCriticalPowersFast(resultsTotal);
   } else {
+    // обновление профайлов райдеров
+    const zwiftIds = resultsTotal.map((result) => result.profileId);
+    await updateZwiftDataInProfiles(zwiftIds);
+
     // добавление CP в результаты райдеров, сохранение FitFiles
     resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
     // обновление CP райдеров в БД
