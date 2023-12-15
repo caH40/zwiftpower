@@ -245,7 +245,7 @@ export interface UserSchema {
   firstName: string;
   patronymic: string;
   lastName: string;
-  zwiftData: {
+  zwiftData?: {
     firstName: string;
     lastName: string;
     category: string;
