@@ -1,6 +1,6 @@
 import { User } from '../../../Model/User.js';
 import { addMainProfileZwift } from '../../profile_additional/main-add.js';
-import { getZwiftRiderService } from '../../zwift/rider.js';
+import { refreshProfileService } from './update-zwiftdata.js';
 
 /**
  * Сервис обновления zwiftId у пользователя
@@ -37,11 +37,10 @@ export async function updateZwiftIdService(
       zwiftIdMain: userDB!.zwiftId,
     };
   } else {
-    // запрос данных Райдера с сервера Zwift
-    const riderData = await getZwiftRiderService(String(zwiftId));
+    await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId } });
 
-    const photoProfile = riderData ? riderData.imageSrc : undefined;
-    await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId, photoProfile } });
+    // добавление данных из звифта zwiftData в профиль пользователя
+    await refreshProfileService(userId);
     return {
       message: `ZwiftId ${zwiftId} привязан к профилю`,
       zwiftIdMain: zwiftId,
