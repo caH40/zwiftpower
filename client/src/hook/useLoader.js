@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 
+// отображение загрузки данных с API
 const useLoader = () => {
   const { status: statusEvents } = useSelector((state) => state.fetchEvents);
   const { status: statusEvent } = useSelector((state) => state.fetchEventResult);
@@ -17,6 +18,23 @@ const useLoader = () => {
   const { status: statusSeries } = useSelector((state) => state.fetchSeries);
   const { status: statusUserResults } = useSelector((state) => state.fetchUserResults);
   const { status: statusUserPowerCurve } = useSelector((state) => state.fetchUserPowerCurve);
+  // обновление данных профиля с zwiftAPI
+  const { status: statusProfileRefresh } = useSelector((state) => state.profileRefresh);
+  // данные для страницы "Распределение райдеров по FTP"
+  const { status: statusRidersTotalFTPFetch } = useSelector(
+    (state) => state.ridersTotalFTPFetch
+  );
+  // запрос всех зарегистрированных пользователей
+  const { status: statusGetUsers } = useSelector((state) => state.getUsers);
+  // модерация результатов райдеров в протоколе заезда
+  const { status: statusResultEdit } = useSelector((state) => state.resultEdit);
+  // запросы работы с логами
+  const { status: statusLogsAdmins } = useSelector((state) => state.logsAdmins);
+  const { status: statusLogsErrors } = useSelector((state) => state.logsErrors);
+  const { status: statusLogError } = useSelector((state) => state.logError);
+  const { status: statusLogErrorDelete } = useSelector((state) => state.logErrorDelete);
+  //  получение данных Эвента с ZwiftAPI
+  const { status: statusEventParams } = useSelector((state) => state.eventParams);
 
   if (
     statusEvents === 'loading' ||
@@ -30,7 +48,16 @@ const useLoader = () => {
     statusResultsSeries === 'loading' ||
     statusSeries === 'loading' ||
     statusUserResults === 'loading' ||
-    statusUserPowerCurve === 'loading'
+    statusUserPowerCurve === 'loading' ||
+    statusProfileRefresh === 'loading' ||
+    statusRidersTotalFTPFetch === 'loading' ||
+    statusGetUsers === 'loading' ||
+    statusResultEdit === 'loading' ||
+    statusLogsAdmins === 'loading' ||
+    statusLogsErrors === 'loading' ||
+    statusLogError === 'loading' ||
+    statusLogErrorDelete === 'loading' ||
+    statusEventParams === 'loading'
   ) {
     return { isLoading: true };
   }

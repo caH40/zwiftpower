@@ -17,7 +17,7 @@ import {
 } from '../assets/date.js';
 import { addZwiftProfile } from './updates/addZwiftProfile.js';
 import { removeActivityFromFitFile } from './updates/fitfiles.js';
-import { updateUsers } from './temp/update-user.js';
+import { updateUsers } from './updates/update-user.js';
 
 // создание sitemap.xml
 await createSitemap(); // первоначальная инициализация, чтобы сразу был после build
