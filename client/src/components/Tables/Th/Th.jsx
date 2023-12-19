@@ -27,6 +27,7 @@ import IconDescription from '../../icons/IconDescription';
 import IconCupRank from '../../icons/IconCupRank';
 import IconResultsSmall from '../../icons/IconResultsSmall';
 import IconDifferent from '../../icons/IconDifferent';
+import IconRules from '../../icons/IconRules';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -127,6 +128,9 @@ const Th = ({ columnName }) => {
 
       case 'Разное':
         return <IconDifferent tooltip={name} place={0} />;
+
+      case 'Правила':
+        return <IconRules tooltip={name} place={0} />;
 
       default:
         return name;

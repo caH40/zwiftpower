@@ -20,6 +20,7 @@ import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
+import RulesBox from '../../RulesBox/RulesBox';
 
 import Thead from './Thead';
 
@@ -55,6 +56,9 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoriesBox event={event} addCls={'nowrap'} />
+            </td>
+            <td>
+              <RulesBox event={event} squareSize={16} />
             </td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>

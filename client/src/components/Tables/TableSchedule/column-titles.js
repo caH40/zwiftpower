@@ -5,6 +5,7 @@ export const scheduleListColumnsFull = [
   { name: 'Организатор', id: 3 },
   { name: 'Формат заезда', id: 4 },
   { name: 'Зарегистрировались', id: 5 },
+  { name: 'Правила', id: 12 },
   { name: 'Карта', id: 6 },
   { name: 'Маршрут', id: 7 },
   { name: 'Круги', id: 8 },
