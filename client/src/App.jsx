@@ -47,7 +47,7 @@ function App() {
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/race/series" element={<RaceSeries />} />
-        <Route path="/race/series/catchup" element={<Catchup />} />
+        <Route path="/race/series/catchup/:season" element={<Catchup />} />
 
         <Route path="/faq" element={<Faq />} />
         {isModerator ? AdminRoute(isAdmin) : ''}

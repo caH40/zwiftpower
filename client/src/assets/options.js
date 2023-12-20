@@ -6,8 +6,9 @@ import { raceTypes } from './zwift/race-type';
  * Сезоны для CatchUp
  */
 export const optionsSeasons = [
-  { name: 'Сезон 2022-2023', id: 0 },
-  { name: 'Сезон 2023-2024', id: 1 },
+  { label: 'Все сезоны', name: 'all', id: 0 },
+  { label: 'Сезон 2022-2023', name: '2022', id: 1 },
+  { label: 'Сезон 2023-2024', name: '2023', id: 2 },
 ];
 
 /**
