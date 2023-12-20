@@ -2,14 +2,16 @@ import styles from './SimpleSelect.module.css';
 
 /**
  * Select при изменении option запускается передаваемая функция
+ * options =[name: значение(value), label: отображаемое название в селекторе, id: любой id]
  */
-function SimpleSelectFunction({ reducer, name, disabled, options, closeEmptyOption }) {
+function SimpleSelectFunction({ reducer, value, name, disabled, options, closeEmptyOption }) {
   return (
     <>
       {name ? <p className={styles.label}>{name}:</p> : null}
       <select
         className={styles.select}
         placeholder={name}
+        value={value}
         onChange={(e) => reducer(e.target.value)}
         disabled={disabled}
       >

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
@@ -10,7 +11,9 @@ import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColum
 import styles from './Catchup.module.css';
 
 function Catchup() {
-  const [form, setForm] = useState({ season: 'Сезон 2023-2024' });
+  const { season } = useParams();
+  const navigate = useNavigate();
+
   const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);
 
   useTitle('Догонялки');
@@ -18,13 +21,17 @@ function Catchup() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchResultsSeries({ type: 'catchUp', season: form.season }));
-  }, [dispatch, form]);
+    dispatch(fetchResultsSeries({ type: 'catchUp', season }));
+  }, [dispatch, season]);
+
+  const getLink = (season) => {
+    navigate(`/race/series/catchup/${season}`);
+  };
 
   return (
     <section>
       <div className={styles.box__filter}>
-        <FilterCatchup form={form} setForm={setForm} />
+        <FilterCatchup season={season} reducer={getLink} />
       </div>
       {results[0] && (
         <div className={styles.block}>

@@ -18,10 +18,12 @@ export async function getResultsSeriesService(type: string, seasonCurrent: strin
   // выбор сезона
   const getSeason = (seasonStr: string) => {
     switch (seasonStr) {
-      case 'Сезон 2022-2023':
+      case '2022':
         return '2022-2023';
-      case 'Сезон 2023-2024':
+      case '2023':
         return '2023-2024';
+      case 'all':
+        return 'all';
       default:
         return null;
     }

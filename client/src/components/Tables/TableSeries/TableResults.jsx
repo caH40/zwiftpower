@@ -1,10 +1,9 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import { seasonCurrent } from '../../../assets/constants';
 import styles from '../Table.module.css';
-
 import { useResize } from '../../../hook/use-resize';
 
 import Thead from './Thead';
@@ -30,7 +29,7 @@ function TableSeries({ series }) {
           <tr
             className={styles.trLink}
             key={seriesOne._id}
-            onClick={() => getLink(seriesOne.type?.toLowerCase())}
+            onClick={() => getLink(`${seriesOne.type?.toLowerCase()}/${seasonCurrent}`)}
           >
             <td>{seriesOne.organizer}</td>
             <td>{seriesOne.name}</td>

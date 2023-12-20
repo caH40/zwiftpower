@@ -1,18 +1,15 @@
-import React from 'react';
-
-import SimpleSelect from '../../SimpleSelect/SimpleSelect';
 import { optionsSeasons } from '../../../../assets/options';
+import SimpleSelectFunction from '../../SimpleSelect/SimpleSelectFunction';
 
 import styles from './FilterCatchup.module.css';
 
-function FilterCatchup({ form, setForm }) {
+function FilterCatchup({ season, reducer }) {
   return (
     <form className={styles.box}>
-      <SimpleSelect
-        state={form}
-        setState={setForm}
-        property="season"
+      <SimpleSelectFunction
+        reducer={reducer}
         options={optionsSeasons}
+        value={season}
         closeEmptyOption={true}
       />
     </form>
