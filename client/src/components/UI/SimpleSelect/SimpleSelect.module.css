@@ -16,6 +16,7 @@
   background-color: var(--color-text-main);
   text-decoration: none;
   overflow: hidden;
+  min-width: 160px;
 }
 .select:focus {
   outline: none;

@@ -1,11 +1,9 @@
 import { optionsSeasons } from '../../../../assets/options';
 import SimpleSelectFunction from '../../SimpleSelect/SimpleSelectFunction';
 
-import styles from './FilterCatchup.module.css';
-
 function FilterCatchup({ season, reducer }) {
   return (
-    <form className={styles.box}>
+    <form>
       <SimpleSelectFunction
         reducer={reducer}
         options={optionsSeasons}
