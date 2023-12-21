@@ -231,7 +231,7 @@ export interface EventResultsDtoArg {
  */
 export interface ResultsSeriesDtoArg {
   results: ResultSeries[];
-  resultsSummary: {
+  resultsSummary?: {
     id: number;
     groupCategory: string;
     winsTotal: number;
@@ -288,7 +288,7 @@ export interface CriticalPower {
 /**
  * Получение данных по Эвентам Серии за выбранный сезон с ДБ
  */
-export interface getCurrentEventsSeries {
+export interface GetCurrentEventsSeries {
   _id: Types.ObjectId;
   totalFinishedCount: number;
   eventStart: string;
@@ -467,4 +467,10 @@ export interface EventSubgroupFromZwiftAPIAdditional extends EventSubgroupFromZw
     distanceInKilometers: number | null;
     elevationGainInMeters: number | null;
   };
+}
+/**
+ * Преобразование названий сезонов
+ */
+export interface SeasonsSeries {
+  [key: string]: string;
 }

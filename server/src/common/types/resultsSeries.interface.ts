@@ -42,7 +42,7 @@ export interface ResultsSeriesFetch {
     totalFinishedCount?: number;
   }[];
 
-  resultsSummary: {
+  resultsSummary?: {
     id: number;
     groupCategory: string;
     winsTotal: number;
