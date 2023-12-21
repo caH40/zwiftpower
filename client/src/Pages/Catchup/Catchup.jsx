@@ -35,9 +35,11 @@ function Catchup() {
       </div>
       {results[0] && (
         <div className={styles.block}>
-          <div className={styles.box__total}>
-            <TableCatchupSummary resultsSummary={resultsSummary} />
-          </div>
+          {resultsSummary && (
+            <div className={styles.box__total}>
+              <TableCatchupSummary resultsSummary={resultsSummary} />
+            </div>
+          )}
           <section className={styles.wrapper__wide}>
             <TableCatchup catchups={results} />
           </section>
