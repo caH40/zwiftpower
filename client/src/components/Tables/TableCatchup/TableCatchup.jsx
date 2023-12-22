@@ -10,6 +10,7 @@ import { getTimerLocal } from '../../../utils/date-local';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import GapStart from '../../GapStart/GapStart';
+
 import {
   getDistanceForTd,
   getElevationForTd,
@@ -40,6 +41,7 @@ function TableCatchup({ catchups }) {
             </td>
             <TdRider profileId={catchupResult.profileId} profile={catchupResult.profileData} />
             <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
+            <td>{catchupResult.speed}км/ч</td>
             <td>{catchupResult.totalFinishedCount}</td>
             <td>
               <GapStart gaps={catchupResult.gaps} />

@@ -29,6 +29,7 @@ import IconResultsSmall from '../../icons/IconResultsSmall';
 import IconDifferent from '../../icons/IconDifferent';
 import IconRules from '../../icons/IconRules';
 import IconGapStart from '../../icons/IconGapStart';
+import IconSpeed from '../../icons/IconSpeed';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -128,13 +129,16 @@ const Th = ({ columnName }) => {
         return <IconCupRank tooltip={name} place={0} />;
 
       case 'Результаты':
-        return <IconResultsSmall tooltip={name} place={0} />;
+        return <IconResultsSmall tooltip={name} />;
 
       case 'Разное':
-        return <IconDifferent tooltip={name} place={0} />;
+        return <IconDifferent tooltip={name} />;
 
       case 'Правила':
-        return <IconRules tooltip={name} place={0} />;
+        return <IconRules tooltip={name} />;
+
+      case 'Скорость':
+        return <IconSpeed tooltip={name} />;
 
       default:
         return name;
