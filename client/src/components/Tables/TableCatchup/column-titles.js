@@ -4,6 +4,7 @@ export const catchupColumnsFull = [
   { name: 'Райдер', id: 2 },
   { name: 'Время', id: 3 },
   { name: 'Финиш', id: 4 },
+  { name: 'Стартовые гэпы (фора)', id: 11 },
   { name: 'Карта', id: 5 },
   { name: 'Маршрут', id: 6 },
   { name: 'Круги', id: 7 },

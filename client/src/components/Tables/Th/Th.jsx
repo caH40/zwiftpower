@@ -28,6 +28,7 @@ import IconCupRank from '../../icons/IconCupRank';
 import IconResultsSmall from '../../icons/IconResultsSmall';
 import IconDifferent from '../../icons/IconDifferent';
 import IconRules from '../../icons/IconRules';
+import IconGapStart from '../../icons/IconGapStart';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -104,6 +105,9 @@ const Th = ({ columnName }) => {
 
       case 'Отставание от райдера впереди':
         return <IconGapPrev tooltip={name} />;
+
+      case 'Стартовые гэпы (фора)':
+        return <IconGapStart tooltip={name} />;
 
       case 'Средняя мощность за гонку':
         return <IconPower tooltip={name} />;
