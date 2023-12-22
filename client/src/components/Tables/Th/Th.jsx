@@ -137,7 +137,7 @@ const Th = ({ columnName }) => {
       case 'Правила':
         return <IconRules tooltip={name} />;
 
-      case 'Скорость':
+      case 'Средняя скорость':
         return <IconSpeed tooltip={name} />;
 
       default:

@@ -12,6 +12,7 @@ import TdRider from '../Td/TdRider';
 import GapStart from '../../GapStart/GapStart';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
+import TdSpeed from '../Td/TdSpeed';
 
 import { getLaps, map, routeName } from '../../../utils/event';
 
@@ -46,10 +47,7 @@ function TableCatchup({ catchups }) {
                 profile={catchupResult.profileData}
               />
               <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
-              <td className={styles.td__nowrap}>
-                {Math.round(catchupResult.speed * 10) / 10}
-                <span className={styles.small}>км/ч</span>
-              </td>
+              <TdSpeed speed={catchupResult.speed} />
               <td>{catchupResult.totalFinishedCount}</td>
               <td>
                 <GapStart gaps={catchupResult.gaps} />

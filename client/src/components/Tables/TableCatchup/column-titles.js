@@ -3,7 +3,7 @@ export const catchupColumnsFull = [
   { name: 'Победа', id: 1 },
   { name: 'Райдер', id: 2 },
   { name: 'Время', id: 3 },
-  { name: 'Скорость', id: 12 },
+  { name: 'Средняя скорость', id: 12 },
   { name: 'Финиш', id: 4 },
   { name: 'Стартовые гэпы (фора)', id: 11 },
   { name: 'Карта', id: 5 },

@@ -13,6 +13,7 @@ import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
+import TdSpeed from '../Td/TdSpeed';
 
 import { getAgeCategory } from '../../../utils/age';
 
@@ -77,6 +78,7 @@ function TableRaceResults({ results, event }) {
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
               <TdGap gap={result.gap} dsq={isDsq} />
               <TdGap gap={result.gapPrev} dsq={isDsq} />
+              <TdSpeed speed={result.speed} />
 
               <TdWattsPerKg
                 valueRaw={result.wattsPerKg.value}

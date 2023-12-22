@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IconParamsAscent from '../../icons/Params/IconParamsAscent';
 import IconParamsDistance from '../../icons/Params/IconParamsDistance';
 import IconParamsDuration from '../../icons/Params/IconParamsDuration';
@@ -29,6 +27,7 @@ import IconDescription from '../../icons/IconDescription';
 import IconCupRank from '../../icons/IconCupRank';
 import IconResultsSmall from '../../icons/IconResultsSmall';
 import IconDifferent from '../../icons/IconDifferent';
+import IconSpeed from '../../icons/IconSpeed';
 
 const ColumnName = ({ columnName }) => {
   /* eslint-disable */
@@ -126,6 +125,9 @@ const ColumnName = ({ columnName }) => {
 
       case 'Разное':
         return <IconDifferent tooltip={name} place={0} />;
+
+      case 'Средняя скорость':
+        return <IconSpeed tooltip={name} />;
 
       default:
         return columnName;
