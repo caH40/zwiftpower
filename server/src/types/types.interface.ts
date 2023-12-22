@@ -13,17 +13,21 @@ import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { PutResult } from './http.interface.js';
 import { EventSubgroupFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 
+interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
+  eventSubgroups: ZwiftEventSubgroupSchema[];
+}
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате
  */
 export interface ResultWithEvent extends Omit<ZwiftResultSchema, 'zwiftEventId'> {
-  zwiftEventId: ZwiftEventSchema;
+  zwiftEventId: ZwiftEventWithSubgroup;
 }
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате и с подгруппой
  */
 export interface ResultWithEventAndSubgroup extends Omit<ResultWithEvent, 'subgroupId'> {
   subgroupId: ZwiftEventSubgroupSchema;
+  gaps?: { id: number; subgroupLabel: string; gap: number }[];
 }
 /**
  * Результаты Эвента с параметрами Эвента в каждом результате и с подгруппой только нужные свойства
@@ -42,6 +46,7 @@ export interface ResultSeries
   eventSubgroup: ZwiftEventSubgroupSchema;
   eventStart: number;
   totalFinishedCount?: number;
+  gaps?: { id: number; subgroupLabel: string; gap: number }[];
 }
 /**
  * Изменение структуры ZwiftResult, изменение нескольких свойств с типа Number на Object
@@ -290,8 +295,16 @@ export interface CriticalPower {
  */
 export interface GetCurrentEventsSeries {
   _id: Types.ObjectId;
-  totalFinishedCount: number;
-  eventStart: string;
+}
+/**
+ * Данные по Эвентам Серии за выбранный сезон с ДБ с гэпами
+ */
+export interface CurrentEventsSeriesGap extends Omit<GetCurrentEventsSeries, 'eventSubgroups'> {
+  eventSubgroupsWithGaps: {
+    id: number;
+    subgroupLabel: string;
+    gap: number;
+  }[];
 }
 /**
  * Power из fitfiles
@@ -473,4 +486,12 @@ export interface EventSubgroupFromZwiftAPIAdditional extends EventSubgroupFromZw
  */
 export interface SeasonsSeries {
   [key: string]: string;
+}
+/**
+ * Сводные данные результатов Догонялок за сезон
+ */
+export interface ResultSummaryCatchup {
+  id: number;
+  groupCategory: string;
+  winsTotal: number;
 }

@@ -8,7 +8,7 @@ import { getEventsService } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
-import { getResultsSeriesService } from '../service/race/series_catchup/results-series.js';
+import { getResultsSeriesService } from '../service/race/series_catchup/index.js';
 import { errorHandler } from '../errors/error.js';
 
 // types

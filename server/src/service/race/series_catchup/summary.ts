@@ -1,11 +1,14 @@
 // types
 import { TotalCatchupSchema } from '../../../types/model.interface.js';
-import { ResultSeries } from '../../../types/types.interface.js';
+import { ResultSeries, ResultSummaryCatchup } from '../../../types/types.interface.js';
 
 /**
  * Получение сводной информации о победах за сезон
  */
-export function getResultSummary(results: ResultSeries[], totalCatchup: TotalCatchupSchema) {
+export function getResultSummary(
+  results: ResultSeries[],
+  totalCatchup: TotalCatchupSchema
+): ResultSummaryCatchup[] {
   let winsA = 0;
   let winsB = 0;
   let winsC = 0;
