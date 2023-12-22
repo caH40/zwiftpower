@@ -10,14 +10,9 @@ import { getTimerLocal } from '../../../utils/date-local';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import GapStart from '../../GapStart/GapStart';
+import TdDistance from '../Td/TdDistance';
 
-import {
-  getDistanceForTd,
-  getElevationForTd,
-  getLaps,
-  map,
-  routeName,
-} from '../../../utils/event';
+import { getElevationForTd, getLaps, map, routeName } from '../../../utils/event';
 
 import Thead from './Thead';
 
@@ -33,36 +28,48 @@ function TableCatchup({ catchups }) {
       <caption className={styles.caption}>Победители этапов</caption>
       <Thead isModerator={isModerator} />
       <tbody>
-        {catchups.map((catchupResult) => (
-          <tr className={styles.hover} key={catchupResult.eventId}>
-            <td>{getTimerLocal(catchupResult.eventStart, 'DDMMYY')}</td>
-            <td>
-              <CategoryBox showLabel={true} label={catchupResult.subgroupLabel} circle={true} />
-            </td>
-            <TdRider profileId={catchupResult.profileId} profile={catchupResult.profileData} />
-            <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
-            <td className={styles.td__nowrap}>
-              {Math.round(catchupResult.speed * 10) / 10}
-              <span className={styles.small}>км/ч</span>
-            </td>
-            <td>{catchupResult.totalFinishedCount}</td>
-            <td>
-              <GapStart gaps={catchupResult.gaps} />
-            </td>
-            <td>{map(catchupResult.eventSubgroup.mapId)}</td>
-            <td className={styles.td__nowrap}>
-              {routeName(catchupResult.eventSubgroup.routeId)}
-            </td>
-            <td>{getLaps(catchupResult.eventSubgroup.laps)}</td>
-            <td>{getDistanceForTd(catchupResult.eventSubgroup)}</td>
-            <td>{getElevationForTd(catchupResult.eventSubgroup)}</td>
-            <td>
-              <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
-                этап
-              </Link>
-            </td>
-          </tr>
-        ))}
+        {catchups.map((catchupResult) => {
+          const { eventSubgroup } = catchupResult;
+          return (
+            <tr className={styles.hover} key={catchupResult.eventId}>
+              <td>{getTimerLocal(catchupResult.eventStart, 'DDMMYY')}</td>
+              <td>
+                <CategoryBox
+                  showLabel={true}
+                  label={catchupResult.subgroupLabel}
+                  circle={true}
+                />
+              </td>
+              <TdRider
+                profileId={catchupResult.profileId}
+                profile={catchupResult.profileData}
+              />
+              <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
+              <td className={styles.td__nowrap}>
+                {Math.round(catchupResult.speed * 10) / 10}
+                <span className={styles.small}>км/ч</span>
+              </td>
+              <td>{catchupResult.totalFinishedCount}</td>
+              <td>
+                <GapStart gaps={catchupResult.gaps} />
+              </td>
+              <td>{map(eventSubgroup.mapId)}</td>
+              <td className={styles.td__nowrap}>{routeName(eventSubgroup.routeId)}</td>
+              <td>{getLaps(eventSubgroup.laps)}</td>
+              {TdDistance(
+                eventSubgroup.durationInSeconds,
+                eventSubgroup.distanceInMeters,
+                eventSubgroup.distanceSummary.distanceInKilometers
+              )}
+              <td>{getElevationForTd(eventSubgroup)}</td>
+              <td>
+                <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
+                  этап
+                </Link>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

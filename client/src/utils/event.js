@@ -190,15 +190,6 @@ export const distanceObject = (eventSubgroup) => {
 };
 
 // окончательная строка дистанции для таблицы
-export const getDistanceForTd = (eventSubgroup) => {
-  if (eventSubgroup?.durationInSeconds !== 0) return null;
-  return (
-    getDistance(eventSubgroup?.distanceInMeters) ||
-    getDistanceEstimated(eventSubgroup?.distanceSummary?.distanceInKilometers)
-  );
-};
-
-// окончательная строка дистанции для таблицы
 export const getElevationForTd = (eventSubgroup) => {
   if (eventSubgroup?.durationInSeconds !== 0 || eventSubgroup?.distanceInMeters !== 0)
     return null;

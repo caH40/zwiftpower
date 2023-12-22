@@ -11,13 +11,13 @@ import {
   map,
   organizer,
   routeName,
-  getDistanceForTd,
   getElevationForTd,
 } from '../../../utils/event';
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
+import TdDistance from '../Td/TdDistance';
 
 import styles from '../Table.module.css';
 
@@ -59,7 +59,11 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>
             <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-            <td>{getDistanceForTd(event.eventSubgroups[0])}</td>
+            {TdDistance(
+              event.eventSubgroups[0].durationInSeconds,
+              event.eventSubgroups[0].distanceInMeters,
+              event.eventSubgroups[0].distanceSummary.distanceInKilometers
+            )}
             <td>{getElevationForTd(event.eventSubgroups[0])}</td>
             <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
             {isModerator && (
