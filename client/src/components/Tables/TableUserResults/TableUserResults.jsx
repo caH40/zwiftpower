@@ -8,6 +8,7 @@ import TdWattsPerKg from '../Td/TdWattsPerKg';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../utils/date-local';
 import TdRank from '../Td/TdRank';
+import TdSpeed from '../Td/TdSpeed';
 
 import styles from '../Table.module.css';
 
@@ -50,7 +51,7 @@ function TableUserResults({ results }) {
                 </Link>
               </td>
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-
+              <TdSpeed speed={result.speed} />
               <TdWattsPerKg
                 valueRaw={result.wattsPerKg.value}
                 valueAddition={result.wattsPerKg.addition}
