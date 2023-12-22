@@ -1,0 +1,13 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.time {
+  font-size: 0.75em;
+}

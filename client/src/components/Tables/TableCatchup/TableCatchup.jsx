@@ -9,6 +9,7 @@ import { secondesToTime } from '../../../utils/date-convert';
 import { getTimerLocal } from '../../../utils/date-local';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
+import GapStart from '../../GapStart/GapStart';
 import {
   getDistanceForTd,
   getElevationForTd,
@@ -40,6 +41,9 @@ function TableCatchup({ catchups }) {
             <TdRider profileId={catchupResult.profileId} profile={catchupResult.profileData} />
             <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
             <td>{catchupResult.totalFinishedCount}</td>
+            <td>
+              <GapStart gaps={catchupResult.gaps} />
+            </td>
             <td>{map(catchupResult.eventSubgroup.mapId)}</td>
             <td className={styles.td__nowrap}>
               {routeName(catchupResult.eventSubgroup.routeId)}

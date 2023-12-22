@@ -24,6 +24,7 @@ export async function getResultsSeriesRaw(
       subgroupLabel: true,
       profileDataMain: true,
       profileData: true,
+      profileId: true,
     }
   )
     .populate({
