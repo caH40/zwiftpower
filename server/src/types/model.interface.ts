@@ -384,7 +384,7 @@ export interface ZwiftResultSchema {
     pairedSteeringDevice: boolean;
   };
   wattsPerKg: number;
-
+  speed?: number;
   flaggedCheating: boolean;
   flaggedSandbagging: boolean;
   // свойства из предыдущей модели

@@ -47,6 +47,7 @@ export interface ResultSeries
   eventStart: number;
   totalFinishedCount?: number;
   gaps?: { id: number; subgroupLabel: string; gap: number }[];
+  speed?: number;
 }
 /**
  * Изменение структуры ZwiftResult, изменение нескольких свойств с типа Number на Object

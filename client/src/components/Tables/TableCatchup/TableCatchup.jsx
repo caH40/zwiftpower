@@ -41,7 +41,10 @@ function TableCatchup({ catchups }) {
             </td>
             <TdRider profileId={catchupResult.profileId} profile={catchupResult.profileData} />
             <td>{secondesToTime(catchupResult.durationInMilliseconds)}</td>
-            <td>{catchupResult.speed}км/ч</td>
+            <td className={styles.td__nowrap}>
+              {Math.round(catchupResult.speed * 10) / 10}
+              <span className={styles.small}>км/ч</span>
+            </td>
             <td>{catchupResult.totalFinishedCount}</td>
             <td>
               <GapStart gaps={catchupResult.gaps} />

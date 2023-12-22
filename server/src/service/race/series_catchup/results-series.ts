@@ -25,6 +25,7 @@ export async function getResultsSeriesRaw(
       profileDataMain: true,
       profileData: true,
       profileId: true,
+      speed: true,
     }
   )
     .populate({

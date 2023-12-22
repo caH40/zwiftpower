@@ -48,6 +48,7 @@ export function getResults(resultsRow: ResultWithEventAndSubgroup[]) {
       result.eventStart = new Date(event.zwiftEventId.eventStart).getTime();
       result.totalFinishedCount = event.zwiftEventId.totalFinishedCount;
       result.gaps = event.gaps;
+      result.speed = event.speed;
       return result;
     })
     .sort((a, b) => b.eventStart - a.eventStart);

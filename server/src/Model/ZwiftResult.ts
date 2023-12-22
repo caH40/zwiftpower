@@ -37,6 +37,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     pairedSteeringDevice: { type: Boolean, default: false },
   },
   wattsPerKg: { type: Number, default: null },
+  speed: { type: Number },
 
   flaggedCheating: { type: Boolean, default: false },
   flaggedSandbagging: { type: Boolean, default: false },
