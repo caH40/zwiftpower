@@ -189,13 +189,6 @@ export const distanceObject = (eventSubgroup) => {
   return { durationStr, distanceStr, lapsStr, laps, distanceEstimated, elevationStr };
 };
 
-// окончательная строка дистанции для таблицы
-export const getElevationForTd = (eventSubgroup) => {
-  if (eventSubgroup?.durationInSeconds !== 0 || eventSubgroup?.distanceInMeters !== 0)
-    return null;
-  return getElevationEstimated(eventSubgroup?.distanceSummary?.elevationGainInMeters);
-};
-
 // формирование строки расстояния дистанции
 function getDistanceString(distanceInKilometers) {
   return Math.round(distanceInKilometers * 10) / 10 + 'км';

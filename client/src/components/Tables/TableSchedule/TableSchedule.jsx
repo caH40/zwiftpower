@@ -6,14 +6,7 @@ import classnames from 'classnames/bind';
 import styles from '../Table.module.css';
 
 import { getToday } from '../../../utils/date-local';
-import {
-  getDuration,
-  getLaps,
-  map,
-  organizer,
-  routeName,
-  getElevationForTd,
-} from '../../../utils/event';
+import { getDuration, getLaps, map, organizer, routeName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
@@ -21,6 +14,7 @@ import TdSeries from '../Td/TdSeries';
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 import RulesBox from '../../RulesBox/RulesBox';
 import TdDistance from '../Td/TdDistance';
+import TdElevation from '../Td/TdElevation';
 
 import Thead from './Thead';
 
@@ -68,7 +62,11 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
               event.eventSubgroups[0].distanceInMeters,
               event.eventSubgroups[0].distanceSummary.distanceInKilometers
             )}
-            <td>{getElevationForTd(event.eventSubgroups[0])}</td>
+            {TdElevation(
+              event.eventSubgroups[0].durationInSeconds,
+              event.eventSubgroups[0].distanceInMeters,
+              event.eventSubgroups[0].distanceSummary.elevationGainInMeters
+            )}
             <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
             {isModerator && (
               <TdScheduleMenuTableScheduleList

@@ -11,8 +11,9 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import GapStart from '../../GapStart/GapStart';
 import TdDistance from '../Td/TdDistance';
+import TdElevation from '../Td/TdElevation';
 
-import { getElevationForTd, getLaps, map, routeName } from '../../../utils/event';
+import { getLaps, map, routeName } from '../../../utils/event';
 
 import Thead from './Thead';
 
@@ -61,7 +62,11 @@ function TableCatchup({ catchups }) {
                 eventSubgroup.distanceInMeters,
                 eventSubgroup.distanceSummary.distanceInKilometers
               )}
-              <td>{getElevationForTd(eventSubgroup)}</td>
+              {TdElevation(
+                eventSubgroup.durationInSeconds,
+                eventSubgroup.distanceInMeters,
+                eventSubgroup.distanceSummary.elevationGainInMeters
+              )}
               <td>
                 <Link className={styles.link} to={`/race/results/${catchupResult.eventId}`}>
                   этап
