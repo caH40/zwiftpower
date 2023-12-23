@@ -28,6 +28,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     activityId: { type: String, default: null },
     sport: { type: String, default: null },
     durationInMilliseconds: { type: Number, default: null },
+    segmentDistanceInMeters: { type: Number, default: null },
   },
 
   sensorData: {

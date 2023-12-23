@@ -204,6 +204,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
     age?: number;
     countryAlpha3?: string;
   };
+  speed?: number;
   wattsPerKg?: number;
   isDisqualification: boolean;
   disqualification: string | null;

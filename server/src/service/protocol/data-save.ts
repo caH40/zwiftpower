@@ -36,6 +36,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
           activityId: result.activityData.activityId,
           sport: result.activityData.sport,
           durationInMilliseconds: result.activityData.durationInMilliseconds,
+          segmentDistanceInMeters: result.activityData.segmentDistanceInMeters,
         },
 
         sensorData: {
@@ -45,6 +46,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
           pairedSteeringDevice: result.sensorData.pairedSteeringDevice,
         },
         wattsPerKg: result.wattsPerKg,
+        speed: result.speed,
 
         flaggedCheating: result.flaggedCheating,
         flaggedSandbagging: result.flaggedSandbagging,

@@ -9,6 +9,7 @@ import { updatePowerCurveResults } from './criticalpower/criticalpower-update.js
 import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
+import { addSpeed } from './speed.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -47,6 +48,9 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
+
+  // добавление средней скорости в результаты (мутация свойства speed)
+  resultsWithCP = await addSpeed(resultsWithCP, event);
 
   // параметры для функции handlerProtocol
   const handlerProtocolArg = {

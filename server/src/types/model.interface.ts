@@ -375,6 +375,7 @@ export interface ZwiftResultSchema {
     activityId: string;
     sport: string;
     durationInMilliseconds: number;
+    segmentDistanceInMeters: number;
   };
 
   sensorData: {
