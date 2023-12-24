@@ -17,7 +17,7 @@ export const parseError = (error: unknown): Omit<LogsErrorSchema, 'timestamp'> =
               message,
               stack: error.stack,
               config: error.config,
-              responseData: error.response.data,
+              responseData: JSON.stringify(error.response.data),
             };
           } else if (error.request) {
             // Запрос был сделан, но ответ не получен
