@@ -1,10 +1,7 @@
-import React from 'react';
-
 import styles from '../Table.module.css';
 
 import { useResize } from '../../../hook/use-resize';
 import { getTimerLocal } from '../../../utils/date-local';
-import { descriptionLogsAdmins } from '../../../assets/logs/admins';
 import { CheckBoxForArray } from '../../UI/CheckBoxForArray/CheckBoxForArray';
 
 import Thead from './Thead';
@@ -28,7 +25,7 @@ function TableLogsAdmin({ checkedTotal, arrayId, setArrayId, logs }) {
             </td>
             <td>{getTimerLocal(log.date, 'DDMMYYHm')}</td>
             {sm && <td>{log.userId?.username || 'deleted'}</td>}
-            <td>{descriptionLogsAdmins[log.description]}</td>
+            <td>{log.description}</td>
             {sm && <td>{log.event.id}</td>}
             <td>{log.event.name}</td>
             {sm && <td>{getTimerLocal(log.event.start, 'DDMMYYHm')}</td>}

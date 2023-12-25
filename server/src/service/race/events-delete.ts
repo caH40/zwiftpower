@@ -4,7 +4,7 @@ import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 
 import { AdditionalParamsEvent, EventWithSubgroup } from '../../types/types.interface.js';
-import { loggingAdmin } from '../log.js';
+import { loggingAdmin } from '../../logger/logger-admin.js';
 
 /**
  * Удаление Event в БД

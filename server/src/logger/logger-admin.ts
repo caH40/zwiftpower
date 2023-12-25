@@ -1,4 +1,5 @@
 import { LogsAdmin } from '../Model/LogsAdmin.js';
+import { descriptionLogsAdmins } from '../assets/logs/admins.js';
 import { errorHandler } from '../errors/error.js';
 
 // types
@@ -15,7 +16,7 @@ export async function loggingAdmin({
     await LogsAdmin.create({
       userId,
       date: Date.now(),
-      description,
+      description: descriptionLogsAdmins[description] || 'Нет описания',
       event: {
         id: eventId,
         name: eventName,

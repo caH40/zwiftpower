@@ -1,4 +1,4 @@
-import { loggingAdmin } from '../../log.js';
+import { loggingAdmin } from '../../../logger/logger-admin.js';
 import { updateStartInfoEvent } from '../../updates/schedule/start-event.js';
 import { getClubName } from '../club.js';
 import { putSignedRidersService } from '../signed-riders.js';

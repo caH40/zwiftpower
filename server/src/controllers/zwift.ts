@@ -11,8 +11,8 @@ import { AxiosError } from 'axios';
 
 export async function getEvent(req: Request, res: Response) {
   try {
-    const { eventId, userId } = req.params;
-    const event = await getEventZwiftService(+eventId, userId);
+    const { eventId } = req.params;
+    const event = await getEventZwiftService(+eventId);
     res.status(200).json(event);
   } catch (error) {
     errorHandler(error);

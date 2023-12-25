@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { loggingAdmin } from '../log.js';
+import { loggingAdmin } from '../../logger/logger-admin.js';
 import { updateResultsEvent } from '../updates/results_event/result-event.js';
 
 // types

@@ -1,4 +1,4 @@
-import { loggingAdmin } from '../log.js';
+import { loggingAdmin } from '../../logger/logger-admin.js';
 import { updateStartInfoEvent } from '../updates/schedule/start-event.js';
 import { getEventZwiftService } from '../zwift/events.js';
 import { updateEventAndSubgroups } from './event-update.js';
@@ -13,15 +13,7 @@ import { putSignedRidersService } from './signed-riders.js';
  */
 export async function putEventService(eventId: number, userId?: string) {
   // Запрос данных Event (eventId) с API Zwift
-  const event = await getEventZwiftService(eventId, userId);
-  // console.log(
-  //   'ZwiftAPI',
-  //   'answer from getEventZwiftService()',
-  //   '===',
-  //   new Date().toLocaleDateString(),
-  //   '===',
-  //   event?.name
-  // );
+  const event = await getEventZwiftService(eventId);
 
   if (!event) {
     throw new Error(`Не найден Эвент с id:${eventId} на сервере Zwift`);
@@ -29,38 +21,14 @@ export async function putEventService(eventId: number, userId?: string) {
 
   // удаление зарегистрированных райдеров из подгрупп subgroupIds
   await deleteSignedRiders(eventId);
-  // console.log(
-  //   'DB',
-  //   'answer from deleteSignedRiders()',
-  //   '===',
-  //   new Date().toLocaleDateString(),
-  //   '===',
-  //   'без ответа'
-  // );
 
   // Обновление данных Эвента, данных подгрупп в БД
   const eventSaved = await updateEventAndSubgroups(event);
-  // console.log(
-  //   'DB',
-  //   'answer from updateEventAndSubgroups()',
-  //   '===',
-  //   new Date().toLocaleDateString(),
-  //   '===',
-  //   eventSaved?.name
-  // );
 
   // получение зарегистрированных райдеров с ZwiftAPI и сохранение в БД
   // обновление зарегистрированных райдеров происходит после обновления
   // подгрупп, так как меняются _id у подгрупп
   await putSignedRidersService(eventId);
-  // console.log(
-  //   'after',
-  //   'answer from putSignedRidersService()',
-  //   '===',
-  //   new Date().toLocaleDateString(),
-  //   '===',
-  //   'без ответа'
-  // );
 
   // Обновление свойства старта заезда в одном event
   await updateStartInfoEvent(eventSaved);
