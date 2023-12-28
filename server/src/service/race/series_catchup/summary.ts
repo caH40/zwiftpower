@@ -15,7 +15,7 @@ export function getResultSummary(
 
   // подсчет побед в заездах
   for (const result of results) {
-    switch (result.eventSubgroup.subgroupLabel) {
+    switch (result.subgroupLabel) {
       case 'A': {
         winsA++;
         break;
