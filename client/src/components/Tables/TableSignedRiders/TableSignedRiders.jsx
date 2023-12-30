@@ -6,7 +6,7 @@ import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
-import TdCpWattsSchedule from '../Td/TdCpWattsSchedule';
+import TdCpWatts from '../Td/TdCpWatts';
 
 import styles from '../Table.module.css';
 
@@ -41,11 +41,10 @@ function TableSignedRiders({ riders = [], event }) {
 
             {/* столбцы с CriticalPower */}
             {intervalsForDisplay.map((interval) => (
-              <TdCpWattsSchedule
+              <TdCpWatts
                 key={interval}
                 cpBestEfforts={rider.cpBestEfforts}
                 interval={interval}
-                dimensionValue={'вт/кг'}
               />
             ))}
             <td>{tdWeight(rider.weight)}</td>

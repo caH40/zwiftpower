@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import {
   fetchEventPreview,
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
+import NavBarScheduleRace from '../../components/UI/NavBarScheduleRace/NavBarScheduleRace';
 
 import styles from './ScheduleDescription.module.css';
 
@@ -48,6 +49,7 @@ function ScheduleDescription() {
             Регистрация в Zwift
           </Link>
           <section className={styles.wrapper__wide}>
+            <NavBarScheduleRace />
             <TableSignedRiders riders={event.signedRiders} event={event} />
           </section>
           <div className={styles.right}>
