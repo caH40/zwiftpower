@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
  */
 const sortTableSignedSlice = createSlice({
   name: 'sortTableSchedule',
-  initialState: { activeSorting: { columnName: 1200, isRasing: true } },
+  initialState: { activeSorting: { columnName: 1200, isRasing: false } },
   reducers: {
     sortColumnTable(state, action) {
       const columnName = action.payload;
@@ -13,11 +13,12 @@ const sortTableSignedSlice = createSlice({
 
       state.activeSorting = { columnName, isRasing: !isRasing };
     },
-    resetSorting(state) {
-      state.activeSorting = { columnName: 1200, isRasing: true };
+    // сброс сортировки таблицы на сортировку по умолчанию
+    resetSortingSigned(state) {
+      state.activeSorting = { columnName: 1200, isRasing: false };
     },
   },
 });
 
-export const { sortColumnTable, resetSorting } = sortTableSignedSlice.actions;
+export const { sortColumnTable, resetSortingSigned } = sortTableSignedSlice.actions;
 export default sortTableSignedSlice.reducer;

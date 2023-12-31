@@ -11,6 +11,7 @@ import {
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
+import { resetSortingSigned } from '../../redux/features/sortTableSignedSlice';
 
 import styles from './ScheduleDescription.module.css';
 
@@ -24,13 +25,15 @@ function ScheduleDescription() {
 
   useEffect(() => {
     dispatch(fetchEventPreview(eventId));
+
+    return () => {
+      dispatch(resetSortingSigned());
+      dispatch(resetPreviewEventData());
+    };
   }, [eventId, dispatch]);
 
   useEffect(() => {
     if (event.started) {
-      // обнуление state.event
-      // баг при переходе с schedule на results
-      dispatch(resetPreviewEventData());
       navigate(`/race/results/${eventId}`, { replace: true });
     }
   }, [event, navigate, eventId]);
