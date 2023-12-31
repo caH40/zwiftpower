@@ -20,7 +20,7 @@ function ScheduleDescription() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  useTitle('Описание заезда');
+  useTitle('Зарегистрированные участники');
   const { eventId } = useParams();
 
   useEffect(() => {
