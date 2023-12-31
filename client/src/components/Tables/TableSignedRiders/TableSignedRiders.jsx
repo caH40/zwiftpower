@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import { useSortSchedule } from '../../../hook/useSortSchedule';
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -13,17 +14,19 @@ import styles from '../Table.module.css';
 import Thead from './Thead';
 
 const cx = classnames.bind(styles);
-const intervalsForDisplay = [15, 300, 2400];
 
 function TableSignedRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
+  const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
+
+  const ridersSortedAndFiltered = useSortSchedule(riders);
 
   return (
     <table className={cx('table')}>
-      <Thead />
+      <Thead columnsCP={columnsCP} />
       <tbody>
-        {riders.map((rider, index) => (
+        {ridersSortedAndFiltered.map((rider, index) => (
           <tr className={cx('hover', { current: zwiftId === rider.id })} key={rider._id}>
             <td>{index + 1}</td>
             <td>
@@ -40,13 +43,18 @@ function TableSignedRiders({ riders = [], event }) {
             <td></td>
 
             {/* столбцы с CriticalPower */}
-            {intervalsForDisplay.map((interval) => (
-              <TdCpWatts
-                key={interval}
-                cpBestEfforts={rider.cpBestEfforts}
-                interval={interval}
-              />
-            ))}
+            {columnsCP.map((column) => {
+              if (column.isVisible) {
+                return (
+                  <TdCpWatts
+                    cpBestEfforts={rider.cpBestEfforts}
+                    interval={column.interval}
+                    key={column.id}
+                  />
+                );
+              }
+              return null;
+            })}
             <td>{tdWeight(rider.weight)}</td>
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>

@@ -30,6 +30,7 @@ import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
 import sortTableSlice from '../features/sortTableSlice';
+import sortTableSignedSlice from '../features/sortTableSignedSlice';
 import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 import eventPostSlice from '../features/api/event-add/eventPostSlice';
 import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
@@ -69,6 +70,7 @@ export default configureStore({
     popupInfoDevPost: popupInfoDevPostSlice,
     popupInfoDevPut: popupInfoDevPutSlice,
     sortTable: sortTableSlice,
+    sortTableSigned: sortTableSignedSlice,
     fetchActualSeries: actualSeriesSlice,
     fetchEventPost: eventPostSlice,
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
