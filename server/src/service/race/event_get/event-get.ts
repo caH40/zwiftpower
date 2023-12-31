@@ -45,8 +45,15 @@ export async function getEventService(eventId: string) {
     // сортировка списка райдеров
     const signedRidersSorted = sortSignedRiders(signedRiders, labelsSubgroup);
 
+    // zwiftId всех зарегистрированных райдеров
+    const zwiftIds = signedRidersSorted.map((rider) => rider.id);
+
     // добавление powerCurve каждому райдеру
-    const powerCurvesDB: PowerCurveSchema[] = await PowerCurve.find();
+    // получение массива PowerCurves всех райдеров,
+    // что бы не делать запрос для каждого райдера по отдельности
+    const powerCurvesDB: PowerCurveSchema[] = await PowerCurve.find({
+      zwiftId: zwiftIds,
+    });
 
     for (const rider of signedRidersSorted) {
       // powerCurve для райдера с zwiftId
