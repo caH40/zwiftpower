@@ -10,7 +10,7 @@ import {
   fetchEventPreview,
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
-import NavBarScheduleRace from '../../components/UI/NavBarScheduleRace/NavBarScheduleRace';
+import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 
 import styles from './ScheduleDescription.module.css';
 
@@ -49,7 +49,7 @@ function ScheduleDescription() {
             Регистрация в Zwift
           </Link>
           <section className={styles.wrapper__wide}>
-            <NavBarScheduleRace />
+            <NavBarSignedRiders />
             <TableSignedRiders riders={event.signedRiders} event={event} />
           </section>
           <div className={styles.right}>
