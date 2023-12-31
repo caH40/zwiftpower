@@ -8,7 +8,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
-import { resetSorting } from '../../redux/features/sortTableSlice';
+import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
 import styles from './EditResults.module.css';
@@ -22,7 +22,7 @@ function EditResults() {
 
   useEffect(() => {
     dispatch(resetFilterCategory());
-    dispatch(resetSorting());
+    dispatch(initialSorting());
     dispatch(fetchResultEvent(eventId));
 
     return () => dispatch(resetResults());
