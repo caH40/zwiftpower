@@ -6,7 +6,7 @@ import { sortDsq } from './dsq';
  * @param {{columnName: string, isRasing: boolean}} activeSorting столбец (свойство) по которому происходит сортировка
  * @returns отсортированная таблица
  */
-export const sortColumns = (data, activeSorting) => {
+export const sortColumnsTime = (data, activeSorting) => {
   return [...data].sort((a, b) => {
     // для дисквалифицированного райдера результат в конец массива
     const dsq = sortDsq(a, b);

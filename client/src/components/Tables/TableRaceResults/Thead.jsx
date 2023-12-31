@@ -4,11 +4,13 @@ import IconArrows from '../../icons/IconArrows';
 import Th from '../Th/Th';
 import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 import ColumnName from '../Th/ColumnName';
-import { columnsWithSorting } from '../../../assets/table-sort';
 
 import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
+
+// Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
+const columnsWithSorting = ['Время'];
 
 function Thead({ columnsCP, showIndex }) {
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ function Thead({ columnsCP, showIndex }) {
           <th key={column.id}>
             <div className={styles.th__box}>
               <ColumnName columnName={column.name} />
-              {columnsWithSorting.results.includes(column.name) && (
+              {columnsWithSorting.includes(column.name) && (
                 <IconArrows
                   columnName={column.name}
                   getClick={setSortTable}
