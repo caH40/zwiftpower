@@ -13,9 +13,9 @@ import {
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import { resetSortingSigned } from '../../redux/features/sortTableSignedSlice';
 
-import styles from './ScheduleDescription.module.css';
+import styles from './SignedRiders.module.css';
 
-function ScheduleDescription() {
+function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
   const navigate = useNavigate();
 
@@ -65,4 +65,4 @@ function ScheduleDescription() {
   );
 }
 
-export default ScheduleDescription;
+export default SignedRiders;

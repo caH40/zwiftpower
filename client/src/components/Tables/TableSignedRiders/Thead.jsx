@@ -5,6 +5,7 @@ import styles from '../Table.module.css';
 import IconArrows from '../../icons/IconArrows';
 import Th from '../Th/Th';
 import { sortColumnTable } from '../../../redux/features/sortTableSignedSlice';
+import IconCategory from '../../icons/IconCategory';
 
 import { signedRidersColumnsEnd, signedRidersColumnsStart } from './column-titles';
 
@@ -20,9 +21,29 @@ function Thead({ columnsCP }) {
   return (
     <thead>
       <tr>
-        {signedRidersColumnsStart.map((column) => (
-          <Th key={column.id} columnName={column.name} />
-        ))}
+        {signedRidersColumnsStart.map((column) => {
+          // для "Категория" добавляются стрелки сортировки
+          if (column.name === 'Категория') {
+            return (
+              <th key={column.id}>
+                <div className={styles.th__box}>
+                  <IconCategory tooltip={column.name} />
+                  <IconArrows
+                    columnName={column.name}
+                    getClick={setSortTable}
+                    squareSize={16}
+                    activeDate={{
+                      isActive: column.name === activeSorting.columnName,
+                      isRasing: activeSorting.isRasing,
+                    }}
+                  />
+                </div>
+              </th>
+            );
+          } else {
+            return <Th key={column.id} columnName={column.name} />;
+          }
+        })}
 
         {columnsCP.map((column) => {
           if (column.isVisible) {
