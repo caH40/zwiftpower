@@ -9,7 +9,7 @@ import { sortTable } from '../utils/table_sort/riders_signed/table-sort';
  * @param {} setShowIndex установка отображения/скрытия столбца со сквозной нумерацией
  * @returns
  */
-export const useSortSchedule = (riders) => {
+export const useSortSignedRiders = (riders) => {
   // отображение данных в таблице: ватты или ватты/кг
   const filterWatts = useSelector((state) => state.filterWatts.value);
   // текущая колонка сортировки и направление сортировки

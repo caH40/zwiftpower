@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { useSortSchedule } from '../../../hook/useSortSchedule';
+import { useSortSignedRiders } from '../../../hook/useSortSignedRiders';
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -20,7 +20,7 @@ function TableSignedRiders({ riders = [], event }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
-  const ridersSortedAndFiltered = useSortSchedule(riders);
+  const ridersSortedAndFiltered = useSortSignedRiders(riders);
 
   return (
     <table className={cx('table')}>

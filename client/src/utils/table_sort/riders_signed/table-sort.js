@@ -1,3 +1,4 @@
+import { sortCategory } from './category';
 import { sortColumnsCP } from './critical-power';
 
 /**
@@ -9,7 +10,11 @@ export const sortTable = (data, activeSorting, filterWatts) => {
   const powerTarget = filterWatts.column;
 
   // выбор сортировщика в зависимости от столбца по которому происходит сортировка
-  // по столбцам CriticalPower или по всем остальным (activeSorting.columnName)
+  switch (activeSorting.columnName) {
+    case 'Категория':
+      return sortCategory(data, activeSorting);
 
-  return sortColumnsCP(data, activeSorting, powerTarget);
+    default:
+      return sortColumnsCP(data, activeSorting, powerTarget);
+  }
 };
