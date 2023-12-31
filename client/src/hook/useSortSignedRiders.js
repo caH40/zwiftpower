@@ -13,7 +13,7 @@ export const useSortSignedRiders = (riders) => {
   // отображение данных в таблице: ватты или ватты/кг
   const filterWatts = useSelector((state) => state.filterWatts.value);
   // текущая колонка сортировки и направление сортировки
-  const activeSorting = useSelector((state) => state.sortTableSigned.activeSorting);
+  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
 
   const ridersSortedAndFiltered = useMemo(() => {
     return sortTable(riders, activeSorting, filterWatts);

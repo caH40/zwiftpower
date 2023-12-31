@@ -6,7 +6,6 @@ import useLeader from '../../../hook/useLeaders';
 import { useSortResults } from '../../../hook/useSortResults';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
-import { useResize } from '../../../hook/use-resize';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
@@ -31,8 +30,6 @@ function TableRaceResults({ results, event }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
-  const { isScreenSm: sm, isScreenMd: md } = useResize();
-
   const [getLeaders, getSweepers] = useLeader(event);
 
   const resultSortedAndFiltered = useSortResults(results, setShowIndex);
@@ -40,7 +37,7 @@ function TableRaceResults({ results, event }) {
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
-      <Thead md={md} sm={sm} columnsCP={columnsCP} showIndex={showIndex} />
+      <Thead columnsCP={columnsCP} showIndex={showIndex} />
 
       <tbody>
         {resultSortedAndFiltered?.map((result, index) => {
@@ -71,7 +68,6 @@ function TableRaceResults({ results, event }) {
               <TdRider
                 profile={profile}
                 profileId={result.profileId}
-                showIcons={{ sm }}
                 getLeaders={getLeaders}
                 getSweepers={getSweepers}
               />

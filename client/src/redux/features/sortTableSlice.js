@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const sortTableSlice = createSlice({
   name: 'sortTable',
-  initialState: { activeSorting: { columnName: 'Время', isRasing: true } },
+  initialState: {},
+
   reducers: {
     sortColumnTable(state, action) {
       const columnName = action.payload;
@@ -10,11 +11,11 @@ const sortTableSlice = createSlice({
 
       state.activeSorting = { columnName, isRasing: !isRasing };
     },
-    resetSorting(state) {
-      state.activeSorting = { columnName: 'Время', isRasing: true };
+    initialSorting(state, action) {
+      state.activeSorting = action.payload;
     },
   },
 });
 
-export const { sortColumnTable, resetSorting } = sortTableSlice.actions;
+export const { sortColumnTable, initialSorting } = sortTableSlice.actions;
 export default sortTableSlice.reducer;

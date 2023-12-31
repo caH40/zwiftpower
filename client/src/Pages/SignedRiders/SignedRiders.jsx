@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
+import { initialSorting } from '../../redux/features/sortTableSlice';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import { getTimerLocal } from '../../utils/date-local';
@@ -11,7 +12,6 @@ import {
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
-import { resetSortingSigned } from '../../redux/features/sortTableSignedSlice';
 
 import styles from './SignedRiders.module.css';
 
@@ -24,10 +24,10 @@ function SignedRiders() {
   const { eventId } = useParams();
 
   useEffect(() => {
+    dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
     dispatch(fetchEventPreview(eventId));
 
     return () => {
-      dispatch(resetSortingSigned());
       dispatch(resetPreviewEventData());
     };
   }, [eventId, dispatch]);

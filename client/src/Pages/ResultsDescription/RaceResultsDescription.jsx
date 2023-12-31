@@ -9,7 +9,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
-import { resetSorting } from '../../redux/features/sortTableSlice';
+import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 
 import styles from './ResultsDescription.module.css';
@@ -22,11 +22,13 @@ function ResultsDescription() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(resetFilterCategory());
-    dispatch(resetSorting());
+    dispatch(initialSorting({ columnName: 'Время', isRasing: true }));
     dispatch(fetchResultEvent(eventId));
 
-    return () => dispatch(resetResults());
+    return () => {
+      dispatch(resetFilterCategory());
+      dispatch(resetResults());
+    };
   }, [eventId, dispatch]);
 
   return (

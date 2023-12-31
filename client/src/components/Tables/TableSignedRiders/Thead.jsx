@@ -4,8 +4,9 @@ import styles from '../Table.module.css';
 
 import IconArrows from '../../icons/IconArrows';
 import Th from '../Th/Th';
-import { sortColumnTable } from '../../../redux/features/sortTableSignedSlice';
+
 import ColumnName from '../Th/ColumnName';
+import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 
 import { signedRidersColumnsEnd, signedRidersColumnsStart } from './column-titles';
 
@@ -19,7 +20,7 @@ function Thead({ columnsCP }) {
     dispatch(sortColumnTable(columnCPInterval));
   };
 
-  const activeSorting = useSelector((state) => state.sortTableSigned.activeSorting);
+  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
 
   return (
     <thead>
