@@ -6,6 +6,7 @@ src/*.json
 tasks.md
 logic.md
 src/images/*.png
+src/temp
 
 *.log
 

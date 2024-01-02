@@ -32,7 +32,7 @@ function TableRaceResults({ results, event }) {
 
   const [getLeaders, getSweepers] = useLeader(event);
 
-  const resultSortedAndFiltered = useSortResults(results, setShowIndex);
+  const resultSortedAndFiltered = useSortResults(results, setShowIndex, event.typeRaceCustom);
 
   return (
     <table className={cx('table')}>

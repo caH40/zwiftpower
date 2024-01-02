@@ -9,7 +9,7 @@ import { sortTable } from '../utils/table_sort/table-sort';
  * @param {} setShowIndex установка отображения/скрытия столбца со сквозной нумерацией
  * @returns
  */
-export const useSortResults = (results, setShowIndex) => {
+export const useSortResults = (results, setShowIndex, typeRaceCustom) => {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const filterWatts = useSelector((state) => state.filterWatts.value);
   const activeSorting = useSelector((state) => state.sortTable.activeSorting);
@@ -24,8 +24,19 @@ export const useSortResults = (results, setShowIndex) => {
       );
     }
 
-    // не отображать скозную нумерацию только при сортировке по общему времени
-    if (activeSorting.columnName === 'Время' && filterCategory.name === 'All') {
+    // не отображать сквозную нумерацию только при сортировке по общему времени
+    // для всех Эвнетов (кроме Эвентов типа classicGroup, для classicGroup всегда показывать)
+    if (
+      activeSorting.columnName === 'Время' &&
+      filterCategory.name === 'All' &&
+      !['classicGroup'].includes(typeRaceCustom)
+    ) {
+      setShowIndex(false);
+    } else if (
+      activeSorting.columnName === 'Время' &&
+      filterCategory.name !== 'All' &&
+      ['classicGroup'].includes(typeRaceCustom)
+    ) {
       setShowIndex(false);
     } else {
       setShowIndex(true);
