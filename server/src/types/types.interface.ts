@@ -86,6 +86,8 @@ export interface UserResult
 
   eventName?: string;
   eventStart?: number;
+  gap?: number;
+  gapPrev?: number;
 }
 
 //

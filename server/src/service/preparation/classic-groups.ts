@@ -1,29 +1,26 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { secondesToTimeThousandths } from '../../utils/thousandths.js';
 import { addPropertyAddition } from '../../utils/property-addition.js';
-import { sortAndFilterResults } from './sortAndFilter.js';
+import { secondesToTimeThousandths } from '../../utils/thousandths.js';
+import { sortAndFilterResultsGroups } from './sortAndFilter.js';
 import { changeProfileData } from '../profile-main.js';
-import { gapValue } from '../../utils/gaps-results.js';
-import { filterThousandths } from '../../utils/thousandths-seconds.js';
-import { setValueMax } from '../../utils/value-max.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
-import { ZwiftResultSchema } from '../../types/model.interface.js';
+import { gapValueWithGroups } from '../../utils/gaps-results.js';
+import { filterThousandths } from '../../utils/thousandths-seconds.js';
+import { setValueMax } from '../../utils/value-max.js';
 
 /**
- * Получение результатов райдеров в Эвенте типа Catchup
+ * Получение результатов райдеров в Эвенте типа ClassicGroup
  */
-export async function getResultsCatchup(event: EventWithSubgroup) {
-  const resultsDB: ZwiftResultSchema[] = await ZwiftResult.find({
-    zwiftEventId: event._id,
-  }).lean();
+export async function getResultsClassicGroups(event: EventWithSubgroup) {
+  const resultsDB = await ZwiftResult.find({ zwiftEventId: event._id }).lean();
 
   // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
   const results = changeProfileData(resultsDB);
 
   // Фильтрация и сортировка отправляемого протокола с результатами
-  const resultsFilteredAndSorted = sortAndFilterResults(results);
+  const resultsFilteredAndSorted = sortAndFilterResultsGroups(results);
 
   const resultsWithAdditions = addPropertyAddition(resultsFilteredAndSorted);
 
@@ -34,7 +31,7 @@ export async function getResultsCatchup(event: EventWithSubgroup) {
     );
   }
 
-  const resultsWithGap = gapValue([...resultsWithAdditions]);
+  const resultsWithGap = gapValueWithGroups([...resultsWithAdditions]);
   const resultsWithThousandths = filterThousandths([...resultsWithGap]);
   const resultsPrepared = setValueMax([...resultsWithThousandths]);
 

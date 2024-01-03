@@ -17,6 +17,7 @@ import {
   HandlerProtocolArg,
   ResultEventAdditional,
 } from '../../types/types.interface.js';
+import { filterByRankClassicGroups } from './classic_groups/results-filter.js';
 
 /**
  * Формирование финишного протокола в зависимости от typeRaceCustom и сохранение в БД
@@ -58,13 +59,16 @@ export async function handlerProtocol({
     case 'newbies':
       resultsSorted = filterByRankNewbies(resultsWithMainProfiles);
       break;
+    case 'classicGroup':
+      resultsSorted = filterByRankClassicGroups(resultsWithMainProfiles);
+      break;
     default: // для всех остальных обрабатывать как 'classicCommon'
       resultsSorted = filterByRankClassicCommon(resultsWithMainProfiles);
   }
   //=======================================================
 
   // установка ранкинга райдерам
-  const resultsWithRank = await setRankResultTotal(resultsSorted);
+  const resultsWithRank = await setRankResultTotal(resultsSorted, typeRaceCustom);
 
   // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);

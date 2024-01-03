@@ -5,6 +5,10 @@ import { EventWithSubgroup, ResultEventAdditional } from '../types/types.interfa
  * Добавление стартовых гэпов к результатам
  */
 export function addGapStart(event: EventWithSubgroup, results: ResultEventAdditional[]) {
+  if (event.typeRaceCustom === 'classicGroup') {
+    return results;
+  }
+
   const resultsNewObj = [...results];
   const getTime = (time: string) => new Date(time).getTime();
 

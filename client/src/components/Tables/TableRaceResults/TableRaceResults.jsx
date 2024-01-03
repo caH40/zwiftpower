@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import useLeader from '../../../hook/useLeaders';
+import { useShowIndex } from '../../../hook/useShowIndex';
 import { useSortResults } from '../../../hook/useSortResults';
 import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
@@ -32,7 +33,8 @@ function TableRaceResults({ results, event }) {
 
   const [getLeaders, getSweepers] = useLeader(event);
 
-  const resultSortedAndFiltered = useSortResults(results, setShowIndex, event.typeRaceCustom);
+  useShowIndex(setShowIndex, event.typeRaceCustom);
+  const resultSortedAndFiltered = useSortResults(results, event.typeRaceCustom);
 
   return (
     <table className={cx('table')}>

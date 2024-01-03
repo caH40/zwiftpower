@@ -31,6 +31,12 @@ function ResultsDescription() {
     };
   }, [eventId, dispatch]);
 
+  useEffect(() => {
+    if (eventData.typeRaceCustom === 'classicGroup') {
+      dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
+    }
+  }, [eventData]);
+
   return (
     <div className={styles.wrapper}>
       {eventData?.id && (
