@@ -1,4 +1,5 @@
 import { sortColumnsCP } from './critical-power';
+import { sortCategory } from './riders_signed/category';
 import { sortColumnsTime } from './time-total';
 
 /**
@@ -12,6 +13,8 @@ export const sortTable = (data, activeSorting, filterWatts) => {
   switch (activeSorting.columnName) {
     case 'Время':
       return sortColumnsTime(data, activeSorting, powerTarget);
+    case 'Категория':
+      return sortCategory(data, activeSorting);
 
     default:
       return sortColumnsCP(data, activeSorting, powerTarget);

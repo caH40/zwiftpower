@@ -9,7 +9,7 @@ import { sortTable } from '../utils/table_sort/table-sort';
  * @param {} setShowIndex установка отображения/скрытия столбца со сквозной нумерацией
  * @returns
  */
-export const useSortResults = (results, setShowIndex, typeRaceCustom) => {
+export const useSortResults = (results, typeRaceCustom) => {
   const filterCategory = useSelector((state) => state.filterCategory.value);
   const filterWatts = useSelector((state) => state.filterWatts.value);
   const activeSorting = useSelector((state) => state.sortTable.activeSorting);
@@ -24,30 +24,15 @@ export const useSortResults = (results, setShowIndex, typeRaceCustom) => {
       );
     }
 
-    // не отображать сквозную нумерацию только при сортировке по общему времени
-    // для всех Эвнетов (кроме Эвентов типа classicGroup, для classicGroup всегда показывать)
-    if (
-      activeSorting.columnName === 'Время' &&
-      filterCategory.name === 'All' &&
-      !['classicGroup'].includes(typeRaceCustom)
-    ) {
-      setShowIndex(false);
-    } else if (
-      activeSorting.columnName === 'Время' &&
-      filterCategory.name !== 'All' &&
-      ['classicGroup'].includes(typeRaceCustom)
-    ) {
-      setShowIndex(false);
-    } else {
-      setShowIndex(true);
-    }
-
     const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
 
-    // убирать гэпы, кроме сортировки по общему времени с возрастанием
-    if (
+    // условия для показа отставаний по общему времени
+    if (typeRaceCustom === 'classicGroup' && activeSorting.columnName === 'Категория') {
+      return sortedAndFilteredResults;
+    } else if (
       activeSorting.columnName !== 'Время' ||
-      (activeSorting.columnName === 'Время' && activeSorting.isRasing === false)
+      (activeSorting.columnName === 'Время' && activeSorting.isRasing === false) ||
+      typeRaceCustom === 'classicGroup'
     ) {
       return sortedAndFilteredResults.map((result) => {
         const newResult = { ...result };

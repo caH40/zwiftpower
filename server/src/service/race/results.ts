@@ -2,6 +2,7 @@ import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
 import { getResultsNewbies } from '../preparation/newbies.js';
+import { getResultsClassicGroups } from '../preparation/classic-groups.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -27,6 +28,9 @@ export async function getResultsService(eventId: number) {
       break;
     case 'newbies':
       eventPrepared = await getResultsNewbies(eventDB);
+      break;
+    case 'classicGroup':
+      eventPrepared = await getResultsClassicGroups(eventDB);
       break;
     default: // все остальные обрабатывать как 'classicCommon'
       eventPrepared = await getResultsClassicCommon(eventDB);

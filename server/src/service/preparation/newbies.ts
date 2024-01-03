@@ -3,6 +3,9 @@ import { addPropertyAddition } from '../../utils/property-addition.js';
 import { secondesToTimeThousandths } from '../../utils/thousandths.js';
 import { filterByRankNewbies } from '../protocol/newbies/results-filter.js';
 import { changeProfileData } from '../profile-main.js';
+import { gapValue } from '../../utils/gaps-results.js';
+import { filterThousandths } from '../../utils/thousandths-seconds.js';
+import { setValueMax } from '../../utils/value-max.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -27,16 +30,20 @@ export async function getResultsNewbies(event: EventWithSubgroup) {
   /**
    * Замена некоторых свойств с number на object (string and object)
    */
-  const resultsWithMaxValues = addPropertyAddition(resultsFiltered);
+  const resultsWithAdditions = addPropertyAddition(resultsFiltered);
 
   // добавление строки времени в addition durationInMilliseconds
-  for (const result of resultsWithMaxValues) {
+  for (const result of resultsWithAdditions) {
     result.activityData.durationInMilliseconds.addition = secondesToTimeThousandths(
       result.activityData.durationInMilliseconds.value
     );
   }
 
-  event.results = resultsWithMaxValues;
+  const resultsWithGap = gapValue([...resultsWithAdditions]);
+  const resultsWithThousandths = filterThousandths([...resultsWithGap]);
+  const resultsPrepared = setValueMax([...resultsWithThousandths]);
+
+  event.results = resultsPrepared;
 
   return event;
 }

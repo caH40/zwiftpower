@@ -10,7 +10,7 @@ import styles from '../Table.module.css';
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
 // Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
-const columnsWithSorting = ['Время'];
+const columnsWithSorting = ['Время', 'Категория'];
 
 function Thead({ columnsCP, showIndex }) {
   const dispatch = useDispatch();
