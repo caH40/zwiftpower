@@ -4,6 +4,7 @@ import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { handlerCatchUpModified } from './handlers/catchup.js';
 import { handlerNewbiesModified } from './handlers/newbies.js';
 import { handlerDefaultModified } from './handlers/default.js';
+import { handlerClassicGroups } from './handlers/classic-groups.js';
 
 // types
 import { ZwiftResultSchema } from '../../types/model.interface.js';
@@ -28,6 +29,10 @@ export const changeRankResults = async (
     case 'newbies':
       await handlerNewbiesModified(resultsDB);
       break;
+    case 'classicGroup':
+      await handlerClassicGroups(resultsDB);
+      break;
+
     default: // для всех остальных обрабатывать как 'classicCommon'
       await handlerDefaultModified(resultsDB);
   }

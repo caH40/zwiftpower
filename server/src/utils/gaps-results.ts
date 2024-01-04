@@ -36,6 +36,7 @@ export function gapValueWithGroups(results: UserResult[]) {
     );
     resultsGroups.push(resultsCurrentLabel);
   }
+  const resultsNotRanked = results.filter((result) => result.rankEvent === 0);
 
   for (const resultsGroup of resultsGroups) {
     const lengthResult = resultsGroup.length;
@@ -51,5 +52,7 @@ export function gapValueWithGroups(results: UserResult[]) {
     }
   }
 
-  return resultsGroups.reduce((acc, cur) => [...acc, ...cur], []);
+  const resultsRanked = resultsGroups.reduce((acc, cur) => [...acc, ...cur], []);
+
+  return [...resultsRanked, ...resultsNotRanked];
 }

@@ -32,7 +32,9 @@ export async function getResultsClassicGroups(event: EventWithSubgroup) {
   }
 
   const resultsWithGap = gapValueWithGroups([...resultsWithAdditions]);
+
   const resultsWithThousandths = filterThousandths([...resultsWithGap]);
+
   const resultsPrepared = setValueMax([...resultsWithThousandths]);
 
   event.results = resultsPrepared;
