@@ -34,18 +34,17 @@ function ProfileBlock({ quantityRace, profile }) {
               <dd className={styles.term__description}>
                 <div className={styles.flex}>
                   {profile.male ? (
-                    <CategoryOnlyBox
-                      label={profile.zCategory}
-                      squareSize={18}
-                      // tooltip={'Мужская категория'}
-                    />
+                    <CategoryOnlyBox label={profile.zCategory} squareSize={18} />
                   ) : (
-                    <CategoryOnlyBox
-                      label={profile.zCategoryWomen}
-                      squareSize={18}
-                      female={true}
-                      // tooltip={'Женская категория'}
-                    />
+                    <>
+                      <CategoryOnlyBox
+                        label={profile.zCategoryWomen}
+                        squareSize={18}
+                        female={true}
+                        tooltip={'Женская категория'}
+                      />
+                      <CategoryOnlyBox label={profile.zCategory} squareSize={18} />
+                    </>
                   )}
                 </div>
               </dd>
