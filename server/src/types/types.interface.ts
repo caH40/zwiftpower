@@ -214,6 +214,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   rankEvent?: number;
   profileDataMain?: ProfileDataInResultWithId;
   errorAccess?: boolean; // 403 ошибка при запросе с ZwiftAPI
+  normalizedPower?: number;
 }
 
 export interface CpBestEfforts {
