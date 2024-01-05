@@ -10,6 +10,7 @@ import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 import { addSpeed } from './speed.js';
+import { addNormalizedPowers } from './normalized-power.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -43,6 +44,10 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
 
     // добавление CP в результаты райдеров, сохранение FitFiles
     resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
+
+    // добавление NP нормализованной мощности
+    await addNormalizedPowers(resultsTotal);
+
     // обновление CP райдеров в БД
     await updatePowerCurveResults(resultsWithCP);
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов

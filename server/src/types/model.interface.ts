@@ -386,6 +386,7 @@ export interface ZwiftResultSchema {
   };
   wattsPerKg: number;
   speed?: number;
+  normalizedPower?: number;
   flaggedCheating: boolean;
   flaggedSandbagging: boolean;
   // свойства из предыдущей модели
