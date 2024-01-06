@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 
+import NPandVIBox from '../../NPandVIBox/NPandVIBox';
 import { tdHeartRate, tdTime, tdWatts, tdWeight } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
@@ -58,7 +59,12 @@ function TableUserResults({ results }) {
               />
 
               <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
-              <td>{tdWatts(Math.round(result.normalizedPower))}</td>
+              <td>
+                <NPandVIBox
+                  variabilityIndex={result.variabilityIndex}
+                  normalizedPower={result.normalizedPower}
+                />
+              </td>
 
               {columnsCP.map((column) => {
                 if (column.isVisible) {

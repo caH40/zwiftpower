@@ -1,0 +1,38 @@
+.box {
+  position: relative;
+  width: 65px;
+  padding: 2px 1px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: #ffffff00;
+  background-color: #c5c5c5;
+  overflow: hidden;
+}
+.box__text {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65px;
+  padding: 2px 1px;
+  color: #000000;
+  text-align: center;
+  z-index: 11;
+}
+.box__vi {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 60%;
+  background-color: red;
+  z-index: 5;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: #f3f300;
+}
+.green {
+  background-color: green;
+}

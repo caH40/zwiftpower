@@ -14,6 +14,7 @@ import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
 import TdSpeed from '../Td/TdSpeed';
+import NPandVIBox from '../../NPandVIBox/NPandVIBox';
 
 import { getAgeCategory } from '../../../utils/age';
 
@@ -84,7 +85,12 @@ function TableRaceResults({ results, event }) {
               />
 
               <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
-              <td>{tdWatts(Math.round(result.normalizedPower))}</td>
+              <td>
+                <NPandVIBox
+                  variabilityIndex={result.variabilityIndex}
+                  normalizedPower={result.normalizedPower}
+                />
+              </td>
 
               {columnsCP.map((column) => {
                 if (column.isVisible) {
