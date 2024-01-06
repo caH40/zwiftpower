@@ -17,7 +17,7 @@ function NPandVIBox({ variabilityIndex, normalizedPower }) {
     <>
       {normalizedPower || getBgWidth(variabilityIndex) ? (
         <div className={styles.box}>
-          invisibleTEXT
+          VI
           <span className={styles.box__text}>{tdWatts(NP)}</span>
           <div
             className={styles.box__vi}

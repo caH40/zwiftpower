@@ -76,7 +76,7 @@ export function highlightValueMax(value, dimension) {
 }
 
 export function tdWatts(value) {
-  return highlightValueMax(value, 'Вт');
+  return highlightValueMax(value, 'вт');
 }
 
 export function tdCPWattsPerKg(value, interval) {
