@@ -7,9 +7,13 @@ export const getNormalizedPower = (powerInWatts: number[]): number => {
   // количество секунд за который рассчитывается средняя мощность одной итерации
   const quantitySeconds = 30;
 
-  let powerSum = 0;
-  const length = powerInWatts.length;
+  // происходит смещение записи в firFile около 20 секунд,
+  // поэтому последние 20 секунд записи приходятся после пересечения финишной линии,
+  // что может существенно влиять на рассчитываемую среднюю и нормализованную мощность
+  const gap = 20;
+  const length = powerInWatts.length - gap;
 
+  let powerSum = 0;
   // количество итераций, количество частей по 30 секунд в
   const iterations = Math.ceil(length / quantitySeconds);
 
