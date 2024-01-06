@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Th from '../Th/Th';
+import ColumnName from '../Th/ColumnName';
 
 import { scheduleListColumns } from './column-titles';
 
@@ -9,9 +7,15 @@ function Thead({ isModerator }) {
     <thead>
       <tr>
         {scheduleListColumns().map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName key={column.id} columnName={column.name} />
+          </th>
         ))}
-        {isModerator && <Th key={'Управление'} columnName={'Управление'} />}
+        {isModerator && (
+          <th>
+            <ColumnName columnName={'Управление'} />
+          </th>
+        )}
       </tr>
     </thead>
   );

@@ -1,17 +1,16 @@
-import React from 'react';
+import ColumnName from '../Th/ColumnName';
 
-import Th from '../Th/Th';
+import { catchupSummaryColumnsFull } from './column-titles';
 
-import { catchupSummaryColumns } from './column-titles';
-
-function Thead({ lg, sm, isModerator }) {
+function Thead() {
   return (
     <thead>
       <tr>
-        {catchupSummaryColumns(lg, sm).map((column) => (
-          <Th key={column.id} columnName={column.name} />
+        {catchupSummaryColumnsFull.map((column) => (
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
-        {/* {isModerator && <Th key={'Управление'} columnName={'Управление'} />} */}
       </tr>
     </thead>
   );

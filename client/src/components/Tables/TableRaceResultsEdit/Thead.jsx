@@ -1,5 +1,5 @@
-import Th from '../Th/Th';
 import ColumnName from '../Th/ColumnName';
+
 import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
@@ -28,7 +28,9 @@ function Thead({ columnsCP }) {
           return null;
         })}
         {raceResultsColumnsEnd.map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

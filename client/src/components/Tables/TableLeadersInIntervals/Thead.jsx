@@ -1,4 +1,4 @@
-import Th from '../Th/Th';
+import ColumnName from '../Th/ColumnName';
 
 import { leadersInIntervalsColumns } from './column-titles';
 
@@ -7,7 +7,9 @@ function Thead({ type }) {
     <thead>
       <tr>
         {leadersInIntervalsColumns(type).map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

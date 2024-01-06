@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../Table.module.css';
 
 import IconArrows from '../../icons/IconArrows';
-import Th from '../Th/Th';
-
 import ColumnName from '../Th/ColumnName';
 import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 
@@ -67,7 +65,9 @@ function Thead({ columnsCP }) {
         })}
 
         {signedRidersColumnsEnd.map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

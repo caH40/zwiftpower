@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Th from '../Th/Th';
+import ColumnName from '../Th/ColumnName';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
@@ -9,7 +7,9 @@ function Thead({ columnsCP }) {
     <thead>
       <tr>
         {raceResultsColumns().map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
         {columnsCP.map((column) => {
           if (column.isVisible) {
@@ -18,7 +18,9 @@ function Thead({ columnsCP }) {
           return null;
         })}
         {raceResultsColumnsEnd.map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

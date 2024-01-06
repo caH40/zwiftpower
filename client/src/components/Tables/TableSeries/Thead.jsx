@@ -1,15 +1,15 @@
-import React from 'react';
+import ColumnName from '../Th/ColumnName';
 
-import Th from '../Th/Th';
+import { resultsColumnsFull } from './column-titles';
 
-import { seriesColumns } from './column-titles';
-
-function Thead({ lg, sm, isModerator }) {
+function Thead() {
   return (
     <thead>
       <tr>
-        {seriesColumns(lg, sm).map((column) => (
-          <Th key={column.id} columnName={column.name} />
+        {resultsColumnsFull.map((column) => (
+          <th key={column.id}>
+            <ColumnName key={column.id} columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

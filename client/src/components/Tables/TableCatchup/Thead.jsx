@@ -1,17 +1,16 @@
-import React from 'react';
-
-import Th from '../Th/Th';
+import ColumnName from '../Th/ColumnName';
 
 import { catchupColumns } from './column-titles';
 
-function Thead({ isModerator }) {
+function Thead() {
   return (
     <thead>
       <tr>
         {catchupColumns().map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
-        {/* {isModerator && <Th key={'Управление'} columnName={'Управление'} />} */}
       </tr>
     </thead>
   );

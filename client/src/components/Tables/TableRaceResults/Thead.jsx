@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import IconArrows from '../../icons/IconArrows';
-import Th from '../Th/Th';
 import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 import ColumnName from '../Th/ColumnName';
 
@@ -64,7 +63,9 @@ function Thead({ columnsCP, showIndex }) {
           return null;
         })}
         {raceResultsColumnsEnd.map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>

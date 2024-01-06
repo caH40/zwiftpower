@@ -1,4 +1,4 @@
-import Th from '../Th/Th';
+import ColumnName from '../Th/ColumnName';
 
 import { userColumns } from './column-titles';
 
@@ -7,7 +7,9 @@ function Thead() {
     <thead>
       <tr>
         {userColumns.map((column) => (
-          <Th key={column.id} columnName={column.name} />
+          <th key={column.id}>
+            <ColumnName columnName={column.name} />
+          </th>
         ))}
       </tr>
     </thead>
