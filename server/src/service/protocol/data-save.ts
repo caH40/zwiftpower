@@ -48,6 +48,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
         wattsPerKg: result.wattsPerKg,
         speed: result.speed,
         normalizedPower: result.normalizedPower,
+        variabilityIndex: result.variabilityIndex,
 
         flaggedCheating: result.flaggedCheating,
         flaggedSandbagging: result.flaggedSandbagging,

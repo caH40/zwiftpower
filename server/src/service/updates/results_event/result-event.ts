@@ -11,6 +11,7 @@ import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
+import { addVariabilityIndex } from './variability-index.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -47,6 +48,9 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
 
     // добавление NP нормализованной мощности
     await addNormalizedPowers(resultsTotal);
+
+    // добавление Variability Index (VI) Индекс вариабельности
+    await addVariabilityIndex(resultsTotal);
 
     // обновление CP райдеров в БД
     await updatePowerCurveResults(resultsWithCP);
