@@ -40,6 +40,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   wattsPerKg: { type: Number, default: null },
   speed: { type: Number },
   normalizedPower: { type: Number },
+  variabilityIndex: { type: Number },
 
   flaggedCheating: { type: Boolean, default: false },
   flaggedSandbagging: { type: Boolean, default: false },
