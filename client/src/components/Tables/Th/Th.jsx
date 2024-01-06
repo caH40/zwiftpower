@@ -30,6 +30,7 @@ import IconDifferent from '../../icons/IconDifferent';
 import IconRules from '../../icons/IconRules';
 import IconGapStart from '../../icons/IconGapStart';
 import IconSpeed from '../../icons/IconSpeed';
+import IconNP from '../../icons/IconNP';
 
 const Th = ({ columnName }) => {
   /* eslint-disable */
@@ -139,6 +140,9 @@ const Th = ({ columnName }) => {
 
       case 'Средняя скорость':
         return <IconSpeed tooltip={name} />;
+
+      case 'Нормализованная мощность':
+        return <IconNP tooltip={name} />;
 
       default:
         return name;

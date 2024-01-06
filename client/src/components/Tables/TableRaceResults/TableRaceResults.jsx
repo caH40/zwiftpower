@@ -84,6 +84,7 @@ function TableRaceResults({ results, event }) {
               />
 
               <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
+              <td>{tdWatts(Math.round(result.normalizedPower))}</td>
 
               {columnsCP.map((column) => {
                 if (column.isVisible) {

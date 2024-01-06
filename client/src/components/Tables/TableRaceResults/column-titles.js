@@ -8,6 +8,7 @@ export const raceResultsColumnsStartFull = [
   { name: 'Средняя скорость', id: 7 },
   { name: 'Удельная средняя мощность за гонку', id: 8 },
   { name: 'Средняя мощность за гонку', id: 9 },
+  { name: 'Нормализованная мощность', id: 10 },
 ];
 export const raceResultsColumnsCP = [
   { name: '5с', id: 100 },
@@ -19,11 +20,11 @@ export const raceResultsColumnsCP = [
   { name: '40м', id: 106 },
 ];
 export const raceResultsColumnsEnd = [
-  { name: 'Пульс', id: 10 },
-  { name: 'Вес', id: 11 },
-  { name: 'Рост', id: 12 },
-  { name: 'Возраст', id: 13 },
-  { name: 'Разное', id: 14 },
+  { name: 'Пульс', id: 11 },
+  { name: 'Вес', id: 12 },
+  { name: 'Рост', id: 13 },
+  { name: 'Возраст', id: 14 },
+  { name: 'Разное', id: 15 },
 ];
 
 export const raceResultsColumns = (setShowIndex) => {

@@ -28,6 +28,7 @@ import IconCupRank from '../../icons/IconCupRank';
 import IconResultsSmall from '../../icons/IconResultsSmall';
 import IconDifferent from '../../icons/IconDifferent';
 import IconSpeed from '../../icons/IconSpeed';
+import IconNP from '../../icons/IconNP';
 
 const ColumnName = ({ columnName }) => {
   /* eslint-disable */
@@ -128,6 +129,9 @@ const ColumnName = ({ columnName }) => {
 
       case 'Средняя скорость':
         return <IconSpeed tooltip={name} />;
+
+      case 'Нормализованная мощность':
+        return <IconNP tooltip={name} />;
 
       default:
         return columnName;
