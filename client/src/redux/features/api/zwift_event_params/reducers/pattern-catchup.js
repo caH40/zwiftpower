@@ -46,7 +46,7 @@ export const patternCatchUp = (rawEventParams) => {
     subgroup.durationInSeconds = eventSubgroupE.durationInSeconds;
     subgroup.distanceInMeters = eventSubgroupE.distanceInMeters;
     subgroup.laps = eventSubgroupE.laps;
-    subgroup.startLocation = eventSubgroupE.startLocation;
+    // subgroup.startLocation = eventSubgroupE.startLocation;
 
     switch (subgroup.label) {
       // группа A

@@ -45,7 +45,7 @@ export const patternNewbies = (rawEventParams) => {
     subgroup.durationInSeconds = eventSubgroupE.durationInSeconds;
     subgroup.distanceInMeters = eventSubgroupE.distanceInMeters;
     subgroup.laps = eventSubgroupE.laps;
-    subgroup.startLocation = eventSubgroupE.startLocation;
+    // subgroup.startLocation = eventSubgroupE.startLocation;
 
     subgroup.registrationStart = `${eventStartDate}T15:30:00.000+0000`;
     subgroup.registrationEnd = `${eventStartDate}T16:00:00.000+0000`;
