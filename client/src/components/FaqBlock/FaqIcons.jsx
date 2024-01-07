@@ -11,6 +11,7 @@ import IconDD from '../icons/IconDD';
 import IconRubberBanding from '../icons/IconRubberBanding';
 import IconLateJoin from '../icons/IconLateJoin';
 import IconSteeringDisabled from '../icons/IconSteeringDisabled';
+import IconTTT from '../icons/IconTTT';
 
 import IconDescription from './IconDescription';
 
@@ -19,7 +20,7 @@ import styles from './FaqBlock.module.css';
 function FaqIcons() {
   return (
     <div className={styles.block}>
-      <h3 className={styles.title}>Правила в заездах</h3>
+      <h2 className={styles.title}>Правила в заездах</h2>
       <IconDescription Icon={IconShowResults}>
         показывать таблицу результатов при финишировании в заезде
       </IconDescription>
@@ -54,6 +55,9 @@ function FaqIcons() {
       </IconDescription>
       <IconDescription Icon={IconLateJoin}>
         Позднее подключение. Возможность подключиться к заезду в течении 30 минут после старта
+      </IconDescription>
+      <IconDescription Icon={IconTTT}>
+        Включен драфт для ТТ велосипедов. Team Time Trial
       </IconDescription>
     </div>
   );

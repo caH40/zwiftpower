@@ -9,7 +9,7 @@ import styles from './FaqBlock.module.css';
 function FaqCategory() {
   return (
     <div className={styles.block}>
-      <h3 className={styles.title}>Отображение категорий на основе zFTP, zMAP</h3>
+      <h2 className={styles.title}>Отображение категорий на основе zFTP, zMAP</h2>
       <div className={styles.box}>
         <p className={styles.text}>
           Приблизительная оценка категории согласно информации, которая размещена на сайте

@@ -47,7 +47,8 @@
 .box__question + .box__question {
   padding-top: 10px;
 }
-.box__iconsDescription {
+.box__iconsDescription,
+.flex__start {
   display: flex;
   gap: 0 15px;
   align-items: center;
@@ -66,6 +67,12 @@
   text-indent: 1.5em;
   text-align: justify;
   font-weight: 500;
+}
+.box__color {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid var(--color-blue-main);
 }
 @media screen and (max-width: 576px) {
   .block {

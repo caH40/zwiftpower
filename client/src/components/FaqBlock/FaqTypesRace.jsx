@@ -8,7 +8,7 @@ import Abbreviation from './Abbreviation';
 function FaqTypesRace() {
   return (
     <div className={styles.block}>
-      <h3 className={styles.title}>Типы заездов</h3>
+      <h2 className={styles.title}>Типы заездов</h2>
       <Abbreviation Icon={<RaceRuleBox label={'CT'} showLabel={true} />}>
         Классическая гонка без групп
       </Abbreviation>
