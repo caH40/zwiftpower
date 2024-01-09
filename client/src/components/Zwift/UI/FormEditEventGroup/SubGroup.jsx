@@ -15,6 +15,7 @@ import styles from './FormEditEventGroup.module.css';
 function SubGroup({ subGroup, index }) {
   const quantityLeaders = subGroup?.invitedLeaders?.length;
   const quantitySweepers = subGroup?.invitedSweepers?.length;
+  // console.log(subGroup);
   return (
     <>
       {subGroup?.subgroupLabel ? (
@@ -84,8 +85,6 @@ function SubGroup({ subGroup, index }) {
                 {jerseys.find((jersey) => jersey.id === subGroup.jerseyHash)?.name ||
                   'Джерси не найдена или не задана'}
               </BoxParameter>
-
-              {/* <BoxParameter title={'Номер пакета правил'}>{subGroup.rulesId}</BoxParameter> */}
             </div>
 
             <div className={styles.box__inputs}>
@@ -142,10 +141,44 @@ function SubGroup({ subGroup, index }) {
                   typeValue: 'number',
                   subgroupIndex: index,
                 }}
+                description="При установке кругов обнуляется дистанция и продолжительность заезда"
               >
                 {subGroup.laps}
               </BoxParameter>
 
+              <BoxParameter
+                title={'Дистанция, метры'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Дистанция, метры',
+                  property: 'distanceInMeters',
+                  type: 'input',
+                  typeValue: 'number',
+                  subgroupIndex: index,
+                }}
+                description="При установке дистанции обнуляются круги и продолжительность заезда"
+              >
+                {subGroup.distanceInMeters}
+              </BoxParameter>
+
+              <BoxParameter
+                title={'Время заезда, секунды'}
+                sample={true}
+                pen={true}
+                inputParams={{
+                  label: 'Время заезда, секунды',
+                  property: 'durationInSeconds',
+                  type: 'input',
+                  typeValue: 'number',
+                  subgroupIndex: index,
+                }}
+                description="При установке продолжительности заезда обнуляется дистанция и круги"
+              >
+                {subGroup.durationInSeconds}
+              </BoxParameter>
+            </div>
+            <div className={styles.box__inputs}>
               <BoxParameter
                 title={'Номер "кармана" на старте'}
                 sample={true}

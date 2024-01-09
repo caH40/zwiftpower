@@ -87,12 +87,24 @@ const zwiftEventParamsSlice = createSlice({
 
     // установка нового параметра в настройках подгруппы
     setSubgroupParams(state, action) {
-      const property = `eventSubgroup_${action.payload.index}`;
-      delete action.payload.index;
+      const params = action.payload;
+      const property = `eventSubgroup_${params.index}`;
+      delete params.index;
+
+      if (params.laps) {
+        params.distanceInMeters = 0;
+        params.durationInSeconds = 0;
+      } else if (params.distanceInMeters) {
+        params.laps = 0;
+        params.durationInSeconds = 0;
+      } else if (params.durationInSeconds) {
+        params.laps = 0;
+        params.distanceInMeters = 0;
+      }
 
       state[property] = {
         ...state[property],
-        ...action.payload,
+        ...params,
       };
     },
 
