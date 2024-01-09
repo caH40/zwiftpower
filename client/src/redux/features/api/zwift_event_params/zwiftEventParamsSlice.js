@@ -60,8 +60,22 @@ const zwiftEventParamsSlice = createSlice({
       state.eventMainParams[propertyEventMain] = valueProperty;
       for (let i = 0; i < 5; i++) {
         // если подгруппа существует, то меняем нужное значение (property) в данной подгруппе
-        if (state['eventSubgroup_' + i])
+        if (state['eventSubgroup_' + i]) {
+          // при выборе одного из трех параметров laps, distanceInMeters, durationInSeconds
+          // два других обнуляются
+          if (property === 'laps') {
+            state['eventSubgroup_' + i].distanceInMeters = 0;
+            state['eventSubgroup_' + i].durationInSeconds = 0;
+          } else if (property === 'distanceInMeters') {
+            state['eventSubgroup_' + i].laps = 0;
+            state['eventSubgroup_' + i].durationInSeconds = 0;
+          } else if (property === 'durationInSeconds') {
+            state['eventSubgroup_' + i].laps = 0;
+            state['eventSubgroup_' + i].distanceInMeters = 0;
+          }
+
           state['eventSubgroup_' + i][propertySubgroup] = valueProperty;
+        }
       }
     },
 
@@ -91,6 +105,8 @@ const zwiftEventParamsSlice = createSlice({
       const property = `eventSubgroup_${params.index}`;
       delete params.index;
 
+      // при выборе одного из трех параметров laps, distanceInMeters, durationInSeconds
+      // два других обнуляются
       if (params.laps) {
         params.distanceInMeters = 0;
         params.durationInSeconds = 0;
