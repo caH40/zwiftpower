@@ -11,7 +11,9 @@ import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColum
 import styles from './Catchup.module.css';
 
 function Catchup() {
-  const { season } = useParams();
+  const seasonCurrent = new Date().getFullYear() - 1;
+
+  const { season = seasonCurrent } = useParams();
   const navigate = useNavigate();
 
   const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);

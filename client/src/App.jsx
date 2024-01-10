@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { ResultsRoute } from './Route/ResultsRoute';
@@ -47,6 +47,7 @@ function App() {
         <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/race/series" element={<RaceSeries />} />
+        <Route path="/race/series/catchup" element={<Catchup />} />
         <Route path="/race/series/catchup/:season" element={<Catchup />} />
 
         <Route path="/faq" element={<Faq />} />

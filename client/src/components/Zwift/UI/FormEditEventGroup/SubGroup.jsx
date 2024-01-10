@@ -163,7 +163,7 @@ function SubGroup({ subGroup, index }) {
               </BoxParameter>
 
               <BoxParameter
-                title={'Время заезда, секунды'}
+                title={'Продолжительность заезда, секунды'}
                 sample={true}
                 pen={true}
                 inputParams={{
