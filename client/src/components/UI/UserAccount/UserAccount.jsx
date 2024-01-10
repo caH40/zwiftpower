@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,11 +24,7 @@ const UserAccount = ({ userAuth }) => {
       dispatch(getAlert({ message: 'Необходима авторизация', type: 'info', isOpened: true }));
     }
   };
-  return (
-    <>
-      <img className={styles.img} src={avatar} alt="avatar" onClick={getClick} />
-    </>
-  );
+  return <img className={styles.img} src={avatar} alt="avatar" onClick={getClick} />;
 };
 
 export default UserAccount;

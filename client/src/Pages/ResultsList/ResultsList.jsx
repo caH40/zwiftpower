@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 
+import { HelmetResults } from '../../components/Helmets/HelmetResults';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
@@ -68,6 +69,7 @@ function ResultsList() {
 
   return (
     <section>
+      <HelmetResults />
       <div className={styles.align__right}>
         <FilterBoxForTable
           search={search}

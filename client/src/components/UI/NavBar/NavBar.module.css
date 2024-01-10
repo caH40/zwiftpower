@@ -3,10 +3,9 @@
   justify-content: flex-start;
   margin: 0px 0px 0px 5px;
   align-items: center;
+  gap: 15px;
 }
-.item {
-  margin-right: 15px;
-}
+
 .link {
   font-family: 'Roboto';
   font-style: normal;
