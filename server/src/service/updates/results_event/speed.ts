@@ -23,10 +23,10 @@ export async function addSpeed(
       continue;
     }
     // продолжительность заезда
-    const durationInHour = result.activityData.durationInMilliseconds / millisecondsInHour;
+    const durationInHours = result.activityData.durationInMilliseconds / millisecondsInHour;
     const segmentDistanceInKilometers = result.activityData.segmentDistanceInMeters / 1000;
 
-    result.speed = Math.round((100 * segmentDistanceInKilometers) / durationInHour) / 100;
+    result.speed = Math.round((100 * segmentDistanceInKilometers) / durationInHours) / 100;
   }
   return results;
 }
