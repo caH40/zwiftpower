@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { showMenu } from '../../../redux/features/menuBurgerSlice';
@@ -12,7 +11,7 @@ function Hamburger() {
   };
   return (
     <div className={styles.circle} onClick={getMenu}>
-      <div className={styles.hamburger__field}>
+      <div className={styles.hamburger}>
         <span className={styles.bar}></span>
         <span className={styles.bar}></span>
         <span className={styles.bar}></span>
