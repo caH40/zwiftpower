@@ -23,6 +23,7 @@ export const HelmetResults = () => {
         property="og:description"
         content="Результаты групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах."
       />
+      <meta property="og:image" content="https://zwiftpower.ru/images/main.jpg" />
     </Helmet>
   );
 };

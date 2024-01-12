@@ -2,9 +2,7 @@ import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 const ResultsList = lazy(() => import('../Pages/ResultsList/ResultsList'));
-const ResultsDescription = lazy(() =>
-  import('../Pages/ResultsDescription/RaceResultsDescription')
-);
+const ResultsDescription = lazy(() => import('../Pages/RaceResults/RaceResults'));
 
 export function ResultsRoute() {
   return (

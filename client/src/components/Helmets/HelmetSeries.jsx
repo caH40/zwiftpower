@@ -23,6 +23,7 @@ export const HelmetSeries = () => {
         property="og:description"
         content="Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах."
       />
+      <meta property="og:image" content="https://zwiftpower.ru/images/main.jpg" />
     </Helmet>
   );
 };

@@ -7,15 +7,18 @@ import TableRaceResults from '../../components/Tables/TableRaceResults/TableRace
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 
+import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
+import { raceTypes } from '../../assets/zwift/race-type';
 
-import styles from './ResultsDescription.module.css';
+import styles from './RaceResults.module.css';
 
 function ResultsDescription() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
+
   useTitle('Результаты заезда');
 
   const { eventId } = useParams();
@@ -39,6 +42,14 @@ function ResultsDescription() {
 
   return (
     <div className={styles.wrapper}>
+      <HelmetRaceResults
+        eventId={eventId}
+        image={eventData.imageUrl}
+        clubName={eventData.clubName}
+        name={eventData.name}
+        eventStart={new Date(eventData.eventStart).toLocaleDateString()}
+        typeRaceCustom={raceTypes.find((race) => race.value === eventData.typeRaceCustom)?.name}
+      />
       {eventData?.id && (
         <>
           <DescriptionEventZwiftNew event={eventData} eventId={eventId} />

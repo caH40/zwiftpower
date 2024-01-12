@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы "Серии и Туры заездов"
+ * Для страницы "Догонялки"
  */
 export const HelmetCatchup = ({ season }) => {
   return (
