@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
 import useTitle from '../../hook/useTitle';
 import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
 import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice';
@@ -18,7 +19,7 @@ function Catchup() {
 
   const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);
 
-  useTitle('Догонялки');
+  useTitle('Догонялки (CatchUp)');
 
   const dispatch = useDispatch();
 
@@ -32,6 +33,7 @@ function Catchup() {
 
   return (
     <section>
+      <HelmetCatchup season={season} />
       <div className={styles.box__filter}>
         <FilterCatchup season={season} reducer={getLink} />
       </div>

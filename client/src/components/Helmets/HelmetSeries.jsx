@@ -9,14 +9,14 @@ export const HelmetSeries = () => {
   return (
     <Helmet>
       <link rel="canonical" href={`${serverFront}/race/series`} />
-      <title>Серии и Туры заездов, проводимых российским сообществом в Zwift (Звифт)</title>
+      <title>Серии и Туры заездов российского сообществом в Zwift (Звифт)</title>
       <meta
         name="description"
         content="Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах."
       />
       <meta
         property="og:title"
-        content="Серии и Туры заездов, проводимых российским сообществом в Zwift (Звифт)"
+        content="Серии и Туры заездов российского сообществом в Zwift (Звифт)"
       />
       <meta property="og:url" content={`${serverFront}/race/series`} />
       <meta
