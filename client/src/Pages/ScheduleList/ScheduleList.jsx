@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -18,7 +19,7 @@ function ScheduleList() {
   const [trigger, setTrigger] = useState(false);
   const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
 
-  useTitle('Расписание заездов');
+  useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,16 +56,17 @@ function ScheduleList() {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper}>
+      <HelmetSchedule />
       {eventsSchedule?.[0] && status === 'resolved' && (
-        <section className={styles.wrapper__wide}>
+        <div className={styles.wrapper__wide}>
           <TableSchedule
             events={eventsSchedule}
             updateEvent={updateEventAndSinged}
             removeEvent={removeEvent}
             setTrigger={setTrigger}
           />
-        </section>
+        </div>
       )}
       {quantityPages > 1 && (
         <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
@@ -72,7 +74,7 @@ function ScheduleList() {
       {!eventsSchedule?.[0] && status === 'resolved' && (
         <div className={styles.title__notFound}>{notFound}</div>
       )}
-    </div>
+    </section>
   );
 }
 

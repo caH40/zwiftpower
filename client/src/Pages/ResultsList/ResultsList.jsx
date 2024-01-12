@@ -25,7 +25,7 @@ function ResultsList() {
 
   const { eventsResults, quantityPages } = useSelector((state) => state.fetchEvents);
 
-  useTitle('Результаты заездов');
+  useTitle('Результаты заездов Zwift');
   const dispatch = useDispatch();
 
   useEffect(() => {

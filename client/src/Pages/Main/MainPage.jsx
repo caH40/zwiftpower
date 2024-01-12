@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
@@ -18,7 +19,7 @@ function MainPage() {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const dispatch = useDispatch();
-  useTitle('Ближайшие заезды');
+  useTitle('Ближайшие заезды Zwift');
 
   const navigate = useNavigate();
   const toLink = (id) => navigate(`/race/schedule/${id}`);
@@ -35,6 +36,7 @@ function MainPage() {
 
   return (
     <section className={styles.wrapper}>
+      <HelmetMain />
       <div className={styles.wrapper__preview}>
         {!eventsPreview[0]?.id && status === 'resolved' && (
           <div className={styles.title__notFound}>{notFound}</div>
