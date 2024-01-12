@@ -6,7 +6,7 @@ import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
-
+import { getTimerLocal } from '../../utils/date-local';
 import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
@@ -47,7 +47,7 @@ function ResultsDescription() {
         image={eventData.imageUrl}
         clubName={eventData.clubName}
         name={eventData.name}
-        eventStart={new Date(eventData.eventStart).toLocaleDateString()}
+        eventStart={getTimerLocal(eventData.eventStart, 'DDMMYY')}
         typeRaceCustom={raceTypes.find((race) => race.value === eventData.typeRaceCustom)?.name}
       />
       {eventData?.id && (
