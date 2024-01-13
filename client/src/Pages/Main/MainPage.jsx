@@ -9,10 +9,12 @@ import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
+import { useAd } from '../../hook/useAd';
 
 import styles from './MainPage.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
+const adNumber = 4;
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
@@ -34,23 +36,28 @@ function MainPage() {
     dispatch(fetchGetInfoDev());
   }, [dispatch]);
 
+  useAd(adNumber);
+
   return (
-    <section className={styles.wrapper}>
-      <HelmetMain />
-      <div className={styles.wrapper__preview}>
-        {!eventsPreview[0]?.id && status === 'resolved' && (
-          <div className={styles.title__notFound}>{notFound}</div>
-        )}
-        {eventsPreview.map((event) => (
-          <CardRacePreview event={event} key={event.id} getClick={toLink} />
-        ))}
-      </div>
-      <div className={styles.wrapper__info}>
-        <h2 className={styles.title__info}>Информационный блок</h2>
-        <MainInfo />
-        <MainInfoDev isModerator={isModerator} />
-      </div>
-    </section>
+    <>
+      <section className={styles.wrapper}>
+        <HelmetMain />
+        <div className={styles.wrapper__preview}>
+          {!eventsPreview[0]?.id && status === 'resolved' && (
+            <div className={styles.title__notFound}>{notFound}</div>
+          )}
+          {eventsPreview.map((event) => (
+            <CardRacePreview event={event} key={event.id} getClick={toLink} />
+          ))}
+        </div>
+        <div className={styles.wrapper__info}>
+          <h2 className={styles.title__info}>Информационный блок</h2>
+          <MainInfo />
+          <MainInfoDev isModerator={isModerator} />
+        </div>
+      </section>
+      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+    </>
   );
 }
 

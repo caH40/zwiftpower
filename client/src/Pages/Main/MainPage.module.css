@@ -3,6 +3,7 @@
   justify-content: space-between;
   gap: 0 25px;
   flex-wrap: wrap;
+  min-height: calc(100vh - 60px);
 }
 .title__info {
   font-weight: 700;

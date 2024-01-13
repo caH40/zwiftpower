@@ -28,6 +28,13 @@ function ResultsDescription() {
     dispatch(initialSorting({ columnName: 'Время', isRasing: true }));
     dispatch(fetchResultEvent(eventId));
 
+    window.yaContextCb.push(() => {
+      window.Ya.Context.AdvManager.render({
+        blockId: 'R-A-5165832-3',
+        renderTo: 'yandex_rtb_R-A-5165832-3',
+      });
+    });
+
     return () => {
       dispatch(resetFilterCategory());
       dispatch(resetResults());
@@ -41,30 +48,35 @@ function ResultsDescription() {
   }, [eventData]);
 
   return (
-    <div className={styles.wrapper}>
-      <HelmetRaceResults
-        eventId={eventId}
-        image={eventData.imageUrl}
-        clubName={eventData.clubName}
-        name={eventData.name}
-        eventStart={getTimerLocal(eventData.eventStart, 'DDMMYY')}
-        typeRaceCustom={raceTypes.find((race) => race.value === eventData.typeRaceCustom)?.name}
-      />
-      {eventData?.id && (
-        <>
-          <DescriptionEventZwiftNew event={eventData} eventId={eventId} />
-          <NavBarResultsRace results={resultsPrepared} />
+    <>
+      <section className={styles.wrapper}>
+        <HelmetRaceResults
+          eventId={eventId}
+          image={eventData.imageUrl}
+          clubName={eventData.clubName}
+          name={eventData.name}
+          eventStart={getTimerLocal(eventData.eventStart, 'DDMMYY')}
+          typeRaceCustom={
+            raceTypes.find((race) => race.value === eventData.typeRaceCustom)?.name
+          }
+        />
+        {eventData?.id && (
+          <>
+            <DescriptionEventZwiftNew event={eventData} eventId={eventId} />
+            <NavBarResultsRace results={resultsPrepared} />
 
-          <section className={styles.wrapper__wide}>
-            <TableRaceResults results={resultsPrepared} event={eventData} />
-            <ServiceBox
-              updated={eventData.updated}
-              modifiedResults={eventData.modifiedResults}
-            />
-          </section>
-        </>
-      )}
-    </div>
+            <section className={styles.wrapper__wide}>
+              <TableRaceResults results={resultsPrepared} event={eventData} />
+              <ServiceBox
+                updated={eventData.updated}
+                modifiedResults={eventData.modifiedResults}
+              />
+            </section>
+          </>
+        )}
+      </section>
+      <div id="yandex_rtb_R-A-5165832-3"></div>
+    </>
   );
 }
 

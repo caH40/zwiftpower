@@ -1,3 +1,6 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+}
 .align__right {
   margin-bottom: 10px;
 }

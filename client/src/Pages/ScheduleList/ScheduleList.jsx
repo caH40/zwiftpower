@@ -9,10 +9,12 @@ import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
+import { useAd } from '../../hook/useAd';
 
 import styles from './ScheduleList.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
+const adNumber = 5;
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
@@ -55,26 +57,31 @@ function ScheduleList() {
     );
   };
 
+  useAd(adNumber);
+
   return (
-    <section className={styles.wrapper}>
-      <HelmetSchedule />
-      {eventsSchedule?.[0] && status === 'resolved' && (
-        <div className={styles.wrapper__wide}>
-          <TableSchedule
-            events={eventsSchedule}
-            updateEvent={updateEventAndSinged}
-            removeEvent={removeEvent}
-            setTrigger={setTrigger}
-          />
-        </div>
-      )}
-      {quantityPages > 1 && (
-        <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
-      )}
-      {!eventsSchedule?.[0] && status === 'resolved' && (
-        <div className={styles.title__notFound}>{notFound}</div>
-      )}
-    </section>
+    <>
+      <section className={styles.wrapper}>
+        <HelmetSchedule />
+        {eventsSchedule?.[0] && status === 'resolved' && (
+          <div className={styles.wrapper__wide}>
+            <TableSchedule
+              events={eventsSchedule}
+              updateEvent={updateEventAndSinged}
+              removeEvent={removeEvent}
+              setTrigger={setTrigger}
+            />
+          </div>
+        )}
+        {quantityPages > 1 && (
+          <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+        )}
+        {!eventsSchedule?.[0] && status === 'resolved' && (
+          <div className={styles.title__notFound}>{notFound}</div>
+        )}
+      </section>
+      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+    </>
   );
 }
 

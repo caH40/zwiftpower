@@ -12,8 +12,11 @@ import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
+import { useAd } from '../../hook/useAd';
 
 import styles from './ResultsList.module.css';
+
+const adNumber = 7;
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -67,35 +70,40 @@ function ResultsList() {
     );
   };
 
+  useAd(adNumber);
+
   return (
-    <section>
-      <HelmetResults />
-      <div className={styles.align__right}>
-        <FilterBoxForTable
-          search={search}
-          setSearch={setSearch}
-          docsOnPage={docsOnPage}
-          setDocsOnPage={setDocsOnPage}
-          placeholder={'поиск по названию'}
-          setPage={setPage}
-        />
-      </div>
-      {eventsResults[0] && (
-        <>
-          <section className={styles.wrapper__wide}>
-            <TableResults
-              events={eventsResults}
-              updateResults={updateResults}
-              removeEvent={removeEvent}
-              updateEventAndSinged={updateEventAndSinged}
-            />
-          </section>
-          {quantityPages > 1 && (
-            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
-          )}
-        </>
-      )}
-    </section>
+    <>
+      <section className={styles.wrapper}>
+        <HelmetResults />
+        <div className={styles.align__right}>
+          <FilterBoxForTable
+            search={search}
+            setSearch={setSearch}
+            docsOnPage={docsOnPage}
+            setDocsOnPage={setDocsOnPage}
+            placeholder={'поиск по названию'}
+            setPage={setPage}
+          />
+        </div>
+        {eventsResults[0] && (
+          <>
+            <section className={styles.wrapper__wide}>
+              <TableResults
+                events={eventsResults}
+                updateResults={updateResults}
+                removeEvent={removeEvent}
+                updateEventAndSinged={updateEventAndSinged}
+              />
+            </section>
+            {quantityPages > 1 && (
+              <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+            )}
+          </>
+        )}
+      </section>
+      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+    </>
   );
 }
 

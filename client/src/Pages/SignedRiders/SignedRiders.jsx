@@ -12,8 +12,11 @@ import {
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
+import { useAd } from '../../hook/useAd';
 
 import styles from './SignedRiders.module.css';
+
+const adNumber = 6;
 
 function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
@@ -38,30 +41,35 @@ function SignedRiders() {
     }
   }, [event, navigate, eventId]);
 
+  useAd(adNumber);
+
   return (
-    <section>
-      {event?.id && !event.started && (
-        <>
-          <DescriptionEventZwiftNew event={event} forSchedule={true} />
-          <Link
-            className={styles.button}
-            to={`https://www.zwift.com/eu/events/view/${event.id}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Регистрация в Zwift
-          </Link>
-          <section className={styles.wrapper__wide}>
-            <NavBarSignedRiders />
-            <TableSignedRiders riders={event.signedRiders} event={event} />
-          </section>
-          <div className={styles.right}>
-            <span className={styles.service}>Обновлено:</span>
-            <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>
-          </div>
-        </>
-      )}
-    </section>
+    <>
+      <section className={styles.wrapper}>
+        {event?.id && !event.started && (
+          <>
+            <DescriptionEventZwiftNew event={event} forSchedule={true} />
+            <Link
+              className={styles.button}
+              to={`https://www.zwift.com/eu/events/view/${event.id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Регистрация в Zwift
+            </Link>
+            <section className={styles.wrapper__wide}>
+              <NavBarSignedRiders />
+              <TableSignedRiders riders={event.signedRiders} event={event} />
+            </section>
+            <div className={styles.right}>
+              <span className={styles.service}>Обновлено:</span>
+              <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>
+            </div>
+          </>
+        )}
+      </section>
+      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+    </>
   );
 }
 
