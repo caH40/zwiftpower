@@ -57,7 +57,7 @@ function MainInfoDev({ isModerator }) {
         <h3 className={styles.title}>Изменения на сайте</h3>
         <div className={styles.block__text}>
           <ul className={styles.list__dev}>
-            {informationDev.map((info) => (
+            {informationDev.slice(0, 10).map((info) => (
               <li className={styles.item} key={info._id}>
                 <div className={styles.li__inner}>
                   <div>

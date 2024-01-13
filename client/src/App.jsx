@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { ResultsRoute } from './Route/ResultsRoute';
@@ -22,7 +22,7 @@ import RaceSeries from './Pages/RaceSeries/RaceSeries';
 const Catchup = lazy(() => import('./Pages/Catchup/Catchup'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
 
-import { sendMetrika } from './metrika/yandex';
+import { sendMetrika } from './yandex/metrika.js';
 
 import './css/App.css';
 
