@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { adBlockRecommendation } from '../yandex/ad-blocks';
+import { isDevelopmentMode } from '../config/environment';
 
 /**
  * Хук для рекомендательного виджета
@@ -8,6 +9,10 @@ import { adBlockRecommendation } from '../yandex/ad-blocks';
  */
 export const useAd = (numbers) => {
   useEffect(() => {
+    if (isDevelopmentMode) {
+      return;
+    }
+
     for (const number of numbers) {
       adBlockRecommendation(number);
     }
