@@ -25,6 +25,7 @@ export const HelmetCatchup = ({ season }) => {
         content={`Серия заездов Догонялки (CatchUp), проводимых командой KOM-on. 
         Общий зачет за сезон ${season}. Список всех победителей заездов за сезон ${season}.`}
       />
+      <meta property="og:image" content="https://zwiftpower.ru/images/open_graph/2.jpg" />
     </Helmet>
   );
 };

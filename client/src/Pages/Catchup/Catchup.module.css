@@ -1,3 +1,6 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+}
 .block {
   display: flex;
   align-items: flex-start;

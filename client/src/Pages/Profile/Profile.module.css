@@ -1,3 +1,6 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+}
 .title__notFound {
   font-style: italic;
   font-weight: 700;

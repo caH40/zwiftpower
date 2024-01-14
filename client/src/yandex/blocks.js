@@ -15,12 +15,12 @@ export const adBlocks = [
   {
     id: 3,
     label: 'R-A-5165832-3',
-    description: 'Баннер, RaceResults',
+    description: 'Баннер, RaceResults, Catchup',
   },
   {
     id: 4,
     label: 'C-A-5165832-4',
-    description: 'Рекомендательный виджет, main',
+    description: 'Рекомендательный виджет, profile',
   },
   {
     id: 5,

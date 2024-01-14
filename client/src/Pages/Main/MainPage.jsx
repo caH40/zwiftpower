@@ -17,7 +17,7 @@ import styles from './MainPage.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
-const adNumbers = [3, 4];
+const adNumbers = [9];
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
@@ -57,11 +57,10 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
           <div className={styles.sidebar}>
             <MainInfo />
-            <AdContainer number={3} />
+            <AdContainer number={9} />
             <MainInfoDev isModerator={isModerator} />
           </div>
         </div>
-        <AdContainer number={4} />
       </section>
     </>
   );
