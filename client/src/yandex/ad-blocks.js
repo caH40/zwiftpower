@@ -14,7 +14,7 @@ export const adBlockRecommendation = (number) => {
 
   window.yaContextCb.push(() => {
     window.Ya.Context.AdvManager.renderWidget({
-      renderTo: `yandex_rtb_C-A-5165832-${number}`,
+      renderTo: `yandex_rtb_${label}`,
       blockId: label,
     });
   });

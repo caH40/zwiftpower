@@ -7,6 +7,7 @@ import { adBlocks } from '../../yandex/blocks';
  */
 function AdContainer({ number }) {
   const adBlock = adBlocks.find((block) => block.id === number)?.label;
+
   return adBlock ? <div id={`yandex_rtb_${adBlock}`}></div> : null;
 }
 
