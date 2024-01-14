@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { HelmetLeaders } from '../../components/Helmets/HelmetLeaders';
 import useTitle from '../../hook/useTitle';
 import { fetchLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/fetchLeadersInIntervals';
 import { resetLeadersInIntervals } from '../../redux/features/api/leadersInIntervals/leadersInIntervalsSlice';
@@ -29,6 +30,7 @@ function LeadersInIntervals() {
 
   return (
     <div>
+      <HelmetLeaders gender={gender} />
       <div className={styles.navigation}>
         <NavBarLeadersGender addCls={'mb15'} />
         <FilterIntervalsForLeader />
