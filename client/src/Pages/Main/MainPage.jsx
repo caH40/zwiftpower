@@ -11,6 +11,7 @@ import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
+import AdMyPage from '../../components/AdMyPage/AdMyPage';
 
 import styles from './MainPage.module.css';
 
@@ -56,8 +57,14 @@ function MainPage() {
         <div className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
           <div className={styles.sidebar}>
-            <MainInfo />
+            <AdMyPage
+              href="/race/series/catchup"
+              title="Догонялки (Catchup)"
+              subtitle="сезон 2023-2024"
+              imageSrc="/images/open_graph/5.jpg"
+            />
             <AdContainer number={9} />
+            <MainInfo />
             <MainInfoDev isModerator={isModerator} />
           </div>
         </div>
