@@ -16,7 +16,7 @@ import { raceTypes } from '../../assets/zwift/race-type';
 
 import styles from './RaceResults.module.css';
 
-function ResultsDescription() {
+function RaceResults() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
 
   useTitle('Результаты заезда');
@@ -80,4 +80,4 @@ function ResultsDescription() {
   );
 }
 
-export default ResultsDescription;
+export default RaceResults;
