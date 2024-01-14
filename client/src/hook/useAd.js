@@ -4,10 +4,12 @@ import { adBlockRecommendation } from '../yandex/ad-blocks';
 
 /**
  * Хук для рекомендательного виджета
- * @param {number} number номер блока присвоенный РСЯ, диапазон  4-8
+ * @param {number[]} numbers номера блоков присвоенных РСЯ (../yandex/blocks)
  */
-export const useAd = (number) => {
+export const useAd = (numbers) => {
   useEffect(() => {
-    adBlockRecommendation(number);
+    for (const number of numbers) {
+      adBlockRecommendation(number);
+    }
   }, []);
 };

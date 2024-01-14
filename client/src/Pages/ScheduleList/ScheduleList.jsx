@@ -10,11 +10,15 @@ import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import { useAd } from '../../hook/useAd';
+import { adBlocks } from '../../yandex/blocks';
 
 import styles from './ScheduleList.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
-const adNumber = 5;
+
+// рекламные блоки на странице
+const adNumbers = [5];
+const adBlock_5 = adBlocks.find((block) => block.id === 5)?.label;
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
@@ -57,7 +61,7 @@ function ScheduleList() {
     );
   };
 
-  useAd(adNumber);
+  useAd(adNumbers);
 
   return (
     <>
@@ -80,7 +84,7 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+      <div id={`yandex_rtb_${adBlock_5}`}></div>
     </>
   );
 }

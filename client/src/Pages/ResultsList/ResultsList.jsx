@@ -13,10 +13,13 @@ import { createResultListMenus } from '../../redux/features/popupTableResultsLis
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { useAd } from '../../hook/useAd';
+import { adBlocks } from '../../yandex/blocks';
 
 import styles from './ResultsList.module.css';
 
-const adNumber = 7;
+// рекламные блоки на странице
+const adNumbers = [7];
+const adBlock_7 = adBlocks.find((block) => block.id === 7)?.label;
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -70,7 +73,7 @@ function ResultsList() {
     );
   };
 
-  useAd(adNumber);
+  useAd(adNumbers);
 
   return (
     <>
@@ -102,7 +105,7 @@ function ResultsList() {
           </>
         )}
       </section>
-      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+      <div id={`yandex_rtb_${adBlock_7}`}></div>
     </>
   );
 }

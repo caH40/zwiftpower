@@ -13,10 +13,13 @@ import {
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import { useAd } from '../../hook/useAd';
+import { adBlocks } from '../../yandex/blocks';
 
 import styles from './SignedRiders.module.css';
 
-const adNumber = 6;
+// рекламные блоки на странице
+const adNumbers = [6];
+const adBlock_6 = adBlocks.find((block) => block.id === 6)?.label;
 
 function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
@@ -41,7 +44,7 @@ function SignedRiders() {
     }
   }, [event, navigate, eventId]);
 
-  useAd(adNumber);
+  useAd(adNumbers);
 
   return (
     <>
@@ -68,7 +71,7 @@ function SignedRiders() {
           </>
         )}
       </section>
-      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
+      <div id={`yandex_rtb_${adBlock_6}`}></div>
     </>
   );
 }

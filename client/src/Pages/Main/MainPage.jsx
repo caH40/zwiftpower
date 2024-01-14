@@ -10,11 +10,14 @@ import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 import { useAd } from '../../hook/useAd';
+import AdContainer from '../../components/AdContainer/AdContainer';
 
 import styles from './MainPage.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
-const adNumber = 4;
+
+// рекламные блоки на странице
+const adNumbers = [3, 4];
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
@@ -36,7 +39,7 @@ function MainPage() {
     dispatch(fetchGetInfoDev());
   }, [dispatch]);
 
-  useAd(adNumber);
+  useAd(adNumbers);
 
   return (
     <>
@@ -52,11 +55,14 @@ function MainPage() {
         </div>
         <div className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
-          <MainInfo />
-          <MainInfoDev isModerator={isModerator} />
+          <div className={styles.sidebar}>
+            <MainInfo />
+            <AdContainer number={3} />
+            <MainInfoDev isModerator={isModerator} />
+          </div>
         </div>
+        <AdContainer number={4} />
       </section>
-      <div id={`yandex_rtb_C-A-5165832-${adNumber}`}></div>
     </>
   );
 }
