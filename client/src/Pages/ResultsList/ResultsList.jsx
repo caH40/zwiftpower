@@ -115,7 +115,7 @@ function ResultsList() {
           </>
         )}
       </section>
-      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
+      {isDesktop ? null : <AdContainer number={adOne} />}
     </>
   );
 }
