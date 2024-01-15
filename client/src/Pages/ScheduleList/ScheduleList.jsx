@@ -18,10 +18,10 @@ import styles from './ScheduleList.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
-const adOverFooter = 5;
+// const adOverFooter = 5;
 const adUnderHeader = 10;
 const adOne = 10; // одна реклама в блоке
-const adNumbers = [adOverFooter, adUnderHeader];
+const adNumbers = [adUnderHeader];
 
 function ScheduleList() {
   const [page, setPage] = useState(1);

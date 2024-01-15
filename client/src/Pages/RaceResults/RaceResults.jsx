@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useResize } from '../../hook/use-resize';
+import { useAd } from '../../hook/useAd';
+import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
@@ -16,8 +19,15 @@ import { raceTypes } from '../../assets/zwift/race-type';
 
 import styles from './RaceResults.module.css';
 
+// рекламные блоки на странице
+const adOverFooter = 3;
+const adUnderHeader = 13;
+const adOne = 13; // одна реклама в блоке
+const adNumbers = [adOverFooter, adUnderHeader];
+
 function RaceResults() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
+  const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Результаты заезда');
 
@@ -27,13 +37,6 @@ function RaceResults() {
   useEffect(() => {
     dispatch(initialSorting({ columnName: 'Время', isRasing: true }));
     dispatch(fetchResultEvent(eventId));
-
-    window.yaContextCb.push(() => {
-      window.Ya.Context.AdvManager.render({
-        blockId: 'R-A-5165832-3',
-        renderTo: 'yandex_rtb_R-A-5165832-3',
-      });
-    });
 
     return () => {
       dispatch(resetFilterCategory());
@@ -47,8 +50,15 @@ function RaceResults() {
     }
   }, [eventData]);
 
+  useAd(adNumbers);
+
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         <HelmetRaceResults
           eventId={eventId}
@@ -75,7 +85,7 @@ function RaceResults() {
           </>
         )}
       </section>
-      <div id="yandex_rtb_R-A-5165832-3"></div>
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }

@@ -19,11 +19,10 @@ import { useAd } from '../../hook/useAd';
 import styles from './ResultsList.module.css';
 
 // рекламные блоки на странице
-// рекламные блоки на странице
-const adOverFooter = 7;
-const adUnderHeader = 10;
-const adOne = 10; // одна реклама в блоке
-const adNumbers = [adOverFooter, adUnderHeader];
+// const adOverFooter = 7;
+const adUnderHeader = 11;
+const adOne = 11; // одна реклама в блоке
+const adNumbers = [adUnderHeader];
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);

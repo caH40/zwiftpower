@@ -50,6 +50,21 @@ export const adBlocks = [
   {
     id: 10,
     label: 'R-A-5165832-10',
-    description: 'Баннер, under header',
+    description: 'Баннер, under header, Schedule Page',
+  },
+  {
+    id: 11,
+    label: 'R-A-5165832-11',
+    description: 'Баннер, under header, Result list Page',
+  },
+  {
+    id: 12,
+    label: 'R-A-5165832-12',
+    description: 'Баннер, under header, Signed riders Page',
+  },
+  {
+    id: 13,
+    label: 'R-A-5165832-13',
+    description: 'Баннер, under header, Race results Page',
   },
 ];

@@ -20,8 +20,8 @@ import styles from './SignedRiders.module.css';
 
 // рекламные блоки на странице
 const adOverFooter = 6;
-const adUnderHeader = 10;
-const adOne = 10; // одна реклама в блоке
+const adUnderHeader = 12;
+const adOne = 12; // одна реклама в блоке
 const adNumbers = [adOverFooter, adUnderHeader];
 
 function SignedRiders() {
@@ -80,7 +80,7 @@ function SignedRiders() {
           </>
         )}
       </section>
-      {isDesktop ? null : <AdContainer number={adOne} />}
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }
