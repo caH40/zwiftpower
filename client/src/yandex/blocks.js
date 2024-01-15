@@ -20,7 +20,7 @@ export const adBlocks = [
   {
     id: 4,
     label: 'C-A-5165832-4',
-    description: 'Рекомендательный виджет, profile',
+    description: 'Рекомендательный виджет, Profile',
   },
   {
     id: 5,
@@ -46,5 +46,10 @@ export const adBlocks = [
     id: 9,
     label: 'R-A-5165832-9',
     description: 'Баннер, main',
+  },
+  {
+    id: 10,
+    label: 'R-A-5165832-10',
+    description: 'Баннер, under header',
   },
 ];

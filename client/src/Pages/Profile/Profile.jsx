@@ -8,7 +8,8 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import styles from './Profile.module.css';
 
 // рекламные блоки на странице
-const adNumbers = [4];
+const adOverFooter = 4;
+const adNumbers = [adOverFooter];
 
 function Profile() {
   useTitle('Профиль пользователя');
@@ -23,8 +24,7 @@ function Profile() {
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>
-      <AdContainer number={3} />
-      <div className="ad__block"></div>
+      <AdContainer number={adOverFooter} />
     </>
   );
 }

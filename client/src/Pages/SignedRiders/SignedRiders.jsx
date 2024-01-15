@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import { useResize } from '../../hook/use-resize';
+import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
@@ -13,17 +15,19 @@ import {
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import { useAd } from '../../hook/useAd';
-import { adBlocks } from '../../yandex/blocks';
 
 import styles from './SignedRiders.module.css';
 
 // рекламные блоки на странице
-const adNumbers = [6];
-const adBlock_6 = adBlocks.find((block) => block.id === 6)?.label;
+const adOverFooter = 6;
+const adUnderHeader = 10;
+const adOne = 10; // одна реклама в блоке
+const adNumbers = [adOverFooter, adUnderHeader];
 
 function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
   const navigate = useNavigate();
+  const { isScreenLg: isDesktop } = useResize();
 
   const dispatch = useDispatch();
   useTitle('Зарегистрированные участники');
@@ -48,6 +52,11 @@ function SignedRiders() {
 
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         {event?.id && !event.started && (
           <>
@@ -71,7 +80,7 @@ function SignedRiders() {
           </>
         )}
       </section>
-      <div id={`yandex_rtb_${adBlock_6}`}></div>
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }

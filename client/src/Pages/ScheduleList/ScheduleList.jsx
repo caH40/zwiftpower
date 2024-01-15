@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
+import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -10,20 +11,23 @@ import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import { useAd } from '../../hook/useAd';
-import { adBlocks } from '../../yandex/blocks';
+import AdContainer from '../../components/AdContainer/AdContainer';
 
 import styles from './ScheduleList.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
-const adNumbers = [5];
-const adBlock_5 = adBlocks.find((block) => block.id === 5)?.label;
+const adOverFooter = 5;
+const adUnderHeader = 10;
+const adOne = 10; // одна реклама в блоке
+const adNumbers = [adOverFooter, adUnderHeader];
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
   const [trigger, setTrigger] = useState(false);
   const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
+  const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
@@ -65,6 +69,11 @@ function ScheduleList() {
 
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         <HelmetSchedule />
         {eventsSchedule?.[0] && status === 'resolved' && (
@@ -84,7 +93,7 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      <div id={`yandex_rtb_${adBlock_5}`}></div>
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }

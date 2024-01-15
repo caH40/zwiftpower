@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useTitle from '../../hook/useTitle';
 
 import { HelmetResults } from '../../components/Helmets/HelmetResults';
+import { useResize } from '../../hook/use-resize';
+import AdContainer from '../../components/AdContainer/AdContainer';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
@@ -13,18 +15,21 @@ import { createResultListMenus } from '../../redux/features/popupTableResultsLis
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { useAd } from '../../hook/useAd';
-import { adBlocks } from '../../yandex/blocks';
 
 import styles from './ResultsList.module.css';
 
 // рекламные блоки на странице
-const adNumbers = [7];
-const adBlock_7 = adBlocks.find((block) => block.id === 7)?.label;
+// рекламные блоки на странице
+const adOverFooter = 7;
+const adUnderHeader = 10;
+const adOne = 10; // одна реклама в блоке
+const adNumbers = [adOverFooter, adUnderHeader];
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const { isScreenLg: isDesktop } = useResize();
 
   const initialDocsOnPage = localStorage.getItem('recordsOnPageResults') || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
@@ -77,6 +82,11 @@ function ResultsList() {
 
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         <HelmetResults />
         <div className={styles.align__right}>
@@ -105,7 +115,7 @@ function ResultsList() {
           </>
         )}
       </section>
-      <div id={`yandex_rtb_${adBlock_7}`}></div>
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }
