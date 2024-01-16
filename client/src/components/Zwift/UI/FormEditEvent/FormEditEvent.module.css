@@ -10,6 +10,17 @@
   font-weight: 700;
   text-decoration: underline;
 }
+.title__param {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 5px;
+}
+.subtitle__param {
+  font-size: 16px;
+  font-style: italic;
+}
 .right {
   text-align: right;
 }
@@ -60,4 +71,8 @@ h3 {
 }
 .rInput {
   flex: 1 1 40%;
+}
+.groups {
+  display: flex;
+  gap: 10px;
 }

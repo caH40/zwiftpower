@@ -29,11 +29,11 @@ export const setPatternReducer = (state, action) => {
   }
 
   [
-    state.eventSubgroup_0,
     state.eventSubgroup_1,
     state.eventSubgroup_2,
     state.eventSubgroup_3,
     state.eventSubgroup_4,
+    state.eventSubgroup_5,
   ] = eventPrepared.eventSubgroups;
 
   state.eventMainParams = eventPrepared;

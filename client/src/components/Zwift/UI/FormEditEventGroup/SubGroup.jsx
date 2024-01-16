@@ -1,4 +1,4 @@
-import cn from 'classnames';
+import classNames from 'classnames/bind';
 
 import { routes } from '../../../../assets/zwift/lib/esm/routes';
 import { jerseys } from '../../../../assets/zwift/raw/jerseys';
@@ -9,20 +9,24 @@ import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 
 import styles from './FormEditEventGroup.module.css';
 
+const cx = classNames.bind(styles);
+
 /**
  *
  */
 function SubGroup({ subGroup, index }) {
   const quantityLeaders = subGroup?.invitedLeaders?.length;
   const quantitySweepers = subGroup?.invitedSweepers?.length;
-  // console.log(subGroup);
+
   return (
     <>
       {subGroup?.subgroupLabel ? (
-        <div className={cn(styles.group, styles[subGroup.subgroupLabel])}>
-          <h4 className={styles.title}>Группа {subGroup.subgroupLabel}</h4>
-          <div className={styles.form__group}>
-            <div className={styles.box__inputs}>
+        <div className={cx('group', subGroup.subgroupLabel)}>
+          <h4 className={cx('title', `i${subGroup.subgroupLabel}`)}>
+            Группа {subGroup.subgroupLabel}
+          </h4>
+          <div className={cx('form__group')}>
+            <div className={cx('box__inputs')}>
               <BoxParameter
                 title={'Дата и время старта'}
                 sample={true}
@@ -87,7 +91,7 @@ function SubGroup({ subGroup, index }) {
               </BoxParameter>
             </div>
 
-            <div className={styles.box__inputs}>
+            <div className={cx('box__inputs')}>
               <BoxParameter
                 title={'Карта'}
                 sample={true}
@@ -178,7 +182,7 @@ function SubGroup({ subGroup, index }) {
                 {subGroup.durationInSeconds}
               </BoxParameter>
             </div>
-            <div className={styles.box__inputs}>
+            <div className={cx('box__inputs')}>
               <BoxParameter
                 title={'Номер "кармана" на старте'}
                 sample={true}
@@ -208,7 +212,7 @@ function SubGroup({ subGroup, index }) {
                 {quantityLeaders === 0 && 'нет'}
                 {subGroup.invitedLeaders.map((leader, index) => {
                   return (
-                    <span className={styles.text__array} key={leader}>
+                    <span className={cx('text__array')} key={leader}>
                       {leader}
                       {quantityLeaders === index + 1 ? '' : ','}
                     </span>
@@ -230,7 +234,7 @@ function SubGroup({ subGroup, index }) {
                 {quantitySweepers === 0 && 'нет'}
                 {subGroup.invitedSweepers.map((leader, index) => {
                   return (
-                    <span className={styles.text__array} key={leader}>
+                    <span className={cx('text__array')} key={leader}>
                       {leader}
                       {quantitySweepers === index + 1 ? '' : ','}
                     </span>

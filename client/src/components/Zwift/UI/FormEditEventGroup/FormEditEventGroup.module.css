@@ -14,6 +14,12 @@
   font-size: 16px;
   font-weight: bold;
   margin: 0 0 10px 0;
+  padding: 3px 8px;
+  border-radius: 3px;
+
+  display: inline-block;
+  color: white;
+  font-weight: 700;
 }
 .group {
   background-color: var(--color-bg-minor);
@@ -39,6 +45,21 @@
 }
 .E {
   background-color: #943e5e20;
+}
+.iA {
+  background-color: var(--catA);
+}
+.iB {
+  background-color: var(--catB);
+}
+.iC {
+  background-color: var(--catC);
+}
+.iD {
+  background-color: var(--catD);
+}
+.iE {
+  background-color: var(--catE);
 }
 .form__group {
   display: flex;

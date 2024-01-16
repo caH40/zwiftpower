@@ -9,11 +9,11 @@ import {
 function useBlockParameters(subgroupIndex) {
   const {
     eventMainParams,
-    eventSubgroup_0,
     eventSubgroup_1,
     eventSubgroup_2,
     eventSubgroup_3,
     eventSubgroup_4,
+    eventSubgroup_5,
   } = useSelector((state) => state.eventParams);
 
   const inputHandler = subgroupIndex || subgroupIndex === 0 ? setSubgroupParams : setMainParams;
@@ -21,8 +21,6 @@ function useBlockParameters(subgroupIndex) {
   /* eslint-disable */
   const blockWithParameters = () => {
     switch (subgroupIndex) {
-      case 0:
-        return eventSubgroup_0;
       case 1:
         return eventSubgroup_1;
       case 2:
@@ -31,6 +29,8 @@ function useBlockParameters(subgroupIndex) {
         return eventSubgroup_3;
       case 4:
         return eventSubgroup_4;
+      case 5:
+        return eventSubgroup_5;
       default:
         return eventMainParams;
     }
