@@ -1,0 +1,35 @@
+.button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button:hover {
+  transition: 0.3s;
+  transform: translate(0, -2px);
+}
+.A {
+  background-color: var(--catA);
+}
+.B {
+  background-color: var(--catB);
+}
+.C {
+  background-color: var(--catC);
+}
+.D {
+  background-color: var(--catD);
+}
+.E {
+  background-color: var(--catE);
+}

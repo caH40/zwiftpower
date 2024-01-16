@@ -7,13 +7,14 @@ import { setPatternReducer } from './reducers/pattern';
 const initialState = {
   eventParamsRaw: {},
   eventMainParams: { id: 0 },
-  eventSubgroup_0: {},
-  eventSubgroup_1: {},
-  eventSubgroup_2: {},
-  eventSubgroup_3: {},
-  eventSubgroup_4: {},
+  eventSubgroup_1: undefined,
+  eventSubgroup_2: undefined,
+  eventSubgroup_3: undefined,
+  eventSubgroup_4: undefined,
+  eventSubgroup_5: undefined,
   checkboxRules: [],
   checkboxTags: [],
+  subgroupLabels: [],
   status: null,
   error: null,
 };
@@ -82,11 +83,11 @@ const zwiftEventParamsSlice = createSlice({
     // сброс всех состояний
     resetParams(state) {
       state.eventParamsRaw = {};
-      state.eventSubgroup_0 = {};
-      state.eventSubgroup_1 = {};
-      state.eventSubgroup_2 = {};
-      state.eventSubgroup_3 = {};
-      state.eventSubgroup_4 = {};
+      state.eventSubgroup_1 = undefined;
+      state.eventSubgroup_2 = undefined;
+      state.eventSubgroup_3 = undefined;
+      state.eventSubgroup_4 = undefined;
+      state.eventSubgroup_5 = undefined;
       state.eventMainParams = { id: 0 };
       state.checkboxRules = [];
       state.checkboxTags = [];
@@ -128,6 +129,43 @@ const zwiftEventParamsSlice = createSlice({
     setPattern(state, action) {
       setPatternReducer(state, action);
     },
+
+    // массив названий групп, которые можно добавить в заезд
+    addGroupToEvent(state, action) {
+      const label = action.payload;
+
+      // добавление в список название группы (A,B...E)
+      state.subgroupLabels.push(label);
+
+      const groups = {
+        A: 1,
+        B: 2,
+        C: 3,
+        D: 4,
+        E: 5,
+      };
+
+      // название объекта для группы с соответствующими параметрами
+      const groupName = `eventSubgroup_${groups[label]}`;
+
+      // поиск первой
+      const groupParams =
+        state.eventSubgroup_1 ||
+        state.eventSubgroup_2 ||
+        state.eventSubgroup_3 ||
+        state.eventSubgroup_4 ||
+        state.eventSubgroup_5;
+
+      state[groupName] = {
+        ...groupParams,
+        subgroupLabel: label,
+        label: groups[label],
+        id: null,
+      };
+    },
+    removeGroupFromEvent(state, action) {
+      state.subgroupLabels = state.subgroupLabels.filter((label) => label !== action.payload);
+    },
   },
   extraReducers: (builder) => builderZwiftEventParams(builder),
 });
@@ -141,6 +179,8 @@ export const {
   setEventTags,
   setSameParameter,
   setPattern,
+  addGroupToEvent,
+  removeGroupFromEvent,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;

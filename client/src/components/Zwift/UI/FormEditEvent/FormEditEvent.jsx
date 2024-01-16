@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import { getNameSelected } from '../../../../service/name-selected';
@@ -10,11 +10,13 @@ import {
 import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
-
 import {
+  addGroupToEvent,
   setEventRules,
   setEventTags,
 } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
+import { labelsSubgroups } from '../../../../assets/subgroups';
 
 import styles from './FormEditEvent.module.css';
 
@@ -22,9 +24,19 @@ import styles from './FormEditEvent.module.css';
  * Форма добавления настроек для всего Эвента
  */
 function FormEditEvent() {
+  const { subgroupLabels } = useSelector((state) => state.eventParams);
+  const dispatch = useDispatch();
+
+  const labelsSubgroupsForAdd = labelsSubgroups
+    .map((label) => label.subgroupLabel)
+    .filter((label) => !subgroupLabels.includes(label));
+
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
+  const addGroup = (label) => {
+    dispatch(addGroupToEvent(label));
+  };
 
   return (
     <>
@@ -154,6 +166,23 @@ function FormEditEvent() {
               property={checkboxTag.value}
             />
           ))}
+        </div>
+      </div>
+      <div>
+        <h3 className={styles.title__param}>Добавление групп в заезд:</h3>
+        <div className={styles.groups}>
+          {labelsSubgroupsForAdd.length ? (
+            labelsSubgroupsForAdd.map((label) => (
+              <ButtonCategory
+                key={label}
+                tooltip={`Добавить группу ${label}`}
+                label={label}
+                getClick={addGroup}
+              />
+            ))
+          ) : (
+            <span className={styles.subtitle__param}>В Заезд добавлены все группы</span>
+          )}
         </div>
       </div>
     </>

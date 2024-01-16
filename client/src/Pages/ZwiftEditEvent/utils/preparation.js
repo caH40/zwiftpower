@@ -6,24 +6,25 @@ import { changeTime } from './time-start';
  */
 export function prepareData({
   eventMainParams,
-  eventSubgroup_0,
   eventSubgroup_1,
   eventSubgroup_2,
   eventSubgroup_3,
   eventSubgroup_4,
+  eventSubgroup_5,
   checkboxRules,
   checkboxTags,
 }) {
   const event = { ...eventMainParams };
   const dateNow = `timestamp=${Date.now()}`;
 
+  // фильтрация от несуществующих групп
   const eventSubgroups = [
-    { ...eventSubgroup_0 },
     { ...eventSubgroup_1 },
     { ...eventSubgroup_2 },
     { ...eventSubgroup_3 },
     { ...eventSubgroup_4 },
-  ].filter((elm) => elm.id);
+    { ...eventSubgroup_5 },
+  ].filter((elm) => elm.label);
 
   event.rulesId = null;
   const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);

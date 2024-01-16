@@ -14,13 +14,18 @@ export const builderZwiftEventParams = (builder) => {
     state.status = 'resolved';
 
     state.eventParamsRaw = action.payload;
-    [
-      state.eventSubgroup_0,
-      state.eventSubgroup_1,
-      state.eventSubgroup_2,
-      state.eventSubgroup_3,
-      state.eventSubgroup_4,
-    ] = action.payload.eventSubgroups;
+    const { eventSubgroups } = action.payload;
+
+    state.eventSubgroup_1 = eventSubgroups.find((elm) => elm.label === 1);
+    state.eventSubgroup_2 = eventSubgroups.find((elm) => elm.label === 2);
+    state.eventSubgroup_3 = eventSubgroups.find((elm) => elm.label === 3);
+    state.eventSubgroup_4 = eventSubgroups.find((elm) => elm.label === 4);
+    state.eventSubgroup_5 = eventSubgroups.find((elm) => elm.label === 5);
+
+    // получение всех названий групп в Эвенте
+    state.subgroupLabels = action.payload.eventSubgroups.map(
+      (subgroup) => subgroup.subgroupLabel
+    );
 
     state.eventMainParams = action.payload;
 
