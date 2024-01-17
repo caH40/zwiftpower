@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { labelsSubgroups } from '../../../../assets/subgroups';
+
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
 
@@ -89,6 +91,7 @@ const zwiftEventParamsSlice = createSlice({
       state.eventSubgroup_4 = undefined;
       state.eventSubgroup_5 = undefined;
       state.eventMainParams = { id: 0 };
+      state.subgroupLabels = [];
       state.checkboxRules = [];
       state.checkboxTags = [];
     },
@@ -137,17 +140,6 @@ const zwiftEventParamsSlice = createSlice({
       // добавление в список название группы (A,B...E)
       state.subgroupLabels.push(label);
 
-      const groups = {
-        A: 1,
-        B: 2,
-        C: 3,
-        D: 4,
-        E: 5,
-      };
-
-      // название объекта для группы с соответствующими параметрами
-      const groupName = `eventSubgroup_${groups[label]}`;
-
       // поиск первой
       const groupParams =
         state.eventSubgroup_1 ||
@@ -155,16 +147,34 @@ const zwiftEventParamsSlice = createSlice({
         state.eventSubgroup_3 ||
         state.eventSubgroup_4 ||
         state.eventSubgroup_5;
+      // номер группы
+      const groupNumber = labelsSubgroups.find((elm) => elm.subgroupLabel == label).label;
+      // название объекта для группы с соответствующими параметрами
+      const groupName = `eventSubgroup_${groupNumber}`;
 
       state[groupName] = {
         ...groupParams,
         subgroupLabel: label,
-        label: groups[label],
+        label: groupNumber,
         id: null,
       };
     },
+
     removeGroupFromEvent(state, action) {
-      state.subgroupLabels = state.subgroupLabels.filter((label) => label !== action.payload);
+      // номер группы
+      const groupNumber = action.payload;
+
+      // название группы
+      const { subgroupLabel } = labelsSubgroups.find(
+        (subgroup) => subgroup.label == groupNumber
+      );
+
+      // возвращение название группы в список групп для добавления
+      state.subgroupLabels = state.subgroupLabels.filter((label) => label !== subgroupLabel);
+
+      // название объекта для группы с соответствующими параметрами
+      const groupName = `eventSubgroup_${groupNumber}`;
+      state[groupName] = undefined;
     },
   },
   extraReducers: (builder) => builderZwiftEventParams(builder),

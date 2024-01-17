@@ -17,6 +17,7 @@ import {
 } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
 import { labelsSubgroups } from '../../../../assets/subgroups';
+import { getAlert } from '../../../../redux/features/alertMessageSlice';
 
 import styles from './FormEditEvent.module.css';
 
@@ -27,6 +28,7 @@ function FormEditEvent() {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
 
+  // список групп для добавления
   const labelsSubgroupsForAdd = labelsSubgroups
     .map((label) => label.subgroupLabel)
     .filter((label) => !subgroupLabels.includes(label));
@@ -34,8 +36,15 @@ function FormEditEvent() {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
-  const addGroup = (label) => {
-    dispatch(addGroupToEvent(label));
+  const addGroup = (subgroupLabel) => {
+    dispatch(addGroupToEvent(subgroupLabel));
+    dispatch(
+      getAlert({
+        message: `Добавлена группа "${subgroupLabel}"`,
+        type: 'success',
+        isOpened: true,
+      })
+    );
   };
 
   return (
