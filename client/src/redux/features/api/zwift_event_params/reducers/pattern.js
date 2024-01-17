@@ -52,15 +52,15 @@ export const setPatternReducer = (state, action) => {
         break;
       }
       case 2: {
-        state.eventSubgroup_5 = subgroup;
+        state.eventSubgroup_2 = subgroup;
         break;
       }
       case 3: {
-        state.eventSubgroup_5 = subgroup;
+        state.eventSubgroup_3 = subgroup;
         break;
       }
       case 4: {
-        state.eventSubgroup_5 = subgroup;
+        state.eventSubgroup_4 = subgroup;
         break;
       }
       case 5: {
