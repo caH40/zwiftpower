@@ -1,11 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import { routes } from '../../../../assets/zwift/lib/esm/routes';
 import { jerseys } from '../../../../assets/zwift/raw/jerseys';
 import { worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
-
+import { getAlert } from '../../../../redux/features/alertMessageSlice';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
+import { removeGroupFromEvent } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import IconDelete from '../../../icons/IconDelete';
 
 import styles from './FormEditEventGroup.module.css';
 
@@ -14,14 +17,40 @@ const cx = classNames.bind(styles);
 /**
  *
  */
-function SubGroup({ subGroup, index }) {
+function SubGroup({ subGroup, groupNumber }) {
+  const { subgroupLabels } = useSelector((state) => state.eventParams);
+
+  const dispatch = useDispatch();
   const quantityLeaders = subGroup?.invitedLeaders?.length;
   const quantitySweepers = subGroup?.invitedSweepers?.length;
+
+  const removeGroup = (label, subgroupLabel) => {
+    if (subgroupLabels.length === 1) {
+      return dispatch(
+        getAlert({ message: 'Нельзя удалять все группы!', type: 'error', isOpened: true })
+      );
+    }
+    dispatch(
+      getAlert({
+        message: `Удалена группа "${subgroupLabel}"`,
+        type: 'success',
+        isOpened: true,
+      })
+    );
+
+    return dispatch(removeGroupFromEvent(label));
+  };
 
   return (
     <>
       {subGroup?.subgroupLabel ? (
         <div className={cx('group', subGroup.subgroupLabel)}>
+          <div className={styles.box__delete}>
+            <IconDelete
+              getClick={() => removeGroup(groupNumber, subGroup?.subgroupLabel)}
+              tooltip={`Удалить группу ${subGroup?.subgroupLabel}`}
+            />
+          </div>
           <h4 className={cx('title', `i${subGroup.subgroupLabel}`)}>
             Группа {subGroup.subgroupLabel}
           </h4>
@@ -37,7 +66,7 @@ function SubGroup({ subGroup, index }) {
                   typeValue: 'dateAndTime',
                   type: 'inputTime',
                   value: subGroup.eventSubgroupStart,
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {getTimerLocal(subGroup.eventSubgroupStart, 'DDMMYYHms', true)}
@@ -52,7 +81,7 @@ function SubGroup({ subGroup, index }) {
                   property: 'name',
                   typeValue: 'text',
                   type: 'input',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {subGroup.name}
@@ -66,7 +95,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Описание для группы',
                   property: 'description',
                   type: 'textarea',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {subGroup.description}
@@ -80,7 +109,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Джерси для группы',
                   property: 'jerseyHash',
                   type: 'selectId',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                   options: [...jerseys].sort((a, b) =>
                     a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
                   ),
@@ -100,7 +129,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Карта',
                   property: 'mapId',
                   type: 'selectId',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                   options: [...worlds].sort((a, b) =>
                     a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
                   ),
@@ -118,7 +147,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Маршрут',
                   property: 'routeId',
                   type: 'selectId',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                   options: routes
                     .filter(
                       (route) =>
@@ -143,7 +172,7 @@ function SubGroup({ subGroup, index }) {
                   property: 'laps',
                   type: 'input',
                   typeValue: 'number',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
                 description="При установке кругов обнуляется дистанция и продолжительность заезда"
               >
@@ -159,7 +188,7 @@ function SubGroup({ subGroup, index }) {
                   property: 'distanceInMeters',
                   type: 'input',
                   typeValue: 'number',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
                 description="При установке дистанции обнуляются круги и продолжительность заезда"
               >
@@ -175,7 +204,7 @@ function SubGroup({ subGroup, index }) {
                   property: 'durationInSeconds',
                   type: 'input',
                   typeValue: 'number',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
                 description="При установке продолжительности заезда обнуляется дистанция и круги"
               >
@@ -192,7 +221,7 @@ function SubGroup({ subGroup, index }) {
                   property: 'startLocation',
                   type: 'input',
                   typeValue: 'number',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {subGroup.startLocation}
@@ -206,7 +235,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Приглашенные лидеры',
                   type: 'leaders&sweepers',
                   property: 'invitedLeaders',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {quantityLeaders === 0 && 'нет'}
@@ -228,7 +257,7 @@ function SubGroup({ subGroup, index }) {
                   label: 'Приглашенные замыкающие',
                   type: 'leaders&sweepers',
                   property: 'invitedSweepers',
-                  subgroupIndex: index,
+                  subgroupIndex: groupNumber,
                 }}
               >
                 {quantitySweepers === 0 && 'нет'}
