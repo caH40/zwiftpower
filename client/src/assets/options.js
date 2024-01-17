@@ -31,5 +31,5 @@ const optionsRaceTypes = raceTypes.map((option) => ({
 
 export const optionsEventPattern = [
   ...optionsRaceTypes,
-  { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
+  // { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
 ];

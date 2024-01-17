@@ -5,9 +5,9 @@ import { checkingRequiredSubgroups } from './subgroups';
 /**
  * Установка паттерна настроек для Эвента CatchUp
  */
-export const patternCatchUp = (rawEventParams) => {
+export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) => {
   // проверка наличия обязательных подгрупп в созданном Эвенте
-  checkingRequiredSubgroups(rawEventParams, requiredLabelsForCatchup);
+  checkingRequiredSubgroups(subgroupLabels, requiredLabelsForCatchup);
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
@@ -19,7 +19,7 @@ export const patternCatchUp = (rawEventParams) => {
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
   eventParams.microserviceEventVisibility = 'SHAREABLE';
   eventParams.tags = ['ttbikesdraft'];
-  const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
+  const eventSubgroupE = eventSubgroups.find((subgroup) => subgroup.label === 5);
 
   if (!eventSubgroupE) {
     throw new Error('Не найдена группа "E"');
@@ -34,7 +34,7 @@ export const patternCatchUp = (rawEventParams) => {
   // время старта Эвента
   eventParams.eventStart = `${eventStartDate}T16:30:00.000+0000`;
 
-  eventParams.eventSubgroups.forEach((subgroup) => {
+  eventSubgroups.forEach((subgroup) => {
     subgroup.tags = ['ttbikesdraft'];
     subgroup.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
     // копирование данных из группы E в остальные группы
@@ -46,7 +46,6 @@ export const patternCatchUp = (rawEventParams) => {
     subgroup.durationInSeconds = eventSubgroupE.durationInSeconds;
     subgroup.distanceInMeters = eventSubgroupE.distanceInMeters;
     subgroup.laps = eventSubgroupE.laps;
-    // subgroup.startLocation = eventSubgroupE.startLocation;
 
     switch (subgroup.label) {
       // группа A
@@ -90,5 +89,5 @@ export const patternCatchUp = (rawEventParams) => {
     }
   });
 
-  return eventParams;
+  return { ...eventParams, eventSubgroups };
 };

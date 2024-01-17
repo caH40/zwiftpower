@@ -5,25 +5,41 @@ import { patternCatchUp } from './pattern-catchup';
 import { patternNewbies } from './pattern-newbies';
 import { patternSeries } from './pattern-series';
 
+/**
+ * Reducer установки параметров для Эвента согласно выбранному "Пакету настроек" (pattern)
+ */
 export const setPatternReducer = (state, action) => {
   // название паттерна
   const pattern = action.payload;
+  if (pattern === '') {
+    return;
+  }
   let eventPrepared = {};
+
+  const { eventSubgroups: eventSubgroupsRaw, ...eventParamsRaw } = { ...state.eventParamsRaw };
+
+  const eventSubgroups = [
+    { ...state.eventSubgroup_1 },
+    { ...state.eventSubgroup_2 },
+    { ...state.eventSubgroup_3 },
+    { ...state.eventSubgroup_4 },
+    { ...state.eventSubgroup_5 },
+  ].filter((elm) => elm?.label);
 
   // выбор соответствующего паттерна настроек Эвента в зависимости от выбранного названия паттерна
   switch (pattern) {
     case 'catchUp':
-      eventPrepared = patternCatchUp(state.eventParamsRaw);
+      eventPrepared = patternCatchUp(eventParamsRaw, eventSubgroups, state.subgroupLabels);
       break;
     case 'series':
-      eventPrepared = patternSeries(state.eventParamsRaw);
+      eventPrepared = patternSeries(eventParamsRaw, eventSubgroups, state.subgroupLabels);
       break;
     case 'newbies':
-      eventPrepared = patternNewbies(state.eventParamsRaw);
+      eventPrepared = patternNewbies(eventParamsRaw, eventSubgroups, state.subgroupLabels);
       break;
-    case 'Сброс настроек':
-      eventPrepared = state.eventParamsRaw;
-      break;
+    // case 'Сброс настроек':
+    //   eventPrepared = state.eventParamsRaw;
+    //   break;
     default:
       throw Error(`Нет "пакета настроек" для "${pattern}"`);
   }

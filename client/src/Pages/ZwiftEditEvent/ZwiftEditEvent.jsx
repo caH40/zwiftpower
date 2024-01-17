@@ -72,6 +72,16 @@ function ZwiftEditEvent() {
   const activatePattern = (pattern) => {
     try {
       dispatch(setPattern(pattern));
+      if (pattern === '' || pattern === 'Сброс настроек') {
+        return;
+      }
+      dispatch(
+        getAlert({
+          message: `Установлен пакет настроек "${pattern}"`,
+          type: 'success',
+          isOpened: true,
+        })
+      );
     } catch (error) {
       dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
     }

@@ -11,7 +11,7 @@ function SimpleSelectFunction({ reducer, value, name, disabled, options, closeEm
       <select
         className={styles.select}
         placeholder={name}
-        value={value}
+        value={''}
         onChange={(e) => reducer(e.target.value)}
         disabled={disabled}
       >

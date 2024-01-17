@@ -5,9 +5,9 @@ import { checkingRequiredSubgroups } from './subgroups';
 /**
  * Установка паттерна настроек для Эвента Series
  */
-export const patternNewbies = (rawEventParams) => {
+export const patternNewbies = (rawEventParams, eventSubgroups, subgroupLabels) => {
   // проверка наличия обязательных подгрупп в созданном Эвенте
-  checkingRequiredSubgroups(rawEventParams, requiredLabelsForNewbies);
+  checkingRequiredSubgroups(subgroupLabels, requiredLabelsForNewbies);
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
@@ -18,7 +18,7 @@ export const patternNewbies = (rawEventParams) => {
   eventParams.cullingType = 'CULLING_EVENT_ONLY';
   eventParams.microserviceEventVisibility = 'SHAREABLE';
   eventParams.tags = [];
-  const eventSubgroupE = eventParams.eventSubgroups.find((subgroup) => subgroup.label === 5);
+  const eventSubgroupE = eventSubgroups.find((subgroup) => subgroup.label === 5);
 
   if (!eventSubgroupE) {
     throw new Error('Не найдена группа "E"');
@@ -33,7 +33,7 @@ export const patternNewbies = (rawEventParams) => {
   // изменение времени для mainEvent
   eventParams.eventStart = `${eventStartDate}T16:00:00.000+0000`;
 
-  eventParams.eventSubgroups.forEach((subgroup) => {
+  eventSubgroups.forEach((subgroup) => {
     subgroup.tags = [];
     subgroup.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
     // копирование данных из группы E в остальные группы
@@ -76,7 +76,7 @@ export const patternNewbies = (rawEventParams) => {
     }
   });
 
-  return eventParams;
+  return { ...eventParams, eventSubgroups };
 };
 
 // создание правил categoryEnforcement для категорий райдеров и групп Эвента

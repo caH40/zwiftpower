@@ -4,9 +4,11 @@ import { labelsSubgroups } from '../../../../../assets/subgroups';
  * Проверка наличия обязательных подгрупп в Эвенте для данного паттерна,
  * или наличие лишних поддгрупп
  */
-export const checkingRequiredSubgroups = (eventParams, requiredLabels) => {
+export const checkingRequiredSubgroups = (subgroupLabels, requiredLabels) => {
   // массив с номерами подгрупп в Эвенте
-  const labelsInRaw = eventParams.eventSubgroups.map((subgroup) => subgroup.label);
+  const labelsInRaw = subgroupLabels.map(
+    (subgroupLabel) => labelsSubgroups.find((elm) => elm.subgroupLabel === subgroupLabel).label
+  );
 
   // поиск отсутствующий подгрупп в Эвенте
   // requiredLabels необходимые подгруппы в текущем Эвенте
