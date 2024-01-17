@@ -69,7 +69,7 @@ export const patternNewbies = (rawEventParams, eventSubgroups, subgroupLabels) =
         break;
 
       // группа E
-      default:
+      case 5:
         subgroup.fromPaceValue = 1;
         subgroup.toPaceValue = 7;
         subgroup.jerseyHash = 2214060235;

@@ -44,13 +44,31 @@ export const setPatternReducer = (state, action) => {
       throw Error(`Нет "пакета настроек" для "${pattern}"`);
   }
 
-  [
-    state.eventSubgroup_1,
-    state.eventSubgroup_2,
-    state.eventSubgroup_3,
-    state.eventSubgroup_4,
-    state.eventSubgroup_5,
-  ] = eventPrepared.eventSubgroups;
+  // присваивание нового значения для соответствующих групп
+  eventPrepared.eventSubgroups.forEach((subgroup) => {
+    switch (subgroup.label) {
+      case 1: {
+        state.eventSubgroup_1 = subgroup;
+        break;
+      }
+      case 2: {
+        state.eventSubgroup_5 = subgroup;
+        break;
+      }
+      case 3: {
+        state.eventSubgroup_5 = subgroup;
+        break;
+      }
+      case 4: {
+        state.eventSubgroup_5 = subgroup;
+        break;
+      }
+      case 5: {
+        state.eventSubgroup_5 = subgroup;
+        break;
+      }
+    }
+  });
 
   state.eventMainParams = eventPrepared;
 

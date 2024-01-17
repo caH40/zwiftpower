@@ -79,7 +79,7 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         break;
 
       // группа E
-      default:
+      case 5:
         subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
         subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
