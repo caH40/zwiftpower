@@ -1,5 +1,3 @@
-import cn from 'classnames';
-
 import { adBlocks } from '../../yandex/blocks';
 
 /**
@@ -11,11 +9,7 @@ function AdContainer({ number, marginBottom = 0, maxHeight = 'none' }) {
   const adBlock = adBlocks.find((block) => block.id === number)?.label;
 
   return adBlock ? (
-    <div
-      className={cn('ad__block')}
-      style={{ marginBottom, maxHeight }}
-      id={`yandex_rtb_${adBlock}`}
-    ></div>
+    <div style={{ marginBottom, maxHeight }} id={`yandex_rtb_${adBlock}`}></div>
   ) : null;
 }
 
