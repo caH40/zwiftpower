@@ -10,14 +10,6 @@
   padding: 20px 13px 20px 63px;
   z-index: 1;
 }
-/* .container__data {
-  min-height: calc(100vh - 60px);
-}
-.ad__block {
-  height: 150px;
-  width: 100%;
-  background-color: aqua;
-} */
 
 @media screen and (max-width: 576px) {
   .container {

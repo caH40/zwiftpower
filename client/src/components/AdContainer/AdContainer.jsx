@@ -7,11 +7,15 @@ import { adBlocks } from '../../yandex/blocks';
  * @param {{number}} number номер блока рекламы
  * @returns
  */
-function AdContainer({ number, marginBottom }) {
+function AdContainer({ number, marginBottom = 0, maxHeight = 'none' }) {
   const adBlock = adBlocks.find((block) => block.id === number)?.label;
 
   return adBlock ? (
-    <div className={cn({ [marginBottom]: marginBottom })} id={`yandex_rtb_${adBlock}`}></div>
+    <div
+      className={cn('ad__block')}
+      style={{ marginBottom, maxHeight }}
+      id={`yandex_rtb_${adBlock}`}
+    ></div>
   ) : null;
 }
 

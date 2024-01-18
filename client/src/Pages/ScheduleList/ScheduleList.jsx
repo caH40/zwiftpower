@@ -70,9 +70,7 @@ function ScheduleList() {
   return (
     <>
       {isDesktop ? (
-        <div className="adblock__underHeader">
-          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
-        </div>
+        <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
         <HelmetSchedule />
