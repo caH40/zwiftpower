@@ -23,10 +23,11 @@ export const optionsPeriodsRidersInEvent = [
 /**
  * Названия паттернов настроек для Эвентов
  */
-const optionsRaceTypes = raceTypes.map((option) => ({
+export const optionsRaceTypes = raceTypes.map((option) => ({
   id: option.id,
   label: option.name,
   name: option.value,
+  translate: option.name,
 }));
 
 export const optionsEventPattern = [
