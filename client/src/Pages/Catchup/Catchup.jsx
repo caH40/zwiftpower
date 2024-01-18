@@ -46,7 +46,6 @@ function Catchup() {
     <>
       {isDesktop ? (
         <div className="adblock__underHeader">
-          <div className="ad__block"></div>
           <AdContainer number={adUnderHeader} marginBottom="mb-10" />
         </div>
       ) : null}
@@ -68,7 +67,6 @@ function Catchup() {
           </div>
         )}
       </section>
-      <div className="ad__block"></div>
       <AdContainer number={adOverFooter} />
     </>
   );
