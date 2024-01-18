@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
+import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
 import TableSeries from '../../components/Tables/TableSeries/TableResults';
 import { fetchSeries } from '../../redux/features/api/seriesSlice';
@@ -11,11 +12,15 @@ import { useAd } from '../../hook/useAd';
 import styles from './RaceSeries.module.css';
 
 // рекламные блоки на странице
-const adNumbers = [3];
+
+const adUnderHeader = 3;
+const adOne = 3; // одна реклама в блоке
+const adNumbers = [adUnderHeader];
 
 function RaceSeries() {
   const series = useSelector((state) => state.fetchSeries.series);
   useTitle('Серии и Туры заездов');
+  const { isScreenLg: isDesktop } = useResize();
 
   const dispatch = useDispatch();
 
@@ -27,6 +32,11 @@ function RaceSeries() {
 
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         <HelmetSeries />
         {series[0] && (
@@ -35,7 +45,7 @@ function RaceSeries() {
           </>
         )}
       </section>
-      <AdContainer number={3} />
+      {isDesktop ? null : <AdContainer number={adOne} />}
     </>
   );
 }

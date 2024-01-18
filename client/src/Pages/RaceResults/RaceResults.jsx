@@ -20,9 +20,8 @@ import { raceTypes } from '../../assets/zwift/race-type';
 import styles from './RaceResults.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 3;
+const adOverFooter = 8;
 const adUnderHeader = 13;
-const adOne = 13; // одна реклама в блоке
 const adNumbers = [adOverFooter, adUnderHeader];
 
 function RaceResults() {
@@ -85,7 +84,7 @@ function RaceResults() {
           </>
         )}
       </section>
-      {isDesktop ? null : <AdContainer number={adOne} />}
+      <AdContainer number={adOverFooter} />
     </>
   );
 }

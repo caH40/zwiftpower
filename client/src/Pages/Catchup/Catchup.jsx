@@ -10,13 +10,17 @@ import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
 import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice';
 import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
 import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
+import { useResize } from '../../hook/use-resize';
 
 import styles from './Catchup.module.css';
 
 // рекламные блоки на странице
-const adNumbers = [3];
+const adOverFooter = 8;
+const adUnderHeader = 3;
+const adNumbers = [adOverFooter, adUnderHeader];
 
 function Catchup() {
+  const { isScreenLg: isDesktop } = useResize();
   const seasonCurrent = new Date().getFullYear() - 1;
 
   const { season = seasonCurrent } = useParams();
@@ -40,6 +44,12 @@ function Catchup() {
 
   return (
     <>
+      {isDesktop ? (
+        <div className="adblock__underHeader">
+          <div className="ad__block"></div>
+          <AdContainer number={adUnderHeader} marginBottom="mb-10" />
+        </div>
+      ) : null}
       <section className={styles.wrapper}>
         <HelmetCatchup season={season} />
         <div className={styles.box__filter}>
@@ -58,7 +68,8 @@ function Catchup() {
           </div>
         )}
       </section>
-      <AdContainer number={3} />
+      <div className="ad__block"></div>
+      <AdContainer number={adOverFooter} />
     </>
   );
 }
