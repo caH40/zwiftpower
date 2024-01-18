@@ -18,6 +18,7 @@ import {
 import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
 import { labelsSubgroups } from '../../../../assets/subgroups';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
+import { optionsRaceTypes } from '../../../../assets/options';
 
 import styles from './FormEditEvent.module.css';
 
@@ -147,6 +148,19 @@ function FormEditEvent() {
             }}
           >
             {getNameSelected(optionsEventType, eventMainParams.eventType)}
+          </BoxParameter>
+
+          <BoxParameter
+            title={'Тип заезда для формирования финишного протокола'}
+            pen={true}
+            inputParams={{
+              property: 'typeRaceCustom',
+              type: 'select',
+              options: optionsRaceTypes,
+            }}
+            description="Настройка сохраняется в БД и не передается в API Zwift"
+          >
+            {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
           </BoxParameter>
         </div>
 
