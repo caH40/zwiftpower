@@ -15,32 +15,32 @@ export const adBlocks = [
   {
     id: 3,
     label: 'R-A-5165832-3',
-    description: 'Баннер, RaceResults, Catchup',
+    description: 'Баннер, UH, RaceSeries, Catchup',
   },
   {
     id: 4,
     label: 'C-A-5165832-4',
-    description: 'Рекомендательный виджет, Profile',
+    description: 'РВ, Profile',
   },
   {
     id: 5,
     label: 'C-A-5165832-5',
-    description: 'Рекомендательный виджет, ScheduleList',
+    description: 'РВ, ScheduleList',
   },
   {
     id: 6,
     label: 'C-A-5165832-6',
-    description: 'Рекомендательный виджет, SignedRiders',
+    description: 'РВ, SignedRiders',
   },
   {
     id: 7,
     label: 'C-A-5165832-7',
-    description: 'Рекомендательный виджет, ResultsList',
+    description: 'РВ, ResultsList',
   },
   {
     id: 8,
     label: 'C-A-5165832-8',
-    description: 'Рекомендательный виджет, Statistics, Catchup,RaceResults',
+    description: 'РВ, Statistics, Catchup,RaceResults',
   },
   {
     id: 9,
@@ -50,21 +50,21 @@ export const adBlocks = [
   {
     id: 10,
     label: 'R-A-5165832-10',
-    description: 'Баннер, under header, Schedule Page',
+    description: 'Баннер, UH, Schedule',
   },
   {
     id: 11,
     label: 'R-A-5165832-11',
-    description: 'Баннер, under header, Result list Page',
+    description: 'Баннер, UH, ResultsList',
   },
   {
     id: 12,
     label: 'R-A-5165832-12',
-    description: 'Баннер, under header, Signed riders Page',
+    description: 'Баннер, UH, SignedRiders',
   },
   {
     id: 13,
     label: 'R-A-5165832-13',
-    description: 'Баннер, under header, Race results Page',
+    description: 'Баннер, RaceResults',
   },
 ];
