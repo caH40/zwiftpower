@@ -41,8 +41,9 @@ export const getMetaTags = (url: string): Tags => {
       'Общая статистика российского сообщества в Zwift (Звифт). Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов.';
     i = 'https://zwiftpower.ru/images/open_graph/5.jpg';
   } else if (url.includes('/race/statistics/leaders/')) {
-    const genderStr = url.replace('/race/statistics/leaders/', '');
-    const imageNumber = genderStr === 'female' ? '8' : '9';
+    const gender = url.replace('/race/statistics/leaders/', '');
+    const genderStr = gender === 'female' ? 'женщин' : 'мужчин';
+    const imageNumber = gender === 'female' ? '8' : '9';
     // ========== "Рейтинг райдеров по мощности" ==========
     t = `Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`;
     d = `Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. Интервалы 15 секунд, минута, 5 минут и 20 минут.`;
