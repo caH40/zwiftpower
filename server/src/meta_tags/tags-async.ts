@@ -38,10 +38,9 @@ export const getSignedRidersMeta = async (url: string): Promise<MetaTags> => {
     // запрещены двойные кавычки в мета тегах
     const title = titleRaw.replace(/"/g, '');
     const canonical = serverFront + url;
-    const descriptionRaw = `Описание заезда '${name}'.
-    Зарегистрированные участники.
-    Организатор команда '${organizer}' в Zwift.
-    Тип заезда '${type ? type : 'Классический без групп'}'.`;
+    const descriptionRaw = `Описание заезда '${name}'. Зарегистрированные участники. Организатор команда '${organizer}' в Zwift. Тип заезда '${
+      type ? type : 'Классический без групп'
+    }'.`;
     // запрещены двойные кавычки в мета тегах
     const description = descriptionRaw.replace(/"/g, '');
     const image = imageUrl;
@@ -78,8 +77,9 @@ export const getRaceResultsMeta = async (url: string): Promise<MetaTags> => {
     // запрещены двойные кавычки в мета тегах
     const title = titleRaw.replace(/"/g, '');
     const canonical = serverFront + url;
-    const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт).
-    Тип заезда '${type ? type : 'Классический без групп'}'.`;
+    const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт). Тип заезда '${
+      type ? type : 'Классический без групп'
+    }'.`;
     // запрещены двойные кавычки в мета тегах
     const description = descriptionRaw.replace(/"/g, '');
     const image = imageUrl;
