@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
-import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
 import useTitle from '../../hook/useTitle';
 import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
 import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice';
@@ -48,7 +47,6 @@ function Catchup() {
         <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
-        <HelmetCatchup season={season} />
         <div className={styles.box__filter}>
           <FilterCatchup season={season} reducer={getLink} />
         </div>

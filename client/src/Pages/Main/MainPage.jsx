@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
@@ -45,7 +44,6 @@ function MainPage() {
   return (
     <>
       <section className={styles.wrapper}>
-        <HelmetMain />
         <div className={styles.wrapper__preview}>
           {!eventsPreview[0]?.id && status === 'resolved' && (
             <div className={styles.title__notFound}>{notFound}</div>

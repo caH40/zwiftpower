@@ -12,7 +12,7 @@ export const HelmetMain = () => {
       <title>Анонсы ближайших заездов российского сообщества в Zwift (Звифт)</title>
       <meta
         name="description"
-        content="Анонс ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах."
+        content="Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах."
       />
       <meta
         property="og:title"

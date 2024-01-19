@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { HelmetFTP } from '../../components/Helmets/HelmetFTP';
 import ChartRidersTotalFTP from '../../components/Charts/RidersTotal/RidersTotalFTP';
 import useTitle from '../../hook/useTitle';
 import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fetchRidersTotalFTP';
@@ -25,7 +24,6 @@ function RidersTotalFTP() {
 
   return (
     <section>
-      <HelmetFTP />
       <h2 className={styles.title}>
         Распределение райдеров по FTP{' '}
         <span>

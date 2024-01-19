@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
 import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
@@ -73,7 +72,6 @@ function ScheduleList() {
         <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
-        <HelmetSchedule />
         {eventsSchedule?.[0] && status === 'resolved' && (
           <div className={styles.wrapper__wide}>
             <TableSchedule

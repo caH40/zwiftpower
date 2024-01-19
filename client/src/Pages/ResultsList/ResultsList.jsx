@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 
-import { HelmetResults } from '../../components/Helmets/HelmetResults';
 import { useResize } from '../../hook/use-resize';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { getAlert } from '../../redux/features/alertMessageSlice';
@@ -85,7 +84,6 @@ function ResultsList() {
         <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
-        <HelmetResults />
         <div className={styles.align__right}>
           <FilterBoxForTable
             search={search}

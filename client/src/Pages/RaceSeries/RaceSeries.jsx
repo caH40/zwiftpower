@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
 import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
 import TableSeries from '../../components/Tables/TableSeries/TableResults';
@@ -36,7 +35,6 @@ function RaceSeries() {
         <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
-        <HelmetSeries />
         {series[0] && (
           <>
             <TableSeries series={series} />

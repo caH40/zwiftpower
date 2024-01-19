@@ -14,6 +14,7 @@ import { routerProfile } from './routes/profile.js';
 import { errorHandler } from './errors/error.js';
 import { statisticsRouter } from './routes/statistics.js';
 import { routerAdmin } from './routes/admin.js';
+import { setMetaTags } from './meta_tags/metat-tags.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -42,10 +43,13 @@ app.use('/api/statistics', statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
 
-app.use(express.static(path.resolve(__dirname, '..', '..', 'client', 'build')));
-app.get('*', (_, res) =>
-  res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html'))
+app.use(
+  express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
 );
+app.get('*', (req, res) => {
+  const htmlContent = setMetaTags(req.path);
+  res.send(htmlContent);
+});
 
 // запуск сервера на express
 const start = async () => {

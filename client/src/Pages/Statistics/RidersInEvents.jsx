@@ -15,7 +15,6 @@ import ChartRidersTotalAge from '../../components/Charts/RidersTotalAge/ChartRid
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
 import { resetRidersTotalAge } from '../../redux/features/api/statistics_age/ridersTotalAgeSlice';
-import { HelmetStatisticsMain } from '../../components/Helmets/HelmetStatisticsMain';
 
 import styles from './Statistics.module.css';
 
@@ -45,7 +44,6 @@ function RidersInEvents() {
 
   return (
     <section>
-      <HelmetStatisticsMain />
       {fetchStatus === 'resolved' && (
         <>
           <h2 className={cx('title')}>Количество участников</h2>
