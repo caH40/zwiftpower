@@ -53,7 +53,7 @@ function SignedRiders() {
   return (
     <>
       {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
+        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
         {event?.id && !event.started && (
