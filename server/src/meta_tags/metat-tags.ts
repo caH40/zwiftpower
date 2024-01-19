@@ -10,8 +10,8 @@ const __dirname = path.resolve();
  * url - url после доменного имени
  * возвращает html файл в ut8 кодировке
  */
-export const setMetaTags = (url: string): string => {
-  const { title, canonical, description, image } = getMetaTags(url);
+export const setMetaTags = async (url: string): Promise<string> => {
+  const { title, canonical, description, image } = await getMetaTags(url);
 
   // путь до index.html в Билде
   const filePath = path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html');

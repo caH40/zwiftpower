@@ -1,4 +1,5 @@
 import { MetaTags } from '../types/types.interface.js';
+import { getRaceResultsMeta } from './tags-async.js';
 import {
   getCatchupMeta,
   getFTPMeta,
@@ -14,7 +15,7 @@ import {
 /**
  * Выбор Мета тэгов соответствующих url
  */
-export const getMetaTags = (url: string): MetaTags => {
+export const getMetaTags = async (url: string): Promise<MetaTags> => {
   let tags;
 
   if (url === '/') {
@@ -33,6 +34,8 @@ export const getMetaTags = (url: string): MetaTags => {
     tags = getFTPMeta(url);
   } else if (url.includes('/race/series/catchup/')) {
     tags = getCatchupMeta(url);
+  } else if (url.includes('/race/results/')) {
+    tags = await getRaceResultsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

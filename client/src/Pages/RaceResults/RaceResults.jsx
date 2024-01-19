@@ -9,13 +9,10 @@ import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
-import { getTimerLocal } from '../../utils/date-local';
-import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
-import { raceTypes } from '../../assets/zwift/race-type';
 
 import styles from './RaceResults.module.css';
 
@@ -57,16 +54,6 @@ function RaceResults() {
         <AdContainer number={adUnderHeader} maxHeight={150} marginBottom={10} />
       ) : null}
       <section className={styles.wrapper}>
-        <HelmetRaceResults
-          eventId={eventId}
-          image={eventData.imageUrl}
-          clubName={eventData.clubName}
-          name={eventData.name}
-          eventStart={getTimerLocal(eventData.eventStart, 'DDMMYY')}
-          typeRaceCustom={
-            raceTypes.find((race) => race.value === eventData.typeRaceCustom)?.name
-          }
-        />
         {eventData?.id && (
           <>
             <DescriptionEventZwiftNew event={eventData} eventId={eventId} />

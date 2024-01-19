@@ -1,7 +1,11 @@
 // формирование даты согласно локали 'ru'
 type TypeTimeFormat = 'HM' | 'HmS' | 'DDMMYYHm' | 'DDMMYY' | undefined;
 
-export function getTimerLocal(date: number, timeFormat: TypeTimeFormat, long?: string): string {
+export function getTimerLocal(
+  date: number | string,
+  timeFormat: TypeTimeFormat,
+  long?: string
+): string {
   const dateForFormat = new Date(date);
   if (!date || date === 0) {
     return 'Дата отсутствует...';
