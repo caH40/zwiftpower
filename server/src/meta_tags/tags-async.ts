@@ -1,9 +1,12 @@
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
+import { ZwiftProfile } from '../Model/ZwiftProfile.js';
 import { raceTypes } from '../assets/race-type.js';
 import { serverFront } from '../config/environment.js';
-import { MetaTags } from '../types/types.interface.js';
 import { getTimerLocal } from '../utils/date-local.js';
 import { getMetaOtherPages } from './tags.js';
+
+// types
+import { MetaTags } from '../types/types.interface.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -50,6 +53,7 @@ export const getSignedRidersMeta = async (url: string): Promise<MetaTags> => {
     return getMetaOtherPages(url);
   }
 };
+
 /**
  * Формирование Мета тегов для страницы "Результаты заезда"
  */
@@ -90,28 +94,57 @@ export const getRaceResultsMeta = async (url: string): Promise<MetaTags> => {
   }
 };
 
-// /**
-//  * Формирование Мета тегов для страницы "Результаты заезда"
-//  */
-// export const getCatchupMeta = async (url: string): Promise<MetaTags> => {
+/**
+ * Формирование Мета тегов для страницы "Профиль пользователя"
+ */
+export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    let profileId, page;
 
-//   const title = ``;
-//   const canonical = serverFront + url;
-//   const description = ``;
-//   const image = '';
+    if (url.includes('/results')) {
+      profileId = +url.replace('/profile/', '').replace('/results', '');
+      page = 'results';
+    } else if (url.includes('/power')) {
+      profileId = +url.replace('/profile/', '').replace('/power', '');
+      page = 'power';
+    } else {
+      return getMetaOtherPages(url);
+    }
 
-//   return { title, canonical, description, image };
-// };
+    const zwiftProfileDB = await ZwiftProfile.findOne(
+      { id: profileId },
+      {
+        firstName: true,
+        lastName: true,
+        imageSrc: true,
+      }
+    ).lean();
 
-// /**
-//  * Формирование Мета тегов для страницы "Результаты заезда"
-//  */
-// export const getCatchupMeta = async (url: string): Promise<MetaTags> => {
+    // если не найден Эвент, то возвращать стандартные Мета Тэги для "прочих" страниц
+    if (!zwiftProfileDB) {
+      return getMetaOtherPages(url);
+    }
 
-//   const title = ``;
-//   const canonical = serverFront + url;
-//   const description = ``;
-//   const image = '';
+    const { firstName, lastName, imageSrc } = zwiftProfileDB;
 
-//   return { title, canonical, description, image };
-// };
+    const rider = `${firstName} ${lastName}`;
+
+    const titleRaw = page === 'results' ? `Результаты ${rider}` : `Диаграмма мощности ${rider}`;
+    // запрещены двойные кавычки в мета тегах
+    const title = titleRaw.replace(/"/g, '');
+    const canonical = serverFront + url;
+
+    // формирование описания
+    const descriptionResults = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
+    const descriptionPower = `Кривая мощности за 90 дней ${rider}. Сравнение кривых мощности за разные заезды.`;
+    const descriptionRaw = page === 'results' ? descriptionResults : descriptionPower;
+    // запрещены двойные кавычки в мета тегах
+    const description = descriptionRaw.replace(/"/g, '');
+
+    const image = imageSrc;
+
+    return { title, canonical, description, image };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};

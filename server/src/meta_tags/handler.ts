@@ -1,5 +1,9 @@
 import { MetaTags } from '../types/types.interface.js';
-import { getRaceResultsMeta, getSignedRidersMeta } from './tags-async.js';
+import {
+  getProfileResultsMeta,
+  getRaceResultsMeta,
+  getSignedRidersMeta,
+} from './tags-async.js';
 import {
   getCatchupMeta,
   getFTPMeta,
@@ -38,6 +42,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = await getRaceResultsMeta(url);
   } else if (url.includes('/race/schedule/')) {
     tags = await getSignedRidersMeta(url);
+  } else if (url.includes('/profile/')) {
+    tags = await getProfileResultsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }
