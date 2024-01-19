@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-import { getMetaTags } from './tags.js';
+import { getMetaTags } from './handler.js';
 
 const __dirname = path.resolve();
 
@@ -19,15 +19,6 @@ export const setMetaTags = (url: string): string => {
   // получение файла в переменную htmlContent
   let htmlContent = fs.readFileSync(filePath, 'utf8');
 
-  // если есть соответствующие метатеги в index.html то снять комментарий
-  // htmlContent = htmlContent.replace(/<title>.*/, '');
-  // htmlContent = htmlContent.replace(/<meta\s+name="description".*/, '');
-  // htmlContent = htmlContent.replace(/<link\s+rel="canonical".*/, '');
-  // htmlContent = htmlContent.replace(/<meta\s+property="og:title".*/, '');
-  // htmlContent = htmlContent.replace(/<meta\s+property="og:description".*/, '');
-  // htmlContent = htmlContent.replace(/<meta\s+property="og:url".*/, '');
-  // htmlContent = htmlContent.replace(/<meta\s+property="og:image".*/, '');
-
   htmlContent = htmlContent.replace(
     /<head>/,
     `<head>
@@ -42,3 +33,12 @@ export const setMetaTags = (url: string): string => {
 
   return htmlContent;
 };
+
+// если есть соответствующие метатеги в index.html то снять комментарий
+// htmlContent = htmlContent.replace(/<title>.*/, '');
+// htmlContent = htmlContent.replace(/<meta\s+name="description".*/, '');
+// htmlContent = htmlContent.replace(/<link\s+rel="canonical".*/, '');
+// htmlContent = htmlContent.replace(/<meta\s+property="og:title".*/, '');
+// htmlContent = htmlContent.replace(/<meta\s+property="og:description".*/, '');
+// htmlContent = htmlContent.replace(/<meta\s+property="og:url".*/, '');
+// htmlContent = htmlContent.replace(/<meta\s+property="og:image".*/, '');

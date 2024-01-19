@@ -501,3 +501,12 @@ export interface ResultSummaryCatchup {
   groupCategory: string;
   winsTotal: number;
 }
+/**
+ * Формирование метатегов для index.html
+ */
+export interface MetaTags {
+  title: string;
+  canonical: string;
+  description: string;
+  image: string;
+}
