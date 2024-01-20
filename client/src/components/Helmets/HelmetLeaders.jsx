@@ -3,35 +3,26 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Статистика лидеры мощности
+ * Формирование Мета тегов для страницы "Рейтинг райдеров по мощности"
  * @param {{female | male}} gender пол участников таблицы
  */
 export const HelmetLeaders = ({ gender }) => {
   const genderStr = gender === 'female' ? 'женщин' : 'мужчин';
-  const image = gender === 'female' ? '8' : '9';
+  const imageNumber = gender === 'female' ? '8' : '9';
+
+  const title = `Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`;
+  const canonical = `${serverFront}/race/statistics/leaders/${gender}`;
+  const description = `Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. Интервалы 15 секунд, минута, 5 минут и 20 минут.`;
+  const image = `https://zwiftpower.ru/images/open_graph/${imageNumber}.jpg`;
   return (
     <Helmet>
-      <link rel="canonical" href={`${serverFront}/race/statistics/leaders/${gender}`} />
-      <title>{`Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`}</title>
-      <meta
-        name="description"
-        content={`Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. 
-        Интервалы 15 секунд, минута, 5 минут и 20 минут.`}
-      />
-      <meta
-        property="og:title"
-        content={`Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`}
-      />
-      <meta property="og:url" content={`${serverFront}/race/statistics/leaders/${gender}`} />
-      <meta
-        property="og:description"
-        content={`Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. 
-        Интервалы 15 секунд, минута, 5 минут и 20 минут.`}
-      />
-      <meta
-        property="og:image"
-        content={`https://zwiftpower.ru/images/open_graph/${image}.jpg`}
-      />
+      <link rel="canonical" href={canonical} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
     </Helmet>
   );
 };

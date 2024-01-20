@@ -7,6 +7,7 @@ import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fet
 import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/ridersTotalFTPSlice';
 import ChartRidersTotalFTPPie from '../../components/Charts/RidersTotalPie/ChartRidersTotalFTPPie';
 import IconQuestion from '../../components/icons/IconQuestion';
+import { HelmetFTP } from '../../components/Helmets/HelmetFTP';
 
 import styles from './Statistics.module.css';
 
@@ -24,6 +25,7 @@ function RidersTotalFTP() {
 
   return (
     <section>
+      <HelmetFTP />
       <h2 className={styles.title}>
         Распределение райдеров по FTP{' '}
         <span>

@@ -10,6 +10,7 @@ import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice'
 import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
 import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
 import { useResize } from '../../hook/use-resize';
+import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
 
 import styles from './Catchup.module.css';
 
@@ -43,6 +44,7 @@ function Catchup() {
 
   return (
     <>
+      <HelmetCatchup season={season} />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}

@@ -8,6 +8,7 @@ import { resetLeadersInIntervals } from '../../redux/features/api/leadersInInter
 import TableLeadersInIntervals from '../../components/Tables/TableLeadersInIntervals/TableLeadersInIntervals';
 import NavBarLeadersGender from '../../components/UI/NavBarLeadersGender/NavBarLeadersGender';
 import FilterIntervalsForLeader from '../../components/UI/Filters/FilterInterval/FilterIntervalsForLeader';
+import { HelmetLeaders } from '../../components/Helmets/HelmetLeaders';
 
 import styles from './Statistics.module.css';
 
@@ -29,6 +30,7 @@ function LeadersInIntervals() {
 
   return (
     <div>
+      <HelmetLeaders gender={gender} />
       <div className={styles.navigation}>
         <NavBarLeadersGender addCls={'mb15'} />
         <FilterIntervalsForLeader />
