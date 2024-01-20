@@ -5,9 +5,9 @@ import { getTimerLocal } from '../../utils/date-local';
 import { raceTypes } from '../../assets/zwift/race-type';
 
 /**
- * Формирование Мета тегов для страницы "Результаты заезда"
+ * Формирование Мета тегов для страницы "Зарегистрированные участники"
  */
-export const HelmetRaceResults = ({
+export const HelmetSignedRiders = ({
   eventId,
   image,
   name,
@@ -16,18 +16,19 @@ export const HelmetRaceResults = ({
   typeRaceCustom,
 }) => {
   // подготовка данных
-  const eventStartLocal = getTimerLocal(eventStart, 'DDMMYY');
+  const eventStartLocal = getTimerLocal(eventStart, 'DDMMYYHm');
   const type = raceTypes.find((race) => race.value === typeRaceCustom)?.name;
 
-  const titleRaw = `Результаты заезда '${name}'`;
+  const titleRaw = `Заезд '${name}', ${eventStartLocal}. RideOn`;
   // запрещены двойные кавычки в мета тегах
   const title = titleRaw.replace(/"/g, '');
-  const canonical = `${serverFront}/race/results/${eventId}`;
-  const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт). Тип заезда '${
+  const canonical = `${serverFront}/race/schedule/${eventId}`;
+  const descriptionRaw = `Описание заезда '${name}'. Зарегистрированные участники. Организатор команда '${organizer}' в Zwift. Тип заезда '${
     type ? type : 'Классический без групп'
   }'.`;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
+
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />

@@ -5,6 +5,7 @@ import FaqTypesRace from '../../components/FaqBlock/FaqTypesRace';
 import FaqVarious from '../../components/FaqBlock/FaqVarious';
 import FaqJersey from '../../components/FaqJersey/FaqJersey';
 import FaqNPVI from '../../components/FaqBlock/FaqNPVI';
+import { HelmetFaq } from '../../components/Helmets/HelmetFaq';
 
 import styles from './Faq.module.css';
 
@@ -13,6 +14,7 @@ function Faq() {
 
   return (
     <section className={styles.wrapper}>
+      <HelmetFaq />
       <FaqVarious />
       <FaqCategory />
       <FaqIcons />

@@ -1,33 +1,25 @@
 import { Helmet } from 'react-helmet-async';
 
 import { serverFront } from '../../config/environment';
-import { getTimerLocal } from '../../utils/date-local';
-import { raceTypes } from '../../assets/zwift/race-type';
 
 /**
  * Формирование Мета тегов для страницы "Результаты заезда"
  */
-export const HelmetRaceResults = ({
-  eventId,
-  image,
-  name,
-  eventStart,
-  organizer,
-  typeRaceCustom,
-}) => {
-  // подготовка данных
-  const eventStartLocal = getTimerLocal(eventStart, 'DDMMYY');
-  const type = raceTypes.find((race) => race.value === typeRaceCustom)?.name;
+export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) => {
+  const rider = `${firstName} ${lastName}`;
 
-  const titleRaw = `Результаты заезда '${name}'`;
+  const titleRaw = page === 'results' ? `Результаты ${rider}` : `Диаграмма мощности ${rider}`;
   // запрещены двойные кавычки в мета тегах
   const title = titleRaw.replace(/"/g, '');
-  const canonical = `${serverFront}/race/results/${eventId}`;
-  const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт). Тип заезда '${
-    type ? type : 'Классический без групп'
-  }'.`;
+  const canonical = `${serverFront}/${profileId}/${page}`;
+
+  // формирование описания
+  const descriptionResults = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
+  const descriptionPower = `Кривая мощности за 90 дней ${rider}. Сравнение кривых мощности за разные заезды.`;
+  const descriptionRaw = page === 'results' ? descriptionResults : descriptionPower;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
+
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />

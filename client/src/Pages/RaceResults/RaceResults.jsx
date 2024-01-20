@@ -13,6 +13,7 @@ import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
+import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 
 import styles from './RaceResults.module.css';
 
@@ -50,6 +51,14 @@ function RaceResults() {
 
   return (
     <>
+      <HelmetRaceResults
+        eventId={eventId}
+        image={eventData.imageUrl}
+        name={eventData.name}
+        eventStart={eventData.eventStart}
+        organizer={eventData.organizer}
+        typeRaceCustom={eventData.typeRaceCustom}
+      />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}

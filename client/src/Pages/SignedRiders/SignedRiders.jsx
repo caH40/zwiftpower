@@ -15,6 +15,7 @@ import {
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import { useAd } from '../../hook/useAd';
+import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
 
 import styles from './SignedRiders.module.css';
 
@@ -52,6 +53,14 @@ function SignedRiders() {
 
   return (
     <>
+      <HelmetSignedRiders
+        eventId={eventId}
+        image={event.imageUrl}
+        name={event.name}
+        eventStart={event.eventStart}
+        organizer={event.organizer}
+        typeRaceCustom={event.typeRaceCustom}
+      />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}

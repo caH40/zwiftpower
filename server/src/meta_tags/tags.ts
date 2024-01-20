@@ -125,7 +125,7 @@ export const getMetaOtherPages = (url: string): MetaTags => {
  * Формирование Мета тегов для страницы "Часто задаваемые вопрос"
  */
 export const getFaqMeta = (url: string): MetaTags => {
-  const title = 'ЧЗВ для сайта zwiftpower.ru';
+  const title = 'Frequently Asked Questions';
   const canonical = serverFront + url;
   const description =
     'Часто задаваемые вопросы (FAQ). Описание иконок, категорий, поиск джерси из Звифта по названию.';

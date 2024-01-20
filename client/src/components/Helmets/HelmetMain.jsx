@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Главная (домашняя)
+ * Формирование Мета тегов для страницы "Домашняя"
  */
 export const HelmetMain = () => {
   const title = 'Анонсы ближайших заездов российского сообщества в Zwift (Звифт)';

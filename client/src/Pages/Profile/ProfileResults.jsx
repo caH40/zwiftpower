@@ -7,6 +7,7 @@ import TableUserResults from '../../components/Tables/TableUserResults/TableUser
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import CPBlock from '../../components/CPBlock/CPBlock';
+import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 
 import styles from './Profile.module.css';
 
@@ -26,6 +27,13 @@ function ProfileResults() {
 
   return (
     <div>
+      <HelmetProfile
+        profileId={zwiftId}
+        firstName={profile.firstName}
+        lastName={profile.lastName}
+        image={profile.imageSrc}
+        page={'results'}
+      />
       {status === 'resolved' && (
         <>
           <ProfileBlock quantityRace={results?.length || 0} profile={profile} />

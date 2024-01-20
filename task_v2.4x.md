@@ -147,6 +147,7 @@
 2.57.9 +формирование метатегов для страницы "ЧЗВ";  
 2.57.10 +формирование метатегов для страниц Catchup,Ftp, Leaders с Helmet на клиенте;  
 2.57.11 +формирование метатегов для страниц ScheduleList, ResultsList, Series, Statistics с Helmet на клиенте;  
+2.57.12 +формирование метатегов для страниц RaceResults, SignedRiders, Profile, Faq с Helmet на клиенте;  
 
 
 

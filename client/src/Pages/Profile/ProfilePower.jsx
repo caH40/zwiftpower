@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ import useScreenOrientation from '../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../components/UI/SimpleCheckbox/SimpleCheckbox';
 import SelectForChart from '../../components/UI/SelectForChart/SelectForChart';
 import FilterWatts from '../../components/UI/Filters/FilterWatts/FilterWatts';
+import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 
 import styles from './ProfilePower.module.css';
 
@@ -20,6 +21,7 @@ function ProfileWeight() {
   const { powerFromEvents, status: fetchStatus } = useSelector(
     (state) => state.fetchUserPowerCurve
   );
+  const { profile } = useSelector((state) => state.fetchUserResults);
   const [eventPowerCurrent, setEventPowerCurrent] = useState({});
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
@@ -39,6 +41,13 @@ function ProfileWeight() {
 
   return (
     <section>
+      <HelmetProfile
+        profileId={zwiftId}
+        firstName={profile.firstName}
+        lastName={profile.lastName}
+        image={profile.imageSrc}
+        page={'power'}
+      />
       {fetchStatus === 'resolved' && (
         <>
           <div className={styles.box__filter}>

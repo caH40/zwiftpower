@@ -3,14 +3,14 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Формирование Мета тегов для страницы "Серии и Туры заездов"
+ * Формирование Мета тегов для страницы "Часто задаваемые вопрос"
  */
-export const HelmetSeries = () => {
-  const title = 'Серии и Туры заездов российского сообществом в Zwift (Звифт)';
-  const canonical = `${serverFront}/race/series`;
+export const HelmetFaq = () => {
+  const title = 'Frequently Asked Questions';
+  const canonical = `${serverFront}/faq`;
   const description =
-    'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+    'Часто задаваемые вопросы (FAQ). Описание иконок, категорий, поиск джерси из Звифта по названию.';
+  const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />

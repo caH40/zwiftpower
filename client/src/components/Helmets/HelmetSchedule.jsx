@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Расписание
+ * Формирование Мета тегов для страницы "Расписание заездов"
  */
 export const HelmetSchedule = () => {
   const title = 'Расписание заездов российского сообщества в Zwift (Звифт)';

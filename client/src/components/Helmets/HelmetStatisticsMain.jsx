@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Статистика количество райдеров в Эвентах
+ * Формирование Мета тегов для страницы "Статистика"
  */
 export const HelmetStatisticsMain = () => {
   const title = 'Статистика по райдерам и Эвентам в Zwift (Звифт)';

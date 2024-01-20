@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Результаты
+ * Формирование Мета тегов для страницы "Результаты заездов"
  */
 export const HelmetResultsList = () => {
   const title = 'Результаты заездов российского сообщества в Zwift (Звифт)';
