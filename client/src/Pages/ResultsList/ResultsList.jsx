@@ -14,6 +14,7 @@ import { createResultListMenus } from '../../redux/features/popupTableResultsLis
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { useAd } from '../../hook/useAd';
+import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
 
 import styles from './ResultsList.module.css';
 
@@ -80,6 +81,7 @@ function ResultsList() {
 
   return (
     <>
+      <HelmetResultsList />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}

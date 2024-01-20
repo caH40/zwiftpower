@@ -3,14 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Для страницы Главная (домашняя)
+ * Для страницы Результаты
  */
-export const HelmetMain = () => {
-  const title = 'Анонсы ближайших заездов российского сообщества в Zwift (Звифт)';
-  const canonical = serverFront;
+export const HelmetResultsList = () => {
+  const title = 'Результаты заездов российского сообщества в Zwift (Звифт)';
+  const canonical = `${serverFront}/race/results`;
   const description =
-    'Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
+    'Результаты групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />

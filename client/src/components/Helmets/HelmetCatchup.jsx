@@ -2,8 +2,6 @@ import { Helmet } from 'react-helmet-async';
 
 import { serverFront } from '../../config/environment';
 
-import MetaTags from './MetaTags';
-
 /**
  * Формирование Мета тегов для страницы "Догонялки (CatchUp)"
  */

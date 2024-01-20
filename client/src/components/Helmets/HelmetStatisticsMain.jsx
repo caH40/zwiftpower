@@ -6,23 +6,20 @@ import { serverFront } from '../../config/environment';
  * Для страницы Статистика количество райдеров в Эвентах
  */
 export const HelmetStatisticsMain = () => {
+  const title = 'Статистика по райдерам и Эвентам в Zwift (Звифт)';
+  const canonical = `${serverFront}/race/statistics/main`;
+  const description =
+    'Общая статистика российского сообщества в Zwift (Звифт). Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов.';
+  const image = 'https://zwiftpower.ru/images/open_graph/5.jpg';
   return (
     <Helmet>
-      <link rel="canonical" href={`${serverFront}/race/statistics/main`} />
-      <title>Статистика по райдерам и Эвентам в Zwift (Звифт)</title>
-      <meta
-        name="description"
-        content="Общая статистика российского сообщества в Zwift (Звифт). 
-        Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов."
-      />
-      <meta property="og:title" content="Статистика по райдерам и Эвентам в Zwift (Звифт)" />
-      <meta property="og:url" content={`${serverFront}/race/statistics/main`} />
-      <meta
-        property="og:description"
-        content="Общая статистика российского сообщества в Zwift (Звифт). 
-        Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов."
-      />
-      <meta property="og:image" content="https://zwiftpower.ru/images/open_graph/5.jpg" />
+      <link rel="canonical" href={canonical} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
     </Helmet>
   );
 };

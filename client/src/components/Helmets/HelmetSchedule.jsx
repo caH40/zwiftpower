@@ -6,24 +6,20 @@ import { serverFront } from '../../config/environment';
  * Для страницы Расписание
  */
 export const HelmetSchedule = () => {
+  const title = 'Расписание заездов российского сообщества в Zwift (Звифт)';
+  const canonical = `${serverFront}/race/schedule`;
+  const description =
+    'Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
+  const image = 'https://zwiftpower.ru/images/main.jpg';
   return (
     <Helmet>
-      <link rel="canonical" href={`${serverFront}/race/schedule`} />
-      <title>Расписание заездов российского сообщества в Zwift (Звифт)</title>
-      <meta
-        name="description"
-        content="Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах."
-      />
-      <meta
-        property="og:title"
-        content="Расписание заездов российского сообщества в Zwift (Звифт)"
-      />
-      <meta property="og:url" content={`${serverFront}/race/schedule`} />
-      <meta
-        property="og:description"
-        content="Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах."
-      />
-      <meta property="og:image" content="https://zwiftpower.ru/images/main.jpg" />
+      <link rel="canonical" href={canonical} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
     </Helmet>
   );
 };

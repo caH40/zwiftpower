@@ -11,6 +11,7 @@ import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import { HelmetMain } from '../../components/Helmets/HelmetMain';
 
 import styles from './MainPage.module.css';
 
@@ -44,6 +45,7 @@ function MainPage() {
   return (
     <>
       <section className={styles.wrapper}>
+        <HelmetMain />
         <div className={styles.wrapper__preview}>
           {!eventsPreview[0]?.id && status === 'resolved' && (
             <div className={styles.title__notFound}>{notFound}</div>

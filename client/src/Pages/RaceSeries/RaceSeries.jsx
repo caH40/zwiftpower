@@ -7,6 +7,7 @@ import TableSeries from '../../components/Tables/TableSeries/TableResults';
 import { fetchSeries } from '../../redux/features/api/seriesSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
+import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
 
 import styles from './RaceSeries.module.css';
 
@@ -31,6 +32,7 @@ function RaceSeries() {
 
   return (
     <>
+      <HelmetSeries />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}

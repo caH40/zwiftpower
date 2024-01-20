@@ -11,6 +11,7 @@ import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlic
 import Pagination from '../../components/UI/Pagination/Pagination';
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
+import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
 
 import styles from './ScheduleList.module.css';
 
@@ -68,6 +69,7 @@ function ScheduleList() {
 
   return (
     <>
+      <HelmetSchedule />
       {isDesktop ? (
         <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
       ) : null}
