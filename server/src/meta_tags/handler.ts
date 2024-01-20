@@ -7,6 +7,7 @@ import {
 import {
   getCatchupMeta,
   getFTPMeta,
+  getFaqMeta,
   getHomeMeta,
   getLeadersMeta,
   getMetaOtherPages,
@@ -38,6 +39,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getFTPMeta(url);
   } else if (url.includes('/race/series/catchup/')) {
     tags = getCatchupMeta(url);
+  } else if (url.includes('/faq')) {
+    tags = getFaqMeta(url);
   } else if (url.includes('/race/results/')) {
     tags = await getRaceResultsMeta(url);
   } else if (url.includes('/race/schedule/')) {

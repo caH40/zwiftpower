@@ -120,3 +120,16 @@ export const getMetaOtherPages = (url: string): MetaTags => {
 
   return { title, canonical, description, image };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Часто задаваемые вопрос"
+ */
+export const getFaqMeta = (url: string): MetaTags => {
+  const title = 'ЧЗВ для сайта zwiftpower.ru';
+  const canonical = serverFront + url;
+  const description =
+    'Часто задаваемые вопросы (FAQ). Описание иконок, категорий, поиск джерси из Звифта по названию.';
+  const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
+
+  return { title, canonical, description, image };
+};
