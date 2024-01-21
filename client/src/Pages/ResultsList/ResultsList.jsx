@@ -19,10 +19,10 @@ import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
 import styles from './ResultsList.module.css';
 
 // рекламные блоки на странице
-// const adOverFooter = 7;
+const adOverFooter = 7;
 const adUnderHeader = 11;
 const adOne = 11; // одна реклама в блоке
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -112,7 +112,7 @@ function ResultsList() {
           </>
         )}
       </section>
-      {isDesktop ? null : <AdContainer number={adOne} />}
+      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
     </>
   );
 }
