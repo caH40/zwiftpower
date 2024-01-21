@@ -52,6 +52,11 @@ pre {
   width: 100%;
   background-color: aqua;
 }
+.ad__block__adaptive {
+  height: 360px;
+  width: 100%;
+  background-color: rgb(214, 11, 170);
+}
 .mb-5 {
   margin-bottom: 5px;
 }

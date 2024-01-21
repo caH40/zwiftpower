@@ -112,6 +112,7 @@ function ResultsList() {
           </>
         )}
       </section>
+      <div className="ad__block__adaptive"></div>
       {isDesktop ? null : <AdContainer number={adOne} />}
     </>
   );

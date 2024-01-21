@@ -40,7 +40,7 @@ export const adBlocks = [
   {
     id: 8,
     label: 'C-A-5165832-8',
-    description: 'РВ, Statistics, Catchup,RaceResults',
+    description: 'РВ, Statistics, Catchup, RaceResults',
   },
   {
     id: 9,
