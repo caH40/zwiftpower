@@ -2,10 +2,10 @@ import { adBlocks } from './blocks';
 
 /**
  * Рекомендательный виджет
- * <div id="yandex_rtb_C-A-5165832-4"></div>
  * @param {number} number номер блока присвоенный РСЯ, диапазон  4-8 (создаются блоки на сайте РСЯ)
+ * @param {string | undefined} type тип инициализируемого рекламного блока. У Баннера и РВ нет типа, у ленты - 'feed'
  */
-export const adBlockRecommendation = (number) => {
+export const adBlockRecommendation = (number, type) => {
   const label = adBlocks.find((block) => block.id === number)?.label;
 
   if (!label) {
@@ -13,9 +13,15 @@ export const adBlockRecommendation = (number) => {
   }
 
   window.yaContextCb.push(() => {
-    window.Ya.Context.AdvManager.renderWidget({
+    const renderOptions = {
       renderTo: `yandex_rtb_${label}`,
       blockId: label,
-    });
+    };
+
+    if (type === 'feed') {
+      renderOptions.type = 'feed';
+    }
+
+    window.Ya.Context.AdvManager.renderWidget(renderOptions);
   });
 };

@@ -72,4 +72,9 @@ export const adBlocks = [
     label: 'R-A-5165832-14',
     description: 'Баннер UnderHead, Profile, Statistics',
   },
+  {
+    id: 15,
+    label: 'R-A-5165832-15',
+    description: 'Лента, Faq',
+  },
 ];
