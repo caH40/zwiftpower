@@ -67,4 +67,9 @@ export const adBlocks = [
     label: 'R-A-5165832-13',
     description: 'Баннер, RaceResults',
   },
+  {
+    id: 14,
+    label: 'R-A-5165832-14',
+    description: 'Баннер UnderHead, Profile, Statistics',
+  },
 ];
