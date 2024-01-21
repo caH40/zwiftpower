@@ -17,7 +17,7 @@ const adNumbers = [adOverFooter];
 
 function Faq() {
   useTitle('Часто задаваемые вопросы');
-  useAd(adNumbers, 'feed');
+  useAd(adNumbers);
 
   return (
     <>
