@@ -14,3 +14,8 @@
 .link:hover {
   text-decoration: underline;
 }
+@media screen and (max-width: 992px) {
+  .wrapper {
+    min-height: auto;
+  }
+}

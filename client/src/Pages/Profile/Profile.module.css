@@ -1,5 +1,6 @@
 .wrapper {
   min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
 }
 .title__notFound {
   font-style: italic;
@@ -20,6 +21,11 @@
   min-height: 350px;
 }
 
+@media screen and (max-width: 992px) {
+  .wrapper {
+    min-height: auto;
+  }
+}
 @media screen and (max-width: 576px) {
   .block__cp {
     gap: 10px 15px;
