@@ -21,26 +21,31 @@ export const adBlocks = [
     id: 4,
     label: 'C-A-5165832-4',
     description: 'РВ, Profile',
+    type: 'widget',
   },
   {
     id: 5,
     label: 'C-A-5165832-5',
     description: 'РВ, ScheduleList',
+    type: 'widget',
   },
   {
     id: 6,
     label: 'C-A-5165832-6',
     description: 'РВ, SignedRiders',
+    type: 'widget',
   },
   {
     id: 7,
     label: 'C-A-5165832-7',
     description: 'РВ, ResultsList',
+    type: 'widget',
   },
   {
     id: 8,
     label: 'C-A-5165832-8',
     description: 'РВ, Statistics, Catchup, RaceResults',
+    type: 'widget',
   },
   {
     id: 9,

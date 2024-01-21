@@ -17,10 +17,19 @@ export const adBlockRecommendation = (number) => {
       blockId: label.label,
     };
 
-    if (label.type === 'feed') {
-      renderOptions.type = 'feed';
-    }
+    switch (label.type) {
+      case 'feed':
+        renderOptions.type = 'feed';
+        window.Ya.Context.AdvManager.render(renderOptions);
+        break;
 
-    window.Ya.Context.AdvManager.renderWidget(renderOptions);
+      case 'widget':
+        window.Ya.Context.AdvManager.renderWidget(renderOptions);
+        break;
+
+      default:
+        window.Ya.Context.AdvManager.render(renderOptions);
+        break;
+    }
   });
 };
