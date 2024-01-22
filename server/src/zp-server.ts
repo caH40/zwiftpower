@@ -14,7 +14,7 @@ import { routerProfile } from './routes/profile.js';
 import { errorHandler } from './errors/error.js';
 import { statisticsRouter } from './routes/statistics.js';
 import { routerAdmin } from './routes/admin.js';
-import { setMetaTags } from './meta_tags/metat-tags.js';
+import { setMetaTags } from './meta_tags/meta-tags.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
