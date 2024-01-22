@@ -15,7 +15,7 @@ import { setBackground } from '../../redux/features/backgroundSlice';
 
 import styles from './Auth.module.css';
 
-function ResetPassword() {
+function NewPassword() {
   const [userId, setUserId] = useState();
   useTitle('Создание нового пароля');
 
@@ -83,4 +83,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default NewPassword;

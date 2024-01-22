@@ -7,5 +7,7 @@ export const checkSeconds = (dateRaw) => {
     second: '2-digit',
   });
 
-  return formatterSec.format(dateRawNumber) !== '0' ? true : false;
+  const secondsStr = formatterSec.format(dateRawNumber);
+
+  return secondsStr === '0' || secondsStr === '00' ? false : true;
 };
