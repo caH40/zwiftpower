@@ -2,24 +2,19 @@ import { lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import useFirstAuth from './hook/useFirstAuth';
 import { ResultsRoute } from './Route/ResultsRoute';
+import { AuthRoute } from './Route/Auth.jsx';
 import { AdminRoute } from './Route/AdminRoute.jsx';
 import { ProfileRoute } from './Route/ProfileRoute';
 import { StatisticsRoute } from './Route/StatisticsRoute';
 import { ScheduleRouteRoute } from './Route/ScheduleRoute';
+import { SeriesRoute } from './Route/Series.jsx';
 import MainLayer from './components/Layers/MainLayer';
 import MainPage from './Pages/Main/MainPage';
 import Page404 from './Pages/Page404/Page404';
-import Authorization from './Pages/Auth/Authorization';
-import Registration from './Pages/Auth/Registration';
 import Message from './Pages/Message/Message';
-import useFirstAuth from './hook/useFirstAuth';
-import ConfirmEmail from './Pages/ConfirmEmail/ConfirmEmail';
-import NewPassword from './Pages/Auth/NewPassword';
-import ResetPassword from './Pages/Auth/ResetPassword';
-import RaceSeries from './Pages/RaceSeries/RaceSeries';
 
-const Catchup = lazy(() => import('./Pages/Catchup/Catchup'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
 
 import { sendMetrika } from './yandex/metrika.js';
@@ -40,23 +35,17 @@ function App() {
     <Routes>
       <Route path="/" element={<MainLayer />}>
         <Route index element={<MainPage />} />
-        <Route path="/auth/authorization" element={<Authorization />} />
-        <Route path="/auth/registration" element={<Registration />} />
-        <Route path="/auth/reset" element={<ResetPassword />} />
-        <Route path="/auth/confirm-email/:token" element={<ConfirmEmail />} />
-        <Route path="/auth/new-password/:token" element={<NewPassword />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
-        <Route path="/race/series" element={<RaceSeries />} />
-        <Route path="/race/series/catchup" element={<Catchup />} />
-        <Route path="/race/series/catchup/:season" element={<Catchup />} />
-
         <Route path="/faq" element={<Faq />} />
+
         {isModerator ? AdminRoute(isAdmin) : ''}
         <Route path="*" element={<Page404 />} />
         {ResultsRoute()}
         {ScheduleRouteRoute()}
         {ProfileRoute()}
+        {SeriesRoute()}
         {StatisticsRoute()}
+        {AuthRoute()}
       </Route>
     </Routes>
   );
