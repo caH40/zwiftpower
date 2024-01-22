@@ -3,7 +3,7 @@ import { lazy } from 'react';
 
 const Authorization = lazy(() => import('../Pages/Auth/Authorization'));
 const Registration = lazy(() => import('../Pages/Auth/Registration'));
-const ResetPassword = lazy(() => import('../Pages/Auth/NewPassword'));
+const ResetPassword = lazy(() => import('../Pages/Auth/ResetPassword'));
 const ConfirmEmail = lazy(() => import('../Pages/ConfirmEmail/ConfirmEmail'));
 const NewPassword = lazy(() => import('../Pages/Auth/NewPassword'));
 
