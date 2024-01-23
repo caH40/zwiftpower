@@ -91,7 +91,11 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      {isDesktop ? <AdContainer number={adOverFooter} /> : <AdContainer number={adOne} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={900} />
+      ) : (
+        <AdContainer number={adOne} />
+      )}
     </>
   );
 }

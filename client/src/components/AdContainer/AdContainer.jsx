@@ -1,15 +1,21 @@
 import { adBlocks } from '../../yandex/blocks';
 
+import styles from './AdContainer.module.css';
+
 /**
  * Контейнер для блока рекламы
  * @param {{number}} number номер блока рекламы
  * @returns
  */
-function AdContainer({ number, marginBottom = 0, maxHeight = 'none' }) {
+function AdContainer({ number, marginBottom = 0, maxHeight = 'none', maxWidth = 'none' }) {
   const adBlock = adBlocks.find((block) => block.id === number)?.label;
 
   return adBlock ? (
-    <div style={{ marginBottom, maxHeight }} id={`yandex_rtb_${adBlock}`}></div>
+    <div
+      className={styles.block}
+      style={{ marginBottom, maxHeight, maxWidth }}
+      id={`yandex_rtb_${adBlock}`}
+    ></div>
   ) : null;
 }
 
