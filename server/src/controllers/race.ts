@@ -22,7 +22,8 @@ import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interf
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const event: EventSignedRidersFetch | null = await getEventService(eventId);
+    const event: EventSignedRidersFetch = await getEventService(eventId);
+
     res.status(200).json({ event });
   } catch (error) {
     errorHandler(error);

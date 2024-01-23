@@ -17,7 +17,7 @@ export async function getResultsService(eventId: number) {
     .lean();
 
   if (!eventDB) {
-    throw new Error(`Не найден Event (${eventId} в БД`);
+    throw new Error(`Заезд id=${eventId} не найден на zwiftpower.ru`);
   }
 
   let eventPrepared = {} as EventWithSubgroup;

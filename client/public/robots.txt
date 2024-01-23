@@ -2,6 +2,7 @@ User-agent: * #указывает, для каких роботов устано
 Disallow: /zwift/edit/event
 Disallow: /zwift/add/event
 Disallow: /bot
+Disallow: /edit
 Disallow: /profile/me/
 Disallow: /auth/confirm-email/
 Disallow: /images/background/
