@@ -26,7 +26,7 @@ export const adBlocks = [
   {
     id: 5,
     label: 'C-A-5165832-5',
-    description: 'РВ, ScheduleList',
+    description: 'РВ, ScheduleList, RaceSeries',
     type: 'widget',
   },
   {

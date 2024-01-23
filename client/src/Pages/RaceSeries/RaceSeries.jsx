@@ -14,8 +14,9 @@ import styles from './RaceSeries.module.css';
 // рекламные блоки на странице
 
 const adUnderHeader = 3;
+const adOverFooter = 5;
 const adOne = 3; // одна реклама в блоке
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceSeries() {
   const series = useSelector((state) => state.fetchSeries.series);
@@ -43,7 +44,11 @@ function RaceSeries() {
           </>
         )}
       </section>
-      {isDesktop ? null : <AdContainer number={adOne} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1005} />
+      ) : (
+        <AdContainer number={adOne} />
+      )}
     </>
   );
 }

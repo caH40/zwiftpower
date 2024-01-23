@@ -87,7 +87,11 @@ function SignedRiders() {
           </>
         )}
       </section>
-      {isDesktop ? null : <AdContainer number={adOne} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1005} />
+      ) : (
+        <AdContainer number={adOne} />
+      )}
     </>
   );
 }

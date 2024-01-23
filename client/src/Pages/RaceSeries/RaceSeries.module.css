@@ -2,8 +2,3 @@
   min-height: calc(100vh - 60px);
   margin-bottom: 15px;
 }
-@media screen and (max-width: 992px) {
-  .wrapper {
-    min-height: auto;
-  }
-}

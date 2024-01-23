@@ -92,7 +92,7 @@ function ScheduleList() {
         )}
       </section>
       {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={900} />
+        <AdContainer number={adOverFooter} maxWidth={1005} />
       ) : (
         <AdContainer number={adOne} />
       )}
