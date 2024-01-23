@@ -71,7 +71,7 @@ function MainPage() {
           </div>
         </div>
       </section>
-      <AdContainer number={adOverFooter} maxWidth={1005} />
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }
