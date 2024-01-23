@@ -18,7 +18,9 @@ import styles from './MainPage.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
-const adNumbers = [9];
+const inSideBar = 9;
+const adOverFooter = 16;
+const adNumbers = [inSideBar, adOverFooter];
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
@@ -69,6 +71,7 @@ function MainPage() {
           </div>
         </div>
       </section>
+      <AdContainer number={adOverFooter} maxWidth={1005} />
     </>
   );
 }

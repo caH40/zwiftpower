@@ -23,10 +23,10 @@ function Profile() {
 
   return (
     <>
-      {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
-      ) : null}
       <section className={styles.wrapper}>
+        {isDesktop ? (
+          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+        ) : null}
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>

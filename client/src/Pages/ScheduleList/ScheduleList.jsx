@@ -70,10 +70,10 @@ function ScheduleList() {
   return (
     <>
       <HelmetSchedule />
-      {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
-      ) : null}
       <section className={styles.wrapper}>
+        {isDesktop ? (
+          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+        ) : null}
         {eventsSchedule?.[0] && status === 'resolved' && (
           <div className={styles.wrapper__wide}>
             <TableSchedule

@@ -61,10 +61,11 @@ function SignedRiders() {
         organizer={event.organizer}
         typeRaceCustom={event.typeRaceCustom}
       />
-      {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
-      ) : null}
+
       <section className={styles.wrapper}>
+        {isDesktop ? (
+          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+        ) : null}
         {event?.id && !event.started && (
           <>
             <DescriptionEventZwiftNew event={event} forSchedule={true} />

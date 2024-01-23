@@ -83,4 +83,10 @@ export const adBlocks = [
     type: 'feed',
     description: 'Лента, Faq',
   },
+  {
+    id: 16,
+    label: 'C-A-5165832-16',
+    description: 'РВ, Main',
+    type: 'widget',
+  },
 ];

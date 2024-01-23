@@ -59,10 +59,11 @@ function RaceResults() {
         organizer={eventData.organizer}
         typeRaceCustom={eventData.typeRaceCustom}
       />
-      {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
-      ) : null}
+
       <section className={styles.wrapper}>
+        {isDesktop ? (
+          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+        ) : null}
         {eventData?.id && (
           <>
             <DescriptionEventZwiftNew event={eventData} eventId={eventId} />

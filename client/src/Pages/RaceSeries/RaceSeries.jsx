@@ -34,10 +34,10 @@ function RaceSeries() {
   return (
     <>
       <HelmetSeries />
-      {isDesktop ? (
-        <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
-      ) : null}
       <section className={styles.wrapper}>
+        {isDesktop ? (
+          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+        ) : null}
         {series[0] && (
           <>
             <TableSeries series={series} />
