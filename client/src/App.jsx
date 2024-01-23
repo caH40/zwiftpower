@@ -11,11 +11,11 @@ import { StatisticsRoute } from './Route/StatisticsRoute';
 import { ScheduleRouteRoute } from './Route/ScheduleRoute';
 import { SeriesRoute } from './Route/Series.jsx';
 import MainLayer from './components/Layers/MainLayer';
-import MainPage from './Pages/Main/MainPage';
-import Page404 from './Pages/Page404/Page404';
-import Message from './Pages/Message/Message';
 
+const Page404 = lazy(() => import('./Pages/Page404/Page404'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
+const MainPage = lazy(() => import('./Pages/Main/MainPage'));
+const Message = lazy(() => import('./Pages/Message/Message'));
 
 import { sendMetrika } from './yandex/metrika.js';
 
