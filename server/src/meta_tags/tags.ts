@@ -5,26 +5,28 @@ import { MetaTags } from '../types/types.interface.js';
  * Формирование Мета тегов для страницы "Домашняя"
  */
 export const getHomeMeta = (): MetaTags => {
-  const title = 'Анонсы ближайших заездов российского сообщества в Zwift (Звифт)';
+  const title = 'Анонсы ближайших заездов в Zwift (Звифт) российского сообщества';
   const canonical = serverFront;
   const description =
     'Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'main';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
  * Формирование Мета тегов для страницы "Расписание заездов"
  */
 export const getScheduleListMeta = (url: string): MetaTags => {
-  const title = 'Расписание заездов российского сообщества в Zwift (Звифт)';
+  const title = 'Расписание заездов в Zwift (Звифт) российского сообщества';
   const canonical = serverFront + url;
   const description =
     'Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'schedule_list';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -36,8 +38,9 @@ export const getResultListMeta = (url: string): MetaTags => {
   const description =
     'Результаты групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'results_list';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -49,8 +52,9 @@ export const getSeriesMeta = (url: string): MetaTags => {
   const description =
     'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'series';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -62,8 +66,9 @@ export const getStatisticsMeta = (url: string): MetaTags => {
   const description =
     'Общая статистика российского сообщества в Zwift (Звифт). Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов.';
   const image = 'https://zwiftpower.ru/images/open_graph/5.jpg';
+  const recommendationsTag = 'statistics';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -78,8 +83,9 @@ export const getLeadersMeta = (url: string): MetaTags => {
   const canonical = serverFront + url;
   const description = `Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. Интервалы 15 секунд, минута, 5 минут и 20 минут.`;
   const image = `https://zwiftpower.ru/images/open_graph/${imageNumber}.jpg`;
+  const recommendationsTag = 'leaders';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -91,8 +97,9 @@ export const getFTPMeta = (url: string): MetaTags => {
   const description =
     'Диаграммы распределения райдеров по FTP (Functional Threshold Power). Диаграммы распределения райдеров по категориям (группам).';
   const image = 'https://zwiftpower.ru/images/open_graph/3.jpg';
+  const recommendationsTag = 'ftp';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -104,8 +111,9 @@ export const getCatchupMeta = (url: string): MetaTags => {
   const canonical = serverFront + url;
   const description = `Серия заездов Догонялки (CatchUp), проводимых командой KOM-on. Общий зачет за сезон ${season}. Список всех победителей заездов за сезон ${season}.`;
   const image = 'https://zwiftpower.ru/images/open_graph/2.jpg';
+  const recommendationsTag = 'catchup';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -117,8 +125,9 @@ export const getMetaOtherPages = (url: string): MetaTags => {
   const description =
     'Анонсы, расписание, результаты заездов российского сообщества в Zwift (Звифт).';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'ban';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };
 
 /**
@@ -130,6 +139,7 @@ export const getFaqMeta = (url: string): MetaTags => {
   const description =
     'Часто задаваемые вопросы (FAQ). Описание иконок, категорий, поиск джерси из Звифта по названию.';
   const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
+  const recommendationsTag = 'faq';
 
-  return { title, canonical, description, image };
+  return { title, canonical, description, image, recommendationsTag };
 };

@@ -7,6 +7,7 @@ Disallow: /profile/me/
 Disallow: /auth/confirm-email/
 Disallow: /images/background/
 Disallow: /message/
+Disallow: profile/*/settings
 Disallow: /admin/ # запрещает ссылки из панели администратора
 Disallow: /logs/ # запрещает ссылки из панели администратора
 Sitemap: https://zwiftpower.ru/sitemap.xml # указывает роботу на файл Sitemap для сайта

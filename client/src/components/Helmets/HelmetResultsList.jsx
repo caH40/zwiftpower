@@ -11,6 +11,7 @@ export const HelmetResultsList = () => {
   const description =
     'Результаты групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'results_list';
 
   return (
     <Helmet>
@@ -21,6 +22,7 @@ export const HelmetResultsList = () => {
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };

@@ -509,4 +509,5 @@ export interface MetaTags {
   canonical: string;
   description: string;
   image: string;
+  recommendationsTag: string;
 }

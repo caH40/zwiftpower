@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 
 /**
- * Формирование Мета тегов для страницы "Результаты заезда"
+ * Формирование Мета тегов для страницы "Профиль пользователя"
  */
 export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) => {
   const rider = `${firstName} ${lastName}`;
@@ -19,6 +19,7 @@ export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) =
   const descriptionRaw = page === 'results' ? descriptionResults : descriptionPower;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
+  const recommendationsTag = 'profile';
 
   return (
     <Helmet>
@@ -29,6 +30,7 @@ export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) =
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };

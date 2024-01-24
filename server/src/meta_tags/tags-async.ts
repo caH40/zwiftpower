@@ -7,6 +7,7 @@ import { getMetaOtherPages } from './tags.js';
 
 // types
 import { MetaTags } from '../types/types.interface.js';
+import { millisecondsInWeekDays } from '../assets/date.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -48,7 +49,12 @@ export const getSignedRidersMeta = async (url: string): Promise<MetaTags> => {
     const description = descriptionRaw.replace(/"/g, '');
     const image = imageUrl;
 
-    return { title, canonical, description, image };
+    // показывать не начавшиеся заезды в расписании
+    const today = Date.now();
+    const actualPage = new Date(eventStart).getTime() > today;
+    const recommendationsTag = actualPage ? 'need_show' : 'ban';
+
+    return { title, canonical, description, image, recommendationsTag };
   } catch (error) {
     return getMetaOtherPages(url);
   }
@@ -88,7 +94,13 @@ export const getRaceResultsMeta = async (url: string): Promise<MetaTags> => {
     const description = descriptionRaw.replace(/"/g, '');
     const image = imageUrl;
 
-    return { title, canonical, description, image };
+    // показывать результаты, которые не старше недели
+    const today = Date.now();
+    const actualPage = new Date(eventStart).getTime() > today - millisecondsInWeekDays;
+
+    const recommendationsTag = actualPage ? 'need_show' : 'ban';
+
+    return { title, canonical, description, image, recommendationsTag };
   } catch (error) {
     return getMetaOtherPages(url);
   }
@@ -142,8 +154,9 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
     const description = descriptionRaw.replace(/"/g, '');
 
     const image = imageSrc;
+    const recommendationsTag = 'profile';
 
-    return { title, canonical, description, image };
+    return { title, canonical, description, image, recommendationsTag };
   } catch (error) {
     return getMetaOtherPages(url);
   }

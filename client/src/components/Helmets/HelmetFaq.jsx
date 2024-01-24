@@ -11,6 +11,7 @@ export const HelmetFaq = () => {
   const description =
     'Часто задаваемые вопросы (FAQ). Описание иконок, категорий, поиск джерси из Звифта по названию.';
   const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
+  const recommendationsTag = 'faq';
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />
@@ -20,6 +21,7 @@ export const HelmetFaq = () => {
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };

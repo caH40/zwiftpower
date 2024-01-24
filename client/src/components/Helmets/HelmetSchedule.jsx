@@ -11,6 +11,8 @@ export const HelmetSchedule = () => {
   const description =
     'Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';
+  const recommendationsTag = 'schedule_list';
+
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />
@@ -20,6 +22,7 @@ export const HelmetSchedule = () => {
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };

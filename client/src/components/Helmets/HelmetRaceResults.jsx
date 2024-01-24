@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { serverFront } from '../../config/environment';
 import { getTimerLocal } from '../../utils/date-local';
 import { raceTypes } from '../../assets/zwift/race-type';
+import { millisecondsInWeekDays } from '../../assets/dates';
 
 /**
  * Формирование Мета тегов для страницы "Результаты заезда"
@@ -28,6 +29,11 @@ export const HelmetRaceResults = ({
   }'.`;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
+  // показывать результаты, которые не старше недели
+  const today = Date.now();
+  const actualPage = new Date(eventStart).getTime() > today - millisecondsInWeekDays;
+
+  const recommendationsTag = actualPage ? 'need_show' : 'ban';
   return (
     <Helmet>
       <link rel="canonical" href={canonical} />
@@ -37,6 +43,7 @@ export const HelmetRaceResults = ({
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };

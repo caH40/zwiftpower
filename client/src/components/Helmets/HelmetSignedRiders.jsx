@@ -28,6 +28,10 @@ export const HelmetSignedRiders = ({
   }'.`;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
+  // показывать не начавшиеся заезды в расписании
+  const today = Date.now();
+  const actualPage = new Date(eventStart).getTime() > today;
+  const recommendationsTag = actualPage ? 'need_show' : 'ban';
 
   return (
     <Helmet>
@@ -38,6 +42,7 @@ export const HelmetSignedRiders = ({
       <meta property="og:url" content={canonical} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="yandex_recommendations_tag" content={recommendationsTag} />
     </Helmet>
   );
 };
