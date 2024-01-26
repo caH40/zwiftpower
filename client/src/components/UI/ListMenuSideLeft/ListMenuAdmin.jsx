@@ -1,9 +1,9 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import IconRepair from '../../icons/IconRepair';
-import IconAddEvent from '../../icons/IconAddEvent';
+import IconEventEdit from '../../icons/IconEventEdit';
+import IconEventAdd from '../../icons/IconEventAdd';
+import IconEventCreate from '../../icons/IconEventCreate';
 import IconUsers from '../../icons/IconUsers';
 
 import styles from './ListMenu.module.css';
@@ -21,12 +21,12 @@ function ListMenuAdmin({ state }) {
       {isModerator && (
         <>
           <li>
-            <NavLink to="/zwift/edit/event" className={activeLink}>
+            <NavLink to="/zwift/add/event" className={activeLink}>
               {({ isActive }) => (
                 <div className={styles.link__box}>
-                  <IconRepair isActive={isActive} />
+                  <IconEventCreate isActive={isActive} />
                   <span className={`${styles.link__name} ${styles[state]}`}>
-                    Редактирование заезда (Zwift)
+                    Создание заезда в Zwift
                   </span>
                 </div>
               )}
@@ -36,9 +36,21 @@ function ListMenuAdmin({ state }) {
             <NavLink to="/zwift/add/event" className={activeLink}>
               {({ isActive }) => (
                 <div className={styles.link__box}>
-                  <IconAddEvent isActive={isActive} />
+                  <IconEventAdd isActive={isActive} />
                   <span className={`${styles.link__name} ${styles[state]}`}>
-                    Добавление заезда (Zwift)
+                    Добавление заезда из Zwift
+                  </span>
+                </div>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/zwift/edit/event" className={activeLink}>
+              {({ isActive }) => (
+                <div className={styles.link__box}>
+                  <IconEventEdit isActive={isActive} />
+                  <span className={`${styles.link__name} ${styles[state]}`}>
+                    Редактирование заезда в Zwift
                   </span>
                 </div>
               )}
