@@ -33,6 +33,7 @@ import sortTableSlice from '../features/sortTableSlice';
 import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 import eventPostSlice from '../features/api/event-add/eventPostSlice';
 import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
+import zwiftEventParamsCreateSlice from '../features/api/zwift_event_params/zwiftEventParamsCreateSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -46,6 +47,7 @@ export default configureStore({
     checkAuth: authSlice,
     menuBurger: menuBurgerSlice,
     eventParams: zwiftEventParamsSlice,
+    eventParamsCreate: zwiftEventParamsCreateSlice,
     background: backgroundSlice,
     filterCategory: filterCategorySlice,
     filterWatts: filterWattsSlice,

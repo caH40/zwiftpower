@@ -1,0 +1,40 @@
+.block {
+  margin-bottom: 35px;
+}
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.right {
+  text-align: right;
+  margin-bottom: 5px;
+}
+.group {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+}
+.poster {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.h4 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+.paragraph {
+  letter-spacing: 0.5px;
+  text-indent: 2em;
+  text-align: justify;
+  margin: 0px 0px 15px 0px;
+}

@@ -15,7 +15,7 @@ import { fetchEventPost } from '../../redux/features/api/event-add/fetchEventPos
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
-  useTitle('Zwift - Добавление заезда');
+  useTitle('Добавление заезда из Zwift');
   const [eventId, setEventId] = useState({ id: 0 });
   const { eventMainParams } = useSelector((state) => state.eventParams);
   const [additionalParams, setAdditionalParams] = useState({ seriesId: null });

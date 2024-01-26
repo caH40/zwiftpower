@@ -21,7 +21,7 @@ function ListMenuAdmin({ state }) {
       {isModerator && (
         <>
           <li>
-            <NavLink to="/zwift/add/event" className={activeLink}>
+            <NavLink to="/zwift/event/create" className={activeLink}>
               {({ isActive }) => (
                 <div className={styles.link__box}>
                   <IconEventCreate isActive={isActive} />
@@ -33,7 +33,7 @@ function ListMenuAdmin({ state }) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/zwift/add/event" className={activeLink}>
+            <NavLink to="/zwift/event/add" className={activeLink}>
               {({ isActive }) => (
                 <div className={styles.link__box}>
                   <IconEventAdd isActive={isActive} />
@@ -45,7 +45,7 @@ function ListMenuAdmin({ state }) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/zwift/edit/event" className={activeLink}>
+            <NavLink to="/zwift/event/edit" className={activeLink}>
               {({ isActive }) => (
                 <div className={styles.link__box}>
                   <IconEventEdit isActive={isActive} />
