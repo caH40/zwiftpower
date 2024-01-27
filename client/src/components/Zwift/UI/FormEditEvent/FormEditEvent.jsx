@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
@@ -24,10 +25,15 @@ import styles from './FormEditEvent.module.css';
 
 /**
  * Форма добавления настроек для всего Эвента
+ * @param {{isCreating:boolean, initialEventData:{}}} isCreating это форма для создание нового эвента?
+ * @param {} initialEventData начальные данные для создания Эвента для Zwift
  */
-function FormEditEvent() {
+function FormEditEvent({ isCreating, initialEventData }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
+
+  // // если форма используется для создания
+  // useEffect(() => {}, [dispatch, initialEventData]);
 
   // список групп для добавления
   const labelsSubgroupsForAdd = labelsSubgroups
