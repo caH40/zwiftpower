@@ -1,7 +1,7 @@
 const dateStart = new Date().setHours(19, 0, 0, 0);
 const eventStart = new Date(dateStart).toISOString();
 
-const eventMainParams = {
+export const getInitialMainParams = () => ({
   id: 0,
   name: 'Title Event',
   description: 'Description Event',
@@ -13,9 +13,10 @@ const eventMainParams = {
   type: 'EVENT_TYPE_GROUP_RIDE',
   rulesId: null,
   microserviceName: 'clubs',
-};
+});
 
-const eventSubgroup_1 = {
+export const getInitialSubgroup = () => ({
+  index: 1,
   name: 'Title Event',
   description: 'Description Event',
   eventSubgroupStart: eventStart,
@@ -29,21 +30,4 @@ const eventSubgroup_1 = {
   jerseyHash: 0,
   durationInSeconds: 0,
   distanceInMeters: 0,
-};
-
-export function getInitialState() {
-  return {
-    eventParamsRaw: {},
-    eventMainParams,
-    eventSubgroup_1,
-    eventSubgroup_2: undefined,
-    eventSubgroup_3: undefined,
-    eventSubgroup_4: undefined,
-    eventSubgroup_5: undefined,
-    checkboxRules: [],
-    checkboxTags: [],
-    subgroupLabels: [],
-    status: null,
-    error: null,
-  };
-}
+});

@@ -4,9 +4,21 @@ import { labelsSubgroups } from '../../../../assets/subgroups';
 
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
-import { getInitialState } from './initialState';
 
-const initialState = getInitialState();
+const initialState = {
+  eventParamsRaw: {},
+  eventMainParams: { id: 0 },
+  eventSubgroup_1: undefined,
+  eventSubgroup_2: undefined,
+  eventSubgroup_3: undefined,
+  eventSubgroup_4: undefined,
+  eventSubgroup_5: undefined,
+  checkboxRules: [],
+  checkboxTags: [],
+  subgroupLabels: [],
+  status: null,
+  error: null,
+};
 
 const zwiftEventParamsSlice = createSlice({
   name: 'eventParams',

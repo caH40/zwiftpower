@@ -13,12 +13,10 @@ const eventCreateSlice = createSlice({
   name: 'eventPostCreate',
   initialState,
   reducers: {
-    // триггер для перехода на страницу редактирования Эвента в Zwift
-    getNavigate(state) {
-      state.needNavigate = true;
+    setEventId(state, action) {
+      state.eventId = action.payload;
     },
-    resetNavigateEventCreate(state) {
-      state.needNavigate = false;
+    resetEventIdCreated(state) {
       state.eventId = 0;
     },
   },
@@ -43,6 +41,6 @@ const eventCreateSlice = createSlice({
   },
 });
 
-export const { getNavigate, resetNavigateEventCreate } = eventCreateSlice.actions;
+export const { setEventId, resetEventIdCreated } = eventCreateSlice.actions;
 
 export default eventCreateSlice.reducer;

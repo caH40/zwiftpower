@@ -97,9 +97,9 @@ export async function postZwiftEvent(req: Request, res: Response) {
     const { userId } = req.params;
     const event: PostZwiftEvent = req.body.event;
 
-    const eventId = await postZwiftEventService(userId, event);
+    const { eventId, message } = await postZwiftEventService(userId, event);
 
-    res.status(201).json({ eventId });
+    res.status(201).json({ eventId, message });
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {
