@@ -10,13 +10,14 @@ import { resetNavigateEventCreate } from '../../redux/features/api/event-create/
 import { resetParams } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 
 import styles from './ZwiftCreateEvent.module.css';
+import { prepareData } from './utils/preparation';
 
 function ZwiftCreateEvent() {
   useTitle('Создание заезда в Zwift');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { needNavigate, eventId } = useSelector((state) => state.fetchEventCreate);
-  const { eventMainParams } = useSelector((state) => state.eventParams);
+  const eventParams = useSelector((state) => state.eventParams);
 
   // needNavigate значение меняется на true, когда приходит положительны ответ
   // от сервера о создании Эвента в Звифте и добавлении его в БД zwiftpower.ru
@@ -28,7 +29,8 @@ function ZwiftCreateEvent() {
   }, [needNavigate]);
 
   const sendCreateNewEvent = () => {
-    dispatch(fetchEventCreatePost(eventMainParams));
+    const event = prepareData(eventParams);
+    dispatch(fetchEventCreatePost(event));
     dispatch(resetNavigateEventCreate());
     dispatch(resetParams());
   };

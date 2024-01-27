@@ -6,8 +6,9 @@ import { getZwiftRiderService } from '../service/zwift/rider.js';
 import { errorHandler } from '../errors/error.js';
 
 //types
-import { PutEvent } from '../types/http.interface.js';
+import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
 import { AxiosError } from 'axios';
+import { postZwiftEventService } from '../service/zwift/create.js';
 
 export async function getEvent(req: Request, res: Response) {
   try {
@@ -75,6 +76,30 @@ export async function getZwiftEventResults(req: Request, res: Response) {
     const { results } = await getZwiftEventResultsService(eventId);
 
     res.send(results);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        error.response.data.message;
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+}
+
+/**
+ * Создание нового Эвента в Звифте
+ */
+export async function postZwiftEvent(req: Request, res: Response) {
+  try {
+    const { userId } = req.params;
+    const event: PostZwiftEvent = req.body.event;
+
+    const eventId = await postZwiftEventService(userId, event);
+
+    res.status(201).json({ eventId });
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {
