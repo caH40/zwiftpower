@@ -18,6 +18,7 @@ import {
   initialSubgroup,
   initialRules,
 } from '../../redux/features/api/zwift_event_params/initialState';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './ZwiftCreateEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -43,6 +44,11 @@ function ZwiftCreateEvent() {
   }, []);
 
   const sendCreateNewEvent = () => {
+    if (!eventParams.microserviceExternalResourceId) {
+      const message = 'Необходимо выбрать Клуб в котором создается Эвент!';
+      dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return;
+    }
     const event = prepareData(eventParams);
     dispatch(fetchEventCreatePost(event));
     dispatch(resetParams());
@@ -55,7 +61,7 @@ function ZwiftCreateEvent() {
 
       <ol className={styles.list}>
         <li className={styles.subtitle}>
-          Создание Эвента с минимально необходимыми настройками;
+          Создание Эвента с минимально необходимыми параметрами;
         </li>
         <li className={styles.subtitle}>Добавление Эвента на сайт zwiftpower.ru;</li>
         <li className={styles.subtitle}>Изменение необходимых параметров Эвента.</li>
