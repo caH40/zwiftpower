@@ -79,7 +79,7 @@ const zwiftEventParamsSlice = createSlice({
       const propertyEventMain = property === 'eventSubgroupStart' ? 'eventStart' : property;
 
       state.eventMainParams[propertyEventMain] = valueProperty;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 1; i <= 5; i++) {
         // если подгруппа существует, то меняем нужное значение (property) в данной подгруппе
         if (state['eventSubgroup_' + i]) {
           // при выборе одного из трех параметров laps, distanceInMeters, durationInSeconds
