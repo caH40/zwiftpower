@@ -10,6 +10,7 @@ import RSelect from '../ReduxUI/RSelect/RSelect';
 import RInputTime from '../ReduxUI/RInputTime/RInputTime';
 import RSelectId from '../ReduxUI/RSelect/RSelectId';
 import RInvitedLeaders from '../ReduxUI/RInvitedLeaders/RInvitedLeaders';
+import RInputNested from '../ReduxUI/RInput/RInputNested';
 
 import styles from './PopupInput.module.css';
 
@@ -84,6 +85,13 @@ function PopupInput() {
             {inputParams?.type === 'leaders&sweepers' && (
               <RInvitedLeaders
                 property={inputParams.property}
+                subgroupIndex={inputParams.subgroupIndex}
+              />
+            )}
+            {inputParams?.type === 'ttParams' && (
+              <RInputNested
+                property={inputParams.property}
+                label={inputParams.label}
                 subgroupIndex={inputParams.subgroupIndex}
               />
             )}

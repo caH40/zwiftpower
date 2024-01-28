@@ -29,6 +29,15 @@ export function prepareData({
   event.rulesSet = rulesSet;
   event.tags = tags;
 
+  // параметры для TIME TRIAL
+  if (event.eventType === 'TIME_TRIAL') {
+    eventSubgroups.forEach((subgroup) => {
+      subgroup.timeTrialOptions = event.timeTrialOptions;
+    });
+  } else {
+    delete event.timeTrialOptions;
+  }
+
   // type тип заезда, значение которого идет в связке с eventType
   // для создания Эвента требуется указывать type, для редактирования eventType
   event.type = optionsEventType.find((type) => type.name === event.eventType)?.nameSecond;

@@ -18,6 +18,11 @@ export const getInitialMainParams = () => ({
   microserviceName: 'clubs',
   cullingType: 'CULLING_EVENT_ONLY',
   categoryEnforcement: false,
+  timeTrialOptions: {
+    timeGapBetweenRowsMs: 15000,
+    maxRows: 50,
+    maxRidersPerRow: 10,
+  },
 });
 
 /**

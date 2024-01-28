@@ -156,6 +156,28 @@ function FormEditEvent({ isCreating }) {
             {getNameSelected(optionsEventType, eventMainParams.eventType)}
           </BoxParameter>
 
+          {/* отображать только для ТТ гонки */}
+          {eventMainParams.eventType === 'TIME_TRIAL' && (
+            <BoxParameter
+              title={'TT параметры'}
+              sample={false}
+              pen={true}
+              inputParams={{
+                label: 'TT параметры',
+                property: 'timeTrialOptions',
+                type: 'ttParams',
+                typeValue: 'number',
+              }}
+              description="Описание в стадии сбора информации"
+            >
+              <div>
+                timeGapBetweenRowsMs - {eventMainParams.timeTrialOptions?.timeGapBetweenRowsMs}
+              </div>
+              <div>maxRows - {eventMainParams.timeTrialOptions?.maxRows}</div>
+              <div>maxRidersPerRow - {eventMainParams.timeTrialOptions?.maxRidersPerRow}</div>
+            </BoxParameter>
+          )}
+
           {!isCreating && (
             <BoxParameter
               title={'Тип заезда для формирования финишного протокола'}
