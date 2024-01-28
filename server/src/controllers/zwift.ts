@@ -19,7 +19,6 @@ export async function getEvent(req: Request, res: Response) {
     errorHandler(error);
     if (error instanceof AxiosError) {
       if (error.response) {
-        error.response.data.message;
         res.status(400).json(error.response.data);
       }
     } else if (error instanceof Error) {
@@ -41,7 +40,6 @@ export async function putEvent(req: Request, res: Response) {
     errorHandler(error);
     if (error instanceof AxiosError) {
       if (error.response) {
-        error.response.data.message;
         res.status(400).json(error.response.data);
       }
     } else if (error instanceof Error) {
@@ -58,7 +56,6 @@ export async function getZwiftRider(req: Request, res: Response) {
     errorHandler(error);
     if (error instanceof AxiosError) {
       if (error.response) {
-        error.response.data.message;
         res.status(400).json(error.response.data);
       }
     } else if (error instanceof Error) {
@@ -80,7 +77,6 @@ export async function getZwiftEventResults(req: Request, res: Response) {
     errorHandler(error);
     if (error instanceof AxiosError) {
       if (error.response) {
-        error.response.data.message;
         res.status(400).json(error.response.data);
       }
     } else if (error instanceof Error) {
@@ -104,8 +100,8 @@ export async function postZwiftEvent(req: Request, res: Response) {
     errorHandler(error);
     if (error instanceof AxiosError) {
       if (error.response) {
-        error.response.data.message;
-        res.status(400).json(error.response.data);
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
       }
     } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });

@@ -1,6 +1,30 @@
 export const organizers = [
-  { id: 0, value: 'KOM-on', name: 'KOM-on' },
-  { id: 1, value: 'Bike-Caucasus', name: 'BCA' },
-  { id: 2, value: 'bc club', name: 'bc club' },
-  { id: 3, value: 'Dev', name: 'Dev' },
+  {
+    id: 0,
+    value: 'KOM-on',
+    name: 'KOM-on',
+    label: 'KOM-on',
+    clubZwiftId: '7d40dde7-b08d-4653-85d0-b51edb8ba7dd',
+  },
+  {
+    id: 1,
+    value: 'Bike-Caucasus',
+    name: 'BCA',
+    label: 'BCA',
+    clubZwiftId: '38297d70-2684-4348-b921-1e200a1c6ad8',
+  },
+  {
+    id: 2,
+    value: 'bc club',
+    name: 'bc club',
+    label: 'bc club',
+    clubZwiftId: '434e76ea-141a-4e0b-bae4-03f10e473920',
+  },
+  {
+    id: 3,
+    value: 'KavMinVodi',
+    name: 'KMV',
+    label: 'KMV',
+    clubZwiftId: '53fb86b7-1702-42f1-8b42-a37a7007ce72',
+  },
 ];

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import FormClub from '../../components/Zwift/UI/FormEditEvent/FormClub';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 import useTitle from '../../hook/useTitle';
@@ -50,14 +51,20 @@ function ZwiftCreateEvent() {
 
   return (
     <section className={styles.block}>
-      <h2 className={styles.title}>
-        Создание заезда в Zwift происходит в 2 этапа:
-        <br />
-        1. Создается заезд с минимально необходимыми настройками.
-        <br />
-        2. Детальная настройка заезда.
-      </h2>
+      <h2 className={styles.title}>Этапы создание Эвента (заезда) в Zwift:</h2>
+
+      <ol className={styles.list}>
+        <li className={styles.subtitle}>
+          Создание Эвента с минимально необходимыми настройками;
+        </li>
+        <li className={styles.subtitle}>Добавление Эвента на сайт zwiftpower.ru;</li>
+        <li className={styles.subtitle}>Изменение необходимых параметров Эвента.</li>
+      </ol>
+
       <div className={styles.group}>
+        <div className={styles.group}>
+          <FormClub isCreating={true} />
+        </div>
         <div className={styles.group}>
           <FormEditEvent isCreating={true} />
         </div>

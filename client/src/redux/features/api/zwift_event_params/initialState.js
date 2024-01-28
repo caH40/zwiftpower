@@ -11,7 +11,7 @@ export const getInitialMainParams = () => ({
   eventStart,
   microserviceEventVisibility: 'SHAREABLE',
   // как изменять клуб в зависимости от создателя заезда
-  microserviceExternalResourceId: '38297d70-2684-4348-b921-1e200a1c6ad8',
+  // microserviceExternalResourceId: '38297d70-2684-4348-b921-1e200a1c6ad8',
   sport: 'CYCLING',
   type: 'EVENT_TYPE_GROUP_RIDE',
   eventType: 'GROUP_RIDE',

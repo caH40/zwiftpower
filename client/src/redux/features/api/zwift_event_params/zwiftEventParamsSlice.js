@@ -38,6 +38,11 @@ const zwiftEventParamsSlice = createSlice({
       state.subgroupLabels = action.payload.subgroups.map((subgroup) => subgroup.subgroupLabel);
     },
 
+    // установка Клуба в котором создается Эвент
+    setClub(state, action) {
+      state.eventMainParams.microserviceExternalResourceId = action.payload;
+    },
+
     // установка правил и сохранение в состояние checkboxRules
     setEventRules(state, action) {
       state.checkboxRules = state.checkboxRules.map((rule) => {
@@ -207,6 +212,7 @@ export const {
   addGroupToEvent,
   removeGroupFromEvent,
   setInitialOtherParams,
+  setClub,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;

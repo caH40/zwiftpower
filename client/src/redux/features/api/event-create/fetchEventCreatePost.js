@@ -28,6 +28,7 @@ export const fetchEventCreatePost = createAsyncThunk(
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
+      console.log(JSON.parse(message)); // eslint-disable-line
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
       return thunkAPI.rejectWithValue(message);
     }
