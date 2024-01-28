@@ -43,7 +43,10 @@ export interface PutEvent {
 /**
  * данные получаемые с фронтэнда для создания нового Event в Zwift
  */
-export interface PostZwiftEvent extends eventDataFromZwiftAPI {}
+export interface PostZwiftEvent {
+  eventTemplateId: number;
+  eventData: eventDataFromZwiftAPI;
+}
 
 /**
  * данные получаемые с фронтэнда для изменения результата Райдера в Эвенте

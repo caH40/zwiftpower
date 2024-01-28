@@ -8,6 +8,7 @@ import styles from './RCheckbox.module.css';
 
 function RCheckboxArray({ reducer, label, value, property, tooltip, disabled }) {
   const dispatch = useDispatch();
+
   return (
     <label className={styles.label}>
       <MyTooltip tooltip={tooltip}>

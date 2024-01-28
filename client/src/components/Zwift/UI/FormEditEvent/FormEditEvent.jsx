@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
@@ -24,16 +23,12 @@ import { optionsRaceTypes } from '../../../../assets/options';
 import styles from './FormEditEvent.module.css';
 
 /**
- * Форма добавления настроек для всего Эвента
- * @param {{isCreating:boolean, initialEventData:{}}} isCreating это форма для создание нового эвента?
- * @param {} initialEventData начальные данные для создания Эвента для Zwift
+ * Форма изменения настроек для Эвента
+ * @param {{isCreating:boolean }} isCreating это форма для создание нового эвента?
  */
-function FormEditEvent({ isCreating, initialEventData }) {
+function FormEditEvent({ isCreating }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
-
-  // // если форма используется для создания
-  // useEffect(() => {}, [dispatch, initialEventData]);
 
   // список групп для добавления
   const labelsSubgroupsForAdd = labelsSubgroups
@@ -43,6 +38,7 @@ function FormEditEvent({ isCreating, initialEventData }) {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
+
   const addGroup = (subgroupLabel) => {
     dispatch(addGroupToEvent(subgroupLabel));
     dispatch(
@@ -104,32 +100,36 @@ function FormEditEvent({ isCreating, initialEventData }) {
             {eventMainParams.description}
           </BoxParameter>
 
-          <BoxParameter
-            title={'URL картинки для обложки'}
-            pen={true}
-            inputParams={{
-              label: 'URL картинки для обложки',
-              property: 'imageUrl',
-              typeValue: 'text',
-              type: 'input',
-            }}
-          >
-            {eventMainParams.imageUrl}
-          </BoxParameter>
+          {/* скрывать блок если форма используется для создания Эвента */}
+          {!isCreating && (
+            <>
+              <BoxParameter
+                title={'URL картинки для обложки'}
+                pen={true}
+                inputParams={{
+                  label: 'URL картинки для обложки',
+                  property: 'imageUrl',
+                  typeValue: 'text',
+                  type: 'input',
+                }}
+              >
+                {eventMainParams.imageUrl}
+              </BoxParameter>
 
-          <BoxParameter
-            title={'Видимость райдеров'}
-            pen={true}
-            inputParams={{
-              label: 'Видимость райдеров',
-              property: 'cullingType',
-              type: 'select',
-              options: optionsCulling,
-            }}
-          >
-            {getNameSelected(optionsCulling, eventMainParams.cullingType)}
-          </BoxParameter>
-
+              <BoxParameter
+                title={'Видимость райдеров'}
+                pen={true}
+                inputParams={{
+                  label: 'Видимость райдеров',
+                  property: 'cullingType',
+                  type: 'select',
+                  options: optionsCulling,
+                }}
+              >
+                {getNameSelected(optionsCulling, eventMainParams.cullingType)}
+              </BoxParameter>
+            </>
+          )}
           <BoxParameter
             title={'Приватность Заезда'}
             pen={true}
@@ -156,18 +156,20 @@ function FormEditEvent({ isCreating, initialEventData }) {
             {getNameSelected(optionsEventType, eventMainParams.eventType)}
           </BoxParameter>
 
-          <BoxParameter
-            title={'Тип заезда для формирования финишного протокола'}
-            pen={true}
-            inputParams={{
-              property: 'typeRaceCustom',
-              type: 'select',
-              options: optionsRaceTypes,
-            }}
-            description="Настройка сохраняется в БД и не передается в API Zwift"
-          >
-            {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
-          </BoxParameter>
+          {!isCreating && (
+            <BoxParameter
+              title={'Тип заезда для формирования финишного протокола'}
+              pen={true}
+              inputParams={{
+                property: 'typeRaceCustom',
+                type: 'select',
+                options: optionsRaceTypes,
+              }}
+              description="Настройка сохраняется в БД и не передается в API Zwift"
+            >
+              {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
+            </BoxParameter>
+          )}
         </div>
 
         <div className={styles.box__checkbox}>
@@ -177,6 +179,7 @@ function FormEditEvent({ isCreating, initialEventData }) {
             property={'categoryEnforcement'}
             tooltip="Райдер может выступать в своей категории или более высокой"
           />
+
           {checkboxRules.map((checkboxRule) => (
             <RCheckboxArray
               reducer={setEventRules}
@@ -186,6 +189,7 @@ function FormEditEvent({ isCreating, initialEventData }) {
               property={checkboxRule.value}
             />
           ))}
+
           {checkboxTags.map((checkboxTag) => (
             <RCheckboxArray
               reducer={setEventTags}
@@ -197,6 +201,7 @@ function FormEditEvent({ isCreating, initialEventData }) {
           ))}
         </div>
       </div>
+
       <div>
         <h3 className={styles.title__param}>Добавление групп в заезд:</h3>
         <div className={styles.groups}>

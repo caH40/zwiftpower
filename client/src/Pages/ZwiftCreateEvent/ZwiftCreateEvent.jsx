@@ -10,10 +10,12 @@ import {
   resetParams,
   setMainParams,
   setSubgroupParams,
+  setInitialOtherParams,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import {
   getInitialMainParams,
-  getInitialSubgroup,
+  initialSubgroup,
+  initialRules,
 } from '../../redux/features/api/zwift_event_params/initialState';
 
 import styles from './ZwiftCreateEvent.module.css';
@@ -26,8 +28,15 @@ function ZwiftCreateEvent() {
   const eventParams = useSelector((state) => state.eventParams);
 
   useEffect(() => {
+    // установка начальных настроек Эвента при создании Эвента
     dispatch(setMainParams(getInitialMainParams()));
-    dispatch(setSubgroupParams(getInitialSubgroup()));
+    dispatch(setSubgroupParams(initialSubgroup));
+    dispatch(
+      setInitialOtherParams({
+        rulesSet: initialRules,
+        subgroups: [initialSubgroup],
+      })
+    );
 
     return () => dispatch(dispatch(resetParams()));
   }, []);
@@ -52,7 +61,7 @@ function ZwiftCreateEvent() {
         <div className={styles.group}>
           <FormEditEvent isCreating={true} />
         </div>
-        <FormEditEventGroup sendForm={sendCreateNewEvent} />
+        <FormEditEventGroup isCreating={true} sendForm={sendCreateNewEvent} />
       </div>
     </section>
   );

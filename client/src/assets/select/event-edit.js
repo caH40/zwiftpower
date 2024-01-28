@@ -18,8 +18,26 @@ export const optionPrivate = [
   { id: 2, name: 'PUBLIC', translate: 'Публичный (ошибка при выборе!)' },
 ];
 
+/**
+ * nameSecond для свойства type в объекте параметров Эвена Zwift
+ */
 export const optionsEventType = [
-  { id: 0, name: 'GROUP_RIDE', translate: 'Свободный заезд' },
-  { id: 1, name: 'RACE', translate: 'Гонка' },
-  { id: 2, name: 'TIME_TRIAL', translate: 'Гонка с раздельным стартом' },
+  {
+    id: 0,
+    name: 'GROUP_RIDE',
+    nameSecond: 'EVENT_TYPE_GROUP_RIDE',
+    translate: 'Свободный заезд',
+  },
+  {
+    id: 1,
+    name: 'RACE',
+    nameSecond: 'EVENT_TYPE_RACE',
+    translate: 'Гонка',
+  },
+  {
+    id: 2,
+    name: 'TIME_TRIAL',
+    nameSecond: 'EVENT_TYPE_TIME_TRIAL',
+    translate: 'Гонка с раздельным стартом',
+  },
 ];
