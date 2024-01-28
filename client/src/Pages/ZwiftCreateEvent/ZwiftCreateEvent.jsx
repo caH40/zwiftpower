@@ -44,7 +44,7 @@ function ZwiftCreateEvent() {
   }, []);
 
   const sendCreateNewEvent = () => {
-    if (!eventParams.microserviceExternalResourceId) {
+    if (!eventParams.eventMainParams.microserviceExternalResourceId) {
       const message = 'Необходимо выбрать Клуб в котором создается Эвент!';
       dispatch(getAlert({ message, type: 'error', isOpened: true }));
       return;
