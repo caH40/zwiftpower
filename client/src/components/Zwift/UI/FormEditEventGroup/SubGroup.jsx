@@ -15,9 +15,9 @@ import styles from './FormEditEventGroup.module.css';
 const cx = classNames.bind(styles);
 
 /**
- *
+ * Форма изменения настроек для подгрупп Эвента
  */
-function SubGroup({ subGroup, groupNumber }) {
+function SubGroup({ subGroup, groupNumber, isCreating }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
 
   const dispatch = useDispatch();
@@ -101,23 +101,25 @@ function SubGroup({ subGroup, groupNumber }) {
                 {subGroup.description}
               </BoxParameter>
 
-              <BoxParameter
-                title={'Джерси для группы'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Джерси для группы',
-                  property: 'jerseyHash',
-                  type: 'selectId',
-                  subgroupIndex: groupNumber,
-                  options: [...jerseys].sort((a, b) =>
-                    a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-                  ),
-                }}
-              >
-                {jerseys.find((jersey) => jersey.id === subGroup.jerseyHash)?.name ||
-                  'Джерси не найдена или не задана'}
-              </BoxParameter>
+              {!isCreating && (
+                <BoxParameter
+                  title={'Джерси для группы'}
+                  sample={true}
+                  pen={true}
+                  inputParams={{
+                    label: 'Джерси для группы',
+                    property: 'jerseyHash',
+                    type: 'selectId',
+                    subgroupIndex: groupNumber,
+                    options: [...jerseys].sort((a, b) =>
+                      a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
+                    ),
+                  }}
+                >
+                  {jerseys.find((jersey) => jersey.id === subGroup.jerseyHash)?.name ||
+                    'Джерси не найдена или не задана'}
+                </BoxParameter>
+              )}
             </div>
 
             <div className={cx('box__inputs')}>
@@ -212,20 +214,23 @@ function SubGroup({ subGroup, groupNumber }) {
               </BoxParameter>
             </div>
             <div className={cx('box__inputs')}>
-              <BoxParameter
-                title={'Номер "кармана" на старте'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Номер "кармана" на старте',
-                  property: 'startLocation',
-                  type: 'input',
-                  typeValue: 'number',
-                  subgroupIndex: groupNumber,
-                }}
-              >
-                {subGroup.startLocation}
-              </BoxParameter>
+              {/* скрывать блок если форма используется для создания Эвента */}
+              {!isCreating && (
+                <BoxParameter
+                  title={'Номер "кармана" на старте'}
+                  sample={true}
+                  pen={true}
+                  inputParams={{
+                    label: 'Номер "кармана" на старте',
+                    property: 'startLocation',
+                    type: 'input',
+                    typeValue: 'number',
+                    subgroupIndex: groupNumber,
+                  }}
+                >
+                  {subGroup.startLocation}
+                </BoxParameter>
+              )}
 
               <BoxParameter
                 title={'Приглашенные лидеры'}

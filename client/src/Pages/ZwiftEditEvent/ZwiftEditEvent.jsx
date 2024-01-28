@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,10 @@ import {
   setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
+import {
+  resetEventIdCreated,
+  setEventId,
+} from '../../redux/features/api/event-create/eventCreateSlice';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -27,9 +31,9 @@ import { prepareData } from './utils/preparation';
  */
 function ZwiftEditEvent() {
   const { id } = useParams();
-  const [eventId, setEventId] = useState({ id: id || 0 });
+  const { eventId } = useSelector((state) => state.fetchEventCreate);
 
-  useTitle('Zwift - Редактирование заезда');
+  useTitle('Редактирование заезда в Zwift');
   const eventParams = useSelector((state) => state.eventParams);
 
   const dispatch = useDispatch();
@@ -37,15 +41,20 @@ function ZwiftEditEvent() {
   const goBack = () => navigate(-1);
 
   useEffect(() => {
-    if (eventId.id === 0) {
+    if (id) {
+      dispatch(setEventId(id));
+    }
+
+    if (eventId === 0) {
       return undefined;
     }
-    dispatch(fetchZwiftEventParams(eventId.id));
+    dispatch(fetchZwiftEventParams(eventId));
 
     return () => {
       dispatch(resetParams());
+      dispatch(resetEventIdCreated());
     };
-  }, [eventId, dispatch]);
+  }, [id, eventId, dispatch]);
 
   const sendNewEventParams = () => {
     const eventForPost = prepareData(eventParams);
@@ -91,7 +100,7 @@ function ZwiftEditEvent() {
     <section className={styles.block}>
       <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
       <div className={styles.group}>
-        <FormRequest name={'Id изменяемого Event'} setState={setEventId} />
+        <FormRequest name={'Id изменяемого Event'} />
       </div>
       {eventParams?.eventMainParams.worldId ? (
         <>

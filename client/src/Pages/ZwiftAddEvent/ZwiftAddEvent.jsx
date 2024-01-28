@@ -11,12 +11,15 @@ import { fetchActualSeries } from '../../redux/features/api/series-actual/fetchA
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetSeries } from '../../redux/features/api/series-actual/actualSeriesSlice';
 import { fetchEventPost } from '../../redux/features/api/event-add/fetchEventPost';
+import { resetEventIdCreated } from '../../redux/features/api/event-create/eventCreateSlice';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
-  useTitle('Zwift - Добавление заезда');
-  const [eventId, setEventId] = useState({ id: 0 });
+  const { eventId } = useSelector((state) => state.fetchEventCreate);
+
+  useTitle('Добавление заезда из Zwift');
+  // const [eventId, setEventId] = useState({ id: eventIdCreated });
   const { eventMainParams } = useSelector((state) => state.eventParams);
   const [additionalParams, setAdditionalParams] = useState({ seriesId: null });
 
@@ -27,12 +30,14 @@ function ZwiftAddEvent() {
 
   // запрос параметров Эвента
   useEffect(() => {
-    if (eventId.id === 0) {
+    if (eventId === 0) {
       return undefined;
     }
-    dispatch(fetchZwiftEventParams(eventId.id));
+
+    dispatch(fetchZwiftEventParams(eventId));
     return () => {
       dispatch(resetParams());
+      dispatch(resetEventIdCreated());
     };
   }, [eventId, dispatch]);
 
@@ -64,7 +69,7 @@ function ZwiftAddEvent() {
     const eventForSend = { creator: userId, ...eventMainParams, ...additionalParams };
     dispatch(fetchEventPost(eventForSend));
 
-    setEventId({ id: 0 });
+    // setEventId({ id: 0 });
     setAdditionalParams({});
   };
 
@@ -74,7 +79,7 @@ function ZwiftAddEvent() {
         {'Добавление заезда из Звифта для отслеживания результатов'}
       </h3>
       <div className={styles.group}>
-        <FormRequest name={'Id Event'} setState={setEventId} />
+        <FormRequest name={'Id Event'} />
       </div>
       {eventMainParams?.name && (
         <>

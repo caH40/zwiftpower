@@ -33,6 +33,7 @@ import sortTableSlice from '../features/sortTableSlice';
 import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 import eventPostSlice from '../features/api/event-add/eventPostSlice';
 import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
+import eventCreateSlice from '../features/api/event-create/eventCreateSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -71,6 +72,7 @@ export default configureStore({
     sortTable: sortTableSlice,
     fetchActualSeries: actualSeriesSlice,
     fetchEventPost: eventPostSlice,
+    fetchEventCreate: eventCreateSlice,
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     ...statisticsReducers,
     ...userReducers,

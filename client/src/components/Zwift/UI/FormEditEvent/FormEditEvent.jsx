@@ -23,9 +23,10 @@ import { optionsRaceTypes } from '../../../../assets/options';
 import styles from './FormEditEvent.module.css';
 
 /**
- * Форма добавления настроек для всего Эвента
+ * Форма изменения настроек для Эвента
+ * @param {{isCreating:boolean }} isCreating это форма для создание нового эвента?
  */
-function FormEditEvent() {
+function FormEditEvent({ isCreating }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
 
@@ -37,6 +38,7 @@ function FormEditEvent() {
   const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
     (state) => state.eventParams
   );
+
   const addGroup = (subgroupLabel) => {
     dispatch(addGroupToEvent(subgroupLabel));
     dispatch(
@@ -98,32 +100,36 @@ function FormEditEvent() {
             {eventMainParams.description}
           </BoxParameter>
 
-          <BoxParameter
-            title={'URL картинки для обложки'}
-            pen={true}
-            inputParams={{
-              label: 'URL картинки для обложки',
-              property: 'imageUrl',
-              typeValue: 'text',
-              type: 'input',
-            }}
-          >
-            {eventMainParams.imageUrl}
-          </BoxParameter>
+          {/* скрывать блок если форма используется для создания Эвента */}
+          {!isCreating && (
+            <>
+              <BoxParameter
+                title={'URL картинки для обложки'}
+                pen={true}
+                inputParams={{
+                  label: 'URL картинки для обложки',
+                  property: 'imageUrl',
+                  typeValue: 'text',
+                  type: 'input',
+                }}
+              >
+                {eventMainParams.imageUrl}
+              </BoxParameter>
 
-          <BoxParameter
-            title={'Видимость райдеров'}
-            pen={true}
-            inputParams={{
-              label: 'Видимость райдеров',
-              property: 'cullingType',
-              type: 'select',
-              options: optionsCulling,
-            }}
-          >
-            {getNameSelected(optionsCulling, eventMainParams.cullingType)}
-          </BoxParameter>
-
+              <BoxParameter
+                title={'Видимость райдеров'}
+                pen={true}
+                inputParams={{
+                  label: 'Видимость райдеров',
+                  property: 'cullingType',
+                  type: 'select',
+                  options: optionsCulling,
+                }}
+              >
+                {getNameSelected(optionsCulling, eventMainParams.cullingType)}
+              </BoxParameter>
+            </>
+          )}
           <BoxParameter
             title={'Приватность Заезда'}
             pen={true}
@@ -150,18 +156,20 @@ function FormEditEvent() {
             {getNameSelected(optionsEventType, eventMainParams.eventType)}
           </BoxParameter>
 
-          <BoxParameter
-            title={'Тип заезда для формирования финишного протокола'}
-            pen={true}
-            inputParams={{
-              property: 'typeRaceCustom',
-              type: 'select',
-              options: optionsRaceTypes,
-            }}
-            description="Настройка сохраняется в БД и не передается в API Zwift"
-          >
-            {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
-          </BoxParameter>
+          {!isCreating && (
+            <BoxParameter
+              title={'Тип заезда для формирования финишного протокола'}
+              pen={true}
+              inputParams={{
+                property: 'typeRaceCustom',
+                type: 'select',
+                options: optionsRaceTypes,
+              }}
+              description="Настройка сохраняется в БД и не передается в API Zwift"
+            >
+              {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
+            </BoxParameter>
+          )}
         </div>
 
         <div className={styles.box__checkbox}>
@@ -171,6 +179,7 @@ function FormEditEvent() {
             property={'categoryEnforcement'}
             tooltip="Райдер может выступать в своей категории или более высокой"
           />
+
           {checkboxRules.map((checkboxRule) => (
             <RCheckboxArray
               reducer={setEventRules}
@@ -180,6 +189,7 @@ function FormEditEvent() {
               property={checkboxRule.value}
             />
           ))}
+
           {checkboxTags.map((checkboxTag) => (
             <RCheckboxArray
               reducer={setEventTags}
@@ -191,6 +201,7 @@ function FormEditEvent() {
           ))}
         </div>
       </div>
+
       <div>
         <h3 className={styles.title__param}>Добавление групп в заезд:</h3>
         <div className={styles.groups}>

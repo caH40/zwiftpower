@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { labelsSubgroups } from '../../../../assets/subgroups';
+import { rules } from '../../../../assets/zwift/rule';
+import { tags } from '../../../../assets/zwift/tags';
 
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
 
-// eventSubgroup_ порядковый номер массива в свойстве  eventSubgroups
 const initialState = {
   eventParamsRaw: {},
-  eventMainParams: { id: 0 },
+  // у контролируемого параметра должно быть значение отличное от null, undefined
+  eventMainParams: { id: 0, categoryEnforcement: false },
   eventSubgroup_1: undefined,
   eventSubgroup_2: undefined,
   eventSubgroup_3: undefined,
@@ -25,6 +27,22 @@ const zwiftEventParamsSlice = createSlice({
   name: 'eventParams',
   initialState,
   reducers: {
+    // установка в checkboxRules начальных данных для создания Эвента
+    setInitialOtherParams(state, action) {
+      state.checkboxRules = rules.map((rule) => {
+        return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
+      });
+
+      state.checkboxTags = tags;
+
+      state.subgroupLabels = action.payload.subgroups.map((subgroup) => subgroup.subgroupLabel);
+    },
+
+    // установка Клуба в котором создается Эвент
+    setClub(state, action) {
+      state.eventMainParams.microserviceExternalResourceId = action.payload;
+    },
+
     // установка правил и сохранение в состояние checkboxRules
     setEventRules(state, action) {
       state.checkboxRules = state.checkboxRules.map((rule) => {
@@ -84,16 +102,18 @@ const zwiftEventParamsSlice = createSlice({
 
     // сброс всех состояний
     resetParams(state) {
-      state.eventParamsRaw = {};
-      state.eventSubgroup_1 = undefined;
-      state.eventSubgroup_2 = undefined;
-      state.eventSubgroup_3 = undefined;
-      state.eventSubgroup_4 = undefined;
-      state.eventSubgroup_5 = undefined;
-      state.eventMainParams = { id: 0 };
-      state.subgroupLabels = [];
-      state.checkboxRules = [];
-      state.checkboxTags = [];
+      state.eventParamsRaw = initialState.eventParamsRaw;
+      state.eventMainParams = initialState.eventMainParams;
+
+      state.eventSubgroup_1 = initialState.eventSubgroup_1;
+      state.eventSubgroup_2 = initialState.eventSubgroup_2;
+      state.eventSubgroup_3 = initialState.eventSubgroup_3;
+      state.eventSubgroup_4 = initialState.eventSubgroup_4;
+      state.eventSubgroup_5 = initialState.eventSubgroup_5;
+
+      state.subgroupLabels = initialState.subgroupLabels;
+      state.checkboxRules = initialState.checkboxRules;
+      state.checkboxTags = initialState.checkboxTags;
     },
 
     // установка нового параметра в настройках Эвента
@@ -105,7 +125,7 @@ const zwiftEventParamsSlice = createSlice({
 
     // установка нового параметра в настройках подгруппы
     setSubgroupParams(state, action) {
-      const params = action.payload;
+      const params = { ...action.payload };
       const property = `eventSubgroup_${params.index}`;
       delete params.index;
 
@@ -191,6 +211,8 @@ export const {
   setPattern,
   addGroupToEvent,
   removeGroupFromEvent,
+  setInitialOtherParams,
+  setClub,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;

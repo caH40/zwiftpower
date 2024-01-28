@@ -58,7 +58,7 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
             <div className={styles.box__title}>
               <h2 className={styles.title}>{event.name}</h2>
               {isModerator && forSchedule && (
-                <Link to={`/zwift/edit/event/${event.id}`}>
+                <Link to={`/zwift/event/edit/${event.id}`}>
                   <IconEdit tooltip={'Редактирование параметров заезда в Звифте'} />
                 </Link>
               )}
