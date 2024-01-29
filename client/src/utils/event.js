@@ -1,3 +1,4 @@
+import { optionsEventType } from '../assets/select/event-edit';
 import { routes } from '../assets/zwift/lib/esm/routes';
 import { worlds } from '../assets/zwift/lib/esm/worlds';
 import { organizers } from '../assets/zwift/organizer';
@@ -12,18 +13,15 @@ export const map = (id) => {
 
 /**
  * Получение типа Эвента (Race, Ride ...)
- * @param {string} type
+ * @param {string} eventType свойство eventType из настроек Эвента
  * @returns {string}
  */
-export const getEventType = (type) => {
-  switch (type) {
-    case 'RACE':
-      return 'Race';
-    case 'GROUP_RIDE':
-      return 'Ride';
-    default:
-      return type;
+export const getEventType = (eventType) => {
+  const typeForTitle = optionsEventType.find((elm) => elm.name === eventType)?.title;
+  if (!typeForTitle) {
+    return '';
   }
+  return typeForTitle;
 };
 
 /**
