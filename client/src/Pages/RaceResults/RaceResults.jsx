@@ -79,7 +79,7 @@ function RaceResults() {
           </>
         )}
       </section>
-      <AdContainer number={adOverFooter} />
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

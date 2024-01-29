@@ -24,7 +24,7 @@ function Statistics() {
         <NavBarStatistics addCls={'mb15'} />
         <Outlet />
       </section>
-      <AdContainer number={adOverFooter} />
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

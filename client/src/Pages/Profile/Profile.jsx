@@ -30,7 +30,7 @@ function Profile() {
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>
-      <AdContainer number={adOverFooter} />
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }
