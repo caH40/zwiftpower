@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
-import { routes } from '../../../../assets/zwift/lib/esm/routes';
 import { jerseys } from '../../../../assets/zwift/raw/jerseys';
-import { worlds } from '../../../../assets/zwift/lib/esm/zwift-lib';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
@@ -11,6 +9,7 @@ import { removeGroupFromEvent } from '../../../../redux/features/api/zwift_event
 import IconDelete from '../../../icons/IconDelete';
 
 import styles from './FormEditEventGroup.module.css';
+import MapBlock from './MapBlock';
 
 const cx = classNames.bind(styles);
 
@@ -123,97 +122,6 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
             </div>
 
             <div className={cx('box__inputs')}>
-              <BoxParameter
-                title={'Карта'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Карта',
-                  property: 'mapId',
-                  type: 'selectId',
-                  subgroupIndex: groupNumber,
-                  options: [...worlds].sort((a, b) =>
-                    a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-                  ),
-                }}
-              >
-                {worlds.find((world) => world.id === subGroup.mapId)?.name ||
-                  'Карта не найдена'}
-              </BoxParameter>
-
-              <BoxParameter
-                title={'Маршрут'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Маршрут',
-                  property: 'routeId',
-                  type: 'selectId',
-                  subgroupIndex: groupNumber,
-                  options: routes
-                    .filter(
-                      (route) =>
-                        route.world.toLowerCase() ===
-                        worlds.find((world) => world.id === subGroup.mapId)?.slug.toLowerCase()
-                    )
-                    .sort((a, b) =>
-                      a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en')
-                    ),
-                }}
-              >
-                {routes.find((route) => route.id === subGroup.routeId)?.name ||
-                  'Маршрут не найден'}
-              </BoxParameter>
-
-              <BoxParameter
-                title={'Количество кругов'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Количество кругов',
-                  property: 'laps',
-                  type: 'input',
-                  typeValue: 'number',
-                  subgroupIndex: groupNumber,
-                }}
-                description="При установке кругов обнуляется дистанция и продолжительность заезда"
-              >
-                {subGroup.laps}
-              </BoxParameter>
-
-              <BoxParameter
-                title={'Дистанция, метры'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Дистанция, метры',
-                  property: 'distanceInMeters',
-                  type: 'input',
-                  typeValue: 'number',
-                  subgroupIndex: groupNumber,
-                }}
-                description="При установке дистанции обнуляются круги и продолжительность заезда"
-              >
-                {subGroup.distanceInMeters}
-              </BoxParameter>
-
-              <BoxParameter
-                title={'Продолжительность заезда, секунды'}
-                sample={true}
-                pen={true}
-                inputParams={{
-                  label: 'Время заезда, секунды',
-                  property: 'durationInSeconds',
-                  type: 'input',
-                  typeValue: 'number',
-                  subgroupIndex: groupNumber,
-                }}
-                description="При установке продолжительности заезда обнуляется дистанция и круги"
-              >
-                {subGroup.durationInSeconds}
-              </BoxParameter>
-            </div>
-            <div className={cx('box__inputs')}>
               {/* скрывать блок если форма используется для создания Эвента */}
               {!isCreating && (
                 <BoxParameter
@@ -275,6 +183,10 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
                   );
                 })}
               </BoxParameter>
+            </div>
+
+            <div className={cx('box__inputs')}>
+              <MapBlock subGroup={subGroup} groupNumber={groupNumber} />
             </div>
           </div>
         </div>

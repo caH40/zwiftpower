@@ -13,7 +13,7 @@
 }
 .title {
   flex: 0 1 420px;
-  min-width: 230px;
+  min-width: 200px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
@@ -30,7 +30,7 @@
   font-size: 16px;
   line-height: 18px;
   max-width: 410px;
-  min-width: 230px;
+  /* min-width: 200px; */
   max-height: 150px;
   overflow: hidden;
   word-wrap: break-word;
@@ -50,6 +50,6 @@
 }
 @media screen and (max-width: 390px) {
   .value {
-    max-width: 260px;
+    max-width: 250px;
   }
 }
