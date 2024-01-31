@@ -16,7 +16,7 @@ import { HelmetMain } from '../../components/Helmets/HelmetMain';
 
 import styles from './MainPage.module.css';
 
-const notFound = 'К сожалению, заезды не найдены ... ((';
+const notFound = 'К сожалению, заезды не найдены!';
 
 // рекламные блоки на странице
 const inSideBar = 9;
@@ -47,12 +47,14 @@ function MainPage() {
   useAd(adNumbers);
 
   const isVisible = eventsPreview[0]?.id;
-
   return (
     <>
       <section className={styles.wrapper}>
         <HelmetMain />
         <div className={styles.wrapper__preview}>
+          {!isVisible && status === 'resolved' && (
+            <h2 className={styles.title__notFound}>{notFound}</h2>
+          )}
           {isVisible && <CardRacePreview event={eventsPreview[0]} getClick={toLink} />}
 
           {!isDesktop && <AdContainer number={9} marginBottom={15} />}
