@@ -5,6 +5,7 @@ import IconSample from '../../../icons/IconSample';
 import IconPen from '../../../icons/IconPen';
 import { setSameParameter } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import IconQuestion from '../../../icons/IconQuestion';
+import { getAlert } from '../../../../redux/features/alertMessageSlice';
 
 import styles from './BoxParameter.module.css';
 
@@ -24,14 +25,21 @@ function BoxParameter({ title, children, sample, pen, inputParams, description }
               subgroupIndex={inputParams.subgroupIndex}
               squareSize={18}
               tooltip={'Применить ко всем группам'}
-              getClick={() =>
+              getClick={() => {
+                dispatch(
+                  getAlert({
+                    message: `Параметр "${inputParams.property}" установлен для всех групп!`,
+                    type: 'success',
+                    isOpened: open,
+                  })
+                );
                 dispatch(
                   setSameParameter({
                     property: inputParams.property,
                     subgroupIndex: inputParams.subgroupIndex ?? 'eventMainParameter',
                   })
-                )
-              }
+                );
+              }}
             />
           )}
           {pen && (
