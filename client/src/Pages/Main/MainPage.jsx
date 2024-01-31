@@ -46,26 +46,23 @@ function MainPage() {
 
   useAd(adNumbers);
 
+  const isVisible = eventsPreview[0]?.id;
+
   return (
     <>
       <section className={styles.wrapper}>
         <HelmetMain />
         <div className={styles.wrapper__preview}>
-          {!eventsPreview[0]?.id ? null : (
-            <>
-              <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
+          {isVisible && <CardRacePreview event={eventsPreview[0]} getClick={toLink} />}
 
-              {!isDesktop && (
-                <>
-                  <AdContainer number={9} marginBottom={15} />
-                </>
-              )}
+          {!isDesktop && <AdContainer number={9} marginBottom={15} />}
 
-              {eventsPreview.slice(1).map((event) => (
+          {isVisible &&
+            eventsPreview
+              .slice(1)
+              .map((event) => (
                 <CardRacePreview event={event} key={event.id} getClick={toLink} />
               ))}
-            </>
-          )}
         </div>
         <div className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
