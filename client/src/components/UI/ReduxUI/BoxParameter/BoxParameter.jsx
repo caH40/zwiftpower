@@ -30,7 +30,7 @@ function BoxParameter({ title, children, sample, pen, inputParams, description }
                   getAlert({
                     message: `Параметр "${inputParams.property}" установлен для всех групп!`,
                     type: 'success',
-                    isOpened: open,
+                    isOpened: true,
                   })
                 );
                 dispatch(
