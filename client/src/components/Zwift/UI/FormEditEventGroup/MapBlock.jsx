@@ -29,7 +29,7 @@ function MapBlock({ subGroup, groupNumber }) {
 
   const descriptions = [
     { title: 'Total', distance: distanceTotal, elevation: elevationTotal },
-    { title: 'Map', distance: distanceMap, elevation },
+    { title: 'Lap', distance: distanceMap, elevation },
     { title: 'LeadIn', distance: distanceLeadIn, elevation: leadInElevation },
   ];
 

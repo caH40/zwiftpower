@@ -1,7 +1,6 @@
-import React from 'react';
-
 import TypeRaceBox from '../TypeRaceBox/TypeRaceBox';
 import RulesBox from '../RulesBox/RulesBox';
+import { getEventType } from '../../utils/event';
 
 import styles from './RaceBoxDescription.module.css';
 
@@ -25,7 +24,7 @@ function RaceBoxDescription({ event }) {
         </div>
         <div className={styles.box__term}>
           <dt className={styles.term}>Тип</dt>
-          <dd className={styles.description}>{event.eventType}</dd>
+          <dd className={styles.description}>{getEventType(event.eventType)}</dd>
         </div>
         <div className={styles.box__term}>
           <dt className={styles.term}>ОРГАНИЗАТОР:</dt>
