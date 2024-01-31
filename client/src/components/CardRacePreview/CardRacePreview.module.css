@@ -132,6 +132,12 @@
 }
 
 @media screen and (max-width: 992px) {
+  .wrapper {
+    margin-bottom: 15px;
+  }
+  .title__date {
+    padding-bottom: 5px;
+  }
   .title {
     font-size: 18px;
   }

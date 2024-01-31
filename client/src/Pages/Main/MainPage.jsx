@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import useTitle from '../../hook/useTitle';
+import { useResize } from '../../hook/use-resize';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
@@ -26,6 +27,7 @@ function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
+  const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
   useTitle('Ближайшие заезды Zwift');
 
@@ -49,12 +51,21 @@ function MainPage() {
       <section className={styles.wrapper}>
         <HelmetMain />
         <div className={styles.wrapper__preview}>
-          {!eventsPreview[0]?.id && status === 'resolved' && (
-            <div className={styles.title__notFound}>{notFound}</div>
+          {!eventsPreview[0]?.id ? null : (
+            <>
+              <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
+
+              {!isDesktop && (
+                <>
+                  <AdContainer number={9} marginBottom={15} />
+                </>
+              )}
+
+              {eventsPreview.slice(1).map((event) => (
+                <CardRacePreview event={event} key={event.id} getClick={toLink} />
+              ))}
+            </>
           )}
-          {eventsPreview.map((event) => (
-            <CardRacePreview event={event} key={event.id} getClick={toLink} />
-          ))}
         </div>
         <div className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
@@ -65,7 +76,9 @@ function MainPage() {
               subtitle="сезон 2023-2024"
               imageSrc="/images/open_graph/5.jpg"
             />
-            <AdContainer number={9} />
+
+            {isDesktop && <AdContainer number={9} />}
+
             <MainInfo />
             <MainInfoDev isModerator={isModerator} />
           </div>
