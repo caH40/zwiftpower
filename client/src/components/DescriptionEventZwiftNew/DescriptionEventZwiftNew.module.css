@@ -92,6 +92,9 @@
 }
 
 @media screen and (max-width: 992px) {
+  .block__text {
+    padding: 10px;
+  }
   .block__mainClosed {
     min-height: 0px;
   }

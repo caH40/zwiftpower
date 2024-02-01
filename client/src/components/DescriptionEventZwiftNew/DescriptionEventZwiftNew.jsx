@@ -14,6 +14,7 @@ import RaceBoxDescription from '../RaceBoxDescription/RaceBoxDescription';
 import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import LinksRoute from '../LinksRoute/LinksRoute';
+import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 
 import styles from './DescriptionEventZwiftNew.module.css';
 
@@ -89,6 +90,7 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
 
       {isOpened && (
         <div className={styles.block__text}>
+          <RouteProfileAndMap routeId={event.eventSubgroups[0].routeId} />
           <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
           <p
             className={styles.paragraph}
