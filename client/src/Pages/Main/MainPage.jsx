@@ -70,7 +70,7 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
           <div className={styles.sidebar}>
             <AdMyPage
-              href="/race/series/catchup"
+              href="/race/series/catchup/2023"
               title="Догонялки (Catchup)"
               subtitle="сезон 2023-2024"
               imageSrc="/images/open_graph/5.jpg"

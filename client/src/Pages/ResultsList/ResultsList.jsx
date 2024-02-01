@@ -84,7 +84,7 @@ function ResultsList() {
       <HelmetResultsList />
       <section className={styles.wrapper}>
         {isDesktop ? (
-          <AdContainer number={adUnderHeader} maxHeight={180} marginBottom={10} />
+          <AdContainer number={adUnderHeader} height={150} marginBottom={10} />
         ) : null}
         <div className={styles.align__right}>
           <FilterBoxForTable
