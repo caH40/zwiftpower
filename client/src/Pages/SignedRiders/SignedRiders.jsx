@@ -77,8 +77,8 @@ function SignedRiders() {
             >
               Регистрация в Zwift
             </Link>
+            <NavBarSignedRiders />
             <section className={styles.wrapper__wide}>
-              <NavBarSignedRiders />
               <TableSignedRiders riders={event.signedRiders} event={event} />
             </section>
             <div className={styles.right}>
