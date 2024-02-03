@@ -32,7 +32,7 @@ function RaceSeries() {
     <>
       <HelmetSeries />
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
+        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         {series[0] && (
           <>
             <TableSeries series={series} />

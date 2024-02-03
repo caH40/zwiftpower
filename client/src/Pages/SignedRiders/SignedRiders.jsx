@@ -61,7 +61,7 @@ function SignedRiders() {
       />
 
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
+        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         {event?.id && !event.started && (
           <>
             <DescriptionEventZwiftNew event={event} forSchedule={true} />

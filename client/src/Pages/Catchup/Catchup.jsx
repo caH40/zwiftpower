@@ -47,7 +47,7 @@ function Catchup() {
       <HelmetCatchup season={season} />
       <section className={styles.wrapper}>
         {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={150} marginBottom={10} />
+          <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
         <div className={styles.box__filter}>
           <FilterCatchup season={season} reducer={getLink} />

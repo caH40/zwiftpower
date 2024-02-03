@@ -45,9 +45,6 @@ function RaceResults() {
       dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
     }
   }, [eventData]);
-  useEffect(() => {
-    (window.MRGtag || []).push({});
-  }, []);
 
   useAd(adNumbers);
 
@@ -63,7 +60,7 @@ function RaceResults() {
       />
 
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
+        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         {eventData?.id && (
           <>
             <DescriptionEventZwiftNew event={eventData} eventId={eventId} />
@@ -79,14 +76,6 @@ function RaceResults() {
           </>
         )}
       </section>
-      {isDesktop && (
-        <ins
-          className="mrg-tag"
-          style={{ display: 'inline-block', width: 'auto', height: '300px' }}
-          data-ad-client="ad-1499271"
-          data-ad-slot="1499271"
-        ></ins>
-      )}
       {!isDesktop && <AdContainer number={adUnderHeader} />}
     </>
   );

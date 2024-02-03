@@ -1,0 +1,15 @@
+.block {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  justify-content: space-around;
+  align-items: center;
+}
+.test {
+  width: 100px;
+  height: 100px;
+  background-color: orange;
+  text-align: center;
+  border: 5px solid green;
+  margin-right: 20px;
+}

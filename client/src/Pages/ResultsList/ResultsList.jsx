@@ -81,7 +81,7 @@ function ResultsList() {
     <>
       <HelmetResultsList />
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
+        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         <div className={styles.align__right}>
           <FilterBoxForTable
             search={search}

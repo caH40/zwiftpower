@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
@@ -20,23 +19,11 @@ function Profile() {
   const { zwiftId } = useParams();
 
   useAd(adNumbers);
-  useEffect(() => {
-    (window.MRGtag || []).push({});
-  }, []);
-
-  useAd(adNumbers);
 
   return (
     <>
       <section className={styles.wrapper}>
-        <ins
-          className="mrg-tag"
-          style={{ display: 'inline-block', width: 320, height: 100 }}
-          data-ad-client="ad-1498490"
-          data-ad-slot="1498490"
-        ></ins>
-
-        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
+        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>
