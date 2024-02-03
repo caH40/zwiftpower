@@ -70,7 +70,7 @@ export const adBlocks = [
   {
     id: 13,
     label: 'R-A-5165832-13',
-    description: 'Баннер, RaceResults',
+    description: 'Баннер, RaceResults, Faq',
   },
   {
     id: 14,
