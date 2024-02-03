@@ -20,10 +20,8 @@ import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders'
 import styles from './SignedRiders.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 6;
 const adUnderHeader = 12;
-const adOne = 12; // одна реклама в блоке
-const adNumbers = [adOverFooter, adUnderHeader];
+const adNumbers = [adUnderHeader];
 
 function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
@@ -63,9 +61,7 @@ function SignedRiders() {
       />
 
       <section className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={150} marginBottom={10} />
-        ) : null}
+        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
         {event?.id && !event.started && (
           <>
             <DescriptionEventZwiftNew event={event} forSchedule={true} />
@@ -88,11 +84,7 @@ function SignedRiders() {
           </>
         )}
       </section>
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adOne} />
-      )}
+      {!isDesktop && <AdContainer number={adUnderHeader} />}
     </>
   );
 }

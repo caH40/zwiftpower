@@ -19,10 +19,8 @@ import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
 import styles from './ResultsList.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 7;
 const adUnderHeader = 11;
-const adOne = 11; // одна реклама в блоке
-const adNumbers = [adUnderHeader, adOverFooter];
+const adNumbers = [adUnderHeader];
 
 function ResultsList() {
   const [trigger, setTrigger] = useState(false);
@@ -83,9 +81,7 @@ function ResultsList() {
     <>
       <HelmetResultsList />
       <section className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={150} marginBottom={10} />
-        ) : null}
+        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
         <div className={styles.align__right}>
           <FilterBoxForTable
             search={search}
@@ -112,11 +108,7 @@ function ResultsList() {
           </>
         )}
       </section>
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adOne} />
-      )}
+      {!isDesktop && <AdContainer number={adUnderHeader} />}
     </>
   );
 }

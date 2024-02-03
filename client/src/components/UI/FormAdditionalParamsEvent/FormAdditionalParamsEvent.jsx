@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Button from '../Button/Button';
 import { raceTypes } from '../../../assets/zwift/race-type';
 import { organizers } from '../../../assets/zwift/organizer';
@@ -23,6 +21,10 @@ function FormAdditionalParamsEvent({ form, setForm, sendForm, series }) {
         setState={setForm}
         property={'typeRaceCustom'}
         options={raceTypes}
+        question={{
+          tooltip: 'Параметр отвечает за формирование финишного протокола',
+          squareSize: 16,
+        }}
       />
       <SimpleSelectArray
         name={'Серия в которую добавляется заезд'}

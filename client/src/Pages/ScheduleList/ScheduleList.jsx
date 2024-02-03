@@ -19,9 +19,7 @@ const notFound = 'К сожалению, заезды не найдены ... ((
 
 // рекламные блоки на странице
 const adUnderHeader = 10;
-const adOverFooter = 5;
-const adOne = 10; // одна реклама в блоке
-const adNumbers = [adUnderHeader, adOverFooter];
+const adNumbers = [adUnderHeader];
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
@@ -71,9 +69,7 @@ function ScheduleList() {
     <>
       <HelmetSchedule />
       <section className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={150} marginBottom={10} />
-        ) : null}
+        {isDesktop && <AdContainer number={adUnderHeader} height={150} marginBottom={10} />}
         {eventsSchedule?.[0] && status === 'resolved' && (
           <div className={styles.wrapper__wide}>
             <TableSchedule
@@ -91,11 +87,7 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adOne} />
-      )}
+      {!isDesktop && <AdContainer number={adUnderHeader} />}
     </>
   );
 }

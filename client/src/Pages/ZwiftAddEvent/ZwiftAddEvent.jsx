@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
@@ -17,9 +17,7 @@ import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
   const { eventId } = useSelector((state) => state.fetchEventCreate);
-
   useTitle('Добавление заезда из Zwift');
-  // const [eventId, setEventId] = useState({ id: eventIdCreated });
   const { eventMainParams } = useSelector((state) => state.eventParams);
   const [additionalParams, setAdditionalParams] = useState({ seriesId: null });
 
@@ -69,7 +67,6 @@ function ZwiftAddEvent() {
     const eventForSend = { creator: userId, ...eventMainParams, ...additionalParams };
     dispatch(fetchEventPost(eventForSend));
 
-    // setEventId({ id: 0 });
     setAdditionalParams({});
   };
 

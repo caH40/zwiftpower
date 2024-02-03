@@ -1,11 +1,17 @@
-import React from 'react';
+import IconQuestion from '../../icons/IconQuestion';
 
 import styles from './SimpleSelectArray.module.css';
 
-function SimpleSelectArray({ name, state, setState, property, disabled, options }) {
+function SimpleSelectArray({ name, state, setState, property, disabled, options, question }) {
   return (
     <>
-      <p className={styles.label}>{name}:</p>
+      <label className={styles.label}>
+        <span>{name}:</span>
+        {question && (
+          <IconQuestion squareSize={question.squareSize} tooltip={question.tooltip} />
+        )}
+      </label>
+
       <select
         className={styles.select}
         placeholder={name}
