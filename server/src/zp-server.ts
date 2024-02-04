@@ -16,6 +16,9 @@ import { statisticsRouter } from './routes/statistics.js';
 import { routerAdmin } from './routes/admin.js';
 import { setMetaTags } from './meta_tags/meta-tags.js';
 
+// cache
+import { getCache } from './middleware/cache.js';
+
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
 
@@ -39,7 +42,7 @@ app.use('/api/zwift', routerZwift);
 app.use('/api/race', routerRace);
 app.use('/api/auth', routerAuth);
 app.use('/api/race/profile', routerProfile);
-app.use('/api/statistics', statisticsRouter);
+app.use('/api/statistics', getCache, statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
 

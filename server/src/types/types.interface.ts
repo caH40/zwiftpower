@@ -344,12 +344,6 @@ export interface StatisticsRidersInEvent {
     female: number; // количество финишировавших женщин
   };
 }
-/**
- * Аргументы для функции getRidersInEventsServiceArg
- */
-export interface GetRidersInEventsServiceArg {
-  period: number; // количество дней для запроса данных от текущей даты
-}
 
 /**
  * райдер (zwiftId) с максимальными ваттами (watts) на интервале (interval)

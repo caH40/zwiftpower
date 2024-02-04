@@ -2,15 +2,12 @@ import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../Model/ZwiftResult.js';
 
 // types
-import {
-  GetRidersInEventsServiceArg,
-  StatisticsRidersInEvent,
-} from '../types/types.interface.js';
+import { StatisticsRidersInEvent } from '../types/types.interface.js';
 
 /**
  * Данные для графика количества участвующих райдеров в заездах
  */
-export const getRidersInEventsService = async ({ period }: GetRidersInEventsServiceArg) => {
+export const getRidersInEventsService = async (period: number) => {
   // расчет даты с которой запрашиваются Эвенты
   const eventsStartFromDate = Date.now() - period;
 
