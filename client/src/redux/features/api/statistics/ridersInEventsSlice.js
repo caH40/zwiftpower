@@ -47,10 +47,11 @@ const ridersInEventsSlice = createSlice({
     builder.addCase(fetchRidersInEvents.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      state.ridersInEvents = action.payload.ridersInEvents;
+      const ridersInEvents = action.payload;
+      state.ridersInEvents = ridersInEvents;
 
       // группирование данных по месяцам
-      const dataPreparedFiltered = filterForMonth(action.payload.ridersInEvents);
+      const dataPreparedFiltered = filterForMonth(ridersInEvents);
       state.ridersInEventsPrepared = dataPreparedFiltered;
     });
 

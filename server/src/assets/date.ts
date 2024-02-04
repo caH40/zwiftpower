@@ -20,3 +20,8 @@ export const millisecondsIn90Days = 90 * millisecondsInDay;
  */
 export const dateBefore90Days = Date.now() - millisecondsIn90Days;
 // 7776000000
+
+// для кэширования время в секундах
+export const secondsInMinute = 60;
+export const secondsInHour = 24 * secondsInMinute;
+export const secondsIn6Hours = 6 * secondsInHour;
