@@ -65,7 +65,12 @@ function Catchup() {
           </div>
         )}
       </section>
-      <AdContainer number={adOverFooter} maxWidth={1105} />
+
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

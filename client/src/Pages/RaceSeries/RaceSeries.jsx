@@ -12,8 +12,9 @@ import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
 import styles from './RaceSeries.module.css';
 
 // рекламные блоки на странице
+const adOverFooter = 5;
 const adUnderHeader = 3;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceSeries() {
   const series = useSelector((state) => state.fetchSeries.series);
@@ -39,7 +40,11 @@ function RaceSeries() {
           </>
         )}
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

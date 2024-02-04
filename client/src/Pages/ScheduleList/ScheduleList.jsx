@@ -18,8 +18,9 @@ import styles from './ScheduleList.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
+const adOverFooter = 5;
 const adUnderHeader = 10;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
@@ -87,7 +88,11 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

@@ -9,8 +9,9 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import styles from './Profile.module.css';
 
 // рекламные блоки на странице
+const adOverFooter = 4;
 const adUnderHeader = 14;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function Profile() {
   useTitle('Профиль пользователя');
@@ -27,7 +28,11 @@ function Profile() {
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
         <Outlet />
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

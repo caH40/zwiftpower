@@ -20,8 +20,8 @@ const notFound = 'К сожалению, заезды не найдены!';
 
 // рекламные блоки на странице
 const inSideBar = 9;
-// const adOverFooter = 16;
-const adNumbers = [inSideBar];
+const adOverFooter = 16;
+const adNumbers = [inSideBar, adOverFooter];
 
 function MainPage() {
   const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
@@ -83,6 +83,7 @@ function MainPage() {
           </div>
         </div>
       </section>
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

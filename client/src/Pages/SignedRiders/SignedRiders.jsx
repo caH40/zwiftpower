@@ -20,8 +20,9 @@ import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders'
 import styles from './SignedRiders.module.css';
 
 // рекламные блоки на странице
+const adOverFooter = 6;
 const adUnderHeader = 12;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function SignedRiders() {
   const { event } = useSelector((state) => state.fetchEventPreview);
@@ -84,7 +85,11 @@ function SignedRiders() {
           </>
         )}
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

@@ -8,8 +8,9 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import styles from './Statistics.module.css';
 
 // рекламные блоки на странице
+const adOverFooter = 8;
 const adUnderHeader = 14;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function Statistics() {
   const { isScreenLg: isDesktop } = useResize();
@@ -22,7 +23,11 @@ function Statistics() {
         <NavBarStatistics addCls={'mb15'} />
         <Outlet />
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }

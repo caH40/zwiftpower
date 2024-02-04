@@ -18,8 +18,9 @@ import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import styles from './RaceResults.module.css';
 
 // рекламные блоки на странице
+const adOverFooter = 8;
 const adUnderHeader = 13;
-const adNumbers = [adUnderHeader];
+const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceResults() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
@@ -76,7 +77,11 @@ function RaceResults() {
           </>
         )}
       </section>
-      {!isDesktop && <AdContainer number={adUnderHeader} />}
+      {isDesktop ? (
+        <AdContainer number={adOverFooter} maxWidth={1105} />
+      ) : (
+        <AdContainer number={adUnderHeader} />
+      )}
     </>
   );
 }
