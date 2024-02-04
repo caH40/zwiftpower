@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
-import { getNameSelected } from '../../../../service/name-selected';
+import { getNameSelected } from '../../../../utils/name-selected';
 import {
   optionPrivate,
   optionsCulling,
