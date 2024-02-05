@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
+const Moderator = lazy(() => import('../Pages/Moderator/Moderator'));
 const ZwiftCreateEvent = lazy(() => import('../Pages/ZwiftCreateEvent/ZwiftCreateEvent'));
 const LogsAdmin = lazy(() => import('../Pages/LogsAdmin/LogsAdmin'));
 const LogsErrors = lazy(() => import('../Pages/LogsErrors/LogsErrors'));
@@ -18,10 +19,13 @@ export function AdminRoute(isAdmin) {
   return (
     <>
       <Route path="/bot" element={<Bot />} />
-      <Route path="/zwift/event/edit" element={<ZwiftEditEvent />} />
-      <Route path="/zwift/event/edit/:id" element={<ZwiftEditEvent />} />
-      <Route path="/zwift/event/add" element={<ZwiftAddEvent />} />
-      <Route path="/zwift/event/create" element={<ZwiftCreateEvent />} />
+      <Route path="/zwift" element={<Moderator />}>
+        <Route path="event/edit" element={<ZwiftEditEvent />} />
+        <Route path="event/edit/:id" element={<ZwiftEditEvent />} />
+        <Route path="event/add" element={<ZwiftAddEvent />} />
+        <Route path="event/create" element={<ZwiftCreateEvent />} />
+      </Route>
+
       <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
       {isAdmin && <Route path="/admin/users" element={<Users />} />}
       {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}

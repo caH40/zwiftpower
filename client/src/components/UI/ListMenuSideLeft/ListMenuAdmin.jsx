@@ -1,10 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import IconEventEdit from '../../icons/IconEventEdit';
-import IconEventAdd from '../../icons/IconEventAdd';
-import IconEventCreate from '../../icons/IconEventCreate';
 import IconUsers from '../../icons/IconUsers';
+import IconZwiftEdit from '../../icons/IconZwiftEdit';
 
 import styles from './ListMenu.module.css';
 
@@ -19,44 +17,18 @@ function ListMenuAdmin({ state }) {
   return (
     <ul className={styles.list}>
       {isModerator && (
-        <>
-          <li>
-            <NavLink to="/zwift/event/create" className={activeLink}>
-              {({ isActive }) => (
-                <div className={styles.link__box}>
-                  <IconEventCreate isActive={isActive} />
-                  <span className={`${styles.link__name} ${styles[state]}`}>
-                    Создание заезда в Zwift
-                  </span>
-                </div>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/zwift/event/add" className={activeLink}>
-              {({ isActive }) => (
-                <div className={styles.link__box}>
-                  <IconEventAdd isActive={isActive} />
-                  <span className={`${styles.link__name} ${styles[state]}`}>
-                    Добавление заезда из Zwift
-                  </span>
-                </div>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/zwift/event/edit" className={activeLink}>
-              {({ isActive }) => (
-                <div className={styles.link__box}>
-                  <IconEventEdit isActive={isActive} />
-                  <span className={`${styles.link__name} ${styles[state]}`}>
-                    Редактирование заезда в Zwift
-                  </span>
-                </div>
-              )}
-            </NavLink>
-          </li>
-        </>
+        <li>
+          <NavLink to="/zwift" className={activeLink}>
+            {({ isActive }) => (
+              <div className={styles.link__box}>
+                <IconZwiftEdit isActive={isActive} />
+                <span className={`${styles.link__name} ${styles[state]}`}>
+                  Управление Эвентами в Zwift
+                </span>
+              </div>
+            )}
+          </NavLink>
+        </li>
       )}
 
       {isAdmin && (

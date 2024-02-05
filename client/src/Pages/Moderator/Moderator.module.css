@@ -1,0 +1,42 @@
+.wrapper {
+  padding: 5px 176px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 35px;
+}
+.active {
+  color: var(--color-orange-main);
+}
+.link {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-minor);
+}
+
+.link__box {
+  height: 30px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+@media screen and (max-width: 992px) {
+  .wrapper {
+    padding: 5px 40px;
+  }
+  .list {
+    gap: 5px 25px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .wrapper {
+    padding: 5px 20px;
+  }
+}
