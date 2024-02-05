@@ -463,3 +463,18 @@ export interface LogsErrorSchema {
   stack?: string; // стэк ошибки
   config?: unknown; // конфигурация при Axios ошибке
 }
+
+/**
+ * Схема клуба в котором создается Эвент
+ */
+export interface ClubSchema {
+  id: string; // id клуба в Звифте
+  images: {
+    icon: string; // ссылка (url) на иконку клуба
+    event: string; // ссылка (url) на постер к создаваемому Эвенту
+    club_large: string; // ссылка (url) на постер клуба
+  };
+  name: string; // название клуба;
+  tagline: string; // полное название клуба;
+  description: string; // описание клуба;
+}

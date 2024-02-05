@@ -8,11 +8,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableClubs({ clubs }) {
-  const deleteClub = (clubId) => {
-    console.log(`Удаление клуба ${clubId}`);
-  };
-
+function TableClubs({ clubs, deleteClub }) {
   return (
     <table className={cx('table')}>
       <caption className={styles.caption}>
@@ -28,7 +24,10 @@ function TableClubs({ clubs }) {
             <td>{club.id}</td>
             <td>{club.images.icon}</td>
             <td>
-              <IconDelete tooltip="Удаление клуба" getClick={() => deleteClub(club.id)} />
+              <IconDelete
+                tooltip="Удаление клуба"
+                getClick={() => deleteClub(club.id, club.name)}
+              />
             </td>
           </tr>
         ))}

@@ -1,6 +1,6 @@
 import resultEditSlice from '../features/api/result_edit/resultEditSlice';
 import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowerSlice';
-import zwiftClubSlice from '../features/api/zwif_club/zwiftClubSlice';
+import zwiftClubSlice from '../features/api/zwift_club/zwiftClubSlice';
 
 /**
  * Редюсеры доступные админам/модераторам

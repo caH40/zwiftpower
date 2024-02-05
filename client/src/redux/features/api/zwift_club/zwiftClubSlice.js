@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchDeleteZwiftClub, fetchGetZwiftClub } from './fetchZwiftClub';
+import { fetchGetZwiftClub, fetchGetZwiftClubs } from './fetchZwiftClub';
 
 const initialState = {
   id: 0,
   club: {},
+  clubs: [],
   status: null,
   error: null,
 };
@@ -16,6 +17,7 @@ const zwiftClubSlice = createSlice({
     resetClub: (state) => {
       state.id = 0;
       state.club = {};
+      state.clubs = [];
     },
     setClubId: (state, action) => {
       state.id = action.payload;
@@ -30,7 +32,7 @@ const zwiftClubSlice = createSlice({
     });
 
     builder.addCase(fetchGetZwiftClub.fulfilled, (state, action) => {
-      state.id = action.payload;
+      state.club = action.payload;
       state.error = null;
       state.status = 'resolved';
     });
@@ -40,18 +42,19 @@ const zwiftClubSlice = createSlice({
       state.error = action.payload;
     });
 
-    // запрос на удаление Клуба из БД
-    builder.addCase(fetchDeleteZwiftClub.pending, (state) => {
+    // получение всех Клубов из БД
+    builder.addCase(fetchGetZwiftClubs.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
 
-    builder.addCase(fetchDeleteZwiftClub.fulfilled, (state, action) => {
+    builder.addCase(fetchGetZwiftClubs.fulfilled, (state, action) => {
+      state.clubs = action.payload;
       state.error = null;
       state.status = 'resolved';
     });
 
-    builder.addCase(fetchDeleteZwiftClub.rejected, (state, action) => {
+    builder.addCase(fetchGetZwiftClubs.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
