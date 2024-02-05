@@ -22,7 +22,15 @@ function TableClubs({ clubs, deleteClub }) {
             <td>{club.tagline}</td>
             <td>{club.description}</td>
             <td>{club.id}</td>
-            <td>{club.images.icon}</td>
+            <td>
+              <div className={styles.box__image}>
+                <img
+                  className={styles.image}
+                  src={club.images.icon}
+                  alt={`${club.name} club icon`}
+                />
+              </div>
+            </td>
             <td>
               <IconDelete
                 tooltip="Удаление клуба"
