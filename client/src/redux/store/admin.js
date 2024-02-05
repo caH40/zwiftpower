@@ -1,5 +1,6 @@
 import resultEditSlice from '../features/api/result_edit/resultEditSlice';
 import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowerSlice';
+import zwiftClubSlice from '../features/api/zwif_club/zwiftClubSlice';
 
 /**
  * Редюсеры доступные админам/модераторам
@@ -7,4 +8,5 @@ import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowe
 export const adminReducers = {
   resultEdit: resultEditSlice,
   getUsers: usersZwiftpowerSlice,
+  zwiftClub: zwiftClubSlice,
 };

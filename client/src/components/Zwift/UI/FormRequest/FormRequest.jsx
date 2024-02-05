@@ -7,7 +7,7 @@ import { setEventId } from '../../../../redux/features/api/event-create/eventCre
 
 import styles from './FormRequest.module.css';
 
-function FormRequest({ name }) {
+function FormRequest({ name, reducer }) {
   const [localId, setLocalId] = useState({ id: 0 });
   const dispatch = useDispatch();
   return (
@@ -22,7 +22,7 @@ function FormRequest({ name }) {
       <div className={styles.right}>
         <Button
           getClick={() => {
-            dispatch(setEventId(localId.id));
+            dispatch(reducer(localId.id) || setEventId(localId.id));
             setLocalId({ id: 0 });
           }}
         >

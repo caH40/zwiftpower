@@ -12,6 +12,7 @@ const Bot = lazy(() => import('../Pages/Bot/Bot'));
 const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'));
 const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 const Users = lazy(() => import('../Pages/Users/Users'));
+const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 
 export function AdminRoute(isAdmin) {
   return (
@@ -26,6 +27,7 @@ export function AdminRoute(isAdmin) {
       {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}
       {isAdmin && <Route path="/logs/errors" element={<LogsErrors />} />}
       {isAdmin && <Route path="/logs/errors/:id" element={<LogErrorDescription />} />}
+      {isAdmin && <Route path="admin/clubs" element={<ZwiftClubs />} />}
     </>
   );
 }

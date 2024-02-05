@@ -1,0 +1,24 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
+}
+.align__right {
+  margin-bottom: 10px;
+}
+.wrapper__wide {
+  overflow-x: auto;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.group {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+}
