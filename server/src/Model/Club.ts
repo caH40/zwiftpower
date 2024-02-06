@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { ClubSchema } from '../types/model.interface.js';
 
 const clubSchema = new Schema<ClubSchema>({
@@ -11,6 +11,7 @@ const clubSchema = new Schema<ClubSchema>({
   name: String,
   tagline: String,
   description: String,
+  moderators: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 export const Club = model('Club', clubSchema);

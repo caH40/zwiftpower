@@ -36,6 +36,7 @@ const useLoader = () => {
   //  получение данных Эвента с ZwiftAPI
   const { status: statusEventParams } = useSelector((state) => state.eventParams);
   const { status: statusZwiftClub } = useSelector((state) => state.zwiftClub);
+  const { status: statusClubModerator } = useSelector((state) => state.clubModerator);
 
   if (
     statusEvents === 'loading' ||
@@ -59,7 +60,8 @@ const useLoader = () => {
     statusLogError === 'loading' ||
     statusLogErrorDelete === 'loading' ||
     statusEventParams === 'loading' ||
-    statusZwiftClub === 'loading'
+    statusZwiftClub === 'loading' ||
+    statusClubModerator === 'loading'
   ) {
     return { isLoading: true };
   }

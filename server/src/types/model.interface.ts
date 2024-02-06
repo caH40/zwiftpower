@@ -480,4 +480,5 @@ export interface ClubSchema {
   name: string; // название клуба;
   tagline: string; // полное название клуба;
   description: string; // описание клуба;
+  moderators?: Types.ObjectId[]; // модераторы клуба;
 }

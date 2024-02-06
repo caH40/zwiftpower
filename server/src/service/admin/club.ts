@@ -4,12 +4,18 @@ import { getRequest } from '../zwift/request-get.js';
 import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
 import { Club } from '../../Model/Club.js';
 import { ClubSchema } from '../../types/model.interface.js';
+import { User } from '../../Model/User.js';
 
 /**
  * Сервис получение клубов из БД
  */
 export const getClubsService = async (): Promise<ClubSchema[]> => {
-  const clubsDB: ClubSchema[] = await Club.find();
+  const clubsDB: ClubSchema[] = await Club.find()
+    .populate({
+      path: 'moderators',
+      select: ['username', 'zwiftId'],
+    })
+    .lean();
 
   return clubsDB;
 };
@@ -52,4 +58,33 @@ export const deleteClubService = async (clubId: string) => {
   }
 
   return { message: `Клуб ${clubDB.name} удалён из БД` };
+};
+
+/**
+ * Сервис добавление модератора для клуба
+ */
+export const addClubModeratorService = async (clubId: string, userId: string) => {
+  // добавления userId в клуб
+  const clubDB = await Club.findOneAndUpdate(
+    { _id: clubId },
+    { $addToSet: { moderators: userId } }
+  );
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб с id:${clubId}`);
+  }
+
+  // добавления userId в клуб
+  const userDB = await User.findOneAndUpdate(
+    { _id: userId },
+    { $addToSet: { 'moderator.clubs': clubId } }
+  );
+
+  if (!userDB) {
+    throw new Error(`UserId добавлен в Клуб, но не найден пользователь с id:${clubId} в БД`);
+  }
+
+  return {
+    message: `Пользователь "${userDB.username}" добавлен модератором для клуба "${clubDB.name}"`,
+  };
 };

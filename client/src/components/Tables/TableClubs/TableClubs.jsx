@@ -33,6 +33,10 @@ function TableClubs({ clubs, deleteClub, addModerator }) {
               </div>
             </td>
             <td>
+              {club.moderators?.length &&
+                club.moderators.map((moderator) => (
+                  <span key={moderator}>{moderator.username}</span>
+                ))}
               <IconAdd getClick={() => addModerator(club._id, club.name)} squareSize={20} />
             </td>
             <td>

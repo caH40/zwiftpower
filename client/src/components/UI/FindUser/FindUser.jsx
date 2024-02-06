@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchPutClubModerator } from '../../../redux/features/api/club_moderator/fetchClubModerator';
 import IconAdd from '../../icons/IconAdd';
 import CommonInput from '../SimpleInput/CommonInput';
 
@@ -13,6 +14,7 @@ function FindUser({ clubCurrent, setClubCurrent, setShowAddModerator }) {
   const { users } = useSelector((state) => state.getUsers);
   // поиск пользователя по userQuery
   const [userQuery, setUserQuery] = useState('');
+  const dispatch = useDispatch();
 
   // отправка на сервер данных о добавлении модератора в клуб
   const addCurrentModerator = (userId, clubId) => {
@@ -20,7 +22,7 @@ function FindUser({ clubCurrent, setClubCurrent, setShowAddModerator }) {
     setClubCurrent({ id: '', name: '' });
     setShowAddModerator(false);
     setUserQuery('');
-    console.log({ userId, clubId });
+    dispatch(fetchPutClubModerator({ userId, clubId }));
   };
 
   return (
