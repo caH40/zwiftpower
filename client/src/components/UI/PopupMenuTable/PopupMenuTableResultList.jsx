@@ -51,7 +51,7 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
             </li>
 
             <li className={styles.item} onClick={clickRemoveEvent}>
-              <IconDelete />
+              <IconDelete squareSize={20} />
               <span className={styles.label}>Удаление заезда и результатов заезда из БД</span>
             </li>
 

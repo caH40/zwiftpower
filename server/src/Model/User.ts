@@ -36,6 +36,7 @@ const userSchema = new Schema<UserSchema>({
   city: { type: String },
   team: { type: String },
   role: { type: String },
+  moderator: { clubs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Club' }] },
   photoFromZp: { type: Boolean },
   photoProfile: { type: String },
   bio: { type: String },

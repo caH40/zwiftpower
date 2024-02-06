@@ -1,6 +1,7 @@
 import classnames from 'classnames/bind';
 
 import IconDelete from '../../icons/IconDelete';
+import IconAdd from '../../icons/IconAdd';
 
 import styles from '../Table.module.css';
 
@@ -8,7 +9,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableClubs({ clubs, deleteClub }) {
+function TableClubs({ clubs, deleteClub, addModerator }) {
   return (
     <table className={cx('table')}>
       <caption className={styles.caption}>
@@ -32,9 +33,13 @@ function TableClubs({ clubs, deleteClub }) {
               </div>
             </td>
             <td>
+              <IconAdd getClick={() => addModerator(club._id, club.name)} squareSize={20} />
+            </td>
+            <td>
               <IconDelete
                 tooltip="Удаление клуба"
                 getClick={() => deleteClub(club.id, club.name)}
+                squareSize={20}
               />
             </td>
           </tr>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
@@ -13,9 +13,12 @@ import { resetClub, setClubId } from '../../redux/features/api/zwift_club/zwiftC
 import TableClubs from '../../components/Tables/TableClubs/TableClubs';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import FindUser from '../../components/UI/FindUser/FindUser';
+import { fetchUsersZwiftpower } from '../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
+
+import BlockClubDescription from './BlockClubDescription';
 
 import styles from './ZwiftClubs.module.css';
-import BlockClubDescription from './BlockClubDescription';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +26,9 @@ const cx = classNames.bind(styles);
  * Список и добавление/удаление клуба в котором создаются заезды из Звифт в БД
  */
 function ZwiftClubs() {
+  const [showAddModerator, setShowAddModerator] = useState(false);
+
+  const [clubCurrent, setClubCurrent] = useState({ id: '', name: '' });
   useTitle('Управление клубами из Звифта');
   const { id, club, clubs } = useSelector((state) => state.zwiftClub);
   const dispatch = useDispatch();
@@ -59,11 +65,26 @@ function ZwiftClubs() {
     return dispatch(fetchDeleteZwiftClub(clubId));
   };
 
+  // открытие формы поиска Модератора для добавления его в клуб модератором
+  const addModerator = (clubId, clubNameRaw) => {
+    setClubCurrent({ id: clubId, name: clubNameRaw });
+    dispatch(fetchUsersZwiftpower());
+    setShowAddModerator(true);
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
-        <TableClubs clubs={clubs} deleteClub={deleteClub} />
+        <TableClubs clubs={clubs} deleteClub={deleteClub} addModerator={addModerator} />
       </div>
+
+      {showAddModerator && (
+        <FindUser
+          clubCurrent={clubCurrent}
+          setClubCurrent={setClubCurrent}
+          setShowAddModerator={setShowAddModerator}
+        />
+      )}
       <h2 className={styles.title}>Поиск клуба</h2>
       <div className={styles.group}>
         <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />

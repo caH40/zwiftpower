@@ -265,6 +265,9 @@ export interface UserSchema {
   city: string;
   team: string;
   role: string;
+  moderator?: {
+    clubs: Types.ObjectId[]; // список клубов в которых является модератором
+  };
   photoFromZp: boolean;
   photoProfile?: string;
   bio: string;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeScheduleMenu } from '../../../redux/features/popupTableScheduleSlice';
@@ -37,12 +36,12 @@ function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
         >
           <ul className={styles.list}>
             <li className={styles.item} onClick={clickUpdateEvent}>
-              <IconRefresh />
+              <IconRefresh squareSize={20} />
               <span className={styles.label}>Обновление данных заезда</span>
             </li>
 
             <li className={styles.item} onClick={clickButton}>
-              <IconDelete />
+              <IconDelete squareSize={20} />
               <span className={styles.label}>Удаление заезда из БД</span>
             </li>
           </ul>

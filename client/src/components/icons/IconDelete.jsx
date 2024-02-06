@@ -1,4 +1,3 @@
-import React from 'react';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../utils/additional-classes';
@@ -6,7 +5,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconDelete({ isActive, getClick, tooltip, addCls = ' ', squareSize = 20 }) {
+function IconDelete({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div

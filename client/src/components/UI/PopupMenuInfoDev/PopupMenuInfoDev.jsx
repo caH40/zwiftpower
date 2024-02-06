@@ -39,7 +39,7 @@ function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete, setIsVi
         <div className={styles.popup} onMouseLeave={() => setIsVisible(false)}>
           <ul className={styles.list}>
             <li className={styles.item} onClick={clickAddRelease}>
-              <IconAdd />
+              <IconAdd squareSize={20} />
               <span className={styles.label}>Добавление релиза</span>
             </li>
 
@@ -49,7 +49,7 @@ function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete, setIsVi
             </li>
           </ul>
           <li className={styles.item} onClick={clickDeleteRelease}>
-            <IconDelete />
+            <IconDelete squareSize={20} />
             <span className={styles.label}>Удаление релиза</span>
           </li>
         </div>

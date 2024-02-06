@@ -1,0 +1,13 @@
+.box__user {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  padding: 3px 7px;
+}
+.box__user:hover {
+  transition: 0.3s;
+  background-color: var(--color-orange-main);
+}
+.user {
+  flex: 0 1 120px;
+}
