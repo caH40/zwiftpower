@@ -1,3 +1,6 @@
+/**
+ * Описание логируемого действия
+ */
 export const descriptionLogsAdmins: Description = {
   postZwiftEvent: 'Сохранение (добавление) Эвента в БД сайта',
   getZwiftEventData: 'Получение данных Эвента с сайта Звифт',

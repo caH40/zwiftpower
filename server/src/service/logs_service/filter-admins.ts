@@ -1,5 +1,3 @@
-import { descriptionLogsAdmins } from '../../assets/logs/admins.js';
-
 // types
 import { LogsAdminUsername } from '../../types/types.interface.js';
 
@@ -12,7 +10,7 @@ export const filterLogs = (logs: LogsAdminUsername[], search: string | undefined
   }
 
   const logsFiltered = logs.filter((log) => {
-    if (descriptionLogsAdmins[log.description].toLowerCase().includes(search.toLowerCase())) {
+    if (log.description?.toLowerCase()?.includes(search.toLowerCase())) {
       return true;
     }
 
