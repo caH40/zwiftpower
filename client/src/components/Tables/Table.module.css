@@ -164,6 +164,11 @@ tbody .current {
 .centerTd {
   text-align: center;
 }
+/* расположение по центру блочного элемента */
+.centerBlock {
+  display: flex;
+  justify-content: center;
+}
 .penalty {
   display: flex;
   justify-content: center;
@@ -258,6 +263,16 @@ tbody .current {
 .image {
   width: 100%;
   height: 100%;
+}
+.block__moderators {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.box__moderators {
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 992px) {

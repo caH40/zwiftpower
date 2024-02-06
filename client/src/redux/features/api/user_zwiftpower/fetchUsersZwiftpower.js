@@ -6,7 +6,7 @@ import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
 import { serverExpress } from '../../../../config/environment';
 
 /**
- * Получение зарегистрированный Users на сайте zwiftpower.ru
+ * Получение зарегистрированных Users на сайте zwiftpower.ru
  */
 export const fetchUsersZwiftpower = createAsyncThunk(
   'user/getUsersZwiftpower',

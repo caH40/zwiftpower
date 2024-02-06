@@ -8,6 +8,7 @@ import {
   postClub,
   deleteClub,
   addClubModerator,
+  deleteClubModerator,
 } from '../controllers/admin.js';
 
 export const routerAdmin = Router();
@@ -18,3 +19,4 @@ routerAdmin.get('/clubs/:id', authAdmin, getClub);
 routerAdmin.post('/clubs', authAdmin, postClub);
 routerAdmin.delete('/clubs', authAdmin, deleteClub);
 routerAdmin.put('/clubs/moderators', authAdmin, addClubModerator);
+routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);

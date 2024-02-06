@@ -57,6 +57,11 @@ export const deleteClubService = async (clubId: string) => {
     throw new Error(`Клуб с id:${clubId} не найден в БД!`);
   }
 
+  await User.updateMany(
+    { 'moderator.clubs': clubDB._id },
+    { $pull: { 'moderator.clubs': clubDB._id } }
+  );
+
   return { message: `Клуб ${clubDB.name} удалён из БД` };
 };
 
@@ -81,10 +86,43 @@ export const addClubModeratorService = async (clubId: string, userId: string) =>
   );
 
   if (!userDB) {
-    throw new Error(`UserId добавлен в Клуб, но не найден пользователь с id:${clubId} в БД`);
+    throw new Error(
+      `Пользователь id:${userId} был добавлен в клуб id:${clubId}, но не был найден в БД`
+    );
   }
 
   return {
     message: `Пользователь "${userDB.username}" добавлен модератором для клуба "${clubDB.name}"`,
+  };
+};
+
+/**
+ * Сервис исключения модератора из клуба
+ */
+export const deleteClubModeratorService = async (clubId: string, userId: string) => {
+  // удаление userId из клуба
+  const clubDB = await Club.findOneAndUpdate(
+    { _id: clubId },
+    { $pull: { moderators: userId } }
+  );
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб с id:${clubId}`);
+  }
+
+  // добавления userId в клуб
+  const userDB = await User.findOneAndUpdate(
+    { _id: userId },
+    { $pull: { 'moderator.clubs': clubId } }
+  );
+
+  if (!userDB) {
+    throw new Error(
+      `Пользователь id:${userId} был удален из модераторов клуба id:${clubId}, но не был найден в БД`
+    );
+  }
+
+  return {
+    message: `Пользователь "${userDB.username}" был удален из модераторов клуба "${clubDB.name}"`,
   };
 };

@@ -15,6 +15,7 @@ import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import FindUser from '../../components/UI/FindUser/FindUser';
 import { fetchUsersZwiftpower } from '../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
+import { fetchDeleteClubModerator } from '../../redux/features/api/club_moderator/fetchClubModerator';
 
 import BlockClubDescription from './BlockClubDescription';
 
@@ -72,10 +73,20 @@ function ZwiftClubs() {
     setShowAddModerator(true);
   };
 
+  // исключение пользователя из модераторов клуба
+  const deleteModerator = (clubId, userId) => {
+    dispatch(fetchDeleteClubModerator({ clubId, userId }));
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
-        <TableClubs clubs={clubs} deleteClub={deleteClub} addModerator={addModerator} />
+        <TableClubs
+          clubs={clubs}
+          deleteClub={deleteClub}
+          addModerator={addModerator}
+          deleteModerator={deleteModerator}
+        />
       </div>
 
       {showAddModerator && (

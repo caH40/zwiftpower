@@ -9,7 +9,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableClubs({ clubs, deleteClub, addModerator }) {
+function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
   return (
     <table className={cx('table')}>
       <caption className={styles.caption}>
@@ -17,37 +17,54 @@ function TableClubs({ clubs, deleteClub, addModerator }) {
       </caption>
       <Thead />
       <tbody>
-        {clubs.map((club) => (
-          <tr className={styles.hover} key={club.id}>
-            <td>{club.name}</td>
-            <td>{club.tagline}</td>
-            <td>{club.description}</td>
-            <td>{club.id}</td>
-            <td>
-              <div className={styles.box__image}>
-                <img
-                  className={styles.image}
-                  src={club.images.icon}
-                  alt={`${club.name} club icon`}
-                />
-              </div>
-            </td>
-            <td>
-              {club.moderators?.length &&
-                club.moderators.map((moderator) => (
-                  <span key={moderator}>{moderator.username}</span>
-                ))}
-              <IconAdd getClick={() => addModerator(club._id, club.name)} squareSize={20} />
-            </td>
-            <td>
+        {clubs.map((club) => {
+          const moderators = club?.moderators?.map((moderator) => (
+            <div className={cx('box__moderators')} key={moderator._id}>
+              <span>{moderator.username}</span>
               <IconDelete
-                tooltip="Удаление клуба"
-                getClick={() => deleteClub(club.id, club.name)}
-                squareSize={20}
+                tooltip={`Исключение ${moderator.username} из модераторов клуба`}
+                squareSize={14}
+                getClick={() => deleteModerator(club._id, moderator._id)}
               />
-            </td>
-          </tr>
-        ))}
+            </div>
+          ));
+          return (
+            <tr className={styles.hover} key={club.id}>
+              <td>{club.name}</td>
+              <td>{club.tagline}</td>
+              <td>{club.description}</td>
+              <td>{club.id}</td>
+              <td>
+                <div className={styles.box__image}>
+                  <img
+                    className={styles.image}
+                    src={club.images.icon}
+                    alt={`${club.name} club icon`}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className={cx('block__moderators')}>
+                  <div>{club.moderators?.length ? moderators : null}</div>
+                  <IconAdd
+                    tooltip={'Добавление модератора'}
+                    getClick={() => addModerator(club._id, club.name)}
+                    squareSize={20}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className={cx('centerBlock')}>
+                  <IconDelete
+                    tooltip="Удаление клуба"
+                    getClick={() => deleteClub(club.id, club.name)}
+                    squareSize={20}
+                  />
+                </div>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

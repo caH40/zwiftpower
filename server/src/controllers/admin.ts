@@ -5,6 +5,7 @@ import { errorHandler } from '../errors/error.js';
 import { getUsersService } from '../service/admin/users.js';
 import {
   addClubModeratorService,
+  deleteClubModeratorService,
   deleteClubService,
   getClubService,
   getClubsService,
@@ -125,6 +126,32 @@ export const addClubModerator = async (req: Request, res: Response) => {
     const { clubId, userId }: { clubId: string; userId: string } = req.body;
 
     const clubModeratorAdded: { message: string } = await addClubModeratorService(
+      clubId,
+      userId
+    );
+
+    res.status(200).json(clubModeratorAdded);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+/**
+ * Удаление модератора из клуба
+ */
+export const deleteClubModerator = async (req: Request, res: Response) => {
+  try {
+    // objectId клуба и пользователя
+    const { clubId, userId }: { clubId: string; userId: string } = req.body;
+
+    const clubModeratorAdded: { message: string } = await deleteClubModeratorService(
       clubId,
       userId
     );
