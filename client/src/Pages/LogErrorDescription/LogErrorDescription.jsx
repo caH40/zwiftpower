@@ -77,7 +77,7 @@ function LogErrorDescription() {
             )}
           </dl>
           <div className={styles.right}>
-            <BackButton to={'/logs/errors'} />
+            <BackButton to={'/admin/logs/errors'} />
           </div>
         </section>
       )}

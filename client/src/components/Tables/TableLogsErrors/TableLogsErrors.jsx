@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CheckBoxTotal } from '../../UI/CheckBoxForArray/CheckboxTotal';
 import { CheckBoxForArray } from '../../UI/CheckBoxForArray/CheckBoxForArray';
 import { getTimerLocal } from '../../../utils/date-local';
 
@@ -13,7 +11,7 @@ function TableLogsErrors({ checkedTotal, arrayId, setArrayId, logs }) {
   const navigate = useNavigate();
 
   const getNavigate = (id) => {
-    navigate(`/logs/errors/${id}`);
+    navigate(`/admin/logs/errors/${id}`);
   };
 
   return (

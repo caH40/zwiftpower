@@ -22,7 +22,7 @@ function NavAdmin({ items }) {
               <NavLink to={item.to} className={cx('link')}>
                 {({ isActive }) => (
                   <div className={cx('link__box')}>
-                    <Icon isActive={isActive} />
+                    <Icon isActive={isActive} color={'#444444'} />
                     <span className={cx({ active: isActive })}>{item.title}</span>
                   </div>
                 )}

@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import IconUsers from '../../icons/IconUsers';
 import IconZwiftEdit from '../../icons/IconZwiftEdit';
+import IconAdmin2 from '../../icons/IconAdmin2';
 
 import styles from './ListMenu.module.css';
 
@@ -22,9 +22,7 @@ function ListMenuAdmin({ state }) {
             {({ isActive }) => (
               <div className={styles.link__box}>
                 <IconZwiftEdit isActive={isActive} />
-                <span className={`${styles.link__name} ${styles[state]}`}>
-                  Управление Эвентами в Zwift
-                </span>
+                <span className={`${styles.link__name} ${styles[state]}`}>Zwift</span>
               </div>
             )}
           </NavLink>
@@ -33,13 +31,11 @@ function ListMenuAdmin({ state }) {
 
       {isAdmin && (
         <li>
-          <NavLink to="/admin/users" className={activeLink}>
+          <NavLink to="/admin" className={activeLink}>
             {({ isActive }) => (
               <div className={styles.link__box}>
-                <IconUsers isActive={isActive} />
-                <span className={`${styles.link__name} ${styles[state]}`}>
-                  Управление пользователями
-                </span>
+                <IconAdmin2 isActive={isActive} />
+                <span className={`${styles.link__name} ${styles[state]}`}>Админ</span>
               </div>
             )}
           </NavLink>

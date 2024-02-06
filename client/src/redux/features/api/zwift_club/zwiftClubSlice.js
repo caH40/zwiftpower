@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetZwiftClub, fetchGetZwiftClubs } from './fetchZwiftClub';
+import { fetchDeleteZwiftClub, fetchGetZwiftClub, fetchGetZwiftClubs } from './fetchZwiftClub';
 
 const initialState = {
   id: 0,
@@ -57,6 +57,12 @@ const zwiftClubSlice = createSlice({
     builder.addCase(fetchGetZwiftClubs.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
+    });
+
+    // удаление клуба из БД
+    builder.addCase(fetchDeleteZwiftClub.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
     });
   },
 });
