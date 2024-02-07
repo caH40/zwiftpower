@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authAdmin } from '../middleware/authRole.js';
+import { authAdmin, authModerator } from '../middleware/authRole.js';
 import {
   getClubs,
   getClub,
@@ -14,7 +14,7 @@ import {
 export const routerAdmin = Router();
 
 routerAdmin.get('/users', authAdmin, getUsers);
-routerAdmin.get('/clubs', authAdmin, getClubs);
+routerAdmin.get('/clubs', authModerator, getClubs);
 routerAdmin.get('/clubs/:id', authAdmin, getClub);
 routerAdmin.post('/clubs', authAdmin, postClub);
 routerAdmin.delete('/clubs', authAdmin, deleteClub);

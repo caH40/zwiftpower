@@ -19,6 +19,8 @@ import {
   initialRules,
 } from '../../redux/features/api/zwift_event_params/initialState';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { resetClub } from '../../redux/features/api/zwift_club/zwiftClubSlice';
+import { fetchGetZwiftClubs } from '../../redux/features/api/zwift_club/fetchZwiftClub';
 
 import styles from './ZwiftCreateEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -28,9 +30,11 @@ function ZwiftCreateEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const eventParams = useSelector((state) => state.eventParams);
+  const { clubs } = useSelector((state) => state.zwiftClub);
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
+    dispatch(fetchGetZwiftClubs());
     dispatch(setMainParams(getInitialMainParams()));
     dispatch(setSubgroupParams(initialSubgroup));
     dispatch(
@@ -40,7 +44,10 @@ function ZwiftCreateEvent() {
       })
     );
 
-    return () => dispatch(dispatch(resetParams()));
+    return () => {
+      dispatch(resetClub());
+      dispatch(dispatch(resetParams()));
+    };
   }, []);
 
   const sendCreateNewEvent = () => {
@@ -69,7 +76,7 @@ function ZwiftCreateEvent() {
 
       <div className={styles.group}>
         <div className={styles.group}>
-          <FormClub isCreating={true} />
+          <FormClub isCreating={true} clubs={clubs} />
         </div>
         <div className={styles.group}>
           <FormEditEvent isCreating={true} />

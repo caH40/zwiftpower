@@ -42,4 +42,4 @@ const userSchema = new Schema<UserSchema>({
   bio: { type: String },
 });
 
-export const User = model<UserSchema>('User', userSchema);
+export const User = model('User', userSchema);

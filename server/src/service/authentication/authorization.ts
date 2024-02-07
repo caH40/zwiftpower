@@ -10,7 +10,9 @@ export async function authorizationService(
 ) {
   const userDB = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
-  });
+  })
+    .populate({ path: 'moderator.clubs', select: ['id'] })
+    .lean();
 
   if (!userDB) {
     throw new Error(`Неверный Логин или Пароль`);
@@ -30,6 +32,7 @@ export async function authorizationService(
     id: userDB._id,
     zwiftId: userDB.zwiftId,
     role: userDB.role,
+    moderator: userDB.moderator,
   });
 
   if (tokens) {
@@ -49,6 +52,7 @@ export async function authorizationService(
       role: userDB.role,
       photoProfile: userDB.photoProfile,
       zwiftId: userDB.zwiftId,
+      moderator: userDB.moderator,
     },
   };
 }

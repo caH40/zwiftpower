@@ -6,4 +6,7 @@ export interface GenerateToken {
   zwiftId?: number;
   id: Types.ObjectId;
   role: string;
+  moderator?: {
+    clubs: Types.ObjectId[];
+  };
 }

@@ -5,7 +5,15 @@ const authSlice = createSlice({
   initialState: {
     value: {
       status: false,
-      user: { email: '', id: '', zwiftId: '', role: '', username: '', photoProfile: '' },
+      user: {
+        email: '',
+        id: '',
+        zwiftId: '',
+        role: '',
+        moderator: { clubs: [] },
+        username: '',
+        photoProfile: '',
+      },
     },
   },
   reducers: {

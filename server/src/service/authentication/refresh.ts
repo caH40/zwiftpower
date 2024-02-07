@@ -15,7 +15,9 @@ export async function refreshService(refreshToken: string) {
     if (!userFromToken || !tokenDb) return;
 
     //обновляем данные пользователя если они изменились
-    const userDB = await User.findById(userFromToken.id);
+    const userDB = await User.findById(userFromToken.id)
+      .populate({ path: 'moderator.clubs', select: ['id'] })
+      .lean();
     if (!userDB) return;
     const tokens = await generateToken({
       id: userDB._id,
@@ -23,6 +25,7 @@ export async function refreshService(refreshToken: string) {
       email: userDB.email,
       username: userDB.username,
       role: userDB.role,
+      moderator: userDB.moderator,
     });
 
     if (!tokens) {
@@ -38,6 +41,7 @@ export async function refreshService(refreshToken: string) {
         role: userDB.role,
         photoProfile: userDB.photoProfile,
         zwiftId: userDB.zwiftId,
+        moderator: userDB.moderator,
       },
     };
   } catch (error) {

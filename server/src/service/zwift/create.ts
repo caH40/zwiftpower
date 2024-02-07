@@ -1,3 +1,5 @@
+import { Club } from '../../Model/Club.js';
+import { User } from '../../Model/User.js';
 import { postRequest } from './request-post.js';
 
 // types
@@ -11,6 +13,22 @@ export async function postZwiftEventService(
   event: PostZwiftEvent
 ): Promise<{ eventId: number; message: string }> {
   // проверять является ли userId модератором клуба в котором содается данный Эвент
+  const clubId = event.eventData.microserviceExternalResourceId;
+
+  const clubDB = await Club.findOne({ id: clubId }, { id: true }).lean();
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб "${clubId}" в котором создается заезд!`);
+  }
+
+  const userDB = await User.findOne({
+    _id: userId,
+    'moderator.clubs': clubDB._id,
+  });
+
+  if (!userDB) {
+    throw new Error('У вас нет прав для создания Эвента в данном клубе!');
+  }
 
   // создание Эвента в ZwiftAPI, в ответе возвращается id созданного Эвента
   const urlCreate = 'events-core/events';
