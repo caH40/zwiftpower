@@ -24,7 +24,7 @@ import './css/App.css';
 function App() {
   useFirstAuth();
   const userAuth = useSelector((state) => state.checkAuth.value.user);
-
+  console.log(userAuth);
   const isModerator = ['admin', 'moderator'].includes(userAuth.role);
   const isAdmin = ['admin'].includes(userAuth.role);
 

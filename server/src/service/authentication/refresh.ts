@@ -47,7 +47,7 @@ export async function refreshService(refreshToken: string) {
         email: userDB.email,
         username: userDB.username,
         role: userDB.role,
-        photoProfile: userDB.photoProfile,
+        photoProfile: userDB.photoProfile || userDB.zwiftData?.imageSrc,
         zwiftId: userDB.zwiftId,
         moderator,
       },

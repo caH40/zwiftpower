@@ -54,7 +54,7 @@ export async function authorizationService(
       email: userDB.email,
       id: userDB._id,
       role: userDB.role,
-      photoProfile: userDB.photoProfile,
+      photoProfile: userDB.photoProfile || userDB.zwiftData?.imageSrc,
       zwiftId: userDB.zwiftId,
       moderator,
     },
