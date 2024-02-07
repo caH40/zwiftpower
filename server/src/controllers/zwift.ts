@@ -9,11 +9,17 @@ import { errorHandler } from '../errors/error.js';
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
 import { AxiosError } from 'axios';
 import { postZwiftEventService } from '../service/zwift/create.js';
+import { checkModeratorClub } from '../service/moderator-club.js';
 
-export async function getEvent(req: Request, res: Response) {
+/**
+ * Получение данных Эвента для последующего редактирование параметров Эвента
+ */
+export async function getEventZwift(req: Request, res: Response) {
   try {
-    const { eventId } = req.params;
+    const { eventId, userId } = req.params;
+
     const event = await getEventZwiftService(+eventId);
+    await checkModeratorClub(userId, event.microserviceExternalResourceId);
     res.status(200).json(event);
   } catch (error) {
     errorHandler(error);
@@ -47,6 +53,7 @@ export async function putEvent(req: Request, res: Response) {
     }
   }
 }
+
 export async function getZwiftRider(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;

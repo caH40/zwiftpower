@@ -20,8 +20,12 @@ import styles from './DescriptionEventZwiftNew.module.css';
 
 function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
   const [isOpened, setIsOpened] = useState(false);
-  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { role, moderator } = useSelector((state) => state.checkAuth.value.user);
+
   const isModerator = ['admin', 'moderator'].includes(role);
+  const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
+  const showForModerate = isModerator && isAllowedModerate;
+
   const navigate = useNavigate();
 
   const openDetailed = () => {
@@ -45,7 +49,7 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
         </div>
 
         {/* показывать только для страницы результатов */}
-        {!forSchedule && isModerator && (
+        {!forSchedule && showForModerate && (
           <div className={styles.box__modify}>
             <IconModify getClick={modifyResultsEvent} bgColor={'white'} />
           </div>
@@ -58,7 +62,7 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
           <div className={styles.box__left}>
             <div className={styles.box__title}>
               <h2 className={styles.title}>{event.name}</h2>
-              {isModerator && forSchedule && (
+              {forSchedule && showForModerate && (
                 <Link to={`/zwift/event/edit/${event.id}`}>
                   <IconEdit tooltip={'Редактирование параметров заезда в Звифте'} />
                 </Link>

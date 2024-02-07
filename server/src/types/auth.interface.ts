@@ -7,6 +7,6 @@ export interface GenerateToken {
   id: Types.ObjectId;
   role: string;
   moderator?: {
-    clubs: Types.ObjectId[];
+    clubs: string[];
   };
 }

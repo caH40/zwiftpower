@@ -17,7 +17,7 @@ function FormClub({ clubs = [] }) {
 
   // фильтрация клубов в зависимости от того, какие клубы может модерировать Пользователь (модератор)
   const clubsFiltered = [...clubs].filter((club) =>
-    moderator.clubs.find((modClubs) => modClubs.id === club.id)
+    moderator.clubs.find((clubId) => clubId === club.id)
   );
 
   // создание объекта для Selector

@@ -18,6 +18,10 @@ export async function authorizationService(
     throw new Error(`Неверный Логин или Пароль`);
   }
 
+  // формирование массива клубов в которых Пользователь является модератором
+  const clubs = userDB.moderator?.clubs.map((club) => club.id) as string[] | undefined;
+  const moderator = clubs ? { clubs: clubs } : undefined;
+
   const isValidPassword = await bcrypt.compare(password, userDB.password);
 
   if (!isValidPassword) {
@@ -32,7 +36,7 @@ export async function authorizationService(
     id: userDB._id,
     zwiftId: userDB.zwiftId,
     role: userDB.role,
-    moderator: userDB.moderator,
+    moderator,
   });
 
   if (tokens) {
@@ -52,7 +56,7 @@ export async function authorizationService(
       role: userDB.role,
       photoProfile: userDB.photoProfile,
       zwiftId: userDB.zwiftId,
-      moderator: userDB.moderator,
+      moderator,
     },
   };
 }
