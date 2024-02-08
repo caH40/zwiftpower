@@ -13,6 +13,10 @@ import styles from './PopupMenuTable.module.css';
 
 function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEventAndSinged }) {
   const { menus } = useSelector((state) => state.popupTableResultsList);
+
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
+
   const dispatch = useDispatch();
 
   const menu = menus.find((elm) => elm.eventId === event?.id) || {};
@@ -50,10 +54,12 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
               <span className={styles.label}>Обновление результатов заезда (протокола)</span>
             </li>
 
-            <li className={styles.item} onClick={clickRemoveEvent}>
-              <IconDelete squareSize={20} />
-              <span className={styles.label}>Удаление заезда и результатов заезда из БД</span>
-            </li>
+            {isAllowedModerate && (
+              <li className={styles.item} onClick={clickRemoveEvent}>
+                <IconDelete squareSize={20} />
+                <span className={styles.label}>Удаление заезда и результатов заезда из БД</span>
+              </li>
+            )}
 
             <li className={styles.item} onClick={clickDownloadJson}>
               <IconDownload />

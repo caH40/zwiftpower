@@ -6,7 +6,6 @@ import { EventsListDtoArg } from '../types/types.interface.js';
  */
 export const eventsListDto = ({ events, quantityPages, message }: EventsListDtoArg) => {
   const eventsForFetch: EventListFetch[] = events.map((event: EventListFetch) => {
-    delete event.microserviceExternalResourceId;
     delete event.totalEntrantCount;
     delete event.totalJoinedCount;
 

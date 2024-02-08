@@ -13,6 +13,9 @@ function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
   const { menus } = useSelector((state) => state.popupTableSchedule);
   const dispatch = useDispatch();
 
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
+
   const menu = menus.find((elm) => elm.eventId === event?.id) || {};
 
   const clickUpdateEvent = (e) => {
@@ -39,11 +42,12 @@ function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
               <IconRefresh squareSize={20} />
               <span className={styles.label}>Обновление данных заезда</span>
             </li>
-
-            <li className={styles.item} onClick={clickButton}>
-              <IconDelete squareSize={20} />
-              <span className={styles.label}>Удаление заезда из БД</span>
-            </li>
+            {isAllowedModerate && (
+              <li className={styles.item} onClick={clickButton}>
+                <IconDelete squareSize={20} />
+                <span className={styles.label}>Удаление заезда из БД</span>
+              </li>
+            )}
           </ul>
         </div>
       )}
