@@ -4,6 +4,7 @@ import { getClubName } from '../club.js';
 import { putSignedRidersService } from '../signed-riders.js';
 import { checkUnique } from './unique.js';
 import { saveEventToDB } from './save.js';
+import { checkModeratorClub } from '../../moderator-club.js';
 
 // types
 import { ZwiftEventSchema } from '../../../types/model.interface.js';
@@ -12,7 +13,10 @@ import { EventWithSubgroup } from '../../../types/types.interface.js';
 /**
  * Добавление эвента в БД zp.ru
  */
-export async function postEventService(eventParams: EventWithSubgroup, userId?: string) {
+export async function postEventService(eventParams: EventWithSubgroup, userId: string) {
+  // Проверка является ли userId модератором клуба в котором создается данный Эвент
+  await checkModeratorClub(userId, eventParams.microserviceExternalResourceId);
+
   // Проверка на уникальность id Эвента и id подгрупп
   await checkUnique(eventParams);
 

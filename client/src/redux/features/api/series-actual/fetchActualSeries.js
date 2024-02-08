@@ -13,10 +13,6 @@ export const fetchActualSeries = createAsyncThunk(
         method: 'get',
       });
 
-      thunkAPI.dispatch(
-        getAlert({ message: 'Данные получены', type: 'success', isOpened: true })
-      );
-
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;

@@ -36,7 +36,7 @@ export async function getEventZwift(req: Request, res: Response) {
 /**
  * Контроллер для внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
  */
-export async function putEvent(req: Request, res: Response) {
+export async function putEventZwift(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const event: PutEvent = req.body.event;

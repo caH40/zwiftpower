@@ -4,7 +4,7 @@ import { authModerator } from '../middleware/authRole.js';
 import {
   getEventZwift,
   getZwiftRider,
-  putEvent,
+  putEventZwift,
   getZwiftEventResults,
   postZwiftEvent,
 } from '../controllers/zwift.js';
@@ -12,7 +12,7 @@ import {
 export const routerZwift = Router();
 
 routerZwift.get('/events/:eventId', authModerator, getEventZwift);
-routerZwift.put('/events', authModerator, putEvent);
+routerZwift.put('/events', authModerator, putEventZwift);
 routerZwift.post('/events', authModerator, postZwiftEvent);
 routerZwift.get('/rider/:zwiftId', getZwiftRider);
 routerZwift.get('/download/event-results/:eventId', authModerator, getZwiftEventResults);
