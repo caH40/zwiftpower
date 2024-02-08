@@ -70,8 +70,10 @@ export const deleteClubService = async (clubId: string) => {
  */
 export const addClubModeratorService = async (clubId: string, userId: string) => {
   // добавления userId в клуб
+  // clubId - id присвоенный клубу в Звифте
+  // userId - ObjectId из БД
   const clubDB = await Club.findOneAndUpdate(
-    { _id: clubId },
+    { id: clubId },
     { $addToSet: { moderators: userId } }
   );
 
@@ -101,10 +103,9 @@ export const addClubModeratorService = async (clubId: string, userId: string) =>
  */
 export const deleteClubModeratorService = async (clubId: string, userId: string) => {
   // удаление userId из клуба
-  const clubDB = await Club.findOneAndUpdate(
-    { _id: clubId },
-    { $pull: { moderators: userId } }
-  );
+  // clubId - id присвоенный клубу в Звифте
+  // userId - ObjectId из БД
+  const clubDB = await Club.findOneAndUpdate({ id: clubId }, { $pull: { moderators: userId } });
 
   if (!clubDB) {
     throw new Error(`Не найден клуб с id:${clubId}`);

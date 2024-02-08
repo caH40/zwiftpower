@@ -10,17 +10,11 @@ export async function authorizationService(
 ) {
   const userDB = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
-  })
-    .populate({ path: 'moderator.clubs', select: ['id'] })
-    .lean();
+  }).lean();
 
   if (!userDB) {
     throw new Error(`Неверный Логин или Пароль`);
   }
-
-  // формирование массива клубов в которых Пользователь является модератором
-  const clubs = userDB.moderator?.clubs.map((club) => club.id) as string[] | undefined;
-  const moderator = clubs ? { clubs: clubs } : undefined;
 
   const isValidPassword = await bcrypt.compare(password, userDB.password);
 
@@ -36,7 +30,7 @@ export async function authorizationService(
     id: userDB._id,
     zwiftId: userDB.zwiftId,
     role: userDB.role,
-    moderator,
+    moderator: userDB.moderator,
   });
 
   if (tokens) {
@@ -56,7 +50,7 @@ export async function authorizationService(
       role: userDB.role,
       photoProfile: userDB.photoProfile || userDB.zwiftData?.imageSrc,
       zwiftId: userDB.zwiftId,
-      moderator,
+      moderator: userDB.moderator,
     },
   };
 }

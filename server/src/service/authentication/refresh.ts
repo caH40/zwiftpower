@@ -15,17 +15,11 @@ export async function refreshService(refreshToken: string) {
     if (!userFromToken || !tokenDb) return;
 
     //обновляем данные пользователя если они изменились
-    const userDB = await User.findById(userFromToken.id)
-      .populate({ path: 'moderator.clubs', select: ['id'] })
-      .lean();
+    const userDB = await User.findById(userFromToken.id).lean();
 
     if (!userDB) {
       throw new Error(`Неверный Логин или Пароль`);
     }
-
-    // формирование массива клубов в которых Пользователь является модератором
-    const clubs = userDB.moderator?.clubs.map((club) => club.id) as string[] | undefined;
-    const moderator = clubs ? { clubs: clubs } : undefined;
 
     const tokens = await generateToken({
       id: userDB._id,
@@ -33,7 +27,7 @@ export async function refreshService(refreshToken: string) {
       email: userDB.email,
       username: userDB.username,
       role: userDB.role,
-      moderator,
+      moderator: userDB.moderator,
     });
 
     if (!tokens) {
@@ -49,7 +43,7 @@ export async function refreshService(refreshToken: string) {
         role: userDB.role,
         photoProfile: userDB.photoProfile || userDB.zwiftData?.imageSrc,
         zwiftId: userDB.zwiftId,
-        moderator,
+        moderator: userDB.moderator,
       },
     };
   } catch (error) {

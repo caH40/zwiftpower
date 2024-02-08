@@ -24,7 +24,7 @@ function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
               <IconDelete
                 tooltip={`Исключение ${moderator.username} из модераторов клуба`}
                 squareSize={14}
-                getClick={() => deleteModerator(club._id, moderator._id)}
+                getClick={() => deleteModerator(club.id, moderator._id)}
               />
             </div>
           ));
@@ -48,7 +48,7 @@ function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
                   <div>{club.moderators?.length ? moderators : null}</div>
                   <IconAdd
                     tooltip={'Добавление модератора'}
-                    getClick={() => addModerator(club._id, club.name)}
+                    getClick={() => addModerator(club.id, club.name)}
                     squareSize={20}
                   />
                 </div>
