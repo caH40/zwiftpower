@@ -41,19 +41,21 @@ function ZwiftEditEvent() {
   const goBack = () => navigate(-1);
 
   useEffect(() => {
+    return () => {
+      dispatch(resetParams());
+    };
+  }, []);
+
+  useEffect(() => {
     if (id) {
       dispatch(setEventId(id));
     }
 
     if (eventId === 0) {
-      return undefined;
+      return;
     }
     dispatch(fetchZwiftEventParams(eventId));
-
-    return () => {
-      dispatch(resetParams());
-      dispatch(resetEventIdCreated());
-    };
+    dispatch(resetEventIdCreated());
   }, [id, eventId, dispatch]);
 
   const sendNewEventParams = () => {

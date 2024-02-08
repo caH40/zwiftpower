@@ -26,28 +26,29 @@ function ZwiftAddEvent() {
 
   const dispatch = useDispatch();
 
+  // запрос актуальных серий
+  useEffect(() => {
+    return () => {
+      dispatch(resetSeries());
+      dispatch(resetParams());
+    };
+  }, []);
+
   // запрос параметров Эвента
   useEffect(() => {
     if (eventId === 0) {
-      return undefined;
+      return;
     }
-
     dispatch(fetchZwiftEventParams(eventId));
-    return () => {
-      dispatch(resetParams());
-      dispatch(resetEventIdCreated());
-    };
+    dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
 
   // запрос актуальных серий
   useEffect(() => {
     if (!eventMainParams?.name) {
-      return undefined;
+      return;
     }
     dispatch(fetchActualSeries());
-    return () => {
-      dispatch(resetSeries());
-    };
   }, [eventMainParams, dispatch]);
 
   // добавление Эвента в БД
