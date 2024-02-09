@@ -495,4 +495,6 @@ export interface OrganizerSchema {
   name: string; // название организатора;
   creator: Types.ObjectId; // модераторы клуба;
   description?: string; // описание Организатора;
+  // createdAt: string;
+  // updatedAt: string;
 }

@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
+import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetOrganizers } from '../../redux/features/api/organizer_admin/organizerAdminSlice';
 import Button from '../../components/UI/Button/Button';
 import TableOrganizer from '../../components/Tables/TableOrganizer/TableOrganizer';
 import FormOrganizer from '../../components/UI/FormOrganizer/FormOrganizer';
 import useTitle from '../../hook/useTitle';
-import { fetchGetOrganizerAdmin } from '../../redux/features/api/organizer_admin/fetchOrganizerAdmin';
+import {
+  fetchDeleteOrganizerAdmin,
+  fetchGetOrganizerAdmin,
+} from '../../redux/features/api/organizer_admin/fetchOrganizerAdmin';
 
 import styles from './AdminOrganizer.module.css';
-
-// const organizers = [{ _id: 0, name: 'KOM-on', creator: 'Faber' }];
 
 /**
  * Страница модерации Организаторами заездов
@@ -22,7 +24,7 @@ function AdminOrganizer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchGetOrganizerAdmin();
+    dispatch(fetchGetOrganizerAdmin());
     return () => dispatch(resetOrganizers());
   }, []);
 
@@ -30,10 +32,25 @@ function AdminOrganizer() {
     setShowFrom((prev) => !prev);
   };
 
+  const deleteOrganizer = (organizerId, name) => {
+    const confirm = window.confirm(`Вы действительно хотите удалить организатора "${name}"?`);
+    if (confirm) {
+      dispatch(fetchDeleteOrganizerAdmin(organizerId));
+    } else {
+      dispatch(
+        getAlert({
+          message: `Отмена удаления организатора "${name}!"`,
+          type: 'warning',
+          isOpened: true,
+        })
+      );
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
-        <TableOrganizer organizers={organizers} />
+        <TableOrganizer organizers={organizers} deleteOrganizer={deleteOrganizer} />
       </div>
 
       <div className={styles.button__right}>

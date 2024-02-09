@@ -9,9 +9,11 @@ import { fetchUsersZwiftpower } from '../../../redux/features/api/user_zwiftpowe
 
 import styles from './FormOrganizer.module.css';
 
+const creatorInit = { _id: '', username: '' };
+
 function FormOrganizer() {
   const [name, setName] = useState('');
-  const [creator, setCreator] = useState({ _id: '', username: '' });
+  const [creator, setCreator] = useState(creatorInit);
   const [userQuery, setUserQuery] = useState('');
 
   const { users } = useSelector((state) => state.getUsers);
@@ -29,9 +31,10 @@ function FormOrganizer() {
 
   // отправка запроса создания Эвента на сервер
   const submit = () => {
-    fetchPostOrganizerAdmin({ name, creator });
+    dispatch(fetchPostOrganizerAdmin({ name, creatorId: creator._id }));
 
     setName('');
+    setUserQuery('');
     setCreator('');
   };
 

@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetOrganizerAdmin, fetchPostOrganizerAdmin } from './fetchOrganizerAdmin';
+import {
+  fetchDeleteOrganizerAdmin,
+  fetchGetOrganizerAdmin,
+  fetchPostOrganizerAdmin,
+} from './fetchOrganizerAdmin';
 
 const initialState = {
   organizers: [],
@@ -33,10 +37,10 @@ const organizerAdminSlice = createSlice({
       state.status = 'resolved';
     });
 
-    // builder.addCase(fetchGetOrganizerAdmin.rejected, (state, action) => {
-    //   state.status = 'rejected';
-    //   state.error = action.payload;
-    // });
+    builder.addCase(fetchGetOrganizerAdmin.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
 
     // ============== создание организатора=================
     builder.addCase(fetchPostOrganizerAdmin.pending, (state) => {
@@ -50,6 +54,22 @@ const organizerAdminSlice = createSlice({
     });
 
     builder.addCase(fetchPostOrganizerAdmin.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== удаление организатора=================
+    builder.addCase(fetchDeleteOrganizerAdmin.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchDeleteOrganizerAdmin.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchDeleteOrganizerAdmin.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

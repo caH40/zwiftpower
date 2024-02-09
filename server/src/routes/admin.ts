@@ -9,6 +9,9 @@ import {
   deleteClub,
   addClubModerator,
   deleteClubModerator,
+  getOrganizers,
+  postOrganizers,
+  deleteOrganizers,
 } from '../controllers/admin.js';
 
 export const routerAdmin = Router();
@@ -20,3 +23,6 @@ routerAdmin.post('/clubs', authAdmin, postClub);
 routerAdmin.delete('/clubs', authAdmin, deleteClub);
 routerAdmin.put('/clubs/moderators', authAdmin, addClubModerator);
 routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);
+routerAdmin.get('/organizers', authAdmin, getOrganizers);
+routerAdmin.post('/organizers', authAdmin, postOrganizers);
+routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);

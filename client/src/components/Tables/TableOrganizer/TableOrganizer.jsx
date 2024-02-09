@@ -18,13 +18,13 @@ function TableOrganizer({ organizers = [], deleteOrganizer }) {
         {organizers.map((organizer) => (
           <tr className={styles.hover} key={organizer._id}>
             <td>{organizer.name}</td>
-            <td>{organizer.creator}</td>
+            <td>{organizer.creator.username}</td>
 
             <td>
               <div className={cx('centerBlock')}>
                 <IconDelete
                   tooltip="Удаление клуба"
-                  getClick={() => deleteOrganizer(organizer.id, organizer.name)}
+                  getClick={() => deleteOrganizer(organizer._id, organizer.name)}
                   squareSize={20}
                 />
               </div>

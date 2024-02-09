@@ -56,3 +56,12 @@ export interface PutResult {
   data: { value: string; message: string };
   id: string;
 }
+
+// /**
+//  * Данные организаторов заездов возвращаемых на Клиент
+//  */
+// export interface Organizers {
+//   _id: string;
+//   data: { value: string; message: string };
+//   id: string;
+// }

@@ -13,8 +13,13 @@ import {
 } from '../service/admin/club.js';
 
 // types
-import { ClubSchema, UserSchema } from '../types/model.interface.js';
+import { ClubSchema, OrganizerSchema, UserSchema } from '../types/model.interface.js';
 import { ClubZwift } from '../types/zwiftAPI/clubFromZwift.interface.js';
+import {
+  deleteOrganizersService,
+  getOrganizersService,
+  postOrganizersService,
+} from '../service/admin/organizer.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -80,7 +85,7 @@ export const postClub = async (req: Request, res: Response) => {
     const club: ClubZwift = req.body.club;
     const clubPosted: { message: string } = await postClubService(club);
 
-    res.status(200).json(clubPosted);
+    res.status(201).json(clubPosted);
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {
@@ -130,7 +135,7 @@ export const addClubModerator = async (req: Request, res: Response) => {
       userId
     );
 
-    res.status(200).json(clubModeratorAdded);
+    res.status(201).json(clubModeratorAdded);
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {
@@ -157,6 +162,71 @@ export const deleteClubModerator = async (req: Request, res: Response) => {
     );
 
     res.status(200).json(clubModeratorAdded);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Получение Организаторов заездов
+ */
+export const getOrganizers = async (req: Request, res: Response) => {
+  try {
+    const organizers: OrganizerSchema[] = await getOrganizersService();
+
+    res.status(200).json(organizers);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Добавление Организаторов заездов
+ */
+export const postOrganizers = async (req: Request, res: Response) => {
+  try {
+    const { name, creatorId } = req.body;
+    const organizers: { message: string } = await postOrganizersService(name, creatorId);
+
+    res.status(201).json(organizers);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Удаление Организаторов заездов
+ */
+export const deleteOrganizers = async (req: Request, res: Response) => {
+  try {
+    const { organizerId } = req.body;
+    const organizers: { message: string } = await deleteOrganizersService(organizerId);
+
+    res.status(200).json(organizers);
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {

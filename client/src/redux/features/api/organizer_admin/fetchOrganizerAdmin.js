@@ -12,7 +12,7 @@ export const fetchGetOrganizerAdmin = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/organizer`,
+        url: `${serverExpress}/api/admin/organizers`,
         method: 'get',
       });
 
@@ -30,9 +30,37 @@ export const fetchPostOrganizerAdmin = createAsyncThunk(
   async (organizer, thunkAPI) => {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/organizer`,
+        url: `${serverExpress}/api/admin/organizers`,
         method: 'post',
         data: organizer,
+      });
+
+      thunkAPI.dispatch(fetchGetOrganizerAdmin());
+      thunkAPI.dispatch(
+        getAlert({
+          message: response.data.message,
+          type: 'success',
+          isOpened: true,
+        })
+      );
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const fetchDeleteOrganizerAdmin = createAsyncThunk(
+  'organizerAdmin/delete',
+  async (organizerId, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/admin/organizers`,
+        method: 'delete',
+        data: { organizerId },
       });
 
       thunkAPI.dispatch(fetchGetOrganizerAdmin());
