@@ -27,4 +27,11 @@ export const organizers = [
     label: 'KMV',
     clubZwiftId: '53fb86b7-1702-42f1-8b42-a37a7007ce72',
   },
+  {
+    id: 4,
+    value: 'VTR SOCIAL RIDES',
+    name: 'VTR',
+    label: 'VTR',
+    clubZwiftId: '9934fb2b-37e2-4b88-b635-9f069bd31026',
+  },
 ];
