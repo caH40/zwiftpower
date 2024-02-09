@@ -58,8 +58,8 @@ export const deleteClubService = async (clubId: string) => {
   }
 
   await User.updateMany(
-    { 'moderator.clubs': clubDB._id },
-    { $pull: { 'moderator.clubs': clubDB._id } }
+    { 'moderator.clubs': clubDB.id },
+    { $pull: { 'moderator.clubs': clubDB.id } }
   );
 
   return { message: `Клуб ${clubDB.name} удалён из БД` };
