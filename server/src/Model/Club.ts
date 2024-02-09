@@ -9,6 +9,7 @@ const clubSchema = new Schema<ClubSchema>(
       event: String,
       club_large: String,
     },
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' },
     name: String,
     tagline: String,
     description: String,

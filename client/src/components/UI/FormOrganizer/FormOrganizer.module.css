@@ -1,0 +1,31 @@
+.button__right {
+  margin-top: 10px;
+  text-align: right;
+}
+.box__user {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  padding: 3px 7px;
+  cursor: pointer;
+}
+.box__user:hover {
+  transition: 0.3s;
+  background-color: var(--color-orange-main);
+}
+.user {
+  flex: 0 1 120px;
+}
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+.group {
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+}

@@ -477,8 +477,22 @@ export interface ClubSchema {
     event: string; // ссылка (url) на постер к создаваемому Эвенту
     club_large: string; // ссылка (url) на постер клуба
   };
+  organizer: Types.ObjectId; // id организатора заездов
   name: string; // название клуба;
   tagline: string; // полное название клуба;
   description: string; // описание клуба;
   moderators?: Types.ObjectId[]; // модераторы клуба;
+}
+
+/**
+ * Схема Организатора заезда, у организатора может быть несколько клубов
+ */
+export interface OrganizerSchema {
+  images: {
+    icon?: string; // ссылка (url) на иконку организатора
+    event?: string; // ссылка (url) на постер к на странице Организатора
+  };
+  name: string; // название организатора;
+  creator: Types.ObjectId; // модераторы клуба;
+  description?: string; // описание Организатора;
 }

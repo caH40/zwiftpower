@@ -1,4 +1,5 @@
 import clubModeratorSlice from '../features/api/club_moderator/clubModeratorSlice';
+import organizerAdminSlice from '../features/api/organizer_admin/organizerAdminSlice';
 import resultEditSlice from '../features/api/result_edit/resultEditSlice';
 import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowerSlice';
 import zwiftClubSlice from '../features/api/zwift_club/zwiftClubSlice';
@@ -11,4 +12,5 @@ export const adminReducers = {
   getUsers: usersZwiftpowerSlice,
   zwiftClub: zwiftClubSlice,
   clubModerator: clubModeratorSlice,
+  organizerAdmin: organizerAdminSlice,
 };

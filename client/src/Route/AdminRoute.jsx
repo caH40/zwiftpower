@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
+const AdminOrganizer = lazy(() => import('../Pages/AdminOrganizer/AdminOrganizer'));
 const Admin = lazy(() => import('../Pages/Admin/Admin'));
 const Moderator = lazy(() => import('../Pages/Moderator/Moderator'));
 const ZwiftCreateEvent = lazy(() => import('../Pages/ZwiftCreateEvent/ZwiftCreateEvent'));
@@ -32,16 +33,12 @@ export function AdminRoute(isAdmin) {
           <Route path="users" element={<Users />} />
           <Route path="logs/admin" element={<LogsAdmin />} />
           <Route path="logs/errors" element={<LogsErrors />} />
+          <Route path="organizer" element={<AdminOrganizer />} />
           <Route path="logs/errors/:id" element={<LogErrorDescription />} />
           <Route path="clubs" element={<ZwiftClubs />} />
         </Route>
       )}
       <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
-      {/* {isAdmin && <Route path="/admin/users" element={<Users />} />}
-      {isAdmin && <Route path="/logs/admin" element={<LogsAdmin />} />}
-      {isAdmin && <Route path="/logs/errors" element={<LogsErrors />} />}
-      {isAdmin && <Route path="/logs/errors/:id" element={<LogErrorDescription />} />}
-      {isAdmin && <Route path="admin/clubs" element={<ZwiftClubs />} />} */}
     </>
   );
 }
