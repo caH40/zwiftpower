@@ -7,6 +7,7 @@ import { OrganizerSchema } from '../types/model.interface.js';
 const organizerSchema = new Schema<OrganizerSchema>(
   {
     name: { type: String, unique: true, required: true },
+    label: String,
     images: {
       icon: String,
       poster: String,

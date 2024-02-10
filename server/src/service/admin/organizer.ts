@@ -15,10 +15,12 @@ export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
  */
 export const postOrganizersService = async (
   name: string,
+  label: string,
   creatorId: string
 ): Promise<{ message: string }> => {
   const response = await Organizer.create({
     name,
+    label,
     creator: creatorId,
   });
 

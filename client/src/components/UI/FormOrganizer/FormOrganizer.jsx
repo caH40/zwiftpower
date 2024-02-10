@@ -13,6 +13,7 @@ const creatorInit = { _id: '', username: '' };
 
 function FormOrganizer() {
   const [name, setName] = useState('');
+  const [label, setLabel] = useState('');
   const [creator, setCreator] = useState(creatorInit);
   const [userQuery, setUserQuery] = useState('');
 
@@ -31,9 +32,10 @@ function FormOrganizer() {
 
   // отправка запроса создания Эвента на сервер
   const submit = () => {
-    dispatch(fetchPostOrganizerAdmin({ name, creatorId: creator._id }));
+    dispatch(fetchPostOrganizerAdmin({ name, label, creatorId: creator._id }));
 
     setName('');
+    setLabel('');
     setUserQuery('');
     setCreator('');
   };
@@ -41,6 +43,11 @@ function FormOrganizer() {
   return (
     <form>
       <CommonInput name={'название Организатора заездов'} state={name} setState={setName} />
+      <CommonInput
+        name={'сокращенное название (аббревиатура)'}
+        state={label}
+        setState={setLabel}
+      />
       <CommonInput
         name={'создатель Организатора заездов'}
         state={userQuery}
@@ -65,7 +72,7 @@ function FormOrganizer() {
       )}
 
       <div className={styles.button__right}>
-        <Button getClick={submit} disabled={!name || !creator._id || !userQuery}>
+        <Button getClick={submit} disabled={!name || !creator._id || !userQuery || !label}>
           Добавить
         </Button>
       </div>

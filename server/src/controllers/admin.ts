@@ -201,8 +201,8 @@ export const getOrganizers = async (req: Request, res: Response) => {
  */
 export const postOrganizers = async (req: Request, res: Response) => {
   try {
-    const { name, creatorId } = req.body;
-    const organizers: { message: string } = await postOrganizersService(name, creatorId);
+    const { name, label, creatorId } = req.body;
+    const organizers: { message: string } = await postOrganizersService(name, label, creatorId);
 
     res.status(201).json(organizers);
   } catch (error) {

@@ -493,6 +493,7 @@ export interface OrganizerSchema {
     event?: string; // ссылка (url) на постер к на странице Организатора
   };
   name: string; // название организатора;
+  label: string; // название организатора;
   creator: Types.ObjectId; // модераторы клуба;
   description?: string; // описание Организатора;
   // createdAt: string;
