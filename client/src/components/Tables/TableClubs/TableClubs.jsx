@@ -43,6 +43,7 @@ function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
                   />
                 </div>
               </td>
+              <td>{club.organizer?.name}</td>
               <td>
                 <div className={cx('block__moderators')}>
                   <div>{club.moderators?.length ? moderators : null}</div>

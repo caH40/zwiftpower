@@ -82,8 +82,8 @@ export const getClub = async (req: Request, res: Response) => {
  */
 export const postClub = async (req: Request, res: Response) => {
   try {
-    const club: ClubZwift = req.body.club;
-    const clubPosted: { message: string } = await postClubService(club);
+    const { club, organizerId }: { club: ClubZwift; organizerId: string } = req.body;
+    const clubPosted: { message: string } = await postClubService(club, organizerId);
 
     res.status(201).json(clubPosted);
   } catch (error) {

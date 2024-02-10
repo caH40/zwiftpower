@@ -16,6 +16,8 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import FindUser from '../../components/UI/FindUser/FindUser';
 import { fetchUsersZwiftpower } from '../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
 import { fetchDeleteClubModerator } from '../../redux/features/api/club_moderator/fetchClubModerator';
+import { fetchGetOrganizerAdmin } from '../../redux/features/api/organizer_admin/fetchOrganizerAdmin';
+import { resetOrganizers } from '../../redux/features/api/organizer_admin/organizerAdminSlice';
 
 import BlockClubDescription from './BlockClubDescription';
 
@@ -28,6 +30,8 @@ const cx = classNames.bind(styles);
  */
 function ZwiftClubs() {
   const [showAddModerator, setShowAddModerator] = useState(false);
+  const [organizer, setOrganizer] = useState({ org: {} });
+  const { organizers } = useSelector((state) => state.organizerAdmin);
 
   const [clubCurrent, setClubCurrent] = useState({ id: '', name: '' });
   useTitle('Управление клубами из Звифта');
@@ -36,7 +40,11 @@ function ZwiftClubs() {
 
   useEffect(() => {
     dispatch(fetchGetZwiftClubs());
-    return () => dispatch(resetClub());
+    dispatch(fetchGetOrganizerAdmin());
+    return () => {
+      dispatch(resetOrganizers());
+      dispatch(resetClub());
+    };
   }, []);
 
   useEffect(() => {
@@ -48,7 +56,12 @@ function ZwiftClubs() {
 
   // добавление клуба в БД
   const postClub = (club) => {
-    dispatch(fetchPostZwiftClub(club));
+    dispatch(
+      fetchPostZwiftClub({
+        club,
+        organizerId: organizers.find((org) => org.name === organizer.org)._id,
+      })
+    );
   };
 
   // удаление клуба из БД
@@ -100,7 +113,15 @@ function ZwiftClubs() {
       <div className={styles.group}>
         <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
       </div>
-      {club?.id && <BlockClubDescription club={club} postClub={postClub} />}
+      {club?.id && (
+        <BlockClubDescription
+          club={club}
+          postClub={postClub}
+          organizers={organizers}
+          organizer={organizer}
+          setOrganizer={setOrganizer}
+        />
+      )}
     </section>
   );
 }

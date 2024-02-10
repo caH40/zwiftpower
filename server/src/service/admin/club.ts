@@ -15,6 +15,7 @@ export const getClubsService = async (): Promise<ClubSchema[]> => {
       path: 'moderators',
       select: ['username', 'zwiftId'],
     })
+    .populate({ path: 'organizer', select: 'name' })
     .lean();
 
   return clubsDB;
@@ -36,13 +37,13 @@ export const getClubService = async (id: string) => {
 /**
  * Сервис добавления клуба в БД
  */
-export const postClubService = async (club: ClubZwift) => {
+export const postClubService = async (club: ClubZwift, organizerId: string) => {
   const images = {
     icon: club.images.find((image) => image.type === 'ICON')?.imageUrl,
     event: club.images.find((image) => image.type === 'EVENT')?.imageUrl,
     club_large: club.images.find((image) => image.type === 'CLUB_LARGE')?.imageUrl,
   };
-  const clubDB = await Club.create({ ...club, images });
+  const clubDB = await Club.create({ ...club, images, organizer: organizerId });
 
   return { message: `Клуб ${clubDB.name} добавлен в БД` };
 };

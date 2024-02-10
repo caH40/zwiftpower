@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 
 import Button from '../../components/UI/Button/Button';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
+import SimpleSelect from '../../components/UI/SimpleSelect/SimpleSelect';
 
 import styles from './ZwiftClubs.module.css';
 
@@ -10,7 +11,13 @@ const cx = classNames.bind(styles);
 /**
  * Блок описания запрошенного клуба с ZwiftAPI
  */
-function BlockClubDescription({ club, postClub }) {
+function BlockClubDescription({ club, postClub, organizers, organizer, setOrganizer }) {
+  const organizersOptions = organizers.map((org) => ({
+    id: org.label,
+    value: org.name,
+    name: org.name,
+  }));
+
   return (
     <>
       <h2 className={styles.title}>Данные запрошенного клуба</h2>
@@ -47,6 +54,15 @@ function BlockClubDescription({ club, postClub }) {
             </dd>
           </div>
         </dl>
+        <div className={styles.box__select}>
+          <SimpleSelect
+            name={'Организатор заездов для клуба'}
+            state={organizer}
+            setState={setOrganizer}
+            options={organizersOptions}
+            property="org"
+          />
+        </div>
         <div className={styles.align__right}>
           <Button getClick={() => postClub(club)}>Добавить</Button>
         </div>

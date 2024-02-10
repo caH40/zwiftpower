@@ -15,9 +15,11 @@ function TableOrganizer({ organizers = [], deleteOrganizer }) {
       <caption className={styles.caption}>Список организаторов заездов</caption>
       <Thead />
       <tbody>
-        {organizers.map((organizer) => (
+        {organizers.map((organizer, index) => (
           <tr className={styles.hover} key={organizer._id}>
+            <td>{index + 1}</td>
             <td>{organizer.name}</td>
+            <td>{organizer.label}</td>
             <td>{organizer.creator.username}</td>
 
             <td>
