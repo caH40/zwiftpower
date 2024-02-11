@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import { resetEventsResults } from '../../../redux/features/api/eventsSlice';
 import { getTimerLocal } from '../../../utils/date-local';
-import { getDuration, getLaps, map, organizer, routeName } from '../../../utils/event';
+import { getDuration, getLaps, map, routeName } from '../../../utils/event';
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRaceType from '../Td/TdRaceType';
@@ -45,7 +45,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               </Link>
             </td>
 
-            <td className={cx('td__nowrap')}>{organizer(event.organizer)}</td>
+            <td className={cx('td__nowrap')}>{event.organizer}</td>
             <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />

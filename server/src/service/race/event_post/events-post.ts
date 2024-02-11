@@ -1,14 +1,23 @@
 import { loggingAdmin } from '../../../logger/logger-admin.js';
 import { updateStartInfoEvent } from '../../updates/schedule/start-event.js';
-import { getClubName } from '../club.js';
 import { putSignedRidersService } from '../signed-riders.js';
 import { checkUnique } from './unique.js';
 import { saveEventToDB } from './save.js';
 import { checkModeratorClub } from '../../moderator-club.js';
 
 // types
-import { ZwiftEventSchema } from '../../../types/model.interface.js';
+import {
+  ClubSchema,
+  OrganizerSchema,
+  ZwiftEventSchema,
+} from '../../../types/model.interface.js';
 import { EventWithSubgroup } from '../../../types/types.interface.js';
+
+import { Club } from '../../../Model/Club.js';
+
+interface ClubWithOrganizer extends Omit<ClubSchema, 'organizer'> {
+  organizer: OrganizerSchema;
+}
 
 /**
  * Добавление эвента в БД zp.ru
@@ -20,10 +29,19 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   // Проверка на уникальность id Эвента и id подгрупп
   await checkUnique(eventParams);
 
-  // добавление названия клуба в котором был создал заезд в объект event
-  if (!eventParams.clubName) {
-    eventParams.clubName = await getClubName(eventParams.microserviceExternalResourceId);
+  // добавление названия клуба  в котором был создал заезд и организатора в объект event
+  const clubDB = (await Club.findOne({
+    id: eventParams.microserviceExternalResourceId,
+  }).populate('organizer')) as ClubWithOrganizer;
+
+  if (!clubDB) {
+    throw new Error(
+      `Не найден клуб "${eventParams.microserviceExternalResourceId}" в БД сайта`
+    );
   }
+
+  eventParams.clubName = clubDB.name;
+  eventParams.organizer = clubDB.organizer.label;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
 

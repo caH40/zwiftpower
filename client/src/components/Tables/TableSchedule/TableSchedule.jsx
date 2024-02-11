@@ -6,7 +6,7 @@ import classnames from 'classnames/bind';
 import styles from '../Table.module.css';
 
 import { getToday } from '../../../utils/date-local';
-import { getDuration, getLaps, map, organizer, routeName } from '../../../utils/event';
+import { getDuration, getLaps, map, routeName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdRaceType from '../Td/TdRaceType';
@@ -46,7 +46,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                 <span className={cx('big')}>{event.name}</span>
               </Link>
             </td>
-            <td className={cx('td__nowrap')}>{organizer(event.organizer)}</td>
+            <td className={cx('td__nowrap')}>{event.organizer}</td>
             <TdRaceType typeRaceCustom={event.typeRaceCustom} />
             <td>
               <CategoriesBox event={event} addCls={'nowrap'} />

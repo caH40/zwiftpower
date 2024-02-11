@@ -53,7 +53,7 @@ function ZwiftAddEvent() {
 
   // добавление Эвента в БД
   const addEvent = () => {
-    const isFilledFields = additionalParams.typeRaceCustom && additionalParams.organizer;
+    const isFilledFields = additionalParams.typeRaceCustom;
     if (!isFilledFields) {
       dispatch(
         getAlert({

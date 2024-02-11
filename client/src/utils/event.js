@@ -1,7 +1,6 @@
 import { optionsEventType } from '../assets/select/event-edit';
 import { routes } from '../assets/zwift/lib/esm/routes';
 import { worlds } from '../assets/zwift/lib/esm/worlds';
-import { organizers } from '../assets/zwift/organizer';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';
@@ -44,38 +43,6 @@ export const getLinksRouteDescription = (routeId) => {
   const linkZwifterbikes = route.zwifterBikesUrl;
   const linkStravaSegment = route.stravaSegmentUrl;
   return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift, linkStravaSegment };
-};
-
-// /**
-//  * Линки на описание маршрутов на сторонних маршрутах !!! для row routes from Zwift
-//  */
-// export const getLinksRouteDescription = (routeId) => {
-//   const route = routes.find((route) => route.id === routeId);
-//   if (!routeName) {
-//     return null;
-//   }
-//   const routeNameForLink = route.name.replace(/\s/g, '-').toLowerCase();
-
-//   let mapNameForLink = null;
-//   switch (route.mapName) {
-//     case 'MAKURIISLANDS':
-//       mapNameForLink = 'MAKURI-ISLANDS'.toLocaleLowerCase();
-//       break;
-//     case 'NEWYORK':
-//       mapNameForLink = 'NEW-YORK'.toLocaleLowerCase();
-//       break;
-//     default:
-//       mapNameForLink = route.mapName.toLocaleLowerCase();
-//   }
-
-//   const linkWhatsonzwift = `https://whatsonzwift.com/world/${mapNameForLink}/route/${routeNameForLink}`;
-//   const linkZwiftinsider = `https://zwiftinsider.com/route/${routeNameForLink}`;
-//   const linkZwifterbikes = `https://zwifterbikes.web.app/route/${routeNameForLink}`;
-//   return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift };
-// };
-
-export const organizer = (value) => {
-  return organizers.find((organizer) => organizer.value === value)?.name;
 };
 
 /**

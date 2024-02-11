@@ -1,6 +1,5 @@
 import Button from '../Button/Button';
 import { raceTypes } from '../../../assets/zwift/race-type';
-import { organizers } from '../../../assets/zwift/organizer';
 import SimpleSelectArray from '../SimpleSelectArray/SimpleSelectArray';
 
 import styles from './FormAdditionalParamsEvent.module.css';
@@ -8,13 +7,6 @@ import styles from './FormAdditionalParamsEvent.module.css';
 function FormAdditionalParamsEvent({ form, setForm, sendForm, series }) {
   return (
     <form className={styles.form} name="requestData">
-      <SimpleSelectArray
-        name={'Организатор'}
-        state={form}
-        setState={setForm}
-        property={'organizer'}
-        options={organizers}
-      />
       <SimpleSelectArray
         name={'Тип гонки'}
         state={form}

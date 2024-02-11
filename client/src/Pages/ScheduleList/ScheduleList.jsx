@@ -27,7 +27,6 @@ function ScheduleList() {
   const [trigger, setTrigger] = useState(false);
   const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
   const { isScreenLg: isDesktop } = useResize();
-
   useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
 
