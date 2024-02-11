@@ -30,7 +30,7 @@ const cx = classNames.bind(styles);
  */
 function ZwiftClubs() {
   const [showAddModerator, setShowAddModerator] = useState(false);
-  const [organizer, setOrganizer] = useState({ org: {} });
+  const [organizer, setOrganizer] = useState({ org: '' });
   const { organizers } = useSelector((state) => state.organizerAdmin);
 
   const [clubCurrent, setClubCurrent] = useState({ id: '', name: '' });

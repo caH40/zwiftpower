@@ -64,7 +64,9 @@ function BlockClubDescription({ club, postClub, organizers, organizer, setOrgani
           />
         </div>
         <div className={styles.align__right}>
-          <Button getClick={() => postClub(club)}>Добавить</Button>
+          <Button getClick={() => postClub(club)} disabled={!organizer.org}>
+            Добавить
+          </Button>
         </div>
       </div>
       <JSONBlock json={club} />
