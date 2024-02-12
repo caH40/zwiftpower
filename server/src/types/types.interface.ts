@@ -505,3 +505,13 @@ export interface MetaTags {
   image: string;
   recommendationsTag: string;
 }
+
+/**
+ * Данные получаемые из фитфайла активности райдера с последующей выборкой только значений
+ * powerInWatts и distanceInCm
+ */
+export interface FitDataFromZwift {
+  zwiftId: number;
+  powerInWatts: number[];
+  distanceInCm: number[];
+}
