@@ -112,6 +112,8 @@
   "exclude": ["node_modules", "build"],
   "lib": ["esnext"],
   "ts-node": {
+    // "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
     "esm": true
   }
 }
