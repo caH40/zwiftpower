@@ -46,7 +46,9 @@ app.use('/api/statistics', getCache, statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
 
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'build'), { index: false }));
+app.use(
+  express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
+);
 app.get('*', async (req, res) => {
   const htmlContent = await setMetaTags(req.path);
   res.send(htmlContent);
