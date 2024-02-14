@@ -46,9 +46,7 @@ app.use('/api/statistics', getCache, statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
 
-app.use(
-  express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
-);
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'build'), { index: false }));
 app.get('*', async (req, res) => {
   const htmlContent = await setMetaTags(req.path);
   res.send(htmlContent);
@@ -57,7 +55,6 @@ app.get('*', async (req, res) => {
 // запуск сервера на express
 const start = async () => {
   try {
-    // throw new Error('testing errors');
     app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
   } catch (error) {
     errorHandler(error);

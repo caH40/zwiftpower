@@ -14,7 +14,7 @@ export const setMetaTags = async (url: string): Promise<string> => {
   const { title, canonical, description, image, recommendationsTag } = await getMetaTags(url);
 
   // путь до index.html в Билде
-  const filePath = path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html');
+  const filePath = path.resolve(__dirname, '..', 'client', 'build', 'index.html');
 
   // получение файла в переменную htmlContent
   let htmlContent = fs.readFileSync(filePath, 'utf8');
