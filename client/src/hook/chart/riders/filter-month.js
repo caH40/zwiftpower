@@ -4,7 +4,7 @@ import { months } from '../../../assets/dates';
  */
 export const filterForMonth = (data) => {
   // исключение результатов в которых никто не участвовал
-  const dataFiltered = data.filter((elm) => elm.riders.male + elm.riders.female !== 0);
+  const dataFiltered = [...data].filter((elm) => elm.riders.male + elm.riders.female !== 0);
 
   const dataPrepared = months.map((month) => ({
     label: month,
@@ -16,10 +16,15 @@ export const filterForMonth = (data) => {
     const monthNumber = new Date(elm.eventStart).getMonth();
     dataPrepared[monthNumber].riders.male += elm.riders.male;
     dataPrepared[monthNumber].riders.female += elm.riders.female;
+    dataPrepared[monthNumber].eventStart = elm?.eventStart;
   }
 
+  const x = [...dataPrepared]
+    .filter((elm) => elm.eventStart)
+    .toSorted((a, b) => a.eventStart - b.eventStart);
+
   // исключение результатов в месячном периоде в которых никто не участвовал
-  const dataPreparedFiltered = [...dataPrepared].filter(
+  const dataPreparedFiltered = [...x].filter(
     (elm) => elm.riders.male + elm.riders.female !== 0
   );
 

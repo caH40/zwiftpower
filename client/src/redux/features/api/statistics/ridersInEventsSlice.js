@@ -23,6 +23,9 @@ const ridersInEventsSlice = createSlice({
 
     // обработка результатов согласно периода запроса
     getRidersInEventsPrepared(state, action) {
+      if (!state.ridersInEvents.length) {
+        return;
+      }
       const periodCurrent = action.payload;
       switch (periodCurrent) {
         case '3 месяца':
