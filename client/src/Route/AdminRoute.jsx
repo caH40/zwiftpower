@@ -16,6 +16,7 @@ const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'))
 const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 const Users = lazy(() => import('../Pages/Users/Users'));
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
+const ZwiftViewEvent = lazy(() => import('../Pages/ZwiftViewEvent/ZwiftViewEvent'));
 
 export function AdminRoute(isAdmin) {
   return (
@@ -26,6 +27,7 @@ export function AdminRoute(isAdmin) {
         <Route path="event/edit/:id" element={<ZwiftEditEvent />} />
         <Route path="event/add" element={<ZwiftAddEvent />} />
         <Route path="event/create" element={<ZwiftCreateEvent />} />
+        <Route path="event/view" element={<ZwiftViewEvent />} />
       </Route>
 
       {isAdmin && (

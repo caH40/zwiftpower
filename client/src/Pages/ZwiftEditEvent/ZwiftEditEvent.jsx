@@ -55,7 +55,7 @@ function ZwiftEditEvent() {
       return;
     }
 
-    dispatch(fetchZwiftEventParams(eventId));
+    dispatch(fetchZwiftEventParams({ eventId }));
     dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
 

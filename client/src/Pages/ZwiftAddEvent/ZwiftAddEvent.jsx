@@ -39,7 +39,7 @@ function ZwiftAddEvent() {
     if (eventId === 0) {
       return;
     }
-    dispatch(fetchZwiftEventParams(eventId));
+    dispatch(fetchZwiftEventParams({ eventId }));
     dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
 

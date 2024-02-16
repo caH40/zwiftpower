@@ -16,10 +16,10 @@ import { checkModeratorClub } from '../service/moderator-club.js';
  */
 export async function getEventZwift(req: Request, res: Response) {
   try {
-    const { eventId, userId } = req.params;
+    const { eventId, userId, forView } = req.params;
 
     const event = await getEventZwiftService(+eventId);
-    await checkModeratorClub(userId, event.microserviceExternalResourceId);
+    await checkModeratorClub(userId, event.microserviceExternalResourceId, forView);
     res.status(200).json(event);
   } catch (error) {
     errorHandler(error);

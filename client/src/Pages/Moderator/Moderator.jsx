@@ -5,6 +5,7 @@ import IconEventCreate from '../../components/icons/IconEventCreate';
 import IconEventEdit from '../../components/icons/IconEventEdit';
 import IconEventAdd from '../../components/icons/IconEventAdd';
 import NavAdmin from '../../components/UI/NavAdmin/NavAdmin';
+import IconEventView from '../../components/icons/IconEventView';
 
 import ModeratorDescription from './ModeratorDescription';
 
@@ -12,6 +13,7 @@ const items = [
   { to: '/zwift/event/create', title: 'Создание', icon: IconEventCreate },
   { to: '/zwift/event/add', title: 'Добавление', icon: IconEventAdd },
   { to: '/zwift/event/edit', title: 'Редактирование', icon: IconEventEdit },
+  { to: '/zwift/event/view', title: 'Просмотр', icon: IconEventView },
 ];
 
 /**

@@ -6,10 +6,10 @@ import { serverExpress } from '../../../../config/environment';
 
 export const fetchZwiftEventParams = createAsyncThunk(
   'zwift/eventParams',
-  async function (eventId, thunkAPI) {
+  async function ({ eventId, forView }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/zwift/events/${eventId}`,
+        url: `${serverExpress}/api/zwift/events/${eventId}/${forView || 'false'}`,
         method: 'get',
       });
 
