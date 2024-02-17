@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
-import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
+import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import FormAdditionalParamsEvent from '../../components/UI/FormAdditionalParamsEvent/FormAdditionalParamsEvent';
 import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import { resetParams } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
@@ -81,7 +81,7 @@ function ZwiftAddEvent() {
       </div>
       {eventMainParams?.name && (
         <>
-          <DescriptionEventZwiftNew event={eventMainParams} />
+          <DescriptionEventZwift event={eventMainParams} />
           <FormAdditionalParamsEvent
             form={additionalParams}
             setForm={setAdditionalParams}

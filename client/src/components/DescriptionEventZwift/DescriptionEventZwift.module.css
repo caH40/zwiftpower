@@ -72,7 +72,7 @@
   margin-right: 35px;
 }
 .block__mainClosed {
-  min-height: 200px;
+  min-height: 250px;
   border-radius: 10px;
 }
 .main__innerClosed {
@@ -81,8 +81,8 @@
 .box__open,
 .box__modify {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 20px;
+  right: 20px;
   z-index: 10;
   cursor: pointer;
 }
@@ -95,11 +95,8 @@
   .block__text {
     padding: 10px;
   }
-  .block__mainClosed {
-    min-height: 0px;
-  }
   .block__main {
-    padding: 20px 20px 0px 20px;
+    padding: 10px 10px 0px 10px;
   }
   .main__inner {
     flex-flow: wrap;
@@ -114,6 +111,10 @@
   }
   .box__params {
     padding: 10px 20px;
+  }
+  .box__open {
+    top: 10px;
+    right: 10px;
   }
 }
 @media screen and (max-width: 576px) {
@@ -139,5 +140,10 @@
   .box__modify {
     bottom: 10px;
     right: 10px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .block__mainClosed {
+    min-height: 300px;
   }
 }

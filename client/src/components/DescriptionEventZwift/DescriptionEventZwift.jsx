@@ -16,9 +16,9 @@ import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 
-import styles from './DescriptionEventZwiftNew.module.css';
+import styles from './DescriptionEventZwift.module.css';
 
-function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
+function DescriptionEventZwift({ event, forSchedule, eventId }) {
   const [isOpened, setIsOpened] = useState(false);
   const { role, moderator } = useSelector((state) => state.checkAuth.value.user);
 
@@ -85,11 +85,10 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
             </div>
           )}
         </div>
-        {isOpened && (
-          <div className={styles.box__params}>
-            <ParamsEvent event={event} />
-          </div>
-        )}
+
+        <div className={styles.box__params}>
+          <ParamsEvent event={event} />
+        </div>
       </div>
 
       {isOpened && (
@@ -106,4 +105,4 @@ function DescriptionEventZwiftNew({ event, forSchedule, eventId }) {
   );
 }
 
-export default DescriptionEventZwiftNew;
+export default DescriptionEventZwift;

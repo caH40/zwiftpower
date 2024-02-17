@@ -7,7 +7,7 @@ import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
-import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
+import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
@@ -64,7 +64,7 @@ function RaceResults() {
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         {eventData?.id && (
           <>
-            <DescriptionEventZwiftNew event={eventData} eventId={eventId} />
+            <DescriptionEventZwift event={eventData} eventId={eventId} />
             <NavBarResultsRace results={resultsPrepared} />
 
             <section className={styles.wrapper__wide}>

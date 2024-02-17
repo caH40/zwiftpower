@@ -7,7 +7,7 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
-import DescriptionEventZwiftNew from '../../components/DescriptionEventZwiftNew/DescriptionEventZwiftNew';
+import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import { getTimerLocal } from '../../utils/date-local';
 import {
   fetchEventPreview,
@@ -65,7 +65,7 @@ function SignedRiders() {
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         {event?.id && !event.started && (
           <>
-            <DescriptionEventZwiftNew event={event} forSchedule={true} />
+            <DescriptionEventZwift event={event} forSchedule={true} />
             <Link
               className={styles.button}
               to={`https://www.zwift.com/eu/events/view/${event.id}`}
