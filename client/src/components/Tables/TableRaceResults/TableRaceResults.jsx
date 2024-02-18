@@ -25,7 +25,7 @@ import { getCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
-function TableRaceResults({ results, event }) {
+function TableRaceResults({ results, event, forDNF }) {
   // показывать сквозную нумерацию в таблице
   const [showIndex, setShowIndex] = useState(false);
 
@@ -55,11 +55,12 @@ function TableRaceResults({ results, event }) {
               key={result._id}
             >
               {showIndex && <td className={cx('centerTd')}>{index + 1}</td>}
+
               <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}
-                  isDsq={isDsq}
-                  dsqType={dsqType}
+                  isDsq={forDNF ? true : isDsq}
+                  dsqType={forDNF ? 'DNF' : dsqType}
                   dsqDescription={dsqDescription}
                 />
               </td>

@@ -8,12 +8,13 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
-import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
+import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
+import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 
 import styles from './RaceResults.module.css';
 
@@ -24,6 +25,7 @@ const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceResults() {
   const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
+  const { column: pageCurrent } = useSelector((state) => state.filterRaceResultsPage.value);
   const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Результаты заезда');
@@ -65,15 +67,31 @@ function RaceResults() {
         {eventData?.id && (
           <>
             <DescriptionEventZwift event={eventData} eventId={eventId} />
-            <NavBarResultsRace results={resultsPrepared} />
+            <NavBarResultsRace />
 
-            <section className={styles.wrapper__wide}>
-              <TableRaceResults results={resultsPrepared} event={eventData} />
-              <ServiceBox
-                updated={eventData.updated}
-                modifiedResults={eventData.modifiedResults}
-              />
-            </section>
+            <NavBarResultsRaceTable results={resultsPrepared} />
+            {pageCurrent === 'results' && (
+              <>
+                <section className={styles.wrapper__wide}>
+                  <TableRaceResults results={resultsPrepared} event={eventData} />
+                  <ServiceBox
+                    updated={eventData.updated}
+                    modifiedResults={eventData.modifiedResults}
+                  />
+                </section>
+              </>
+            )}
+            {pageCurrent === 'dnf' && (
+              <>
+                <section className={styles.wrapper__wide}>
+                  <TableRaceResults results={resultsPrepared} event={eventData} forDNF={true} />
+                  <ServiceBox
+                    updated={eventData.updated}
+                    modifiedResults={eventData.modifiedResults}
+                  />
+                </section>
+              </>
+            )}
           </>
         )}
       </section>

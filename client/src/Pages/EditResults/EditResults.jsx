@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 import TableRaceResultsEdit from '../../components/Tables/TableRaceResultsEdit/TableRaceResultsEdit';
-import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
+import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
@@ -36,7 +36,7 @@ function EditResults() {
           <h3 className={styles.subtitle}>
             {getTimerLocal(eventData.eventStart, 'DDMMYYHm', true)}
           </h3>
-          <NavBarResultsRace results={resultsPrepared} />
+          <NavBarResultsRaceTable results={resultsPrepared} />
 
           <section className={styles.wrapper__wide}>
             <TableRaceResultsEdit results={resultsPrepared} event={eventData} />

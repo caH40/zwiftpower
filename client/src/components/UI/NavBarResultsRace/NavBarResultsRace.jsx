@@ -1,17 +1,11 @@
-import React from 'react';
-
-import FilterCategory from '../Filters/FilterCategory/FilterCategory';
-import FilterWatts from '../Filters/FilterWatts/FilterWatts';
-import FilterColumn from '../Filters/FilterColumn/FilterColumn';
+import FilterPageRaceResults from '../Filters/FilterPageRaceResults/FilterPageRaceResults';
 
 import styles from './NavBarResultsRace.module.css';
 
-function NavBarResultsRace({ results, hideCategory }) {
+function NavBarResultsRace() {
   return (
     <div className={styles.box}>
-      {hideCategory ? null : <FilterCategory results={results} />}
-      <FilterWatts />
-      <FilterColumn />
+      <FilterPageRaceResults />
     </div>
   );
 }

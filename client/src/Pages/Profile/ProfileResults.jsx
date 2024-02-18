@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { fetchUserResults } from '../../redux/features/api/userResultsSlice';
 import TableUserResults from '../../components/Tables/TableUserResults/TableUserResults';
-import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
+import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import CPBlock from '../../components/CPBlock/CPBlock';
 import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
@@ -45,7 +45,7 @@ function ProfileResults() {
       )}
       {results?.length && status === 'resolved' ? (
         <>
-          <NavBarResultsRace results={results} hideCategory={true} />
+          <NavBarResultsRaceTable results={results} hideCategory={true} />
 
           <section className={styles.block__results}>
             <TableUserResults results={results} />

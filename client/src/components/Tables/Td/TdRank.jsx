@@ -6,7 +6,7 @@ import styles from './Td.module.css';
 
 const TdRank = ({ value, isDsq, dsqType, dsqDescription }) => {
   // первые 3 места
-  if ([1, 2, 3].includes(value)) {
+  if ([1, 2, 3].includes(value) && !isDsq) {
     return (
       <div className={styles.rank}>
         <IconCupRank place={value} />
