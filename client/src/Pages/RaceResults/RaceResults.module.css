@@ -14,3 +14,9 @@
 .link:hover {
   text-decoration: underline;
 }
+.block__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px 15px;
+  flex-wrap: wrap;
+}

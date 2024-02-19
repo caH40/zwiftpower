@@ -5,8 +5,6 @@ import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setRaceResultsPage } from '../../../../redux/features/filterRaceResultsPageSlice';
 import { raceResultsBtn } from '../../../../assets/navigate-buttons';
 
-import styles from './FilterPageRaceResults.module.css';
-
 /**
  * Выбор отображения страницы с результатами Эвента: финишировавших или сошедших райдеров
  */
@@ -15,7 +13,7 @@ function FilterPageRaceResults() {
 
   const quantityButtonsInterval = raceResultsBtn.length;
   return (
-    <nav className={styles.box}>
+    <nav>
       {raceResultsBtn.map((pageNested, index) => {
         return (
           <ButtonForFilter

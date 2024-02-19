@@ -69,9 +69,11 @@ function RaceResults() {
         {eventData?.id && (
           <>
             <DescriptionEventZwift event={eventData} eventId={eventId} />
-            <NavBarResultsRace />
+            <nav className={styles.block__nav}>
+              <NavBarResultsRace />
 
-            <NavBarResultsRaceTable results={resultsPrepared} />
+              <NavBarResultsRaceTable results={resultsPrepared} />
+            </nav>
             {pageCurrent === 'results' && (
               <>
                 <section className={styles.wrapper__wide}>
