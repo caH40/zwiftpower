@@ -224,6 +224,43 @@ export interface CpBestEfforts {
   cpLabel: string;
   duration: number;
 }
+
+/**
+ * Результат райдера который не финишировал в Event-е
+ */
+export interface ResultEventDNF {
+  activityData: {
+    activityId: string;
+    calories: number;
+    durationInMilliseconds: number;
+    elevationInMeters: number;
+    segmentDistanceInMeters: number;
+  };
+  eventId: number;
+  eventSubgroupId: number;
+  profileData: {
+    firstName: string;
+    gender: string;
+    heightInCentimeters: number;
+    lastName: string;
+    weightInGrams: number;
+  };
+  profileId: number;
+  sensorData: {
+    avgWatts: number;
+    heartRateData: {
+      avgHeartRate: number;
+      heartRateMonitor: boolean;
+    };
+  };
+  subgroupLabel: string;
+  speed: number;
+  isDisqualification: boolean;
+  disqualification: string | null;
+  disqualificationDescription: string | null;
+  rank: number;
+}
+
 /**
  * Результаты райдеров в Event с дополнительными параметрами
  */
@@ -256,6 +293,7 @@ export interface ActivityFeedShort {
   date: number;
   name: string;
   eventId: number | null;
+  activityId?: string;
 }
 /**
  * Параметры для функции getIntervals

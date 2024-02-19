@@ -12,6 +12,7 @@ import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
 import { addVariabilityIndex } from './variability-index.js';
+import { getResultsDNFRiders } from './result-events-dnf.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -39,6 +40,11 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   if (isFast) {
     resultsWithCP = addCriticalPowersFast(resultsTotal);
   } else {
+    // получение результатов райдеров которые не финишировали
+    const ridersWithFinish = resultsTotal.map((result) => result.profileId);
+    const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
+    console.log(resultsRidersDNF);
+
     // обновление профайлов райдеров
     const zwiftIds = resultsTotal.map((result) => result.profileId);
     await updateZwiftDataInProfiles(zwiftIds);

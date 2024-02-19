@@ -9,22 +9,13 @@ import { EventWithSubgroup } from '../../types/types.interface.js';
 import { SignedRiderFromZwiftAPI } from '../../types/zwiftAPI/signedRidersFromZwift.interface.js';
 
 /**
- * Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
+ * Получение зарегистрированных райдров с ZwiftAPI и сохранение в БД
  */
 export async function putSignedRidersService(eventId: number) {
   try {
     const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
       id: eventId,
     }).populate('eventSubgroups');
-
-    // console.log(
-    //   'DB',
-    //   'get eventDB',
-    //   '===',
-    //   new Date().toLocaleDateString(),
-    //   '===',
-    //   eventDB?.name
-    // );
 
     if (!eventDB) {
       throw new Error(`Не найден Event ${eventId} в БД`);
@@ -38,14 +29,7 @@ export async function putSignedRidersService(eventId: number) {
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
         const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
-        // console.log(
-        //   'ZwiftAPI',
-        //   'signedData',
-        //   '===',
-        //   new Date().toLocaleDateString(),
-        //   '===',
-        //   signedData?.length
-        // );
+
         if (!signedData) {
           continue;
         }
@@ -70,31 +54,55 @@ export async function putSignedRidersService(eventId: number) {
           weight: rider.weight,
           subgroupLabel: eventSubgroup.subgroupLabel,
         });
-        // console.log(
-        //   'DB',
-        //   'create ZwiftSignedRiders',
-        //   '===',
-        //   new Date().toLocaleDateString(),
-        //   '===',
-        //   'без ответа'
-        // );
+
         // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
         await PowerCurve.create({ zwiftId: rider.id, isMale: rider.male }).catch((error) => {
           if (error.code === 11000) return true;
           errorHandler(error);
         });
-        // console.log(
-        //   'DB',
-        //   'create PowerCurve',
-        //   '===',
-        //   new Date().toLocaleDateString(),
-        //   '===',
-        //   'без ответа'
-        // );
       }
     }
 
     return { message: 'Изменения сохранены' };
+  } catch (error) {
+    errorHandler(error);
+  }
+}
+
+/**
+ * Получение зарегистрированных райдров с ZwiftAPI
+ */
+export async function getSignedRiders(eventId: number) {
+  try {
+    const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+      id: eventId,
+    }).populate('eventSubgroups');
+
+    if (!eventDB) {
+      throw new Error(`Не найден Event ${eventId} в БД`);
+    }
+
+    const signedDataTotal = [];
+    for (const eventSubgroup of eventDB.eventSubgroups) {
+      // стоит лимит на запрос 100 юзеров, подключенных к заезду в определенной группе
+
+      let ridersQuantity = 100;
+      let start = 0;
+      while (ridersQuantity === 100) {
+        const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
+        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
+
+        if (!signedData) {
+          continue;
+        }
+        signedDataTotal.push(...signedData);
+
+        ridersQuantity = signedData.length;
+        start += 100;
+      }
+    }
+
+    return signedDataTotal;
   } catch (error) {
     errorHandler(error);
   }
