@@ -11,10 +11,10 @@ export function getCPFromResult(result: ResultEventAdditional) {
   const cpBestEfforts = [];
 
   const criticalPower = new Map([
-    [15, result.criticalP.criticalP15Seconds],
-    [60, result.criticalP.criticalP1Minute],
-    [300, result.criticalP.criticalP5Minutes],
-    [1200, result.criticalP.criticalP20Minutes],
+    [15, result.criticalP?.criticalP15Seconds],
+    [60, result.criticalP?.criticalP1Minute],
+    [300, result.criticalP?.criticalP5Minutes],
+    [1200, result.criticalP?.criticalP20Minutes],
   ]);
 
   for (const interval of intervals) {
