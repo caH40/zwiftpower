@@ -14,15 +14,15 @@ export interface ResultEvent {
     calories: number;
     durationInMilliseconds: number;
     elevationInMeters: number;
-    endDate: string;
-    endWorldTime: number;
-    mapId: number;
+    endDate?: string;
+    endWorldTime?: number;
+    mapId?: number;
     segmentDistanceInMeters: number;
-    sport: string;
-    worldId: number;
+    sport?: string;
+    worldId?: number;
   };
-  bibNumber: number;
-  criticalP: {
+  bibNumber?: number;
+  criticalP?: {
     criticalP15Seconds: number;
     criticalP1Minute: number;
     criticalP20Minutes: number;
@@ -30,9 +30,9 @@ export interface ResultEvent {
   };
   eventId: number;
   eventSubgroupId: number;
-  flaggedCheating: boolean;
-  flaggedSandbagging: boolean;
-  lateJoin: boolean;
+  flaggedCheating?: boolean;
+  flaggedSandbagging?: boolean;
+  lateJoin?: boolean;
   profileData: {
     firstName: string;
     gender: string;
@@ -43,13 +43,13 @@ export interface ResultEvent {
     weightInGrams: number;
   };
   profileId: number;
-  qualified: boolean;
+  qualified?: boolean;
   rank: number;
-  rankingValue: number;
+  rankingValue?: number;
   sensorData: {
     avgWatts: number;
     heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
-    pairedSteeringDevice: boolean;
-    powerType: string;
+    pairedSteeringDevice?: boolean;
+    powerType?: string;
   };
 }

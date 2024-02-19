@@ -5,3 +5,8 @@
   gap: 10px 15px;
   margin: 0px 0px 10px 0px;
 }
+@media screen and (max-width: 576px) {
+  .box {
+    gap: 10px 5px;
+  }
+}

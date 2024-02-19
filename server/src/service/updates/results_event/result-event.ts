@@ -1,9 +1,6 @@
 import { handlerProtocol } from '../../protocol/handler-protocol.js';
 import { addCriticalPowers } from './criticalpower/criticalpower.js';
 import { banUpdating } from './update-ban.js';
-
-// types
-import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
 import { getResultsFromZwift } from './resultsFromZwift.js';
 import { updatePowerCurveResults } from './criticalpower/criticalpower-update.js';
 import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
@@ -12,6 +9,10 @@ import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
 import { addVariabilityIndex } from './variability-index.js';
+import { getResultsDNFRiders } from './result-events-dnf.js';
+
+// types
+import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -34,37 +35,45 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
     eventStart: new Date(event.eventStart).getTime(),
   };
 
-  let resultsWithCP = [] as ResultEventAdditional[];
+  let resultsTotalWithCP = [] as ResultEventAdditional[];
+
   // выбор как обновлять результаты
   if (isFast) {
-    resultsWithCP = addCriticalPowersFast(resultsTotal);
+    resultsTotalWithCP = addCriticalPowersFast(resultsTotal);
   } else {
+    // получение результатов райдеров которые не финишировали
+    const ridersWithFinish = resultsTotal.map((result) => result.profileId);
+    const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
+
     // обновление профайлов райдеров
-    const zwiftIds = resultsTotal.map((result) => result.profileId);
+    const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
     await updateZwiftDataInProfiles(zwiftIds);
 
     // добавление CP в результаты райдеров, сохранение FitFiles
-    resultsWithCP = await addCriticalPowers(resultsTotal, nameAndDate);
+    resultsTotalWithCP = await addCriticalPowers(
+      [...resultsTotal, ...resultsRidersDNF],
+      nameAndDate
+    );
 
     // добавление NP нормализованной мощности
-    await addNormalizedPowers(resultsTotal);
+    await addNormalizedPowers(resultsTotalWithCP);
 
     // добавление Variability Index (VI) Индекс вариабельности
-    await addVariabilityIndex(resultsTotal);
+    await addVariabilityIndex(resultsTotalWithCP);
 
     // обновление CP райдеров в БД
-    await updatePowerCurveResults(resultsWithCP);
+    await updatePowerCurveResults(resultsTotalWithCP);
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
 
   // добавление средней скорости в результаты (мутация свойства speed)
-  resultsWithCP = await addSpeed(resultsWithCP, event);
+  resultsTotalWithCP = await addSpeed(resultsTotalWithCP, event);
 
   // параметры для функции handlerProtocol
   const handlerProtocolArg = {
     eventId: event._id,
-    results: resultsWithCP,
+    results: resultsTotalWithCP,
     typeRaceCustom: event.typeRaceCustom,
   };
 

@@ -4,9 +4,10 @@ export const getCategoriesSorted = (results) => {
   for (const result of results) {
     categoriesSet.add(result.subgroupLabel);
   }
-  const categoriesSorted = [...categoriesSet].sort((a, b) =>
-    a.toLowerCase().localeCompare(b.toLowerCase())
-  );
+
+  const categoriesSorted = [...categoriesSet]
+    .filter((category) => category)
+    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   return ['All', ...categoriesSorted];
 };

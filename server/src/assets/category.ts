@@ -26,3 +26,11 @@ export const categoryFemale = {
   B: { ftpWattsPerKg: 3.2 },
   C: { ftpWattsPerKg: 2.5 },
 };
+
+export const eventSubGroups = new Map([
+  [1, 'A'],
+  [2, 'B'],
+  [3, 'C'],
+  [4, 'D'],
+  [5, 'E'],
+]);

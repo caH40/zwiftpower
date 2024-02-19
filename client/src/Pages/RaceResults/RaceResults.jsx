@@ -15,6 +15,7 @@ import { initialSorting } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
+import { resetRaceResultsPage } from '../../redux/features/filterRaceResultsPageSlice';
 
 import styles from './RaceResults.module.css';
 
@@ -40,6 +41,7 @@ function RaceResults() {
     return () => {
       dispatch(resetFilterCategory());
       dispatch(resetResults());
+      dispatch(resetRaceResultsPage());
     };
   }, [eventId, dispatch]);
 
@@ -73,7 +75,12 @@ function RaceResults() {
             {pageCurrent === 'results' && (
               <>
                 <section className={styles.wrapper__wide}>
-                  <TableRaceResults results={resultsPrepared} event={eventData} />
+                  <TableRaceResults
+                    results={resultsPrepared.filter(
+                      (result) => result.disqualification !== 'DNF'
+                    )}
+                    event={eventData}
+                  />
                   <ServiceBox
                     updated={eventData.updated}
                     modifiedResults={eventData.modifiedResults}
@@ -84,7 +91,13 @@ function RaceResults() {
             {pageCurrent === 'dnf' && (
               <>
                 <section className={styles.wrapper__wide}>
-                  <TableRaceResults results={resultsPrepared} event={eventData} forDNF={true} />
+                  <TableRaceResults
+                    results={resultsPrepared.filter(
+                      (result) => result.disqualification === 'DNF'
+                    )}
+                    event={eventData}
+                    forDNF={true}
+                  />
                   <ServiceBox
                     updated={eventData.updated}
                     modifiedResults={eventData.modifiedResults}
