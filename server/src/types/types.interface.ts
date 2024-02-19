@@ -201,7 +201,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
     heightInCentimeters: number;
     imageSrc: string;
     lastName: string;
-    playerType: string;
+    playerType?: string;
     weightInGrams: number;
     age?: number;
     countryAlpha3?: string;

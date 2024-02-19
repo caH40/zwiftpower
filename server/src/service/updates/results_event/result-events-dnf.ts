@@ -3,7 +3,7 @@ import { getSignedRiders } from '../../race/signed-riders.js';
 import { getActivities, getActivitiesFullData } from '../../zwift/fitfiles/activities.js';
 
 // types
-import { ActivityFeedShort, ResultEventDNF } from '../../../types/types.interface.js';
+import { ActivityFeedShort, ResultEventAdditional } from '../../../types/types.interface.js';
 import { ActivitiesDataFromZwiftAPI } from '../../../types/zwiftAPI/activitiesFromZwift.interface.js';
 import { eventSubGroups } from '../../../assets/category.js';
 
@@ -13,7 +13,7 @@ import { eventSubGroups } from '../../../assets/category.js';
 export async function getResultsDNFRiders(
   ridersWithFinish: number[],
   eventId: number
-): Promise<ResultEventDNF[] | []> {
+): Promise<ResultEventAdditional[]> {
   try {
     // получение зарегистрированных райдеров в Эвенте из ZwiftAPI
     const signedRiders = await getSignedRiders(eventId);
@@ -69,7 +69,7 @@ export async function getResultsDNFRiders(
 
     // // формирование массива результатов райдеров из данных с найденных активностей
 
-    const results: ResultEventDNF[] = activitiesCurrent.map((activity) => {
+    const results = activitiesCurrent.map((activity) => {
       const rider = ridersWithoutFinish.find(
         (rider) => rider.profileId === activity.profileId
       )!;
@@ -83,17 +83,17 @@ export async function getResultsDNFRiders(
         },
         eventId: activity.eventInfo.id,
         eventSubgroupId: activity.eventInfo.eventSubGroupId,
-
         profileData: {
           firstName: activity.profile.firstName,
           gender: activity.profile.eventCategory,
-          heightInCentimeters: rider.height,
+          imageSrc: activity.profile.imageSrc,
+          heightInCentimeters: rider.height / 10,
           lastName: activity.profile.lastName,
           weightInGrams: rider.weight,
         },
         profileId: activity.profileId,
         sensorData: {
-          avgWatts: activity.avgWatts,
+          avgWatts: Math.round(activity.avgWatts),
           heartRateData: {
             avgHeartRate: Math.round(activity.avgHeartRate),
             heartRateMonitor: activity.avgHeartRate ? true : false,
