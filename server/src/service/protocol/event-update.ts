@@ -12,7 +12,9 @@ export const setUpdatedToEvent = async (
   resultsSorted: ResultEventAdditional[],
   eventId: Types.ObjectId
 ) => {
-  const totalFinishedCount = resultsSorted.length;
+  const totalFinishedCount = [...resultsSorted].filter(
+    (result) => result.disqualification !== 'DNF'
+  ).length;
   const updated = Date.now();
 
   await ZwiftEvent.findOneAndUpdate(
