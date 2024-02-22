@@ -7,6 +7,7 @@ import IconSchedule from '../../icons/IconSchedule';
 import IconFaq from '../../icons/IconFaq';
 import IconHome from '../../icons/IconHome';
 import IconProfile from '../../icons/IconProfile';
+import IconRider2 from '../../icons/IconRider2';
 
 import styles from './ListMenu.module.css';
 
@@ -16,8 +17,9 @@ const iconItems = [
   { id: 2, to: '/race/results', icon: IconResults, label: 'Результаты' },
   { id: 3, to: '/race/series', icon: IconWorld, label: 'Серии гонок' },
   { id: 4, to: '/race/statistics/main', icon: IconDiagram, label: 'Статистика' },
-  { id: 5, to: '/profile', icon: IconProfile, label: 'Профиль' },
-  { id: 6, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
+  { id: 5, to: '/riders', icon: IconRider2, label: 'Райдеры' },
+  { id: 6, to: '/profile', icon: IconProfile, label: 'Профиль' },
+  { id: 7, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
 ];
 
 function ListMenuMain({ state }) {
