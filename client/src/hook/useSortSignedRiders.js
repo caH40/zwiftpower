@@ -10,6 +10,9 @@ import { sortTable } from '../utils/table_sort/riders_signed/table-sort';
  * @returns
  */
 export const useSortSignedRiders = (riders) => {
+  if (!riders.length) {
+    return [];
+  }
   // отображение данных в таблице: ватты или ватты/кг
   const filterWatts = useSelector((state) => state.filterWatts.value);
   // текущая колонка сортировки и направление сортировки

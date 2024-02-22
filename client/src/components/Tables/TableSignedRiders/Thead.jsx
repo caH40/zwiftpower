@@ -33,8 +33,8 @@ function Thead({ columnsCP }) {
                   getClick={setSortTable}
                   squareSize={16}
                   activeDate={{
-                    isActive: column.name === activeSorting.columnName,
-                    isRasing: activeSorting.isRasing,
+                    isActive: column.name === activeSorting?.columnName,
+                    isRasing: activeSorting?.isRasing,
                   }}
                 />
               )}
@@ -53,8 +53,8 @@ function Thead({ columnsCP }) {
                     getClick={setSortTable}
                     squareSize={16}
                     activeDate={{
-                      isActive: column.interval === activeSorting.columnName,
-                      isRasing: activeSorting.isRasing,
+                      isActive: column.interval === activeSorting?.columnName,
+                      isRasing: activeSorting?.isRasing,
                     }}
                   />
                 </div>

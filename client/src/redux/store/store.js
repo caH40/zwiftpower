@@ -35,6 +35,7 @@ import eventPostSlice from '../features/api/event-add/eventPostSlice';
 import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderSlice';
 import eventCreateSlice from '../features/api/event-create/eventCreateSlice';
 import filterRaceResultsPageSlice from '../features/filterRaceResultsPageSlice';
+import ridersSlice from '../features/api/riders/ridersSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -76,6 +77,7 @@ export default configureStore({
     fetchEventCreate: eventCreateSlice,
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     filterRaceResultsPage: filterRaceResultsPageSlice,
+    riders: ridersSlice,
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,
