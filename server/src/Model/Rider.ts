@@ -1,31 +1,29 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-import { RiderSchema } from '../types/model.interface.js';
+import { RiderProfileSchema } from '../types/model.interface.js';
 
-const riderSchema = new Schema<RiderSchema>({
-  teamId: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
+const riderSchema = new Schema<RiderProfileSchema>({
+  zwiftId: { type: Number, unique: true, required: true },
   firstName: String,
   lastName: String,
-  firstNameZwift: String,
-  lastNameZwift: String,
-  telegramUsername: String,
-  telegramId: { type: Number, unique: true },
-  zwiftId: { type: Number, unique: true },
-  cycleTrainer: String,
-  zwiftPower: String,
-  yearBirth: String,
-  category: String,
-  categoryTour: String,
-  gender: String,
-  settings: {
-    notice: {
-      news: { type: Boolean, default: true },
-      newRace: { type: Boolean, default: true },
-      botInfo: { type: Boolean, default: true },
-      training: { type: Boolean, default: true },
-    },
+  male: Boolean,
+  eventCategory: String,
+  imageSrc: String,
+  countryAlpha3: String,
+  age: Number,
+  height: Number,
+  weight: Number,
+  competitionMetrics: {
+    racingScore: Number,
+    category: String,
+    categoryWomen: String,
   },
-  password: String,
+  totalEvents: Number,
+  medals: {
+    gold: Number,
+    silver: Number,
+    bronze: Number,
+  },
 });
 
-export const Rider = model<RiderSchema>('Rider', riderSchema);
+export const Rider = model<RiderProfileSchema>('Rider', riderSchema);

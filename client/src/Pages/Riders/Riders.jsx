@@ -14,7 +14,7 @@ function Riders() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchRiders());
+    dispatch(fetchRiders({ page: 1, docsOnPage: 100, search: 'test' }));
   }, []);
 
   return (

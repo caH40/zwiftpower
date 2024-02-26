@@ -9,6 +9,7 @@ import {
   deleteLogError,
   deleteLogAdmin,
 } from '../controllers/logs.js';
+import { getRiders } from '../controllers/riders.js';
 
 export const router = Router();
 
@@ -18,3 +19,4 @@ router.get('/logs/errors', authAdmin, getLogsErrors);
 router.delete('/logs/errors', authAdmin, deleteLogError);
 router.delete('/logs/admins', authAdmin, deleteLogAdmin);
 router.get('/logs/error', authAdmin, getLogError);
+router.get('/riders', getRiders);

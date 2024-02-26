@@ -57,11 +57,7 @@ export interface PutResult {
   id: string;
 }
 
-// /**
-//  * Данные организаторов заездов возвращаемых на Клиент
-//  */
-// export interface Organizers {
-//   _id: string;
-//   data: { value: string; message: string };
-//   id: string;
-// }
+/**
+ * Данные из query параметров url
+ */
+export interface GetRidersQuery extends GetLogsAdmins {}

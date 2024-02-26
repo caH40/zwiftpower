@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { ProfileDataInResultWithId } from './types.interface.js';
+import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 // типизация схемы и модели документов mongodb
 //
 //
@@ -116,32 +117,32 @@ export interface ResultSchema {
   imageSrc: string;
   addedManually: boolean;
 }
-//
-//
-export interface RiderSchema {
-  teamId: Types.ObjectId;
-  firstName: string;
-  lastName: string;
-  firstNameZwift: string;
-  lastNameZwift: string;
-  telegramUsername: string;
-  telegramId: number;
+
+/**
+ * Общие данные данные райдера
+ * Дополнительные данные (таблицы) для более оптимальных запросов данных для других таблиц
+ */
+export interface RiderProfileSchema
+  extends Exclude<
+    ProfileZwiftAPI,
+    | 'firstName'
+    | 'lastName'
+    | 'male'
+    | 'eventCategory'
+    | 'imageSrc'
+    | 'countryAlpha3'
+    | 'age'
+    | 'height'
+    | 'weight'
+    | 'competitionMetrics'
+  > {
   zwiftId: number;
-  cycleTrainer: string;
-  zwiftPower: string;
-  yearBirth: string;
-  category: string;
-  categoryTour: string;
-  gender: string;
-  settings: {
-    notice: {
-      news: boolean;
-      newRace: boolean;
-      botInfo: boolean;
-      training: boolean;
-    };
+  totalEvents: number; // общее количество заездов
+  medals: {
+    gold: number;
+    silver: number;
+    bronze: number;
   };
-  password: string;
 }
 //
 //
@@ -438,7 +439,8 @@ export interface TokenSchema {
   importance: string;
 }
 //
-//
+// ===================================== удалить как не актуальную ================
+// замена на RiderProfileSchema
 export interface ZwiftProfileSchema {
   id: number;
   publicId: string;
@@ -456,6 +458,7 @@ export interface ZwiftProfileSchema {
   weight: number;
   ftp: number;
 }
+
 //
 //
 export interface LogsErrorSchema {

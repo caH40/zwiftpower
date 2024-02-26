@@ -553,3 +553,15 @@ export interface FitDataFromZwift {
   powerInWatts: number[];
   distanceInCm: number[];
 }
+
+/**
+ * Добавление (обновление) данных Звифт-профайла райдеров
+ */
+export interface RiderProfileRanks {
+  totalEvents: number;
+  medals: {
+    gold: number;
+    silver: number;
+    bronze: number;
+  };
+}
