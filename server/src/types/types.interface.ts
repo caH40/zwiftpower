@@ -565,3 +565,12 @@ export interface RiderProfileRanks {
     bronze: number;
   };
 }
+
+/**
+ * Возвращение документов для текущей страницы пагинации
+ */
+export interface DocsAfterPagination<T> {
+  currentDocs: Array<T>;
+  currentPage: number;
+  quantityPages: number;
+}

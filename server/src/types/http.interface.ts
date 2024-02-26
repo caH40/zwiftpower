@@ -60,4 +60,8 @@ export interface PutResult {
 /**
  * Данные из query параметров url
  */
-export interface GetRidersQuery extends GetLogsAdmins {}
+export interface GetRidersQuery {
+  page?: number; // номер страницы при пагинации
+  docsOnPage?: number; // количество документов на одной странице при пагинации
+  search?: string; // фильтр поиска
+}

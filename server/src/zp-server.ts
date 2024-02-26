@@ -18,6 +18,7 @@ import { setMetaTags } from './meta_tags/meta-tags.js';
 
 // cache
 import { getCache } from './middleware/cache.js';
+import { getRidersService } from './service/riders/riders.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -53,7 +54,7 @@ app.get('*', async (req, res) => {
   const htmlContent = await setMetaTags(req.path);
   res.send(htmlContent);
 });
-
+await getRidersService({});
 // запуск сервера на express
 const start = async () => {
   try {

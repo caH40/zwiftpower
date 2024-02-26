@@ -14,15 +14,15 @@ function Riders() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchRiders({ page: 1, docsOnPage: 100, search: 'test' }));
+    dispatch(fetchRiders({ page: 1, docsOnPage: 20 }));
   }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.align__right}></div>
-      <NavBarSignedRiders />
+      {/* <NavBarSignedRiders /> */}
       <section className={styles.wrapper__wide}>
-        <TableSignedRiders riders={riders} />
+        {/* <TableSignedRiders riders={riders} /> */}
       </section>
     </div>
   );
