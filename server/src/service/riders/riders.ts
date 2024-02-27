@@ -1,8 +1,11 @@
 import { Rider } from '../../Model/Rider.js';
+import { PowerCurve } from '../../Model/PowerCurve.js';
 import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 
 // types
 import { GetRidersQuery } from '../../types/http.interface.js';
+import { PowerCurveSchema, RiderProfileSchema } from '../../types/model.interface.js';
+import { addPropertyAdditionCP } from '../../utils/property-additionCP.js';
 
 /**
  * Сервис получения списка райдеров по фильтру search (поиск по имени и фамилии)
@@ -12,11 +15,40 @@ export const getRidersService = async ({
   docsOnPage = 20,
   search = '.',
 }: GetRidersQuery) => {
-  const ridersDB = await Rider.find({
-    $or: [{ firstName: { $regex: search } }, { lastName: { $regex: search } }],
+  const ridersDB: RiderProfileSchema[] = await Rider.find({
+    $or: [
+      { firstName: { $regex: search, $options: 'i' } },
+      { lastName: { $regex: search, $options: 'i' } },
+    ],
   })
-    .sort({ totalEvents: 1 })
+    .sort({ totalEvents: -1 })
     .lean();
 
-  return getCurrentDocsOnPage(ridersDB, page, docsOnPage);
+  const ridersWithSequence = ridersDB.map((elm, index) => ({
+    sequenceNumber: index + 1,
+    ...elm,
+  }));
+
+  const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
+    ridersWithSequence,
+    page,
+    docsOnPage
+  );
+
+  // добавление CriticalPowers
+  const zwiftIds = currentDocs.map((doc) => doc.zwiftId);
+  const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds });
+
+  const currentDocsWithCP = currentDocs.map((doc) => {
+    const powerCurve = powerCurveDB.find((elm) => elm.zwiftId === doc.zwiftId);
+    if (!powerCurve) {
+      return { ...doc, cpBestEfforts: undefined };
+    }
+    // изменение powerCurve на cpBestEfforts
+    const cpBestEfforts = addPropertyAdditionCP(powerCurve);
+
+    return { ...doc, cpBestEfforts };
+  });
+
+  return { riders: currentDocsWithCP, currentPage, quantityPages };
 };

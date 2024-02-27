@@ -24,7 +24,7 @@ export const ridersSlice = createSlice({
     builder.addCase(fetchRiders.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'loading';
-      state.riders = action.payload.currentDocs;
+      state.riders = action.payload.riders;
       state.quantityPages = action.payload.quantityPages;
     });
     builder.addCase(fetchRiders.rejected, (state, action) => {
