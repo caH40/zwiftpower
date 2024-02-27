@@ -438,26 +438,6 @@ export interface TokenSchema {
   username: string;
   importance: string;
 }
-//
-// ===================================== удалить как не актуальную ================
-// замена на RiderProfileSchema
-export interface ZwiftProfileSchema {
-  id: number;
-  publicId: string;
-  firstName: string;
-  lastName: string;
-  male: boolean;
-  eventCategory: string; // MALE ?
-  imageSrc: string;
-  imageSrcLarge: string;
-  playerType: string; // NORMAL ?
-  countryAlpha3: string;
-  countryCode: number;
-  age: number;
-  height: number;
-  weight: number;
-  ftp: number;
-}
 
 //
 //

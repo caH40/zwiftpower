@@ -1,10 +1,10 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
-import { ZwiftProfile } from '../../Model/ZwiftProfile.js';
 import { getRiderWithMaxPowerInInterval } from './power.js';
 import { getRiderWithMaxWattsPerKgInInterval } from './powerPerKg.js';
 import { addProfile } from './profile.js';
 import { User } from '../../Model/User.js';
 import { intervalsForLeaders } from '../../assets/intervals.js';
+import { Rider } from '../../Model/Rider.js';
 
 // types
 import { PowerCurveSchema } from '../../types/model.interface.js';
@@ -63,10 +63,10 @@ export const getLeadersInIntervalsService = async (isMale: boolean) => {
  *  Получение всех zwiftId райдеров, принимавших участие в Эвентах
  */
 const getZwiftIds = async (isMale: boolean): Promise<number[]> => {
-  const zwiftProfilesDB: { id: number }[] = await ZwiftProfile.find(
+  const ridersDB: { zwiftId: number }[] = await Rider.find(
     { male: isMale },
-    { id: true, _id: false }
+    { zwiftId: true, _id: false }
   ).lean();
 
-  return zwiftProfilesDB.map((profile) => profile.id);
+  return ridersDB.map((profile) => profile.zwiftId);
 };

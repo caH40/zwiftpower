@@ -1,5 +1,4 @@
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
-import { ZwiftProfile } from '../Model/ZwiftProfile.js';
 import { raceTypes } from '../assets/race-type.js';
 import { serverFront } from '../config/environment.js';
 import { getTimerLocal } from '../utils/date-local.js';
@@ -8,6 +7,7 @@ import { getMetaOtherPages } from './tags.js';
 // types
 import { MetaTags } from '../types/types.interface.js';
 import { millisecondsInWeekDays } from '../assets/date.js';
+import { Rider } from '../Model/Rider.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -123,8 +123,8 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
       return getMetaOtherPages(url);
     }
 
-    const zwiftProfileDB = await ZwiftProfile.findOne(
-      { id: profileId },
+    const riderDB = await Rider.findOne(
+      { zwiftId: profileId },
       {
         firstName: true,
         lastName: true,
@@ -133,11 +133,11 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
     ).lean();
 
     // если не найден Эвент, то возвращать стандартные Мета Тэги для "прочих" страниц
-    if (!zwiftProfileDB) {
+    if (!riderDB) {
       return getMetaOtherPages(url);
     }
 
-    const { firstName, lastName, imageSrc } = zwiftProfileDB;
+    const { firstName, lastName, imageSrc } = riderDB;
 
     const rider = `${firstName} ${lastName}`;
 

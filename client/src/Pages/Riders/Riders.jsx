@@ -5,7 +5,6 @@ import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
 import useTitle from '../../hook/useTitle';
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
-// import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
 import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
 import Pagination from '../../components/UI/Pagination/Pagination';

@@ -540,7 +540,7 @@ export interface MetaTags {
   title: string;
   canonical: string;
   description: string;
-  image: string;
+  image: string | null;
   recommendationsTag: string;
 }
 
