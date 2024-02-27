@@ -41,4 +41,11 @@ export const ridersColumnsCP = [
     nameInMenu: '20 минут',
     isVisible: true,
   },
+  {
+    id: 109,
+    interval: 2400,
+    name: '40м',
+    nameInMenu: '40 минут',
+    isVisible: true,
+  },
 ];

@@ -2,7 +2,7 @@ import { getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
 import { getAgeCategory } from '../../utils/age';
-import CategoryOnlyBox from '../CategoryOnlyBox/CategoryOnlyBox';
+import CategoryMF from '../CategoryMF/CategoryMF';
 
 import styles from './ProfileBlock.module.css';
 
@@ -32,21 +32,12 @@ function ProfileBlock({ quantityRace, profile }) {
                 <dt className={styles.term}>z-Категория</dt>
               </MyTooltip>
               <dd className={styles.term__description}>
-                <div className={styles.flex}>
-                  {profile.male ? (
-                    <CategoryOnlyBox label={profile.zCategory} squareSize={18} />
-                  ) : (
-                    <>
-                      <CategoryOnlyBox
-                        label={profile.zCategoryWomen}
-                        squareSize={18}
-                        female={true}
-                        tooltip={'Женская категория'}
-                      />
-                      <CategoryOnlyBox label={profile.zCategory} squareSize={18} />
-                    </>
-                  )}
-                </div>
+                <CategoryMF
+                  male={profile.male}
+                  category={profile.zCategory}
+                  categoryWomen={profile.zCategoryWomen}
+                  squareSize={18}
+                />
               </dd>
             </div>
           )}
