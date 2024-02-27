@@ -143,3 +143,17 @@ export const getFaqMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Участники заездов (поиск райдеров)"
+ */
+export const getRidersMeta = (url: string): MetaTags => {
+  const title = 'Участники заездов в Zwift';
+  const canonical = serverFront + url;
+  const description =
+    'Поиск райдеров, которые участвовали в гонках Звифт, опубликованных на сайте zwiftpower.ru';
+  const image = 'https://zwiftpower.ru/images/open_graph/11.jpg';
+  const recommendationsTag = 'riders';
+
+  return { title, canonical, description, image, recommendationsTag };
+};

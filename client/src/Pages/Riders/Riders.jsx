@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
 import useTitle from '../../hook/useTitle';
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
@@ -43,8 +44,10 @@ function Riders() {
 
   return (
     <>
+      <HelmetRiders />
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
+
         <div className={styles.align__right}>
           <FilterBoxForTable
             search={search}
@@ -68,11 +71,8 @@ function Riders() {
           </div>
         )}
       </section>
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )}
+
+      <AdContainer number={isDesktop ? adOverFooter : adUnderHeader} maxWidth={1105} />
     </>
   );
 }

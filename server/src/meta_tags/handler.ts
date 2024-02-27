@@ -12,6 +12,7 @@ import {
   getLeadersMeta,
   getMetaOtherPages,
   getResultListMeta,
+  getRidersMeta,
   getScheduleListMeta,
   getSeriesMeta,
   getStatisticsMeta,
@@ -41,6 +42,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getCatchupMeta(url);
   } else if (url.includes('/faq')) {
     tags = getFaqMeta(url);
+  } else if (url.includes('/riders')) {
+    tags = getRidersMeta(url);
   } else if (url.includes('/race/results/')) {
     tags = await getRaceResultsMeta(url);
   } else if (url.includes('/race/schedule/')) {
