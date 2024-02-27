@@ -2,7 +2,7 @@ export const ridersColumnsStart = [
   { name: '#', id: 0 },
   // { name: 'Категория', id: 1 },
   { name: 'Райдер', id: 2 },
-  { name: 'Заезды', id: 3 },
+  { name: 'Финиш', tooltip: 'Количество заездов', id: 3 },
 ];
 export const ridersColumnsEnd = [
   { name: 'Вес', id: 7 },

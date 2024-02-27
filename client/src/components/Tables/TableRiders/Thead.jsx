@@ -26,7 +26,7 @@ function Thead({ columnsCP }) {
         {ridersColumnsStart.map((column) => (
           <th key={column.id}>
             <div className={styles.th__box}>
-              <ColumnName columnName={column.name} />
+              <ColumnName columnName={column.name} tooltip={column.tooltip} />
               {/* {columnsWithSorting.includes(column.name) && (
                 <IconArrows
                   columnName={column.name}
