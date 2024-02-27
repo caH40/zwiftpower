@@ -47,11 +47,11 @@ export const addRiderProfile = async () => {
       } else {
         // если первое вхождение, то создаются пустые значения
         zwiftProfiles.set(result.profileId, {
-          totalEvents: 0,
+          totalEvents: 1,
           medals: {
-            gold: 0,
-            silver: 0,
-            bronze: 0,
+            gold: result.rankEvent === 1 ? 1 : 0,
+            silver: result.rankEvent === 2 ? 1 : 0,
+            bronze: result.rankEvent === 3 ? 1 : 0,
           },
         });
       }
