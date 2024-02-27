@@ -20,7 +20,7 @@ export const adBlocks = [
   {
     id: 4,
     label: 'C-A-5165832-4',
-    description: 'РВ, Profile',
+    description: 'РВ, Profile, Riders',
     type: 'widget',
   },
   {
@@ -88,5 +88,10 @@ export const adBlocks = [
     label: 'C-A-5165832-16',
     description: 'РВ, Main',
     type: 'widget',
+  },
+  {
+    id: 17,
+    label: 'R-A-5165832-17',
+    description: 'Баннер, UH, Riders',
   },
 ];
