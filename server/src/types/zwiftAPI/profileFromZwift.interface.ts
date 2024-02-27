@@ -113,5 +113,5 @@ export interface ProfileZwiftAPI {
     racingScore: number;
     category: string;
     categoryWomen: string;
-  };
+  } | null;
 }

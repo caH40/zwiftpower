@@ -14,6 +14,7 @@ import MainLayer from './components/Layers/MainLayer';
 
 const Page404 = lazy(() => import('./Pages/Page404/Page404'));
 const Faq = lazy(() => import('./Pages/Faq/Faq'));
+const Riders = lazy(() => import('./Pages/Riders/Riders.jsx'));
 const MainPage = lazy(() => import('./Pages/Main/MainPage'));
 const Message = lazy(() => import('./Pages/Message/Message'));
 
@@ -37,6 +38,7 @@ function App() {
         <Route index element={<MainPage />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/riders" element={<Riders />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
         <Route path="*" element={<Page404 />} />

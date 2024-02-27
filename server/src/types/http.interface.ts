@@ -57,11 +57,11 @@ export interface PutResult {
   id: string;
 }
 
-// /**
-//  * Данные организаторов заездов возвращаемых на Клиент
-//  */
-// export interface Organizers {
-//   _id: string;
-//   data: { value: string; message: string };
-//   id: string;
-// }
+/**
+ * Данные из query параметров url
+ */
+export interface GetRidersQuery {
+  page?: number; // номер страницы при пагинации
+  docsOnPage?: number; // количество документов на одной странице при пагинации
+  search?: string; // фильтр поиска
+}

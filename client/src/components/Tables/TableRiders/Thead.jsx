@@ -4,30 +4,30 @@ import styles from '../Table.module.css';
 
 import IconArrows from '../../icons/IconArrows';
 import ColumnName from '../Th/ColumnName';
-import { sortColumnTable } from '../../../redux/features/sortTableSlice';
+// import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 
-import { signedRidersColumnsEnd, signedRidersColumnsStart } from './column-titles';
+import { ridersColumnsStart, ridersColumnsEnd } from './column-titles';
 
 // Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
-const columnsWithSorting = ['Категория'];
+// const columnsWithSorting = ['Категория'];
 
 function Thead({ columnsCP }) {
   const dispatch = useDispatch();
 
-  const setSortTable = (columnCPInterval) => {
-    dispatch(sortColumnTable(columnCPInterval));
-  };
+  // const setSortTable = (columnCPInterval) => {
+  //   dispatch(sortColumnTable(columnCPInterval));
+  // };
 
   const activeSorting = useSelector((state) => state.sortTable.activeSorting);
 
   return (
     <thead>
       <tr>
-        {signedRidersColumnsStart.map((column) => (
+        {ridersColumnsStart.map((column) => (
           <th key={column.id}>
             <div className={styles.th__box}>
               <ColumnName columnName={column.name} />
-              {columnsWithSorting.includes(column.name) && (
+              {/* {columnsWithSorting.includes(column.name) && (
                 <IconArrows
                   columnName={column.name}
                   getClick={setSortTable}
@@ -37,7 +37,7 @@ function Thead({ columnsCP }) {
                     isRasing: activeSorting?.isRasing,
                   }}
                 />
-              )}
+              )} */}
             </div>
           </th>
         ))}
@@ -48,7 +48,7 @@ function Thead({ columnsCP }) {
               <th key={column.id}>
                 <div className={styles.th__box}>
                   <span>{column.name}</span>
-                  <IconArrows
+                  {/* <IconArrows
                     columnName={column.interval}
                     getClick={setSortTable}
                     squareSize={16}
@@ -56,7 +56,7 @@ function Thead({ columnsCP }) {
                       isActive: column.interval === activeSorting?.columnName,
                       isRasing: activeSorting?.isRasing,
                     }}
-                  />
+                  /> */}
                 </div>
               </th>
             );
@@ -64,7 +64,7 @@ function Thead({ columnsCP }) {
           return null;
         })}
 
-        {signedRidersColumnsEnd.map((column) => (
+        {ridersColumnsEnd.map((column) => (
           <th key={column.id}>
             <ColumnName columnName={column.name} />
           </th>

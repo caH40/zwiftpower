@@ -1,0 +1,10 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
+}
+.wrapper__wide {
+  overflow-x: auto;
+}
+.align__right {
+  margin-bottom: 10px;
+}
