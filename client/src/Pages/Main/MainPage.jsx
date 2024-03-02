@@ -66,7 +66,7 @@ function MainPage() {
                 <CardRacePreview event={event} key={event.id} getClick={toLink} />
               ))}
         </div>
-        <div className={styles.wrapper__info}>
+        <aside className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
           <div className={styles.sidebar}>
             <AdMyPage
@@ -81,7 +81,7 @@ function MainPage() {
             <MainInfo />
             <MainInfoDev isModerator={isModerator} />
           </div>
-        </div>
+        </aside>
       </section>
       <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
