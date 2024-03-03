@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 import { mongodb, serverFront, serverPort } from './config/environment.js';
 import { routerAuth } from './routes/authentication.js';
@@ -29,6 +30,10 @@ await mongoose
   .catch((error) => errorHandler(error));
 
 const app = express();
+
+// сжатие текста
+app.use(compression({ level: 6 }));
+
 app.use(
   cors({
     credentials: true,
