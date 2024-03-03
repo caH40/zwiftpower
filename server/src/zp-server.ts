@@ -32,7 +32,8 @@ await mongoose
 const app = express();
 
 // сжатие текста
-app.use(compression({ level: 6 }));
+const minSizeForCompression = 10000;
+app.use(compression({ level: 6, threshold: minSizeForCompression }));
 
 app.use(
   cors({
