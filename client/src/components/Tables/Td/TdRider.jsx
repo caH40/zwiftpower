@@ -13,6 +13,7 @@ import styles from './Td.module.css';
 const cx = classNames.bind(styles);
 
 function TdRider({ profile, profileId, getLeaders, getSweepers }) {
+  const riderName = `${profile.firstName} ${profile.lastName}`;
   return (
     <td>
       <Link className={cx('link')} to={`/profile/${profileId}/results`}>
@@ -27,7 +28,12 @@ function TdRider({ profile, profileId, getLeaders, getSweepers }) {
 
           <div className={cx('rider__logo')}>
             {profile.imageSrc ? (
-              <img className={cx('rider__img')} src={profile.imageSrc} alt="Ph" />
+              <img
+                className={cx('rider__img')}
+                src={profile.imageSrc}
+                loading="lazy"
+                alt={`${riderName}'s rider logo`}
+              />
             ) : (
               <div className={cx('rider__img__empty')}>
                 {profile.firstName.slice(0, 1) + profile.lastName.slice(0, 1)}
@@ -37,7 +43,7 @@ function TdRider({ profile, profileId, getLeaders, getSweepers }) {
 
           <div className={cx('name')}>
             <span>
-              {`${profile.firstName} ${profile.lastName}`}
+              {riderName}
               <span className={cx('female')}>
                 {profile.gender === 'FEMALE' && <IconFemale squareSize={15} />}
               </span>
