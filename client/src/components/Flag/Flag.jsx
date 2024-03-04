@@ -70,6 +70,10 @@ function Flag({ name = '' }) {
       nameShort = 'jm';
       break;
 
+    case 'prt':
+      nameShort = 'pt';
+      break;
+
     default:
       nameShort = name.slice(0, 2);
       break;
