@@ -34,7 +34,6 @@ function ZwiftCreateEvent() {
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
-    dispatch(fetchGetZwiftClubs());
     dispatch(setMainParams(getInitialMainParams()));
     dispatch(setSubgroupParams(initialSubgroup));
     dispatch(
@@ -43,10 +42,16 @@ function ZwiftCreateEvent() {
         subgroups: [initialSubgroup],
       })
     );
+    return () => {
+      dispatch(resetParams());
+    };
+  }, []);
 
+  useEffect(() => {
+    // установка начальных настроек Эвента при создании Эвента
+    dispatch(fetchGetZwiftClubs());
     return () => {
       dispatch(resetClub());
-      dispatch(dispatch(resetParams()));
     };
   }, []);
 

@@ -13,7 +13,7 @@ import styles from './ParamsEvent.module.css';
 
 // отображение блока основных параметров Эвента
 function ParamsEvent({ event, addCls, bgColor }) {
-  const [subgroup] = event.eventSubgroups;
+  const [subgroup] = event.eventSubgroups || [];
 
   return (
     <div className={cn(styles.block, cns(styles, addCls), styles[bgColor])}>
