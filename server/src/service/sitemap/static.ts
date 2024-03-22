@@ -18,6 +18,12 @@ export const urlsStatic = `
 </url>
 
 <url>
+<loc>https://zwiftpower.ru/riders</loc>
+<priority>0.5</priority>
+<changefreq>always</changefreq>
+</url>
+
+<url>
 <loc>https://zwiftpower.ru/race/series</loc>
 <priority>0.1</priority>
 <changefreq>always</changefreq>
