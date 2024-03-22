@@ -13,6 +13,7 @@ import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { HelmetMain } from '../../components/Helmets/HelmetMain';
+import CardRacePreviewLoading from '../../components/CardRacePreview/CardRacePreviewLoading';
 
 import styles from './MainPage.module.css';
 
@@ -55,7 +56,12 @@ function MainPage() {
           {!isVisible && status === 'resolved' && (
             <h2 className={styles.title__notFound}>{notFound}</h2>
           )}
-          {isVisible && <CardRacePreview event={eventsPreview[0]} getClick={toLink} />}
+
+          {isVisible ? (
+            <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
+          ) : (
+            <CardRacePreviewLoading />
+          )}
 
           {!isDesktop && <AdContainer number={9} marginBottom={15} />}
 

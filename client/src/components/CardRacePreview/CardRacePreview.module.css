@@ -92,7 +92,7 @@
 }
 .box__img {
   position: relative;
-  max-width: 406px;
+  flex: 0 0 406px;
   aspect-ratio: 2.5/1;
   border-radius: 5px;
   overflow: hidden;
@@ -131,6 +131,28 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* =========заглушка при загрузке============ */
+.loading__string {
+  display: block;
+  height: 1rem;
+  width: 100px;
+  background-color: var(--color-bg-minor-2);
+  margin-bottom: 10px;
+}
+.poster.loading {
+  margin: 0;
+  flex: 0 0 406px;
+  aspect-ratio: 2.5/1;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: var(--color-bg-minor-2);
+  margin: 0px -10px 10px -10px;
+}
+.card__bottom.loading {
+  height: 70px;
+}
+/* =========================================== */
+
 @media screen and (max-width: 992px) {
   .wrapper {
     margin-bottom: 15px;
@@ -155,9 +177,8 @@
     margin-bottom: 10px;
   }
   .box__img {
-    max-width: calc(100% + 22px);
-    width: calc(100% + 22px);
-    min-height: 170px;
+    flex-basis: calc(100% + 22px);
+    min-height: 300px;
     border-radius: 0px;
     margin: 0px -11px;
     aspect-ratio: unset;
@@ -168,8 +189,14 @@
     right: 15px;
     top: -30px;
   }
+  .poster.loading {
+    flex: 1 1 100%;
+  }
 }
 @media screen and (max-width: 576px) {
+  .box__img {
+    min-height: 170px;
+  }
   .description {
     flex-wrap: wrap;
   }
