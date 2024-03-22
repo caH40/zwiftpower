@@ -23,8 +23,7 @@
   display: table-header-group;
   vertical-align: middle;
   border-color: inherit;
-  /* background: #ff7c00; */
-  background: linear-gradient(90deg, #ff7c00 -0.39%, #ffb773 100%);
+  background: var(--gradient-orange);
 }
 .table th {
   text-align: inherit;
