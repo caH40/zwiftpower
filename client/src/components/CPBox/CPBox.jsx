@@ -22,6 +22,7 @@ const Block = styled.div`
   height: 20px;
   background-color: #ffffff;
   border: 1px solid ${(props) => (props.$myLabel === 'watts' ? '#6d809d' : '#30872e')};
+  border-radius: 0.4em;
 `;
 
 const showBar = (width) => keyframes`
