@@ -70,8 +70,6 @@ const gap = (dateStart, dateStartGroup) => {
     : secondesToMinutes(gapMilliseconds);
 };
 
-export const replaceWithBr = (text = '') => text.replace(/\n/g, '<br />');
-
 export const getWeightStr = (weight) => {
   if (String(weight).includes('max')) {
     // отделение слова 'max', что изменить вес

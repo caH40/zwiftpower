@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { gapStart, replaceWithBr } from '../../utils/event';
+import { gapStart } from '../../utils/event';
 import { getTimerLocal } from '../../utils/date-local';
 import IconEdit from '../icons/IconEdit';
 import IconModify from '../icons/IconModify';
@@ -15,6 +15,8 @@ import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
+import { createHtml } from '../../utils/html';
+import { createDescription } from '../../Pages/ZwiftEditEvent/utils/description';
 
 import styles from './DescriptionEventZwift.module.css';
 
@@ -95,10 +97,19 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         <div className={styles.block__text}>
           <RouteProfileAndMap routeId={event.eventSubgroups[0].routeId} />
           <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
+          <hr className={styles.hr} />
           <p
             className={styles.paragraph}
-            dangerouslySetInnerHTML={{ __html: replaceWithBr(event.description) }}
+            dangerouslySetInnerHTML={{ __html: createHtml.description(event.description) }}
           ></p>
+          <hr className={styles.hr} />
+          <p
+            className={styles.paragraph}
+            dangerouslySetInnerHTML={{
+              __html: createHtml.description(createDescription(event)),
+            }}
+          ></p>
+          <hr className={styles.hr} />
         </div>
       )}
     </div>

@@ -15,7 +15,7 @@ export const optionPrivate = [
     translate: 'Могут участвовать только райдеры из клуба',
   },
   { id: 1, name: 'SHAREABLE', translate: 'Могут участвовать все райдеры' },
-  { id: 2, name: 'PUBLIC', translate: 'Публичный (ошибка при выборе!)' },
+  { id: 2, name: 'PUBLIC', translate: 'Публичный' },
 ];
 
 /**

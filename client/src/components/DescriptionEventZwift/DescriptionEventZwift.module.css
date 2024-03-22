@@ -90,6 +90,12 @@
   top: unset;
   bottom: 15px;
 }
+.hr {
+  margin: 0.7rem 0;
+  height: 4px;
+  background: var(--gradient-main);
+  border: none;
+}
 
 @media screen and (max-width: 992px) {
   .block__text {
