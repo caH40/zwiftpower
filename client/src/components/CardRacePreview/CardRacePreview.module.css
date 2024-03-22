@@ -64,7 +64,7 @@
 .box__term {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   gap: 0 5px;
 }
 .box__term + .box__term {

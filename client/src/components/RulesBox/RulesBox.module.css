@@ -1,6 +1,7 @@
 .block {
   display: flex;
-  gap: 0 12px;
+  gap: 5px 10px;
+  flex-wrap: wrap;
 }
 .text {
   padding: 0;
