@@ -57,7 +57,7 @@ export async function putEventZwift(req: Request, res: Response) {
 export async function getZwiftRider(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
-    const rider = await getZwiftRiderService(zwiftId);
+    const rider = await getZwiftRiderService(+zwiftId);
     res.status(200).json(rider);
   } catch (error) {
     errorHandler(error);
