@@ -2,25 +2,6 @@ import { Types } from 'mongoose';
 
 // общий тип, используемый на сервере и фронте, UserResult отправляемый/получаемый через API
 export interface UserResultFetch {
-  powerCurve: {
-    zwiftId: number;
-    date: number;
-
-    pointsWatts: {
-      duration: number;
-      value: number;
-      date: number;
-      name: string;
-    }[];
-
-    pointsWattsPerKg: {
-      duration: number;
-      value: number;
-      date: number;
-      name: string;
-    }[];
-  } | null;
-
   userResults: {
     _id: Types.ObjectId;
     zwiftEventId: Types.ObjectId;
@@ -77,22 +58,6 @@ export interface UserResultFetch {
       duration: number;
     }[];
   }[];
-
-  profile: {
-    ftp: number | null;
-    imageSrc: string | null;
-    firstName: string;
-    lastName: string;
-    age: number;
-    weight: number;
-    height: number;
-    countryAlpha3: string;
-    male: boolean;
-    zCategory?: string;
-    zCategoryWomen?: string;
-    category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
-    bio?: string;
-  };
   quantityPages: number;
   message: string;
 }

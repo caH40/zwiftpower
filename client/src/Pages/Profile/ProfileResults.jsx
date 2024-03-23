@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { fetchUserResults } from '../../redux/features/api/userResultsSlice';
+import { fetchUserProfile, resetUserProfile } from '../../redux/features/api/userProfileSlice';
+import { fetchUserResults, resetUserResults } from '../../redux/features/api/userResultsSlice';
 import TableUserResults from '../../components/Tables/TableUserResults/TableUserResults';
 import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
@@ -20,16 +21,25 @@ function ProfileResults() {
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
 
-  const { results, powerCurve, profile, status, quantityPages } = useSelector(
-    (state) => state.fetchUserResults
-  );
+  const { powerCurve, profile, status } = useSelector((state) => state.fetchUserProfile);
+  const { results, quantityPages } = useSelector((state) => state.fetchUserResults);
 
   const initialDocsOnPage = localStorage.getItem('recordsOnPageProfileResults') || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
+  // получение профиля райдера
+  useEffect(() => {
+    dispatch(fetchUserProfile({ zwiftId }));
+
+    return () => dispatch(resetUserProfile());
+  }, [dispatch, zwiftId, userAuth]);
+
+  // получение результатов райдера
   useEffect(() => {
     localStorage.setItem('recordsOnPageProfileResults', docsOnPage);
-    dispatch(fetchUserResults({ zwiftId, page, docsOnPage, quantityPages }));
+    dispatch(fetchUserResults({ zwiftId, page, docsOnPage }));
+
+    return () => dispatch(resetUserResults());
   }, [dispatch, zwiftId, userAuth, page, docsOnPage]);
 
   return (

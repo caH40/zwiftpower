@@ -7,6 +7,7 @@ import {
   putUserZwiftId,
   deleteUserZwiftId,
   refreshProfile,
+  getUserProfile,
 } from '../controllers/profile.js';
 
 import { checkAuth } from '../middleware/auth.js';
@@ -14,6 +15,7 @@ import { checkAuth } from '../middleware/auth.js';
 export const routerProfile = Router();
 
 routerProfile.get('/results', getUserResults);
+routerProfile.get('/:zwiftId', getUserProfile);
 routerProfile.get('/:zwiftId/power', getUserPower);
 routerProfile.get('/:zwiftId/zwift-profiles', getZwiftProfiles);
 routerProfile.put('/zwiftid', checkAuth, putUserZwiftId);

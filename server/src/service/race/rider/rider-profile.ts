@@ -1,38 +1,26 @@
 import { PowerCurve } from '../../../Model/PowerCurve.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { userPowerDto } from '../../../dto/user-power.dto.js';
-import { userResultsDto } from '../../../dto/user-results.dto.js';
 import { getProfileService } from './profile.js';
-import { getUserResultsFromDB } from './results.js';
 
 // types
-import { GetProfileResultsQuery } from '../../../types/http.interface.js';
 import { ResultWithEvent } from '../../../types/types.interface.js';
+import { userProfileDto } from '../../../dto/user-profile.dto.js';
 
 /**
  * Получение профайла райдера (анкеты), основных значений CriticalPower, всех результатов райдера
  */
-export async function getUserResultsService({
-  zwiftId,
-  page = 1,
-  docsOnPage = 20,
-}: GetProfileResultsQuery) {
+export async function getUserProfileService(zwiftId?: number) {
   if (zwiftId === undefined) {
     return null;
   }
 
   const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
-  const { resultsWithMaxValues: results, quantityPages } = await getUserResultsFromDB(
-    zwiftId,
-    page,
-    docsOnPage
-  );
+
   const profile = await getProfileService(zwiftId);
 
   // подготовка данных для отправки при запросе API
-  return userResultsDto({
-    userResults: results,
-    quantityPages,
+  return userProfileDto({
     profile,
     powerCurve: powerCurveDB,
   });

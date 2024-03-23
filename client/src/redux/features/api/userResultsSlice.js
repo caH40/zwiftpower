@@ -6,7 +6,7 @@ import { setValueMax } from '../../../utils/value-max';
 import { serverExpress } from '../../../config/environment';
 
 /**
- * Запрос на получение профиля райдера и его результатов
+ * Запрос на получение результатов райдера
  */
 export const fetchUserResults = createAsyncThunk(
   'userResultsGet/profile',
@@ -28,30 +28,28 @@ export const fetchUserResults = createAsyncThunk(
 );
 
 const userResultsSlice = createSlice({
-  name: 'logsAdmins',
+  name: 'userResults',
   initialState: {
-    profile: {},
     results: [],
-    powerCurve: {},
     quantityPages: null,
 
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetUserResults: (state) => {
+      state.results = [];
+      state.quantityPages = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUserResults.pending, (state) => {
-      state.profile = {};
-      state.results = [];
-      state.powerCurve = {};
       state.error = null;
       state.status = 'loading';
     });
     builder.addCase(fetchUserResults.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      state.profile = action.payload.profile;
-      state.powerCurve = action.payload.powerCurve;
       state.results = setValueMax(action.payload.userResults);
       state.quantityPages = action.payload.quantityPages;
     });
@@ -61,5 +59,7 @@ const userResultsSlice = createSlice({
     });
   },
 });
+
+export const { resetUserResults } = userResultsSlice.actions;
 
 export default userResultsSlice.reducer;

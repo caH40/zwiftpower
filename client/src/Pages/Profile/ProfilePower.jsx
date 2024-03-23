@@ -21,7 +21,7 @@ function ProfileWeight() {
   const { powerFromEvents, status: fetchStatus } = useSelector(
     (state) => state.fetchUserPowerCurve
   );
-  const { profile } = useSelector((state) => state.fetchUserResults);
+  const { profile } = useSelector((state) => state.fetchUserProfile);
   const [eventPowerCurrent, setEventPowerCurrent] = useState({});
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);

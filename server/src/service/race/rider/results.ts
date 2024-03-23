@@ -1,14 +1,25 @@
 import { User } from '../../../Model/User.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
+import { userResultsDto } from '../../../dto/user-results.dto.js';
 import { secondesToTime } from '../../../utils/date-convert.js';
 import { addPropertyAddition } from '../../../utils/property-addition.js';
 import { changeProfileData } from '../../profile-main.js';
 
+type Arg = {
+  zwiftId?: number;
+  page?: number;
+  docsOnPage?: number;
+};
+
 /**
  * Получение результатов райдера zwiftId и результатов с дополнительных профилей Звифт
  */
-export async function getUserResultsFromDB(zwiftId: number, page: number, docsOnPage: number) {
+export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20 }: Arg) {
+  if (zwiftId === undefined) {
+    return null;
+  }
+
   const userDB = await User.findOne({ zwiftId });
 
   const zwiftIdAdditional: number[] = userDB ? userDB.zwiftIdAdditional : [];
@@ -62,5 +73,5 @@ export async function getUserResultsFromDB(zwiftId: number, page: number, docsOn
     );
   }
 
-  return { resultsWithMaxValues: resultsSliced, quantityPages };
+  return userResultsDto({ userResults: resultsSliced, quantityPages });
 }

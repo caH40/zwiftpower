@@ -16,7 +16,7 @@ import eventPreviewSlice from '../features/api/eventPreviewSlice';
 import eventResultSlice from '../features/api/eventResultSlice';
 import popupTableScheduleSlice from '../features/popupTableScheduleSlice';
 import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
-import userResultsSlice from '../features/api/userResultsSlice';
+import userProfileSlice from '../features/api/userProfileSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
 import seriesSlice from '../features/api/seriesSlice';
@@ -36,6 +36,7 @@ import filterIntervalsForLeaderSlice from '../features/filterIntervalsForLeaderS
 import eventCreateSlice from '../features/api/event-create/eventCreateSlice';
 import filterRaceResultsPageSlice from '../features/filterRaceResultsPageSlice';
 import ridersSlice from '../features/api/riders/ridersSlice';
+import userResultsSlice from '../features/api/userResultsSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -60,6 +61,7 @@ export default configureStore({
     fetchEventPreview: eventPreviewSlice,
     popupTableSchedule: popupTableScheduleSlice,
     popupTableResultsList: popupTableResultsListSlice,
+    fetchUserProfile: userProfileSlice,
     fetchUserResults: userResultsSlice,
     fetchUserPowerCurve: userPowerCurveSlice,
     getPopupInput: popupInputSlice,
