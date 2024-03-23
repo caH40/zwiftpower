@@ -5,7 +5,12 @@ import { Profile, UserResult } from '../types/types.interface.js';
 
 //
 // подготовка данных мощности определенного райдера для страницы профайл/мощность для контроллера
-export const userResultsDto = ({ userResults, profile, powerCurve }: UserResultsDtoArg) => {
+export const userResultsDto = ({
+  userResults,
+  profile,
+  quantityPages,
+  powerCurve,
+}: UserResultsDtoArg) => {
   const powerCurveForResponse: PowerCurveSchema | null = powerCurve ? { ...powerCurve } : null;
 
   const userResultsForResponse: UserResult[] = [...userResults];
@@ -15,6 +20,7 @@ export const userResultsDto = ({ userResults, profile, powerCurve }: UserResults
     userResults: userResultsForResponse,
     profile: profileForResponse,
     powerCurve: powerCurveForResponse,
+    quantityPages,
     message: 'Профайл и результаты райдера',
   };
 

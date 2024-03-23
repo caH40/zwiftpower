@@ -14,7 +14,7 @@ export async function refreshProfileService(userId: string) {
     throw new Error('zwiftId не привязан к профилю');
   }
   // запрос данных Райдера с сервера Zwift
-  const riderData = await getZwiftRiderService(String(userDB.zwiftId));
+  const riderData = await getZwiftRiderService(userDB.zwiftId);
 
   if (!riderData) {
     throw new Error(`Ошибка при получении данных профиля ${userDB.zwiftId} с ZwiftAPI`);

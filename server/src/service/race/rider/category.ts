@@ -5,7 +5,7 @@ import { errorHandler } from '../../../errors/error.js';
 /**
  * Определение категории по ftp=CP20*0*95 и старым zwiftpwer правилам
  */
-export async function getCategory(zwiftId: string) {
+export async function getCategory(zwiftId: number) {
   try {
     const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
 

@@ -10,14 +10,23 @@ import { refreshProfileService } from '../service/profile/zwiftid/update-zwiftda
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 
+// types
+import { GetProfileResultsQuery } from '../types/http.interface.js';
+
 /**
  * Контролер получения профайла райдера (анкеты), основных значений CriticalPower,
  * всех результатов райдера
  */
 export async function getUserResults(req: Request, res: Response) {
   try {
-    const { zwiftId } = req.params;
-    const userResults = await getUserResultsService(zwiftId);
+    const { page, docsOnPage, zwiftId } = req.query;
+    const query: GetProfileResultsQuery = {
+      page: page ? +page : undefined,
+      docsOnPage: docsOnPage ? +docsOnPage : undefined,
+      zwiftId: zwiftId ? +zwiftId : undefined,
+    };
+
+    const userResults = await getUserResultsService(query);
     res.status(200).json(userResults);
   } catch (error) {
     errorHandler(error);
@@ -50,7 +59,8 @@ export async function getUserPower(req: Request, res: Response) {
 export async function getZwiftProfiles(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
-    const zwiftProfiles = await getZwiftProfilesService(zwiftId);
+
+    const zwiftProfiles = await getZwiftProfilesService(+zwiftId);
     res.status(200).json(zwiftProfiles);
   } catch (error) {
     errorHandler(error);

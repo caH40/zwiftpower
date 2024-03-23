@@ -4,8 +4,8 @@ import { getRequest } from './request-get.js';
 /**
  *  запрос данных Райдера с сервера Zwift
  */
-export async function getZwiftRiderService(zwiftId: string): Promise<ProfileZwiftAPI | null> {
-  if (zwiftId === '0') {
+export async function getZwiftRiderService(zwiftId: number): Promise<ProfileZwiftAPI | null> {
+  if (zwiftId === 0) {
     return null;
   }
 

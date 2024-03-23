@@ -29,7 +29,7 @@ export const addMainProfileZwiftToRaw = async (
   for (const user of userMainOnlyIds) {
     // запрос данных основного профиля с сервера Zwift
     const profileMainZwiftAPI: ProfileZwiftAPI | null = await getZwiftRiderService(
-      String(user.zwiftId)
+      user.zwiftId
     );
 
     // при ошибке получения данных профиля с zwiftAPI переход к следующей итерации

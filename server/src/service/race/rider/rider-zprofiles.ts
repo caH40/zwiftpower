@@ -10,7 +10,7 @@ import { ZwiftProfileShort, ZwiftRidersShort } from '../../../types/types.interf
  * @returns объект с данными основного и дополнительных райдеров с сервера ZwiftAPI
  */
 export const getZwiftProfilesService = async (
-  zwiftIdMain: string
+  zwiftIdMain: number
 ): Promise<ZwiftRidersShort | null> => {
   // данные пользователя с ДБ
   const userDB = await User.findOne({ zwiftId: zwiftIdMain });
@@ -48,8 +48,8 @@ export const getZwiftProfilesService = async (
 
   // запрос и формирование данных для дополнительных райдеров с сервера ZwiftAPI
   for (const zwiftId of userDB.zwiftIdAdditional) {
-    const zwiftProfileAdditionalZP = await getZwiftRiderService(String(zwiftId)).catch(
-      (error) => errorHandler(error)
+    const zwiftProfileAdditionalZP = await getZwiftRiderService(zwiftId).catch((error) =>
+      errorHandler(error)
     );
 
     if (!zwiftProfileAdditionalZP) {

@@ -22,7 +22,7 @@ export async function createFitFiles(zwiftId: number): Promise<void> {
     const activitiesFiltered = await filterActivities(activities, zwiftId);
 
     // запрос данный райдера для получения веса
-    const rider = await getZwiftRiderService(String(zwiftId));
+    const rider = await getZwiftRiderService(zwiftId);
 
     // получение данных fitFiles из API Zwift
     const powers = await getFitFilesFromZwift(activitiesFiltered, rider ? rider.weight : 0);
