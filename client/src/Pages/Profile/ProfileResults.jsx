@@ -21,7 +21,9 @@ function ProfileResults() {
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
 
-  const { powerCurve, profile, status } = useSelector((state) => state.fetchUserProfile);
+  const { powerCurve, profile, quantityRace, status } = useSelector(
+    (state) => state.fetchUserProfile
+  );
   const { results, quantityPages } = useSelector((state) => state.fetchUserResults);
 
   const initialDocsOnPage = localStorage.getItem('recordsOnPageProfileResults') || 20;
@@ -53,7 +55,7 @@ function ProfileResults() {
       />
       {status === 'resolved' && (
         <>
-          <ProfileBlock quantityRace={results?.length || 0} profile={profile} />
+          <ProfileBlock profile={profile} quantityRace={quantityRace || 0} />
           <div className={styles.block__cp}>
             <CPBlock criticalPowers={powerCurve?.pointsWattsPerKg} label={'wattsPerKg'} />
             <CPBlock criticalPowers={powerCurve?.pointsWatts} label={'watts'} />

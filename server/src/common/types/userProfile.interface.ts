@@ -35,5 +35,6 @@ export interface UserProfileFetch {
     bio?: string;
   };
 
+  quantityRace: number;
   message: string;
 }

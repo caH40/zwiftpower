@@ -27,8 +27,7 @@ export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20
   const resultsDB = await ZwiftResult.find({
     profileId: [zwiftId, ...zwiftIdAdditional],
   })
-    .sort()
-    .lean();
+  .lean();
 
   // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
   const results = changeProfileData(resultsDB);

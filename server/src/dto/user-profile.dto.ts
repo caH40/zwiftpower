@@ -9,9 +9,11 @@ import { Profile } from '../types/types.interface.js';
 export const userProfileDto = ({
   profile,
   powerCurve,
+  quantityRace,
 }: {
   profile: Profile;
   powerCurve: PowerCurveSchema | null;
+  quantityRace: number;
 }) => {
   const powerCurveForResponse: PowerCurveSchema | null = powerCurve ? { ...powerCurve } : null;
 
@@ -20,7 +22,7 @@ export const userProfileDto = ({
   const userProfileFetch: UserProfileFetch = {
     profile: profileForResponse,
     powerCurve: powerCurveForResponse,
-
+    quantityRace,
     message: 'Профиль райдера',
   };
 

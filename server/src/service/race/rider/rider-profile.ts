@@ -6,6 +6,7 @@ import { getProfileService } from './profile.js';
 // types
 import { ResultWithEvent } from '../../../types/types.interface.js';
 import { userProfileDto } from '../../../dto/user-profile.dto.js';
+import { User } from '../../../Model/User.js';
 
 /**
  * Получение профайла райдера (анкеты), основных значений CriticalPower, всех результатов райдера
@@ -19,10 +20,18 @@ export async function getUserProfileService(zwiftId?: number) {
 
   const profile = await getProfileService(zwiftId);
 
+  // Получает только суммарное количество заездов
+  const userDB = await User.findOne({ zwiftId });
+  const zwiftIdAdditional: number[] = userDB ? userDB.zwiftIdAdditional : [];
+  const quantityRace = await ZwiftResult.countDocuments({
+    profileId: [zwiftId, ...zwiftIdAdditional],
+  });
+
   // подготовка данных для отправки при запросе API
   return userProfileDto({
     profile,
     powerCurve: powerCurveDB,
+    quantityRace,
   });
 }
 

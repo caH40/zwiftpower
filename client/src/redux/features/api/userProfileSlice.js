@@ -31,6 +31,7 @@ const userProfileSlice = createSlice({
   initialState: {
     profile: {},
     powerCurve: {},
+    quantityRace: null,
 
     status: null,
     error: null,
@@ -39,6 +40,7 @@ const userProfileSlice = createSlice({
     resetUserProfile: (state) => {
       state.profile = {};
       state.powerCurve = {};
+      state.quantityRace = null;
     },
   },
   extraReducers: (builder) => {
@@ -51,6 +53,7 @@ const userProfileSlice = createSlice({
       state.status = 'resolved';
       state.profile = action.payload.profile;
       state.powerCurve = action.payload.powerCurve;
+      state.quantityRace = action.payload.quantityRace;
     });
     builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.status = 'rejected';
