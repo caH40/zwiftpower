@@ -59,9 +59,7 @@ export const addRiderProfile = async () => {
 
     // добавление(обновление) данных профилей райдеров
     for (const [keys, value] of zwiftProfiles) {
-      const profile = await getZwiftRiderService(`${keys}`).catch((error) =>
-        errorHandler(error)
-      );
+      const profile = await getZwiftRiderService(keys).catch((error) => errorHandler(error));
 
       if (!profile) {
         continue;

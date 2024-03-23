@@ -13,7 +13,7 @@ import { checkAuth } from '../middleware/auth.js';
 
 export const routerProfile = Router();
 
-routerProfile.get('/:zwiftId/results', getUserResults);
+routerProfile.get('/results', getUserResults);
 routerProfile.get('/:zwiftId/power', getUserPower);
 routerProfile.get('/:zwiftId/zwift-profiles', getZwiftProfiles);
 routerProfile.put('/zwiftid', checkAuth, putUserZwiftId);

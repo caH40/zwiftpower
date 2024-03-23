@@ -27,9 +27,7 @@ export const addMainProfileZwift = async ({
   }
 
   // запрос данных основного профиля с сервера Zwift
-  const profileMainZwiftAPI: ProfileZwiftAPI | null = await getZwiftRiderService(
-    String(zwiftIdMain)
-  );
+  const profileMainZwiftAPI: ProfileZwiftAPI | null = await getZwiftRiderService(zwiftIdMain);
 
   if (!profileMainZwiftAPI) {
     throw new Error('Ошибка при запросе данных Profile с ZwiftAPI');

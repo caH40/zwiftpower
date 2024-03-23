@@ -8,7 +8,7 @@ import { getCategory } from './category.js';
 /**
  * Формирование данных профайла райдера (анкета)
  */
-export async function getProfileService(zwiftId: string) {
+export async function getProfileService(zwiftId: number) {
   const profile: Profile = {
     zwiftId: +zwiftId,
     ftp: null,

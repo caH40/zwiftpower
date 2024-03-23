@@ -65,3 +65,12 @@ export interface GetRidersQuery {
   docsOnPage?: number; // количество документов на одной странице при пагинации
   search?: string; // фильтр поиска
 }
+
+/**
+ * Данные из query параметров url для запроса профиля райдера и его результатов
+ */
+export interface GetProfileResultsQuery {
+  page?: number; // номер страницы при пагинации
+  docsOnPage?: number; // количество документов на одной странице при пагинации
+  zwiftId?: number; // zwiftId райдера
+}

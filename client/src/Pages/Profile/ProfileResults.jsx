@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -8,22 +8,29 @@ import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/N
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import CPBlock from '../../components/CPBlock/CPBlock';
 import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
+import Pagination from '../../components/UI/Pagination/Pagination';
 
 import styles from './Profile.module.css';
 
 const notFound = 'Заезды не найдены ... ((';
 
 function ProfileResults() {
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
-  const { results, powerCurve, profile, status } = useSelector(
+
+  const { results, powerCurve, profile, status, quantityPages } = useSelector(
     (state) => state.fetchUserResults
   );
 
+  const initialDocsOnPage = localStorage.getItem('recordsOnPageProfileResults') || 20;
+  const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
+
   useEffect(() => {
-    dispatch(fetchUserResults({ zwiftId }));
-  }, [dispatch, zwiftId, userAuth]);
+    localStorage.setItem('recordsOnPageProfileResults', docsOnPage);
+    dispatch(fetchUserResults({ zwiftId, page, docsOnPage, quantityPages }));
+  }, [dispatch, zwiftId, userAuth, page, docsOnPage]);
 
   return (
     <div>
@@ -43,15 +50,24 @@ function ProfileResults() {
           </div>
         </>
       )}
-      {results?.length && status === 'resolved' ? (
+      {!!results.length && status === 'resolved' && (
         <>
-          <NavBarResultsRaceTable results={results} hideCategory={true} />
+          <NavBarResultsRaceTable
+            results={results}
+            hideCategory={true}
+            docsOnPage={docsOnPage}
+            setDocsOnPage={setDocsOnPage}
+            setPage={setPage}
+          />
 
           <section className={styles.block__results}>
             <TableUserResults results={results} />
           </section>
+          {quantityPages > 1 && (
+            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+          )}
         </>
-      ) : null}
+      )}
 
       {!results?.length && status === 'resolved' ? (
         <div className={styles.title__notFound}>{notFound}</div>

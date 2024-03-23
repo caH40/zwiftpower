@@ -8,4 +8,5 @@ export interface UserResultsDtoArg {
   userResults: UserResult[];
   profile: Profile;
   powerCurve: PowerCurveSchema | null;
+  quantityPages: number;
 }

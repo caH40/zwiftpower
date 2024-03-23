@@ -93,7 +93,7 @@ export interface UserResultFetch {
     category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
     bio?: string;
   };
-
+  quantityPages: number;
   message: string;
 }
 
