@@ -1,19 +1,27 @@
 .select {
-  width: 28px;
-  height: 28px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  padding: 0.35em 0.4em;
   border: solid 1px black;
   border-radius: 3px;
   text-align: center;
 
   color: #000;
   background-color: transparent;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+}
+.option {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
 }
 .select:focus {
   outline: none;
   box-shadow: 0 0 2px 2px var(--color-orange-main);
+}
+
+@media screen and (max-width: 992px) {
+  .select {
+    padding: 0.15em 0.2em;
+  }
 }

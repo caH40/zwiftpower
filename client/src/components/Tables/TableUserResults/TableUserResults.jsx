@@ -10,6 +10,7 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../utils/date-local';
 import TdRank from '../Td/TdRank';
 import TdSpeed from '../Td/TdSpeed';
+import TableLoading from '../TableLoading/TableLoading';
 
 import styles from '../Table.module.css';
 
@@ -18,7 +19,14 @@ import { getCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
-function TableUserResults({ results }) {
+/**
+ * Таблица результатов райдера
+ * @param {any[]} results Результаты
+ * @param {'resolved' | 'loading' | 'rejected' } status Статус получения данных с сервера.
+ * @param {number} docsOnPage Количество результатов на странице (количество строк)
+ * @returns
+ */
+function TableUserResults({ results, status, docsOnPage }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
 
   return (
@@ -26,6 +34,13 @@ function TableUserResults({ results }) {
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>
+        <TableLoading
+          status={status}
+          docsOnPage={docsOnPage}
+          columns={7}
+          columnsDynamic={columnsCP.length}
+          height={37}
+        />
         {results?.map((result) => {
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;

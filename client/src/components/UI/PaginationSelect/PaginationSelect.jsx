@@ -14,7 +14,12 @@ function PaginationSelect({ docsOnPage, setDocsOnPage, records, setPage }) {
         }}
       >
         {records.map((record) => (
-          <option value={record.value} label={record.value} key={record.id} />
+          <option
+            className={styles.option}
+            value={record.value}
+            label={record.value}
+            key={record.id}
+          />
         ))}
       </select>
     </>

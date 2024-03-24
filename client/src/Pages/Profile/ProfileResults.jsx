@@ -13,18 +13,23 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 
 import styles from './Profile.module.css';
 
-const notFound = 'Заезды не найдены ... ((';
-
 function ProfileResults() {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
 
-  const { powerCurve, profile, quantityRace, status } = useSelector(
-    (state) => state.fetchUserProfile
-  );
-  const { results, quantityPages } = useSelector((state) => state.fetchUserResults);
+  const {
+    powerCurve,
+    profile,
+    quantityRace,
+    status: statusProfile,
+  } = useSelector((state) => state.fetchUserProfile);
+  const {
+    results,
+    quantityPages,
+    status: statusResults,
+  } = useSelector((state) => state.fetchUserResults);
 
   const initialDocsOnPage = localStorage.getItem('recordsOnPageProfileResults') || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
@@ -53,7 +58,7 @@ function ProfileResults() {
         image={profile.imageSrc}
         page={'results'}
       />
-      {status === 'resolved' && (
+      {statusProfile === 'resolved' && (
         <>
           <ProfileBlock profile={profile} quantityRace={quantityRace || 0} />
           <div className={styles.block__cp}>
@@ -62,28 +67,21 @@ function ProfileResults() {
           </div>
         </>
       )}
-      {!!results.length && status === 'resolved' && (
-        <>
-          <NavBarResultsRaceTable
-            results={results}
-            hideCategory={true}
-            docsOnPage={docsOnPage}
-            setDocsOnPage={setDocsOnPage}
-            setPage={setPage}
-          />
 
-          <section className={styles.block__results}>
-            <TableUserResults results={results} />
-          </section>
-          {quantityPages > 1 && (
-            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
-          )}
-        </>
+      <NavBarResultsRaceTable
+        results={results}
+        hideCategory={true}
+        docsOnPage={docsOnPage}
+        setDocsOnPage={setDocsOnPage}
+        setPage={setPage}
+      />
+
+      <section className={styles.block__results}>
+        <TableUserResults results={results} status={statusResults} docsOnPage={+docsOnPage} />
+      </section>
+      {quantityPages > 1 && (
+        <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
       )}
-
-      {!results?.length && status === 'resolved' ? (
-        <div className={styles.title__notFound}>{notFound}</div>
-      ) : null}
     </div>
   );
 }
