@@ -11,3 +11,6 @@
 .mb15 {
   margin-bottom: 15px;
 }
+.nowrap {
+  flex-wrap: nowrap;
+}

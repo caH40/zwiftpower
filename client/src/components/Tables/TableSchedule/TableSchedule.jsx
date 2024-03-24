@@ -52,7 +52,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
               <CategoriesBox event={event} addCls={'nowrap'} />
             </td>
             <td>
-              <RulesBox event={event} squareSize={16} />
+              <RulesBox event={event} squareSize={16} addCls={'nowrap'} />
             </td>
             <td>{map(event.eventSubgroups[0]?.mapId)}</td>
             <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>

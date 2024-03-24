@@ -1,11 +1,12 @@
 /**
  * Отображение пустых строк таблицы во время загрузки данных.
- * @param {'resolved' | 'loading' | 'rejected' } status Статус получения данных с сервера,
+ * @param {object} props - Пропсы.
+ * @param {'resolved' | 'loading' | 'rejected' } props.status Статус получения данных с сервера,
  * то есть количество строк таблицы, которые необходимо отобразить во время загрузки.
- * @param {number} docsOnPage Количество результатов на странице (количество строк).
- * @param {number} columns - Количество статичных столбцов.
- * @param {number} columnsDynamic - Количество динамических столбцов.
- * @param {number | string} height - Высота строк в пикселях или в em,rem.
+ * @param {number} props.docsOnPage Количество результатов на странице (количество строк).
+ * @param {number} props.columns - Количество статичных столбцов.
+ * @param {number} props.columnsDynamic - Количество динамических столбцов.
+ * @param {number | string} props.height - Высота строк в пикселях или в em, rem.
  * @returns {JSX.Element} - Компонент отображения загрузки таблицы.
  */
 function TableLoading({ status, docsOnPage, columns, columnsDynamic, height = '2rem' }) {
