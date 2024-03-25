@@ -10,7 +10,6 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../utils/date-local';
 import TdRank from '../Td/TdRank';
 import TdSpeed from '../Td/TdSpeed';
-import SkeletonTableTr from '../../SkeletonLoading/SkeletonTableTr/SkeletonTableTr';
 
 import styles from '../Table.module.css';
 
@@ -23,11 +22,9 @@ const cx = classnames.bind(styles);
  * Таблица результатов райдера
  * @param {object} props Пропсы.
  * @param {any[]} props.results Результаты.
- * @param {'resolved' | 'loading' | 'rejected' } props.status Статус получения данных с сервера.
- * @param {number} props.docsOnPage Количество результатов на странице (количество строк).
  * @returns
  */
-function TableUserResults({ results, status, docsOnPage }) {
+function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
 
   return (
@@ -35,12 +32,6 @@ function TableUserResults({ results, status, docsOnPage }) {
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>
-        <SkeletonTableTr
-          status={status}
-          docsOnPage={+docsOnPage}
-          columns={7 + columnsCP.length}
-          height={37}
-        />
         {results?.map((result) => {
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;

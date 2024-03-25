@@ -5,8 +5,7 @@ import styles from './SkeletonTable.module.css';
  * @param {object} props - Пропсы.
  * @param {'resolved' | 'loading' | 'rejected' } props.status Статус получения данных с сервера,
  * то есть количество строк таблицы, которые необходимо отобразить во время загрузки.
- * @param {number} props.docsOnPage Количество результатов на странице (количество строк).
- * @param {number} props.columns - Количество статичных столбцов.
+ * @param {number} props.rows Количество результатов на странице (количество строк).
  * @param {number | string} props.height - Высота строк в пикселях или в em, rem.
  * @returns {JSX.Element} - Компонент отображения загрузки таблицы.
  */

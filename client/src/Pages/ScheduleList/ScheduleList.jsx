@@ -12,6 +12,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './ScheduleList.module.css';
 
@@ -25,7 +26,11 @@ const adNumbers = [adUnderHeader, adOverFooter];
 function ScheduleList() {
   const [page, setPage] = useState(1);
   const [trigger, setTrigger] = useState(false);
-  const { eventsSchedule, quantityPages, status } = useSelector((state) => state.fetchEvents);
+  const {
+    eventsSchedule,
+    quantityPages,
+    status: statusFetchEvents,
+  } = useSelector((state) => state.fetchEvents);
   const { isScreenLg: isDesktop } = useResize();
   useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
@@ -70,7 +75,11 @@ function ScheduleList() {
       <HelmetSchedule />
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-        {eventsSchedule?.[0] && status === 'resolved' && (
+
+        {/* Скелетон загрузки для Таблицы */}
+        <SkeletonTable status={statusFetchEvents} rows={10} height={30} />
+
+        {eventsSchedule?.[0] && statusFetchEvents === 'resolved' && (
           <div className={styles.wrapper__wide}>
             <TableSchedule
               events={eventsSchedule}
@@ -83,7 +92,7 @@ function ScheduleList() {
         {quantityPages > 1 && (
           <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
-        {!eventsSchedule?.[0] && status === 'resolved' && (
+        {!eventsSchedule?.[0] && statusFetchEvents === 'resolved' && (
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>

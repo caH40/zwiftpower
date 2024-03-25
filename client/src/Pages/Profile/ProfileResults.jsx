@@ -11,6 +11,7 @@ import CPBlock from '../../components/CPBlock/CPBlock';
 import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileBlock';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Profile.module.css';
 
@@ -77,12 +78,19 @@ function ProfileResults() {
         setDocsOnPage={setDocsOnPage}
         setPage={setPage}
       />
+      {/* Скелетон загрузки для Таблицы */}
+      <SkeletonTable status={statusResults} rows={+docsOnPage} height={30} />
 
-      <section className={styles.block__results}>
-        <TableUserResults results={results} status={statusResults} docsOnPage={+docsOnPage} />
-      </section>
-      {quantityPages > 1 && (
-        <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+      {statusResults === 'resolved' && (
+        <>
+          <section className={styles.block__results}>
+            <TableUserResults results={results} />
+          </section>
+
+          {quantityPages > 1 && (
+            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+          )}
+        </>
       )}
     </div>
   );

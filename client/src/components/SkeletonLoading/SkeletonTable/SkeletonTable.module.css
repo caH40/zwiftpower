@@ -8,7 +8,6 @@ table .thead__tr {
   background-color: var(--color-bg-minor-2);
   height: 40px;
 }
-
 table .tr:nth-child(odd) {
   background-color: var(--color-bg-minor-2);
 }

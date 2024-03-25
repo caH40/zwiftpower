@@ -12,7 +12,6 @@ import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
-import SkeletonTableTr from '../../SkeletonLoading/SkeletonTableTr/SkeletonTableTr';
 
 import styles from '../Table.module.css';
 
@@ -20,14 +19,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableResults({
-  events,
-  docsOnPage,
-  status,
-  updateResults,
-  removeEvent,
-  updateEventAndSinged,
-}) {
+function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const dispatch = useDispatch();
 
@@ -37,7 +29,6 @@ function TableResults({
 
   const isModerator = ['admin', 'moderator'].includes(role);
 
-  const columnModerator = isModerator ? 1 : 0;
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>
@@ -45,56 +36,45 @@ function TableResults({
       </caption>
       <Thead isModerator={isModerator} />
       <tbody>
-        <SkeletonTableTr
-          status={status}
-          docsOnPage={+docsOnPage}
-          // если модератор то добавляется 1 колонка
-          columns={12 + columnModerator}
-          height={30}
-        />
+        {events.map((event) => (
+          <tr className={cx('hover')} key={event._id}>
+            <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
+            <TdSeries seriesName={event.seriesId?.name} />
+            <td className={cx('td__nowrap')}>
+              <Link className={cx('link')} to={String(event.id)}>
+                <span className={cx('big')}>{event.name}</span>
+              </Link>
+            </td>
 
-        {status === 'resolved' &&
-          events.map((event) => (
-            <tr className={cx('hover')} key={event._id}>
-              <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
-              <TdSeries seriesName={event.seriesId?.name} />
-              <td className={cx('td__nowrap')}>
-                <Link className={cx('link')} to={String(event.id)}>
-                  <span className={cx('big')}>{event.name}</span>
-                </Link>
-              </td>
-
-              <td className={cx('td__nowrap')}>{event.organizer}</td>
-              <TdRaceType typeRaceCustom={event.typeRaceCustom} />
-              <td>
-                <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
-              </td>
-              <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-              <td className={cx('td__nowrap')}>
-                {routeName(event.eventSubgroups[0]?.routeId)}
-              </td>
-              <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-              {TdDistance(
-                event.eventSubgroups[0].durationInSeconds,
-                event.eventSubgroups[0].distanceInMeters,
-                event.eventSubgroups[0].distanceSummary.distanceInKilometers
-              )}
-              {TdElevation(
-                event.eventSubgroups[0].durationInSeconds,
-                event.eventSubgroups[0].distanceInMeters,
-                event.eventSubgroups[0].distanceSummary.elevationGainInMeters
-              )}
-              <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
-              {isModerator && (
-                <TdScheduleMenuTableResultList
-                  event={event}
-                  updateResults={updateResults}
-                  updateEventAndSinged={updateEventAndSinged}
-                  removeEvent={removeEvent}
-                />
-              )}
-            </tr>
-          ))}
+            <td className={cx('td__nowrap')}>{event.organizer}</td>
+            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+            <td>
+              <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
+            </td>
+            <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+            <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>
+            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
+            {TdDistance(
+              event.eventSubgroups[0].durationInSeconds,
+              event.eventSubgroups[0].distanceInMeters,
+              event.eventSubgroups[0].distanceSummary.distanceInKilometers
+            )}
+            {TdElevation(
+              event.eventSubgroups[0].durationInSeconds,
+              event.eventSubgroups[0].distanceInMeters,
+              event.eventSubgroups[0].distanceSummary.elevationGainInMeters
+            )}
+            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
+            {isModerator && (
+              <TdScheduleMenuTableResultList
+                event={event}
+                updateResults={updateResults}
+                updateEventAndSinged={updateEventAndSinged}
+                removeEvent={removeEvent}
+              />
+            )}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

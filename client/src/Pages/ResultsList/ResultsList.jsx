@@ -15,6 +15,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { useAd } from '../../hook/useAd';
 import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './ResultsList.module.css';
 
@@ -98,16 +99,21 @@ function ResultsList() {
           />
         </div>
 
-        <section className={styles.wrapper__wide}>
-          <TableResults
-            events={eventsResults}
-            updateResults={updateResults}
-            removeEvent={removeEvent}
-            updateEventAndSinged={updateEventAndSinged}
-            docsOnPage={docsOnPage}
-            status={statusFetchEvents}
-          />
-        </section>
+        {/* Скелетон загрузки для Таблицы */}
+        <SkeletonTable status={statusFetchEvents} rows={+docsOnPage} height={30} />
+
+        {!!eventsResults.length && statusFetchEvents === 'resolved' && (
+          <section className={styles.wrapper__wide}>
+            <TableResults
+              events={eventsResults}
+              updateResults={updateResults}
+              removeEvent={removeEvent}
+              updateEventAndSinged={updateEventAndSinged}
+              docsOnPage={docsOnPage}
+              status={statusFetchEvents}
+            />
+          </section>
+        )}
         {quantityPages > 1 && (
           <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
