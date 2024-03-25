@@ -43,7 +43,13 @@ function TableResults({
       </caption>
       <Thead isModerator={isModerator} />
       <tbody>
-        <SkeletonTableTr status={status} docsOnPage={+docsOnPage} columns={13} height={30} />
+        <SkeletonTableTr
+          status={status}
+          docsOnPage={+docsOnPage}
+          // если модератор то добавляется 1 колонка
+          columns={12 + isModerator ? 1 : 0}
+          height={30}
+        />
 
         {status === 'resolved' &&
           events.map((event) => (
