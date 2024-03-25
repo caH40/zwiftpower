@@ -10,6 +10,7 @@ import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import CPBlock from '../../components/CPBlock/CPBlock';
 import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 import Pagination from '../../components/UI/Pagination/Pagination';
+import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileBlock';
 
 import styles from './Profile.module.css';
 
@@ -58,6 +59,7 @@ function ProfileResults() {
         image={profile.imageSrc}
         page={'results'}
       />
+      <SkeletonProfileBlock status={statusProfile} />
       {statusProfile === 'resolved' && (
         <>
           <ProfileBlock profile={profile} quantityRace={quantityRace || 0} />
