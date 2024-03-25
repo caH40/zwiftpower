@@ -36,14 +36,15 @@
   width: 60px;
 }
 .label {
+  height: 0.9rem;
   width: 140px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 .bar {
   height: 20px;
   width: 160px;
   background-color: var(--color-bg-minor-2);
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   border-radius: 0.4rem;
 }
 

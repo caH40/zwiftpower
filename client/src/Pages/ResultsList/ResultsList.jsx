@@ -32,7 +32,11 @@ function ResultsList() {
   const initialDocsOnPage = localStorage.getItem('recordsOnPageResults') || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
-  const { eventsResults, quantityPages } = useSelector((state) => state.fetchEvents);
+  const {
+    eventsResults,
+    quantityPages,
+    status: statusFetchEvents,
+  } = useSelector((state) => state.fetchEvents);
 
   useTitle('Результаты заездов Zwift');
   const dispatch = useDispatch();
@@ -93,20 +97,19 @@ function ResultsList() {
             setPage={setPage}
           />
         </div>
-        {eventsResults[0] && (
-          <>
-            <section className={styles.wrapper__wide}>
-              <TableResults
-                events={eventsResults}
-                updateResults={updateResults}
-                removeEvent={removeEvent}
-                updateEventAndSinged={updateEventAndSinged}
-              />
-            </section>
-            {quantityPages > 1 && (
-              <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
-            )}
-          </>
+
+        <section className={styles.wrapper__wide}>
+          <TableResults
+            events={eventsResults}
+            updateResults={updateResults}
+            removeEvent={removeEvent}
+            updateEventAndSinged={updateEventAndSinged}
+            docsOnPage={docsOnPage}
+            status={statusFetchEvents}
+          />
+        </section>
+        {quantityPages > 1 && (
+          <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
       </section>
       {isDesktop ? (
