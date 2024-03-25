@@ -1,0 +1,21 @@
+.wrapper {
+  min-height: 250px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: var(--color-bg-minor-2);
+  animation: loading 1s infinite alternate;
+}
+@media screen and (max-width: 420px) {
+  .wrapper {
+    min-height: 300px;
+  }
+}
+
+@keyframes loading {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}

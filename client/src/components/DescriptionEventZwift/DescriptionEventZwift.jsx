@@ -53,7 +53,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         {/* показывать только для страницы результатов */}
         {!forSchedule && showForModerate && (
           <div className={styles.box__modify}>
-            <IconModify getClick={modifyResultsEvent} bgColor={'white'} />
+            <IconModify getClick={modifyResultsEvent} bgColor={'#ff7c00'} />
           </div>
         )}
         <div

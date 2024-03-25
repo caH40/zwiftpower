@@ -1,0 +1,23 @@
+.wrapper {
+  animation: loading 1s infinite alternate;
+}
+.table {
+  width: 100%;
+}
+table .thead__tr {
+  background-color: var(--color-bg-minor-2);
+  height: 40px;
+}
+
+table .tr:nth-child(odd) {
+  background-color: var(--color-bg-minor-2);
+}
+
+@keyframes loading {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}

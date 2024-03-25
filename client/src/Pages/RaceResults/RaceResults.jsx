@@ -16,6 +16,8 @@ import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
 import { resetRaceResultsPage } from '../../redux/features/filterRaceResultsPageSlice';
+import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './RaceResults.module.css';
 
@@ -25,7 +27,11 @@ const adUnderHeader = 13;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceResults() {
-  const { eventData, resultsPrepared } = useSelector((state) => state.fetchEventResult);
+  const {
+    eventData,
+    resultsPrepared,
+    status: statusFetchResults,
+  } = useSelector((state) => state.fetchEventResult);
   const { column: pageCurrent } = useSelector((state) => state.filterRaceResultsPage.value);
   const { isScreenLg: isDesktop } = useResize();
 
@@ -66,47 +72,56 @@ function RaceResults() {
 
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-        {eventData?.id && (
-          <>
-            <DescriptionEventZwift event={eventData} eventId={eventId} />
-            <nav className={styles.block__nav}>
-              <NavBarResultsRace />
 
-              <NavBarResultsRaceTable results={resultsPrepared} />
-            </nav>
-            {pageCurrent === 'results' && (
-              <>
-                <section className={styles.wrapper__wide}>
-                  <TableRaceResults
-                    results={resultsPrepared.filter(
-                      (result) => result.disqualification !== 'DNF'
-                    )}
-                    event={eventData}
-                  />
-                  <ServiceBox
-                    updated={eventData.updated}
-                    modifiedResults={eventData.modifiedResults}
-                  />
-                </section>
-              </>
-            )}
-            {pageCurrent === 'dnf' && (
-              <>
-                <section className={styles.wrapper__wide}>
-                  <TableRaceResults
-                    results={resultsPrepared.filter(
-                      (result) => result.disqualification === 'DNF'
-                    )}
-                    event={eventData}
-                    forDNF={true}
-                  />
-                  <ServiceBox
-                    updated={eventData.updated}
-                    modifiedResults={eventData.modifiedResults}
-                  />
-                </section>
-              </>
-            )}
+        {/* Скелетон загрузки для Постера */}
+        <SkeletonDescEvent status={statusFetchResults} />
+
+        {eventData?.id && statusFetchResults === 'resolved' && (
+          <DescriptionEventZwift event={eventData} eventId={eventId} />
+        )}
+
+        <nav className={styles.block__nav}>
+          {/* Фильтры данных в таблице */}
+          <NavBarResultsRace />
+          {/* Переключение между страницами: Результаты и Сход */}
+          <NavBarResultsRaceTable results={resultsPrepared} />
+        </nav>
+
+        {/* Скелетон загрузки для Таблицы */}
+        <SkeletonTable status={statusFetchResults} rows={20} height={40} />
+
+        {pageCurrent === 'results' && !!resultsPrepared.length && (
+          <>
+            <section className={styles.wrapper__wide}>
+              <TableRaceResults
+                results={resultsPrepared.filter((result) => result.disqualification !== 'DNF')}
+                event={eventData}
+                status={statusFetchResults}
+                docsOnPage={20}
+              />
+              <ServiceBox
+                updated={eventData.updated}
+                modifiedResults={eventData.modifiedResults}
+              />
+            </section>
+          </>
+        )}
+
+        {/* страница для дисквалификации результатов */}
+
+        {pageCurrent === 'dnf' && statusFetchResults === 'resolved' && (
+          <>
+            <section className={styles.wrapper__wide}>
+              <TableRaceResults
+                results={resultsPrepared.filter((result) => result.disqualification === 'DNF')}
+                event={eventData}
+                forDNF={true}
+              />
+              <ServiceBox
+                updated={eventData.updated}
+                modifiedResults={eventData.modifiedResults}
+              />
+            </section>
           </>
         )}
       </section>
