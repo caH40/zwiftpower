@@ -16,6 +16,8 @@ import {
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 import { useAd } from '../../hook/useAd';
 import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
+import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './SignedRiders.module.css';
 
@@ -25,7 +27,9 @@ const adUnderHeader = 12;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 function SignedRiders() {
-  const { event } = useSelector((state) => state.fetchEventPreview);
+  const { event, status: statusFetchEventPreview } = useSelector(
+    (state) => state.fetchEventPreview
+  );
   const navigate = useNavigate();
   const { isScreenLg: isDesktop } = useResize();
 
@@ -61,9 +65,13 @@ function SignedRiders() {
         typeRaceCustom={event.typeRaceCustom}
       />
 
-      <section className={styles.wrapper}>
+      <div className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-        {event?.id && !event.started && (
+
+        {/* Скелетон загрузки для Постера */}
+        <SkeletonDescEvent status={statusFetchEventPreview} />
+
+        {event?.id && !event.started && statusFetchEventPreview === 'resolved' && (
           <>
             <DescriptionEventZwift event={event} forSchedule={true} />
             <Link
@@ -75,16 +83,26 @@ function SignedRiders() {
               Регистрация в Zwift
             </Link>
             <NavBarSignedRiders />
+          </>
+        )}
+
+        {/* Скелетон загрузки для Таблицы */}
+        <SkeletonTable status={statusFetchEventPreview} rows={20} height={40} />
+
+        {event?.id && !event.started && statusFetchEventPreview === 'resolved' && (
+          <>
             <section className={styles.wrapper__wide}>
               <TableSignedRiders riders={event.signedRiders} event={event} />
             </section>
+
             <div className={styles.right}>
               <span className={styles.service}>Обновлено:</span>
               <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>
             </div>
           </>
         )}
-      </section>
+      </div>
+
       {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (

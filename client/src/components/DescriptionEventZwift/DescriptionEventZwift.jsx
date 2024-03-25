@@ -41,7 +41,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   const gaps = gapStart(event);
 
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper}>
       <div
         className={cn(styles.block__main, { [styles.block__mainClosed]: !isOpened })}
         style={{ backgroundImage: `url(${event.imageUrl})` }}
@@ -112,7 +112,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           <hr className={styles.hr} />
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
