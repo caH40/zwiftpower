@@ -81,10 +81,11 @@ function RaceResults() {
         )}
 
         <nav className={styles.block__nav}>
-          {/* Фильтры данных в таблице */}
-          <NavBarResultsRace />
           {/* Переключение между страницами: Результаты и Сход */}
-          <NavBarResultsRaceTable results={resultsPrepared} />
+          <NavBarResultsRace />
+
+          {/* Фильтры данных в таблице */}
+          <NavBarResultsRaceTable results={resultsPrepared} hideDocsOnPage={true} />
         </nav>
 
         {/* Скелетон загрузки для Таблицы */}

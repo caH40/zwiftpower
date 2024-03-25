@@ -6,18 +6,27 @@ import { records } from '../../../assets/constants';
 
 import styles from './NavBarResultsRaceTable.module.css';
 
-function NavBarResultsRace({ results, hideCategory, docsOnPage, setDocsOnPage, setPage }) {
+function NavBarResultsRace({
+  results,
+  hideCategory,
+  docsOnPage,
+  setDocsOnPage,
+  setPage,
+  hideDocsOnPage,
+}) {
   return (
     <div className={styles.box}>
       {hideCategory ? null : <FilterCategory results={results} />}
       <FilterWatts />
       <FilterColumn />
-      <PaginationSelect
-        docsOnPage={docsOnPage}
-        setDocsOnPage={setDocsOnPage}
-        records={records}
-        setPage={setPage}
-      />
+      {!hideDocsOnPage && (
+        <PaginationSelect
+          docsOnPage={docsOnPage}
+          setDocsOnPage={setDocsOnPage}
+          records={records}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 }
