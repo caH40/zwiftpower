@@ -11,6 +11,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Riders.module.css';
 
@@ -27,7 +28,11 @@ function Riders() {
   const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Участники заездов');
-  const { riders, quantityPages } = useSelector((state) => state.riders);
+  const {
+    riders,
+    quantityPages,
+    status: statusFetchRiders,
+  } = useSelector((state) => state.riders);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,10 +62,13 @@ function Riders() {
             setPage={setPage}
           />
         </div>
-        {riders[0] && (
+        {/* Скелетон загрузки для Таблицы */}
+        <SkeletonTable status={statusFetchRiders} rows={+docsOnPage} height={40} />
+
+        {riders[0] && statusFetchRiders === 'resolved' && (
           <div className={styles.wrapper}>
             <div className={styles.align__right}></div>
-            {/* <NavBarSignedRiders /> */}
+
             <section className={styles.wrapper__wide}>
               <TableRiders riders={riders} />
             </section>

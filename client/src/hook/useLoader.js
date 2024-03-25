@@ -37,6 +37,7 @@ const useLoader = () => {
   const { status: statusEventParams } = useSelector((state) => state.eventParams);
   const { status: statusZwiftClub } = useSelector((state) => state.zwiftClub);
   const { status: statusClubModerator } = useSelector((state) => state.clubModerator);
+  const { status: statusFetchRiders } = useSelector((state) => state.riders);
 
   if (
     statusEvents === 'loading' ||
@@ -61,7 +62,8 @@ const useLoader = () => {
     statusLogErrorDelete === 'loading' ||
     statusEventParams === 'loading' ||
     statusZwiftClub === 'loading' ||
-    statusClubModerator === 'loading'
+    statusClubModerator === 'loading' ||
+    statusFetchRiders === 'loading'
   ) {
     return { isLoading: true };
   }
