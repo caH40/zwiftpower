@@ -36,6 +36,8 @@ function TableResults({
   }, []);
 
   const isModerator = ['admin', 'moderator'].includes(role);
+
+  const columnModerator = isModerator ? 1 : 0;
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>
@@ -47,7 +49,7 @@ function TableResults({
           status={status}
           docsOnPage={+docsOnPage}
           // если модератор то добавляется 1 колонка
-          columns={12 + isModerator ? 1 : 0}
+          columns={12 + columnModerator}
           height={30}
         />
 
