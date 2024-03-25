@@ -13,11 +13,9 @@ import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { HelmetMain } from '../../components/Helmets/HelmetMain';
-import CardRacePreviewLoading from '../../components/CardRacePreview/CardRacePreviewLoading';
+import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 
 import styles from './MainPage.module.css';
-
-const notFound = 'К сожалению, заезды не найдены!';
 
 // рекламные блоки на странице
 const inSideBar = 9;
@@ -25,7 +23,9 @@ const adOverFooter = 16;
 const adNumbers = [inSideBar, adOverFooter];
 
 function MainPage() {
-  const { eventsPreview, status } = useSelector((state) => state.fetchEvents);
+  const { eventsPreview, status: statusFetchEvents } = useSelector(
+    (state) => state.fetchEvents
+  );
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const { isScreenLg: isDesktop } = useResize();
@@ -47,31 +47,28 @@ function MainPage() {
 
   useAd(adNumbers);
 
-  const isVisible = eventsPreview[0]?.id;
   return (
     <>
-      <section className={styles.wrapper}>
+      <div className={styles.wrapper}>
         <HelmetMain />
-        <div className={styles.wrapper__preview}>
-          {!isVisible && status === 'resolved' && (
-            <h2 className={styles.title__notFound}>{notFound}</h2>
-          )}
+        <section className={styles.wrapper__preview}>
+          <SkeletonCardRacePreview status={statusFetchEvents} />
 
-          {isVisible ? (
+          {!!eventsPreview.length && statusFetchEvents === 'resolved' && (
             <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
-          ) : (
-            <CardRacePreviewLoading />
           )}
 
           {!isDesktop && <AdContainer number={9} marginBottom={15} />}
 
-          {isVisible &&
+          {!!eventsPreview.length &&
+            statusFetchEvents === 'resolved' &&
             eventsPreview
               .slice(1)
               .map((event) => (
                 <CardRacePreview event={event} key={event.id} getClick={toLink} />
               ))}
-        </div>
+        </section>
+
         <aside className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
           <div className={styles.sidebar}>
@@ -88,7 +85,8 @@ function MainPage() {
             <MainInfoDev isModerator={isModerator} />
           </div>
         </aside>
-      </section>
+      </div>
+
       <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
