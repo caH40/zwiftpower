@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ChartRidersTotalFTP from '../../components/Charts/RidersTotal/RidersTotalFTP';
 import useTitle from '../../hook/useTitle';
@@ -8,6 +8,7 @@ import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/rid
 import ChartRidersTotalFTPPie from '../../components/Charts/RidersTotalPie/ChartRidersTotalFTPPie';
 import IconQuestion from '../../components/icons/IconQuestion';
 import { HelmetFTP } from '../../components/Helmets/HelmetFTP';
+import SkeletonRidersDiagrams from '../../components/SkeletonLoading/SkeletonRidersDiagrams/SkeletonRidersDiagrams';
 
 import styles from './Statistics.module.css';
 
@@ -16,6 +17,9 @@ import styles from './Statistics.module.css';
  */
 function RidersTotalFTP() {
   useTitle('Статистика райдеров по FTP');
+  const { status: statusRidersTotalFTPFetch } = useSelector(
+    (state) => state.ridersTotalFTPFetch
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,22 +41,29 @@ function RidersTotalFTP() {
           />
         </span>
       </h2>
-      <div className={styles.wrapper__charts}>
-        <div className={styles.wrapper__chart}>
-          <ChartRidersTotalFTP isMale={true} />
-        </div>
-        <div className={styles.wrapper__chart}>
-          <ChartRidersTotalFTP isMale={false} />
-        </div>
-      </div>
-      <div className={styles.wrapper__charts}>
-        <div className={styles.wrapper__chart}>
-          <ChartRidersTotalFTPPie isMale={true} />
-        </div>
-        <div className={styles.wrapper__chart}>
-          <ChartRidersTotalFTPPie isMale={false} />
-        </div>
-      </div>
+      {/* скелетон для загрузки */}
+      <SkeletonRidersDiagrams status={statusRidersTotalFTPFetch} quantityCharts={4} />
+
+      {statusRidersTotalFTPFetch === 'resolved' && (
+        <>
+          <div className={styles.wrapper__charts}>
+            <div className={styles.wrapper__chart}>
+              <ChartRidersTotalFTP isMale={true} />
+            </div>
+            <div className={styles.wrapper__chart}>
+              <ChartRidersTotalFTP isMale={false} />
+            </div>
+          </div>
+          <div className={styles.wrapper__charts}>
+            <div className={styles.wrapper__chart}>
+              <ChartRidersTotalFTPPie isMale={true} />
+            </div>
+            <div className={styles.wrapper__chart}>
+              <ChartRidersTotalFTPPie isMale={false} />
+            </div>
+          </div>
+        </>
+      )}
     </section>
   );
 }

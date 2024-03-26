@@ -16,7 +16,7 @@ import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarR
 import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
 import { resetRidersTotalAge } from '../../redux/features/api/statistics_age/ridersTotalAgeSlice';
 import { HelmetStatisticsMain } from '../../components/Helmets/HelmetStatisticsMain';
-import SkeletonRidersInEvents from '../../components/SkeletonLoading/SkeletonRidersInEvents/SkeletonRidersInEvents';
+import SkeletonRidersDiagrams from '../../components/SkeletonLoading/SkeletonRidersDiagrams/SkeletonRidersDiagrams';
 
 import styles from './Statistics.module.css';
 
@@ -54,7 +54,7 @@ function RidersInEvents() {
       <NavBarRidersInEvent form={form} setForm={setForm} />
 
       {/* скелетон для загрузки */}
-      <SkeletonRidersInEvents status={statusRidersInEventsFetch} />
+      <SkeletonRidersDiagrams status={statusRidersInEventsFetch} quantityCharts={4} />
 
       {statusRidersInEventsFetch === 'resolved' && (
         <>
