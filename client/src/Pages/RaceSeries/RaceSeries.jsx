@@ -8,6 +8,7 @@ import { fetchSeries } from '../../redux/features/api/seriesSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
 import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './RaceSeries.module.css';
 
@@ -17,7 +18,7 @@ const adUnderHeader = 3;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceSeries() {
-  const series = useSelector((state) => state.fetchSeries.series);
+  const { series, status: statusFetchSeries } = useSelector((state) => state.fetchSeries);
   useTitle('Серии и Туры заездов');
   const { isScreenLg: isDesktop } = useResize();
 
@@ -34,12 +35,13 @@ function RaceSeries() {
       <HelmetSeries />
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-        {series[0] && (
-          <>
-            <TableSeries series={series} />
-          </>
-        )}
+
+        {/* скелетон загрузки */}
+        <SkeletonTable status={statusFetchSeries} rows={1} />
+
+        {!!series.length && statusFetchSeries === 'resolved' && <TableSeries series={series} />}
       </section>
+
       {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (

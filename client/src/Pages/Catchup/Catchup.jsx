@@ -11,6 +11,7 @@ import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/Tab
 import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
 import { useResize } from '../../hook/use-resize';
 import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Catchup.module.css';
 
@@ -26,7 +27,11 @@ function Catchup() {
   const { season = seasonCurrent } = useParams();
   const navigate = useNavigate();
 
-  const { results, resultsSummary } = useSelector((state) => state.fetchResultsSeries);
+  const {
+    results,
+    resultsSummary,
+    status: statusFetchResultsSeries,
+  } = useSelector((state) => state.fetchResultsSeries);
 
   useTitle('Догонялки (CatchUp)');
 
@@ -41,30 +46,47 @@ function Catchup() {
   };
 
   useAd(adNumbers);
-
   return (
     <>
       <HelmetCatchup season={season} />
-      <section className={styles.wrapper}>
+      <div className={styles.wrapper}>
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
         <div className={styles.box__filter}>
           <FilterCatchup season={season} reducer={getLink} />
         </div>
-        {results[0] && (
-          <div className={styles.block}>
-            {resultsSummary && (
-              <div className={styles.box__total}>
-                <TableCatchupSummary resultsSummary={resultsSummary} />
-              </div>
+
+        <div className={styles.block}>
+          <section className={styles.box__total}>
+            {/* скелетон загрузки */}
+            <SkeletonTable
+              status={statusFetchResultsSeries}
+              rows={3}
+              needCaption={true}
+              height={35}
+              style={{ marginBottom: '15px' }}
+            />
+
+            {!!resultsSummary.length && statusFetchResultsSeries === 'resolved' && (
+              <TableCatchupSummary resultsSummary={resultsSummary} />
             )}
-            <section className={styles.wrapper__wide}>
+          </section>
+
+          <section className={styles.wrapper__wide}>
+            {/* скелетон загрузки */}
+            <SkeletonTable
+              status={statusFetchResultsSeries}
+              rows={20}
+              needCaption={true}
+              height={40}
+            />
+            {!!results.length && statusFetchResultsSeries === 'resolved' && (
               <TableCatchup catchups={results} />
-            </section>
-          </div>
-        )}
-      </section>
+            )}
+          </section>
+        </div>
+      </div>
 
       {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />

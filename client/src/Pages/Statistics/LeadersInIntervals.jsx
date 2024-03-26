@@ -43,7 +43,7 @@ function LeadersInIntervals() {
 
       {/* скелетон загрузки */}
       <SkeletonTable status={statusLeadersInIntervalsFetch} rows={11} needCaption={true} />
-      <div style={{ marginBottom: '20px' }} />
+      <br />
       <SkeletonTable status={statusLeadersInIntervalsFetch} rows={11} needCaption={true} />
 
       {!!maxWatts.length && statusLeadersInIntervalsFetch === 'resolved' && (
