@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const Profile = lazy(() => import('../Pages/Profile/Profile'));
 const ProfileResults = lazy(() => import('../Pages/Profile/ProfileResults'));
 const ProfileSetting = lazy(() => import('../Pages/Profile/ProfileSetting'));
-const ProfilePower = lazy(() => import('../Pages/Profile/ProfilePower'));
+const ProfilePower = lazy(() => import('../Pages/Profile/Power/ProfilePower'));
 const ProfileWeight = lazy(() => import('../Pages/Profile/ProfileWeight'));
 
 export function ProfileRoute() {
