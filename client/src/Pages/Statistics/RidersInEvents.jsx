@@ -16,6 +16,7 @@ import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarR
 import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
 import { resetRidersTotalAge } from '../../redux/features/api/statistics_age/ridersTotalAgeSlice';
 import { HelmetStatisticsMain } from '../../components/Helmets/HelmetStatisticsMain';
+import SkeletonRidersInEvents from '../../components/SkeletonLoading/SkeletonRidersInEvents/SkeletonRidersInEvents';
 
 import styles from './Statistics.module.css';
 
@@ -24,7 +25,9 @@ const cx = classNames.bind(styles);
 function RidersInEvents() {
   useTitle('Статистика');
   const [form, setForm] = useState({ period: 'Год' });
-  const { status: fetchStatus } = useSelector((state) => state.ridersInEventsFetch);
+  const { status: statusRidersInEventsFetch } = useSelector(
+    (state) => state.ridersInEventsFetch
+  );
 
   const dispatch = useDispatch();
 
@@ -46,10 +49,15 @@ function RidersInEvents() {
   return (
     <section>
       <HelmetStatisticsMain />
-      {fetchStatus === 'resolved' && (
+
+      <h2 className={cx('title')}>Количество участников</h2>
+      <NavBarRidersInEvent form={form} setForm={setForm} />
+
+      {/* скелетон для загрузки */}
+      <SkeletonRidersInEvents status={statusRidersInEventsFetch} />
+
+      {statusRidersInEventsFetch === 'resolved' && (
         <>
-          <h2 className={cx('title')}>Количество участников</h2>
-          <NavBarRidersInEvent form={form} setForm={setForm} />
           <div className={cx('wrapper__charts')}>
             <div className={cx('wrapper__chart')}>
               <ChartRidersInEvents />

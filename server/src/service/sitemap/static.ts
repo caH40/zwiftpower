@@ -30,12 +30,6 @@ export const urlsStatic = `
 </url>
 
 <url>
-<loc>https://zwiftpower.ru/race/series/catchup</loc>
-<priority>0.1</priority>
-<changefreq>always</changefreq>
-</url>
-
-<url>
 <loc>https://zwiftpower.ru/faq</loc>
 <priority>0.1</priority>
 <changefreq>always</changefreq>

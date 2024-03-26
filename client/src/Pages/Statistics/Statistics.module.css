@@ -17,15 +17,6 @@
   font-size: 9px;
   text-align: right;
 }
-.wrapper__chart {
-  flex: 0 1 470px;
-  min-width: 300px;
-  background-color: var(--color-bg-minor);
-  border: 1px solid var(--color-border-minor);
-  border-radius: 5px;
-  padding: 15px 15px 5px;
-  letter-spacing: 0.03em;
-}
 .block__table {
   overflow-x: auto;
   min-height: 350px;
