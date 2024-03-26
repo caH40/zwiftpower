@@ -9,6 +9,7 @@ import TableLeadersInIntervals from '../../components/Tables/TableLeadersInInter
 import NavBarLeadersGender from '../../components/UI/NavBarLeadersGender/NavBarLeadersGender';
 import FilterIntervalsForLeader from '../../components/UI/Filters/FilterInterval/FilterIntervalsForLeader';
 import { HelmetLeaders } from '../../components/Helmets/HelmetLeaders';
+import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Statistics.module.css';
 
@@ -19,7 +20,11 @@ function LeadersInIntervals() {
   const { pathname } = useLocation();
   const gender = pathname.includes('/female') ? 'female' : 'male';
 
-  const { maxWatts, maxWattsPerKg } = useSelector((state) => state.leadersInIntervalsFetch);
+  const {
+    maxWatts,
+    maxWattsPerKg,
+    status: statusLeadersInIntervalsFetch,
+  } = useSelector((state) => state.leadersInIntervalsFetch);
 
   const dispatch = useDispatch();
 
@@ -35,22 +40,29 @@ function LeadersInIntervals() {
         <NavBarLeadersGender addCls={'mb15'} />
         <FilterIntervalsForLeader />
       </div>
-      {maxWatts?.length ? (
-        <section>
-          <h2>Лидеры по абсолютным ваттам за 90 дней </h2>
-          <article className={styles.block__table}>
-            <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
-          </article>
-        </section>
-      ) : null}
-      {maxWatts?.length ? (
-        <section>
-          <h2>Лидеры по удельной мощности за 90 дней</h2>
-          <article className={styles.block__table}>
-            <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
-          </article>
-        </section>
-      ) : null}
+
+      {/* скелетон загрузки */}
+      <SkeletonTable status={statusLeadersInIntervalsFetch} rows={11} needCaption={true} />
+      <div style={{ marginBottom: '20px' }} />
+      <SkeletonTable status={statusLeadersInIntervalsFetch} rows={11} needCaption={true} />
+
+      {!!maxWatts.length && statusLeadersInIntervalsFetch === 'resolved' && (
+        <>
+          <section>
+            <h2>Лидеры по абсолютным ваттам за 90 дней </h2>
+            <article className={styles.block__table}>
+              <TableLeadersInIntervals leadersInIntervals={maxWatts} type={'watts'} />
+            </article>
+          </section>
+
+          <section>
+            <h2>Лидеры по удельной мощности за 90 дней</h2>
+            <article className={styles.block__table}>
+              <TableLeadersInIntervals leadersInIntervals={maxWattsPerKg} type={'wattsPerKg'} />
+            </article>
+          </section>
+        </>
+      )}
     </div>
   );
 }
