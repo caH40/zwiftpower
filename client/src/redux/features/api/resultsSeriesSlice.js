@@ -33,7 +33,12 @@ const resultsSeriesSlice = createSlice({
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetCatchData: (state) => {
+      state.results = [];
+      state.resultsSummary = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchResultsSeries.pending, (state) => {
       state.error = null;
@@ -54,6 +59,6 @@ const resultsSeriesSlice = createSlice({
   },
 });
 
-export const { resetEventData } = resultsSeriesSlice.actions;
+export const { resetCatchData } = resultsSeriesSlice.actions;
 
 export default resultsSeriesSlice.reducer;

@@ -6,7 +6,10 @@ import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
-import { fetchResultsSeries } from '../../redux/features/api/resultsSeriesSlice';
+import {
+  fetchResultsSeries,
+  resetCatchData,
+} from '../../redux/features/api/resultsSeriesSlice';
 import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
 import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
 import { useResize } from '../../hook/use-resize';
@@ -39,6 +42,8 @@ function Catchup() {
 
   useEffect(() => {
     dispatch(fetchResultsSeries({ type: 'catchUp', season }));
+
+    return () => dispatch(resetCatchData());
   }, [dispatch, season]);
 
   const getLink = (season) => {
@@ -68,7 +73,7 @@ function Catchup() {
               style={{ marginBottom: '15px' }}
             />
 
-            {!!resultsSummary.length && statusFetchResultsSeries === 'resolved' && (
+            {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
               <TableCatchupSummary resultsSummary={resultsSummary} />
             )}
           </section>
