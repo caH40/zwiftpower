@@ -26,17 +26,20 @@ export async function putSignedRidersService(eventId: number) {
       const signedDataTotal = [];
       let ridersQuantity = 100;
       let start = 0;
+
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
         const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
 
+        // количество зарегистрированных райдеров подсчет которых начинается с позиции start
+        ridersQuantity = signedData?.length || 0;
+        start += 100;
+
         if (!signedData) {
           continue;
         }
-        signedDataTotal.push(...signedData);
 
-        ridersQuantity = signedData.length;
-        start += 100;
+        signedDataTotal.push(...signedData);
       }
       // добавление райдеров в группу
       for (const rider of signedDataTotal) {
