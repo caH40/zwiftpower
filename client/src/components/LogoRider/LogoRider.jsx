@@ -20,7 +20,7 @@ function LogoRider({ source, firstName, lastName, enlargeLogo }) {
     <>
       {source ? (
         <img
-          className={cx('img', { pointer: source })}
+          className={cx('img', { zoom: source })}
           src={source}
           alt="Ph"
           onClick={() => enlargeLogo(source)}
