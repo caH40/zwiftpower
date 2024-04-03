@@ -63,20 +63,11 @@ function Catchup() {
         </div>
 
         <div className={styles.block}>
-          <section className={styles.box__total}>
-            {/* скелетон загрузки */}
-            <SkeletonTable
-              status={statusFetchResultsSeries}
-              rows={3}
-              needCaption={true}
-              height={35}
-              style={{ marginBottom: '15px' }}
-            />
-
-            {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
+          {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
+            <section className={styles.box__total}>
               <TableCatchupSummary resultsSummary={resultsSummary} />
-            )}
-          </section>
+            </section>
+          )}
 
           <section className={styles.wrapper__wide}>
             {/* скелетон загрузки */}
