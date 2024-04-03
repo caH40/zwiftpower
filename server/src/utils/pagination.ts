@@ -2,8 +2,12 @@
 import { DocsAfterPagination } from '../types/types.interface.js';
 
 /**
- * Получение страницы page из массива документов documents,
- * когда на фронтенде отображается docsOnPage документов на странице
+ * Получение страницы из массива документов.
+ * @template T Тип элементов массива документов.
+ * @param documents Массив документов.
+ * @param page Номер страницы.
+ * @param docsOnPage Количество документов на странице.
+ * @returns Объект с данными о текущей странице и общем количестве страниц.
  */
 export const getCurrentDocsOnPage = <T>(
   documents: Array<T>,
@@ -11,11 +15,12 @@ export const getCurrentDocsOnPage = <T>(
   docsOnPage: number
 ): DocsAfterPagination<T> => {
   let currentPage = page;
+
   // общее количество страниц с документами
   const quantityPages = Math.ceil(documents.length / docsOnPage);
 
-  // если запрашиваемая страница page больше количество страниц quantityPages
-  if (quantityPages - page < 0) {
+  // если запрашиваемая страница page больше чем общее количество страниц quantityPages
+  if (quantityPages - page <= 0) {
     currentPage = quantityPages;
   }
 

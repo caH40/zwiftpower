@@ -1,5 +1,6 @@
 import { LogsErrorSchema } from '../../types/model.interface.js';
 import { filterLogsErrors } from './filter-errors.js';
+import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 
 // types
 import { LogsError } from '../../Model/LogsError.js';
@@ -14,25 +15,18 @@ export async function getLogsErrorsService({
   search,
 }: GetLogsAdmins) {
   const logsDB: LogsErrorSchema[] = await LogsError.find().lean().sort({ timestamp: -1 });
-  let currentPage = page;
 
   // фильтрация найденных логов по ключевому слову search
   const logsFiltered = filterLogsErrors(logsDB, search);
 
-  const quantityPages = Math.ceil(logsFiltered.length / docsOnPage);
-
-  // если запрашиваемая страница page больше количество страниц quantityPages
-  if (quantityPages - page < 0) {
-    currentPage = quantityPages;
-  }
-
-  const sliceStart = currentPage * docsOnPage - docsOnPage;
-  const sliceEnd = docsOnPage * currentPage;
-
-  const logsSliced = logsFiltered.slice(sliceStart, sliceEnd);
+  const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
+    logsFiltered,
+    page,
+    docsOnPage
+  );
 
   return {
-    logs: logsSliced,
+    logs: currentDocs,
     quantityPages,
     page: currentPage,
     message: 'Логи ошибок на сервере',
