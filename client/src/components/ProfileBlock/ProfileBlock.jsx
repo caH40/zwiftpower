@@ -6,7 +6,7 @@ import CategoryMF from '../CategoryMF/CategoryMF';
 
 import styles from './ProfileBlock.module.css';
 
-function ProfileBlock({ quantityRace, profile }) {
+function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.bio}>{profile?.bio}</div>
@@ -16,6 +16,7 @@ function ProfileBlock({ quantityRace, profile }) {
             source={profile.imageSrc}
             firstName={profile.firstName}
             lastName={profile.lastName}
+            enlargeLogo={enlargeLogo}
           />
         </div>
         <dl className={styles.list}>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Transition } from 'react-transition-group';
+import cn from 'classnames/bind';
 
 import { fetchUserProfile, resetUserProfile } from '../../redux/features/api/userProfileSlice';
 import { fetchUserResults, resetUserResults } from '../../redux/features/api/userResultsSlice';
@@ -14,6 +16,8 @@ import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfi
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Profile.module.css';
+
+const cx = cn.bind(styles);
 
 function ProfileResults() {
   const [page, setPage] = useState(1);
@@ -51,8 +55,26 @@ function ProfileResults() {
     return () => dispatch(resetUserResults());
   }, [dispatch, zwiftId, userAuth, page, docsOnPage]);
 
+  const [source, setSource] = useState('');
+  const [showEnlargeLogo, setShowEnlargeLogo] = useState(false);
+
+  // увеличение размера лого райдера
+  const enlargeLogo = (src) => {
+    setShowEnlargeLogo(true);
+    setSource(src);
+  };
+
   return (
     <div>
+      {/* отображение увеличенного лого райдера */}
+      <Transition in={showEnlargeLogo} unmountOnExit timeout={250}>
+        {(state) => (
+          <div className={cx('modal', state)} onClick={() => setShowEnlargeLogo(false)}>
+            <img src={source} alt="Large Logo" className={styles.logo__large} />
+          </div>
+        )}
+      </Transition>
+
       <HelmetProfile
         profileId={zwiftId}
         firstName={profile.firstName}
@@ -63,7 +85,11 @@ function ProfileResults() {
       <SkeletonProfileBlock status={statusProfile} />
       {statusProfile === 'resolved' && (
         <>
-          <ProfileBlock profile={profile} quantityRace={quantityRace || 0} />
+          <ProfileBlock
+            profile={profile}
+            enlargeLogo={enlargeLogo}
+            quantityRace={quantityRace || 0}
+          />
           <div className={styles.block__cp}>
             <CPBlock criticalPowers={powerCurve?.pointsWattsPerKg} label={'wattsPerKg'} />
             <CPBlock criticalPowers={powerCurve?.pointsWatts} label={'watts'} />

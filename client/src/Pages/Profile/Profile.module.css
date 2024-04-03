@@ -21,8 +21,50 @@
   min-height: 350px;
 }
 
+.modal {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 50px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.logo__large {
+  object-fit: contain;
+  margin-top: 30px;
+  max-height: calc(100vh - 120px);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-right: 50px;
+}
+
 @media screen and (max-width: 576px) {
+  .modal {
+    left: 40px;
+  }
+  .logo__large {
+    margin-right: 40px;
+  }
   .block__cp {
     gap: 10px 15px;
   }
+}
+
+.modal.entering {
+  opacity: 0;
+}
+.modal.entered {
+  opacity: 1;
+  transition: opacity 250ms ease-in-out;
+}
+.modal.exiting {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+.modal.exited {
+  opacity: 0;
 }
