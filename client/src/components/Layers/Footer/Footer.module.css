@@ -8,20 +8,15 @@
   background: var(--gradient-main);
   color: var(--color-text-main);
 }
-.wrapper {
+.block__links {
   display: flex;
   flex-wrap: wrap;
   gap: 15px 50px;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-.box {
-  display: flex;
-  gap: 0 50px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
+
 .title {
   font-size: 14px;
   font-weight: 400;
@@ -34,9 +29,8 @@
   color: var(--color-text-main);
   font-family: inherit;
   font-size: 13px;
-  display: block;
-  margin-bottom: 5px;
   cursor: pointer;
+  flex: 0 0 180px;
 }
 .link__icon {
   display: flex;
@@ -46,8 +40,8 @@
   color: var(--color-text-main);
   font-family: inherit;
   font-size: 13px;
-  margin-bottom: 5px;
   cursor: pointer;
+  flex: 0 0 180px;
 }
 .link:hover,
 .link__icon:hover {
@@ -57,9 +51,19 @@
   text-align: left;
   font-size: 12px;
 }
+.column {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 20px;
+  max-width: 580px;
+}
 
 @media screen and (max-width: 576px) {
   .footer {
     padding-left: 13px;
+  }
+  .link,
+  .link__icon {
+    flex: 0 0 150px;
   }
 }

@@ -4,145 +4,108 @@ import { serverFront } from '../../../config/environment';
 
 import styles from './Footer.module.css';
 
+const mapSite = [
+  { id: 0, name: 'Анонсы ближайших заездов', href: serverFront },
+  { id: 1, name: 'Расписание всех заездов', href: `${serverFront}/race/schedule` },
+  { id: 2, name: 'Результаты заездов', href: `${serverFront}/race/results` },
+  { id: 3, name: 'Серии заездов', href: `${serverFront}/race/series` },
+  { id: 4, name: 'Статистика', href: `${serverFront}/race/statistics/main` },
+  { id: 5, name: 'Лидеры мощности', href: `${serverFront}/race/statistics/leaders/male` },
+  { id: 6, name: 'Райдеры по FTP', href: `${serverFront}/race/statistics/riders-ftp` },
+  { id: 7, name: 'Догонялки', href: `${serverFront}/race/series/catchup/2023` },
+  { id: 8, name: 'Часто задаваемые вопросы', href: `${serverFront}/faq` },
+  { id: 9, name: 'Поиск райдера', href: `${serverFront}/riders` },
+];
+
+const usefulLinks = [
+  { id: 0, name: 'zwiftpower.com', href: 'https://zwiftpower.com' },
+  { id: 1, name: 'zwifterbikes.com', href: 'https://zwifterbikes.web.app/' },
+  { id: 2, name: 'whatsonzwift.com', href: 'https://whatsonzwift.com' },
+  { id: 3, name: 'zwiftinsider.com', href: 'https://zwiftinsider.com' },
+  { id: 4, name: 'zwifthub.com', href: 'https://zwifthub.com' },
+];
+const usefulLinksWithIcon = [
+  {
+    id: 0,
+    name: 'KOM-on группа',
+    href: 'https://t.me/komon_zwift',
+    icon: <IconTelegram squareSize={20} />,
+  },
+  {
+    id: 1,
+    name: 'KOM-on инфо',
+    href: 'https://t.me/komon_race_info',
+    icon: <IconTelegram squareSize={20} />,
+  },
+];
+
 function Footer() {
   const { isScreenLg: lg } = useResize();
   return (
     <footer className={styles.footer}>
-      <div className={styles.wrapper}>
+      <div className={styles.block__links}>
         <div className={styles.block}>
           <h3 className={styles.title}>Техническая поддержка:</h3>
-          <div className={styles.box}>
-            <div className={styles.column}>
-              <a className={styles.link} href="mailto:support@zwiftpower.ru">
-                support@zwiftpower.ru
-              </a>
-              <a
-                className={styles.link__icon}
-                href="https://t.me/zwiftpower"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <IconTelegram squareSize={20} /> Группа разработки
-              </a>
-            </div>
+
+          <div className={styles.column}>
+            <a className={styles.link} href="mailto:support@zwiftpower.ru">
+              support@zwiftpower.ru
+            </a>
+            <a
+              className={styles.link__icon}
+              href="https://t.me/zwiftpower"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <IconTelegram squareSize={20} /> Группа разработки
+            </a>
           </div>
         </div>
+
         {lg && (
           <div className={styles.block}>
             <h3 className={styles.title}>Карта сайта:</h3>
-            <div className={styles.box}>
-              <div className={styles.column}>
-                <a className={styles.link} href={`${serverFront}`}>
-                  Анонсы ближайших заездов
+
+            <div className={styles.column}>
+              {mapSite.map((page) => (
+                <a className={styles.link} href={page.href} key={page.id}>
+                  {page.name}
                 </a>
-                <a className={styles.link} href={`${serverFront}/race/schedule`}>
-                  Расписание всех заездов
-                </a>
-                <a className={styles.link} href={`${serverFront}/race/results`}>
-                  Результаты заездов
-                </a>
-              </div>
-              <div className={styles.column}>
-                <a className={styles.link} href={`${serverFront}/race/series`}>
-                  Серии заездов
-                </a>
-                <a className={styles.link} href={`${serverFront}/race/statistics/main`}>
-                  Статистика
-                </a>
-                <a className={styles.link} href={`${serverFront}/race/statistics/leaders`}>
-                  Лидеры мощности
-                </a>
-              </div>
-              <div className={styles.column}>
-                <a className={styles.link} href={`${serverFront}/race/series/catchup`}>
-                  Догонялки
-                </a>
-                <a className={styles.link} href={`${serverFront}/faq`}>
-                  Часто задаваемые вопросы
-                </a>
-              </div>
+              ))}
             </div>
           </div>
         )}
         <div className={styles.block}>
           <h3 className={styles.title}>Тематические ссылки:</h3>
-          <div className={styles.box}>
-            <div className={styles.column}>
-              <div className={styles.box__icon}>
-                <a
-                  className={styles.link__icon}
-                  href="https://t.me/komon_zwift"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <IconTelegram squareSize={20} /> KOM-on группа
-                </a>
-              </div>
-
+          <div className={styles.column}>
+            {usefulLinksWithIcon.map((page) => (
               <a
                 className={styles.link__icon}
-                href="https://t.me/komon_race_info"
+                href={page.href}
                 target="_blank"
                 rel="noreferrer"
+                key={page.id}
               >
-                <IconTelegram squareSize={20} /> KOM-on инфо
+                {page.icon}
+                <span>{page.name}</span>
               </a>
-            </div>
-            <div className={styles.column}>
+            ))}
+
+            {usefulLinks.map((page) => (
               <a
                 className={styles.link}
-                href="https://zwift.com"
+                href={page.href}
                 target="_blank"
                 rel="noreferrer"
+                key={page.id}
               >
-                zwift.com
+                {page.name}
               </a>
-              <a
-                className={styles.link}
-                href="https://zwiftpower.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                zwiftpower.com
-              </a>
-              <a
-                className={styles.link}
-                href="https://zwifterbikes.web.app/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                zwifterbikes
-              </a>
-            </div>
-            <div className={styles.column}>
-              <a
-                className={styles.link}
-                href="https://whatsonzwift.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                whatsonzwift.com
-              </a>
-              <a
-                className={styles.link}
-                href="https://zwiftinsider.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                zwiftinsider.com
-              </a>
-              <a
-                className={styles.link}
-                href="https://zwifthub.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                zwifthub.com
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>
+
       <div className={styles.copyright}>
         <span>Copyright © Berezhnev A., 2023</span>
       </div>
