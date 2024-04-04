@@ -4,6 +4,7 @@ import { filterLogs } from './filter-admins.js';
 // types
 import { GetLogsAdmins } from '../../types/http.interface.js';
 import { LogsAdminUsername } from '../../types/types.interface.js';
+import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 
 /**
  * Сервис по обработке запроса логов по действиям админов(модераторов)
@@ -17,24 +18,17 @@ export async function getLogsAdminsService({
     .sort({ date: -1 })
     .populate({ path: 'userId', select: 'username' });
 
-  let currentPage = page;
-
   // фильтрация найденных логов по ключевому слову search
   const logsFiltered = filterLogs(logsDB, search);
 
-  const quantityPages = Math.ceil(logsFiltered.length / docsOnPage);
-
-  // если запрашиваемая страница page больше количество страниц quantityPages
-  if (quantityPages - page < 0) {
-    currentPage = quantityPages;
-  }
-
-  const sliceStart = currentPage * docsOnPage - docsOnPage;
-  const sliceEnd = docsOnPage * currentPage;
-  const logsSliced = logsFiltered.slice(sliceStart, sliceEnd);
+  const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
+    logsFiltered,
+    page,
+    docsOnPage
+  );
 
   return {
-    logs: logsSliced,
+    logs: currentDocs,
     quantityPages,
     page: currentPage,
     message: 'Логи о действиях админов (модераторов)',
