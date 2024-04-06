@@ -1,6 +1,12 @@
-import React from 'react';
-
 import styles from './MainInfo.module.css';
+
+const raceTypes = [
+  { id: 0, name: 'догонялки' },
+  { id: 1, name: 'для новичков' },
+  { id: 2, name: 'классический' },
+  { id: 3, name: 'классический без групп' },
+  { id: 4, name: 'объём' },
+];
 
 function MainInfo() {
   return (
@@ -15,35 +21,18 @@ function MainInfo() {
         На данный момент поддерживаются следующие типы заездов, проводимые командой{' '}
         <strong>"KOM-on"</strong>:
         <ul className={styles.list}>
-          <li className={styles.item}>
-            {' '}
-            <span className={styles.text}>догонялки</span>
-          </li>
-          <li className={styles.item}>
-            {' '}
-            <span className={styles.text}>для новичков</span>
-          </li>
-          <li className={styles.item}>
-            {' '}
-            <span className={styles.text}>классический</span>
-          </li>
-          <li className={styles.item}>
-            {' '}
-            <span className={styles.text}>классический без групп</span>
-          </li>
-          <li className={styles.item}>
-            <span className={styles.text}>объём</span>
-          </li>
+          {raceTypes.map((race) => (
+            <li className={styles.item} key={race.id}>
+              <span className={styles.text}>{race.name}</span>
+            </li>
+          ))}
         </ul>
       </div>
       <h3 className={styles.title}>Улучшение сайта?</h3>
       <div className={styles.block__text}>
-        <p className={styles.p}>
-          В ближайшее время будет создана форма обратной связи для Ваших пожеланий в улучшении
-          сайта и добавления новых фитчей для zwiftpower.ru.
-        </p>
         <p>
-          Для более оперативной обратной связи создана группа{' '}
+          Для обратной связи создана группа в телеграмм. Ждем ваших предложений по улучшению и
+          добавлению новых фитчей.{' '}
           <a
             className={styles.link}
             target="_blank"

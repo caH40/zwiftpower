@@ -25,17 +25,22 @@ export async function postDevelopmentService(releaseData: PostDevelopment, userI
     errorHandler(error);
   }
 }
-//
-//
-export async function getDevelopmentService() {
-  try {
-    const informationDev = await InfoDevelopment.find();
-    informationDev.sort((a, b) => b.releaseDate - a.releaseDate);
-    return { informationDev };
-  } catch (error) {
-    errorHandler(error);
-  }
+
+/**
+ * Получение информации о разработке из БД.
+ * @param quantityPosts Количество запрашиваемых постов о разработке.
+ * @returns Объект с информацией о разработке.
+ */
+export async function getDevelopmentService(quantityPosts: number) {
+  const informationDevDB = await InfoDevelopment.find().lean();
+
+  const informationDev = informationDevDB
+    .sort((a, b) => b.releaseDate - a.releaseDate)
+    .slice(0, quantityPosts);
+
+  return { informationDev };
 }
+
 //
 //
 export async function deleteDevelopmentService(id: string) {

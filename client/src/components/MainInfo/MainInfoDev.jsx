@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import IconMenuInfoDev from '../UI/IconMenuInfoDev/IconMenuInfoDev';
 import PopupMenuInfoDev from '../UI/PopupMenuInfoDev/PopupMenuInfoDev';
-
+import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 import IconDelete from '../icons/IconDelete';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchDeleteInfoDev } from '../../redux/features/api/popupInfoDevDeleteSlice';
@@ -13,6 +13,8 @@ import { getTimerLocal } from '../../utils/date-local';
 
 import styles from './MainInfo.module.css';
 
+const quantityPosts = 7;
+
 function MainInfoDev({ isModerator }) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const [isVisibleDelete, setIsVisibleDelete] = useState(false);
@@ -20,6 +22,10 @@ function MainInfoDev({ isModerator }) {
   const informationDev = useSelector((state) => state.popupInfoDevGet.informationDev);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGetInfoDev(quantityPosts));
+  }, [dispatch]);
 
   const deleteInfoDev = (id, text) => {
     const response = window.confirm(`Вы действительно хотите удалить релиз: "${text}"`);
@@ -57,7 +63,7 @@ function MainInfoDev({ isModerator }) {
         <h3 className={styles.title}>Изменения на сайте</h3>
         <div className={styles.block__text}>
           <ul className={styles.list__dev}>
-            {informationDev.slice(0, 10).map((info) => (
+            {informationDev.map((info) => (
               <li className={styles.item} key={info._id}>
                 <div className={styles.li__inner}>
                   <div>

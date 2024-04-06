@@ -6,10 +6,10 @@ import { serverExpress } from '../../../config/environment';
 
 export const fetchGetInfoDev = createAsyncThunk(
   'informationDevelopment/getInfoDev',
-  async function (_, thunkAPI) {
+  async function (quantityPosts, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/information/development`,
+        url: `${serverExpress}/api/information/development?quantityPosts=${quantityPosts}`,
         method: 'get',
       });
 

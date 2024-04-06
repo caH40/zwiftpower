@@ -8,7 +8,6 @@ import { useResize } from '../../hook/use-resize';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
-import { fetchGetInfoDev } from '../../redux/features/api/popupInfoDevGetSlice';
 import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
@@ -39,10 +38,6 @@ function MainPage() {
     dispatch(fetchEvents({ started: false, target: 'preview' }));
 
     return () => dispatch(resetEventsPreview());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchGetInfoDev());
   }, [dispatch]);
 
   useAd(adNumbers);

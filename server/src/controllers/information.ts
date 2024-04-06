@@ -13,11 +13,21 @@ import { sendMessageToTelegramBot } from '../service/telegrambot.js';
 import { PostDevelopment } from '../types/http.interface.js';
 import { InfoDevelopmentSchema } from '../types/model.interface.js';
 
-//
-//
+/**
+ * Обработчик запроса на получение информации о разработке.
+ */
 export async function getDevelopment(req: Request, res: Response) {
   try {
-    const informationDev = await getDevelopmentService();
+    const query = req.query;
+    if (!query?.quantityPosts) {
+      throw new Error('Некорректное значение количества постов по изменениям на сайте');
+    }
+    const quantityPosts: number = +query.quantityPosts;
+    if (isNaN(quantityPosts) || quantityPosts <= 0) {
+      throw new Error('Некорректное значение количества постов по изменениям на сайте');
+    }
+
+    const informationDev = await getDevelopmentService(quantityPosts);
     res.status(200).json(informationDev);
   } catch (error) {
     errorHandler(error);
