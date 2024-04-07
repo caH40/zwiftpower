@@ -25,9 +25,13 @@ function TableUsers({ users }) {
             <TdLogo srcPicture={user.photoProfile} />
 
             <td>
-              <Copy name={`username "${user.username}"`} showValue={true}>
-                {user.username}
-              </Copy>
+              {user.zwiftId ? (
+                <Link to={`/profile/${user.zwiftId}/results`} className="link">
+                  {user.username}
+                </Link>
+              ) : (
+                user.username
+              )}
             </td>
             <td>{user.role}</td>
             <td>
@@ -44,14 +48,18 @@ function TableUsers({ users }) {
             <TdBoolean value={user.emailConfirm} />
             <td>{getTimerLocal(user.date)}</td>
             <td>
-              <Link
-                className={cx('link')}
-                to={`https://zwiftpower.com/profile.php?z=${user.zwiftId}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                профиль
-              </Link>
+              <td>
+                {!!user.zwiftId && (
+                  <Link
+                    className={cx('link')}
+                    to={`https://zwiftpower.com/profile.php?z=${user.zwiftId}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    zp.com
+                  </Link>
+                )}
+              </td>
             </td>
             <td>
               <Copy name={`_id "${user.username}"`}>{user._id}</Copy>
