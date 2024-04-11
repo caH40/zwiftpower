@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { labelsSubgroups } from '../../../../assets/subgroups';
 import { rules } from '../../../../assets/zwift/rule';
 import { tags } from '../../../../assets/zwift/tags';
+import { getPaceValue } from '../../../../utils/pace-category';
 
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
@@ -175,6 +176,7 @@ const zwiftEventParamsSlice = createSlice({
       state[groupName] = {
         ...groupParams,
         subgroupLabel: label,
+        ...getPaceValue(label),
         label: groupNumber,
         id: null,
       };
