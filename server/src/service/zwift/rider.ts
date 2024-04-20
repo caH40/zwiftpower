@@ -11,8 +11,7 @@ export async function getZwiftRiderService(zwiftId: number): Promise<ProfileZwif
 
   const urlRiderData = `profiles/${zwiftId}`;
 
-  // используется secondary zwiftAccessToken, так как все профили открытые для просмотра
-  const riderData: ProfileZwiftAPI = await getRequest(urlRiderData, false);
+  const riderData: ProfileZwiftAPI = await getRequest(urlRiderData);
 
   if (!riderData) {
     throw new Error('Не найден профиль на сервере Zwift');
