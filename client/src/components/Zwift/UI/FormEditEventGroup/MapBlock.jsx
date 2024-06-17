@@ -15,7 +15,7 @@ import styles from './FormEditEventGroup.module.css';
 function MapBlock({ subGroup, groupNumber }) {
   const [descriptionId, setDescriptionId] = useState(0);
   const worldCurrent = worlds.find((world) => world.id === subGroup.mapId);
-  const routeCurrent = routes.find((route) => route.id === subGroup.routeId);
+  const routeCurrent = routes.find((route) => route.id === subGroup.routeId) || {};
   const routeName = routeCurrent?.name || 'Маршрут не найден';
 
   const { distance, elevation, leadInDistance, leadInElevation } = routeCurrent;
