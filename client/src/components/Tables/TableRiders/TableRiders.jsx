@@ -52,7 +52,7 @@ function TableRiders({ riders = [], event }) {
             <td>{tdWeight(rider.weight)}</td>
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>
-            <td className={cx('link')}>{tdLinkZP(rider.id)}</td>
+            <td className={cx('link')}>{tdLinkZP(rider.zwiftId)}</td>
           </tr>
         ))}
       </tbody>
