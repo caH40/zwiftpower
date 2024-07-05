@@ -44,6 +44,13 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
           )}
 
           <div className={styles.box__term}>
+            <MyTooltip tooltip={'Гоночные рейтинговые очки'}>
+              <dt className={styles.term}>Racing Score</dt>
+            </MyTooltip>
+            <dd className={styles.term__description}>{profile.racingScore}</dd>
+          </div>
+
+          <div className={styles.box__term}>
             <dt className={styles.term}>ВЕС</dt>
             <dd className={styles.term__description}>
               {getWeightStr(profile.weight)}

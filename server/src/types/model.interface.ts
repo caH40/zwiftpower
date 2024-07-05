@@ -259,6 +259,7 @@ export interface UserSchema {
     imageSrc: string;
     male: boolean;
     publicId: string;
+    racingScore: number;
   };
   category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
   gender: string;

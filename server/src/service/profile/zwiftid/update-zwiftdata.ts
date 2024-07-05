@@ -28,6 +28,7 @@ export async function refreshProfileService(userId: string) {
         'zwiftData.lastName': riderData.lastName,
         'zwiftData.category': riderData.competitionMetrics?.category,
         'zwiftData.categoryWomen': riderData.competitionMetrics?.categoryWomen,
+        'zwiftData.racingScore': riderData.competitionMetrics?.racingScore,
         'zwiftData.ftp': riderData.ftp,
         'zwiftData.weight': riderData.weight,
         'zwiftData.height': riderData.height,
@@ -37,9 +38,6 @@ export async function refreshProfileService(userId: string) {
         'zwiftData.male': riderData.male,
         'zwiftData.publicId': riderData.publicId,
       },
-    },
-    {
-      new: true,
     }
   );
 

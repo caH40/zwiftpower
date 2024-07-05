@@ -107,6 +107,7 @@ export interface Profile {
   zCategoryWomen?: string;
   category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
   bio?: string;
+  racingScore: number;
 }
 
 export interface LoggingAdminArg {

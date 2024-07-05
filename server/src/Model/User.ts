@@ -29,6 +29,7 @@ const userSchema = new Schema<UserSchema>({
     imageSrc: String,
     male: Boolean,
     publicId: String,
+    racingScore: Number,
   },
   category: String,
   gender: { type: String },

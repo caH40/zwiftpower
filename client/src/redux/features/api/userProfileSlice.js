@@ -16,7 +16,6 @@ export const fetchUserProfile = createAsyncThunk(
         url: `${serverExpress}/api/race/profile/${zwiftId}`,
         method: 'get',
       });
-
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
