@@ -41,6 +41,7 @@ function TableRiders({ riders = [], event }) {
               getSweepers={getSweepers}
             />
             <td>{rider.totalEvents}</td>
+            <td>{rider.competitionMetrics?.racingScore || 0}</td>
             {/* столбцы с CriticalPower */}
             {ridersColumnsCP.map((column) => (
               <TdCpWatts

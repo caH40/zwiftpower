@@ -31,6 +31,7 @@ import IconSpeed from '../../icons/IconSpeed';
 import IconNP from '../../icons/IconNP';
 import IconGapStart from '../../icons/IconGapStart';
 import IconRules from '../../icons/IconRules';
+import IconScoreBased from '../../icons/IconScoreBased';
 
 const ColumnName = ({ columnName, tooltip }) => {
   /* eslint-disable */
@@ -145,6 +146,9 @@ const ColumnName = ({ columnName, tooltip }) => {
 
     case 'Правила':
       return <IconRules tooltip={tooltip || columnName} />;
+
+    case 'Рейтинговые очки':
+      return <IconScoreBased tooltip={tooltip || columnName} />;
 
     default:
       return columnName;

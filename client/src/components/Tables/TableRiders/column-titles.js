@@ -3,6 +3,7 @@ export const ridersColumnsStart = [
   { name: 'Категория', id: 1 },
   { name: 'Райдер', id: 2 },
   { name: 'Финиш', tooltip: 'Количество заездов', id: 3 },
+  { name: 'Рейтинговые очки', tooltip: 'Гоночные рейтинговые очки', id: 4 },
 ];
 export const ridersColumnsEnd = [
   { name: 'Вес', id: 7 },
