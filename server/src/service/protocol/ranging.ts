@@ -18,7 +18,7 @@ export const setRankResultTotal = async (
     B: 1,
     C: 1,
     D: 1,
-    E: 0,
+    E: 1,
   };
 
   if (typeRaceCustom === 'classicGroup') {
