@@ -15,6 +15,7 @@ export const serverPort: string = parsed.SERVER_PORT;
 export const serverUpdatePort: string = parsed.SERVER_UPDATE_PORT;
 export const mongodb: string = parsed.MONGODB;
 export const server: string = parsed.FRONT;
+export const serverWoWWW: string = parsed.FRONT_WITHOUT_WWW;
 export const jwtAccessSecret: string = parsed.JWT_ACCESS_SECRET;
 export const jwtRefreshSecret: string = parsed.JWT_REFRESH_SECRET;
 export const mailUser: string = parsed.MAIL_USER;

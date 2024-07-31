@@ -1,6 +1,6 @@
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 import { raceTypes } from '../assets/race-type.js';
-import { serverFront } from '../config/environment.js';
+import { serverWoWWW } from '../config/environment.js';
 import { getTimerLocal } from '../utils/date-local.js';
 import { getMetaOtherPages } from './tags.js';
 
@@ -41,7 +41,7 @@ export const getSignedRidersMeta = async (url: string): Promise<MetaTags> => {
     const titleRaw = `Заезд '${name}', ${eventStartLocal}. RideOn`;
     // запрещены двойные кавычки в мета тегах
     const title = titleRaw.replace(/"/g, '');
-    const canonical = serverFront + url;
+    const canonical = serverWoWWW + url;
     const descriptionRaw = `Описание заезда '${name}'. Зарегистрированные участники. Организатор команда '${organizer}' в Zwift. Тип заезда '${
       type ? type : 'Классический без групп'
     }'.`;
@@ -86,7 +86,7 @@ export const getRaceResultsMeta = async (url: string): Promise<MetaTags> => {
     const titleRaw = `Результаты заезда '${name}'`;
     // запрещены двойные кавычки в мета тегах
     const title = titleRaw.replace(/"/g, '');
-    const canonical = serverFront + url;
+    const canonical = serverWoWWW + url;
     const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт). Тип заезда '${
       type ? type : 'Классический без групп'
     }'.`;
@@ -144,7 +144,7 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
     const titleRaw = page === 'results' ? `Результаты ${rider}` : `Диаграмма мощности ${rider}`;
     // запрещены двойные кавычки в мета тегах
     const title = titleRaw.replace(/"/g, '');
-    const canonical = serverFront + url;
+    const canonical = serverWoWWW + url;
 
     // формирование описания
     const descriptionResults = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
