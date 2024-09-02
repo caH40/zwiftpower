@@ -9,6 +9,7 @@ export const optionsSeasons = [
   { label: 'Все сезоны', name: 'all', id: 0 },
   { label: 'Сезон 2022-2023', name: '2022', id: 1 },
   { label: 'Сезон 2023-2024', name: '2023', id: 2 },
+  { label: 'Сезон 2024-2025', name: '2024', id: 3 },
 ];
 
 /**

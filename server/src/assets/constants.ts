@@ -7,5 +7,6 @@ import { SeasonsSeries } from '../types/types.interface.js';
 export const seasonsSeries: SeasonsSeries = {
   '2022': '2022-2023',
   '2023': '2023-2024',
+  '2024': '2024-2025',
   all: 'all',
 };
