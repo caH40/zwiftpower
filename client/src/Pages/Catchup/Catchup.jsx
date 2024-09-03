@@ -18,15 +18,22 @@ import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/Skelet
 
 import styles from './Catchup.module.css';
 
-// рекламные блоки на странице
+// Рекламные блоки на странице.
 const adOverFooter = 8;
 const adUnderHeader = 3;
 const adNumbers = [adOverFooter, adUnderHeader];
 
+/**
+ * Компонент для отображения страницы "Догонялки".
+ * @returns {JSX.Element} Страница с результатами догонялок.
+ */
 function Catchup() {
   const { isScreenLg: isDesktop } = useResize();
+
+  // Определяем текущий сезон (предыдущий год).
   const seasonCurrent = new Date().getFullYear() - 1;
 
+  // Получаем сезон из параметров URL или используем текущий сезон по умолчанию.
   const { season = seasonCurrent } = useParams();
   const navigate = useNavigate();
 
@@ -46,9 +53,16 @@ function Catchup() {
     return () => dispatch(resetCatchData());
   }, [dispatch, season]);
 
+  // Функция для навигации по сезонам.
   const getLink = (season) => {
     navigate(`/race/series/catchup/${season}`);
   };
+
+  // Определяем категории, включаем 'D' для сезонов после 2023 года.
+  const categories = ['A', 'B', 'C'];
+  if (+season > 2023) {
+    categories.push('D');
+  }
 
   useAd(adNumbers);
   return (
@@ -65,7 +79,7 @@ function Catchup() {
         <div className={styles.block}>
           {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
             <section className={styles.box__total}>
-              <TableCatchupSummary resultsSummary={resultsSummary} />
+              <TableCatchupSummary resultsSummary={resultsSummary} categories={categories} />
             </section>
           )}
 
