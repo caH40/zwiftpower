@@ -18,12 +18,13 @@ export const filterByRankCatchup = <T extends ResultEventAdditional | ZwiftResul
     // установка данных дисквалификации при использовании VirtualPower
     const resultsWithVP = results.map((result) => setDSQWithVirtualPower(result));
 
-    const resultsABC = resultsWithVP
+    const resultsABCD = resultsWithVP
       .filter(
         (result) =>
           (result.subgroupLabel === 'A' ||
             result.subgroupLabel === 'B' ||
-            result.subgroupLabel === 'C') &&
+            result.subgroupLabel === 'C' ||
+            result.subgroupLabel === 'D') &&
           result.isDisqualification !== true
       )
       .sort(
@@ -48,7 +49,7 @@ export const filterByRankCatchup = <T extends ResultEventAdditional | ZwiftResul
       (result) => result.subgroupLabel !== 'E' && result.isDisqualification
     );
 
-    return [...resultsABC, ...resultsE, ...resultsOthers];
+    return [...resultsABCD, ...resultsE, ...resultsOthers];
   } catch (error) {
     errorHandler(error);
     return results;
