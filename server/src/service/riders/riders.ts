@@ -24,12 +24,15 @@ export const getRidersService = async ({
   const sort: { [key: string]: SortOrder } = { [columnName]: isRasing ? 1 : -1 };
 
   const ridersDB: RiderProfileSchema[] = await Rider.find({
-    $or: [
-      { firstName: { $regex: search, $options: 'i' } },
-      { lastName: { $regex: search, $options: 'i' } },
+    $and: [
+      {
+        $or: [
+          { firstName: { $regex: search, $options: 'i' } },
+          { lastName: { $regex: search, $options: 'i' } },
+        ],
+      },
+      categoryFilter({ category }), // добавляем фильтр по категории
     ],
-
-    ...categoryFilter({ category }),
   })
     .sort(sort)
     .lean();
