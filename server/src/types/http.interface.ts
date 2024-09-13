@@ -66,17 +66,5 @@ export interface GetRidersQuery {
   search?: string; // фильтр поиска
   columnName?: string; // Столбец по которому производится сортировка.
   isRasing?: string; // Направление сортировки.
-  category?: string; // Категория запроса.
-}
-
-/**
- * Данные из query параметров url
- */
-export interface IRidersQuery {
-  page?: number;
-  docsOnPage?: number;
-  search?: string;
-  columnName?: string;
-  isRasing?: boolean;
-  category: 'All' | 'A' | 'B' | 'C' | 'D' | 'E';
+  category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E'; // Категория запроса.
 }

@@ -575,3 +575,15 @@ export interface DocsAfterPagination<T> {
   currentPage: number;
   quantityPages: number;
 }
+
+/**
+ * Данные из query параметров url
+ */
+export interface IRidersQuery {
+  page?: number;
+  docsOnPage?: number;
+  search?: string;
+  columnName?: string;
+  isRasing?: boolean;
+  category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E';
+}

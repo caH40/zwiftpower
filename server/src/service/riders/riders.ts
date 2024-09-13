@@ -5,10 +5,11 @@ import { PowerCurve } from '../../Model/PowerCurve.js';
 import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 
 // types
-import { IRidersQuery } from '../../types/http.interface.js';
+
 import { PowerCurveSchema, RiderProfileSchema } from '../../types/model.interface.js';
 import { addPropertyAdditionCP } from '../../utils/property-additionCP.js';
 import { categoryFilter } from './utils.js';
+import { IRidersQuery } from '../../types/types.interface.js';
 
 /**
  * Сервис получения списка райдеров по фильтру search (поиск по имени и фамилии)
