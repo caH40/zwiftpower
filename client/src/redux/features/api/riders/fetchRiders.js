@@ -39,9 +39,10 @@ const columns = {
   Райдер: 'firstName',
   Финиш: 'totalEvents',
   'Рейтинговые очки': 'competitionMetrics.racingScore',
+  15: 15,
   60: 60,
   300: 300,
-  1200: 600,
+  1200: 1200,
   2400: 2400,
 };
 

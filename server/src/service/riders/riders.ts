@@ -55,17 +55,11 @@ export const getRidersService = async ({
     ...elm,
   }));
 
-  const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
-    ridersWithSequence,
-    page,
-    docsOnPage
-  );
-
   // добавление CriticalPowers
-  const zwiftIds = currentDocs.map((doc) => doc.zwiftId);
+  const zwiftIds = ridersWithSequence.map((doc) => doc.zwiftId);
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds });
 
-  const currentDocsWithCP = currentDocs.map((doc) => {
+  const resultsWithCP = ridersWithSequence.map((doc) => {
     const powerCurve = powerCurveDB.find((elm) => elm.zwiftId === doc.zwiftId);
     if (!powerCurve) {
       return { ...doc, cpBestEfforts: undefined };
@@ -76,5 +70,25 @@ export const getRidersService = async ({
     return { ...doc, cpBestEfforts };
   });
 
-  return { riders: currentDocsWithCP, currentPage, quantityPages };
+  // Сортировка по удельной мощности.
+  resultsWithCP.sort((a, b) => {
+    const aWattsKg =
+      a.cpBestEfforts?.find((cp) => cp.duration === +columnName)?.wattsKg.value || 0;
+    const bWattsKg =
+      b.cpBestEfforts?.find((cp) => String(cp.duration) === columnName)?.wattsKg.value || 0;
+
+    if (isRasing) {
+      return aWattsKg - bWattsKg;
+    } else {
+      return bWattsKg - aWattsKg;
+    }
+  });
+
+  const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
+    resultsWithCP,
+    page,
+    docsOnPage
+  );
+
+  return { riders: currentDocs, currentPage, quantityPages };
 };

@@ -49,7 +49,7 @@ function Thead() {
               <th key={column.id}>
                 <div className={styles.th__box}>
                   <span>{column.name}</span>
-                  {/* <IconArrows
+                  <IconArrows
                     columnName={column.interval}
                     getClick={setSortTable}
                     squareSize={16}
@@ -57,7 +57,7 @@ function Thead() {
                       isActive: column.interval === activeSorting.columnName,
                       isRasing: activeSorting.isRasing,
                     }}
-                  /> */}
+                  />
                 </div>
               </th>
             );
