@@ -50,16 +50,11 @@ export const getRidersService = async ({
     });
   }
 
-  const ridersWithSequence = riderFilteredCategory.map((elm, index) => ({
-    sequenceNumber: index + 1,
-    ...elm,
-  }));
-
   // добавление CriticalPowers
-  const zwiftIds = ridersWithSequence.map((doc) => doc.zwiftId);
+  const zwiftIds = riderFilteredCategory.map((doc) => doc.zwiftId);
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds });
 
-  const resultsWithCP = ridersWithSequence.map((doc) => {
+  const resultsWithCP = riderFilteredCategory.map((doc) => {
     const powerCurve = powerCurveDB.find((elm) => elm.zwiftId === doc.zwiftId);
     if (!powerCurve) {
       return { ...doc, cpBestEfforts: undefined };
@@ -70,22 +65,29 @@ export const getRidersService = async ({
     return { ...doc, cpBestEfforts };
   });
 
-  // Сортировка по удельной мощности.
-  resultsWithCP.sort((a, b) => {
-    const aWattsKg =
-      a.cpBestEfforts?.find((cp) => cp.duration === +columnName)?.wattsKg.value || 0;
-    const bWattsKg =
-      b.cpBestEfforts?.find((cp) => String(cp.duration) === columnName)?.wattsKg.value || 0;
+  // Сортировка по удельной мощности только когда columnName соответствует числу (длительность интервала).
+  if (typeof +columnName === 'number') {
+    resultsWithCP.sort((a, b) => {
+      const aWattsKg =
+        a.cpBestEfforts?.find((cp) => cp.duration === +columnName)?.wattsKg.value || 0;
+      const bWattsKg =
+        b.cpBestEfforts?.find((cp) => cp.duration === +columnName)?.wattsKg.value || 0;
 
-    if (isRasing) {
-      return aWattsKg - bWattsKg;
-    } else {
-      return bWattsKg - aWattsKg;
-    }
-  });
+      if (isRasing) {
+        return aWattsKg - bWattsKg;
+      } else {
+        return bWattsKg - aWattsKg;
+      }
+    });
+  }
+
+  const ridersWithSequence = resultsWithCP.map((elm, index) => ({
+    sequenceNumber: index + 1,
+    ...elm,
+  }));
 
   const { currentDocs, currentPage, quantityPages } = getCurrentDocsOnPage(
-    resultsWithCP,
+    ridersWithSequence,
     page,
     docsOnPage
   );
