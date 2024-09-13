@@ -8,6 +8,7 @@ import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 import { IRidersQuery } from '../../types/http.interface.js';
 import { PowerCurveSchema, RiderProfileSchema } from '../../types/model.interface.js';
 import { addPropertyAdditionCP } from '../../utils/property-additionCP.js';
+import { categoryFilter } from './utils.js';
 
 /**
  * Сервис получения списка райдеров по фильтру search (поиск по имени и фамилии)
@@ -27,34 +28,17 @@ export const getRidersService = async ({
       { firstName: { $regex: search, $options: 'i' } },
       { lastName: { $regex: search, $options: 'i' } },
     ],
+
+    ...categoryFilter({ category }),
   })
     .sort(sort)
     .lean();
 
-  let riderFilteredCategory = [] as RiderProfileSchema[];
-  if (category === 'All') {
-    riderFilteredCategory = ridersDB;
-  } else {
-    riderFilteredCategory = ridersDB.filter((rider) => {
-      // Если нет данных по competitionMetrics.
-      if (!rider.competitionMetrics) {
-        return false;
-      }
-
-      // Для мужчин и женщин разные категории.
-      if (rider.male) {
-        return rider.competitionMetrics.category === category;
-      } else {
-        return rider.competitionMetrics.categoryWomen === category;
-      }
-    });
-  }
-
   // добавление CriticalPowers
-  const zwiftIds = riderFilteredCategory.map((doc) => doc.zwiftId);
+  const zwiftIds = ridersDB.map((doc) => doc.zwiftId);
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds });
 
-  const resultsWithCP = riderFilteredCategory.map((doc) => {
+  const resultsWithCP = ridersDB.map((doc) => {
     const powerCurve = powerCurveDB.find((elm) => elm.zwiftId === doc.zwiftId);
     if (!powerCurve) {
       return { ...doc, cpBestEfforts: undefined };
@@ -66,7 +50,7 @@ export const getRidersService = async ({
   });
 
   // Сортировка по удельной мощности только когда columnName соответствует числу (длительность интервала).
-  if (typeof +columnName === 'number') {
+  if (!isNaN(Number(columnName))) {
     resultsWithCP.sort((a, b) => {
       const aWattsKg =
         a.cpBestEfforts?.find((cp) => cp.duration === +columnName)?.wattsKg.value || 0;

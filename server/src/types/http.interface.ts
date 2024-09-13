@@ -78,5 +78,5 @@ export interface IRidersQuery {
   search?: string;
   columnName?: string;
   isRasing?: boolean;
-  category?: string;
+  category: 'All' | 'A' | 'B' | 'C' | 'D' | 'E';
 }
