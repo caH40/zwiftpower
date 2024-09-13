@@ -9,12 +9,20 @@ import { GetRidersQuery } from '../types/http.interface.js';
 
 export const getRiders = async (req: Request, res: Response) => {
   try {
-    const query: GetRidersQuery = req.query;
+    const query: GetRidersQuery = req.query as unknown as GetRidersQuery;
 
+    // Приведение параметров к нужным типам
+    const page = query.page ? Number(query.page) : undefined;
+    const docsOnPage = query.docsOnPage ? Number(query.docsOnPage) : undefined;
+    const isRasing = query.isRasing === 'true'; // Приводим строку 'true' или 'false' к boolean.
+
+    // Пример вызова сервиса с переданными параметрами
     const riders = await getRidersService({
-      page: query.page ? +query.page : undefined,
-      docsOnPage: query.docsOnPage ? +query.docsOnPage : undefined,
+      page,
+      docsOnPage,
       search: query.search,
+      columnName: query.columnName,
+      isRasing,
     });
 
     res.status(200).json(riders);

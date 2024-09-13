@@ -12,6 +12,7 @@ import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxFo
 import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import { initialSorting } from '../../redux/features/sortTableSlice';
 
 import styles from './Riders.module.css';
 
@@ -26,6 +27,7 @@ function Riders() {
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
   const [search, setSearch] = useState('');
   const { isScreenLg: isDesktop } = useResize();
+  const { activeSorting } = useSelector((state) => state.sortTable);
 
   useTitle('Участники заездов');
   const {
@@ -35,14 +37,17 @@ function Riders() {
   } = useSelector((state) => state.riders);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(initialSorting({ columnName: 'Финиш', isRasing: false }));
+
     return () => dispatch(resetRiders());
   }, []);
 
   useEffect(() => {
     localStorage.setItem('recordsOnPageRiders', docsOnPage);
-    dispatch(fetchRiders({ page, docsOnPage, search }));
-  }, [page, docsOnPage, search]);
+    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting }));
+  }, [page, docsOnPage, search, activeSorting]);
 
   useAd(adNumbers);
 

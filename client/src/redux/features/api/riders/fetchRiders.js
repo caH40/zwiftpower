@@ -10,13 +10,9 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const fetchRiders = createAsyncThunk(
   'get/fetchRiders',
-  async function ({ page, docsOnPage, search }, thunkAPI) {
+  async function ({ page, docsOnPage, search, columnName, isRasing }, thunkAPI) {
     try {
-      const pageStr = page ? `&page=${page}` : '';
-      const docsOnPageStr = docsOnPage ? `&docsOnPage=${docsOnPage}` : '';
-      const searchStr = search ? `&search=${search}` : '';
-
-      const query = `${pageStr}${docsOnPageStr}${searchStr}`;
+      const query = getSearchParams({ page, docsOnPage, search, columnName, isRasing });
       const response = await axios({
         url: `${serverExpress}/api/riders?${query}`,
         method: 'get',
@@ -30,3 +26,40 @@ export const fetchRiders = createAsyncThunk(
     }
   }
 );
+
+// Соответствие названий колонок в таблице к названием свойств в БД.
+const columns = {
+  Райдер: 'firstName',
+  Финиш: 'totalEvents',
+  'Рейтинговые очки': 'competitionMetrics.racingScore',
+  60: 60,
+  300: 300,
+  1200: 600,
+  2400: 2400,
+};
+
+/**
+ * Создание query запроса.
+ */
+function getSearchParams({ page, docsOnPage, search, columnName, isRasing }) {
+  const params = new URLSearchParams();
+
+  if (page) {
+    params.append('page', page);
+  }
+  if (docsOnPage) {
+    params.append('docsOnPage', docsOnPage);
+  }
+  if (search) {
+    params.append('search', search);
+  }
+  const columnNameFormatted = columns[columnName];
+  if (columnNameFormatted) {
+    params.append('columnName', columnNameFormatted);
+  }
+  if (typeof isRasing !== 'undefined') {
+    params.append('isRasing', isRasing);
+  }
+
+  return params.toString(); // Преобразуем параметры в строку.
+}

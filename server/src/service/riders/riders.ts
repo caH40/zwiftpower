@@ -1,9 +1,11 @@
+import { SortOrder } from 'mongoose';
+
 import { Rider } from '../../Model/Rider.js';
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { getCurrentDocsOnPage } from '../../utils/pagination.js';
 
 // types
-import { GetRidersQuery } from '../../types/http.interface.js';
+import { IRidersQuery } from '../../types/http.interface.js';
 import { PowerCurveSchema, RiderProfileSchema } from '../../types/model.interface.js';
 import { addPropertyAdditionCP } from '../../utils/property-additionCP.js';
 
@@ -14,14 +16,18 @@ export const getRidersService = async ({
   page = 1,
   docsOnPage = 20,
   search = '.',
-}: GetRidersQuery) => {
+  columnName = 'totalEvents',
+  isRasing = false,
+}: IRidersQuery) => {
+  const sort: { [key: string]: SortOrder } = { [columnName]: isRasing ? 1 : -1 };
+
   const ridersDB: RiderProfileSchema[] = await Rider.find({
     $or: [
       { firstName: { $regex: search, $options: 'i' } },
       { lastName: { $regex: search, $options: 'i' } },
     ],
   })
-    .sort({ totalEvents: -1 })
+    .sort(sort)
     .lean();
 
   const ridersWithSequence = ridersDB.map((elm, index) => ({

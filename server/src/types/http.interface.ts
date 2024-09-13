@@ -61,7 +61,20 @@ export interface PutResult {
  * Данные из query параметров url
  */
 export interface GetRidersQuery {
-  page?: number; // номер страницы при пагинации
-  docsOnPage?: number; // количество документов на одной странице при пагинации
+  page?: string; // номер страницы при пагинации
+  docsOnPage?: string; // количество документов на одной странице при пагинации
   search?: string; // фильтр поиска
+  columnName?: string; // Столбец по которому производится сортировка.
+  isRasing?: string; // Направление сортировки.
+}
+
+/**
+ * Данные из query параметров url
+ */
+export interface IRidersQuery {
+  page?: number;
+  docsOnPage?: number;
+  search?: string;
+  columnName?: string;
+  isRasing?: boolean;
 }
