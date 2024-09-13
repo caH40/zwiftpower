@@ -1,0 +1,11 @@
+.box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 15px;
+  padding: 0;
+  margin: 0px 0px 10px 0px;
+}
+@media screen and (max-width: 576px) {
+}

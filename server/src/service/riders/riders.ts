@@ -18,6 +18,7 @@ export const getRidersService = async ({
   search = '.',
   columnName = 'totalEvents',
   isRasing = false,
+  category = 'All',
 }: IRidersQuery) => {
   const sort: { [key: string]: SortOrder } = { [columnName]: isRasing ? 1 : -1 };
 
@@ -30,7 +31,26 @@ export const getRidersService = async ({
     .sort(sort)
     .lean();
 
-  const ridersWithSequence = ridersDB.map((elm, index) => ({
+  let riderFilteredCategory = [] as RiderProfileSchema[];
+  if (category === 'All') {
+    riderFilteredCategory = ridersDB;
+  } else {
+    riderFilteredCategory = ridersDB.filter((rider) => {
+      // Если нет данных по competitionMetrics.
+      if (!rider.competitionMetrics) {
+        return false;
+      }
+
+      // Для мужчин и женщин разные категории.
+      if (rider.male) {
+        return rider.competitionMetrics.category === category;
+      } else {
+        return rider.competitionMetrics.categoryWomen === category;
+      }
+    });
+  }
+
+  const ridersWithSequence = riderFilteredCategory.map((elm, index) => ({
     sequenceNumber: index + 1,
     ...elm,
   }));

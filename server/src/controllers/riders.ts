@@ -23,6 +23,7 @@ export const getRiders = async (req: Request, res: Response) => {
       search: query.search,
       columnName: query.columnName,
       isRasing,
+      category: query.category,
     });
 
     res.status(200).json(riders);

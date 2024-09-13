@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
 import useTitle from '../../hook/useTitle';
-import { useAd } from '../../hook/useAd';
-import { useResize } from '../../hook/use-resize';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
-import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
 import Pagination from '../../components/UI/Pagination/Pagination';
-import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
-import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import NavBarRidersTable from '../../components/UI/NavBarRidersTable/NavBarRidersTable';
+import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
+import { useAd } from '../../hook/useAd';
+import { useResize } from '../../hook/use-resize';
+import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
 import { initialSorting } from '../../redux/features/sortTableSlice';
+import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
+import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 
 import styles from './Riders.module.css';
 
@@ -28,6 +29,7 @@ function Riders() {
   const [search, setSearch] = useState('');
   const { isScreenLg: isDesktop } = useResize();
   const { activeSorting } = useSelector((state) => state.sortTable);
+  const { name: category } = useSelector((state) => state.filterCategory.value);
 
   useTitle('Участники заездов');
   const {
@@ -41,13 +43,16 @@ function Riders() {
   useEffect(() => {
     dispatch(initialSorting({ columnName: 'Финиш', isRasing: false }));
 
-    return () => dispatch(resetRiders());
+    return () => {
+      dispatch(resetRiders());
+      dispatch(resetFilterCategory());
+    };
   }, []);
 
   useEffect(() => {
     localStorage.setItem('recordsOnPageRiders', docsOnPage);
-    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting }));
-  }, [page, docsOnPage, search, activeSorting]);
+    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category }));
+  }, [page, docsOnPage, search, activeSorting, category]);
 
   useAd(adNumbers);
 
@@ -58,7 +63,7 @@ function Riders() {
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
 
         <div className={styles.align__right}>
-          <FilterBoxForTable
+          <NavBarRidersTable
             search={search}
             setSearch={setSearch}
             docsOnPage={docsOnPage}

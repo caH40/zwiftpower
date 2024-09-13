@@ -66,6 +66,7 @@ export interface GetRidersQuery {
   search?: string; // фильтр поиска
   columnName?: string; // Столбец по которому производится сортировка.
   isRasing?: string; // Направление сортировки.
+  category?: string; // Категория запроса.
 }
 
 /**
@@ -77,4 +78,5 @@ export interface IRidersQuery {
   search?: string;
   columnName?: string;
   isRasing?: boolean;
+  category?: string;
 }

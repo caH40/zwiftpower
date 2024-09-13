@@ -6,7 +6,6 @@
   border: solid 1px black;
   border-radius: 3px;
   text-align: center;
-
   color: #000;
   background-color: transparent;
 }
@@ -22,6 +21,6 @@
 
 @media screen and (max-width: 992px) {
   .select {
-    padding: 0.15em 0.2em;
+    padding: 0.25em 0.3em;
   }
 }

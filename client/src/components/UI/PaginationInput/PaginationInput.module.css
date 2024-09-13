@@ -2,7 +2,7 @@
   padding: 5px 10px;
   min-width: 0;
   flex: 0 0 180px;
-  height: 28px;
+  max-height: 35px;
   border: solid 1px black;
   border-radius: 3px;
   text-align: left;
@@ -22,4 +22,11 @@
 .input::placeholder {
   font-weight: 400;
   color: var(--color-text-minor);
+}
+
+/* ====================================================================== */
+@media screen and (max-width: 992px) {
+  .input {
+    padding: 0.25em 0.5em;
+  }
 }

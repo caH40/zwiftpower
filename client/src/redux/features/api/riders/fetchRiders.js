@@ -10,9 +10,16 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const fetchRiders = createAsyncThunk(
   'get/fetchRiders',
-  async function ({ page, docsOnPage, search, columnName, isRasing }, thunkAPI) {
+  async function ({ page, docsOnPage, search, columnName, isRasing, category }, thunkAPI) {
     try {
-      const query = getSearchParams({ page, docsOnPage, search, columnName, isRasing });
+      const query = getSearchParams({
+        page,
+        docsOnPage,
+        search,
+        columnName,
+        isRasing,
+        category,
+      });
       const response = await axios({
         url: `${serverExpress}/api/riders?${query}`,
         method: 'get',
@@ -41,7 +48,7 @@ const columns = {
 /**
  * Создание query запроса.
  */
-function getSearchParams({ page, docsOnPage, search, columnName, isRasing }) {
+function getSearchParams({ page, docsOnPage, search, columnName, isRasing, category }) {
   const params = new URLSearchParams();
 
   if (page) {
@@ -59,6 +66,9 @@ function getSearchParams({ page, docsOnPage, search, columnName, isRasing }) {
   }
   if (typeof isRasing !== 'undefined') {
     params.append('isRasing', isRasing);
+  }
+  if (category) {
+    params.append('category', category);
   }
 
   return params.toString(); // Преобразуем параметры в строку.
