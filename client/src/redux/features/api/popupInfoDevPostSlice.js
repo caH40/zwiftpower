@@ -7,6 +7,8 @@ import { getAlert } from '../alertMessageSlice';
 
 import { fetchGetInfoDev } from './popupInfoDevGetSlice';
 
+const quantityPosts = 7;
+
 export const fetchPostInfoDev = createAsyncThunk(
   'informationDevelopment/postInfoDev',
   async function (releaseData, thunkAPI) {
@@ -20,7 +22,7 @@ export const fetchPostInfoDev = createAsyncThunk(
       const { message } = response.data;
       thunkAPI.dispatch(getAlert({ message, type: 'success', isOpened: true }));
       // обновление списка релизов на главной странице, после добавления нового релиза в БД
-      thunkAPI.dispatch(fetchGetInfoDev());
+      thunkAPI.dispatch(fetchGetInfoDev(quantityPosts));
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;

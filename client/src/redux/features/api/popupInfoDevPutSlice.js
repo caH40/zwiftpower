@@ -2,10 +2,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';
-
 import { getAlert } from '../alertMessageSlice';
 
 import { fetchGetInfoDev } from './popupInfoDevGetSlice';
+
+const quantityPosts = 7;
 
 export const fetchPutInfoDev = createAsyncThunk(
   'informationDevelopment/postInfoDev',
@@ -20,7 +21,7 @@ export const fetchPutInfoDev = createAsyncThunk(
       const { message } = response.data;
       thunkAPI.dispatch(getAlert({ message, type: 'success', isOpened: true }));
       // обновление списка релизов на главной странице, после добавления нового релиза в БД
-      thunkAPI.dispatch(fetchGetInfoDev());
+      thunkAPI.dispatch(fetchGetInfoDev(quantityPosts));
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
