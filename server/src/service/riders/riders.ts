@@ -41,8 +41,11 @@ export const getRidersService = async ({
   const zwiftIds = ridersDB.map((doc) => doc.zwiftId);
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds });
 
+  // Создаем Map для быстрого поиска PowerCurve по zwiftId.
+  const powerCurveMap = new Map(powerCurveDB.map((pw) => [pw.zwiftId, pw]));
+
   const resultsWithCP = ridersDB.map((doc) => {
-    const powerCurve = powerCurveDB.find((elm) => elm.zwiftId === doc.zwiftId);
+    const powerCurve = powerCurveMap.get(doc.zwiftId);
     if (!powerCurve) {
       return { ...doc, cpBestEfforts: undefined };
     }
