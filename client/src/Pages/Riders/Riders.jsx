@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
@@ -11,8 +11,9 @@ import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
-import { initialSorting } from '../../redux/features/sortTableSlice';
 import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
+import { useInitialRidersSettings } from '../../hook/useInitialRidersSettings';
+import { useLocalStorageSetRiders } from '../../hook/useLocalStorageSetRiders';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 
 import styles from './Riders.module.css';
@@ -30,6 +31,7 @@ function Riders() {
   const { isScreenLg: isDesktop } = useResize();
   const { activeSorting } = useSelector((state) => state.sortTable);
   const { name: category } = useSelector((state) => state.filterCategory.value);
+  const isMounting = useRef(true);
 
   useTitle('Участники заездов');
   const {
@@ -40,17 +42,33 @@ function Riders() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(initialSorting({ columnName: 'Финиш', isRasing: false }));
+  // Инициализация данных из Локального хранилища.
+  useInitialRidersSettings();
 
+  // Сохранение данных в Локальном хранилище.
+  useLocalStorageSetRiders({
+    docsOnPage,
+    activeSorting,
+    category,
+    isMounting,
+  });
+
+  // Очистка Хранилища после размонтировании компонента (страницы).
+  useEffect(() => {
     return () => {
       dispatch(resetRiders());
       dispatch(resetFilterCategory());
     };
   }, []);
 
+  // Получение данных с БД.
   useEffect(() => {
-    localStorage.setItem('recordsOnPageRiders', docsOnPage);
+    // При монтировании не все данные для fetch запроса установленны.
+    if (isMounting.current) {
+      isMounting.current = false;
+      return;
+    }
+
     dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category }));
   }, [page, docsOnPage, search, activeSorting, category]);
 
