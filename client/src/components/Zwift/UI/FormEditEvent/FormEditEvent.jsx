@@ -18,7 +18,8 @@ import {
 import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
 import { labelsSubgroups } from '../../../../assets/subgroups';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
-import { optionsRaceTypes } from '../../../../assets/options';
+import { optionsCategoryEnforcement, optionsRaceTypes } from '../../../../assets/options';
+import SimpleSelectFunction from '../../../UI/SimpleSelect/SimpleSelectFunction';
 
 import styles from './FormEditEvent.module.css';
 
@@ -26,7 +27,7 @@ import styles from './FormEditEvent.module.css';
  * Форма изменения настроек для Эвента
  * @param {{isCreating:boolean }} isCreating это форма для создание нового эвента?
  */
-function FormEditEvent({ isCreating }) {
+function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
 
@@ -195,12 +196,12 @@ function FormEditEvent({ isCreating }) {
         </div>
 
         <div className={styles.box__checkbox}>
-          <RCheckbox
+          {/* <RCheckbox
             label={'Строгая категоризация'}
             value={eventMainParams.categoryEnforcement}
             property={'categoryEnforcement'}
             tooltip="Райдер может выступать в своей категории или более высокой"
-          />
+          /> */}
 
           {checkboxRules.map((checkboxRule) => (
             <RCheckboxArray
@@ -221,6 +222,21 @@ function FormEditEvent({ isCreating }) {
               property={checkboxTag.value}
             />
           ))}
+        </div>
+      </div>
+
+      <div className={styles.spacer__block}>
+        <h3 className={styles.title__param}>Выбор строгой категоризации:</h3>
+        <div className={styles.groups__enforcement}>
+          <SimpleSelectFunction
+            reducer={selectCategoryEnforcement}
+            options={optionsCategoryEnforcement}
+          />
+          {eventMainParams.categoryEnforcement ? (
+            <pre className={styles.code}>{eventMainParams.accessExpression}</pre>
+          ) : (
+            <span>Не включена</span>
+          )}
         </div>
       </div>
 

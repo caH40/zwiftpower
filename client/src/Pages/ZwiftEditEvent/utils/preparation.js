@@ -1,4 +1,3 @@
-import { getAccessExpression } from './accessExpression';
 import { changeTime } from './time-start';
 
 /**
@@ -40,13 +39,6 @@ export function prepareData({
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
     subGroup.rulesId = null;
-  }
-
-  // если включен categoryEnforcement, но не задан accessExpression
-  if (event.categoryEnforcement && !event.accessExpression) {
-    event.accessExpression = getAccessExpression();
-  } else if (!event.categoryEnforcement) {
-    event.accessExpression = null;
   }
 
   return {

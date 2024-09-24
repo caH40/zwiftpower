@@ -4,7 +4,7 @@ import CategoryOnlyBox from '../CategoryOnlyBox/CategoryOnlyBox';
 import styles from './GapStart.module.css';
 
 /**
- * Блок отображения стартовых гэпов
+ * Блок отображения стартовых гэпов в таблице результатов, в частности в Догонялках.
  */
 function GapStart({ gaps }) {
   const gapsSorted = [...gaps]

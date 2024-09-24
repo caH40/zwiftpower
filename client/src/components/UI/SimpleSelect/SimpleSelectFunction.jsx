@@ -7,7 +7,7 @@ import styles from './SimpleSelect.module.css';
 function SimpleSelectFunction({ reducer, value, name, disabled, options, closeEmptyOption }) {
   return (
     <>
-      {name ? <p className={styles.label}>{name}:</p> : null}
+      {name ? <p className={styles.label__bold}>{name}:</p> : null}
       <select
         className={styles.select}
         placeholder={name}

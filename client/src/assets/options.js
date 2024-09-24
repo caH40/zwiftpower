@@ -35,3 +35,19 @@ export const optionsEventPattern = [
   ...optionsRaceTypes,
   // { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
 ];
+
+export const categoryEnforcement = [
+  { id: 0, label: 'Выключена', name: 'disabled', translate: 'Выключена' },
+  { id: 1, label: 'Категории, стандарт', name: 'category', translate: 'Категории' },
+  { id: 2, label: 'Рейтинг, стандарт', name: 'racingScore', translate: 'Рейтинг' },
+];
+
+/**
+ * Настройки строгой категоризации
+ */
+export const optionsCategoryEnforcement = categoryEnforcement.map((option) => ({
+  id: option.id,
+  label: option.label,
+  name: option.name,
+  translate: option.translate,
+}));

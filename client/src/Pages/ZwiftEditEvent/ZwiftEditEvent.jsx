@@ -14,6 +14,7 @@ import JSONBlock from '../../components/JSONBlock/JSONBlock';
 import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import {
   resetParams,
+  setCategoryEnforcement,
   setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
@@ -99,6 +100,10 @@ function ZwiftEditEvent() {
     }
   };
 
+  const selectCategoryEnforcement = (categoryEnforcementName) => {
+    dispatch(setCategoryEnforcement(categoryEnforcementName));
+  };
+
   return (
     <section className={styles.block}>
       <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
@@ -111,7 +116,7 @@ function ZwiftEditEvent() {
             <FormPattern activatePattern={activatePattern} />
           </div>
           <div className={styles.group}>
-            <FormEditEvent />
+            <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
           </div>
           <FormEditEventGroup sendForm={sendNewEventParams} />
           <Button getClick={goBack}>назад</Button>

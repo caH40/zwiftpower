@@ -11,7 +11,7 @@
   border-radius: 0.4em;
   padding: 0.4em 0.8em;
   cursor: pointer;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   user-select: none;
   background-color: var(--color-text-main);
   text-decoration: none;
@@ -35,6 +35,10 @@
   font-weight: inherit;
   color: inherit;
   background: var(--color-bg-minor);
+}
+.label__bold {
+  font-size: 14px;
+  font-weight: 700;
 }
 @media screen and (max-width: 992px) {
   .select {

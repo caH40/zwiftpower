@@ -1,4 +1,5 @@
 import { requiredLabelsForSeries } from '../../../../../assets/subgroups';
+import { accessExpressionDefault } from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -11,7 +12,7 @@ export const patternSeries = (rawEventParams, eventSubgroups, subgroupLabels) =>
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = getAccessExpression();
+  eventParams.accessExpression = accessExpressionDefault.value;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';
@@ -86,16 +87,4 @@ export const patternSeries = (rawEventParams, eventSubgroups, subgroupLabels) =>
   });
 
   return { ...eventParams, eventSubgroups };
-};
-
-// создание правил categoryEnforcement для категорий райдеров и групп Эвента
-const getAccessExpression = () => {
-  const APlusSeries = 'powerCurves.zFTPwkg >= 4.84 && subgroup.label == 4';
-  const ASeries =
-    'powerCurves.category == 1 && powerCurves.zFTPwkg < 4.84 && (subgroup.label == 1 || subgroup.label == 4)';
-  const BSeries = 'powerCurves.category == 2 && (subgroup.label < 3  || subgroup.label == 4)';
-  const CSeries = 'powerCurves.category == 3 && (subgroup.label < 4  || subgroup.label == 4)';
-  const DSeries = 'powerCurves.category == 4 && subgroup.label < 5';
-  const ISeries = 'powerCurves.category == 5';
-  return `${APlusSeries} || ${ASeries} || ${BSeries} || ${CSeries} || ${DSeries} || ${ISeries}`;
 };

@@ -7,6 +7,7 @@ import { getPaceValue } from '../../../../utils/pace-category';
 
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
+import { setCategoryEnforcementReducer } from './reducers/category-enforcement';
 
 const initialState = {
   eventParamsRaw: {},
@@ -154,6 +155,11 @@ const zwiftEventParamsSlice = createSlice({
       setPatternReducer(state, action);
     },
 
+    // Установка строгой категоризации CategoryEnforcement.
+    setCategoryEnforcement(state, action) {
+      setCategoryEnforcementReducer(state, action);
+    },
+
     // массив названий групп, которые можно добавить в заезд
     addGroupToEvent(state, action) {
       const label = action.payload;
@@ -215,6 +221,7 @@ export const {
   removeGroupFromEvent,
   setInitialOtherParams,
   setClub,
+  setCategoryEnforcement,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;

@@ -40,6 +40,9 @@
 h3 {
   flex-basis: 100%;
 }
+.spacer__block {
+  margin-bottom: 10px;
+}
 .input {
   display: block;
   width: 100%;
@@ -75,4 +78,15 @@ h3 {
 .groups {
   display: flex;
   gap: 10px;
+}
+.groups__enforcement {
+  display: flex;
+
+  gap: 10px 100px;
+  align-items: flex-start;
+}
+.code {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
 }

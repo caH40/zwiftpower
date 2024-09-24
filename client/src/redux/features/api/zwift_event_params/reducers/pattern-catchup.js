@@ -1,4 +1,5 @@
 import { requiredLabelsForCatchup } from '../../../../../assets/subgroups';
+import { accessExpressionCatchUp } from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -11,8 +12,7 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression =
-    '(powerCurves.category == 0 && subgroup.label == 1) || (powerCurves.category != 5 && powerCurves.category >= subgroup.label) || (powerCurves.category == 5 && subgroup.label == 5) || (powerCurves.category == 5 && subgroup.label == 1)';
+  eventParams.accessExpression = accessExpressionCatchUp;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'RACE';
   eventParams.type = 'EVENT_TYPE_RACE';
@@ -50,21 +50,21 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
     switch (subgroup.label) {
       // группа A
       case 1:
-        subgroup.registrationStart = `${eventStartDate}T16:08:30.000+0000`;
-        subgroup.registrationEnd = `${eventStartDate}T16:38:30.000+0000`;
-        subgroup.lineUpStart = `${eventStartDate}T16:33:30.000+0000`;
-        subgroup.lineUpEnd = `${eventStartDate}T16:38:30.000+0000`;
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:38:30.000+0000`;
+        subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
+        subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
+        subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.jerseyHash = 3090729076;
         break;
 
       // группа B
       case 2:
-        subgroup.registrationStart = `${eventStartDate}T16:06:00.000+0000`;
-        subgroup.registrationEnd = `${eventStartDate}T16:36:00.000+0000`;
-        subgroup.lineUpStart = `${eventStartDate}T16:31:00.000+0000`;
-        subgroup.lineUpEnd = `${eventStartDate}T16:36:00.000+0000`;
-        subgroup.eventSubgroupStart = `${eventStartDate}T16:36:00.000+0000`;
+        subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
+        subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
+        subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.jerseyHash = 4288197284;
         break;
 
@@ -76,6 +76,16 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.jerseyHash = 3271072532;
+        break;
+
+      // группа D
+      case 4:
+        subgroup.registrationStart = `${eventStartDate}T16:00:00.000+0000`;
+        subgroup.registrationEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
+        subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.jerseyHash = 1893222148;
         break;
 
       // группа E
