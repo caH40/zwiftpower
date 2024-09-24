@@ -102,6 +102,20 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
             className={styles.paragraph}
             dangerouslySetInnerHTML={{ __html: createHtml.description(event.description) }}
           ></p>
+
+          {/* Описание Строгой категоризации */}
+          {event.categoryEnforcementDescription && (
+            <>
+              <hr className={styles.hr} />
+              <p
+                className={styles.paragraph}
+                dangerouslySetInnerHTML={{
+                  __html: createHtml.description(event.categoryEnforcementDescription),
+                }}
+              ></p>
+            </>
+          )}
+
           <hr className={styles.hr} />
           <p
             className={styles.paragraph}

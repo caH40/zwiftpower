@@ -1,7 +1,4 @@
-import {
-  accessExpressionDefault,
-  accessExpressionDefaultRacingScoreDefault,
-} from '../../../../../assets/zwift/accessExpression';
+import { accessExpression } from '../../../../../assets/zwift/accessExpression';
 
 /**
  * Reducer установки параметров строгой категоризации CategoryEnforcement и accessExpression.
@@ -13,16 +10,21 @@ export const setCategoryEnforcementReducer = (state, action) => {
     case 'disabled': {
       state.eventMainParams.categoryEnforcement = false;
       state.eventMainParams.accessExpression = null;
+      state.eventMainParams.categoryEnforcementDescription = '';
       break;
     }
     case 'category': {
       state.eventMainParams.categoryEnforcement = true;
-      state.eventMainParams.accessExpression = accessExpressionDefault.value;
+      state.eventMainParams.accessExpression = accessExpression.default.value;
+      state.eventMainParams.categoryEnforcementDescription =
+        accessExpression.default.description;
       break;
     }
     case 'racingScore': {
       state.eventMainParams.categoryEnforcement = true;
-      state.eventMainParams.accessExpression = accessExpressionDefaultRacingScoreDefault.value;
+      state.eventMainParams.accessExpression = accessExpression.racingScoreDefault.value;
+      state.eventMainParams.categoryEnforcementDescription =
+        accessExpression.racingScoreDefault.description;
       break;
     }
 

@@ -39,10 +39,17 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
   const urlEventData = `events/${id}`;
   const eventData = await putRequest(urlEventData, event);
 
-  // изменение в БД typeRaceCustom (в API Zwift не передается, локальный параметр)
+  // изменение в БД typeRaceCustom,categoryEnforcementDescription (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(
     { id },
-    { $set: { typeRaceCustom: event.eventData.typeRaceCustom } }
+    {
+      $set: {
+        typeRaceCustom: event.eventData.typeRaceCustom,
+        ...(event.eventData.categoryEnforcementDescription && {
+          categoryEnforcementDescription: event.eventData.categoryEnforcementDescription,
+        }),
+      },
+    }
   );
 
   // после внесения изменений на сервере Звифт => запрос новых данны и сохранения в БД

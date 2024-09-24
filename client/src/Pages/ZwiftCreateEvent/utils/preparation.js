@@ -1,5 +1,5 @@
 import { optionsEventType } from '../../../assets/select/event-edit';
-import { accessExpressionDefault } from '../../../assets/zwift/accessExpression';
+import { accessExpression } from '../../../assets/zwift/accessExpression';
 
 /**
  * Дополнительные правила для Эвента и подгрупп
@@ -44,7 +44,7 @@ export function prepareData({
 
   // если включен categoryEnforcement, но не задан accessExpression
   if (event.categoryEnforcement && !event.accessExpression) {
-    event.accessExpression = accessExpressionDefault;
+    event.accessExpression = accessExpression.default;
   } else if (!event.categoryEnforcement) {
     event.accessExpression = null;
   }

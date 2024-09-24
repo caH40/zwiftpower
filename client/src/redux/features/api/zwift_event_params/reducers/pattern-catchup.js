@@ -1,5 +1,5 @@
 import { requiredLabelsForCatchup } from '../../../../../assets/subgroups';
-import { accessExpressionCatchUp } from '../../../../../assets/zwift/accessExpression';
+import { accessExpression } from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -12,7 +12,8 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpressionCatchUp;
+  eventParams.accessExpression = accessExpression.catchUp.value;
+  eventParams.categoryEnforcementDescription = accessExpression.catchUp.description;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'RACE';
   eventParams.type = 'EVENT_TYPE_RACE';

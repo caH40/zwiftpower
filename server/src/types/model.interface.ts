@@ -280,6 +280,7 @@ export interface ZwiftEventSchema {
   _id?: Types.ObjectId;
   seriesId: Types.ObjectId | null;
   typeRaceCustom: string;
+  categoryEnforcementDescription?: string;
   id: number;
   mapId: number;
   categoryEnforcement: boolean;
