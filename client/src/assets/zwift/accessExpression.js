@@ -3,8 +3,7 @@ export const accessExpression = {
   default: {
     value: `(powerCurves.category == 0 && subgroup.label == 1) || 
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
-(powerCurves.category == 5 && subgroup.label == 5) ||
-(powerCurves.category == 5 && subgroup.label == 1)
+(powerCurves.category == 5 && subgroup.label == 5)
 `,
     description: `Группа A:  zMAP: ≥5.1W/kg; zFTP: ≥4.2W/kg, zFTP (watts): ≥250W;
   Группа B: zMAP: ≥4.1W/kg; zFTP: ≥3.36W/kg, zFTP (watts): ≥200W;
@@ -13,7 +12,6 @@ export const accessExpression = {
   Группа E: zMAP: n/a; zFTP: n/a;
   `,
   },
-
   // Стандартное распределение по рейтинговым очкам.
   racingScoreDefault: {
     value: `(subgroup.label == 1 && scoring.current <= 1000) ||
@@ -35,14 +33,13 @@ export const accessExpression = {
   catchUp: {
     value: `(powerCurves.category == 0 && subgroup.label == 1) ||
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
-(powerCurves.category == 5 && subgroup.label == 5) ||
 (powerCurves.category == 5 && subgroup.label == 1)
 `,
     description: `Группа A:  zMAP: ≥5.1W/kg; zFTP: ≥4.2W/kg, zFTP (watts): ≥250W;
   Группа B: zMAP: ≥4.1W/kg; zFTP: ≥3.36W/kg, zFTP (watts): ≥200W;
   Группа C: zMAP: ≥3.2W/kg; zFTP: ≥2.63W/kg, zFTP (watts): ≥150W;
   Группа D: zMAP: <3.2W/kg; zFTP:<2.63W/kg;
-  Райдер без категории может присоединиться в группу А;
+  Райдер без категории (E) может присоединиться в группу А;
   `,
   },
 
