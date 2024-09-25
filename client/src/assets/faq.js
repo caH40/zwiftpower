@@ -5,6 +5,7 @@ import IconLateJoin from '../components/icons/IconLateJoin';
 import IconPowerMeter from '../components/icons/IconPowerMeter';
 import IconPowerUp from '../components/icons/IconPowerUp';
 import IconRubberBanding from '../components/icons/IconRubberBanding';
+import IconScoreBased from '../components/icons/IconScoreBased';
 import IconShowResults from '../components/icons/IconShowResults';
 import IconSteeringDisabled from '../components/icons/IconSteeringDisabled';
 import IconTT from '../components/icons/IconTT';
@@ -23,43 +24,49 @@ export const iconsDescriptions = [
     id: 1,
     icon: IconCategoryEnforced,
     description:
-      'включена строгая категоризация (category Enforcement). Категорию выставляет Звифт. Зайти можно в свою группу или более высокую. Райдеры без категории могут присоединиться только к группе "E"',
+      'Включена строгая категоризация (category Enforcement). Категорию выставляет Звифт. По умолчанию: присоединиться можно в свою группу или более высокую. Райдеры без категории могут присоединиться только к группе "E"',
   },
-  { id: 2, icon: IconPowerUp, description: 'Отключены в заезде PowerUp' },
-  { id: 3, icon: IconViewEvent, description: 'Видны все участники заезда' },
-  { id: 4, icon: IconViewGroup, description: 'Видны только участники группы' },
-  { id: 5, icon: IconSteeringDisabled, description: 'Отключено рулевое управление' },
-  { id: 6, icon: IconTT, description: 'Драфтинг отключен' },
   {
-    id: 7,
+    id: 2,
+    icon: IconScoreBased,
+    description:
+      'Включена строгая категоризация по Racing score (category Enforcement). Распределение по группам происходит по заработанным рейтинговым очкам',
+  },
+  { id: 3, icon: IconPowerUp, description: 'Отключены в заезде PowerUp' },
+  { id: 4, icon: IconViewEvent, description: 'Видны все участники заезда' },
+  { id: 5, icon: IconViewGroup, description: 'Видны только участники группы' },
+  { id: 6, icon: IconSteeringDisabled, description: 'Отключено рулевое управление' },
+  { id: 7, icon: IconTT, description: 'Драфтинг отключен' },
+  {
+    id: 8,
     icon: IconTTLock,
     description: 'Запрет выбора велосипедов для раздельного старта (TT)',
   },
   {
-    id: 8,
+    id: 9,
     icon: IconPowerMeter,
     description:
       'Обязательное наличие станка с измерителем мощности (запрет использования станков с z-power)',
   },
   {
-    id: 9,
+    id: 10,
     icon: IconHeartMonitor,
     description: 'Обязательное наличия монитора сердечного ритма',
   },
-  { id: 10, icon: IconDD, description: 'Двойной драфтинг' },
+  { id: 11, icon: IconDD, description: 'Двойной драфтинг' },
   {
-    id: 11,
+    id: 12,
     icon: IconRubberBanding,
     description:
       'Группа удерживается вместе невидимой резиновой лентой, так что райдеры с разным уровнем подготовки смогут ехать одной группой',
   },
   {
-    id: 12,
+    id: 13,
     icon: IconLateJoin,
     description:
       'Позднее подключение. Возможность подключиться к заезду в течении 30 минут после старта',
   },
-  { id: 13, icon: IconTTT, description: 'Включен драфт для ТТ велосипедов. Team Time Trial' },
+  { id: 14, icon: IconTTT, description: 'Включен драфт для ТТ велосипедов. Team Time Trial' },
 ];
 
 export const racesDescription = [

@@ -4,7 +4,10 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconScoreBased({ squareSize = 24, tooltip }) {
+function IconScoreBased({
+  squareSize = 24,
+  tooltip = 'Строгая категоризация по Racing Score',
+}) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>

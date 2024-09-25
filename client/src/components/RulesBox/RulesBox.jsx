@@ -14,12 +14,21 @@ import IconViewEvent from '../icons/IconViewEvent';
 import IconViewGroup from '../icons/IconViewGroup';
 import IconSteeringDisabled from '../icons/IconSteeringDisabled';
 import IconTTT from '../icons/IconTTT';
+import IconScoreBased from '../icons/IconScoreBased';
 
 import { enabledRule, enabledRuleInTag } from './utils';
 
 import styles from './RulesBox.module.css';
 
+/**
+ * Блок отображения правил в заезде в виде перечная иконок соответствующих настроек.
+ */
 function RulesBox({ event, squareSize = 24, addCls }) {
+  // Проверка, что включена категориазция по рейтинговым очкам.
+  // Подразумевается, что категоризация по очкам не происходит
+  // одновременно с другими категоризациями (по категориям, по мощности и т.д.).
+  const hasRacingScore = event.accessExpression?.includes('scoring');
+
   return (
     <div className={cn(styles.block, cns(styles, addCls))}>
       <>
@@ -31,16 +40,26 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         {enabledRule(event, 'NO_TT_BIKES') && <IconTTLock squareSize={squareSize} />}
         {enabledRule(event, 'ALLOWS_LATE_JOIN') && <IconLateJoin squareSize={squareSize} />}
         {enabledRule(event, 'TEST_BIT_10') && <IconRubberBanding squareSize={squareSize} />}
-        {event.categoryEnforcement && <IconCategoryEnforced squareSize={squareSize} />}
+
+        {event.categoryEnforcement &&
+          (hasRacingScore ? (
+            <IconScoreBased squareSize={squareSize} />
+          ) : (
+            <IconCategoryEnforced squareSize={squareSize} />
+          ))}
+
         {event.cullingType === 'CULLING_EVENT_ONLY' && (
           <IconViewEvent squareSize={squareSize} />
         )}
+
         {event.cullingType === 'CULLING_SUBGROUP_ONLY' && (
           <IconViewGroup squareSize={squareSize} />
         )}
+
         {enabledRuleInTag(event, 'steering_disabled') && (
           <IconSteeringDisabled squareSize={squareSize} />
         )}
+
         {enabledRuleInTag(event, 'ttbikesdraft') && <IconTTT squareSize={squareSize} />}
       </>
     </div>
