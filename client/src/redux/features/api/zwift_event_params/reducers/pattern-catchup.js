@@ -57,6 +57,8 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.jerseyHash = 3090729076;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 6;
         break;
 
       // группа B
@@ -67,6 +69,8 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.jerseyHash = 4288197284;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 6;
         break;
 
       // группа C
@@ -76,6 +80,8 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 6;
         subgroup.jerseyHash = 3271072532;
         break;
 
@@ -86,6 +92,8 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 6;
         subgroup.jerseyHash = 1893222148;
         break;
 
@@ -96,7 +104,9 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
         subgroup.lineUpStart = `${eventStartDate}T16:25:00.000+0000`;
         subgroup.lineUpEnd = `${eventStartDate}T16:30:00.000+0000`;
         subgroup.eventSubgroupStart = `${eventStartDate}T16:30:00.000+0000`;
-        subgroup.jerseyHash = 1303932596;
+        subgroup.fromPaceValue = 1;
+        subgroup.toPaceValue = 6;
+        subgroup.jerseyHash = 3992094603;
     }
   });
 

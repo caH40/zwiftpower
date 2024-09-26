@@ -40,6 +40,7 @@ export const categoryEnforcement = [
   { id: 0, label: 'Выключена', name: 'disabled', translate: 'Выключена' },
   { id: 1, label: 'Категории, стандарт', name: 'category', translate: 'Категории' },
   { id: 2, label: 'Рейтинг, стандарт', name: 'racingScore', translate: 'Рейтинг' },
+  { id: 3, label: 'Догонялки, новые', name: 'catchUpNew', translate: 'Догонялки, новые' },
 ];
 
 /**

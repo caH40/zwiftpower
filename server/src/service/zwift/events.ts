@@ -41,7 +41,7 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
 
   const categoryEnforcementDescription =
     event.eventData.categoryEnforcementDescription != null
-      ? { categoryEnforcementDescription: '' }
+      ? { categoryEnforcementDescription: event.eventData.categoryEnforcementDescription }
       : undefined;
 
   // изменение в БД typeRaceCustom,categoryEnforcementDescription (в API Zwift не передается, локальный параметр)

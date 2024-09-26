@@ -58,15 +58,15 @@ export const patternNewbies = (rawEventParams, eventSubgroups, subgroupLabels) =
     switch (subgroup.label) {
       // группа C
       case 3:
-        subgroup.fromPaceValue = 2.5;
-        subgroup.toPaceValue = 3.19;
+        subgroup.fromPaceValue = 2.63;
+        subgroup.toPaceValue = 3.36;
         subgroup.jerseyHash = 2439396652;
         break;
 
       // группа D
       case 4:
         subgroup.fromPaceValue = 1;
-        subgroup.toPaceValue = 2.49;
+        subgroup.toPaceValue = 2.629;
         subgroup.jerseyHash = 2808241362;
         break;
 
