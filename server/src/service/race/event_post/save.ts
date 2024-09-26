@@ -57,6 +57,7 @@ export async function saveEventToDB(eventParams: EventWithSubgroup) {
   const eventDB: ZwiftEventSchema = await ZwiftEvent.create({
     seriesId: eventParams.seriesId,
     typeRaceCustom: eventParams.typeRaceCustom,
+    categoryEnforcementDescription: eventParams.categoryEnforcementDescription,
     organizer: eventParams.organizer,
     id: eventParams.id,
     mapId: eventParams.mapId,
