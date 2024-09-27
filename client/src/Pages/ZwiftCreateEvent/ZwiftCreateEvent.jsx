@@ -12,6 +12,7 @@ import {
   setMainParams,
   setSubgroupParams,
   setInitialOtherParams,
+  setCategoryEnforcement,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import {
   getInitialMainParams,
@@ -67,6 +68,10 @@ function ZwiftCreateEvent() {
     navigate('/zwift/event/add');
   };
 
+  const selectCategoryEnforcement = (categoryEnforcementName) => {
+    dispatch(setCategoryEnforcement(categoryEnforcementName));
+  };
+
   return (
     <section className={styles.block}>
       <h2 className={styles.title}>Этапы создание Эвента (заезда) в Zwift:</h2>
@@ -84,7 +89,10 @@ function ZwiftCreateEvent() {
           <FormClub isCreating={true} clubs={clubs} />
         </div>
         <div className={styles.group}>
-          <FormEditEvent isCreating={true} />
+          <FormEditEvent
+            isCreating={true}
+            selectCategoryEnforcement={selectCategoryEnforcement}
+          />
         </div>
         <FormEditEventGroup isCreating={true} sendForm={sendCreateNewEvent} />
       </div>

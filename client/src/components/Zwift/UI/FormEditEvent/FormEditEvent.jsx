@@ -196,13 +196,6 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
         </div>
 
         <div className={styles.box__checkbox}>
-          {/* <RCheckbox
-            label={'Строгая категоризация'}
-            value={eventMainParams.categoryEnforcement}
-            property={'categoryEnforcement'}
-            tooltip="Райдер может выступать в своей категории или более высокой"
-          /> */}
-
           {checkboxRules.map((checkboxRule) => (
             <RCheckboxArray
               reducer={setEventRules}
