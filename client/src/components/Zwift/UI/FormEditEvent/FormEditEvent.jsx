@@ -226,6 +226,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
             options={optionsCategoryEnforcement}
             defaultValue={eventMainParams.categoryEnforcementName}
           />
+
           {eventMainParams.categoryEnforcement ? (
             <pre className={styles.code}>{eventMainParams.accessExpression}</pre>
           ) : (

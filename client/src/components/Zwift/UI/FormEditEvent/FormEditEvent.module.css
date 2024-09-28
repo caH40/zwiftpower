@@ -81,7 +81,7 @@ h3 {
 }
 .groups__enforcement {
   display: flex;
-
+  flex-wrap: wrap;
   gap: 10px 100px;
   align-items: flex-start;
 }

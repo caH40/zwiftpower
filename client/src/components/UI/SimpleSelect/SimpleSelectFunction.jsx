@@ -13,8 +13,6 @@ function SimpleSelectFunction({
   closeEmptyOption,
   defaultValue,
 }) {
-  console.log({ defaultValue });
-
   return (
     <>
       {name ? <p className={styles.label__bold}>{name}:</p> : null}
