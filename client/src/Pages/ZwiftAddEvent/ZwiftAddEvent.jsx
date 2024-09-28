@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
@@ -12,6 +13,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetSeries } from '../../redux/features/api/series-actual/actualSeriesSlice';
 import { fetchEventPost } from '../../redux/features/api/event-add/fetchEventPost';
 import { resetEventIdCreated } from '../../redux/features/api/event-create/eventCreateSlice';
+import { accessExpressions } from '../../assets/zwift/accessExpression';
 
 import styles from './ZwiftAddEvent.module.css';
 
@@ -23,7 +25,7 @@ function ZwiftAddEvent() {
 
   const { id: userId } = useSelector((state) => state.checkAuth.value.user);
   const { series } = useSelector((state) => state.fetchActualSeries);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // запрос актуальных серий
@@ -53,6 +55,12 @@ function ZwiftAddEvent() {
 
   // добавление Эвента в БД
   const addEvent = () => {
+    // Добавление названия пакета настроек строгой категоризации.
+    const { accessExpression } = eventMainParams;
+    const categoryEnforcementName =
+      accessExpressions.find((elm) => elm.value === accessExpression)?.name || null;
+
+    // Добавление типа Гонки на основании чего будет рассчитываться финишный протокол.
     const isFilledFields = additionalParams.typeRaceCustom;
     if (!isFilledFields) {
       dispatch(
@@ -65,9 +73,17 @@ function ZwiftAddEvent() {
       return;
     }
 
-    const eventForSend = { creator: userId, ...eventMainParams, ...additionalParams };
-    dispatch(fetchEventPost(eventForSend));
-
+    const eventForSend = {
+      creator: userId,
+      ...eventMainParams,
+      ...additionalParams,
+      categoryEnforcementName,
+    };
+    dispatch(fetchEventPost(eventForSend)).then((data) => {
+      if (data.meta.requestStatus === 'fulfilled') {
+        navigate('/race/schedule');
+      }
+    });
     setAdditionalParams({});
   };
 

@@ -4,7 +4,7 @@
 export const accessExpressionsDefault = {
   id: 1,
   name: 'default',
-  label: 'Стандартное распределение по категориям',
+  label: 'Базовые настройки по категориям.',
   value: `(powerCurves.category == 0 && subgroup.label == 1) || 
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
 (powerCurves.category == 5 && subgroup.label == 5)`,
@@ -46,7 +46,7 @@ export const accessExpressions = [
   {
     id: 2,
     name: 'racingScoreDefault',
-    label: 'Стандартное распределение по рейтинговым очкам',
+    label: 'Гоночный рейтинг. Базовые настройки.',
     value: `(subgroup.label == 1 && scoring.current <= 1000) ||
 (subgroup.label == 2 && scoring.current < 650) ||
 (subgroup.label == 3 && scoring.current < 525 ) ||
@@ -69,7 +69,7 @@ export const accessExpressions = [
   {
     id: 3,
     name: 'catchUp',
-    label: 'По категориям для Догонялок',
+    label: 'Догонялки. По категориям.',
     value: `(powerCurves.category == 0 && subgroup.label == 1) ||
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
 (powerCurves.category == 5 && subgroup.label == 1)`,
@@ -89,7 +89,7 @@ export const accessExpressions = [
   {
     id: 4,
     name: 'catchUpNew',
-    label: 'По категориям для Догонялок с экспериментальными категориями',
+    label: 'Догонялки. По удельной мощности.',
     value: `(subgroup.label == 5 && powerCurves.zFTPwkg < 6) ||
 (subgroup.label == 1 && powerCurves.zFTPwkg < 4.6) ||
 (subgroup.label == 2 && powerCurves.zFTPwkg < 4.2) ||
@@ -111,7 +111,7 @@ export const accessExpressions = [
   {
     id: 5,
     name: 'newbies',
-    label: 'По категориям для новичков',
+    label: 'Новичковая. По категориям.',
     value: `(powerCurves.category == 3 && subgroup.label == 3) ||
 (powerCurves.category == 4 && (subgroup.label == 4 || subgroup.label == 3)) || 
 (powerCurves.category == 5)`,

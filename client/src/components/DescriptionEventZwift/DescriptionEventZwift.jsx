@@ -108,12 +108,15 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           {event.categoryEnforcementName && (
             <>
               <hr className={styles.hr} />
-              <p className={styles.paragraph}>
-                {
-                  accessExpressions.find((elm) => elm.name === event.categoryEnforcementName)
-                    ?.description
-                }
-              </p>
+              <p
+                className={styles.paragraph}
+                dangerouslySetInnerHTML={{
+                  __html: createHtml.description(
+                    accessExpressions.find((elm) => elm.name === event.categoryEnforcementName)
+                      ?.description || 'Нет описания распределения по категориям'
+                  ),
+                }}
+              ></p>
             </>
           )}
 
