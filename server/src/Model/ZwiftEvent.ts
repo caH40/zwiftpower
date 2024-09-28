@@ -5,7 +5,7 @@ import { ZwiftEventSchema } from '../types/model.interface.js';
 const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', default: null },
   typeRaceCustom: { type: String, default: null },
-  categoryEnforcementDescription: { type: String },
+  categoryEnforcementName: { type: String, default: null },
   id: { type: Number, unique: true, required: true },
   mapId: { type: Number, default: null },
   categoryEnforcement: { type: Boolean, default: false },

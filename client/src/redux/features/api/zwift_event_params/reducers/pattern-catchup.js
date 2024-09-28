@@ -1,5 +1,8 @@
 import { requiredLabelsForCatchup } from '../../../../../assets/subgroups';
-import { accessExpression } from '../../../../../assets/zwift/accessExpression';
+import {
+  accessExpressions,
+  accessExpressionsDefault,
+} from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -10,10 +13,13 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
   // проверка наличия обязательных подгрупп в созданном Эвенте
   checkingRequiredSubgroups(subgroupLabels, requiredLabelsForCatchup);
 
+  const accessExpressionCatchUp =
+    accessExpressions.find((elm) => elm.name === 'catchUp') || accessExpressionsDefault;
+
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpression.catchUp.value;
-  eventParams.categoryEnforcementDescription = accessExpression.catchUp.description;
+  eventParams.accessExpression = accessExpressionCatchUp.value;
+  eventParams.categoryEnforcementName = accessExpressionCatchUp.name;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'RACE';
   eventParams.type = 'EVENT_TYPE_RACE';

@@ -20,6 +20,7 @@ export async function getEventZwift(req: Request, res: Response) {
 
     const event = await getEventZwiftService(+eventId);
     await checkModeratorClub(userId, event.microserviceExternalResourceId, forView);
+
     res.status(200).json(event);
   } catch (error) {
     errorHandler(error);

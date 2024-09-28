@@ -31,7 +31,7 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   creator: string;
   organizer: string;
   typeRaceCustom: string;
-  categoryEnforcementDescription?: string;
+  categoryEnforcementName: string | null;
   seriesId: Types.ObjectId | null;
 }
 /**

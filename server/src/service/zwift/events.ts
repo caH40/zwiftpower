@@ -20,12 +20,13 @@ export async function getEventZwiftService(eventId: number) {
   }
 
   // получение typeRaceCustom
-  const eventDB: { typeRaceCustom: string } | null = await ZwiftEvent.findOne(
-    { id: eventId },
-    { _id: false, typeRaceCustom: true }
-  );
+  const eventDB: { typeRaceCustom: string; categoryEnforcementName: string | null } | null =
+    await ZwiftEvent.findOne(
+      { id: eventId },
+      { _id: false, typeRaceCustom: true, categoryEnforcementName: true }
+    ).lean();
 
-  return { ...eventData, typeRaceCustom: eventDB?.typeRaceCustom };
+  return { ...eventData, ...eventDB };
 }
 
 /**
@@ -39,20 +40,16 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
   const urlEventData = `events/${id}`;
   const eventData = await putRequest(urlEventData, event);
 
-  const categoryEnforcementDescription =
-    event.eventData.categoryEnforcementDescription != null
-      ? { categoryEnforcementDescription: event.eventData.categoryEnforcementDescription }
-      : undefined;
-
-  // изменение в БД typeRaceCustom,categoryEnforcementDescription (в API Zwift не передается, локальный параметр)
+  // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(
     { id },
     {
       $set: {
         typeRaceCustom: event.eventData.typeRaceCustom,
-        ...categoryEnforcementDescription,
+        categoryEnforcementName: event.eventData.categoryEnforcementName,
       },
-    }
+    },
+    { new: true }
   );
 
   // после внесения изменений на сервере Звифт => запрос новых данны и сохранения в БД

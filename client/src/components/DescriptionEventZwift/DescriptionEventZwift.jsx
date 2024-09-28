@@ -17,6 +17,7 @@ import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 import { createHtml } from '../../utils/html';
 import { createDescription } from '../../Pages/ZwiftEditEvent/utils/description';
+import { accessExpressions } from '../../assets/zwift/accessExpression';
 
 import styles from './DescriptionEventZwift.module.css';
 
@@ -104,15 +105,15 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           ></p>
 
           {/* Описание Строгой категоризации */}
-          {event.categoryEnforcementDescription && (
+          {event.categoryEnforcementName && (
             <>
               <hr className={styles.hr} />
-              <p
-                className={styles.paragraph}
-                dangerouslySetInnerHTML={{
-                  __html: createHtml.description(event.categoryEnforcementDescription),
-                }}
-              ></p>
+              <p className={styles.paragraph}>
+                {
+                  accessExpressions.find((elm) => elm.name === event.categoryEnforcementName)
+                    ?.description
+                }
+              </p>
             </>
           )}
 

@@ -32,10 +32,6 @@ export function prepareData({
 
   event.rulesSet = rulesSet;
 
-  // Установка значений в зависимость от
-  // fromPaceValue
-  // toPaceValue;
-
   // изменение тэга времени
   event.tags = tags;
   for (const subGroup of eventSubgroups) {

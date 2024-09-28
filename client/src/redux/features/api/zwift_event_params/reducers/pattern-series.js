@@ -1,5 +1,5 @@
 import { requiredLabelsForSeries } from '../../../../../assets/subgroups';
-import { accessExpression } from '../../../../../assets/zwift/accessExpression';
+import { accessExpressionsDefault } from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -12,8 +12,8 @@ export const patternSeries = (rawEventParams, eventSubgroups, subgroupLabels) =>
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpression.default.value;
-  eventParams.categoryEnforcementDescription = accessExpression.default.description;
+  eventParams.accessExpression = accessExpressionsDefault.value;
+  eventParams.categoryEnforcementName = accessExpressionsDefault.name;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';

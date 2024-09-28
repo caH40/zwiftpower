@@ -1,5 +1,8 @@
 import { requiredLabelsForNewbies } from '../../../../../assets/subgroups';
-import { accessExpression } from '../../../../../assets/zwift/accessExpression';
+import {
+  accessExpressions,
+  accessExpressionsDefault,
+} from '../../../../../assets/zwift/accessExpression';
 
 import { checkingRequiredSubgroups } from './subgroups';
 
@@ -10,10 +13,13 @@ export const patternNewbies = (rawEventParams, eventSubgroups, subgroupLabels) =
   // проверка наличия обязательных подгрупп в созданном Эвенте
   checkingRequiredSubgroups(subgroupLabels, requiredLabelsForNewbies);
 
+  const accessExpressionCatchUp =
+    accessExpressions.find((elm) => elm.name === 'newbies') || accessExpressionsDefault;
+
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpression.newbies.value;
-  eventParams.categoryEnforcementDescription = accessExpression.newbies.description;
+  eventParams.accessExpression = accessExpressionCatchUp.value;
+  eventParams.categoryEnforcementName = accessExpressionCatchUp.name;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';
