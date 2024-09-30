@@ -128,8 +128,9 @@ export const accessExpressions = [
   {
     id: 6,
     name: 'closed',
-    label: 'Регистрация закрыта',
+    label: 'Регистрация временно закрыта',
     value: 'false',
+    description: '❗️❗️❗️ Регистрация временно закрыта ❗️❗️❗️',
     paceValues: {
       1: { from: 1, to: 6 },
       2: { from: 1, to: 6 },

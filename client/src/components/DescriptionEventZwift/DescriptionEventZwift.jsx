@@ -28,6 +28,8 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   const isModerator = ['admin', 'moderator'].includes(role);
   const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
   const showForModerate = isModerator && isAllowedModerate;
+  console.log(event.categoryEnforcementName);
+  console.log(accessExpressions.find((elm) => elm.name === 'closed'));
 
   const navigate = useNavigate();
 
