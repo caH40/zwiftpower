@@ -97,13 +97,13 @@ export const accessExpressions = [
 (subgroup.label == 4 && (powerCurves.zFTPwkg < 3.0 || powerCurves.zFTP < 200))`,
     description: `Группа E: zFTP (W/kg): 4.6 - 6.0;
                   Группа A: zFTP (W/kg): 4.2 - 4.59;
-                  Группа B: zFTP (W/kg): 3.5 - 4.19;
-                  Группа C: zFTP (W/kg): 2.8 - 3.49 и zFTP (watts): ≥200W;
+                  Группа B: zFTP (W/kg): 3.7 - 4.19;
+                  Группа C: zFTP (W/kg): 2.8 - 3.69 и zFTP (watts): ≥200W;
                   Группа D: zFTP (W/kg): 1.0 - 2.79;`,
     paceValues: {
       1: { from: 4.2, to: 4.59 },
-      2: { from: 3.5, to: 4.19 },
-      3: { from: 2.8, to: 3.49 },
+      2: { from: 3.7, to: 4.19 },
+      3: { from: 2.8, to: 3.69 },
       4: { from: 1.0, to: 2.79 },
       5: { from: 4.6, to: 6.0 },
     },
