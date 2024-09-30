@@ -115,13 +115,13 @@ export const accessExpressions = [
     value: `(powerCurves.category == 3 && subgroup.label == 3) ||
 (powerCurves.category == 4 && (subgroup.label == 4 || subgroup.label == 3)) || 
 (powerCurves.category == 5)`,
-    description: `Группа C: zMAP: ≥3.2W/kg; zFTP: ≥2.63W/kg, zFTP (watts): ≥150W;
-                  Группа D: zMAP: <3.2W/kg; zFTP:<2.63W/kg;`,
+    description: `Группа C: zFTP (W/kg): 2.63 - 3.359, zMAP (W/kg): 3.2 - 4.09 и zFTP (watts): ≥150W;
+                  Группа D: zFTP (W/kg): 1.0 - 2.629, zMAP (W/kg): 1 - 3.19 и zFTP (watts): <150W;`,
     paceValues: {
       1: { from: 1, to: 6 },
       2: { from: 1, to: 6 },
-      3: { from: 1, to: 6 },
-      4: { from: 1, to: 6 },
+      3: { from: 2.63, to: 3.35 },
+      4: { from: 1, to: 2.62 },
       5: { from: 1, to: 6 },
     },
   },
