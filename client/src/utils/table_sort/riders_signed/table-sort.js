@@ -1,5 +1,6 @@
 import { sortCategory } from './category';
 import { sortColumnsCP } from './critical-power';
+import { sortRacingScore } from './racing-score';
 
 /**
  * Сортировка таблицы зарегистрированных райдеров
@@ -13,6 +14,9 @@ export const sortTable = (data, activeSorting, filterWatts) => {
   switch (activeSorting.columnName) {
     case 'Категория':
       return sortCategory(data, activeSorting);
+
+    case 'Рейтинговые очки':
+      return sortRacingScore(data, activeSorting);
 
     default:
       return sortColumnsCP(data, activeSorting, powerTarget);

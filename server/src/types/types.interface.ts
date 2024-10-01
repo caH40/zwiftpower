@@ -151,6 +151,7 @@ export interface CpBestEffortsAdditional {
  */
 export interface SignedRidersPowerCurves extends SignedRidersSchema {
   cpBestEfforts?: CpBestEffortsAdditional[];
+  racingScore?: number;
 }
 /**
  * Данные Event с зарегистрированными райдерами

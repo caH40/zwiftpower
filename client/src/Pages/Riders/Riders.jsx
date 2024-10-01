@@ -23,6 +23,10 @@ const adOverFooter = 4;
 const adUnderHeader = 17;
 const adNumbers = [adUnderHeader, adOverFooter];
 
+/**
+ * Страница с таблицей райдеров, принимавших участие в заездах на сайте.
+ * Сортировка таблицы происходит на сервере из-за большого количества документов.
+ */
 function Riders() {
   const [page, setPage] = useState(1);
   const initialDocsOnPage = localStorage.getItem('recordsOnPageRiders') || 20;

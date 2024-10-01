@@ -20,6 +20,7 @@ function TableSignedRiders({ riders = [], event }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
+  // Сортировка и фильтрация таблицы.
   const ridersSortedAndFiltered = useSortSignedRiders(riders);
 
   return (
@@ -41,6 +42,7 @@ function TableSignedRiders({ riders = [], event }) {
 
             {/* для "space-between" столбцов */}
             <td></td>
+            <td>{Math.round(rider.racingScore) || 0}</td>
 
             {/* столбцы с CriticalPower */}
             {columnsCP.map((column) => {

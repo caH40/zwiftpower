@@ -9,7 +9,7 @@ import { sortColumnTable } from '../../../redux/features/sortTableSlice';
 import { signedRidersColumnsEnd, signedRidersColumnsStart } from './column-titles';
 
 // Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
-const columnsWithSorting = ['Категория'];
+const columnsWithSorting = ['Категория', 'Рейтинговые очки'];
 
 function Thead({ columnsCP }) {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ function Thead({ columnsCP }) {
     dispatch(sortColumnTable(columnCPInterval));
   };
 
+  // Подсвечивания стрелки, указывающей текущую сортировку.
   const activeSorting = useSelector((state) => state.sortTable.activeSorting);
 
   return (

@@ -5,12 +5,10 @@ import { eventSignedRidersDto } from '../../../dto/eventSignedRiders.dto.js';
 import { addPropertyAdditionCP } from '../../../utils/property-additionCP.js';
 
 // types
-import {
-  EventWithSignedRiders,
-  SignedRidersPowerCurves,
-} from '../../../types/types.interface.js';
-import { PowerCurveSchema } from '../../../types/model.interface.js';
+import { EventWithSignedRiders } from '../../../types/types.interface.js';
 import { sortSignedRiders } from './sort.js';
+import { Rider } from '../../../Model/Rider.js';
+import { SignedRidersSchema } from '../../../types/model.interface.js';
 
 /**
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
@@ -26,21 +24,22 @@ export async function getEventService(eventId: string) {
     throw new Error(`Заезд id=${eventId} не найден на zwiftpower.ru`);
   }
 
-  // Поиск и добавление в массив всех зарегистрированных райдеров в подгруппы
-  const labelsSubgroup: string[] = [];
-  const signedRiders: SignedRidersPowerCurves[] = [];
-  for (const subgroup of eventDataDB.eventSubgroups) {
-    const ridersInGroup: SignedRidersPowerCurves[] = await ZwiftSignedRiders.find({
-      subgroup: subgroup._id,
-    }).lean();
-    labelsSubgroup.push(subgroup.subgroupLabel);
-    signedRiders.push(...ridersInGroup);
-  }
+  // Массив _id подгрупп.
+  const subgroupIds = eventDataDB.eventSubgroups.map((subgroup) => subgroup._id);
 
-  // сортировка групп по убыванию
+  // Поиск всех зарегистрированных райдеров в подгруппы.
+  const signedRiders: SignedRidersSchema[] = await ZwiftSignedRiders.find({
+    subgroup: subgroupIds,
+  }).lean();
+
+  const labelsSubgroup: string[] = eventDataDB.eventSubgroups.map(
+    (subgroup) => subgroup.subgroupLabel
+  );
+
+  // Сортировка групп по убыванию.
   eventDataDB.eventSubgroups.sort((a, b) => a.label - b.label);
 
-  // сортировка списка райдеров
+  // Сортировка списка райдеров.
   const signedRidersSorted = sortSignedRiders(signedRiders, labelsSubgroup);
 
   // zwiftId всех зарегистрированных райдеров
@@ -48,25 +47,36 @@ export async function getEventService(eventId: string) {
 
   // добавление powerCurve каждому райдеру
   // получение массива PowerCurves всех райдеров,
-  // что бы не делать запрос для каждого райдера по отдельности
-  const powerCurvesDB: PowerCurveSchema[] = await PowerCurve.find({
-    zwiftId: zwiftIds,
-  });
+  const [powerCurvesDB, riderRacingScoreDB] = await Promise.all([
+    PowerCurve.find({
+      zwiftId: zwiftIds,
+    }).lean(),
+    Rider.find(
+      {
+        zwiftId: zwiftIds,
+      },
+      { _id: false, zwiftId: true, 'competitionMetrics.racingScore': true }
+    ).lean(),
+  ]);
+
+  const powerCurvesMap = new Map(powerCurvesDB.map((pc) => [pc.zwiftId, pc]));
+
+  const riderRacingScoreMap = new Map(
+    riderRacingScoreDB.map((rs) => [rs.zwiftId, rs.competitionMetrics?.racingScore])
+  );
 
   for (const rider of signedRidersSorted) {
     // powerCurve для райдера с zwiftId
-    const powerCurve = powerCurvesDB.find((cp) => cp.zwiftId === rider.id);
+    const powerCurve = powerCurvesMap.get(rider.id);
 
-    if (!powerCurve) {
-      rider.cpBestEfforts = undefined;
-      continue;
-    }
-    // изменение powerCurve на cpBestEfforts
-    const cpBestEfforts = addPropertyAdditionCP(powerCurve);
+    // Добавление рейтинговых очков.
+    rider.racingScore = riderRacingScoreMap.get(rider.id) || 0;
 
-    rider.cpBestEfforts = cpBestEfforts;
+    // Изменение powerCurve на cpBestEfforts.
+    rider.cpBestEfforts = powerCurve ? addPropertyAdditionCP(powerCurve) : undefined;
   }
 
+  // Добавление массива с зарегистрированными райдерами в итоговый документ Эвента.
   eventDataDB.signedRiders = signedRidersSorted;
 
   return eventSignedRidersDto(eventDataDB);

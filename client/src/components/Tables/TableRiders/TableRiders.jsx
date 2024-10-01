@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { useSortSignedRiders } from '../../../hook/useSortSignedRiders';
 import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryMF from '../../CategoryMF/CategoryMF';
