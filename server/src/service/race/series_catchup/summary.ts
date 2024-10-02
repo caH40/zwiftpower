@@ -13,6 +13,7 @@ export function getResultSummary(
   let winsB = 0;
   let winsC = 0;
   let winsD = 0;
+  let winsE = 0;
 
   // подсчет побед в заездах
   for (const result of results) {
@@ -31,6 +32,10 @@ export function getResultSummary(
       }
       case 'D': {
         winsD++;
+        break;
+      }
+      case 'E': {
+        winsE++;
         break;
       }
       default: {
@@ -58,6 +63,10 @@ export function getResultSummary(
         winsD++;
         break;
       }
+      case 'E': {
+        winsE++;
+        break;
+      }
       default: {
         break;
       }
@@ -69,7 +78,9 @@ export function getResultSummary(
     { id: 1, groupCategory: 'B', winsTotal: winsB },
     { id: 2, groupCategory: 'C', winsTotal: winsC },
     { id: 3, groupCategory: 'D', winsTotal: winsD },
+    { id: 4, groupCategory: 'E', winsTotal: winsE },
   ];
   resultSummary.sort((a, b) => b.winsTotal - a.winsTotal);
+
   return resultSummary;
 }

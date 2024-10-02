@@ -11,6 +11,9 @@
   color: #ffffff;
   user-select: none;
 }
+.APlus {
+  background: #000000;
+}
 .A {
   background-color: #dc4119;
 }

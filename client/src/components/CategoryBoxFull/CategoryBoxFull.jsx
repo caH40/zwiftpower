@@ -1,19 +1,17 @@
-import React from 'react';
-import cn from 'classnames';
-
-import MyTooltip from '../../HOC/MyTooltip';
+import cn from 'classnames/bind';
 
 import styles from './CategoryBoxFull.module.css';
 
-function CategoryBoxFull({ label = '' }) {
-  const classes = cn(styles.category, styles[label], styles.full);
-  const tooltip = '';
+const cx = cn.bind(styles);
 
-  return (
-    <MyTooltip tooltip={tooltip}>
-      <div className={classes}>{`Группа ${label}`}</div>
-    </MyTooltip>
-  );
+/**
+ * Блок с названием группы (категории).
+ */
+function CategoryBoxFull({ label }) {
+  // Изменение названия для группы А+
+  const labelCurrent = label !== 'APlus' ? label : 'A+';
+
+  return <div className={cx('category', label, 'full')}>{`Группа ${labelCurrent}`}</div>;
 }
 
 export default CategoryBoxFull;

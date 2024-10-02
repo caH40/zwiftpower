@@ -61,7 +61,7 @@ function Catchup() {
   // Определяем категории, включаем 'D' для сезонов после 2023 года.
   const categories = ['A', 'B', 'C'];
   if (+season > 2023) {
-    categories.push('D');
+    categories.push('D', 'E');
   }
 
   useAd(adNumbers);

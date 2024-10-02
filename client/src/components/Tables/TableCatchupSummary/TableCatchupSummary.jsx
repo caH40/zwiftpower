@@ -39,11 +39,17 @@ function TableCatchupSummary({ resultsSummary = [], categories }) {
             <td className={cn(styles.onlyContent, styles.centerTd)}>
               <TdRank value={index + 1} />
             </td>
+
             <td className={cn(styles.onlyContent, styles.centerTd, styles.bold)}>
               {result.winsTotal}
             </td>
+
             <td>
-              <CategoryBoxFull showLabel={true} label={result.groupCategory} full={true} />
+              <CategoryBoxFull
+                showLabel={true}
+                label={result.groupCategory !== 'E' ? result.groupCategory : 'APlus'}
+                full={true}
+              />
             </td>
           </tr>
         ))}

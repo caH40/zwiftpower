@@ -178,6 +178,9 @@ tbody .current {
   font-weight: bold;
   background: rgb(252, 131, 61);
 }
+.APlus {
+  background: #000000;
+}
 .A {
   background: #dc4119;
 }
