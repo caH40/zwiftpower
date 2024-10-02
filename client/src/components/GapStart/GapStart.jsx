@@ -7,9 +7,8 @@ import styles from './GapStart.module.css';
  * Блок отображения стартовых гэпов в таблице результатов, в частности в Догонялках.
  */
 function GapStart({ gaps }) {
-  const gapsSorted = [...gaps]
-    .filter((gap) => gap.gap !== 0)
-    .sort((a, b) => a.subgroupLabel.toLowerCase().localeCompare(b.subgroupLabel.toLowerCase()));
+  const gapsSorted = gaps.filter((gap) => gap.gap !== 0).sort((a, b) => a.gap - b.gap);
+
   return (
     <div className={styles.block}>
       {gapsSorted.map((gap) => (

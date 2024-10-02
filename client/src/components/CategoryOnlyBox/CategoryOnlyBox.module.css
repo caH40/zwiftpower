@@ -8,6 +8,9 @@
   line-height: 1;
   user-select: none;
 }
+.APlus {
+  background-color: var(--catAPlus);
+}
 .A {
   background-color: var(--catA);
 }

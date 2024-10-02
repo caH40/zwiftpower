@@ -13,3 +13,12 @@ export const getCategoryZMAP = (wattsPerKg) => {
   if (wattsPerKg >= zMAP.C.wattsPerKg) return 'C';
   return 'D';
 };
+
+/**
+ * Изменение названия группы в гэпах для Эвента.
+ */
+export function changeLabelCategoryInGaps({ gaps, oldLabel, newLabel }) {
+  return gaps.map((gap) =>
+    gap.subgroupLabel === oldLabel ? { ...gap, subgroupLabel: newLabel } : gap
+  );
+}

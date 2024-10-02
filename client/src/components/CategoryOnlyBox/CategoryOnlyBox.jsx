@@ -7,7 +7,8 @@ import styles from './CategoryOnlyBox.module.css';
 const cx = classNames.bind(styles);
 
 function CategoryOnlyBox({ label = '', squareSize = 24, female, hideLabel, tooltip }) {
-  const value = hideLabel ? '' : label;
+  const labelCurrent = label === 'APlus' ? 'A+' : label;
+  const value = hideLabel ? '' : labelCurrent;
 
   return (
     <MyTooltip tooltip={tooltip}>

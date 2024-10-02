@@ -88,6 +88,7 @@ select {
   --success: #58c34e;
   --wafer-white: rgba(255, 255, 255, 0.8);
 
+  --catAPlus: rgb(0, 0, 0);
   --catA: rgb(220, 65, 25);
   --catB: rgb(88, 195, 78);
   --catC: rgb(62, 192, 233);

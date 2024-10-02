@@ -9,7 +9,7 @@ const cx = cn.bind(styles);
  */
 function CategoryBoxFull({ label }) {
   // Изменение названия для группы А+
-  const labelCurrent = label !== 'APlus' ? label : 'A+';
+  const labelCurrent = label === 'APlus' ? 'A+' : label;
 
   return <div className={cx('category', label, 'full')}>{`Группа ${labelCurrent}`}</div>;
 }

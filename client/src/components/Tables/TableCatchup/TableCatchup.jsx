@@ -14,6 +14,7 @@ import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
 import TdSpeed from '../Td/TdSpeed';
 
+import { changeLabelCategoryInGaps } from '../../../utils/category';
 import { getLaps, map, routeName } from '../../../utils/event';
 
 import Thead from './Thead';
@@ -38,7 +39,9 @@ function TableCatchup({ catchups }) {
               <td>
                 <CategoryBox
                   showLabel={true}
-                  label={catchupResult.subgroupLabel}
+                  label={
+                    catchupResult.subgroupLabel === 'E' ? 'APlus' : catchupResult.subgroupLabel
+                  }
                   circle={true}
                 />
               </td>
@@ -50,7 +53,13 @@ function TableCatchup({ catchups }) {
               <TdSpeed speed={catchupResult.speed} />
               <td>{catchupResult.totalFinishedCount}</td>
               <td>
-                <GapStart gaps={catchupResult.gaps} />
+                <GapStart
+                  gaps={changeLabelCategoryInGaps({
+                    gaps: catchupResult.gaps,
+                    oldLabel: 'E',
+                    newLabel: 'APlus',
+                  })}
+                />
               </td>
               <td>{map(eventSubgroup.mapId)}</td>
               <td className={styles.td__nowrap}>{routeName(eventSubgroup.routeId)}</td>
