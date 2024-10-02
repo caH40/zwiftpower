@@ -18,38 +18,16 @@ export const filterByRankCatchup = <T extends ResultEventAdditional | ZwiftResul
     // установка данных дисквалификации при использовании VirtualPower
     const resultsWithVP = results.map((result) => setDSQWithVirtualPower(result));
 
-    const resultsABCD = resultsWithVP
-      .filter(
-        (result) =>
-          (result.subgroupLabel === 'A' ||
-            result.subgroupLabel === 'B' ||
-            result.subgroupLabel === 'C' ||
-            result.subgroupLabel === 'D') &&
-          result.isDisqualification !== true
-      )
+    const resultsNorm = resultsWithVP
+      .filter((result) => result.isDisqualification !== true)
       .sort(
         (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
       );
 
-    // для группы Е дисквал, так как участвуют вне зачёта
-    const resultsE = resultsWithVP
-      .filter((result) => result.subgroupLabel === 'E')
-      .sort(
-        (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-      )
-      .map((result) => ({
-        ...result,
-        isDisqualification: true,
-        disqualification: 'OFF_RECORD',
-        disqualificationDescription: 'Участвует вне зачёта',
-      }));
-
     // для всех дисквалифицированных результатов, кроме группы Е
-    const resultsOthers = resultsWithVP.filter(
-      (result) => result.subgroupLabel !== 'E' && result.isDisqualification
-    );
+    const resultsOthers = resultsWithVP.filter((result) => result.isDisqualification);
 
-    return [...resultsABCD, ...resultsE, ...resultsOthers];
+    return [...resultsNorm, ...resultsOthers];
   } catch (error) {
     errorHandler(error);
     return results;
