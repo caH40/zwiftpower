@@ -10,10 +10,13 @@ export const patternSeries = (rawEventParams, eventSubgroups, subgroupLabels) =>
   // проверка наличия обязательных подгрупп в созданном Эвенте
   checkingRequiredSubgroups(subgroupLabels, requiredLabelsForSeries);
 
+  // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
+  const { value, paceValues, ...accessExpressionObj } = accessExpressionsDefault;
+
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpressionsDefault.value;
-  eventParams.categoryEnforcementName = accessExpressionsDefault.name;
+  eventParams.accessExpression = value;
+  eventParams.accessExpressionObj = accessExpressionObj;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';

@@ -280,7 +280,7 @@ export interface ZwiftEventSchema {
   _id?: Types.ObjectId;
   seriesId: Types.ObjectId | null;
   typeRaceCustom: string;
-  categoryEnforcementName: string | null;
+  accessExpressionObj: TAccessExpressionObj | null; // Описание диапазонов доступа в категории при включенной Строгой категоризации.
   id: number;
   mapId: number;
   categoryEnforcement: boolean;
@@ -318,6 +318,11 @@ export interface ZwiftEventSchema {
     }[];
   };
 }
+export type TAccessExpressionObj = {
+  name: string;
+  label: string;
+  description: string;
+} | null;
 //
 //
 export interface ZwiftEventSubgroupSchema {

@@ -5,6 +5,7 @@ import { accessExpressions } from '../../../../../assets/zwift/accessExpression'
  */
 export const setCategoryEnforcementReducer = (state, action) => {
   const name = action.payload;
+
   const eventSubgroups = [
     state.eventSubgroup_1,
     state.eventSubgroup_2,
@@ -16,47 +17,13 @@ export const setCategoryEnforcementReducer = (state, action) => {
   const accessExpression = accessExpressions.find((elm) => elm.name === name);
   const isDisabled = name === 'disabled';
 
+  // Удаления value строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
+  const { paceValues, value, id, ...accessExpressionObj } = accessExpression;
+
   state.eventMainParams.categoryEnforcement = !isDisabled ? true : false;
-  state.eventMainParams.accessExpression = !isDisabled ? accessExpression.value : null;
-  state.eventMainParams.categoryEnforcementName = accessExpression.name;
-  setPaceValues(eventSubgroups, accessExpression.paceValues);
-
-  // switch (name) {
-  //   case 'disabled': {
-  //     state.eventMainParams.categoryEnforcement = false;
-  //     state.eventMainParams.accessExpression = null;
-  //     state.eventMainParams.categoryEnforcementName = 'disabled';
-  //     break;
-  //   }
-  //   case 'category': {
-  //     state.eventMainParams.categoryEnforcement = true;
-  //     state.eventMainParams.accessExpression = accessExpression.default.value;
-  //     state.eventMainParams.categoryEnforcementDescription =
-  //       accessExpression.default.description;
-  //     break;
-  //   }
-  //   case 'racingScore': {
-  //     state.eventMainParams.categoryEnforcement = true;
-  //     state.eventMainParams.accessExpression = accessExpression.racingScoreDefault.value;
-  //     state.eventMainParams.categoryEnforcementDescription =
-  //       accessExpression.racingScoreDefault.description;
-  //     break;
-  //   }
-  //   case 'catchUpNew': {
-  //     const accessExpressionCatchUpNew = accessExpressions.find(
-  //       (elm) => elm.name === 'catchUpNew'
-  //     );
-  //     state.eventMainParams.categoryEnforcement = true;
-  //     state.eventMainParams.accessExpression = accessExpressionCatchUpNew.value;
-  //     state.eventMainParams.categoryEnforcementDescription = accessExpressionCatchUpNew.name;
-  //     setPaceValues(eventSubgroups, accessExpressionCatchUpNew.paceValues);
-
-  //     break;
-  //   }
-
-  //   default:
-  //   // Остается без изменения
-  // }
+  state.eventMainParams.accessExpression = !isDisabled ? value : null;
+  state.eventMainParams.accessExpressionObj = accessExpressionObj;
+  setPaceValues(eventSubgroups, paceValues);
 };
 
 /**

@@ -7,7 +7,6 @@ import {
   optionsCulling,
   optionsEventType,
 } from '../../../../assets/select/event-edit';
-import RCheckbox from '../../../UI/ReduxUI/RCheckbox/RCheckbox';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
 import {
@@ -224,7 +223,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
           <SimpleSelectFunction
             reducer={selectCategoryEnforcement}
             options={optionsCategoryEnforcement}
-            defaultValue={eventMainParams.categoryEnforcementName}
+            defaultValue={eventMainParams.accessExpressionObj?.name}
           />
 
           {eventMainParams.categoryEnforcement ? (

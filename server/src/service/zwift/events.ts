@@ -1,14 +1,15 @@
 import { loggingAdmin } from '../../logger/logger-admin.js';
 import { getRequest } from './request-get.js';
 import { putRequest } from './request-put.js';
-
-// types
-import { PutEvent } from '../../types/http.interface.js';
-import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { checkModeratorClub } from '../moderator-club.js';
+
+// types
+import { PutEvent } from '../../types/http.interface.js';
+import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
+import { TAccessExpressionObj } from '../../types/model.interface.js';
 
 // запрос данных Эвента с сервера Zwift
 export async function getEventZwiftService(eventId: number) {
@@ -20,10 +21,10 @@ export async function getEventZwiftService(eventId: number) {
   }
 
   // получение typeRaceCustom
-  const eventDB: { typeRaceCustom: string; categoryEnforcementName: string | null } | null =
+  const eventDB: { typeRaceCustom: string; accessExpressionObj: TAccessExpressionObj } | null =
     await ZwiftEvent.findOne(
       { id: eventId },
-      { _id: false, typeRaceCustom: true, categoryEnforcementName: true }
+      { _id: false, typeRaceCustom: true, accessExpressionObj: true }
     ).lean();
 
   return { ...eventData, ...eventDB };
@@ -46,7 +47,7 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
     {
       $set: {
         typeRaceCustom: event.eventData.typeRaceCustom,
-        categoryEnforcementName: event.eventData.categoryEnforcementName,
+        accessExpressionObj: event.eventData.accessExpressionObj,
       },
     },
     { new: true }

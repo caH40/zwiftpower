@@ -16,10 +16,13 @@ export const patternCatchUp = (rawEventParams, eventSubgroups, subgroupLabels) =
   const accessExpressionCatchUp =
     accessExpressions.find((elm) => elm.name === 'catchUp') || accessExpressionsDefault;
 
+  // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
+  const { value, paceValues, ...accessExpressionObj } = accessExpressionCatchUp;
+
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpressionCatchUp.value;
-  eventParams.categoryEnforcementName = accessExpressionCatchUp.name;
+  eventParams.accessExpression = value;
+  eventParams.accessExpressionObj = accessExpressionObj;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'RACE';
   eventParams.type = 'EVENT_TYPE_RACE';

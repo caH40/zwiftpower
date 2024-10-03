@@ -13,13 +13,16 @@ export const patternNewbies = (rawEventParams, eventSubgroups, subgroupLabels) =
   // проверка наличия обязательных подгрупп в созданном Эвенте
   checkingRequiredSubgroups(subgroupLabels, requiredLabelsForNewbies);
 
-  const accessExpressionCatchUp =
+  const accessExpressionNewbies =
     accessExpressions.find((elm) => elm.name === 'newbies') || accessExpressionsDefault;
+
+  // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
+  const { value, paceValues, ...accessExpressionObj } = accessExpressionNewbies;
 
   const eventParams = { ...rawEventParams };
   eventParams.categoryEnforcement = true;
-  eventParams.accessExpression = accessExpressionCatchUp.value;
-  eventParams.categoryEnforcementName = accessExpressionCatchUp.name;
+  eventParams.accessExpression = value;
+  eventParams.accessExpressionObj = accessExpressionObj;
   eventParams.rulesSet = ['SHOW_RACE_RESULTS', 'NO_POWERUPS'];
   eventParams.eventType = 'GROUP_RIDE';
   eventParams.type = 'EVENT_TYPE_GROUP_RIDE';

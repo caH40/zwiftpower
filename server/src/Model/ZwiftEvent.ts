@@ -2,10 +2,19 @@ import mongoose, { Schema, model } from 'mongoose';
 
 import { ZwiftEventSchema } from '../types/model.interface.js';
 
+const accessExpressionObjSchema = new Schema(
+  {
+    name: String,
+    label: String,
+    description: String,
+  },
+  { _id: false }
+);
+
 const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', default: null },
   typeRaceCustom: { type: String, default: null },
-  categoryEnforcementName: { type: String, default: null },
+  accessExpressionObj: { type: accessExpressionObjSchema, default: null },
   id: { type: Number, unique: true, required: true },
   mapId: { type: Number, default: null },
   categoryEnforcement: { type: Boolean, default: false },

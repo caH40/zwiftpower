@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
+import { TAccessExpressionObj } from './model.interface.js';
 
 // данные из query параметров url
 export interface GetLogsAdmins {
@@ -31,7 +32,7 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   creator: string;
   organizer: string;
   typeRaceCustom: string;
-  categoryEnforcementName: string | null;
+  accessExpressionObj: TAccessExpressionObj;
   seriesId: Types.ObjectId | null;
 }
 /**

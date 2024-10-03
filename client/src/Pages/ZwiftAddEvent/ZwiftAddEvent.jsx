@@ -57,8 +57,13 @@ function ZwiftAddEvent() {
   const addEvent = () => {
     // Добавление названия пакета настроек строгой категоризации.
     const { accessExpression } = eventMainParams;
-    const categoryEnforcementName =
-      accessExpressions.find((elm) => elm.value === accessExpression)?.name || null;
+    const accessExpressionObj =
+      accessExpressions.find((elm) => elm.value === accessExpression) || null;
+
+    // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
+
+    delete accessExpressionObj?.value;
+    delete accessExpressionObj?.paceValues;
 
     // Добавление типа Гонки на основании чего будет рассчитываться финишный протокол.
     const isFilledFields = additionalParams.typeRaceCustom;
@@ -77,8 +82,9 @@ function ZwiftAddEvent() {
       creator: userId,
       ...eventMainParams,
       ...additionalParams,
-      categoryEnforcementName,
+      accessExpressionObj,
     };
+
     dispatch(fetchEventPost(eventForSend)).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
         navigate('/race/schedule');
