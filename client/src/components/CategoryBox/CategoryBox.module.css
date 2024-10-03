@@ -12,34 +12,34 @@
   user-select: none;
 }
 .APlus {
-  background: #000000;
+  background-color: var(--catAPlus);
 }
 .A {
-  background-color: #dc4119;
+  background-color: var(--catA);
 }
 .B {
-  background-color: #58c34e;
+  background-color: var(--catB);
 }
 .C {
-  background-color: #3ec0e9;
+  background-color: var(--catC);
 }
 .D {
-  background-color: #fccf0b;
+  background-color: var(--catD);
 }
 .E {
-  background-color: #943e5e;
+  background-color: var(--catE);
 }
 .W {
-  background-color: #9422ae;
+  background-color: var(--catW);
 }
 .WA {
-  background-color: #9422ae;
+  background-color: var(--catWA);
 }
 .WB {
-  background-color: #9422ae;
+  background-color: var(--catWB);
 }
 .T {
-  background-color: var(--color-blue-3);
+  background-color: var(--catT);
 }
 .circle {
   max-width: 24px;

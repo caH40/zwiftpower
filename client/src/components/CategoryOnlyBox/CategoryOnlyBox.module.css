@@ -29,3 +29,9 @@
 .W {
   background-color: var(--catW);
 }
+.WA {
+  background-color: var(--catWA);
+}
+.WB {
+  background-color: var(--catWB);
+}
