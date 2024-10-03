@@ -223,6 +223,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
           <SimpleSelectFunction
             reducer={selectCategoryEnforcement}
             options={optionsCategoryEnforcement}
+            value={eventMainParams.accessExpressionObj?.name}
             defaultValue={eventMainParams.accessExpressionObj?.name}
           />
 

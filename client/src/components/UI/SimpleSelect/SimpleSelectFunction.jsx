@@ -1,34 +1,33 @@
 import styles from './SimpleSelect.module.css';
 
 /**
- * Select при изменении option запускается передаваемая функция
- * options =[name: значение(value), label: отображаемое название в селекторе, id: любой id]
+ * Компонент SimpleSelectFunction: отображает выпадающий список (селектор) с возможностью
+ * передать функцию для обработки выбора.
+ *
+ * @param {Object} props - Пропсы компонента
+ * @returns {JSX.Element} Выпадающий список с опциями.
  */
-function SimpleSelectFunction({
-  reducer,
-  value,
-  name,
-  disabled,
-  options,
-  closeEmptyOption,
-  defaultValue,
-}) {
+function SimpleSelectFunction({ reducer, value, name, disabled, options, closeEmptyOption }) {
   return (
     <>
       {name ? <p className={styles.label__bold}>{name}:</p> : null}
+      {/* Отображение метки, если передан проп name */}
       <select
-        className={styles.select}
-        placeholder={name}
-        value={value}
-        // value={''}
-        onChange={(e) => reducer(e.target.value)}
-        disabled={disabled}
-        defaultValue={defaultValue}
+        className={styles.select} // Стили для селектора
+        value={value} // Текущее значение, управляемое извне
+        onChange={(e) => reducer(e.target.value)} // Вызов reducer при изменении значения
+        disabled={disabled} // Если true, отключает селектор
       >
+        {/* Если closeEmptyOption не установлен, добавляется пустая опция */}
         {!closeEmptyOption && <option className={styles.option} value=""></option>}
+        {/* Генерация опций на основе переданного массива options */}
         {options.map((element) => (
-          <option className={styles.option} value={element.name} key={element.id}>
-            {element.label}
+          <option
+            className={styles.option} // Стили для опций
+            value={element.name} // Значение опции
+            key={element.id} // Уникальный ключ для каждой опции
+          >
+            {element.label} {/* Отображаемый текст опции */}
           </option>
         ))}
       </select>
