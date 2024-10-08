@@ -217,6 +217,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
         </div>
       </div>
 
+      {/* Выбор строгой настроек категоризации или отключение */}
       <div className={styles.spacer__block}>
         <h3 className={styles.title__param}>Выбор строгой категоризации:</h3>
         <div className={styles.groups__enforcement}>
@@ -225,8 +226,10 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
             options={optionsCategoryEnforcement}
             value={eventMainParams.accessExpressionObj?.name}
             defaultValue={eventMainParams.accessExpressionObj?.name}
+            closeEmptyOption={true}
           />
 
+          {/* Отображение настроек строгой категоризации*/}
           {eventMainParams.categoryEnforcement ? (
             <pre className={styles.code}>{eventMainParams.accessExpression}</pre>
           ) : (

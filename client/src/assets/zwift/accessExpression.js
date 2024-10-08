@@ -4,7 +4,7 @@
 export const accessExpressionsDefault = {
   id: 1,
   name: 'default',
-  label: 'Базовые настройки по категориям.',
+  label: 'По категориям. Базовые настройки.',
   value: `(powerCurves.category == 0 && subgroup.label == 1) || 
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
 (powerCurves.category == 5 && subgroup.label == 5)`,
@@ -48,16 +48,16 @@ export const accessExpressions = [
     name: 'racingScoreDefault',
     label: 'Гоночный рейтинг. Базовые настройки.',
     value: `(subgroup.label == 1 && scoring.current <= 1000) ||
-(subgroup.label == 2 && scoring.current < 650) ||
-(subgroup.label == 3 && scoring.current < 525 ) ||
-(subgroup.label == 4 && scoring.current < 415) ||
-(subgroup.label == 5 && scoring.current < 300)`,
+(subgroup.label == 2 && scoring.current < 690) ||
+(subgroup.label == 3 && scoring.current < 520 ) ||
+(subgroup.label == 4 && scoring.current < 350) ||
+(subgroup.label == 5 && scoring.current < 180)`,
     description: `Деление на группы происходит по Racing Score.
-                  Группа A:  650-1000;
-                  Группа B: 525-650;
-                  Группа C: 415-525;
-                  Группа D: 300-415;
-                  Группа E: 0-300;`,
+                  Группа A:  690-1000;
+                  Группа B: 520-690;
+                  Группа C: 350-520;
+                  Группа D: 180-350;
+                  Группа E: 0-180;`,
     paceValues: {
       1: { from: 1, to: 6 },
       2: { from: 1, to: 6 },

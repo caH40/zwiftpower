@@ -112,13 +112,19 @@ function ZwiftEditEvent() {
       </div>
       {eventParams?.eventMainParams.worldId ? (
         <>
+          {/* Выбор сохраненных настроек для Эвентов */}
           <div className={styles.group}>
             <FormPattern activatePattern={activatePattern} />
           </div>
+
+          {/* Форма для установки настроек Эвента */}
           <div className={styles.group}>
             <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
           </div>
+
+          {/* Формы для установки настроек в группах Эвента */}
           <FormEditEventGroup sendForm={sendNewEventParams} />
+
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
