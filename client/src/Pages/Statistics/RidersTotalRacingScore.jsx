@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ChartRidersTotalFTP from '../../components/Charts/RidersTotal/RidersTotalFTP';
 import useTitle from '../../hook/useTitle';
-import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fetchRidersTotalFTP';
-import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/ridersTotalFTPSlice';
 import ChartRidersTotalFTPPie from '../../components/Charts/RidersTotalPie/ChartRidersTotalFTPPie';
-import IconQuestion from '../../components/icons/IconQuestion';
 import { HelmetFTP } from '../../components/Helmets/HelmetFTP';
 import SkeletonRidersDiagrams from '../../components/SkeletonLoading/SkeletonRidersDiagrams/SkeletonRidersDiagrams';
+import { fetchRidersTotalRacingScore } from '../../redux/features/api/statistics-racing-score/fetchRidersTotalRacingScore';
+import { resetRidersTotalRacingScore } from '../../redux/features/api/statistics-racing-score/ridersTotalRacingScoreSlice';
 
 import styles from './Statistics.module.css';
 
@@ -17,34 +16,24 @@ import styles from './Statistics.module.css';
  */
 function RidersTotalRacingScore() {
   useTitle('Статистика райдеров по Racing Score');
-  const { status: statusRidersTotalFTPFetch } = useSelector(
-    (state) => state.ridersTotalFTPFetch
+  const { status: statusRidersTotalRacingScoreFetch } = useSelector(
+    (state) => state.ridersTotalRacingScoreFetch
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchRidersTotalFTP());
-    return () => dispatch(resetRidersTotalFTP());
+    dispatch(fetchRidersTotalRacingScore());
+    return () => dispatch(resetRidersTotalRacingScore());
   }, []);
 
   return (
     <section>
       <HelmetFTP />
-      <h2 className={styles.title}>
-        Распределение райдеров по FTP{' '}
-        <span>
-          <IconQuestion
-            squareSize={18}
-            tooltip={
-              'Категории рассчитываются по правилам с сайта zwiftpower.com, FTP рассчитывается как CP20 * 0.95 '
-            }
-          />
-        </span>
-      </h2>
+      <h2 className={styles.title}>Распределение райдеров по Racing Score</h2>
       {/* скелетон для загрузки */}
-      <SkeletonRidersDiagrams status={statusRidersTotalFTPFetch} quantityCharts={4} />
+      <SkeletonRidersDiagrams status={statusRidersTotalRacingScoreFetch} quantityCharts={4} />
 
-      {statusRidersTotalFTPFetch === 'resolved' && (
+      {statusRidersTotalRacingScoreFetch === 'resolved' && (
         <>
           <div className={styles.wrapper__charts}>
             <div className={styles.wrapper__chart}>
