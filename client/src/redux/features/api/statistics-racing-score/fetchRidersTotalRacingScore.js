@@ -9,7 +9,7 @@ export const fetchRidersTotalRacingScore = createAsyncThunk(
   async function (_, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/statistics/riders-total`,
+        url: `${serverExpress}/api/statistics/riders-total-racing-score`,
         method: 'get',
       });
 

@@ -588,3 +588,19 @@ export interface IRidersQuery {
   isRasing?: boolean;
   category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E';
 }
+
+/**
+ * Данные распределения количества райдера по диапазонам рейтинговых очков.
+ */
+export type TRidersRacingScore = {
+  scoreRange: number;
+  value: number;
+};
+
+/**
+ * Данные распределения количества райдера по диапазонам рейтинговых очков для женщин и мужчин на всём диапазоне.
+ */
+export type TRidersRacingScores = {
+  maleRacingScore: TRidersRacingScore[];
+  femaleRacingScore: TRidersRacingScore[];
+};

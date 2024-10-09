@@ -19,6 +19,7 @@ function RidersTotalRacingScore() {
   const { status: statusRidersTotalRacingScoreFetch } = useSelector(
     (state) => state.ridersTotalRacingScoreFetch
   );
+
   const dispatch = useDispatch();
 
   useEffect(() => {

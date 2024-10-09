@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchRidersTotalRacingScore } from './fetchRidersTotalRacingScore';
 
 const initialState = {
-  ridersTotal: [],
+  maleRacingScore: [],
+  femaleRacingScore: [],
   status: null,
   error: null,
 };
@@ -16,7 +17,8 @@ const ridersTotalRacingScoreSlice = createSlice({
   initialState,
   reducers: {
     resetRidersTotalRacingScore(state) {
-      state.ridersTotal = [];
+      state.maleRacingScore = [];
+      state.femaleRacingScore = [];
     },
   },
 
@@ -30,7 +32,8 @@ const ridersTotalRacingScoreSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
 
-      state.ridersTotal = action.payload;
+      state.maleRacingScore = action.payload.maleRacingScore;
+      state.femaleRacingScore = action.payload.femaleRacingScore;
     });
 
     builder.addCase(fetchRidersTotalRacingScore.rejected, (state, action) => {

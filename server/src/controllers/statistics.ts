@@ -6,10 +6,15 @@ import { getLeadersInIntervalsService } from '../statistics/leadersInIntervals/l
 import { getRidersTotalService } from '../statistics/ridersTotal.js';
 
 // types
-import { AgeCategories, TotalRidersFTP } from '../types/types.interface.js';
+import {
+  AgeCategories,
+  TotalRidersFTP,
+  TRidersRacingScores,
+} from '../types/types.interface.js';
 import { getRidersTotalAgeService } from '../statistics/ridersAge.js';
 import { setCache } from '../cache/cache.js';
 import { secondsIn6Hours } from '../assets/date.js';
+import { getRidersTotalRacingScoreService } from '../statistics/ridersTotalRacingScore.js';
 
 export const getRidersInEvents = async (req: Request, res: Response) => {
   try {
@@ -78,6 +83,29 @@ export const getRidersTotal = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     } else {
       res.status(400).json('Непредвиденная ошибка в getRidersTotal');
+    }
+  }
+};
+
+/**
+ * Получение всех райдеров с распределением по 10 racing score за последние 90 дней
+ */
+export const getRidersTotalRacingScore = async (req: Request, res: Response) => {
+  try {
+    const { path } = req;
+    const ridersTotalRacingScore: TRidersRacingScores =
+      await getRidersTotalRacingScoreService();
+
+    // кэширование данных
+    setCache(path, JSON.stringify(ridersTotalRacingScore), secondsIn6Hours);
+
+    res.status(200).json(ridersTotalRacingScore);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json('Непредвиденная ошибка в getRidersTotalRacingScore');
     }
   }
 };
