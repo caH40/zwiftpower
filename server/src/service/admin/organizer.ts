@@ -28,7 +28,7 @@ export const postOrganizersService = async (
 };
 
 /**
- * Сервис добавления нового Организатора заезда
+ * Сервис удаления Организатора заезда.
  */
 export const deleteOrganizersService = async (
   organizerId: string
