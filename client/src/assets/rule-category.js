@@ -9,6 +9,14 @@ export const zMAP = {
   C: { wattsPerKg: 3.2 },
 };
 
+export const racingScoreDefault = {
+  APlus: { min: 690, max: 1000 },
+  A: { min: 520, max: 689 },
+  B: { min: 350, max: 519 },
+  C: { min: 180, max: 349 },
+  D: { min: 0, max: 179 },
+};
+
 /**
  * Категории из ZwiftPower для мужчин
  */
