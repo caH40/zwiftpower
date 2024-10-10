@@ -38,7 +38,7 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getLeadersMeta(url);
   } else if (url === '/race/statistics/riders-ftp') {
     tags = getFTPMeta(url);
-  } else if (url === '/race/riders-racing-score') {
+  } else if (url === '/race/statistics/riders-racing-score') {
     tags = getFTPMeta(url);
   } else if (url.includes('/race/series/catchup/')) {
     tags = getCatchupMeta(url);
