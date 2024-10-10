@@ -11,6 +11,7 @@ import {
   getHomeMeta,
   getLeadersMeta,
   getMetaOtherPages,
+  getRacingScoreMeta,
   getResultListMeta,
   getRidersMeta,
   getScheduleListMeta,
@@ -39,7 +40,7 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
   } else if (url === '/race/statistics/riders-ftp') {
     tags = getFTPMeta(url);
   } else if (url === '/race/statistics/riders-racing-score') {
-    tags = getFTPMeta(url);
+    tags = getRacingScoreMeta(url);
   } else if (url.includes('/race/series/catchup/')) {
     tags = getCatchupMeta(url);
   } else if (url.includes('/faq')) {
