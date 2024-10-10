@@ -103,6 +103,20 @@ export const getFTPMeta = (url: string): MetaTags => {
 };
 
 /**
+ * Формирование Мета тегов для страницы "Статистика райдеров по Racing Score"
+ */
+export const getRacingScoreMeta = (url: string): MetaTags => {
+  const title = 'Статистика райдеров по Racing Score в Zwift (Звифт)';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Диаграммы распределения райдеров по Racing Score (Рейтинговые очки). Диаграммы распределения райдеров по категориям (базовые настройки Звифта).';
+  const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
+  const recommendationsTag = 'ftp';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
+
+/**
  * Формирование Мета тегов для страницы "Догонялки (CatchUp)"
  */
 export const getCatchupMeta = (url: string): MetaTags => {
