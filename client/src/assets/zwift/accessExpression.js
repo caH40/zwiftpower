@@ -20,7 +20,7 @@ export const accessExpressionsDefault = {
     4: { from: 1, to: 2.49 },
     5: { from: 1, to: 6 },
   },
-  categoryEnforcement: false,
+  categoryEnforcement: true,
 };
 
 /**
