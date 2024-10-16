@@ -38,7 +38,9 @@ function ZwiftViewEvent() {
       <div className={styles.group}>
         <FormRequest name={'Id изменяемого Event'} />
       </div>
-      <JSONBlock json={eventParams?.eventMainParams} />
+      <JSONBlock
+        json={eventParams?.eventMainParams?.id === 0 ? null : eventParams?.eventMainParams}
+      />
     </section>
   );
 }

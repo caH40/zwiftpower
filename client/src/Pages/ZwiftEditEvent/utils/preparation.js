@@ -14,7 +14,6 @@ export function prepareData({
   checkboxTags,
 }) {
   const event = { ...eventMainParams };
-  const dateNow = `timestamp=${Date.now()}`;
 
   // фильтрация от несуществующих групп
   const eventSubgroups = [
@@ -27,15 +26,23 @@ export function prepareData({
 
   event.rulesId = null;
   const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
-  const tags = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
-  tags.push(dateNow);
+
+  // Обработка данных в tags.
+  const tagsFromCheckbox = [...checkboxTags]
+    .filter((tag) => tag.checked)
+    .map((tag) => tag.value);
+  const tags = [...eventMainParams.tags, ...tagsFromCheckbox];
+  const tagsFiltered = tags.filter((tag) => !tag.includes('timestamp'));
+  const timestamp = `timestamp=${Date.now()}`;
+
+  tagsFiltered.push(timestamp);
 
   event.rulesSet = rulesSet;
 
   // изменение тэга времени
-  event.tags = tags;
+  event.tags = tagsFiltered;
   for (const subGroup of eventSubgroups) {
-    subGroup.tags = tags;
+    subGroup.tags = tagsFiltered;
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
     subGroup.rulesId = null;

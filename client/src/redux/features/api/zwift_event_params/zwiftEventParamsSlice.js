@@ -4,6 +4,10 @@ import { labelsSubgroups } from '../../../../assets/subgroups';
 import { rules } from '../../../../assets/zwift/rule';
 import { tags } from '../../../../assets/zwift/tags';
 import { getPaceValue } from '../../../../utils/pace-category';
+import {
+  accessExpressions,
+  accessExpressionsRegClosed,
+} from '../../../../assets/zwift/accessExpression';
 
 import { builderZwiftEventParams } from './builder';
 import { setPatternReducer } from './reducers/pattern';
@@ -12,7 +16,12 @@ import { setCategoryEnforcementReducer } from './reducers/category-enforcement';
 const initialState = {
   eventParamsRaw: {},
   // у контролируемого параметра должно быть значение отличное от null, undefined
-  eventMainParams: { id: 0, categoryEnforcement: false },
+  eventMainParams: {
+    id: 0,
+    categoryEnforcement: true,
+    accessExpression: accessExpressionsRegClosed.value,
+    accessExpressionObj: accessExpressionsRegClosed,
+  },
   eventSubgroup_1: undefined,
   eventSubgroup_2: undefined,
   eventSubgroup_3: undefined,

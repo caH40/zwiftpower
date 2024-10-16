@@ -61,9 +61,12 @@ function ZwiftAddEvent() {
       accessExpressions.find((elm) => elm.value === accessExpression) || null;
 
     // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
-
-    delete accessExpressionObj?.value;
-    delete accessExpressionObj?.paceValues;
+    const accessExpressionObjFiltered = {
+      description: accessExpressionObj.description,
+      id: accessExpressionObj.id,
+      label: accessExpressionObj.label,
+      name: accessExpressionObj.name,
+    };
 
     // Добавление типа Гонки на основании чего будет рассчитываться финишный протокол.
     const isFilledFields = additionalParams.typeRaceCustom;
@@ -82,7 +85,7 @@ function ZwiftAddEvent() {
       creator: userId,
       ...eventMainParams,
       ...additionalParams,
-      accessExpressionObj,
+      accessExpressionObj: accessExpressionObjFiltered,
     };
 
     dispatch(fetchEventPost(eventForSend)).then((data) => {

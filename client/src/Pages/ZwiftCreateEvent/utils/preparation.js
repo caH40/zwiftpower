@@ -25,9 +25,13 @@ export function prepareData({
   ].filter((elm) => elm.label);
 
   const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
-  const tags = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
+
+  // Установка значений в tags.
+  const tagsRules = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
   event.rulesSet = rulesSet;
-  event.tags = tags;
+  const timestamp = `timestamp=${Date.now()}`;
+  const tag = [...tagsRules, timestamp];
+  event.tags = tag;
 
   // параметры для TIME TRIAL
   if (event.eventType === 'TIME_TRIAL') {
@@ -36,18 +40,14 @@ export function prepareData({
     });
   } else {
     delete event.timeTrialOptions;
+    eventSubgroups.forEach((subgroup) => {
+      subgroup.tags = tag;
+    });
   }
 
   // type тип заезда, значение которого идет в связке с eventType
   // для создания Эвента требуется указывать type, для редактирования eventType
   event.type = optionsEventType.find((type) => type.name === event.eventType)?.nameSecond;
-
-  // если включен categoryEnforcement, но не задан accessExpression
-  if (event.categoryEnforcement && !event.accessExpression) {
-    event.accessExpression = accessExpressionsDefault;
-  } else if (!event.categoryEnforcement) {
-    event.accessExpression = null;
-  }
 
   return {
     eventData: {

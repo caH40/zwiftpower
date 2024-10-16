@@ -50,6 +50,11 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
     );
   };
 
+  // Для формы создания необходим только пункт closed
+  const optionsCategoryEnforcementCurrent = isCreating
+    ? optionsCategoryEnforcement.filter((elm) => elm.name === 'closed')
+    : optionsCategoryEnforcement;
+
   return (
     <>
       <h4 className={styles.title}>Общие настройки заезда</h4>
@@ -223,7 +228,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
         <div className={styles.groups__enforcement}>
           <SimpleSelectFunction
             reducer={selectCategoryEnforcement}
-            options={optionsCategoryEnforcement}
+            options={optionsCategoryEnforcementCurrent}
             value={eventMainParams.accessExpressionObj?.name}
             defaultValue={eventMainParams.accessExpressionObj?.name}
             closeEmptyOption={true}

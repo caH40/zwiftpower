@@ -17,7 +17,7 @@ import {
   setCategoryEnforcement,
   setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
-import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
+// import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
 import {
   resetEventIdCreated,
   setEventId,
@@ -113,9 +113,9 @@ function ZwiftEditEvent() {
       {eventParams?.eventMainParams.worldId ? (
         <>
           {/* Выбор сохраненных настроек для Эвентов */}
-          <div className={styles.group}>
+          {/* <div className={styles.group}>
             <FormPattern activatePattern={activatePattern} />
-          </div>
+          </div> */}
 
           {/* Форма для установки настроек Эвента */}
           <div className={styles.group}>
@@ -128,7 +128,9 @@ function ZwiftEditEvent() {
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
-      <JSONBlock json={eventParams?.eventMainParams} />
+      <JSONBlock
+        json={eventParams?.eventMainParams?.id === 0 ? null : eventParams?.eventMainParams}
+      />
     </section>
   );
 }

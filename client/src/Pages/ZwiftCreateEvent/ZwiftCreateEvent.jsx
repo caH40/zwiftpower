@@ -33,6 +33,14 @@ function ZwiftCreateEvent() {
   const eventParams = useSelector((state) => state.eventParams);
   const { clubs } = useSelector((state) => state.zwiftClub);
 
+  // Сброс хранилища при размонтировании компонента.
+  useEffect(() => {
+    return () => {
+      dispatch(resetParams());
+      dispatch(resetClub());
+    };
+  }, []);
+
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
     dispatch(setMainParams(getInitialMainParams()));
@@ -43,17 +51,11 @@ function ZwiftCreateEvent() {
         subgroups: [initialSubgroup],
       })
     );
-    return () => {
-      dispatch(resetParams());
-    };
   }, []);
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
     dispatch(fetchGetZwiftClubs());
-    return () => {
-      dispatch(resetClub());
-    };
   }, []);
 
   const sendCreateNewEvent = () => {
@@ -64,7 +66,7 @@ function ZwiftCreateEvent() {
     }
     const event = prepareData(eventParams);
     dispatch(fetchEventCreatePost(event));
-    dispatch(resetParams());
+    // dispatch(resetParams());
     navigate('/zwift/event/add');
   };
 

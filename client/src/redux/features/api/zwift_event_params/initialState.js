@@ -1,3 +1,5 @@
+import { accessExpressionsRegClosed } from '../../../../assets/zwift/accessExpression';
+
 const dateStart = new Date().setHours(19, 0, 0, 0);
 const eventStart = new Date(dateStart).toISOString();
 
@@ -17,12 +19,15 @@ export const getInitialMainParams = () => ({
   rulesId: null,
   microserviceName: 'clubs',
   cullingType: 'CULLING_EVENT_ONLY',
-  categoryEnforcement: false,
+  categoryEnforcement: true,
+  accessExpression: accessExpressionsRegClosed.value,
+  accessExpressionObj: accessExpressionsRegClosed,
   timeTrialOptions: {
     timeGapBetweenRowsMs: 15000,
     maxRows: 50,
     maxRidersPerRow: 10,
   },
+  tags: [],
 });
 
 /**
