@@ -14,7 +14,7 @@ export const racingScoreDefault = {
   A: { min: 520, max: 689.99 },
   B: { min: 350, max: 519.99 },
   C: { min: 180, max: 349.99 },
-  D: { min: 0, max: 179.99 },
+  D: { min: 1, max: 179.99 },
 };
 
 /**

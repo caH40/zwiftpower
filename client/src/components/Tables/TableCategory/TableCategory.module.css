@@ -11,7 +11,6 @@
 .table td {
   border: 1px solid var(--color-border-minor);
   padding: 5px;
-  text-align: center;
 }
 .table caption {
   text-align: left;
@@ -31,17 +30,22 @@
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
+  width: 120px;
+  margin: 0 auto;
 }
-.categoryA {
+.APlus {
+  background-color: var(--catAPlus);
+}
+.A {
   background-color: var(--catA);
 }
-.categoryB {
+.B {
   background-color: var(--catB);
 }
-.categoryC {
+.C {
   background-color: var(--catC);
 }
-.categoryD {
+.D {
   background-color: var(--catD);
 }
 

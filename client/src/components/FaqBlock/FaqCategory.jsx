@@ -12,16 +12,7 @@ function FaqCategory() {
       <h2 className={styles.title}>Отображение категорий на основе zFTP, zMAP</h2>
       <div className={styles.box}>
         <p className={styles.text}>
-          Приблизительная оценка категории согласно информации, которая размещена на сайте
-          Звифта:{' '}
-          <a
-            href="https://support.zwift.com/en_us/category-enforcement-faq-rJ5CQrpvc"
-            className={styles.link}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Category Enforcement FAQ
-          </a>
+          Приблизительная оценка категории Category Enforcement по zFTP и zMAP.
         </p>
         <div className={styles.icon}>
           <IconCategoryEnforced squareSize={50} />

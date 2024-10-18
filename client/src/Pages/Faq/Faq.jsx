@@ -9,6 +9,7 @@ import FaqJersey from '../../components/FaqJersey/FaqJersey';
 import FaqNPVI from '../../components/FaqBlock/FaqNPVI';
 import { HelmetFaq } from '../../components/Helmets/HelmetFaq';
 import AdContainer from '../../components/AdContainer/AdContainer';
+import FaqCategoryRS from '../../components/FaqBlock/FaqCategoryRS';
 
 import styles from './Faq.module.css';
 
@@ -28,11 +29,12 @@ function Faq() {
       <section className={styles.wrapper}>
         <HelmetFaq />
         <FaqVarious />
-        <FaqCategory />
+        <FaqCategoryRS />
+        <FaqJersey />
         <FaqIcons />
         <FaqNPVI />
         <FaqTypesRace />
-        <FaqJersey />
+        <FaqCategory />
       </section>
       <AdContainer number={adOverFooter} />
     </>
