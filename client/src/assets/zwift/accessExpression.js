@@ -81,7 +81,7 @@ export const accessExpressions = [
                   Группа B: 520-690;
                   Группа C: 350-520;
                   Группа D: 180-350;
-                  Группа E: 0-180;`,
+                  Группа E: 1-180;`,
     paceValues: {
       1: { from: 1, to: 6 },
       2: { from: 1, to: 6 },

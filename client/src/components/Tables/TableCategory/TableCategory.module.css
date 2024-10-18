@@ -33,9 +33,6 @@
   width: 120px;
   margin: 0 auto;
 }
-.APlus {
-  background-color: var(--catAPlus);
-}
 .A {
   background-color: var(--catA);
 }
@@ -47,6 +44,9 @@
 }
 .D {
   background-color: var(--catD);
+}
+.E {
+  background-color: var(--catE);
 }
 
 @media screen and (max-width: 576px) {

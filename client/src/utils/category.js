@@ -4,7 +4,7 @@ import { racingScoreDefault as rs } from '../assets/rule-category';
 /**
  * Получение названия категории в зависимости от значения racingScore
  * @param {number} racingScore
- * @returns {'APlus' | 'A' | 'B' | 'C' | 'D' | null} возвращается название категории,
+ * @returns {'A' | 'B' | 'C' | 'D' |'E'| null} возвращается название категории,
  *  или null если значение не попало ни в один диапазон.
  */
 export const getCategoryRacingScore = (racingScore) => {

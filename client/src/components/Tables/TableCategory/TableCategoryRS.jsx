@@ -7,11 +7,11 @@ import styles from './TableCategory.module.css';
 const cx = cn.bind(styles);
 
 const categories = [
-  { label: 'A+', name: 'APlus' },
   { label: 'A', name: 'A' },
   { label: 'B', name: 'B' },
   { label: 'C', name: 'C' },
   { label: 'D', name: 'D' },
+  { label: 'E', name: 'E' },
 ];
 
 function TableCategoryRS() {

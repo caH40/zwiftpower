@@ -10,11 +10,11 @@ export const zMAP = {
 };
 
 export const racingScoreDefault = {
-  APlus: { min: 690, max: 1000 },
-  A: { min: 520, max: 689.99 },
-  B: { min: 350, max: 519.99 },
-  C: { min: 180, max: 349.99 },
-  D: { min: 1, max: 179.99 },
+  A: { min: 690, max: 1000 },
+  B: { min: 520, max: 689.99 },
+  C: { min: 350, max: 519.99 },
+  D: { min: 180, max: 349.99 },
+  E: { min: 1, max: 179.99 },
 };
 
 /**
