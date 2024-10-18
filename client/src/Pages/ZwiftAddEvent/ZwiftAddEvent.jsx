@@ -13,7 +13,10 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetSeries } from '../../redux/features/api/series-actual/actualSeriesSlice';
 import { fetchEventPost } from '../../redux/features/api/event-add/fetchEventPost';
 import { resetEventIdCreated } from '../../redux/features/api/event-create/eventCreateSlice';
-import { accessExpressions } from '../../assets/zwift/accessExpression';
+import {
+  accessExpressions,
+  accessExpressionsDisabled,
+} from '../../assets/zwift/accessExpression';
 
 import styles from './ZwiftAddEvent.module.css';
 
@@ -58,7 +61,8 @@ function ZwiftAddEvent() {
     // Добавление названия пакета настроек строгой категоризации.
     const { accessExpression } = eventMainParams;
     const accessExpressionObj =
-      accessExpressions.find((elm) => elm.value === accessExpression) || null;
+      accessExpressions.find((elm) => elm.value === accessExpression) ||
+      accessExpressionsDisabled;
 
     // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
     const accessExpressionObjFiltered = {

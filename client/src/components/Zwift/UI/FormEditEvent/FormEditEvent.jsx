@@ -52,7 +52,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
 
   // Для формы создания необходим только пункт closed
   const optionsCategoryEnforcementCurrent = isCreating
-    ? optionsCategoryEnforcement.filter((elm) => elm.name === 'closed')
+    ? optionsCategoryEnforcement.filter((elm) => ['disabled', 'closed'].includes(elm.name))
     : optionsCategoryEnforcement;
 
   return (

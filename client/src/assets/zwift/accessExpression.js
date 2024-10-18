@@ -43,27 +43,30 @@ export const accessExpressionsRegClosed = {
 };
 
 /**
+ * Строгая категоризация выключена..
+ */
+export const accessExpressionsDisabled = {
+  id: 0,
+  name: 'disabled',
+  label: 'Выключена',
+  value: 'disabled',
+  description: 'Выключена',
+  paceValues: {
+    1: { from: 4, to: 6 },
+    2: { from: 3.2, to: 3.99 },
+    3: { from: 2.5, to: 3.19 },
+    4: { from: 1, to: 2.49 },
+    5: { from: 0, to: 6 },
+  },
+  categoryEnforcement: false,
+};
+
+/**
  * Массив настроек для Строгой категоризации в заездах Звифта.
  */
 export const accessExpressions = [
-  {
-    id: 0,
-    name: 'disabled',
-    label: 'Выключена',
-    value: 'disabled',
-    description: 'Выключена',
-    paceValues: {
-      1: { from: 1, to: 6 },
-      2: { from: 1, to: 6 },
-      3: { from: 1, to: 6 },
-      4: { from: 1, to: 6 },
-      5: { from: 1, to: 6 },
-    },
-    categoryEnforcement: false,
-  },
-  {
-    ...accessExpressionsDefault,
-  },
+  accessExpressionsDisabled,
+  accessExpressionsDefault,
   {
     id: 2,
     name: 'racingScoreDefault',

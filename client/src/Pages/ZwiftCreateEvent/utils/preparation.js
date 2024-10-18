@@ -30,13 +30,15 @@ export function prepareData({
   const tagsRules = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
   event.rulesSet = rulesSet;
   const timestamp = `timestamp=${Date.now()}`;
-  const tag = [...tagsRules, timestamp];
+  const tagsDefault = ['ranked', 'showplacements'];
+  const tag = [...tagsRules, timestamp, ...tagsDefault];
   event.tags = tag;
 
   // параметры для TIME TRIAL
   if (event.eventType === 'TIME_TRIAL') {
     eventSubgroups.forEach((subgroup) => {
       subgroup.timeTrialOptions = event.timeTrialOptions;
+      subgroup.tags = tag;
     });
   } else {
     delete event.timeTrialOptions;

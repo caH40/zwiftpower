@@ -1,7 +1,7 @@
 import { changeTime } from './time-start';
 
 /**
- * Дополнительные правила для Эвента и подгрупп
+ * Дополнительные правила для Эвента и подгрупп перед сохранением в API Zwift.
  */
 export function prepareData({
   eventMainParams,
@@ -27,11 +27,14 @@ export function prepareData({
   event.rulesId = null;
   const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
 
+  // Тестовые настройки.
+
   // Обработка данных в tags.
   const tagsFromCheckbox = [...checkboxTags]
     .filter((tag) => tag.checked)
     .map((tag) => tag.value);
-  const tags = [...eventMainParams.tags, ...tagsFromCheckbox];
+  const tagsDefault = ['ranked', 'showplacements'];
+  const tags = [...eventMainParams.tags, ...tagsFromCheckbox, ...tagsDefault];
   const tagsFiltered = tags.filter((tag) => !tag.includes('timestamp'));
   const timestamp = `timestamp=${Date.now()}`;
 
@@ -46,6 +49,7 @@ export function prepareData({
     subGroup.rulesSet = rulesSet;
     changeTime(subGroup);
     subGroup.rulesId = null;
+    subGroup.accessValidationResult = true;
   }
 
   return {
