@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 
 import useScreenOrientation from '../../useScreenOrientation';
-import { getCategoryColors } from '../../../utils/category-colors';
 import { getCategoryColorsRS } from '../../../utils/category-colors-rs';
 
 /**

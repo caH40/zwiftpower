@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { roundValue } from '../../../utils/round';
 
 import HighlightValueMax from './HighlightValueMax';
-import DefineCategory from './DefineCategory';
+// import DefineCategory from './DefineCategory';
 
 function TdCpWatts({ cpBestEfforts = [], interval }) {
   const { column } = useSelector((state) => state.filterWatts.value);
@@ -21,14 +21,14 @@ function TdCpWatts({ cpBestEfforts = [], interval }) {
 
   return (
     <td>
-      <DefineCategory cpBestEfforts={cpBestEfforts} interval={interval}>
-        <HighlightValueMax
-          valueCPRounded={valueCPRounded}
-          dimensionValue={dimensionValue}
-          valueRaw={valueRaw}
-          interval={interval}
-        />
-      </DefineCategory>
+      {/* <DefineCategory cpBestEfforts={cpBestEfforts} interval={interval}> */}
+      <HighlightValueMax
+        valueCPRounded={valueCPRounded}
+        dimensionValue={dimensionValue}
+        valueRaw={valueRaw}
+        interval={interval}
+      />
+      {/* </DefineCategory> */}
     </td>
   );
 }

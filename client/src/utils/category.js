@@ -1,5 +1,5 @@
-// определение категорий, согласно правилам getCategoryZFTP
 import { zFTP, zMAP } from '../assets/rule-category';
+import { racingScoreDefault as rs } from '../assets/rule-category';
 
 export const getCategoryZFTP = (wattsPerKg, watts) => {
   if (wattsPerKg >= zFTP.A.wattsPerKg && watts >= zFTP.A.watts) return 'A';
@@ -12,6 +12,25 @@ export const getCategoryZMAP = (wattsPerKg) => {
   if (wattsPerKg >= zMAP.B.wattsPerKg) return 'B';
   if (wattsPerKg >= zMAP.C.wattsPerKg) return 'C';
   return 'D';
+};
+
+/**
+ * Получение названия категории в зависимости от значения racingScore
+ * @param {number} racingScore
+ * @returns {'APlus' | 'A' | 'B' | 'C' | 'D' | null} возвращается название категории,
+ *  или null если значение не попало ни в один диапазон.
+ */
+export const getCategoryRacingScore = (racingScore) => {
+  // Округление до двух знаков после запятой, так как диапазоны указаны с этой точностью.
+  const rsRounded = parseFloat(racingScore.toFixed(2));
+
+  for (const [key, value] of Object.entries(rs)) {
+    if (rsRounded >= value.min && rsRounded <= value.max) {
+      return key;
+    }
+  }
+
+  return null;
 };
 
 /**

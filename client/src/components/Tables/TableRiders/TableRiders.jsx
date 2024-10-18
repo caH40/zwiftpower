@@ -7,6 +7,7 @@ import CategoryMF from '../../CategoryMF/CategoryMF';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
+import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 
 import styles from '../Table.module.css';
 
@@ -40,7 +41,10 @@ function TableRiders({ riders = [], event }) {
               getSweepers={getSweepers}
             />
             <td>{rider.totalEvents}</td>
-            <td>{rider.competitionMetrics?.racingScore || 0}</td>
+            <td>
+              <CategoryRSBox racingScore={rider.competitionMetrics?.racingScore || 0} />
+            </td>
+
             {/* столбцы с CriticalPower */}
             {ridersColumnsCP.map((column) => (
               <TdCpWatts

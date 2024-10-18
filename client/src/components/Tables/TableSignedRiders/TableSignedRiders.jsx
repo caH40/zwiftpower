@@ -8,6 +8,7 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
+import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 
 import styles from '../Table.module.css';
 
@@ -42,7 +43,11 @@ function TableSignedRiders({ riders = [], event }) {
 
             {/* для "space-between" столбцов */}
             <td></td>
-            <td>{Math.round(rider.racingScore) || 0}</td>
+
+            <td>
+              {' '}
+              <CategoryRSBox racingScore={rider.racingScore || 0} />
+            </td>
 
             {/* столбцы с CriticalPower */}
             {columnsCP.map((column) => {

@@ -1,0 +1,26 @@
+.categoryBox {
+  width: 65px;
+  padding: 2px 1px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: #ffffff;
+  text-align: center;
+}
+.APlus {
+  background-color: var(--catAPlus);
+}
+.A {
+  background-color: var(--catA);
+}
+.B {
+  background-color: var(--catB);
+}
+.C {
+  background-color: var(--catC);
+}
+.D {
+  background-color: var(--catD);
+}
+.gray {
+  background-color: gray;
+}
