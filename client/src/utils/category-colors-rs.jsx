@@ -1,7 +1,7 @@
 import { racingScoreDefault as rs } from '../assets/rule-category';
 
 /**
- * Получение массива цветов для каждой категории для RacingScore
+ * Получение массива цветов для каждой категории для RacingScore для диаграмм.
  * @param {{ftp:number,quantityMale:number,quantityFemale:number}[]} data распределение райдеров по значениям FTP
  * @param {boolean} isMale диаграмма для мужчин или женщин
  * @returns массив цветов по категориям, например ['rgba(252, 207, 11, 0.7)']
