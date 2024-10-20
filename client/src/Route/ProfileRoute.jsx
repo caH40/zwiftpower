@@ -6,7 +6,12 @@ const Profile = lazy(() => import('../Pages/Profile/Profile'));
 const ProfileResults = lazy(() => import('../Pages/Profile/ProfileResults'));
 const ProfileSetting = lazy(() => import('../Pages/Profile/ProfileSetting'));
 const ProfilePower = lazy(() => import('../Pages/Profile/Power/ProfilePower'));
-const ProfileWeight = lazy(() => import('../Pages/Profile/ProfileWeight'));
+const ProfileRacingScore = lazy(() =>
+  import('../Pages/Profile/ProfileRacingScore/ProfileRacingScore')
+);
+const ProfileWeightAndHeight = lazy(() =>
+  import('../Pages/Profile/ProfileWeightAndHeight/ProfileWeightAndHeight')
+);
 
 export function ProfileRoute() {
   const { status, user } = useSelector((state) => state.checkAuth.value);
@@ -33,7 +38,8 @@ export function ProfileRoute() {
       <Route path="/profile/:zwiftId" element={<Profile />}>
         <Route path="results" element={<ProfileResults />} />
         <Route path="power" element={<ProfilePower />} />
-        <Route path="weight" element={<ProfileWeight />} />
+        <Route path="weight-and-height" element={<ProfileWeightAndHeight />} />
+        <Route path="racing-score" element={<ProfileRacingScore />} />
         {status && <Route path="settings" element={<ProfileSetting />} />}
       </Route>
     </>

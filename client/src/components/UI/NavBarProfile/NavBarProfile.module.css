@@ -1,4 +1,10 @@
-.box {
+.wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.wrapper__buttons {
   display: flex;
   justify-content: flex-end;
 }
@@ -42,6 +48,9 @@
 .button__right {
   border-left: none;
   border-radius: 0px 0.4em 0.4em 0px;
+}
+.button__solo {
+  border-radius: 0.4em;
 }
 
 .active {
