@@ -19,6 +19,7 @@ import {
 import { removeActivityFromFitFile } from './updates/fitfiles.js';
 import { updateUsers } from './updates/update-user.js';
 import { addRiderProfile } from './updates/riders-profile.js';
+import { updateRidersDailyMetrics } from './metrics/metrics.js';
 
 // создание sitemap.xml
 await createSitemap(); // первоначальная инициализация, чтобы сразу был после build
@@ -65,6 +66,7 @@ export async function setTimers() {
       await updateAccessToken();
       await updateAllPowerCurve();
       await updateUsers();
+      await updateRidersDailyMetrics();
     },
     null,
     true,

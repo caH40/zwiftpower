@@ -4,6 +4,7 @@ import {
   ProfileDataInResult,
   SeriesSchema,
   SignedRidersSchema,
+  TMetrics,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -604,3 +605,8 @@ export type TRidersRacingScores = {
   maleRacingScore: TRidersRacingScore[];
   femaleRacingScore: TRidersRacingScore[];
 };
+
+/**
+ * Метрики райдера.
+ */
+export type TMetricsMap = Map<number, TMetrics>;
