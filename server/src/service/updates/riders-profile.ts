@@ -1,3 +1,5 @@
+import pLimit from 'p-limit';
+
 import { Rider } from '../../Model/Rider.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { errorHandler } from '../../errors/error.js';
@@ -5,12 +7,16 @@ import { getZwiftRiderService } from '../zwift/rider.js';
 
 // types
 import { RiderProfileRanks } from '../../types/types.interface.js';
+import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface.js';
 
 type ResultsDB = {
   profileId: number;
   rank: number;
   rankEvent: number;
 };
+
+const concurrency = 50; // Количество параллельных запросов.
+const limit = pLimit(concurrency);
 
 /**
  * Добавление (обновление) данных Звифт-профайла всех райдеров,
@@ -24,54 +30,63 @@ export const addRiderProfile = async () => {
       { profileId: true, rank: true, rankEvent: true, _id: false }
     ).lean();
 
-    // получение уникальных райдеров
-    const zwiftProfiles = new Map<number, RiderProfileRanks>();
-    for (const result of resultsDB) {
-      const zwiftProfile = zwiftProfiles.get(result.profileId);
+    // Подсчет общего количества Эвентов и медалей для каждого райдера, участвовавшего в Заездах.
+    const profilesWithRanks = calculateEventsAndMedals(resultsDB);
 
-      if (zwiftProfile) {
-        // изменение соответствующих счетчиков для текущего Райдера
-        const medalsCurrent = zwiftProfile.medals;
+    const requestsProfiles = [...profilesWithRanks.keys()].map((profileId) =>
+      limit(() =>
+        getZwiftRiderService(profileId).catch((error) => {
+          errorHandler(error);
+          return null; // Возвращаем null вместо выброса ошибки.
+        })
+      )
+    );
 
-        const totalEvents = zwiftProfile.totalEvents + 1;
-        const medals = {
-          gold: result.rankEvent === 1 ? medalsCurrent.gold + 1 : medalsCurrent.gold,
-          silver: result.rankEvent === 2 ? medalsCurrent.silver + 1 : medalsCurrent.silver,
-          bronze: result.rankEvent === 3 ? medalsCurrent.bronze + 1 : medalsCurrent.bronze,
-        };
+    // Массив данных профилей райдеров с Zwift API.
+    const profiles = await Promise.all(requestsProfiles);
 
-        zwiftProfiles.set(result.profileId, {
-          totalEvents,
-          medals,
-        });
-      } else {
-        // если первое вхождение, то создаются пустые значения
-        zwiftProfiles.set(result.profileId, {
-          totalEvents: 1,
-          medals: {
-            gold: result.rankEvent === 1 ? 1 : 0,
-            silver: result.rankEvent === 2 ? 1 : 0,
-            bronze: result.rankEvent === 3 ? 1 : 0,
-          },
-        });
-      }
-    }
+    // Фильтрация только успешных результатов.
+    const profilesFiltered = profiles.filter(
+      (profile) => profile !== null
+    ) as ProfileZwiftAPI[];
 
-    // добавление(обновление) данных профилей райдеров
-    for (const [keys, value] of zwiftProfiles) {
-      const profile = await getZwiftRiderService(keys).catch((error) => errorHandler(error));
-
-      if (!profile) {
-        continue;
-      }
-
-      await Rider.findOneAndUpdate(
+    // Теперь можно продолжить работу с успешными профилями.
+    const updatePromises = profilesFiltered.map((profile) =>
+      Rider.findOneAndUpdate(
         { zwiftId: profile.id },
-        { ...profile, ...value },
+        { ...profile, ...profilesWithRanks.get(profile.id) },
         { upsert: true }
-      ).catch((error) => errorHandler(error));
-    }
+      ).catch((error) => errorHandler(error))
+    );
+
+    // Необходимо дождаться завершения всех асинхронных функций.
+    await Promise.allSettled(updatePromises);
   } catch (error) {
     errorHandler(error);
   }
 };
+
+/**
+ * Подсчет общего количества Эвентов и медалей для каждого райдера.
+ */
+function calculateEventsAndMedals(results: ResultsDB[]): Map<number, RiderProfileRanks> {
+  const zwiftProfiles = new Map<number, RiderProfileRanks>();
+
+  for (const result of results) {
+    // Получаем данные объекта rank райдера или создаем новый, если его еще нет.
+    const profileRank = zwiftProfiles.get(result.profileId) || {
+      totalEvents: 0,
+      medals: { gold: 0, silver: 0, bronze: 0 },
+    };
+
+    // Увеличиваем счетчики.
+    profileRank.totalEvents++;
+    profileRank.medals.gold += result.rankEvent === 1 ? 1 : 0;
+    profileRank.medals.silver += result.rankEvent === 2 ? 1 : 0;
+    profileRank.medals.bronze += result.rankEvent === 3 ? 1 : 0;
+
+    // Сохраняем обновленные данные в мапу.
+    zwiftProfiles.set(result.profileId, profileRank);
+  }
+  return zwiftProfiles;
+}

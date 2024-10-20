@@ -493,7 +493,7 @@ export interface OrganizerSchema {
 /**
  * Описание типа для метрик спортсмена.
  */
-export type Metrics = {
+export type TMetrics = {
   raceScore: number; // Очки в гонках.
   weightInGrams: number; // Вес в кг.
   heightInCentimeters: number; // Рост в см.
@@ -504,8 +504,8 @@ export type Metrics = {
 /**
  * Описание типа для документа MongoDB, представляющего метрики на определенную дату.
  */
-export type RiderDailyMetric = {
+export type TRiderDailyMetric = {
   riderId: Types.ObjectId; // Идентификатор спортсмена.
   date: Date; // Дата записи метрик
-  metrics: Metrics;
+  metrics: TMetrics;
 };

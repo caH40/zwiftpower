@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "nodemailer": "^6.9.1",
+    "p-limit": "^6.1.0",
     "redis": "^4.6.12",
     "uuid": "^9.0.0",
     "winston": "^3.10.0"

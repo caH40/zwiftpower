@@ -1,10 +1,10 @@
 import { Schema, model } from 'mongoose';
 
 // types
-import { RiderDailyMetric } from '../types/model.interface.js';
+import { TRiderDailyMetric } from '../types/model.interface.js';
 
 // Определение схемы для коллекции 'riderMetrics'.
-const RiderDailyMetricSchema = new Schema<RiderDailyMetric>({
+const RiderDailyMetricSchema = new Schema<TRiderDailyMetric>({
   riderId: { type: Schema.Types.ObjectId, required: true },
   date: { type: Date, required: true },
   metrics: {
@@ -20,7 +20,7 @@ const RiderDailyMetricSchema = new Schema<RiderDailyMetric>({
 RiderDailyMetricSchema.index({ date: 1 }, { expireAfterSeconds: 31536000 });
 
 // Экспорт модели, чтобы использовать её в приложении
-export const RiderDailyMetricModel = model<RiderDailyMetric>(
+export const RiderDailyMetricModel = model<TRiderDailyMetric>(
   'DailyMetric',
   RiderDailyMetricSchema
 );
