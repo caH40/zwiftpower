@@ -19,6 +19,7 @@ import { setMetaTags } from './meta_tags/meta-tags.js';
 
 // cache
 import { getCache } from './middleware/cache.js';
+import { createSitemap } from './service/sitemap/generate-sitemap.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -64,6 +65,9 @@ app.get('*', async (req, res) => {
 const start = async () => {
   try {
     app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
+
+    // Первоначальная инициализация, чтобы сразу был после build.
+    await createSitemap();
   } catch (error) {
     errorHandler(error);
   }

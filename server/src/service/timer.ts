@@ -22,7 +22,6 @@ import { addRiderProfile } from './updates/riders-profile.js';
 import { updateRidersDailyMetrics } from './metrics/metrics.js';
 
 // создание sitemap.xml
-await createSitemap(); // первоначальная инициализация, чтобы сразу был после build
 export async function setTimers() {
   setInterval(async () => {
     await createSitemap();
