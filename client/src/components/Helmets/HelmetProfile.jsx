@@ -8,7 +8,7 @@ import { serverFront } from '../../config/environment';
 export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) => {
   const rider = `${firstName} ${lastName}`;
 
-  const canonical = `${serverFront}/${profileId}/${page}`;
+  const canonical = `${serverFront}/profile/${profileId}/${page}`;
 
   // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
   let descriptionRaw = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
