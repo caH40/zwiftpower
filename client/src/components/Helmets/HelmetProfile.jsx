@@ -27,6 +27,12 @@ export const HelmetProfile = ({ profileId, firstName, lastName, image, page }) =
 
       titleRaw = `Диаграмма изменения Racing Score для райдера ${rider}`;
       break;
+
+    case 'weight-and-height':
+      descriptionRaw = `График изменения веса райдера ${rider} в Zwift (Звифт). График контроля изменения роста.`;
+
+      titleRaw = `Диаграмма изменения веса райдера ${rider}`;
+      break;
   }
 
   // Запрещены двойные кавычки в мета тегах.

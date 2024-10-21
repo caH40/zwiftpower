@@ -21,8 +21,8 @@ ChartJS.register(
   Filler
 );
 
-function useChartRacingScore(metrics, isPortrait) {
-  const chartValue = metrics.map((elm) => elm.racingScore);
+function useChartWeight(metrics, isPortrait) {
+  const chartValue = metrics.map((elm) => elm.weightInGrams / 1000);
   const labels = metrics.map((elm) => getTimerLocal(elm.date, 'DDMMYY'));
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
@@ -57,12 +57,12 @@ function useChartRacingScore(metrics, isPortrait) {
       },
       y: {
         // Уменьшить минимальное значение для отступа.
-        suggestedMin: Math.min(...chartValue) === 0 ? 0 : Math.min(...chartValue) - 10,
+        suggestedMin: Math.min(...chartValue) === 0 ? 0 : Math.min(...chartValue) - 1,
         // Увеличить максимальное значение для отступа.
-        suggestedMax: Math.max(...chartValue) + 10,
+        suggestedMax: Math.max(...chartValue) + 1,
         title: {
           display: !isPortrait, // в мобильной версии не показывать
-          text: 'Racing Score',
+          text: 'Вес, кг',
           font: { weight: 400, size: 14 },
         },
         ticks: {
@@ -76,10 +76,10 @@ function useChartRacingScore(metrics, isPortrait) {
 
   const dataset = {
     filterWord: 'event',
-    label: 'Гоночные рейтинговые очки',
+    label: 'Вес, кг',
     data: chartValue,
-    pointBorderColor: 'red',
-    borderColor: 'red',
+    pointBorderColor: 'blue',
+    borderColor: 'blue',
     fill: false,
   };
 
@@ -91,4 +91,4 @@ function useChartRacingScore(metrics, isPortrait) {
   return { data, options };
 }
 
-export default useChartRacingScore;
+export default useChartWeight;

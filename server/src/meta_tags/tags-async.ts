@@ -116,7 +116,11 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
     const zwiftId = Number(parts[2]);
     const page = parts.at(-1);
 
-    if (isNaN(zwiftId) || !page || !['results', 'power', 'racing-score'].includes(page)) {
+    if (
+      isNaN(zwiftId) ||
+      !page ||
+      !['results', 'power', 'racing-score', 'weight-and-height'].includes(page)
+    ) {
       return getMetaOtherPages(url);
     }
 
@@ -153,6 +157,12 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
         descriptionRaw = `Диаграмма изменения гоночного рейтинга (Racing Score) райдера ${rider} в Zwift (Звифт).`;
 
         titleRaw = `Диаграмма изменения Racing Score для райдера ${rider}`;
+        break;
+
+      case 'weight-and-height':
+        descriptionRaw = `График изменения веса райдера ${rider} в Zwift (Звифт). График контроля изменения роста.`;
+
+        titleRaw = `Диаграмма изменения веса райдера ${rider}`;
         break;
     }
 
