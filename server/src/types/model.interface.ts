@@ -346,6 +346,7 @@ export interface ZwiftEventSubgroupSchema {
   routeId: number;
   rulesSet: string[];
   subgroupLabel: string;
+  startLocation?: number;
   tags: string[];
   timeTrialOptions: null;
   totalEntrantCount: number;

@@ -22,6 +22,7 @@ const zwiftEventSubgroupSchema = new Schema<ZwiftEventSubgroupSchema>({
   routeId: { type: Number, default: null },
   rulesSet: { type: [String], default: [] },
   subgroupLabel: { type: String, default: null },
+  startLocation: { type: Number },
   tags: { type: [String], default: [] },
   timeTrialOptions: { type: Object, default: null },
   totalEntrantCount: { type: Number, default: null },
