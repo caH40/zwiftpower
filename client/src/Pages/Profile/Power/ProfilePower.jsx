@@ -11,6 +11,7 @@ import useScreenOrientation from '../../../hook/useScreenOrientation';
 import SimpleCheckbox from '../../../components/UI/SimpleCheckbox/SimpleCheckbox';
 import SelectForChart from '../../../components/UI/SelectForChart/SelectForChart';
 import FilterWatts from '../../../components/UI/Filters/FilterWatts/FilterWatts';
+import { fetchUserProfile } from '../../../redux/features/api/userProfileSlice';
 import { HelmetProfile } from '../../../components/Helmets/HelmetProfile';
 
 import styles from './ProfilePower.module.css';
@@ -39,6 +40,7 @@ function ProfileWeight() {
       return;
     }
     dispatch(fetchUserPowerCurve({ zwiftId: currentZwiftId }));
+    dispatch(fetchUserProfile({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, user]);
 
   return (

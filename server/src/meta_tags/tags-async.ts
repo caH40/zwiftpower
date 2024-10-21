@@ -111,20 +111,17 @@ export const getRaceResultsMeta = async (url: string): Promise<MetaTags> => {
  */
 export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
   try {
-    let profileId, page;
+    // Парсинг url.
+    const parts = url.split('/');
+    const zwiftId = Number(parts[2]);
+    const page = parts.at(-1);
 
-    if (url.includes('/results')) {
-      profileId = +url.replace('/profile/', '').replace('/results', '');
-      page = 'results';
-    } else if (url.includes('/power')) {
-      profileId = +url.replace('/profile/', '').replace('/power', '');
-      page = 'power';
-    } else {
+    if (isNaN(zwiftId) || !page || !['results', 'power', 'racing-score'].includes(page)) {
       return getMetaOtherPages(url);
     }
 
     const riderDB = await Rider.findOne(
-      { zwiftId: profileId },
+      { zwiftId },
       {
         firstName: true,
         lastName: true,
@@ -141,18 +138,29 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
 
     const rider = `${firstName} ${lastName}`;
 
-    const titleRaw = page === 'results' ? `Результаты ${rider}` : `Диаграмма мощности ${rider}`;
-    // запрещены двойные кавычки в мета тегах
-    const title = titleRaw.replace(/"/g, '');
-    const canonical = serverWoWWW + url;
+    // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
+    let descriptionRaw = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
+    let titleRaw = `Результаты заездов ${rider}`;
 
-    // формирование описания
-    const descriptionResults = `Профиль райдера ${rider}. Результаты заездов в Zwift (Звифт).`;
-    const descriptionPower = `Кривая мощности за 90 дней ${rider}. Сравнение кривых мощности за разные заезды.`;
-    const descriptionRaw = page === 'results' ? descriptionResults : descriptionPower;
-    // запрещены двойные кавычки в мета тегах
+    switch (page) {
+      case 'power':
+        descriptionRaw = `Кривая мощности за 90 дней ${rider} в Zwift (Звифт). Сравнение кривых мощности за разные заезды.`;
+
+        titleRaw = `Диаграмма мощности ${rider}`;
+        break;
+
+      case 'racing-score':
+        descriptionRaw = `Диаграмма изменения гоночного рейтинга (Racing Score) райдера ${rider} в Zwift (Звифт).`;
+
+        titleRaw = `Диаграмма изменения Racing Score для райдера ${rider}`;
+        break;
+    }
+
+    // Запрещены двойные кавычки в мета тегах.
     const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
 
+    const canonical = serverWoWWW + url;
     const image = imageSrc;
     const recommendationsTag = 'profile';
 
