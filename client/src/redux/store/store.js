@@ -29,6 +29,7 @@ import popupInfoDevGetSlice from '../features/api/popupInfoDevGetSlice';
 import popupInfoDevPostSlice from '../features/api/popupInfoDevPostSlice';
 import popupInfoDevPutSlice from '../features/api/popupInfoDevPutSlice';
 import userPowerCurveSlice from '../features/api/userPowerCurveSlice';
+import riderRacingScoreSlice from '../features/api/riderRacingScoreSlice';
 import sortTableSlice from '../features/sortTableSlice';
 import actualSeriesSlice from '../features/api/series-actual/actualSeriesSlice';
 import eventPostSlice from '../features/api/event-add/eventPostSlice';
@@ -64,6 +65,7 @@ export default configureStore({
     fetchUserProfile: userProfileSlice,
     fetchUserResults: userResultsSlice,
     fetchUserPowerCurve: userPowerCurveSlice,
+    riderRacingScore: riderRacingScoreSlice,
     getPopupInput: popupInputSlice,
     popupForm: popupFormSlice,
     downloadResults: downloadResultsSlice,

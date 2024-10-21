@@ -16,7 +16,7 @@ type TResponseDBRacingScore = {
  */
 export async function getMetricRacingScoreService({ zwiftId }: Params): Promise<{
   zwiftId: number;
-  data: { _id: string; date: Date; racingScore: number }[];
+  racingScores: { _id: string; date: Date; racingScore: number }[];
 }> {
   const metricsDB: TResponseDBRacingScore = await RiderDailyMetricModel.find(
     { zwiftId },
@@ -25,11 +25,11 @@ export async function getMetricRacingScoreService({ zwiftId }: Params): Promise<
 
   // Проверка на случай, если данные не найдены.
   if (!metricsDB.length) {
-    return { zwiftId, data: [] };
+    return { zwiftId, racingScores: [] };
   }
 
   // Формирование ответа с необходимой структурой и типами.
-  const data = metricsDB.map((metric) => {
+  const racingScores = metricsDB.map((metric) => {
     const _id = String(metric._id);
     const racingScore = metric.metrics?.racingScore ?? 0;
     return {
@@ -39,5 +39,5 @@ export async function getMetricRacingScoreService({ zwiftId }: Params): Promise<
     };
   });
 
-  return { zwiftId, data };
+  return { zwiftId, racingScores };
 }
