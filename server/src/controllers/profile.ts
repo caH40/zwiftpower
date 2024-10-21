@@ -10,7 +10,7 @@ import { refreshProfileService } from '../service/profile/zwiftid/update-zwiftda
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 import { getUserResultsService } from '../service/race/rider/results.js';
-import { getMetricRacingScoreService } from '../service/metrics/getMetric.js';
+import { getMetricService } from '../service/metrics/getMetric.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -72,7 +72,7 @@ export async function getUserPower(req: Request, res: Response) {
 /**
  * Контролер получения значений Racing Score для райдера (zwiftId) за период.
  */
-export async function getRiderRacingScore(req: Request, res: Response) {
+export async function getRiderMetric(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
 
@@ -80,8 +80,8 @@ export async function getRiderRacingScore(req: Request, res: Response) {
       throw new Error('zwiftId должен быть целым числом!');
     }
 
-    const userRacingScore = await getMetricRacingScoreService({ zwiftId: +zwiftId });
-    res.status(200).json(userRacingScore);
+    const riderMetric = await getMetricService({ zwiftId: +zwiftId });
+    res.status(200).json(riderMetric);
   } catch (error) {
     errorHandler(error);
     if (error instanceof Error) {

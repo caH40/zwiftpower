@@ -21,9 +21,9 @@ ChartJS.register(
   Filler
 );
 
-function useChartRacingScore(racingScores, isPortrait) {
-  const chartValue = racingScores.map((elm) => elm.racingScore);
-  const labels = racingScores.map((elm) => getTimerLocal(elm.date, 'DDMMYY'));
+function useChartRacingScore(metrics, isPortrait) {
+  const chartValue = metrics.map((elm) => elm.racingScore);
+  const labels = metrics.map((elm) => getTimerLocal(elm.date, 'DDMMYY'));
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
   const aspectRatio = isPortrait ? 1 / 1.45 : 2.5;

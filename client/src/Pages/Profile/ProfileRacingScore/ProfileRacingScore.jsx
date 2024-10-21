@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 
-import { fetchRiderRacingScore } from '../../../redux/features/api/riderRacingScoreSlice';
+import { fetchRiderMetrics } from '../../../redux/features/api/riderMetricsSlice';
 import useTitle from '../../../hook/useTitle';
 import useScreenOrientation from '../../../hook/useScreenOrientation';
 import useChartRacingScore from '../../../hook/chart/useChartRacingScore';
@@ -21,12 +21,10 @@ function ProfileRacingScore() {
   const { zwiftId } = useParams();
   const { user } = useSelector((state) => state.checkAuth.value);
   const { profile } = useSelector((state) => state.fetchUserProfile);
-  const { racingScores, status: statusFetchStatus } = useSelector(
-    (state) => state.riderRacingScore
-  );
+  const { metrics, status: statusFetchStatus } = useSelector((state) => state.riderMetrics);
 
   // данные для диаграммы
-  const { data, options } = useChartRacingScore(racingScores, isPortrait);
+  const { data, options } = useChartRacingScore(metrics, isPortrait);
 
   const dispatch = useDispatch();
 
@@ -35,7 +33,7 @@ function ProfileRacingScore() {
     if (!currentZwiftId) {
       return;
     }
-    dispatch(fetchRiderRacingScore({ zwiftId: currentZwiftId }));
+    dispatch(fetchRiderMetrics({ zwiftId: currentZwiftId }));
     dispatch(fetchUserProfile({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, user]);
 

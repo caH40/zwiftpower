@@ -4,12 +4,12 @@ import axios from 'axios';
 import { getAlert } from '../alertMessageSlice';
 import { serverExpress } from '../../../config/environment';
 
-export const fetchRiderRacingScore = createAsyncThunk(
-  'riderRacingScoreGet/profile',
+export const fetchRiderMetrics = createAsyncThunk(
+  'riderMetricsGet/profile',
   async function ({ zwiftId }, thunkAPI) {
     try {
       const response = await axios({
-        url: `${serverExpress}/api/race/profile/${zwiftId}/metric/racing-score/`,
+        url: `${serverExpress}/api/race/profile/${zwiftId}/metrics`,
         method: 'get',
       });
 
@@ -22,32 +22,32 @@ export const fetchRiderRacingScore = createAsyncThunk(
   }
 );
 
-const riderRacingScoreSlice = createSlice({
+const riderMetricsSlice = createSlice({
   name: 'powerCurve',
   initialState: {
-    racingScores: [],
+    metrics: [],
 
     status: null,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchRiderRacingScore.pending, (state) => {
-      state.racingScores = [];
+    builder.addCase(fetchRiderMetrics.pending, (state) => {
+      state.metrics = [];
       state.error = null;
       state.status = 'loading';
     });
-    builder.addCase(fetchRiderRacingScore.fulfilled, (state, action) => {
+    builder.addCase(fetchRiderMetrics.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
 
-      state.racingScores = action.payload.racingScores;
+      state.metrics = action.payload.data;
     });
-    builder.addCase(fetchRiderRacingScore.rejected, (state, action) => {
+    builder.addCase(fetchRiderMetrics.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
   },
 });
 
-export default riderRacingScoreSlice.reducer;
+export default riderMetricsSlice.reducer;

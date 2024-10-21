@@ -38,7 +38,7 @@ export async function postMetrics({ metrics }: { metrics: TMetricsMap }): Promis
         zwiftId,
         date: yesterdayAt23,
         metrics: {
-          heightInCentimeters: value.heightInCentimeters,
+          heightInCentimeters: value.heightInCentimeters / 10,
           weightInGrams: value.weightInGrams,
           racingScore: value.racingScore,
         },

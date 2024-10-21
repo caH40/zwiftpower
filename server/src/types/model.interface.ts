@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { ProfileDataInResultWithId } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 // типизация схемы и модели документов mongodb
@@ -494,17 +494,16 @@ export interface OrganizerSchema {
  * Описание типа для метрик спортсмена.
  */
 export type TMetrics = {
-  racingScore: number | null; // Очки в гонках.
+  racingScore: number; // Очки в гонках.
   weightInGrams: number; // Вес в кг.
   heightInCentimeters: number; // Рост в см.
-  ftp?: number; // FTP (Functional Threshold Power).
-  map?: number; // MAP (Maximum Aerobic Power).
 };
 
 /**
  * Описание типа для документа MongoDB, представляющего метрики на определенную дату.
  */
 export type TRiderDailyMetric = {
+  _id: mongoose.Types.ObjectId;
   zwiftId: number; // Идентификатор райдера в Zwift.
   date: Date; // Дата записи метрик
   metrics: TMetrics;

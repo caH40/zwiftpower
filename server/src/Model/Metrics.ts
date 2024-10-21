@@ -11,8 +11,6 @@ const RiderDailyMetricSchema = new Schema<TRiderDailyMetric>({
     racingScore: { type: Number, default: 0 },
     weightInGrams: { type: Number, default: 0 },
     heightInCentimeters: { type: Number, default: 0 },
-    ftp: { type: Number, default: 0 },
-    map: { type: Number, default: 0 },
   },
 });
 

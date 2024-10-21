@@ -1,43 +1,51 @@
-import mongoose from 'mongoose';
+import { millisecondsIn90Days } from '../../assets/date.js';
 import { RiderDailyMetricModel } from '../../Model/Metrics.js';
+import { TRiderDailyMetric } from '../../types/model.interface.js';
 
 type Params = {
   zwiftId: number;
 };
 
-type TResponseDBRacingScore = {
-  _id: mongoose.Types.ObjectId;
-  date: Date;
-  metrics: { racingScore: number };
-}[];
-
 /**
  * Получение метрик райдера.
  */
-export async function getMetricRacingScoreService({ zwiftId }: Params): Promise<{
+export async function getMetricService({ zwiftId }: Params): Promise<{
   zwiftId: number;
-  racingScores: { _id: string; date: Date; racingScore: number }[];
+  data: {
+    _id: string;
+    date: Date;
+    racingScore: number;
+    weightInGrams: number;
+    heightInCentimeters: number;
+  }[];
 }> {
-  const metricsDB: TResponseDBRacingScore = await RiderDailyMetricModel.find(
+  const metricsDB: Omit<TRiderDailyMetric, 'zwiftId'>[] = await RiderDailyMetricModel.find(
     { zwiftId },
-    { date: true, 'metrics.racingScore': true }
+    {
+      zwiftId: false,
+    }
   ).lean();
 
   // Проверка на случай, если данные не найдены.
   if (!metricsDB.length) {
-    return { zwiftId, racingScores: [] };
+    return { zwiftId, data: [] };
   }
 
   // Формирование ответа с необходимой структурой и типами.
-  const racingScores = metricsDB.map((metric) => {
-    const _id = String(metric._id);
-    const racingScore = metric.metrics?.racingScore ?? 0;
-    return {
-      _id,
-      date: metric.date,
-      racingScore,
-    };
-  });
+  const data = metricsDB
+    .map((metric) => {
+      const _id = String(metric._id);
+      const { racingScore, weightInGrams, heightInCentimeters } = metric.metrics;
+      return {
+        _id,
+        date: metric.date,
+        racingScore,
+        weightInGrams,
+        heightInCentimeters,
+      };
+    })
+    .filter((elm) => elm.date.getTime() > Date.now() - millisecondsIn90Days) // Данные за последние 90 дней.
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 
-  return { zwiftId, racingScores };
+  return { zwiftId, data };
 }
