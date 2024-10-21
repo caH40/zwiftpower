@@ -60,7 +60,7 @@ function NavBarProfile({ zwiftId, addCls }) {
       </div>
 
       <div className={styles.wrapper__buttons}>
-        {profileButtonsSeconds.map((buttonLink, index) => (
+        {profileButtonsSeconds.map((buttonLink) => (
           <NavLink
             className={({ isActive }) =>
               cn(styles.button, styles.button__solo, { [styles.active]: isActive })
