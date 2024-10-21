@@ -42,6 +42,11 @@ export async function createSitemap() {
       data
     );
   } catch (error) {
+    // Маскирование ошибки создания файла.
+    if (error instanceof Error && error.message.includes('no such file or directory')) {
+      return;
+    }
+
     errorHandler(error);
   }
 }
