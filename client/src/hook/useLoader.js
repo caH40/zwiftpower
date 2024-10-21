@@ -18,6 +18,7 @@ const useLoader = () => {
   const { status: statusSeries } = useSelector((state) => state.fetchSeries);
   const { status: statusUserResults } = useSelector((state) => state.fetchUserResults);
   const { status: statusUserPowerCurve } = useSelector((state) => state.fetchUserPowerCurve);
+  const { status: statusRiderRacingScore } = useSelector((state) => state.riderRacingScore);
   // обновление данных профиля с zwiftAPI
   const { status: statusProfileRefresh } = useSelector((state) => state.profileRefresh);
   // данные для страницы "Распределение райдеров по FTP"
@@ -52,6 +53,7 @@ const useLoader = () => {
     statusSeries === 'loading' ||
     statusUserResults === 'loading' ||
     statusUserPowerCurve === 'loading' ||
+    statusRiderRacingScore === 'loading' ||
     statusProfileRefresh === 'loading' ||
     statusRidersTotalFTPFetch === 'loading' ||
     statusGetUsers === 'loading' ||

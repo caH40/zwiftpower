@@ -1,0 +1,39 @@
+.chart {
+  margin-bottom: 15px;
+}
+.box__checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 40px;
+  flex-wrap: wrap;
+  font-size: 1.1em;
+}
+
+.box__filter {
+  text-align: right;
+  margin-bottom: 5px;
+}
+
+.skeleton {
+  width: 100%;
+  aspect-ratio: 2.5;
+  margin-top: 10px;
+  background-color: var(--color-bg-minor-2);
+  animation: loading 1s infinite alternate;
+}
+
+@keyframes loading {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .skeleton {
+    aspect-ratio: 1 / 1.45;
+  }
+}

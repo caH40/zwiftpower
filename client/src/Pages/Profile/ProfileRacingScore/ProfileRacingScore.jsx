@@ -10,6 +10,8 @@ import useChartRacingScore from '../../../hook/chart/useChartRacingScore';
 import { HelmetProfile } from '../../../components/Helmets/HelmetProfile';
 import { fetchUserProfile } from '../../../redux/features/api/userProfileSlice';
 
+import styles from './ProfileRacingScore.module.css';
+
 /**
  * Страница с диаграммой изменения Racing Score.
  */
@@ -19,7 +21,9 @@ function ProfileRacingScore() {
   const { zwiftId } = useParams();
   const { user } = useSelector((state) => state.checkAuth.value);
   const { profile } = useSelector((state) => state.fetchUserProfile);
-  const { racingScores } = useSelector((state) => state.riderRacingScore);
+  const { racingScores, status: statusFetchStatus } = useSelector(
+    (state) => state.riderRacingScore
+  );
 
   // данные для диаграммы
   const { data, options } = useChartRacingScore(racingScores, isPortrait);
@@ -44,8 +48,9 @@ function ProfileRacingScore() {
         image={profile.imageSrc}
         page={'racing-score'}
       />
+      {statusFetchStatus === 'loading' && <div className={styles.skeleton} />}
 
-      <Line options={options} data={data} />
+      {statusFetchStatus === 'resolved' && <Line options={options} data={data} />}
     </section>
   );
 }
