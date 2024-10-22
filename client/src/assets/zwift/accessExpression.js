@@ -127,17 +127,17 @@ export const accessExpressions = [
 (subgroup.label == 1 && powerCurves.zFTPwkg < 4.6) ||
 (subgroup.label == 2 && powerCurves.zFTPwkg < 4.2) ||
 (subgroup.label == 3 && powerCurves.zFTPwkg < 3.5) ||
-(subgroup.label == 4 && (powerCurves.zFTPwkg < 2.8 && powerCurves.zFTP < 200))`,
+(subgroup.label == 4 && (powerCurves.zFTPwkg < 2.5 || powerCurves.zFTP < 160))`,
     description: `Группа E: zFTP (W/kg): 4.6 - 6.0;
                   Группа A: zFTP (W/kg): 4.2 - 4.59;
                   Группа B: zFTP (W/kg): 3.5 - 4.19;
-                  Группа C: zFTP (W/kg): 2.8 - 3.49;
-                  Группа D: zFTP (W/kg): 1.0 - 2.79 и zFTP (watts): < 200W;`,
+                  Группа C: zFTP (W/kg): 2.5 - 3.49;
+                  Группа D: zFTP (W/kg): 1.0 - 2.49 или zFTP (watts): < 160W;`,
     paceValues: {
       1: { from: 4.2, to: 4.59 },
       2: { from: 3.5, to: 4.19 },
-      3: { from: 2.8, to: 3.49 },
-      4: { from: 1.0, to: 2.79 },
+      3: { from: 2.5, to: 3.49 },
+      4: { from: 1.0, to: 2.49 },
       5: { from: 4.6, to: 6.0 },
     },
     categoryEnforcement: true,
