@@ -22,8 +22,12 @@ ChartJS.register(
 );
 
 function useChartRacingScore(metrics, isPortrait) {
-  const chartValue = metrics.map((elm) => elm.racingScore);
-  const labels = metrics.map((elm) => getTimerLocal(elm.date, 'DDMMYY'));
+  // Фильтрация нулевых значений racingScore
+  const metricsNotNull = metrics.filter((elm) => !!elm.racingScore);
+
+  // Данные для графика.
+  const chartValue = metricsNotNull.map((elm) => elm.racingScore).filter(Boolean);
+  const labels = metricsNotNull.map((elm) => getTimerLocal(elm.date, 'DDMMYY'));
 
   // отношение ширины к высоте холста в зависимости от позиции экрана устройства
   const aspectRatio = isPortrait ? 1 / 1.45 : 2.5;
@@ -57,9 +61,9 @@ function useChartRacingScore(metrics, isPortrait) {
       },
       y: {
         // Уменьшить минимальное значение для отступа.
-        suggestedMin: Math.min(...chartValue) === 0 ? 0 : Math.min(...chartValue) - 10,
+        suggestedMin: Math.min(...chartValue) === 0 ? 0 : Math.min(...chartValue) - 1,
         // Увеличить максимальное значение для отступа.
-        suggestedMax: Math.max(...chartValue) + 10,
+        suggestedMax: Math.max(...chartValue) + 1,
         title: {
           display: !isPortrait, // в мобильной версии не показывать
           text: 'Racing Score',
