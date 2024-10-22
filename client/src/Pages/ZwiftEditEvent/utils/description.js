@@ -87,8 +87,8 @@ export const createDescription = (eventParams) => {
       const jersey = jerseys.find((jersey) => jersey.id === subgroup.jerseyHash);
       const jerseyStr = `Джерси: <b>${jersey ? jersey.name : 'Не выбрана'}</b>\n`;
 
-      const startLocationStr = subgroup.startLocationStr
-        ? `Стартовый карман: <b>${subgroup.startLocationStr}</b>\n`
+      const startLocationStr = subgroup.startLocation
+        ? `Стартовый карман: <b>${subgroup.startLocation}</b>\n`
         : '';
 
       strGroups += `
@@ -96,7 +96,7 @@ export const createDescription = (eventParams) => {
 Старт: <b>${getTimerLocal(subgroup.eventSubgroupStart, 'DDMMYYHms')}</b>
 Карта: <b>${map(subgroup.mapId)}</b>
 Маршрут: <b>${routeName(subgroup.routeId)}</b>
-${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadInDistance}${leadInElevation}${jerseyStr}${startLocationStr}`;
+${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadInDistance}${leadInElevation}${jerseyStr}`;
     }
   }
 
