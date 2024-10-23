@@ -46,8 +46,7 @@ function TableSignedRiders({ riders = [], event }) {
             <td></td>
 
             <td>
-              {' '}
-              <CategoryRSBox racingScore={rider.racingScore || 0} />
+              <CategoryRSBox racingScore={rider.racingScore || 0} zwiftId={rider.id} />
             </td>
 
             {/* столбцы с CriticalPower */}

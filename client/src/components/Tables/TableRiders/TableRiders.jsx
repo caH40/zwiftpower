@@ -43,7 +43,10 @@ function TableRiders({ riders = [], event }) {
             />
             <td>{rider.totalEvents}</td>
             <td>
-              <CategoryRSBox racingScore={rider.competitionMetrics?.racingScore || 0} />
+              <CategoryRSBox
+                racingScore={rider.competitionMetrics?.racingScore || 0}
+                zwiftId={rider.zwiftId}
+              />
             </td>
 
             {/* столбцы с CriticalPower */}

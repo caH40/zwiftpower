@@ -5,6 +5,15 @@
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
+  display: block;
+  text-decoration: none;
+}
+.link {
+  cursor: pointer;
+}
+.link:hover {
+  transition: all 0.2s;
+  transform: scale(1.03);
 }
 .E {
   background-color: var(--catE);

@@ -1,4 +1,5 @@
 import cn from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 import { getCategoryRacingScore } from '../../utils/category';
 
@@ -15,10 +16,17 @@ const cx = cn.bind(styles);
  * @param {number} props.racingScore - Значение, по которому определяется категория.
  * @returns {JSX.Element} Элемент div, отображающий racingScore с соответствующим классом.
  */
-export default function CategoryRSBox({ racingScore }) {
+export default function CategoryRSBox({ racingScore, zwiftId }) {
   const categoryLabel = getCategoryRacingScore(racingScore) || 'gray';
 
-  return (
+  return zwiftId != null ? (
+    <Link
+      to={`/profile/${zwiftId}/racing-score`}
+      className={cx('categoryBox', categoryLabel, 'link')}
+    >
+      {racingScore} {/* Отображаем значение racingScore внутри div */}
+    </Link>
+  ) : (
     <div className={cx('categoryBox', categoryLabel)}>
       {racingScore} {/* Отображаем значение racingScore внутри div */}
     </div>
