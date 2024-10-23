@@ -2,12 +2,13 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { useSortSignedRiders } from '../../../hook/useSortSignedRiders';
-import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
+import { tdHeight, tdLinkZP } from '../utils/td';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
+import TdWeight from '../Td/TdWeight';
 import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 
 import styles from '../Table.module.css';
@@ -62,7 +63,7 @@ function TableSignedRiders({ riders = [], event }) {
               }
               return null;
             })}
-            <td>{tdWeight(rider.weight)}</td>
+            <TdWeight weight={rider.weight} zwiftId={rider.id} />
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>
             <td className={cx('link')}>{tdLinkZP(rider.id)}</td>

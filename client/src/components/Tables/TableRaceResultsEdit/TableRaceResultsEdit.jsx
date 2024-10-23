@@ -3,7 +3,7 @@ import classnames from 'classnames/bind';
 
 import { fetchResultEdit } from '../../../redux/features/api/result_edit/fetchResultEdit';
 import useLeader from '../../../hook/useLeaders';
-import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
+import { tdHeartRate, tdHeight, tdTime, tdWatts } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -12,8 +12,8 @@ import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
+import TdWeight from '../Td/TdWeight';
 import Checkbox from '../../UI/Checkbox/Checkbox';
-
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
@@ -99,7 +99,11 @@ function TableRaceResultsEdit({ results, event, setUpdate }) {
               {
                 <>
                   <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-                  <td>{tdWeight(profile.weightInGrams.addition)}</td>
+                  <TdWeight
+                    weight={profile.weightInGrams.addition}
+                    zwiftId={result.profileId}
+                  />
+
                   <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
                   <td>{getAgeCategory(profile.age)}</td>
                   <TdDifferent

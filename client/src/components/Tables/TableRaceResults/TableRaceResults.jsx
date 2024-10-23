@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 import useLeader from '../../../hook/useLeaders';
 import { useShowIndex } from '../../../hook/useShowIndex';
 import { useSortResults } from '../../../hook/useSortResults';
-import { tdHeartRate, tdHeight, tdTime, tdWatts, tdWeight } from '../utils/td';
+import { tdHeartRate, tdHeight, tdTime, tdWatts } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -15,7 +15,7 @@ import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
 import TdSpeed from '../Td/TdSpeed';
 import NPandVIBox from '../../NPandVIBox/NPandVIBox';
-
+import TdWeight from '../Td/TdWeight';
 import { getAgeCategory } from '../../../utils/age';
 
 import styles from '../Table.module.css';
@@ -108,7 +108,10 @@ function TableRaceResults({ results, event, forDNF }) {
               {
                 <>
                   <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-                  <td>{tdWeight(profile.weightInGrams.addition)}</td>
+                  <TdWeight
+                    weight={profile.weightInGrams.addition}
+                    zwiftId={result.profileId}
+                  />
                   <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
                   <td>{getAgeCategory(profile.age)}</td>
                   <TdDifferent

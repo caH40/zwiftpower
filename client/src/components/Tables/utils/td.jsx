@@ -87,9 +87,6 @@ export function tdCPWattsPerKg(value, interval) {
 export function tdHeartRate(value) {
   return highlightValueMax(value, 'уд/м');
 }
-export function tdWeight(value) {
-  return highlightValueMax(getWeightStr(value), 'кг');
-}
 export function tdHeight(value) {
   return highlightValueMax(getHeightStr(value, 'cm'), 'см');
 }

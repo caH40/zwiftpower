@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { tdHeight, tdLinkZP, tdWeight } from '../utils/td';
+import { tdHeight, tdLinkZP } from '../utils/td';
 import { getAgeCategory } from '../../../utils/age';
 import CategoryMF from '../../CategoryMF/CategoryMF';
 import useLeader from '../../../hook/useLeaders';
 import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
 import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
+import TdWeight from '../Td/TdWeight';
 
 import styles from '../Table.module.css';
 
@@ -53,7 +54,7 @@ function TableRiders({ riders = [], event }) {
                 key={column.id}
               />
             ))}
-            <td>{tdWeight(rider.weight)}</td>
+            <TdWeight weight={rider.weight} zwiftId={rider.zwiftId} />
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>
             <td className={cx('link')}>{tdLinkZP(rider.zwiftId)}</td>

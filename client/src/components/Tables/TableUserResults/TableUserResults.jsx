@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 
 import NPandVIBox from '../../NPandVIBox/NPandVIBox';
-import { tdHeartRate, tdTime, tdWatts, tdWeight } from '../utils/td';
+import { tdHeartRate, tdTime, tdWatts } from '../utils/td';
 import TdCpWatts from '../Td/TdCpWatts';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../utils/date-local';
 import TdRank from '../Td/TdRank';
 import TdSpeed from '../Td/TdSpeed';
+import TdWeight from '../Td/TdWeight';
 
 import styles from '../Table.module.css';
 
@@ -85,7 +86,7 @@ function TableUserResults({ results }) {
                 return null;
               })}
               <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-              <td>{tdWeight(result.profileData.weightInGrams.addition)}</td>
+              <TdWeight weight={result.profileData.weightInGrams.addition} />
             </tr>
           );
         })}
