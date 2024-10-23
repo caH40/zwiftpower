@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-
 import { Line } from 'react-chartjs-2';
 
 import { fetchUserPowerCurve } from '../../../redux/features/api/userPowerCurveSlice';
