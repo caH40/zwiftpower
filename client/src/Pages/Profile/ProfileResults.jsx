@@ -8,7 +8,7 @@ import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/N
 import CPBlock from '../../components/CPBlock/CPBlock';
 import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 import Pagination from '../../components/UI/Pagination/Pagination';
-import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileBlock';
+import SkeletonProfileCPBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileCPBlock';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './Profile.module.css';
@@ -50,7 +50,7 @@ function ProfileResults() {
         image={profile.imageSrc}
         page={'results'}
       />
-      <SkeletonProfileBlock status={statusProfile} />
+      <SkeletonProfileCPBlock status={statusProfile} />
       {statusProfile === 'resolved' && (
         <div className={styles.block__cp}>
           <CPBlock criticalPowers={powerCurve?.pointsWattsPerKg} label={'wattsPerKg'} />

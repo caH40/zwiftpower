@@ -6,7 +6,6 @@ import { Line } from 'react-chartjs-2';
 import { HelmetProfile } from '../../../components/Helmets/HelmetProfile';
 import useScreenOrientation from '../../../hook/useScreenOrientation';
 import useTitle from '../../../hook/useTitle';
-import { fetchUserProfile } from '../../../redux/features/api/userProfileSlice';
 import { fetchRiderMetrics } from '../../../redux/features/api/riderMetricsSlice';
 import useChartWeight from '../../../hook/chart/useChartWeight';
 import useChartHeight from '../../../hook/chart/useChartHeight';
@@ -43,7 +42,6 @@ function ProfileWeightAndHeight() {
       return;
     }
     dispatch(fetchRiderMetrics({ zwiftId: currentZwiftId }));
-    dispatch(fetchUserProfile({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, user]);
   return (
     <section>

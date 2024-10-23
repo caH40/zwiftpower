@@ -11,6 +11,7 @@ import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import { fetchUserProfile, resetUserProfile } from '../../redux/features/api/userProfileSlice';
+import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileBlock';
 
 import styles from './Profile.module.css';
 
@@ -27,7 +28,11 @@ const adNumbers = [adUnderHeader, adOverFooter];
 function Profile() {
   useTitle('Профиль пользователя');
   const { isScreenLg: isDesktop } = useResize();
-  const { profile, quantityRace } = useSelector((state) => state.fetchUserProfile);
+  const {
+    profile,
+    quantityRace,
+    status: statusProfile,
+  } = useSelector((state) => state.fetchUserProfile);
   const [source, setSource] = useState('');
   const [showEnlargeLogo, setShowEnlargeLogo] = useState(false);
   const userAuth = useSelector((state) => state.checkAuth.value);
@@ -67,11 +72,14 @@ function Profile() {
         <NavBarProfile zwiftId={+zwiftId} addCls={'mb15'} />
 
         {/* Блок профиля: изображение и основные данные райдера */}
-        <ProfileBlock
-          profile={profile}
-          enlargeLogo={enlargeLogo}
-          quantityRace={quantityRace || 0}
-        />
+        <SkeletonProfileBlock status={statusProfile} />
+        {statusProfile === 'resolved' && (
+          <ProfileBlock
+            profile={profile}
+            enlargeLogo={enlargeLogo}
+            quantityRace={quantityRace || 0}
+          />
+        )}
 
         <Outlet />
       </section>

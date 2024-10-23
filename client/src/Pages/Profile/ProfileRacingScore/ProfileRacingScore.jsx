@@ -8,7 +8,6 @@ import useTitle from '../../../hook/useTitle';
 import useScreenOrientation from '../../../hook/useScreenOrientation';
 import useChartRacingScore from '../../../hook/chart/useChartRacingScore';
 import { HelmetProfile } from '../../../components/Helmets/HelmetProfile';
-import { fetchUserProfile } from '../../../redux/features/api/userProfileSlice';
 
 import styles from './ProfileRacingScore.module.css';
 
@@ -34,7 +33,6 @@ function ProfileRacingScore() {
       return;
     }
     dispatch(fetchRiderMetrics({ zwiftId: currentZwiftId }));
-    dispatch(fetchUserProfile({ zwiftId: currentZwiftId }));
   }, [dispatch, zwiftId, user]);
 
   return (
