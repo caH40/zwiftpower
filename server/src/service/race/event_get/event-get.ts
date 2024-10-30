@@ -47,6 +47,7 @@ export async function getEventService(eventId: string) {
 
   // добавление powerCurve каждому райдеру
   // получение массива PowerCurves всех райдеров,
+  // получение массива racingScore всех райдеров из ранее сохраненных Rider в БД,
   const [powerCurvesDB, riderRacingScoreDB] = await Promise.all([
     PowerCurve.find({
       zwiftId: zwiftIds,

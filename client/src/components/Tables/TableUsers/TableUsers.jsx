@@ -48,18 +48,16 @@ function TableUsers({ users }) {
             <TdBoolean value={user.emailConfirm} />
             <td>{getTimerLocal(user.date)}</td>
             <td>
-              <td>
-                {!!user.zwiftId && (
-                  <Link
-                    className={cx('link')}
-                    to={`https://zwiftpower.com/profile.php?z=${user.zwiftId}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    zp.com
-                  </Link>
-                )}
-              </td>
+              {!!user.zwiftId && (
+                <Link
+                  className={cx('link')}
+                  to={`https://zwiftpower.com/profile.php?z=${user.zwiftId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  zp.com
+                </Link>
+              )}
             </td>
             <td>
               <Copy name={`_id "${user.username}"`}>{user._id}</Copy>
