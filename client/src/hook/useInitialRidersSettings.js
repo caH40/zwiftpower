@@ -21,7 +21,7 @@ export const useInitialRidersSettings = () => {
     let genderName;
     switch (maleStored) {
       case 'true':
-        genderName = 'M';
+        genderName = 'М';
         break;
 
       case 'false':
