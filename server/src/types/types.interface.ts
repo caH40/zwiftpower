@@ -588,6 +588,7 @@ export interface IRidersQuery {
   columnName?: string;
   isRasing?: boolean;
   category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E';
+  male?: 'true' | 'false';
 }
 
 /**

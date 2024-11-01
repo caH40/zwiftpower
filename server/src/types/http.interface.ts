@@ -69,4 +69,5 @@ export interface GetRidersQuery {
   columnName?: string; // Столбец по которому производится сортировка.
   isRasing?: string; // Направление сортировки.
   category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E'; // Категория запроса.
+  male?: 'true' | 'false'; // Пол райдеров.
 }

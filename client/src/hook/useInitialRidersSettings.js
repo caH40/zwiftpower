@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { initialSorting } from '../redux/features/sortTableSlice';
 import { setFilterCategory } from '../redux/features/filterCategorySlice';
 import { lsPrefixRiders } from '../constants/localstorage';
+import { setFilterGender } from '../redux/features/filterGenderSlice';
 
 /**
  * Инициализация данных для страницы Райдеры из локального хранилища.
@@ -15,6 +16,22 @@ export const useInitialRidersSettings = () => {
     const columnNameStored = localStorage.getItem(`${lsPrefixRiders}columnName`);
     const isRasingStored = localStorage.getItem(`${lsPrefixRiders}isRasing`);
     const categoryStored = localStorage.getItem(`${lsPrefixRiders}category`);
+    const maleStored = localStorage.getItem(`${lsPrefixRiders}male`);
+
+    let genderName;
+    switch (maleStored) {
+      case 'true':
+        genderName = 'M';
+        break;
+
+      case 'false':
+        genderName = 'Ж';
+        break;
+
+      default:
+        genderName = 'All';
+        break;
+    }
 
     const columnName = columnNameStored
       ? isNaN(Number(columnNameStored))
@@ -24,12 +41,14 @@ export const useInitialRidersSettings = () => {
     const isRasing = isRasingStored ? JSON.parse(isRasingStored) : false;
     const categoryForLs = categoryStored || 'All';
 
-    return { columnName, isRasing, categoryForLs };
+    return { columnName, isRasing, categoryForLs, genderName };
   };
 
   useEffect(() => {
-    const { columnName, isRasing, categoryForLs } = getInitialSettings();
+    const { columnName, isRasing, categoryForLs, genderName } = getInitialSettings();
+
     dispatch(initialSorting({ columnName, isRasing }));
     dispatch(setFilterCategory({ name: categoryForLs, isActive: true }));
+    dispatch(setFilterGender({ name: genderName, isActive: true }));
   }, [dispatch]);
 };

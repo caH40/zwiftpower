@@ -27,3 +27,14 @@ export const categoryFilter = ({
         ],
       };
 };
+
+/**
+ * Создание запроса по полу райдера.
+ */
+export const createMaleQuery = ({ gender }: { gender?: 'male' | 'female' }) => {
+  if (!gender) {
+    return undefined;
+  }
+
+  return gender === 'male' ? true : false;
+};

@@ -15,6 +15,7 @@ import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
 import { useInitialRidersSettings } from '../../hook/useInitialRidersSettings';
 import { useLocalStorageSetRiders } from '../../hook/useLocalStorageSetRiders';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
+import { resetFilterGender } from '../../redux/features/filterGenderSlice';
 
 import styles from './Riders.module.css';
 
@@ -35,6 +36,7 @@ function Riders() {
   const { isScreenLg: isDesktop } = useResize();
   const { activeSorting } = useSelector((state) => state.sortTable);
   const { name: category } = useSelector((state) => state.filterCategory.value);
+  const { male } = useSelector((state) => state.filterGender.value);
   const isMounting = useRef(true);
 
   useTitle('Участники заездов');
@@ -55,6 +57,7 @@ function Riders() {
     activeSorting,
     category,
     isMounting,
+    male,
   });
 
   // Очистка Хранилища после размонтировании компонента (страницы).
@@ -62,6 +65,7 @@ function Riders() {
     return () => {
       dispatch(resetRiders());
       dispatch(resetFilterCategory());
+      dispatch(resetFilterGender());
     };
   }, []);
 
@@ -73,8 +77,8 @@ function Riders() {
       return;
     }
 
-    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category }));
-  }, [page, docsOnPage, search, activeSorting, category]);
+    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category, male }));
+  }, [page, docsOnPage, search, activeSorting, category, male]);
 
   useAd(adNumbers);
 

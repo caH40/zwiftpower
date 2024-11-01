@@ -10,6 +10,7 @@ export const useLocalStorageSetRiders = ({
   activeSorting,
   category,
   isMounting,
+  male,
 }) => {
   useEffect(() => {
     if (isMounting.current) {
@@ -18,6 +19,7 @@ export const useLocalStorageSetRiders = ({
     localStorage.setItem(`${lsPrefixRiders}columnName`, String(activeSorting.columnName));
     localStorage.setItem(`${lsPrefixRiders}isRasing`, String(activeSorting.isRasing));
     localStorage.setItem(`${lsPrefixRiders}category`, category);
+    localStorage.setItem(`${lsPrefixRiders}male`, String(male));
     localStorage.setItem('recordsOnPageRiders', docsOnPage);
-  }, [docsOnPage, activeSorting, category]);
+  }, [docsOnPage, activeSorting, category, male]);
 };

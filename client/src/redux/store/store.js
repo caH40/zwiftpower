@@ -7,6 +7,7 @@ import titleSlice from '../features/titleSlice';
 import zwiftEventParamsSlice from '../features/api/zwift_event_params/zwiftEventParamsSlice';
 import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
+import filterGenderSlice from '../features/filterGenderSlice';
 import filterWattsSlice from '../features/filterWattsSlice';
 import columnsCPSlice from '../features/columnsCPSlice';
 import eventsSlice from '../features/api/eventsSlice';
@@ -53,6 +54,7 @@ export default configureStore({
     eventParams: zwiftEventParamsSlice,
     background: backgroundSlice,
     filterCategory: filterCategorySlice,
+    filterGender: filterGenderSlice,
     filterWatts: filterWattsSlice,
     columnsCP: columnsCPSlice,
     fetchEventResult: eventResultSlice,

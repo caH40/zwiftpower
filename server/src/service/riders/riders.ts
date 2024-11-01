@@ -21,6 +21,7 @@ export const getRidersService = async ({
   columnName = 'totalEvents',
   isRasing = false,
   category = 'All',
+  male,
 }: IRidersQuery) => {
   const sort: { [key: string]: SortOrder } = { [columnName]: isRasing ? 1 : -1 };
 
@@ -33,6 +34,8 @@ export const getRidersService = async ({
         ],
       },
       categoryFilter({ category }), // добавляем фильтр по категории
+      // male === 'undefined значит запрос по male не формируется, если male существует (строка 'true', 'false'), значит формируется соответствующий запрос.
+      { ...(male && { male }) },
     ],
   })
     .sort(sort)
