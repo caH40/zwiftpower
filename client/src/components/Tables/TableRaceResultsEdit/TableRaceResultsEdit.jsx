@@ -77,10 +77,7 @@ function TableRaceResultsEdit({ results, event, setUpdate }) {
               <TdGap gap={result.gap} dsq={isDsq} />
               <TdGap gap={result.gapPrev} dsq={isDsq} />
 
-              <TdWattsPerKg
-                valueRaw={result.wattsPerKg.value}
-                valueAddition={result.wattsPerKg.addition}
-              />
+              <TdWattsPerKg valueAddition={result.wattsPerKg.addition} />
 
               <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
 

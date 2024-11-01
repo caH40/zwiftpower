@@ -80,10 +80,7 @@ function TableRaceResults({ results, event, forDNF }) {
               <TdGap gap={result.gapPrev} dsq={isDsq} />
               <TdSpeed speed={result.speed} />
 
-              <TdWattsPerKg
-                valueRaw={result.wattsPerKg.value}
-                valueAddition={result.wattsPerKg.addition}
-              />
+              <TdWattsPerKg valueAddition={result.wattsPerKg.addition} />
 
               <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
               <td>

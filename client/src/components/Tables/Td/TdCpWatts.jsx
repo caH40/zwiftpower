@@ -17,12 +17,7 @@ function TdCpWatts({ cpBestEfforts = [], interval }) {
 
   return (
     <td>
-      <HighlightValueMax
-        valueCPRounded={valueCPRounded}
-        dimensionValue={dimensionValue}
-        valueRaw={valueRaw}
-        interval={interval}
-      />
+      <HighlightValueMax valueCPRounded={valueCPRounded} dimensionValue={dimensionValue} />
     </td>
   );
 }
