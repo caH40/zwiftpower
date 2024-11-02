@@ -3,16 +3,26 @@ import { Request, Response } from 'express';
 import { validateAccessToken } from '../service/authentication/token.js';
 import { errorHandler } from '../errors/error.js';
 
+/**
+ * Проверка токена в запросе.
+ */
 export async function checkAuth(req: Request, res: Response, next: () => void) {
   try {
     const { authorization } = req.headers;
-    if (!authorization) return res.status(401).json({ message: 'Нет Authorization' });
+    if (!authorization) {
+      return res.status(401).json({ message: 'Нет Authorization' });
+    }
     const accessToken = authorization?.split(' ')[1];
 
     const isValidAccessToken = validateAccessToken(accessToken);
-    if (!isValidAccessToken)
+
+    if (!isValidAccessToken) {
       return res.status(401).json({ message: 'Неактуальный accessToken' });
+    }
+
+    // Добавление данных из токена в params запроса.
     req.params.userId = isValidAccessToken?.id;
+    req.params.userZwiftId = isValidAccessToken?.id;
 
     return next();
 

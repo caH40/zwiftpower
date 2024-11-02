@@ -35,3 +35,27 @@ export async function getNotificationsService({
   const message = 'Данные по настройке оповещений для пользователя.';
   return { data, message };
 }
+
+/**
+ * Обновление настроек оповещения пользователя на email.
+ */
+export async function putNotificationsService({
+  zwiftId,
+  notifications,
+}: {
+  zwiftId: number;
+  notifications: TNotifications;
+}): Promise<TResponseService<null>> {
+  const userDB: { notifications: TNotifications } | null = await User.findOneAndUpdate(
+    { zwiftId },
+    { $set: { notifications } },
+    { _id: true }
+  ).lean();
+
+  if (!userDB) {
+    throw new Error(`Не найден пользователь с zwiftId:${zwiftId} в БД!`);
+  }
+
+  const message = 'Данные по настройке оповещений для пользователя.';
+  return { data: null, message };
+}

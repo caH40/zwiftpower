@@ -10,6 +10,7 @@ import {
   getUserProfile,
   getRiderMetric,
   getNotifications,
+  putNotifications,
 } from '../controllers/profile.js';
 
 import { checkAuth } from '../middleware/auth.js';
@@ -25,3 +26,4 @@ routerProfile.put('/zwiftid', checkAuth, putUserZwiftId);
 routerProfile.delete('/zwiftid', checkAuth, deleteUserZwiftId);
 routerProfile.put('/my', checkAuth, refreshProfile);
 routerProfile.get('/notifications/:zwiftId', checkAuth, getNotifications);
+routerProfile.put('/notifications', checkAuth, putNotifications);

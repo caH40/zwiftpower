@@ -11,7 +11,11 @@ import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 import { getUserResultsService } from '../service/race/rider/results.js';
 import { getMetricService } from '../service/metrics/getMetric.js';
-import { getNotificationsService } from '../service/profile/zwiftid/notifications.js';
+import {
+  getNotificationsService,
+  putNotificationsService,
+} from '../service/profile/zwiftid/notifications.js';
+import { TNotifications } from '../types/model.interface.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -176,6 +180,51 @@ export async function getNotifications(req: Request, res: Response) {
     }
 
     const response = await getNotificationsService({ zwiftId: +zwiftId });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Проверяет, что объект соответствует типу TNotifications.
+ * @param notifications - Объект для проверки.
+ * @returns {boolean} - Возвращает true, если объект соответствует типу TNotifications.
+ */
+function isValidNotifications(notifications: unknown): notifications is TNotifications {
+  return (
+    typeof notifications === 'object' &&
+    notifications !== null &&
+    typeof (notifications as TNotifications).development === 'boolean' &&
+    typeof (notifications as TNotifications).events === 'boolean' &&
+    typeof (notifications as TNotifications).news === 'boolean'
+  );
+}
+
+/**
+ * Контроллер обновления данных настроек оповещения пользователя по почте.
+ */
+export async function putNotifications(req: Request, res: Response) {
+  try {
+    const { zwiftId, notifications } = req.body;
+    const { userZwiftId } = req.params;
+
+    if (zwiftId !== userZwiftId) {
+      throw new Error('Можно изменять данные только своего профиля!');
+    }
+
+    if (isNaN(+zwiftId)) {
+      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    }
+
+    if (!isValidNotifications(notifications)) {
+      throw new Error(`Некорректные данные notifications`);
+    }
+
+    const response = await putNotificationsService({ zwiftId: +zwiftId, notifications });
 
     return res.status(200).json(response);
   } catch (error) {
