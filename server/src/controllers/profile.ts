@@ -11,6 +11,7 @@ import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 import { getUserResultsService } from '../service/race/rider/results.js';
 import { getMetricService } from '../service/metrics/getMetric.js';
+import { getNotificationsService } from '../service/profile/zwiftid/notifications.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -160,5 +161,26 @@ export async function refreshProfile(req: Request, res: Response) {
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
+  }
+}
+
+/**
+ * Контроллер получение данных настроек оповещения пользователя по почте.
+ */
+export async function getNotifications(req: Request, res: Response) {
+  try {
+    const { zwiftId } = req.params;
+
+    if (isNaN(+zwiftId)) {
+      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    }
+
+    const response = await getNotificationsService({ zwiftId: +zwiftId });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
   }
 }

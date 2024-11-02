@@ -3,6 +3,7 @@ import userSettingDeleteZwiftIdSlice from '../features/api/user/userSettingDelet
 import userSettingSlice from '../features/api/user/userSettingSlice';
 import zwiftProfileSlice from '../features/api/zwiftProfiles/zwiftProfileSlice';
 import zwiftProfilesSliceSlice from '../features/api/zwiftProfiles/zwiftProfilesSliceSlice';
+import userNotificationsSlice from '../features/api/user-notifications/userNotificationsSlice';
 
 export const userReducers = {
   getZwiftProfile: zwiftProfileSlice,
@@ -10,4 +11,5 @@ export const userReducers = {
   zwiftProfiles: zwiftProfilesSliceSlice,
   userSettingDeleteZwiftId: userSettingDeleteZwiftIdSlice,
   profileRefresh: profileRefreshSlice,
+  notifications: userNotificationsSlice,
 };

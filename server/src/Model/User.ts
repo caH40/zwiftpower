@@ -1,6 +1,15 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { UserSchema } from '../types/model.interface.js';
+import { TNotifications, UserSchema } from '../types/model.interface.js';
+
+const notificationsSchema = new Schema<TNotifications>(
+  {
+    development: { type: Boolean, default: true }, // Оповещение на email об изменениях на сайте.
+    events: { type: Boolean, default: true }, // Оповещение на email об новых Эвентах.
+    news: { type: Boolean, default: true }, // Оповещение на email о новостях.
+  },
+  { _id: false }
+);
 
 const userSchema = new Schema<UserSchema>({
   username: { type: String, unique: true, required: true },
@@ -41,6 +50,7 @@ const userSchema = new Schema<UserSchema>({
   photoFromZp: { type: Boolean },
   photoProfile: { type: String },
   bio: { type: String },
+  notifications: { type: notificationsSchema },
 });
 
 export const User = model('User', userSchema);

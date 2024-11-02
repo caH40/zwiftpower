@@ -273,7 +273,14 @@ export interface UserSchema {
   photoFromZp: boolean;
   photoProfile?: string;
   bio: string;
+  notifications: TNotifications;
 }
+export type TNotifications = {
+  development: boolean; // Оповещение на email об изменениях на сайте.
+  events: boolean; // Оповещение на email об новых Эвентах.
+  news: boolean; // Оповещение на email о новостях.
+};
+
 //
 //
 export interface ZwiftEventSchema {

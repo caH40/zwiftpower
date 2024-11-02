@@ -71,3 +71,11 @@ export interface GetRidersQuery {
   category?: 'All' | 'A' | 'B' | 'C' | 'D' | 'E'; // Категория запроса.
   male?: 'true' | 'false'; // Пол райдеров.
 }
+
+/**
+ * Ответ с сервиса.
+ */
+export type TResponseService<T> = {
+  data: T;
+  message: string;
+};
