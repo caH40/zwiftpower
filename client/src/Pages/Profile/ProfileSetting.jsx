@@ -15,7 +15,7 @@ function ProfileSetting() {
   const { zwiftId: zwiftIdPage } = useParams();
 
   // Не отображать страницу настроек для чужого пользователя.
-  if (+zwiftIdPage !== zwiftIdAuth) {
+  if (+zwiftIdPage !== zwiftIdAuth && +zwiftIdPage !== 0) {
     return <></>;
   }
 
@@ -34,7 +34,10 @@ function ProfileSetting() {
         </div>
 
         <ProfileSettingsZwift zwiftIdAuth={zwiftIdAuth} />
-        <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
+
+        {zwiftIdAuth && (
+          <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
+        )}
       </div>
     </section>
   );
