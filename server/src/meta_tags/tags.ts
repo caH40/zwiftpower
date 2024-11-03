@@ -180,7 +180,7 @@ export const getStreamsMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Смотрите трансляции (стримы) участников Zwift в реальном времени. Следите за гонками, обсуждайте стратегии и будьте в курсе всех событий виртуальных велогонок!';
-  const image = 'http://zwiftpower.ru/images/open_graph/stream.jpg';
+  const image = 'http://zwiftpower.ru/images/open_graph/stream.webp';
   const recommendationsTag = 'streams';
 
   return { title, canonical, description, image, recommendationsTag };

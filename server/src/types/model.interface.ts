@@ -280,6 +280,12 @@ export type TNotifications = {
   events: boolean; // Оповещение на email об новых Эвентах.
   news: boolean; // Оповещение на email о новостях.
 };
+export type TStreams = {
+  twitch: {
+    channel: string;
+    enabled: boolean;
+  };
+};
 
 //
 //
