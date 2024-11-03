@@ -274,17 +274,19 @@ export interface UserSchema {
   photoProfile?: string;
   bio: string;
   notifications: TNotifications;
+  streams: TUserStreams;
 }
 export type TNotifications = {
   development: boolean; // Оповещение на email об изменениях на сайте.
   events: boolean; // Оповещение на email об новых Эвентах.
   news: boolean; // Оповещение на email о новостях.
 };
-export type TStreams = {
+export type TUserStreams = {
   twitch: {
-    channel: string;
-    enabled: boolean;
+    channelName: string; // Название канала на Твиче.
+    isEnabled: boolean; // Включение/отключение пользователем отображения стрима на сайте.
   };
+  streamingRestricted: boolean; // Флаг, ограничивающий добавление стримов пользователем. (устанавливается админом)
 };
 
 //

@@ -1,12 +1,24 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { TNotifications, UserSchema } from '../types/model.interface.js';
+import { TNotifications, TUserStreams, UserSchema } from '../types/model.interface.js';
 
 const notificationsSchema = new Schema<TNotifications>(
   {
     development: { type: Boolean, default: true }, // Оповещение на email об изменениях на сайте.
     events: { type: Boolean, default: true }, // Оповещение на email об новых Эвентах.
     news: { type: Boolean, default: true }, // Оповещение на email о новостях.
+  },
+  { _id: false }
+);
+
+// Схема для конфигурации стримов пользователя с разных ресурсов.
+const streamsSchema = new Schema<TUserStreams>(
+  {
+    twitch: {
+      channelName: { type: String },
+      isEnabled: { type: Boolean },
+    },
+    streamingRestricted: { type: Boolean, default: false },
   },
   { _id: false }
 );
@@ -50,7 +62,17 @@ const userSchema = new Schema<UserSchema>({
   photoFromZp: { type: Boolean },
   photoProfile: { type: String },
   bio: { type: String },
-  notifications: { type: notificationsSchema },
+  notifications: {
+    type: notificationsSchema,
+    default: () => ({}),
+  },
+  streams: {
+    type: streamsSchema,
+    default: () => ({
+      twitch: { channelName: '', isEnabled: false },
+      streamingRestricted: false,
+    }),
+  },
 });
 
 export const User = model('User', userSchema);
