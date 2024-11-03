@@ -48,8 +48,6 @@ export async function putNotificationsService({
   zwiftId: number;
   notifications: TNotifications;
 }): Promise<TResponseService<{ notifications: TNotifications }>> {
-  // console.log(notifications);
-
   const userDB: { notifications: TNotifications; _id: mongoose.Types.ObjectId } | null =
     await User.findOneAndUpdate(
       { zwiftId },

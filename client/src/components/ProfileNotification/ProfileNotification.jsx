@@ -24,27 +24,26 @@ import styles from './ProfileNotification.module.css';
  * @param {Notifications} props.notifications - Настройки уведомлений пользователя.
  * @returns {JSX.Element} Элемент JSX для отображения настроек уведомлений профиля.
  */
-export default function ProfileNotification() {
+export default function ProfileNotification({ zwiftIdAuth }) {
   const { notifications } = useSelector((state) => state.notifications);
-  const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUserNotifications({ zwiftId }));
+    dispatch(fetchUserNotifications({ zwiftId: zwiftIdAuth }));
   }, []);
 
   const handleCheckboxChange = async (event) => {
     const { name, checked } = event.target;
 
     const notificationsChanged = { ...notifications, [name]: checked };
-    dispatch(fetchPutUserNotifications({ zwiftId, notifications: notificationsChanged })).then(
-      (data) => {
-        if (data.meta.requestStatus === 'fulfilled') {
-          dispatch(putNotifications(data.payload.data));
-        }
+    dispatch(
+      fetchPutUserNotifications({ zwiftId: zwiftIdAuth, notifications: notificationsChanged })
+    ).then((data) => {
+      if (data.meta.requestStatus === 'fulfilled') {
+        dispatch(putNotifications(data.payload.data));
       }
-    );
+    });
   };
 
   // Задаем фиксированный порядок для отображения

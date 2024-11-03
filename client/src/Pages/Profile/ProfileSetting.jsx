@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
 import ProfileSettingsZwift from '../../components/ProfileSettingsZwift/ProfileSettingsZwift';
@@ -10,6 +11,14 @@ import styles from './ProfileSetting.module.css';
 const notificationsTest = { development: false, news: true, events: true };
 
 function ProfileSetting() {
+  const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
+  const { zwiftId: zwiftIdPage } = useParams();
+
+  // Не отображать страницу настроек для чужого пользователя.
+  if (+zwiftIdPage !== zwiftIdAuth) {
+    return <></>;
+  }
+
   const dispatch = useDispatch();
 
   const refreshProfile = () => {
@@ -24,8 +33,8 @@ function ProfileSetting() {
           <IconRefresh getClick={refreshProfile} />
         </div>
 
-        <ProfileSettingsZwift />
-        <ProfileNotification notifications={notificationsTest} />
+        <ProfileSettingsZwift zwiftIdAuth={zwiftIdAuth} />
+        <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
       </div>
     </section>
   );

@@ -16,9 +16,9 @@ import styles from './ProfileSettingsZwift.module.css';
 /**
  * блок добавления/удаления ZwiftId к аккаунту
  */
-function ProfileSettingsZwift() {
+function ProfileSettingsZwift({ zwiftIdAuth }) {
   const [isOpened, setIsOpened] = useState(false);
-  const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
+
   const { zwiftProfiles } = useSelector((state) => state.zwiftProfiles);
   const dispatch = useDispatch();
 
