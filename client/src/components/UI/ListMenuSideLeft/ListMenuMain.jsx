@@ -20,7 +20,7 @@ const iconItems = [
   { id: 4, to: '/race/statistics/main', icon: IconDiagram, label: 'Статистика' },
   { id: 5, to: '/riders', icon: IconRider2, label: 'Райдеры' },
   { id: 6, to: '/profile', icon: IconProfile, label: 'Профиль' },
-  { id: 7, to: '/streams', icon: IconStream, label: 'Стримы' },
+  { id: 7, to: '/streams', icon: IconStream, label: 'Трансляции' },
   { id: 8, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
 ];
 

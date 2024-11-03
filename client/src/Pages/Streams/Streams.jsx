@@ -1,3 +1,4 @@
+import { HelmetStreams } from '../../components/Helmets/HelmetStreams';
 import TwitchStream from '../../components/Streams/TwitchStream/TwitchStream';
 import useTitle from '../../hook/useTitle';
 
@@ -10,6 +11,7 @@ export default function Streams() {
   useTitle('Трансляции с Zwift');
   return (
     <div>
+      <HelmetStreams />
       <TwitchStream channel={'komonrace'} />
     </div>
   );

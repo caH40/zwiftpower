@@ -17,6 +17,7 @@ import {
   getScheduleListMeta,
   getSeriesMeta,
   getStatisticsMeta,
+  getStreamsMeta,
 } from './tags.js';
 
 /**
@@ -53,6 +54,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = await getSignedRidersMeta(url);
   } else if (url.includes('/profile/')) {
     tags = await getProfileResultsMeta(url);
+  } else if (url.includes('/streams')) {
+    tags = getStreamsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

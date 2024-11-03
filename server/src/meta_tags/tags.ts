@@ -171,3 +171,17 @@ export const getRidersMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Трансляции"
+ */
+export const getStreamsMeta = (url: string): MetaTags => {
+  const title = 'Трансляции участников Zwift - Смотрите гонки в реальном времени';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Смотрите трансляции (стримы) участников Zwift в реальном времени. Следите за гонками, обсуждайте стратегии и будьте в курсе всех событий виртуальных велогонок!';
+  const image = 'http://zwiftpower.ru/images/open_graph/stream.jpg';
+  const recommendationsTag = 'riders';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
