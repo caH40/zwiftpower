@@ -17,6 +17,7 @@ const Faq = lazy(() => import('./Pages/Faq/Faq'));
 const Riders = lazy(() => import('./Pages/Riders/Riders.jsx'));
 const MainPage = lazy(() => import('./Pages/Main/MainPage'));
 const Message = lazy(() => import('./Pages/Message/Message'));
+const Streams = lazy(() => import('./Pages/Streams/Streams'));
 
 import { sendMetrika } from './yandex/metrika.js';
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/message/:messageId/:additional" element={<Message />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/riders" element={<Riders />} />
+        <Route path="/streams" element={<Streams />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
         <Route path="*" element={<Page404 />} />
