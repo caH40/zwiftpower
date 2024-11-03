@@ -14,8 +14,9 @@ import { getMetricService } from '../service/metrics/getMetric.js';
 import {
   getNotificationsService,
   putNotificationsService,
-} from '../service/profile/zwiftid/notifications.js';
-import { TNotifications } from '../types/model.interface.js';
+} from '../service/profile/notifications.js';
+import { TNotifications, TUserStreams } from '../types/model.interface.js';
+import { putUserStreamsService } from '../service/profile/streams.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -225,6 +226,51 @@ export async function putNotifications(req: Request, res: Response) {
     }
 
     const response = await putNotificationsService({ zwiftId: +zwiftId, notifications });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Проверяет, что объект соответствует типу TUserStreams.
+ * @param streamsParams - Объект для проверки.
+ * @returns {boolean} - Возвращает true, если объект соответствует типу TUserStreams.
+ */
+function isValidUserStreams(streamsParams: unknown): streamsParams is TUserStreams {
+  return (
+    typeof streamsParams === 'object' &&
+    streamsParams !== null &&
+    typeof (streamsParams as TUserStreams).streamingRestricted === 'boolean' &&
+    typeof (streamsParams as TUserStreams).twitch.channelName === 'string' &&
+    typeof (streamsParams as TUserStreams).twitch.isEnabled === 'boolean'
+  );
+}
+
+/**
+ * Контроллер обновления настроек для отображения трансляций с разных ресурсов.
+ */
+export async function putUserStreams(req: Request, res: Response) {
+  try {
+    const { zwiftId, streamsParams } = req.body;
+    const { userZwiftId } = req.params;
+
+    if (zwiftId !== userZwiftId) {
+      throw new Error('Можно изменять данные только своего профиля!');
+    }
+
+    if (isNaN(+zwiftId)) {
+      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    }
+
+    if (!isValidUserStreams(streamsParams)) {
+      throw new Error(`Некорректные данные streamsParams`);
+    }
+
+    const response = await putUserStreamsService({ zwiftId: +zwiftId, streamsParams });
 
     return res.status(200).json(response);
   } catch (error) {

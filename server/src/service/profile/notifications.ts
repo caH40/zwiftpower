@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-import { User } from '../../../Model/User.js';
-import { TResponseService } from '../../../types/http.interface.js';
-import { TNotifications } from '../../../types/model.interface.js';
+import { User } from '../../Model/User.js';
+import { TResponseService } from '../../types/http.interface.js';
+import { TNotifications } from '../../types/model.interface.js';
 
 // Временная конфигурация, пока не добавлен данных объект во все документы User в БД.
 const notificationDefault: TNotifications = {
@@ -48,17 +48,17 @@ export async function putNotificationsService({
   zwiftId: number;
   notifications: TNotifications;
 }): Promise<TResponseService<{ notifications: TNotifications }>> {
-  const userDB: { notifications: TNotifications; _id: mongoose.Types.ObjectId } | null =
-    await User.findOneAndUpdate(
-      { zwiftId },
-      { $set: { notifications } },
-      { new: true, projection: { notifications: true } }
-    ).lean();
+  const userDB = await User.findOneAndUpdate(
+    { zwiftId },
+    { $set: { notifications } },
+    { new: true, projection: { notifications: true } }
+  ).lean<{ notifications: TNotifications; _id: mongoose.Types.ObjectId }>();
 
   if (!userDB) {
     throw new Error(`Не найден пользователь с zwiftId:${zwiftId} в БД!`);
   }
 
   const message = 'Обновлены параметры оповещений для пользователя.';
+
   return { data: { notifications: userDB.notifications }, message };
 }
