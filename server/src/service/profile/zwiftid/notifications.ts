@@ -1,12 +1,14 @@
+import mongoose from 'mongoose';
+
 import { User } from '../../../Model/User.js';
 import { TResponseService } from '../../../types/http.interface.js';
 import { TNotifications } from '../../../types/model.interface.js';
 
 // Временная конфигурация, пока не добавлен данных объект во все документы User в БД.
 const notificationDefault: TNotifications = {
-  development: true,
+  news: false,
   events: false,
-  news: true,
+  development: false,
 };
 
 type TResponseGetNotifications = {
@@ -32,7 +34,7 @@ export async function getNotificationsService({
 
   const data = { notifications: userDB.notifications || notificationDefault, zwiftId };
 
-  const message = 'Данные по настройке оповещений для пользователя.';
+  const message = 'Данные по параметрам оповещений для пользователя.';
   return { data, message };
 }
 
@@ -45,17 +47,20 @@ export async function putNotificationsService({
 }: {
   zwiftId: number;
   notifications: TNotifications;
-}): Promise<TResponseService<null>> {
-  const userDB: { notifications: TNotifications } | null = await User.findOneAndUpdate(
-    { zwiftId },
-    { $set: { notifications } },
-    { _id: true }
-  ).lean();
+}): Promise<TResponseService<{ notifications: TNotifications }>> {
+  // console.log(notifications);
+
+  const userDB: { notifications: TNotifications; _id: mongoose.Types.ObjectId } | null =
+    await User.findOneAndUpdate(
+      { zwiftId },
+      { $set: { notifications } },
+      { new: true, projection: { notifications: true } }
+    ).lean();
 
   if (!userDB) {
     throw new Error(`Не найден пользователь с zwiftId:${zwiftId} в БД!`);
   }
 
-  const message = 'Данные по настройке оповещений для пользователя.';
-  return { data: null, message };
+  const message = 'Обновлены параметры оповещений для пользователя.';
+  return { data: { notifications: userDB.notifications }, message };
 }

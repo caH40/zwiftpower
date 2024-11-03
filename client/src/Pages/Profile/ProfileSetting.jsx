@@ -18,12 +18,15 @@ function ProfileSetting() {
 
   return (
     <section className={styles.wrapper}>
-      <div className={styles.refresh}>
-        <span>Обновить данные основного профиля</span>
-        <IconRefresh getClick={refreshProfile} />
+      <div className={styles.wrapper__blocks}>
+        <div className={styles.refresh}>
+          <span>Обновить данные основного профиля</span>
+          <IconRefresh getClick={refreshProfile} />
+        </div>
+
+        <ProfileSettingsZwift />
+        <ProfileNotification notifications={notificationsTest} />
       </div>
-      <ProfileSettingsZwift />
-      <ProfileNotification notifications={notificationsTest} />
     </section>
   );
 }

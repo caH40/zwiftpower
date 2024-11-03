@@ -1,7 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchUserNotifications } from '../../redux/features/api/user-notifications/fetchUserNotifications';
+import {
+  fetchPutUserNotifications,
+  fetchUserNotifications,
+} from '../../redux/features/api/user-notifications/fetchUserNotifications';
+import { putNotifications } from '../../redux/features/api/user-notifications/userNotificationsSlice';
+import CheckboxSimple from '../UI/Checkbox/CheckboxSimple';
+import { getTranslation } from '../../utils/translation';
 
 import styles from './ProfileNotification.module.css';
 
@@ -28,15 +34,34 @@ export default function ProfileNotification() {
     dispatch(fetchUserNotifications({ zwiftId }));
   }, []);
 
-  console.log(notifications);
+  const handleCheckboxChange = async (event) => {
+    const { name, checked } = event.target;
+
+    const notificationsChanged = { ...notifications, [name]: checked };
+    dispatch(fetchPutUserNotifications({ zwiftId, notifications: notificationsChanged })).then(
+      (data) => {
+        if (data.meta.requestStatus === 'fulfilled') {
+          dispatch(putNotifications(data.payload.data));
+        }
+      }
+    );
+  };
+
+  // Задаем фиксированный порядок для отображения
+  const orderedKeys = ['news', 'events', 'development'];
 
   return (
     <div className={styles.wrapper}>
+      <h3 className={styles.title}>Оповещения на e-mail</h3>
       <ul className={styles.list}>
-        {Object.entries(notifications).map(([key, value]) => (
+        {orderedKeys.map((key) => (
           <li className={styles.item} key={key}>
-            <span>{key}</span>
-            <input type="checkbox" defaultChecked={value} />
+            <span>{getTranslation(key)}</span>
+            <CheckboxSimple
+              checked={notifications[key]}
+              handleCheckboxChange={handleCheckboxChange}
+              name={key}
+            />
           </li>
         ))}
       </ul>

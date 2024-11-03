@@ -4,9 +4,9 @@ import { fetchUserNotifications } from './fetchUserNotifications';
 
 const initialState = {
   notifications: {
-    news: true,
-    development: true,
-    events: true,
+    news: false,
+    events: false,
+    development: false,
   },
   status: null,
   error: null,
@@ -15,7 +15,11 @@ const initialState = {
 const userNotificationsSlice = createSlice({
   name: 'getNotifications',
   initialState,
-  reducers: {},
+  reducers: {
+    putNotifications: (state, action) => {
+      state.notifications = action.payload.notifications;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchUserNotifications.pending, (state) => {
@@ -35,5 +39,7 @@ const userNotificationsSlice = createSlice({
     });
   },
 });
+
+export const { putNotifications } = userNotificationsSlice.actions;
 
 export default userNotificationsSlice.reducer;

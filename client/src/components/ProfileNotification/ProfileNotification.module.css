@@ -1,0 +1,15 @@
+.wrapper {
+  max-width: 400px;
+}
+.list {
+  font-size: 1.1em;
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.item + .item {
+  margin-top: 0.2rem;
+}

@@ -22,7 +22,7 @@ export async function checkAuth(req: Request, res: Response, next: () => void) {
 
     // Добавление данных из токена в params запроса.
     req.params.userId = isValidAccessToken?.id;
-    req.params.userZwiftId = isValidAccessToken?.id;
+    req.params.userZwiftId = isValidAccessToken?.zwiftId;
 
     return next();
 

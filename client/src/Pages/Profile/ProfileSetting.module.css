@@ -2,5 +2,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+}
+.wrapper__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
