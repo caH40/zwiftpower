@@ -10,6 +10,7 @@ import {
   deleteLogAdmin,
 } from '../controllers/logs.js';
 import { getRiders } from '../controllers/riders.js';
+import { getEnabledUserStreams } from '../controllers/streams.js';
 
 export const router = Router();
 
@@ -20,3 +21,4 @@ router.delete('/logs/errors', authAdmin, deleteLogError);
 router.delete('/logs/admins', authAdmin, deleteLogAdmin);
 router.get('/logs/error', authAdmin, getLogError);
 router.get('/riders', getRiders);
+router.get('/streams', getEnabledUserStreams);

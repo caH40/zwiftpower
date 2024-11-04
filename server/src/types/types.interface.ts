@@ -611,3 +611,21 @@ export type TRidersRacingScores = {
  * Метрики райдера.
  */
 export type TMetricsMap = Map<number, TMetrics>;
+
+/**
+ * Ответ с сервиса получения включенных трансляций пользователей.
+ */
+export type TResponseEnabledUserStream = {
+  _id: string;
+  zwiftData: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    category: string;
+    racingScore: string;
+    imageSrc: string;
+    countryAlpha3: string;
+    male: boolean;
+  };
+  twitch: { channelName: string };
+};
