@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  fetchPutUserNotifications,
-  fetchUserNotifications,
-} from '../../redux/features/api/user-notifications/fetchUserNotifications';
-import { putNotifications } from '../../redux/features/api/user-notifications/userNotificationsSlice';
+import { putUserNotifications } from '../../redux/features/api/user-settings/putUserNotification';
+import { putNotifications } from '../../redux/features/api/user-settings/userSettingsSlice';
 import CheckboxSimple from '../UI/Checkbox/CheckboxSimple';
 import { getTranslation } from '../../utils/translation';
 
@@ -25,20 +21,16 @@ import styles from './ProfileNotification.module.css';
  * @returns {JSX.Element} Элемент JSX для отображения настроек уведомлений профиля.
  */
 export default function ProfileNotification({ zwiftIdAuth }) {
-  const { notifications } = useSelector((state) => state.notifications);
+  const { notifications } = useSelector((state) => state.userSettings);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserNotifications({ zwiftId: zwiftIdAuth }));
-  }, []);
 
   const handleCheckboxChange = async (event) => {
     const { name, checked } = event.target;
 
     const notificationsChanged = { ...notifications, [name]: checked };
     dispatch(
-      fetchPutUserNotifications({ zwiftId: zwiftIdAuth, notifications: notificationsChanged })
+      putUserNotifications({ zwiftId: zwiftIdAuth, notifications: notificationsChanged })
     ).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
         dispatch(putNotifications(data.payload.data));
