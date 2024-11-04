@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
+import { fetchUserSettings } from '../../redux/features/api/user-settings/fetchUserSettings';
+import ProfileStreams from '../../components/ProfileStreams/ProfileStreams';
 import ProfileSettingsZwift from '../../components/ProfileSettingsZwift/ProfileSettingsZwift';
 import ProfileNotification from '../../components/ProfileNotification/ProfileNotification';
 import IconRefresh from '../../components/icons/IconRefresh';
-import { fetchUserSettings } from '../../redux/features/api/user-settings/fetchUserSettings';
 
 import styles from './ProfileSetting.module.css';
 
@@ -42,7 +43,11 @@ function ProfileSetting() {
         <ProfileSettingsZwift zwiftIdAuth={zwiftIdAuth} />
 
         {zwiftIdAuth && (
-          <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
+          <>
+            <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
+
+            <ProfileStreams zwiftIdAuth={zwiftIdAuth} />
+          </>
         )}
       </div>
     </section>

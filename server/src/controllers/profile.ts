@@ -266,7 +266,6 @@ function isValidUserStreams(streamsParams: unknown): streamsParams is TUserStrea
   return (
     typeof streamsParams === 'object' &&
     streamsParams !== null &&
-    typeof (streamsParams as TUserStreams).streamingRestricted === 'boolean' &&
     typeof (streamsParams as TUserStreams).twitch.channelName === 'string' &&
     typeof (streamsParams as TUserStreams).twitch.isEnabled === 'boolean'
   );
@@ -277,7 +276,7 @@ function isValidUserStreams(streamsParams: unknown): streamsParams is TUserStrea
  */
 export async function putUserStreams(req: Request, res: Response) {
   try {
-    const { zwiftId, streamsParams } = req.body;
+    const { zwiftId, streams } = req.body;
     const { userZwiftId } = req.params;
 
     if (zwiftId !== userZwiftId) {
@@ -288,11 +287,11 @@ export async function putUserStreams(req: Request, res: Response) {
       throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
     }
 
-    if (!isValidUserStreams(streamsParams)) {
-      throw new Error(`Некорректные данные streamsParams`);
+    if (!isValidUserStreams(streams)) {
+      throw new Error(`Некорректные данные streams`);
     }
 
-    const response = await putUserStreamsService({ zwiftId: +zwiftId, streamsParams });
+    const response = await putUserStreamsService({ zwiftId: +zwiftId, streamsParams: streams });
 
     return res.status(200).json(response);
   } catch (error) {

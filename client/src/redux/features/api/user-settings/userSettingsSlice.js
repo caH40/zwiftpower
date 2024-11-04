@@ -8,6 +8,13 @@ const initialState = {
     events: false,
     development: false,
   },
+  streams: {
+    twitch: {
+      channelName: '',
+      isEnabled: true,
+    },
+    streamingRestricted: false,
+  },
   status: null,
   error: null,
 };
@@ -19,6 +26,10 @@ const userSettingsSlice = createSlice({
     // Обновление notifications в хранилище данными, пришедшими с сервера после изменения настроек. (checkbox)
     putNotifications: (state, action) => {
       state.notifications = action.payload.notifications;
+    },
+
+    putStreams: (state, action) => {
+      state.streams = action.payload.streams;
     },
   },
 
@@ -42,6 +53,6 @@ const userSettingsSlice = createSlice({
   },
 });
 
-export const { putNotifications } = userSettingsSlice.actions;
+export const { putNotifications, putStreams } = userSettingsSlice.actions;
 
 export default userSettingsSlice.reducer;
