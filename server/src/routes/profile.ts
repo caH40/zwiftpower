@@ -12,6 +12,7 @@ import {
   getNotifications,
   putNotifications,
   putUserStreams,
+  getUserSettings,
 } from '../controllers/profile.js';
 
 import { checkAuth } from '../middleware/auth.js';
@@ -29,3 +30,4 @@ routerProfile.put('/my', checkAuth, refreshProfile);
 routerProfile.get('/notifications/:zwiftId', checkAuth, getNotifications);
 routerProfile.put('/notifications', checkAuth, putNotifications);
 routerProfile.put('/streams', checkAuth, putUserStreams);
+routerProfile.get('/settings/:zwiftId', checkAuth, getUserSettings);

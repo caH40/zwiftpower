@@ -17,6 +17,7 @@ import {
 } from '../service/profile/notifications.js';
 import { TNotifications, TUserStreams } from '../types/model.interface.js';
 import { putUserStreamsService } from '../service/profile/streams.js';
+import { getUserSettingsService } from '../service/profile/settings.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -181,6 +182,27 @@ export async function getNotifications(req: Request, res: Response) {
     }
 
     const response = await getNotificationsService({ zwiftId: +zwiftId });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер получение данных настроек профиля пользователя.
+ */
+export async function getUserSettings(req: Request, res: Response) {
+  try {
+    const { zwiftId } = req.params;
+
+    if (isNaN(+zwiftId)) {
+      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    }
+
+    const response = await getUserSettingsService({ zwiftId: +zwiftId });
 
     return res.status(200).json(response);
   } catch (error) {
