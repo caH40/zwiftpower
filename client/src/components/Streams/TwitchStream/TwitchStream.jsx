@@ -3,6 +3,8 @@ import { domain } from '../../../config/environment';
 import styles from './TwitchStream.module.css';
 
 function TwitchStream({ channel }) {
+  console.log({ channel });
+
   if (!channel) {
     return <></>;
   }

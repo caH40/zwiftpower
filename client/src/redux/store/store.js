@@ -44,6 +44,7 @@ import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
 import { adminReducers } from './admin';
 import { logsReducers } from './logs';
+import { streamsReducers } from './streams';
 
 export default configureStore({
   reducer: {
@@ -88,6 +89,7 @@ export default configureStore({
     ...userReducers,
     ...adminReducers,
     ...logsReducers,
+    ...streamsReducers,
   },
 });
 
