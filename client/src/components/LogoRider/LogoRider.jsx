@@ -20,10 +20,10 @@ function LogoRider({ source, firstName, lastName, enlargeLogo }) {
     <>
       {source ? (
         <img
-          className={cx('img', { zoom: source })}
+          className={cx('img', { zoom: enlargeLogo })}
           src={source}
           alt="Ph"
-          onClick={() => enlargeLogo(source)}
+          onClick={() => (enlargeLogo ? enlargeLogo(source) : null)}
         />
       ) : (
         <div className={cx('empty')}>{name}</div>

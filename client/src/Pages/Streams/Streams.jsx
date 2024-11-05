@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { HelmetStreams } from '../../components/Helmets/HelmetStreams';
-import TwitchStream from '../../components/Streams/TwitchStream/TwitchStream';
+import TwitchStreamBlock from '../../components/Streams/TwitchStreamBlock/TwitchStreamBlock';
 import useTitle from '../../hook/useTitle';
 import { fetchUsersEnabledStreams } from '../../redux/features/api/streams/fetchUsersEnabledStreams';
 
@@ -16,8 +16,6 @@ export default function Streams() {
 
   const dispatch = useDispatch();
 
-  console.log(streams);
-
   useEffect(() => {
     dispatch(fetchUsersEnabledStreams());
   }, []);
@@ -27,10 +25,10 @@ export default function Streams() {
     <div>
       <HelmetStreams />
 
-      {!!streams.length &&
-        streams.map((stream) => (
-          <TwitchStream channel={stream.twitch.channelName} key={stream._id} />
-        ))}
+      <div className={styles.wrapper__streams}>
+        {!!streams.length &&
+          streams.map((stream) => <TwitchStreamBlock stream={stream} key={stream._id} />)}
+      </div>
     </div>
   );
 }

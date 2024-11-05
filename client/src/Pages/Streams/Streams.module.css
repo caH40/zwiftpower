@@ -1,0 +1,5 @@
+.wrapper__streams {
+  display: flex;
+  gap: 25px 10px;
+  flex-wrap: wrap;
+}
