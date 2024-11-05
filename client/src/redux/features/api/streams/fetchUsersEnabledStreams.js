@@ -8,7 +8,7 @@ import { serverExpress } from '../../../../config/environment';
  * Получение включенных трансляций пользователей.
  */
 export const fetchUsersEnabledStreams = createAsyncThunk(
-  'user/getUserSettings',
+  'user/getUserEnabledStreams',
   async function (_, thunkAPI) {
     try {
       const response = await myAxios({

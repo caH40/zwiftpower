@@ -32,6 +32,4 @@ const usersEnabledStreamsSlice = createSlice({
   },
 });
 
-// export const { putNotifications, putStreams } = userEnabledStreamsSlice.actions;
-
 export default usersEnabledStreamsSlice.reducer;
