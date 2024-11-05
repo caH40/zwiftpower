@@ -11,7 +11,7 @@ const initialState = {
   streams: {
     twitch: {
       channelName: '',
-      isEnabled: true,
+      isEnabled: false,
     },
     streamingRestricted: false,
   },
@@ -30,6 +30,11 @@ const userSettingsSlice = createSlice({
 
     putStreams: (state, action) => {
       state.streams = action.payload.streams;
+    },
+
+    resetUserSettings: (state) => {
+      state.notifications = initialState.notifications;
+      state.streams = initialState.streams;
     },
   },
 
@@ -53,6 +58,6 @@ const userSettingsSlice = createSlice({
   },
 });
 
-export const { putNotifications, putStreams } = userSettingsSlice.actions;
+export const { putNotifications, putStreams, resetUserSettings } = userSettingsSlice.actions;
 
 export default userSettingsSlice.reducer;

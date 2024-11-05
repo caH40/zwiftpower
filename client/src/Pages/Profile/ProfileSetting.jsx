@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
 import { fetchUserSettings } from '../../redux/features/api/user-settings/fetchUserSettings';
+import { resetUserSettings } from '../../redux/features/api/user-settings/userSettingsSlice';
 import ProfileStreams from '../../components/ProfileStreams/ProfileStreams';
 import ProfileSettingsZwift from '../../components/ProfileSettingsZwift/ProfileSettingsZwift';
 import ProfileNotification from '../../components/ProfileNotification/ProfileNotification';
@@ -26,6 +27,9 @@ function ProfileSetting() {
 
   useEffect(() => {
     dispatch(fetchUserSettings({ zwiftId: zwiftIdAuth }));
+    return () => {
+      dispatch(resetUserSettings());
+    };
   }, []);
 
   const refreshProfile = () => {
