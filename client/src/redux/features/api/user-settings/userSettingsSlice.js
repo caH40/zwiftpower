@@ -4,9 +4,9 @@ import { fetchUserSettings } from './fetchUserSettings';
 
 const initialState = {
   notifications: {
-    news: false,
-    events: false,
-    development: false,
+    news: true,
+    events: true,
+    development: true,
   },
   streams: {
     twitch: {

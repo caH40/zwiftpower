@@ -31,6 +31,32 @@ export default function ProfileStreams({ zwiftIdAuth }) {
         isEnabled: event.target.checked,
       },
     };
+
+    dispatch(fetchPutUserStreams({ zwiftId: zwiftIdAuth, streams: streamsUpdated })).then(
+      (data) => {
+        if (data.meta.requestStatus === 'fulfilled') {
+          dispatch(putStreams(data.payload.data));
+        }
+      }
+    );
+  };
+
+  // Обработчик для изменения channelName и автоматического отключения isEnabled.
+  const handleChannelNameChange = (newChannelName) => {
+    setChannelName(newChannelName);
+
+    // Если уже выключена, то не надо передавать это же значение на сервер.
+    if (!streams.twitch.isEnabled) {
+      return;
+    }
+
+    const streamsUpdated = {
+      twitch: {
+        channelName: newChannelName,
+        isEnabled: false,
+      },
+    };
+
     dispatch(fetchPutUserStreams({ zwiftId: zwiftIdAuth, streams: streamsUpdated })).then(
       (data) => {
         if (data.meta.requestStatus === 'fulfilled') {
@@ -53,7 +79,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
         <label>Название канала</label>
         <InputSimple
           value={channelName}
-          setValue={setChannelName}
+          setValue={handleChannelNameChange}
           type="text"
           name="channelName"
         />
