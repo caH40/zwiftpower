@@ -17,6 +17,7 @@ const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 const Users = lazy(() => import('../Pages/Users/Users'));
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 const ZwiftViewEvent = lazy(() => import('../Pages/ZwiftViewEvent/ZwiftViewEvent'));
+const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
 
 export function AdminRoute(isAdmin) {
   return (
@@ -38,6 +39,7 @@ export function AdminRoute(isAdmin) {
           <Route path="organizer" element={<AdminOrganizer />} />
           <Route path="logs/errors/:id" element={<LogErrorDescription />} />
           <Route path="clubs" element={<ZwiftClubs />} />
+          <Route path="notifications" element={<AdminNotifications />} />
         </Route>
       )}
       <Route path="/admin/results/edit/:eventId" element={<EditResults />} />

@@ -6,6 +6,7 @@ import IconUsers from '../../components/icons/IconUsers';
 import IconTeam from '../../components/icons/IconTeam';
 import IconLog from '../../components/icons/IconLog';
 import IconCreator from '../../components/icons/IconCreator';
+import IconEmail from '../../components/icons/IconEmail';
 
 const items = [
   { to: '/admin/users', title: 'Пользователи', icon: IconUsers },
@@ -13,6 +14,7 @@ const items = [
   { to: '/admin/organizer', title: 'Организаторы', icon: IconCreator },
   { to: '/admin/logs/admin', title: 'Логи модераторов', icon: IconLog },
   { to: '/admin/logs/errors', title: 'Логи ошибок', icon: IconLog },
+  { to: '/admin/notifications', title: 'Оповещения', icon: IconEmail },
 ];
 
 /**
