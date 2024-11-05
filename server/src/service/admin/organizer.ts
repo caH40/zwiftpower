@@ -7,6 +7,15 @@ import { OrganizerSchema } from '../../types/model.interface.js';
 export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
   const organizersDB = await Organizer.find().populate('creator').lean();
 
+  // Проверка на случай возможного удаления User из БД, который создавал Организатора.
+  if (organizersDB.length) {
+    for (const organizer of organizersDB) {
+      if (!organizer.creator) {
+        throw new Error(`Не найден создатель (User) Организатора: "${organizer.name}" в БД!`);
+      }
+    }
+  }
+
   return organizersDB;
 };
 

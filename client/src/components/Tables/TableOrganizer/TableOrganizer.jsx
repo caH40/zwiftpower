@@ -20,7 +20,7 @@ function TableOrganizer({ organizers = [], deleteOrganizer }) {
             <td>{index + 1}</td>
             <td>{organizer.name}</td>
             <td>{organizer.label}</td>
-            <td>{organizer.creator.username}</td>
+            <td>{organizer.creator?.username || 'Ошибка, нет creator!'}</td>
 
             <td>
               <div className={cx('centerBlock')}>
