@@ -18,15 +18,13 @@ function ProfileSetting() {
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
   const { zwiftId: zwiftIdPage } = useParams();
 
-  // Не отображать страницу настроек для чужого пользователя.
-  if (+zwiftIdPage !== zwiftIdAuth && +zwiftIdPage !== 0) {
-    return <></>;
-  }
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUserSettings({ zwiftId: zwiftIdAuth }));
+    if (zwiftIdAuth !== undefined) {
+      dispatch(fetchUserSettings({ zwiftId: zwiftIdAuth }));
+    }
+
     return () => {
       dispatch(resetUserSettings());
     };
@@ -35,6 +33,12 @@ function ProfileSetting() {
   const refreshProfile = () => {
     dispatch(fetchProfileRefresh());
   };
+
+  // Не отображать страницу настроек для чужого пользователя..
+  const isOtherUser = +zwiftIdPage !== zwiftIdAuth && +zwiftIdPage !== 0;
+  if (isOtherUser) {
+    return <p>Вы не можете просматривать настройки другого пользователя.</p>;
+  }
 
   return (
     <section className={styles.wrapper}>
