@@ -22,7 +22,7 @@ export const mailUser: string = parsed.MAIL_USER;
 export const mailPass: string = parsed.MAIL_PASS;
 export const mailHost: string = parsed.MAIL_HOST;
 export const mailPort: number = +parsed.MAIL_PORT;
-export const mailSecure: boolean = parsed.MAIL_SECURE === 'true' ? true : false;
+export const mailSecure: boolean = parsed.MAIL_SECURE === 'true';
 export const serverFront: string = parsed.FRONT;
 export const telegramBotHost: string = parsed.TELEGRAM_BOT_HOST;
 export const zwiftAPI: string = parsed.ZWIFT_API;

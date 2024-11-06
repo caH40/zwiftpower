@@ -9,12 +9,12 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const sendNotification = createAsyncThunk(
   'users/sendNotification',
-  async function ({ notificationsTypes, text }, thunkAPI) {
+  async function ({ text, notificationsTypes, subject, title }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/notification`,
+        url: `${serverExpress}/api/admin/notification`,
         method: 'post',
-        data: { notificationsTypes, text },
+        data: { text, notificationsTypes, subject, title },
       });
 
       return response.data;

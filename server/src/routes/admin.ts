@@ -13,6 +13,7 @@ import {
   postOrganizers,
   deleteOrganizers,
 } from '../controllers/admin.js';
+import { postNotification } from '../controllers/notification.js';
 
 export const routerAdmin = Router();
 
@@ -26,3 +27,4 @@ routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);
 routerAdmin.get('/organizers', authAdmin, getOrganizers);
 routerAdmin.post('/organizers', authAdmin, postOrganizers);
 routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);
+routerAdmin.post('/notification', authAdmin, postNotification);

@@ -629,3 +629,12 @@ export type TResponseEnabledUserStream = {
   };
   twitch: { channelName: string };
 };
+
+/**
+ * Параметры для отправки email.
+ */
+export type TMailServiceParams = {
+  letter: string; // Текст письма (html).
+  subject: string; // Тема письма.
+  email: string; // Email куда отправляется письмо.
+};

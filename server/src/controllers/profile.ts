@@ -217,7 +217,7 @@ export async function getUserSettings(req: Request, res: Response) {
  * @param notifications - Объект для проверки.
  * @returns {boolean} - Возвращает true, если объект соответствует типу TNotifications.
  */
-function isValidNotifications(notifications: unknown): notifications is TNotifications {
+export function isValidNotifications(notifications: unknown): notifications is TNotifications {
   return (
     typeof notifications === 'object' &&
     notifications !== null &&

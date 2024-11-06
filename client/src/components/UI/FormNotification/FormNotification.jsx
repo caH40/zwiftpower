@@ -42,9 +42,13 @@ export default function FormNotification() {
     }
 
     dispatch(sendNotification({ notificationsTypes, text })).then((data) => {
-      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
-      setNotificationsTypes(notificationsTypesInit);
-      setText('');
+      if (data.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
+        setNotificationsTypes(notificationsTypesInit);
+        setText('');
+      } else {
+        return; // Ошибка обрабатывается в sendNotification
+      }
     });
   };
 
