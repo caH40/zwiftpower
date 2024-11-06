@@ -14,6 +14,7 @@ type Params = {
 export async function postNotificationService({
   text,
   subject,
+  title,
   notificationsTypes,
 }: Params): Promise<TResponseService<null>> {
   // Создание массива из включенных типов имен оповещений.
@@ -31,7 +32,7 @@ export async function postNotificationService({
 
   const letter = createNotificationLetter({
     text,
-    title: 'Трансляции Zwift: делитесь своими заездами на Twitch прямо с нашего сайта!',
+    title,
     tags,
   });
 

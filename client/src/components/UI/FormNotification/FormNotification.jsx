@@ -22,6 +22,8 @@ const notificationsTypesInit = {
 export default function FormNotification() {
   const [notificationsTypes, setNotificationsTypes] = useState(notificationsTypesInit);
   const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+  const [subject, setSubject] = useState('');
   const dispatch = useDispatch();
 
   const handleCheckboxChange = (event) => {
@@ -41,11 +43,13 @@ export default function FormNotification() {
       return;
     }
 
-    dispatch(sendNotification({ notificationsTypes, text })).then((data) => {
+    dispatch(sendNotification({ notificationsTypes, text, title, subject })).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
         dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
         setNotificationsTypes(notificationsTypesInit);
         setText('');
+        setSubject('');
+        setTitle('');
       } else {
         return; // Ошибка обрабатывается в sendNotification
       }
@@ -75,6 +79,8 @@ export default function FormNotification() {
       </div>
 
       <div className={styles.wrapper__textarea}>
+        <TextAreaSimple state={subject} setState={setSubject} name={'Тема письма'} />
+        <TextAreaSimple state={title} setState={setTitle} name={'Заголовок сообщения'} />
         <TextAreaSimple state={text} setState={setText} name={'Текст сообщения'} />
       </div>
 
