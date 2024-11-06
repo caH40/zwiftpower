@@ -3,6 +3,7 @@ import { TResponseService } from '../../types/http.interface.js';
 import { TNotifications } from '../../types/model.interface.js';
 import { createNotificationLetter } from '../mail/letters/createNotificationLetter.js';
 import { mailService } from '../mail/nodemailer.js';
+import { mailUserNotification, mailPassNotification } from '../../config/environment.js';
 
 type Params = {
   text: string;
@@ -41,6 +42,10 @@ export async function postNotificationService({
       email: user.email,
       subject,
       letter,
+      auth: {
+        user: mailUserNotification,
+        pass: mailPassNotification,
+      },
     })
   );
 

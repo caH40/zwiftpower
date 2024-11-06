@@ -20,6 +20,10 @@ export const jwtAccessSecret: string = parsed.JWT_ACCESS_SECRET;
 export const jwtRefreshSecret: string = parsed.JWT_REFRESH_SECRET;
 export const mailUser: string = parsed.MAIL_USER;
 export const mailPass: string = parsed.MAIL_PASS;
+
+export const mailUserNotification: string = parsed.MAIL_USER_NOTIFICATION;
+export const mailPassNotification: string = parsed.MAIL_PASS_NOTIFICATION;
+
 export const mailHost: string = parsed.MAIL_HOST;
 export const mailPort: number = +parsed.MAIL_PORT;
 export const mailSecure: boolean = parsed.MAIL_SECURE === 'true';

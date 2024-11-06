@@ -637,4 +637,8 @@ export type TMailServiceParams = {
   letter: string; // Текст письма (html).
   subject: string; // Тема письма.
   email: string; // Email куда отправляется письмо.
+  auth: {
+    user: string; // email отправителя.
+    pass: string; // Пароль от email отправителя.
+  };
 };

@@ -1,13 +1,7 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
-import {
-  mailPass,
-  mailUser,
-  mailHost,
-  mailPort,
-  mailSecure,
-} from '../../config/environment.js';
+import { mailHost, mailPort, mailSecure } from '../../config/environment.js';
 import { errorHandler } from '../../errors/error.js';
 import { TMailServiceParams } from '../../types/types.interface.js';
 
@@ -18,6 +12,7 @@ export async function mailService({
   letter,
   subject,
   email,
+  auth,
 }: TMailServiceParams): Promise<boolean> {
   try {
     // Инициализация транспортера
@@ -25,15 +20,12 @@ export async function mailService({
       host: mailHost,
       port: mailPort,
       secure: mailSecure,
-      auth: {
-        user: mailUser,
-        pass: mailPass,
-      },
+      auth,
     });
 
     // Параметры письма
     const mailOptions = {
-      from: mailUser,
+      from: auth.user,
       to: email,
       subject,
       html: letter,
