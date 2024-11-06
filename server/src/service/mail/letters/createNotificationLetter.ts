@@ -1,3 +1,4 @@
+import { serverFront } from '../../../config/environment.js';
 import { getTimerLocal } from '../../../utils/date-local.js';
 import { content } from '../../../utils/text.js';
 
@@ -5,8 +6,9 @@ type TLetterParams = {
   text: string;
   title: string;
   tags: string[];
+  zwiftId: number;
 };
-export function createNotificationLetter({ text, title, tags }: TLetterParams) {
+export function createNotificationLetter({ text, title, tags, zwiftId }: TLetterParams) {
   const date = getTimerLocal(Date.now(), 'DDMMYYHm');
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -162,6 +164,20 @@ export function createNotificationLetter({ text, title, tags }: TLetterParams) {
                   <p style="margin: 0; padding: 0">С уважением, команда ZwiftPower.ru</p>
                   </td>
                 </tr>
+
+                
+                <tr>
+                  <td>
+                    <br>
+                    <p style="margin: 0; padding: 0 0 20px 0; text-align: center;">
+                      <a href="${serverFront}/profile/${zwiftId}/settings" style="color: blue; font-size: 12px;">
+                        Управление оповещениями
+                      </a>
+                    </p>
+                  </td>
+                </tr>
+                
+
               </table>
             </td>
           </tr>

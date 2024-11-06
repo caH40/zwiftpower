@@ -27,18 +27,20 @@ export async function postNotificationService({
   const conditions = tags.map((tag) => ({ [`notifications.${tag}`]: true }));
 
   // Выполнение запроса с использованием динамического условия
-  const usersDB = await User.find({ $or: conditions }, { email: true, _id: false }).lean<
-    { email: string }[]
-  >();
+  const usersDB = await User.find(
+    { $or: conditions },
+    { email: true, zwiftId: true, _id: false }
+  ).lean<{ email: string; zwiftId: number }[]>();
 
-  const letter = createNotificationLetter({
-    text,
-    title,
-    tags,
-  });
+  const sendAllEmails = usersDB.map((user) => {
+    const letter = createNotificationLetter({
+      text,
+      title,
+      tags,
+      zwiftId: user.zwiftId,
+    });
 
-  const sendAllEmails = usersDB.map((user) =>
-    mailService({
+    return mailService({
       email: user.email,
       subject,
       letter,
@@ -46,8 +48,8 @@ export async function postNotificationService({
         user: mailUserNotification,
         pass: mailPassNotification,
       },
-    })
-  );
+    });
+  });
 
   await Promise.allSettled(sendAllEmails);
 
