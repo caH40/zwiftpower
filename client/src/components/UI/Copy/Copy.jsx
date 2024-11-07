@@ -6,13 +6,14 @@ import styles from './Copy.module.css';
 
 /**
  * При клике информация копируется в буфер
- * @param {{children:string, name:string, showValue?:boolean}} пропсы
+ * @param {{children:string, name:string, showValue?:boolean, color?:string}} пропсы
  * @param children только текст без html тэгов,
  * @param name только текст без html тэгов,
  * @param showValue показывать значение или текст "copy",
+ * @param color цвет текса children,
  * @returns
  */
-function Copy({ children, name, showValue }) {
+function Copy({ children, name, showValue, color }) {
   const dispatch = useDispatch();
 
   const copyText = () => {
@@ -38,7 +39,7 @@ function Copy({ children, name, showValue }) {
       });
   };
   return (
-    <span className={styles.box} onClick={copyText}>
+    <span className={styles.box} style={color && { color }} onClick={copyText}>
       {showValue ? children : 'copy'}
     </span>
   );
