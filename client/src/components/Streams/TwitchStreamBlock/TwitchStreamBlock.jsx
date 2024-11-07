@@ -1,4 +1,6 @@
-import Copy from '../../UI/Copy/Copy';
+import { useDispatch } from 'react-redux';
+
+import { getAlert } from '../../../redux/features/alertMessageSlice';
 import RiderStreamBlock from '../../RiderStreamBlock/RiderStreamBlock';
 import TwitchStream from '../TwitchStream/TwitchStream';
 
@@ -29,6 +31,7 @@ import styles from './TwitchStreamBlock.module.css';
  * @property {string} twitch.channelName - Название канала Twitch.
  */
 export default function TwitchStreamBlock({ stream: { twitch, zwiftData } }) {
+  const dispatch = useDispatch();
   // Проверка, что название канала заданно.
   if (!twitch.channelName) {
     return <></>;
@@ -36,14 +39,36 @@ export default function TwitchStreamBlock({ stream: { twitch, zwiftData } }) {
 
   const urlChannel = `https://player.twitch.tv/?channel=${twitch.channelName}&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=0.5`;
 
+  const copyText = () => {
+    navigator.clipboard
+      .writeText(urlChannel)
+      .then(() => {
+        dispatch(
+          getAlert({
+            message: 'url трансляции скопирован в буфер обмена',
+            type: 'success',
+            isOpened: true,
+          })
+        );
+      })
+      .catch(() => {
+        dispatch(
+          getAlert({
+            message: 'Ошибка при копировании в буфер обмена',
+            type: 'error',
+            isOpened: true,
+          })
+        );
+      });
+  };
+
   return (
     <div className={styles.wrapper}>
-      <Copy name={'url'} showValue={true} color={'black'}>
-        <h2 className={styles.title}>
-          <img className={styles.icon} src={'/images/glitch_flat_purple.svg'} />
-          {twitch.channelName}
-        </h2>
-      </Copy>
+      <h2 className={styles.title} onClick={copyText}>
+        <img className={styles.icon} src={'/images/glitch_flat_purple.svg'} />
+        {twitch.channelName}
+      </h2>
+
       <div className={styles.spacer}>
         <TwitchStream channel={twitch.channelName} />
       </div>
