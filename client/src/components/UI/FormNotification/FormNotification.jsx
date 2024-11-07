@@ -31,7 +31,7 @@ export default function FormNotification() {
     watch,
     formState: { errors },
   } = useForm({
-    mode: 'all', // Режим валидации: 'all' означает, что валидация будет происходить при каждом изменении любого из полей.
+    mode: 'all',
     defaultValues: {
       subject: '',
       text: '',
@@ -42,7 +42,7 @@ export default function FormNotification() {
 
   useEffect(() => {
     if (errorCheckboxes) {
-      setErrorCheckboxes(''); // Сбрасываем ошибку при изменении чекбоксов
+      setErrorCheckboxes(''); // Сбрасываем ошибку при изменении чекбоксов.
     }
   }, [JSON.stringify(watch('notificationsTypes'))]);
 
@@ -56,7 +56,6 @@ export default function FormNotification() {
       const message = 'Необходимо выбрать хотя бы один тип оповещения!';
       setErrorCheckboxes(message);
 
-      // dispatch(getAlert({ message, type: 'error', isOpened: true }));
       return;
     }
 

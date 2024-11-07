@@ -17,3 +17,7 @@
   background-color: #4380d3;
   border-color: #4380d3;
 }
+.input:disabled {
+  border-color: red;
+  cursor: not-allowed;
+}

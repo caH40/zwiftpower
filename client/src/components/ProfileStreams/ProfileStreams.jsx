@@ -13,18 +13,39 @@ import styles from './ProfileStreams.module.css';
  */
 export default function ProfileStreams({ zwiftIdAuth }) {
   const { streams } = useSelector((state) => state.userSettings);
+  const [errorChannelName, setErrorChannelName] = useState('');
+  const [disableCheckbox, setDisableCheckbox] = useState(false);
 
   const [channelName, setChannelName] = useState('');
   const dispatch = useDispatch();
 
-  // Устанавливаем начальное значение channelName после получения данных с сервера
+  // Устанавливаем начальное значение channelName после получения данных с сервера.
   useEffect(() => {
     if (streams?.twitch?.channelName) {
       setChannelName(streams.twitch.channelName);
     }
   }, [streams.twitch.channelName]);
 
+  // Контроль вводимых символов для названия канала, запрет использования символов "."" и "/"
+  useEffect(() => {
+    const regex = /[^a-zA-Z0-9._-]/;
+    if (regex.test(channelName)) {
+      setErrorChannelName('только название канала');
+      setDisableCheckbox(true);
+    } else {
+      setErrorChannelName('');
+      setDisableCheckbox(false);
+    }
+    if (!channelName) {
+      setDisableCheckbox(true);
+    }
+  }, [channelName]);
+
+  // Обработчик нажатия чекбокса.
   const handleCheckboxChange = (event) => {
+    if (!channelName) {
+      return;
+    }
     const streamsUpdated = {
       twitch: {
         channelName,
@@ -42,6 +63,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
   };
 
   // Обработчик для изменения channelName и автоматического отключения isEnabled.
+  // newChannelName данные вводимые в input.
   const handleChannelNameChange = (newChannelName) => {
     setChannelName(newChannelName);
 
@@ -76,12 +98,13 @@ export default function ProfileStreams({ zwiftIdAuth }) {
       </h4>
 
       <div className={styles.box__input}>
-        <label>Название канала</label>
         <InputSimple
           value={channelName}
           setValue={handleChannelNameChange}
           type="text"
           name="channelName"
+          label={'Название канала'}
+          validationText={errorChannelName}
         />
       </div>
 
@@ -91,6 +114,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           checked={streams.twitch.isEnabled}
           handleCheckboxChange={handleCheckboxChange}
           name={'twitchBtn'}
+          disabled={disableCheckbox}
         />
       </div>
     </div>
