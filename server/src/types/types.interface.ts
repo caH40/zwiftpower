@@ -627,7 +627,7 @@ export type TResponseEnabledUserStream = {
     countryAlpha3: string;
     male: boolean;
   };
-  twitch: { channelName: string };
+  twitch: { stream: TTwitchStreamDto; user: TTwitchUserDto } | null;
 };
 
 /**
@@ -641,4 +641,41 @@ export type TMailServiceParams = {
     user: string; // email отправителя.
     pass: string; // Пароль от email отправителя.
   };
+};
+
+/**
+ * Twitch stream после Dto.
+ */
+export type TTwitchStreamDto = {
+  id: string;
+  userId: string;
+  userLogin: string;
+  userName: string;
+  gameId: string;
+  gameName: string;
+  type: string;
+  title: string;
+  tags: string[];
+  viewerCount: number;
+  startedAt: Date;
+  language: string;
+  thumbnailUrl: string;
+  tagIds: unknown[];
+  isMature: boolean;
+};
+
+/**
+ * Twitch user после Dto.
+ */
+export type TTwitchUserDto = {
+  id: string;
+  login: string;
+  displayName: string;
+  type: string;
+  broadcasterType: string;
+  description: string;
+  profileImageUrl: string;
+  offlineImageUrl: string;
+  viewCount: number;
+  createdAt: Date;
 };

@@ -6,6 +6,7 @@ import { User } from '../../Model/User.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { TUserStreams } from '../../types/model.interface.js';
 import { TResponseEnabledUserStream } from '../../types/types.interface.js';
+import { getTwitchChannelsService } from '../twitch/twitch.js';
 
 const zwiftDataSliced = {
   'zwiftData.firstName': true,
@@ -45,14 +46,22 @@ export async function getEnabledUserStreamsService(): Promise<
     { zwiftId: true, streams: true, ...zwiftDataSliced }
   ).lean<TStreamsFromDB[]>();
 
+  const channelsNames = streamsDB.map((stream) => stream.streams.twitch.channelName);
+
+  const channelsData = await getTwitchChannelsService(channelsNames);
+
   const streams = streamsDB.map((stream) => {
     const _id = String(stream._id);
     const zwiftData = { ...stream.zwiftData, id: stream.zwiftId };
-    const twitch = { channelName: stream.streams.twitch.channelName };
+
+    const channelName = stream.streams.twitch.channelName?.toLocaleLowerCase();
+
+    const twitch =
+      channelsData.find((channelData) => channelData.user.login === channelName) || null;
 
     return { _id, zwiftData, twitch };
   });
 
-  const message = 'Список включенныех трансляций пользователей.';
+  const message = 'Список трансляций пользователей, включенных для просмотра.';
   return { data: streams, message };
 }

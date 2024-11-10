@@ -1,21 +1,43 @@
 /* TwitchStream.module.css */
 .wrapper {
+  position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 480px;
   margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
 }
 .title {
   display: flex;
   gap: 5px;
+  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.icon__twitch {
+  width: auto;
+  height: 24px;
   cursor: copy;
 }
-.icon {
-  width: 24px;
-  height: 24px;
+.watch {
+  font-size: 16px;
+  font-weight: 400;
 }
-.spacer {
-  margin-bottom: 5px;
+.description {
+  padding: 1rem;
+}
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .title {
+    font-size: 1.3rem;
+  }
+  .icon__twitch {
+    width: auto;
+    height: 20px;
+  }
 }
