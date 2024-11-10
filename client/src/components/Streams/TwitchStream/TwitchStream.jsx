@@ -55,6 +55,7 @@ function TwitchStream({
         <>
           <img src={profileImage} className={styles.profileImage} />
           {description && <div className={cx('live', 'viewers')}>{description}</div>}
+          <div className={cx('boxes', 'offline')}>Stream Ended</div>
         </>
       )}
     </div>

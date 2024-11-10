@@ -117,15 +117,13 @@ export default function TwitchStreamBlock({ stream: { twitch, zwiftData } }) {
         <h2 className={styles.title}>
           {twitch.user.displayName}
 
-          {isLive && (
-            <MyTooltip tooltip="Ссылка на плеер twitch">
-              <img
-                className={styles.icon__twitch}
-                src={'/images/twitch_wordmark_extruded_purple.svg'}
-                onClick={copyText}
-              />
-            </MyTooltip>
-          )}
+          <MyTooltip tooltip="Ссылка на плеер twitch">
+            <img
+              className={styles.icon__twitch}
+              src={'/images/twitch_wordmark_extruded_purple.svg'}
+              onClick={copyText}
+            />
+          </MyTooltip>
         </h2>
 
         <RiderStreamBlock rider={zwiftData} />

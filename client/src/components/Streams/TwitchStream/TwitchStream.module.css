@@ -41,6 +41,13 @@
   left: 0px;
   top: 0px;
 }
+.offline {
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background-color: rgb(0, 0, 0);
+  left: 0px;
+  top: 0px;
+}
 .viewers {
   background-color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0;
