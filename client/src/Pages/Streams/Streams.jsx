@@ -20,15 +20,38 @@ export default function Streams() {
     dispatch(fetchUsersEnabledStreams());
   }, []);
 
+  const { streamsOnline, streamsOffline } = streams.reduce(
+    (acc, stream) => {
+      if (stream.twitch.stream) {
+        acc.streamsOnline.push(stream);
+      } else {
+        acc.streamsOffline.push(stream);
+      }
+      return acc;
+    },
+    { streamsOnline: [], streamsOffline: [] }
+  );
+
   useTitle('Трансляции с Zwift');
   return (
     <div>
       <HelmetStreams />
 
-      <div className={styles.wrapper__streams}>
-        {!!streams.length &&
-          streams.map((stream) => <TwitchStreamBlock stream={stream} key={stream._id} />)}
-      </div>
+      {!!streamsOnline.length && (
+        <div className={styles.wrapper__streams}>
+          {streamsOnline.map((stream) => (
+            <TwitchStreamBlock stream={stream} key={stream._id} />
+          ))}
+        </div>
+      )}
+
+      {!!streamsOffline.length && (
+        <div className={styles.wrapper__streams}>
+          {streamsOffline.map((stream) => (
+            <TwitchStreamBlock stream={stream} key={stream._id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

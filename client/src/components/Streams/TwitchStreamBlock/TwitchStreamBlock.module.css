@@ -1,9 +1,7 @@
 /* TwitchStream.module.css */
 .wrapper {
   position: relative;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
+  width: 480px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
