@@ -11,7 +11,11 @@ const initialState = {
 const usersEnabledStreamsSlice = createSlice({
   name: 'getUserEnabledStreams',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStreams: (state) => {
+      state.streams = [];
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchUsersEnabledStreams.pending, (state) => {
@@ -31,5 +35,7 @@ const usersEnabledStreamsSlice = createSlice({
     });
   },
 });
+
+export const { resetStreams } = usersEnabledStreamsSlice.actions;
 
 export default usersEnabledStreamsSlice.reducer;

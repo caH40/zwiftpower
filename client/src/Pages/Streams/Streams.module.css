@@ -4,3 +4,8 @@
   flex-wrap: wrap;
   margin-bottom: 25px;
 }
+.wrapper__skeleton {
+  display: flex;
+  gap: 25px 10px;
+  flex-wrap: wrap;
+}

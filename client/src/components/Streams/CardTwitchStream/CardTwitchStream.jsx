@@ -5,7 +5,7 @@ import RiderStreamBlock from '../../RiderStreamBlock/RiderStreamBlock';
 import TwitchStream from '../TwitchStream/TwitchStream';
 import MyTooltip from '../../../HOC/MyTooltip';
 
-import styles from './TwitchStreamBlock.module.css';
+import styles from './CardTwitchStream.module.css';
 
 /**
  * Компонент для отображения блока Twitch-трансляции.
@@ -63,7 +63,7 @@ import styles from './TwitchStreamBlock.module.css';
  *
  */
 
-export default function TwitchStreamBlock({ stream: { twitch, zwiftData } }) {
+export default function CardTwitchStream({ stream: { twitch, zwiftData } }) {
   const dispatch = useDispatch();
   // Проверка, что найден канал твича.
   if (!twitch) {

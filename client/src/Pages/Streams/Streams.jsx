@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { HelmetStreams } from '../../components/Helmets/HelmetStreams';
-import TwitchStreamBlock from '../../components/Streams/TwitchStreamBlock/TwitchStreamBlock';
-import useTitle from '../../hook/useTitle';
 import { fetchUsersEnabledStreams } from '../../redux/features/api/streams/fetchUsersEnabledStreams';
+import { resetStreams } from '../../redux/features/api/streams/usersEnabledStreamsSlice';
+import useTitle from '../../hook/useTitle';
+import CardTwitchStream from '../../components/Streams/CardTwitchStream/CardTwitchStream';
+import SkeletonCardTwitchStream from '../../components/SkeletonLoading/SkeletonCardTwitchStream/SkeletonCardTwitchStream';
 
 import styles from './Streams.module.css';
 
@@ -12,14 +14,20 @@ import styles from './Streams.module.css';
  * Страница Трансляций (стримов) с звифта пользователей сайта.
  */
 export default function Streams() {
-  const { streams } = useSelector((state) => state.usersEnabledStreams);
+  useTitle('Трансляции с Zwift');
+  const { streams, status: statusUsersEnabledStreams } = useSelector(
+    (state) => state.usersEnabledStreams
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUsersEnabledStreams());
+
+    return () => dispatch(resetStreams());
   }, []);
 
+  // Разделение каналов на которых идет трансляция и которые находятся в офлайне.
   const { streamsOnline, streamsOffline } = streams.reduce(
     (acc, stream) => {
       if (stream.twitch.stream) {
@@ -32,15 +40,21 @@ export default function Streams() {
     { streamsOnline: [], streamsOffline: [] }
   );
 
-  useTitle('Трансляции с Zwift');
   return (
     <div>
       <HelmetStreams />
 
+      {/* Скелетон загрузки для карточек трансляций */}
+      <div className={styles.wrapper__skeleton}>
+        {Array.from({ length: 5 }, (_, index) => (
+          <SkeletonCardTwitchStream status={statusUsersEnabledStreams} key={index} />
+        ))}
+      </div>
+
       {!!streamsOnline.length && (
         <div className={styles.wrapper__streams}>
           {streamsOnline.map((stream) => (
-            <TwitchStreamBlock stream={stream} key={stream._id} />
+            <CardTwitchStream stream={stream} key={stream._id} />
           ))}
         </div>
       )}
@@ -48,7 +62,7 @@ export default function Streams() {
       {!!streamsOffline.length && (
         <div className={styles.wrapper__streams}>
           {streamsOffline.map((stream) => (
-            <TwitchStreamBlock stream={stream} key={stream._id} />
+            <CardTwitchStream stream={stream} key={stream._id} />
           ))}
         </div>
       )}
