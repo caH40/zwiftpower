@@ -1,3 +1,7 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
+}
 .wrapper__streams {
   display: flex;
   gap: 25px 10px;

@@ -94,4 +94,10 @@ export const adBlocks = [
     label: 'R-A-5165832-17',
     description: 'Баннер, UH, Riders',
   },
+  {
+    id: 21,
+    label: 'C-A-5165832-21',
+    description: 'РВ-21, Streams',
+    type: 'widget',
+  },
 ];
