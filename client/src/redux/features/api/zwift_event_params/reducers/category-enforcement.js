@@ -15,7 +15,6 @@ export const setCategoryEnforcementReducer = (state, action) => {
   ];
 
   const accessExpression = accessExpressions.find((elm) => elm.name === name);
-  const isDisabled = name === 'disabled';
 
   // Удаления value строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
   const {
@@ -33,8 +32,6 @@ export const setCategoryEnforcementReducer = (state, action) => {
   state.eventMainParams.accessExpression = categoryEnforcement ? value : null;
   state.eventMainParams.accessExpressionObj = categoryEnforcement ? accessExpressionObj : null;
 
-  // setTags(state, isZRacing);
-
   // Установка диапазона рейтинга при включенном рейтинге.
   if (isZRacing) {
     state.eventMainParams.rangeAccessLabel = '0-1000';
@@ -42,19 +39,6 @@ export const setCategoryEnforcementReducer = (state, action) => {
   }
   setPaceValues(eventSubgroups, paceValues);
 };
-
-/**
- * Установка значений в tags.
- */
-// function setTags(state, isZRacing) {
-//   if (isZRacing) {
-//     state.eventMainParams.tags.push('showplacements', 'ranked');
-//   } else {
-//     state.eventMainParams.tags = state.eventMainParams.tags.filter(
-//       (elm) => !['showplacements', 'ranked'].includes(elm)
-//     );
-//   }
-// }
 
 /**
  * Установка отображаемых диапазонов FTP райдера в описании заезда для каждой группы.
