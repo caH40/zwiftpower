@@ -4,12 +4,12 @@
 }
 .wrapper__streams {
   display: flex;
-  gap: 25px 10px;
+  gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .wrapper__skeleton {
   display: flex;
-  gap: 25px 10px;
+  gap: 15px;
   flex-wrap: wrap;
 }

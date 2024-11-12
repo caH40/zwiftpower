@@ -1,6 +1,6 @@
 .wrapper {
   position: relative;
-  width: 480px;
+  width: 350px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -12,7 +12,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 24px;
   margin-bottom: 1rem;
   overflow: hidden;
 }
@@ -26,15 +26,19 @@
   font-weight: 400;
 }
 .description {
-  padding: 1rem;
+  padding: 12px;
 }
 /* ====================================================================== */
 @media (max-width: 576px) {
   .title {
-    font-size: 1.3rem;
+    font-size: 20px;
+    margin-bottom: 12px;
   }
   .icon__twitch {
     width: auto;
     height: 20px;
+  }
+  .description {
+    padding: 10px 8px;
   }
 }

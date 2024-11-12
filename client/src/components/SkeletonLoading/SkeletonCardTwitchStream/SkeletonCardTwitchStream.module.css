@@ -1,6 +1,6 @@
 .wrapper {
   position: relative;
-  width: 480px;
+  width: 350px;
   border: 1px solid var(--color-border-minor);
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -11,7 +11,7 @@
   aspect-ratio: 16 / 9;
 }
 .description {
-  padding: 1rem;
+  padding: 12px;
 }
 .channel {
   display: flex;
@@ -45,7 +45,7 @@
   background-color: var(--color-bg-minor-2);
 }
 .rider__name {
-  width: 170px;
+  width: 140px;
   height: 17px;
   background-color: var(--color-bg-minor-2);
 }
@@ -55,7 +55,7 @@
   gap: 10px;
 }
 .stats__string {
-  width: 120px;
+  width: 110px;
   height: 17px;
   background-color: var(--color-bg-minor-2);
 }
@@ -69,10 +69,19 @@
 }
 /* ====================================================================== */
 @media (max-width: 576px) {
-  .stats {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
+  .rider__name {
+    gap: 7px;
+  }
+  .rider__name {
+    width: 110px;
+    height: 16px;
+  }
+  .stats__string {
+    width: 100px;
+    height: 16px;
+  }
+  .channel {
+    margin-bottom: 12px;
   }
   .channel__string {
     width: 130px;
@@ -85,5 +94,8 @@
   .rider__img {
     width: 30px;
     height: 30px;
+  }
+  .description {
+    padding: 10px 8px;
   }
 }
