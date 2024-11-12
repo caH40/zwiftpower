@@ -10,23 +10,28 @@ import styles from './BannerInformation.module.css';
  * @param {Object} props - Свойства компонента.
  * @param {React.ReactNode} props.children - Дочерние элементы для отображения внутри баннера.
  * @param {boolean} [props.initState=false] - Начальное состояние видимости баннера.
- * @param {string} [props.colorSchema] - Схема цветов для баннера. В разработке.
+ * @param {string} [props.storageKey] - Название ключа в LC для харения даты закрытия баннера.
  * @param {number} [props.marginBottom] - Отступ снизу от блока.
  * @returns {JSX.Element} Компонент информационного баннера.
  */
 export default function BannerInformation({
   children,
   initState = false,
-  colorSchema,
   marginBottom = 0,
+  storageKey,
 }) {
   // Состояние, отвечающее за видимость баннера.
   const [visible, setVisible] = useState(initState);
 
+  const handlerClose = () => {
+    localStorage.setItem(storageKey, new Date().toISOString());
+    setVisible(false);
+  };
+
   return (
     visible && (
       <div className={styles.wrapper} style={marginBottom && { marginBottom }}>
-        <ButtonClose getClick={() => setVisible(false)} scale={0.7} />
+        <ButtonClose getClick={handlerClose} scale={0.7} />
         {children}
       </div>
     )

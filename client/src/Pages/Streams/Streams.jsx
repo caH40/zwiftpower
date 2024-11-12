@@ -10,12 +10,17 @@ import useTitle from '../../hook/useTitle';
 import CardTwitchStream from '../../components/Streams/CardTwitchStream/CardTwitchStream';
 import SkeletonCardTwitchStream from '../../components/SkeletonLoading/SkeletonCardTwitchStream/SkeletonCardTwitchStream';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
+import useBannerVisibility from '../../hook/useBannerVisibility';
+import { lsPrefixStreams } from '../../constants/localstorage';
+import { millisecondsInDay } from '../../assets/dates';
 
 import styles from './Streams.module.css';
 
 // рекламные блоки на странице
 const adOverFooter = 21;
 const adNumbers = [adOverFooter];
+
+const storageKeyBanner = `${lsPrefixStreams}banner`;
 
 /**
  * Страница Трансляций (стримов) с звифта пользователей сайта.
@@ -25,6 +30,10 @@ export default function Streams() {
   const { streams, status: statusUsersEnabledStreams } = useSelector(
     (state) => state.usersEnabledStreams
   );
+  const isVisibleBanner = useBannerVisibility({
+    storageKey: storageKeyBanner,
+    intervalMs: millisecondsInDay,
+  });
 
   const dispatch = useDispatch();
 
@@ -54,7 +63,11 @@ export default function Streams() {
       <HelmetStreams />
 
       <section className={styles.wrapper}>
-        <BannerInformation initState={true} marginBottom={14}>
+        <BannerInformation
+          initState={isVisibleBanner}
+          storageKey={storageKeyBanner}
+          marginBottom={14}
+        >
           Для отображения вашего канала с трансляциями добавьте название Twitch-канала в
           настройках профиля!
         </BannerInformation>
