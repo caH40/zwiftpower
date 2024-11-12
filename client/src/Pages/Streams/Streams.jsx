@@ -9,6 +9,7 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import CardTwitchStream from '../../components/Streams/CardTwitchStream/CardTwitchStream';
 import SkeletonCardTwitchStream from '../../components/SkeletonLoading/SkeletonCardTwitchStream/SkeletonCardTwitchStream';
+import BannerInformation from '../../components/BannerInformation/BannerInformation';
 
 import styles from './Streams.module.css';
 
@@ -53,9 +54,16 @@ export default function Streams() {
       <HelmetStreams />
 
       <section className={styles.wrapper}>
+        <div className={styles.spacer__banner}>
+          <BannerInformation initState={true}>
+            Для отображения вашего канала с трансляциями добавьте название Twitch-канала в
+            настройках профиля!
+          </BannerInformation>
+        </div>
+
         {/* Скелетон загрузки для карточек трансляций */}
         <div className={styles.wrapper__skeleton}>
-          {Array.from({ length: 5 }, (_, index) => (
+          {Array.from({ length: 9 }, (_, index) => (
             <SkeletonCardTwitchStream status={statusUsersEnabledStreams} key={index} />
           ))}
         </div>
