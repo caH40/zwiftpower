@@ -16,7 +16,7 @@
 .channel {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .info {
   display: flex;

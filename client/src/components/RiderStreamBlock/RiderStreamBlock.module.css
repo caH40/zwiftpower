@@ -2,7 +2,6 @@
   display: flex;
   gap: 10px;
   justify-content: space-between;
-  /* flex-wrap: wrap; */
 }
 .rider {
   flex-basis: 200px;
@@ -23,7 +22,6 @@
   margin: 0;
   padding: 0;
 }
-
 .list__title,
 .value {
   margin: 0;
@@ -36,7 +34,8 @@
 }
 .wrapper__img {
   flex: 0 0 40px;
-  border-radius: 3px;
+  height: 40px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .name {
@@ -49,6 +48,8 @@
   }
   .wrapper__img {
     flex: 0 0 30px;
+    height: 30px;
+    border-radius: 4px;
   }
   .box__item {
     grid-template-columns: 85px auto;
