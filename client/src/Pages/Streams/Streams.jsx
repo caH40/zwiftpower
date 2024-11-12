@@ -54,12 +54,10 @@ export default function Streams() {
       <HelmetStreams />
 
       <section className={styles.wrapper}>
-        <div className={styles.spacer__banner}>
-          <BannerInformation initState={true}>
-            Для отображения вашего канала с трансляциями добавьте название Twitch-канала в
-            настройках профиля!
-          </BannerInformation>
-        </div>
+        <BannerInformation initState={true} marginBottom={14}>
+          Для отображения вашего канала с трансляциями добавьте название Twitch-канала в
+          настройках профиля!
+        </BannerInformation>
 
         {/* Скелетон загрузки для карточек трансляций */}
         <div className={styles.wrapper__skeleton}>
