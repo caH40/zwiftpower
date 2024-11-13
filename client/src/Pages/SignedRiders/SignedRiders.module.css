@@ -16,8 +16,7 @@
 .wrapper__wide {
   overflow-x: auto;
 }
-
-.button {
+.button__link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,17 +31,28 @@
   cursor: pointer;
   letter-spacing: 0.06em;
   user-select: none;
-  background-color: var(--color-text-main);
+  background-color: var(--color-yellow-5);
   text-decoration: none;
   color: var(--color-blue-4);
 }
-
-.button:hover {
-  background-color: var(--color-yellow-5);
+.button__title {
+  margin-right: 4px;
+}
+.button__additional {
+  font-style: italic;
+}
+.button__link:hover {
+  background-color: var(--color-orange-5);
   color: var(--color-text-minor);
   transition: 0.2s;
 }
-.button:active {
-  background-color: var(--color-yellow-4);
+.button__link:active {
+  background-color: var(--color-orange-4);
   transition: 0.2s;
+}
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .button__link {
+    font-size: 12px;
+  }
 }

@@ -26,6 +26,9 @@ const adOverFooter = 6;
 const adUnderHeader = 12;
 const adNumbers = [adUnderHeader, adOverFooter];
 
+/**
+ * Страница с описанием Эвента и таблицей зарегистрированных райдеров.
+ */
 function SignedRiders() {
   const { event, status: statusFetchEventPreview } = useSelector(
     (state) => state.fetchEventPreview
@@ -74,13 +77,32 @@ function SignedRiders() {
         {event?.id && !event.started && statusFetchEventPreview === 'resolved' && (
           <>
             <DescriptionEventZwift event={event} forSchedule={true} />
+
             <Link
-              className={styles.button}
+              className={styles.button__link}
               to={`https://www.zwift.com/eu/events/view/${event.id}`}
               target="_blank"
               rel="noreferrer"
             >
-              Регистрация в Zwift
+              <div>
+                <span className={styles.button__title}>Регистрация</span>
+                <span className={styles.button__additional}>
+                  {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' &&
+                    `(только для участников клуба ${event.clubName})`}
+                </span>
+              </div>
+            </Link>
+
+            <Link
+              className={styles.button__link}
+              to={`https://www.zwift.com/eu/clubs/${event.microserviceExternalResourceId}/join`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div>
+                <span className={styles.button__title}>Вступить в клуб</span>
+                <span className={styles.button__additional}>{event.clubName}</span>
+              </div>
             </Link>
             <NavBarSignedRiders />
           </>
