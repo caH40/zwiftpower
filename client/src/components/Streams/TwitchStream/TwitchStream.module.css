@@ -50,7 +50,7 @@
   font-weight: 400;
   top: 0;
   right: 0;
-  max-width: 350px;
+  max-width: 70%;
 }
 .start {
   background-color: rgba(0, 0, 0, 0.6);
@@ -75,20 +75,5 @@
 @media (max-width: 576px) {
   .boxes {
     font-size: 0.8rem;
-  }
-}
-@media (max-width: 520px) {
-  .title__stream {
-    max-width: 300px;
-  }
-}
-@media (max-width: 450px) {
-  .title__stream {
-    max-width: 250px;
-  }
-}
-@media (max-width: 400px) {
-  .title__stream {
-    max-width: 200px;
   }
 }
