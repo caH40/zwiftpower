@@ -2,6 +2,9 @@ import { User } from '../../../Model/User.js';
 import { errorHandler } from '../../../errors/error.js';
 import { refreshProfileService } from './update-zwiftdata.js';
 
+// !!! Удалить данный сервис!!!
+// !!! Удалить данный сервис!!!
+// !!! Удалить данный сервис!!!
 /**
  * Обновление данных из Звифта zwiftData в профилях зарегистрированных пользователей,
  * которые финишировали в заезде

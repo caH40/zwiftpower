@@ -5,7 +5,6 @@ import { getResultsFromZwift } from './resultsFromZwift.js';
 import { updatePowerCurveResults } from './criticalpower/criticalpower-update.js';
 import { addCriticalPowersFast } from './criticalpower/criticalpower-fast.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { updateZwiftDataInProfiles } from '../../profile/zwiftid/profiles.js';
 import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
 import { addVariabilityIndex } from './variability-index.js';
@@ -45,9 +44,10 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
     const ridersWithFinish = resultsTotal.map((result) => result.profileId);
     const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
 
+    // !!! Изменить данный сервис!!!
     // обновление профайлов райдеров
-    const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
-    await updateZwiftDataInProfiles(zwiftIds);
+    // const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
+    // await updateZwiftDataInProfiles(zwiftIds);
 
     // добавление CP в результаты райдеров, сохранение FitFiles
     resultsTotalWithCP = await addCriticalPowers(

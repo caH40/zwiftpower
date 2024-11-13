@@ -1,6 +1,5 @@
 import { User } from '../../../Model/User.js';
 import { addMainProfileZwift } from '../../profile_additional/main-add.js';
-import { refreshProfileService } from './update-zwiftdata.js';
 
 /**
  * Сервис обновления zwiftId у пользователя
@@ -39,11 +38,12 @@ export async function updateZwiftIdService(
   } else {
     await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId } });
 
-    // добавление данных из звифта zwiftData в профиль пользователя
-    await refreshProfileService(userId);
-    return {
-      message: `ZwiftId ${zwiftId} привязан к профилю`,
-      zwiftIdMain: zwiftId,
-    };
+    // !!! Изменить данный сервис!!!
+    // добавление данных из звифта в профиль пользователя
+    // await refreshProfileService(userId);
+    // return {
+    //   message: `ZwiftId ${zwiftId} привязан к профилю`,
+    //   zwiftIdMain: zwiftId,
+    // };
   }
 }

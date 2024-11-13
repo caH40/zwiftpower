@@ -2,6 +2,9 @@ import { User } from '../../../Model/User.js';
 
 import { getZwiftRiderService } from '../../zwift/rider.js';
 
+// !!! Удалить данный сервис!!!
+// !!! Удалить данный сервис!!!
+// !!! Удалить данный сервис!!!
 /**
  * Сервис обновление данных пользователя на сайте zwiftpower.ru с данных zwiftAPI
  */
@@ -24,19 +27,19 @@ export async function refreshProfileService(userId: string) {
     { _id: userId },
     {
       $set: {
-        'zwiftData.firstName': riderData.firstName,
-        'zwiftData.lastName': riderData.lastName,
-        'zwiftData.category': riderData.competitionMetrics?.category,
-        'zwiftData.categoryWomen': riderData.competitionMetrics?.categoryWomen,
-        'zwiftData.racingScore': riderData.competitionMetrics?.racingScore,
-        'zwiftData.ftp': riderData.ftp,
-        'zwiftData.weight': riderData.weight,
-        'zwiftData.height': riderData.height,
-        'zwiftData.age': riderData.age,
-        'zwiftData.countryAlpha3': riderData.countryAlpha3,
-        'zwiftData.imageSrc': riderData.imageSrc,
-        'zwiftData.male': riderData.male,
-        'zwiftData.publicId': riderData.publicId,
+        'DelwiftData.firstName': riderData.firstName,
+        'DelwiftData.lastName': riderData.lastName,
+        'DelwiftData.category': riderData.competitionMetrics?.category,
+        'DelwiftData.categoryWomen': riderData.competitionMetrics?.categoryWomen,
+        'DelwiftData.racingScore': riderData.competitionMetrics?.racingScore,
+        'DelwiftData.ftp': riderData.ftp,
+        'DelwiftData.weight': riderData.weight,
+        'DelwiftData.height': riderData.height,
+        'DelwiftData.age': riderData.age,
+        'DelwiftData.countryAlpha3': riderData.countryAlpha3,
+        'DelwiftData.imageSrc': riderData.imageSrc,
+        'DelwiftData.male': riderData.male,
+        'DelwiftData.publicId': riderData.publicId,
       },
     }
   );

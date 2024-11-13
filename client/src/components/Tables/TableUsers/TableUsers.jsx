@@ -22,7 +22,7 @@ function TableUsers({ users }) {
         {users.map((user, index) => (
           <tr className={styles.hover} key={user._id}>
             <td>{index + 1}</td>
-            <TdLogo srcPicture={user.photoProfile} />
+            <TdLogo srcPicture={user.imageSrc} />
 
             <td>
               {user.zwiftId ? (

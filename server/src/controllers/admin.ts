@@ -13,20 +13,21 @@ import {
 } from '../service/admin/club.js';
 
 // types
-import { ClubSchema, OrganizerSchema, UserSchema } from '../types/model.interface.js';
+import { ClubSchema, OrganizerSchema } from '../types/model.interface.js';
 import { ClubZwift } from '../types/zwiftAPI/clubFromZwift.interface.js';
 import {
   deleteOrganizersService,
   getOrganizersService,
   postOrganizersService,
 } from '../service/admin/organizer.js';
+import { UserProfileForAdmin } from '../types/types.interface.js';
 
 /**
  * Получение всех зарегистрированных Users
  */
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users: Omit<UserSchema, 'password'>[] = await getUsersService();
+    const users: UserProfileForAdmin[] = await getUsersService();
     res.status(200).json(users);
   } catch (error) {
     errorHandler(error);

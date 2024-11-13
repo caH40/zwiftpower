@@ -1,15 +1,16 @@
 import { User } from '../../../Model/User.js';
 import { getZwiftRiderService } from '../../zwift/rider.js';
+import { getCategory } from './category.js';
+import { Rider } from '../../../Model/Rider.js';
 
 // types
-import { Profile } from '../../../types/types.interface.js';
-import { getCategory } from './category.js';
+import type { Profile } from '../../../types/types.interface.js';
 
 /**
  * Формирование данных профайла райдера (анкета)
  */
-export async function getProfileService(zwiftId: number) {
-  const profile: Profile = {
+export async function getProfileService(zwiftId: number): Promise<Profile> {
+  const baseProfile: Profile = {
     zwiftId: +zwiftId,
     ftp: null,
     imageSrc: null,
@@ -23,47 +24,53 @@ export async function getProfileService(zwiftId: number) {
     racingScore: 0,
   };
 
-  // Получение данных зарегистрированного райдера для отображения таких как bio
-  const userDB = await User.findOne({ zwiftId });
+  // Запрос данных райдера и пользователя из БД параллельно
+  const [userDB, riderDB] = await Promise.all([
+    User.findOne({ zwiftId }),
+    Rider.findOne({ zwiftId }),
+  ]);
 
-  // если нет результатов райдера в БД берутся данные из API Zwift
-  if (!userDB || userDB.zwiftData?.lastName === undefined) {
-    const category = await getCategory(zwiftId);
-    const rider = await getZwiftRiderService(zwiftId);
-
-    if (!rider) {
-      throw new Error('Не найден райдер на сервере Zwift');
-    }
-    profile.imageSrc = rider.imageSrc;
-    profile.firstName = rider.firstName;
-    profile.lastName = rider.lastName;
-    profile.age = rider.age;
-    profile.weight = rider.weight;
-    profile.height = rider.height;
-    profile.countryAlpha3 = rider.countryAlpha3;
-    profile.male = rider.male;
-    profile.zCategory = rider.competitionMetrics?.category;
-    profile.zCategoryWomen = rider.competitionMetrics?.categoryWomen;
-    profile.racingScore = rider.competitionMetrics?.racingScore || 0;
-    profile.category = category;
-
-    return profile;
+  // Если оба найдены, формируем профиль из базы данных
+  if (userDB && riderDB) {
+    return {
+      ...baseProfile,
+      imageSrc: riderDB.imageSrc,
+      firstName: riderDB.firstName,
+      lastName: riderDB.lastName,
+      age: riderDB.age,
+      weight: riderDB.weight,
+      height: riderDB.height,
+      countryAlpha3: riderDB.countryAlpha3,
+      male: riderDB.male,
+      zCategory: riderDB.competitionMetrics?.category,
+      zCategoryWomen: riderDB.competitionMetrics?.categoryWomen,
+      category: userDB.category,
+      bio: userDB.bio,
+      racingScore: riderDB.competitionMetrics?.racingScore || 0,
+    };
   }
 
-  profile.zwiftId = +zwiftId;
-  profile.imageSrc = userDB.zwiftData.imageSrc;
-  profile.firstName = userDB.zwiftData.firstName;
-  profile.lastName = userDB.zwiftData.lastName;
-  profile.age = userDB.zwiftData.age;
-  profile.weight = userDB.zwiftData.weight;
-  profile.height = userDB.zwiftData.height;
-  profile.countryAlpha3 = userDB.zwiftData.countryAlpha3;
-  profile.male = userDB.zwiftData.male;
-  profile.zCategory = userDB.zwiftData.category;
-  profile.zCategoryWomen = userDB.zwiftData.categoryWomen;
-  profile.category = userDB.category;
-  profile.bio = userDB?.bio;
-  profile.racingScore = userDB.zwiftData.racingScore || 0;
+  // Обработка данных через API Zwift, если что-то отсутствует в БД
+  const category = await getCategory(zwiftId);
+  const riderFromZwift = await getZwiftRiderService(zwiftId);
 
-  return profile;
+  if (!riderFromZwift) {
+    throw new Error('Не найден райдер на сервере Zwift');
+  }
+
+  return {
+    ...baseProfile,
+    imageSrc: riderFromZwift.imageSrc,
+    firstName: riderFromZwift.firstName,
+    lastName: riderFromZwift.lastName,
+    age: riderFromZwift.age,
+    weight: riderFromZwift.weight,
+    height: riderFromZwift.height,
+    countryAlpha3: riderFromZwift.countryAlpha3,
+    male: riderFromZwift.male,
+    zCategory: riderFromZwift.competitionMetrics?.category,
+    zCategoryWomen: riderFromZwift.competitionMetrics?.categoryWomen,
+    racingScore: riderFromZwift.competitionMetrics?.racingScore || 0,
+    category: category,
+  };
 }
