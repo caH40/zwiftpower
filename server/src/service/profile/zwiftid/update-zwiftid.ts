@@ -38,12 +38,9 @@ export async function updateZwiftIdService(
   } else {
     await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId } });
 
-    // !!! Изменить данный сервис!!!
-    // добавление данных из звифта в профиль пользователя
-    // await refreshProfileService(userId);
-    // return {
-    //   message: `ZwiftId ${zwiftId} привязан к профилю`,
-    //   zwiftIdMain: zwiftId,
-    // };
+    return {
+      message: `ZwiftId ${zwiftId} привязан к профилю`,
+      zwiftIdMain: zwiftId,
+    };
   }
 }

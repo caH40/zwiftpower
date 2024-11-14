@@ -17,7 +17,6 @@ import {
 } from '../assets/date.js';
 
 import { removeActivityFromFitFile } from './updates/fitfiles.js';
-import { updateUsers } from './updates/update-user.js';
 import { updateAllRidersProfiles } from './updates/riders-profile.js';
 import { updateRidersDailyMetrics } from './metrics/metrics.js';
 
@@ -64,7 +63,6 @@ export async function setTimers() {
       await updateAllRidersProfiles();
       await updateAccessToken();
       await updateAllPowerCurve();
-      await updateUsers();
       await updateRidersDailyMetrics();
     },
     null,
