@@ -6,7 +6,6 @@ import {
 } from '../service/race/rider/rider-profile.js';
 import { errorHandler } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
-import { refreshProfileService } from '../service/profile/zwiftid/update-zwiftdata.js';
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
 import { getUserResultsService } from '../service/race/rider/results.js';
@@ -18,6 +17,7 @@ import {
 import { TNotifications, TUserStreams } from '../types/model.interface.js';
 import { putUserStreamsService } from '../service/profile/streams.js';
 import { getUserSettingsService } from '../service/profile/settings.js';
+import { updateProfileService } from '../service/profile/rider.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -153,13 +153,13 @@ export async function deleteUserZwiftId(req: Request, res: Response) {
   }
 }
 /**
- * Обновление данных пользователя на сайте zwiftpower.ru с данных zwiftAPI
+ * Обновление данных пользователя на сайте zwiftpower.ru в коллекции Rider с данных zwiftAPI
  */
 export async function refreshProfile(req: Request, res: Response) {
   try {
     const { userId } = req.params;
 
-    const user = await refreshProfileService(userId);
+    const user = await updateProfileService(userId);
 
     return res.status(200).json(user);
   } catch (error) {

@@ -12,6 +12,7 @@ import { getResultsDNFRiders } from './result-events-dnf.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
+import { updateRidersProfiles } from '../riders-profile.js';
 
 /**
  * Обновление результатов Эвента (event)
@@ -44,10 +45,9 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
     const ridersWithFinish = resultsTotal.map((result) => result.profileId);
     const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
 
-    // !!! Изменить данный сервис!!!
-    // обновление профайлов райдеров
-    // const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
-    // await updateZwiftDataInProfiles(zwiftIds);
+    // обновление документов в коллекции Rider.
+    const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
+    await updateRidersProfiles(zwiftIds);
 
     // добавление CP в результаты райдеров, сохранение FitFiles
     resultsTotalWithCP = await addCriticalPowers(

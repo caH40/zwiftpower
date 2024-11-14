@@ -9,7 +9,7 @@ import { getZwiftRiderService } from '../zwift/rider.js';
 import { RiderProfileRanks } from '../../types/types.interface.js';
 import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface.js';
 
-type ResultsDB = {
+type RiderIdsWithRank = {
   profileId: number;
   rank: number;
   rankEvent: number;
@@ -19,19 +19,46 @@ const concurrency = 50; // Количество параллельных зап�
 const limit = pLimit(concurrency);
 
 /**
- * Добавление (обновление) данных Звифт-профайла всех райдеров,
+ * Обновление данных Звифт-профайла всех райдеров,
  * участвовавших и финишировавших в заездах, которые есть в БД
- * Данные необходимы для использования в статистике, для оптимизации запросов на ZwiftAPI
+ * Данные Rider необходимы для использования в статистике, для оптимизации запросов на ZwiftAPI.
  */
-export const addRiderProfile = async () => {
+export const updateAllRidersProfiles = async () => {
   try {
-    const resultsDB: ResultsDB[] = await ZwiftResult.find(
+    const riderIdsWithRank = await ZwiftResult.find(
       {},
       { profileId: true, rank: true, rankEvent: true, _id: false }
-    ).lean();
+    ).lean<RiderIdsWithRank[]>();
 
+    await updateRidersProfilesService(riderIdsWithRank);
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+/**
+ * Обновление данных Звифт-профайла (коллекция Rider) райдеров, переданных во входном параметре.
+ */
+export const updateRidersProfiles = async (zwiftIds: number[]) => {
+  try {
+    const riderIdsWithRank = await ZwiftResult.find(
+      { profileId: zwiftIds },
+      { profileId: true, rank: true, rankEvent: true, _id: false }
+    ).lean<RiderIdsWithRank[]>();
+
+    await updateRidersProfilesService(riderIdsWithRank);
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+/**
+ * Обновление данных Звифт-профайла (коллекция Rider) райдеров.
+ */
+async function updateRidersProfilesService(riderIdsWithRank: RiderIdsWithRank[]) {
+  try {
     // Подсчет общего количества Эвентов и медалей для каждого райдера, участвовавшего в Заездах.
-    const profilesWithRanks = calculateEventsAndMedals(resultsDB);
+    const profilesWithRanks = calculateEventsAndMedals(riderIdsWithRank);
 
     const requestsProfiles = [...profilesWithRanks.keys()].map((profileId) =>
       limit(() =>
@@ -64,12 +91,12 @@ export const addRiderProfile = async () => {
   } catch (error) {
     errorHandler(error);
   }
-};
+}
 
 /**
  * Подсчет общего количества Эвентов и медалей для каждого райдера.
  */
-function calculateEventsAndMedals(results: ResultsDB[]): Map<number, RiderProfileRanks> {
+function calculateEventsAndMedals(results: RiderIdsWithRank[]): Map<number, RiderProfileRanks> {
   const zwiftProfiles = new Map<number, RiderProfileRanks>();
 
   for (const result of results) {
