@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 
 import { User } from '../../Model/User.js';
 import { generateToken, removeToken, saveToken } from './token.js';
+import { UserSchema } from '../../types/model.interface.js';
+import { Rider } from '../../Model/Rider.js';
 
 export async function authorizationService(
   username: string,
@@ -10,9 +12,9 @@ export async function authorizationService(
 ) {
   const userDB = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
-  }).lean();
+  }).lean<UserSchema>();
 
-  if (!userDB) {
+  if (!userDB || !userDB._id) {
     throw new Error(`Неверный Логин или Пароль`);
   }
 
@@ -21,6 +23,12 @@ export async function authorizationService(
   if (!isValidPassword) {
     throw new Error(`Неверный Логин или Пароль`);
   }
+
+  // Получение лого райдера из коллекции Rider.
+  const riderDB = await Rider.findOne(
+    { zwiftId: userDB.zwiftId },
+    { _id: false, imageSrc: true }
+  ).lean<{ imageSrc: string | null }>();
 
   await removeToken(refreshToken);
 
@@ -48,6 +56,7 @@ export async function authorizationService(
       email: userDB.email,
       id: userDB._id,
       role: userDB.role,
+      photoProfile: riderDB?.imageSrc,
       zwiftId: userDB.zwiftId,
       moderator: userDB.moderator,
     },

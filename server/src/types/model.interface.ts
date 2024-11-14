@@ -255,8 +255,6 @@ export interface UserSchema {
   moderator?: {
     clubs: string[]; // список клубов в которых является модератором
   };
-  photoFromZp: boolean;
-  photoProfile?: string;
   bio: string;
   notifications: TNotifications;
   streams: TUserStreams;

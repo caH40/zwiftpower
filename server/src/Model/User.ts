@@ -44,8 +44,6 @@ const userSchema = new Schema<UserSchema>({
   team: { type: String },
   role: { type: String },
   moderator: { clubs: [String] },
-  photoFromZp: { type: Boolean },
-  photoProfile: { type: String },
   bio: { type: String },
   notifications: {
     type: notificationsSchema,

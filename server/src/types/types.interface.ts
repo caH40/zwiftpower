@@ -5,8 +5,6 @@ import {
   SeriesSchema,
   SignedRidersSchema,
   TMetrics,
-  TNotifications,
-  TUserStreams,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -682,23 +680,4 @@ export type TTwitchUserDto = {
   offlineImageUrl: string;
   viewCount: number;
   createdAt: Date;
-};
-
-/**
- * Зарегистрированный пользователь для админ запроса.
- */
-export type UserProfileForAdmin = {
-  _id: string;
-  username: string;
-  date: number;
-  email: string;
-  emailConfirm: boolean;
-  role: string;
-  photoProfile?: string;
-  zwiftId: number;
-  notifications: TNotifications;
-  streams: TUserStreams;
-  imageSrc: string | null;
-  firstName: string | null;
-  lastName: string | null;
 };

@@ -54,6 +54,7 @@ export async function authorization(req: Request, res: Response) {
       httpOnly: true,
       secure: true,
     });
+
     res.status(201).json({ ...response, refreshToken: undefined });
   } catch (error) {
     errorHandler(error);

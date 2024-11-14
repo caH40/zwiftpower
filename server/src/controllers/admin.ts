@@ -20,14 +20,13 @@ import {
   getOrganizersService,
   postOrganizersService,
 } from '../service/admin/organizer.js';
-import { UserProfileForAdmin } from '../types/types.interface.js';
 
 /**
  * Получение всех зарегистрированных Users
  */
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users: UserProfileForAdmin[] = await getUsersService();
+    const users = await getUsersService();
     res.status(200).json(users);
   } catch (error) {
     errorHandler(error);
