@@ -7,30 +7,30 @@ import { TResponseService } from '../../types/http.interface.js';
 import { TUserStreams } from '../../types/model.interface.js';
 import { TResponseEnabledUserStream } from '../../types/types.interface.js';
 import { getTwitchChannelsService } from '../twitch/twitch.js';
+import { Rider } from '../../Model/Rider.js';
 
 const zwiftDataSliced = {
-  'zwiftData.firstName': true,
-  'zwiftData.lastName': true,
-  'zwiftData.category': true,
-  'zwiftData.racingScore': true,
-  'zwiftData.imageSrc': true,
-  'zwiftData.countryAlpha3': true,
-  'zwiftData.male': true,
+  zwiftId: true,
+  firstName: true,
+  lastName: true,
+  'competitionMetrics.category': true,
+  'competitionMetrics.racingScore': true,
+  imageSrc: true,
+  countryAlpha3: true,
+  male: true,
 };
 
-type TStreamsFromDB = {
-  _id: mongoose.Types.ObjectId;
+type TRidersFromDB = {
   zwiftId: number;
-  zwiftData: {
-    firstName: string;
-    lastName: string;
+  firstName: string;
+  lastName: string;
+  competitionMetrics: {
     category: string;
     racingScore: string;
-    imageSrc: string;
-    countryAlpha3: string;
-    male: boolean;
   };
-  streams: TUserStreams;
+  imageSrc: string;
+  countryAlpha3: string;
+  male: boolean;
 };
 
 /**
@@ -43,8 +43,15 @@ export async function getEnabledUserStreamsService(): Promise<
     {
       $and: [{ 'streams.streamingRestricted': false }, { 'streams.twitch.isEnabled': true }],
     },
-    { zwiftId: true, streams: true, ...zwiftDataSliced }
-  ).lean<TStreamsFromDB[]>();
+    { zwiftId: true, streams: true }
+  ).lean<{ zwiftId: number; streams: TUserStreams; _id: mongoose.Types.ObjectId }[]>();
+
+  const zwiftIds = streamsDB.map(({ zwiftId }) => zwiftId);
+
+  const ridersDB = await Rider.find(
+    { zwiftId: zwiftIds },
+    { _id: false, ...zwiftDataSliced }
+  ).lean<TRidersFromDB[]>();
 
   const channelsNames = streamsDB.map((stream) => stream.streams.twitch.channelName);
 
@@ -52,7 +59,20 @@ export async function getEnabledUserStreamsService(): Promise<
 
   const streams = streamsDB.map((stream) => {
     const _id = String(stream._id);
-    const zwiftData = { ...stream.zwiftData, id: stream.zwiftId };
+
+    // Не все райдеры привязали zwiftId к профилю, поэтому у некоторых riderCurrent = undefined
+    const riderCurrent = ridersDB.find((rider) => rider.zwiftId === stream.zwiftId);
+
+    const zwiftData = riderCurrent && {
+      id: riderCurrent.zwiftId,
+      firstName: riderCurrent.firstName,
+      lastName: riderCurrent.lastName,
+      category: riderCurrent.competitionMetrics?.category,
+      racingScore: riderCurrent.competitionMetrics?.racingScore,
+      imageSrc: riderCurrent.imageSrc,
+      countryAlpha3: riderCurrent.countryAlpha3,
+      male: riderCurrent.male,
+    };
 
     const channelName = stream.streams.twitch.channelName?.toLocaleLowerCase();
 

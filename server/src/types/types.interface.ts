@@ -619,16 +619,18 @@ export type TMetricsMap = Map<number, TMetrics>;
  */
 export type TResponseEnabledUserStream = {
   _id: string;
-  zwiftData: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    category: string;
-    racingScore: string;
-    imageSrc: string;
-    countryAlpha3: string;
-    male: boolean;
-  };
+  zwiftData:
+    | {
+        id: number;
+        firstName: string;
+        lastName: string;
+        category: string;
+        racingScore: string;
+        imageSrc: string;
+        countryAlpha3: string;
+        male: boolean;
+      }
+    | undefined;
   twitch: { stream: TTwitchStreamDto; user: TTwitchUserDto } | null;
 };
 

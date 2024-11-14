@@ -126,7 +126,8 @@ export default function CardTwitchStream({ stream: { twitch, zwiftData } }) {
           </MyTooltip>
         </h2>
 
-        <RiderStreamBlock rider={zwiftData} />
+        {/* Не все райдеры привязали zwiftId к профилю, поэтому у некоторых riderCurrent = undefined */}
+        {zwiftData && <RiderStreamBlock rider={zwiftData} />}
       </div>
     </div>
   );
