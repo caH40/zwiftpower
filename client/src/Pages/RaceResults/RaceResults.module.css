@@ -20,3 +20,10 @@
   gap: 10px 15px;
   flex-wrap: wrap;
 }
+.wrapper__series {
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
