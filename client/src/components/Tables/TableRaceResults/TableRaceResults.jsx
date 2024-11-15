@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import useLeader from '../../../hook/useLeaders';
 import { useShowIndex } from '../../../hook/useShowIndex';
 import { useSortResults } from '../../../hook/useSortResults';
+import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdTime, tdWatts } from '../utils/td';
+import useLeader from '../../../hook/useLeaders';
+import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 import TdCpWatts from '../Td/TdCpWatts';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -16,7 +18,6 @@ import TdDifferent from '../Td/TdDifferent';
 import TdSpeed from '../Td/TdSpeed';
 import NPandVIBox from '../../NPandVIBox/NPandVIBox';
 import TdWeight from '../Td/TdWeight';
-import { getAgeCategory } from '../../../utils/age';
 
 import styles from '../Table.module.css';
 
@@ -111,6 +112,14 @@ function TableRaceResults({ results, event, forDNF }) {
                 }
                 return null;
               })}
+
+              <td>
+                <CategoryRSBox
+                  racingScore={result.profileData.racingScore || 0}
+                  zwiftId={result.zwiftId}
+                />
+              </td>
+
               {
                 <>
                   <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>

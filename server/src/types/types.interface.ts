@@ -76,6 +76,7 @@ export interface UserResult
     imageSrc: string | null;
     countryAlpha3: string;
     age: number;
+    racingScore?: number;
   };
   sensorData: {
     heartRateData: { avgHeartRate: Additional };

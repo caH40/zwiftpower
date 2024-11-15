@@ -20,11 +20,12 @@ export const raceResultsColumnsCP = [
   { name: '40м', id: 106 },
 ];
 export const raceResultsColumnsEnd = [
-  { name: 'Пульс', id: 11 },
-  { name: 'Вес', id: 12 },
-  { name: 'Рост', id: 13 },
-  { name: 'Возраст', id: 14 },
-  { name: 'Разное', id: 15 },
+  { name: 'Рейтинговые очки', tooltip: 'Гоночные рейтинговые очки', id: 11 },
+  { name: 'Пульс', id: 12 },
+  { name: 'Вес', id: 13 },
+  { name: 'Рост', id: 14 },
+  { name: 'Возраст', id: 15 },
+  { name: 'Разное', id: 16 },
 ];
 
 export const raceResultsColumns = (setShowIndex) => {

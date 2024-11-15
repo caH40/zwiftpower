@@ -7,6 +7,7 @@ import { getResultsClassicGroups } from '../preparation/classic-groups.js';
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
 import { eventResultsDto } from '../../dto/eventResults.dto.js';
+import { addRacingScores } from '../preparation/racingscore.js';
 
 /**
  * Получение результатов райдеров в Эвенте из БД
@@ -35,6 +36,8 @@ export async function getResultsService(eventId: number) {
     default: // все остальные обрабатывать как 'classicCommon'
       eventPrepared = await getResultsClassicCommon(eventDB);
   }
+
+  await addRacingScores(eventPrepared);
 
   return eventResultsDto({ event: eventPrepared, message: 'Эвент с результаты заезда' });
 }
