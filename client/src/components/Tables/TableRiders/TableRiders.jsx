@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -20,6 +21,9 @@ const cx = classnames.bind(styles);
 function TableRiders({ riders = [], event }) {
   const [getLeaders, getSweepers] = useLeader(event);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
+
+  // id ячеек столбца на который наведен курсор мышки.
+  const [columnActive, setColumnActive] = useState(false);
 
   return (
     <table className={cx('table')}>
@@ -50,13 +54,21 @@ function TableRiders({ riders = [], event }) {
             </td>
 
             {/* столбцы с CriticalPower */}
-            {ridersColumnsCP.map((column) => (
-              <TdCpWatts
-                cpBestEfforts={rider.cpBestEfforts}
-                interval={column.interval}
-                key={column.id}
-              />
-            ))}
+            {ridersColumnsCP.map((column, indexColumnCP) => {
+              const id = `TdCpWatts-${indexColumnCP}`;
+
+              return (
+                <TdCpWatts
+                  cpBestEfforts={rider.cpBestEfforts}
+                  interval={column.interval}
+                  key={column.id}
+                  id={id}
+                  onMouseEnter={() => setColumnActive(id)}
+                  onMouseLeave={() => setColumnActive(null)}
+                  hoverEnabled={columnActive === id}
+                />
+              );
+            })}
             <TdWeight weight={rider.weight} zwiftId={rider.zwiftId} />
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>

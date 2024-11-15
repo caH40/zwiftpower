@@ -28,7 +28,9 @@ const cx = classnames.bind(styles);
 function TableRaceResults({ results, event, forDNF }) {
   // показывать сквозную нумерацию в таблице
   const [showIndex, setShowIndex] = useState(false);
-  const [numberColumnActive, setNumberColumnActive] = useState(false);
+
+  // id ячеек столбца на который наведен курсор мышки.
+  const [columnActive, setColumnActive] = useState(false);
 
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
@@ -101,9 +103,9 @@ function TableRaceResults({ results, event, forDNF }) {
                       interval={column.interval}
                       key={column.id}
                       id={id}
-                      onMouseEnter={() => setNumberColumnActive(id)}
-                      onMouseLeave={() => setNumberColumnActive(null)}
-                      hoverEnabled={numberColumnActive === id}
+                      onMouseEnter={() => setColumnActive(id)}
+                      onMouseLeave={() => setColumnActive(null)}
+                      hoverEnabled={columnActive === id}
                     />
                   );
                 }

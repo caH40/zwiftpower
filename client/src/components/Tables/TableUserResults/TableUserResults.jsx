@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
@@ -27,6 +28,9 @@ const cx = classnames.bind(styles);
  */
 function TableUserResults({ results }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
+
+  // id ячеек столбца на который наведен курсор мышки.
+  const [columnActive, setColumnActive] = useState(false);
 
   return (
     <table className={styles.table}>
@@ -70,18 +74,25 @@ function TableUserResults({ results }) {
                 />
               </td>
 
-              {columnsCP.map((column) => {
+              {columnsCP.map((column, indexColumnCP) => {
+                const id = `TdCpWatts-${indexColumnCP}`;
+
                 if (column.isVisible) {
                   return (
                     <TdCpWatts
                       cpBestEfforts={result.cpBestEfforts}
                       interval={column.interval}
                       key={column.id}
+                      id={id}
+                      onMouseEnter={() => setColumnActive(id)}
+                      onMouseLeave={() => setColumnActive(null)}
+                      hoverEnabled={columnActive === id}
                     />
                   );
                 }
                 return null;
               })}
+
               <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
               <TdWeight weight={result.profileData.weightInGrams.addition} />
             </tr>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -25,6 +26,9 @@ function TableSignedRiders({ riders = [], event }) {
   // Сортировка и фильтрация таблицы.
   const ridersSortedAndFiltered = useSortSignedRiders(riders);
 
+  // id ячеек столбца на который наведен курсор мышки.
+  const [columnActive, setColumnActive] = useState(false);
+
   return (
     <table className={cx('table')}>
       <Thead columnsCP={columnsCP} />
@@ -50,13 +54,19 @@ function TableSignedRiders({ riders = [], event }) {
             </td>
 
             {/* столбцы с CriticalPower */}
-            {columnsCP.map((column) => {
+            {columnsCP.map((column, indexColumnCP) => {
+              const id = `TdCpWatts-${indexColumnCP}`;
+
               if (column.isVisible) {
                 return (
                   <TdCpWatts
                     cpBestEfforts={rider.cpBestEfforts}
                     interval={column.interval}
                     key={column.id}
+                    id={id}
+                    onMouseEnter={() => setColumnActive(id)}
+                    onMouseLeave={() => setColumnActive(null)}
+                    hoverEnabled={columnActive === id}
                   />
                 );
               }
