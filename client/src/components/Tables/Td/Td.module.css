@@ -38,6 +38,10 @@
 .link:hover {
   text-decoration: underline;
 }
+.hover__cell {
+  background-color: var(--color-yellow-5-transparent);
+  transition: 0.3s;
+}
 .rider {
   display: flex;
   gap: 0 7px;

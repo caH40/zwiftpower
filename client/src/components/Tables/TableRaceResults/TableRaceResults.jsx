@@ -28,6 +28,7 @@ const cx = classnames.bind(styles);
 function TableRaceResults({ results, event, forDNF }) {
   // показывать сквозную нумерацию в таблице
   const [showIndex, setShowIndex] = useState(false);
+  const [numberColumnActive, setNumberColumnActive] = useState(false);
 
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
@@ -90,13 +91,19 @@ function TableRaceResults({ results, event, forDNF }) {
                 />
               </td>
 
-              {columnsCP.map((column) => {
+              {columnsCP.map((column, indexColumnCP) => {
+                const id = `TdCpWatts-${indexColumnCP}`;
+
                 if (column.isVisible) {
                   return (
                     <TdCpWatts
                       cpBestEfforts={result.cpBestEfforts}
                       interval={column.interval}
                       key={column.id}
+                      id={id}
+                      onMouseEnter={() => setNumberColumnActive(id)}
+                      onMouseLeave={() => setNumberColumnActive(null)}
+                      hoverEnabled={numberColumnActive === id}
                     />
                   );
                 }

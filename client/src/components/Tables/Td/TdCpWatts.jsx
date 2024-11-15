@@ -1,10 +1,15 @@
 import { useSelector } from 'react-redux';
+import cn from 'classnames/bind';
 
 import { roundValue } from '../../../utils/round';
 
 import HighlightValueMax from './HighlightValueMax';
 
-function TdCpWatts({ cpBestEfforts = [], interval }) {
+import styles from './Td.module.css';
+
+const cx = cn.bind(styles);
+
+function TdCpWatts({ hoverEnabled, cpBestEfforts = [], interval, ...props }) {
   const { column } = useSelector((state) => state.filterWatts.value);
 
   const dimension = column === 'watts' ? 'integer' : 'hundred';
@@ -16,7 +21,7 @@ function TdCpWatts({ cpBestEfforts = [], interval }) {
   const valueCPRounded = roundValue(valueAdditionCP, dimension);
 
   return (
-    <td>
+    <td {...props} className={cx({ hover__cell: hoverEnabled })}>
       <HighlightValueMax valueCPRounded={valueCPRounded} dimensionValue={dimensionValue} />
     </td>
   );
