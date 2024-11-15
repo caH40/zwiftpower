@@ -116,7 +116,7 @@ function TableRaceResults({ results, event, forDNF }) {
               <td>
                 <CategoryRSBox
                   racingScore={result.profileData.racingScore || 0}
-                  zwiftId={result.zwiftId}
+                  zwiftId={result.profileId}
                 />
               </td>
 
