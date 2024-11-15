@@ -9,6 +9,7 @@ import ProfileStreams from '../../components/ProfileStreams/ProfileStreams';
 import ProfileSettingsZwift from '../../components/ProfileSettingsZwift/ProfileSettingsZwift';
 import ProfileNotification from '../../components/ProfileNotification/ProfileNotification';
 import IconRefresh from '../../components/icons/IconRefresh';
+import { fetchUserProfile } from '../../redux/features/api/userProfileSlice';
 
 import styles from './ProfileSetting.module.css';
 
@@ -31,7 +32,12 @@ function ProfileSetting() {
   }, []);
 
   const refreshProfile = () => {
-    dispatch(fetchProfileRefresh());
+    dispatch(fetchProfileRefresh()).then((data) => {
+      if (data.meta.requestStatus === 'fulfilled') {
+        // Запрос обновленных данных профиля и обновление стора на клиенте.
+        dispatch(fetchUserProfile({ zwiftId: zwiftIdAuth }));
+      }
+    });
   };
 
   // Не отображать страницу настроек для чужого пользователя..
