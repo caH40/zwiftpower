@@ -72,12 +72,12 @@ export const getRiderWithMaxWattsPerKgInInterval = (
   const wattsPerKgInInterval = [] as RiderMaxWattsPerKg[];
   for (let i = 0; i < places; i++) {
     const riderMaxWattsPerKgt: RiderMaxWattsPerKg = {
-      id: 0,
       zwiftId: 0,
       interval: 0,
       wattsPerKg: 0,
       eventStart: 0,
       eventName: '',
+      profileData: null,
     };
 
     if (!powerCurvesFiltered[i]) {

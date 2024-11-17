@@ -70,12 +70,12 @@ export const getRiderWithMaxPowerInInterval = (
   const wattsInInterval = [] as RiderMaxWatt[];
   for (let i = 0; i < places; i++) {
     const riderMaxWatt: RiderMaxWatt = {
-      id: 0,
       zwiftId: 0,
       interval: 0,
       watts: 0,
       eventStart: 0,
       eventName: '',
+      profileData: null,
     };
 
     if (!powerCurvesFiltered[i]) {

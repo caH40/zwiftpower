@@ -1,10 +1,10 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { getRiderWithMaxPowerInInterval } from './power.js';
 import { getRiderWithMaxWattsPerKgInInterval } from './powerPerKg.js';
-import { addProfile } from './profile.js';
+
 import { User } from '../../Model/User.js';
 import { intervalsForLeaders } from '../../assets/intervals.js';
-import { Rider } from '../../Model/Rider.js';
+import { getProfilesData, addProfileData } from './profiles-data.js';
 
 // types
 import { PowerCurveSchema } from '../../types/model.interface.js';
@@ -19,8 +19,10 @@ import {
  * @param isMale - получение данных для мужчин или женщин
  */
 export const getLeadersInIntervalsService = async (isMale: boolean) => {
-  // получение всех zwiftId райдеров, принимавших участие в Эвентах
-  const zwiftIds = await getZwiftIds(isMale);
+  // Получение данных всех профилей Rider.
+  const profilesData = await getProfilesData(isMale);
+
+  const zwiftIds = [...profilesData.keys()];
 
   // получение powerCurve всех райдеров
   const powerCurveDB: PowerCurveSchema[] = await PowerCurve.find({ zwiftId: zwiftIds }).lean();
@@ -50,23 +52,12 @@ export const getLeadersInIntervalsService = async (isMale: boolean) => {
     maxWattsPerKg.push(...riderMaxWattsPerKg);
   }
 
-  // добавление данных профиля
-  const { maxWattsWithProfile, maxWattsPerKgWithProfile } = await addProfile(
+  // Добавление данных профиля.
+  const { maxWattsWithProfile, maxWattsPerKgWithProfile } = addProfileData(
     maxWatts,
-    maxWattsPerKg
+    maxWattsPerKg,
+    profilesData
   );
 
   return { maxWattsWithProfile, maxWattsPerKgWithProfile };
-};
-
-/**
- *  Получение всех zwiftId райдеров, принимавших участие в Эвентах
- */
-const getZwiftIds = async (isMale: boolean): Promise<number[]> => {
-  const ridersDB: { zwiftId: number }[] = await Rider.find(
-    { male: isMale },
-    { zwiftId: true, _id: false }
-  ).lean();
-
-  return ridersDB.map((profile) => profile.zwiftId);
 };

@@ -229,6 +229,25 @@ export interface CpBestEfforts {
   duration: number;
 }
 
+export type TRiderData = Pick<
+  ProfileZwiftAPI,
+  | 'firstName'
+  | 'lastName'
+  | 'male'
+  | 'eventCategory'
+  | 'imageSrc'
+  | 'countryAlpha3'
+  | 'age'
+  | 'height'
+  | 'weight'
+  | 'competitionMetrics'
+>;
+
+export type TRiderDataForStatistics = Pick<
+  TRiderData,
+  'firstName' | 'lastName' | 'countryAlpha3' | 'imageSrc'
+> & { gender: string };
+
 /**
  * Результат райдера который не финишировал в Event-е
  */
@@ -391,21 +410,12 @@ export interface StatisticsRidersInEvent {
  * райдер (zwiftId) с максимальными ваттами (watts) на интервале (interval)
  */
 export interface RiderMaxWatt {
-  id: number;
   zwiftId: number;
   interval: number;
   watts: number;
   eventStart: number;
   eventName: string;
-  profileData?: {
-    firstName: string;
-    gender: string;
-    heightInCentimeters: number;
-    imageSrc: string;
-    lastName: string;
-    playerType: string;
-    weightInGrams: number;
-  };
+  profileData: TRiderDataForStatistics | null;
 }
 
 /**
