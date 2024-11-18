@@ -33,6 +33,12 @@ function TableUsers({ users }) {
                 user.username
               )}
             </td>
+
+            <td>
+              <Link to={`/admin/users/${user._id}`} className="link">
+                {user._id}
+              </Link>
+            </td>
             <td>{user.role}</td>
             <td>
               <Copy name={`zwiftId "${user.username}"`} showValue={true}>
