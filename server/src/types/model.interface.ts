@@ -1,5 +1,5 @@
 import mongoose, { Types } from 'mongoose';
-import { ProfileDataInResultWithId } from './types.interface.js';
+import { PowerFitFiles, ProfileDataInResultWithId } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 // типизация схемы и модели документов mongodb
 //
@@ -10,19 +10,21 @@ export interface DescriptionSchema {
 }
 //
 //
-export interface FitFileSchema {
+
+/**
+ * Документ с массивом кратких описаний активностей и фитфайлами к ним.
+ */
+export type FitFileSchema = {
   zwiftId: number;
   dateLastedActivity: number;
   dateUpdate: number;
-  activities: {
-    isVirtualPower: boolean;
-    eventId: number | null;
-    name: string;
-    date: number;
-    powerInWatts: string;
-    weightInGrams: number;
-  }[];
-}
+  activities: TActivitiesForFitFile[];
+};
+type TActivitiesForFitFile = PowerFitFiles & {
+  isVirtualPower: boolean; // Данные используются для расчета кривой мощности, но не учитываются в таблицах лидеров.
+  banned?: boolean; // Данные активности (фитфайла) нигде не учитываются. Данные глючные или читерские.
+};
+
 //
 //
 export interface InfoDevelopmentSchema {

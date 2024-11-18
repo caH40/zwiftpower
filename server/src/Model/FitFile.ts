@@ -14,6 +14,7 @@ const fitFileSchema = new Schema<FitFileSchema>({
       date: { type: Number, default: null },
       powerInWatts: { type: String },
       weightInGrams: { type: Number, default: null },
+      banned: { type: Boolean, default: false },
       _id: false,
     },
   ],
