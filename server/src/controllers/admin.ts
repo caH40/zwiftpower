@@ -20,6 +20,7 @@ import {
   getOrganizersService,
   postOrganizersService,
 } from '../service/admin/organizer.js';
+import { putActivityInFitFileService } from '../service/fitfile.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -227,6 +228,32 @@ export const deleteOrganizers = async (req: Request, res: Response) => {
     const organizers: { message: string } = await deleteOrganizersService(organizerId);
 
     res.status(200).json(organizers);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Установки/снятия блокировки (банна) с активности в фитфайле FileFile райдера.
+ */
+export const putActivityInFitFile = async (req: Request, res: Response) => {
+  try {
+    const { _id, banned } = req.body as {
+      _id: string;
+      banned: boolean;
+    };
+
+    const response = await putActivityInFitFileService({ _id, banned });
+
+    res.status(200).json(response);
   } catch (error) {
     errorHandler(error);
     if (error instanceof AxiosError) {

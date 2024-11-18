@@ -15,7 +15,6 @@ const fitFileSchema = new Schema<FitFileSchema>({
       powerInWatts: { type: String },
       weightInGrams: { type: Number, default: null },
       banned: { type: Boolean, default: false },
-      _id: false,
     },
   ],
 });

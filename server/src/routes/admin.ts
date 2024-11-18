@@ -12,6 +12,7 @@ import {
   getOrganizers,
   postOrganizers,
   deleteOrganizers,
+  putActivityInFitFile,
 } from '../controllers/admin.js';
 import { postNotification } from '../controllers/notification.js';
 
@@ -28,3 +29,4 @@ routerAdmin.get('/organizers', authAdmin, getOrganizers);
 routerAdmin.post('/organizers', authAdmin, postOrganizers);
 routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);
 routerAdmin.post('/notification', authAdmin, postNotification);
+routerAdmin.put('/fitfile', authAdmin, putActivityInFitFile);

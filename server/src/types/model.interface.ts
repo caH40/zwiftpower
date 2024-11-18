@@ -21,6 +21,7 @@ export type FitFileSchema = {
   activities: TActivitiesForFitFile[];
 };
 export type TActivitiesForFitFile = PowerFitFiles & {
+  _id: mongoose.Types.ObjectId;
   isVirtualPower: boolean; // Данные используются для расчета кривой мощности, но не учитываются в таблицах лидеров.
   banned?: boolean; // Данные активности (фитфайла) нигде не учитываются. Данные глючные или читерские.
 };
