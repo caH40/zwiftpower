@@ -20,7 +20,10 @@ import {
   getOrganizersService,
   postOrganizersService,
 } from '../service/admin/organizer.js';
-import { putActivityInFitFileService } from '../service/fitfile.js';
+import {
+  getActivityInFitFileService,
+  putActivityInFitFileService,
+} from '../service/fitfile.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -252,6 +255,29 @@ export const putActivityInFitFile = async (req: Request, res: Response) => {
     };
 
     const response = await putActivityInFitFileService({ _id, banned });
+
+    res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Получение фитфайла активностей райдера.
+ */
+export const getActivityInFitFile = async (req: Request, res: Response) => {
+  try {
+    const { _idUser } = req.params;
+
+    const response = await getActivityInFitFileService({ _idUser });
 
     res.status(200).json(response);
   } catch (error) {

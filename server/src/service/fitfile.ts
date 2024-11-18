@@ -1,7 +1,9 @@
 import { FitFile } from '../Model/FitFile.js';
+import { User } from '../Model/User.js';
 import { TResponseService } from '../types/http.interface.js';
+import { FitFileSchema } from '../types/model.interface.js';
 
-type Params = {
+type ParamsPut = {
   _id: string; // _id активности для обновления
   banned: boolean; // Значение для обновления свойства блокировки.
 };
@@ -12,7 +14,7 @@ type Params = {
 export async function putActivityInFitFileService({
   _id,
   banned,
-}: Params): Promise<TResponseService<null>> {
+}: ParamsPut): Promise<TResponseService<null>> {
   const response = await FitFile.findOneAndUpdate(
     { 'activities._id': _id },
     { $set: { 'activities.$.banned': banned } },
@@ -28,4 +30,48 @@ export async function putActivityInFitFileService({
   }`;
 
   return { data: null, message };
+}
+
+/**
+ * Сервис получения фитфайла активностей райдера.
+ */
+export async function getActivityInFitFileService({
+  _idUser,
+}: {
+  _idUser: string;
+}): Promise<TResponseService<FitFileSchema | null>> {
+  try {
+    const userDB = await User.findOne({ _id: _idUser }, { _id: false, zwiftId: true }).lean<{
+      zwiftId: number;
+    }>();
+
+    if (!userDB) {
+      return {
+        data: null,
+        message: `Пользователь не найден с _id:${_idUser}!`,
+      };
+    }
+
+    const response = await FitFile.findOne(
+      { zwiftId: userDB.zwiftId },
+      { 'activities.powerInWatts': false }
+    ).lean();
+
+    if (!response) {
+      return {
+        data: null,
+        message: `Не найден фитфайл с активностями пользователя с zwiftId:${userDB.zwiftId}!`,
+      };
+    }
+
+    return {
+      data: response,
+      message: `Фитфайл активностей пользователя _idUser:${_idUser} c zwiftId:${userDB.zwiftId}`,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      message: 'Произошла ошибка при получении данных',
+    };
+  }
 }
