@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import {
+  CriticalPower,
   LogsAdminSchema,
   ProfileDataInResult,
   SeriesSchema,
@@ -316,7 +317,7 @@ export interface ActivityFeedShort {
   date: number;
   name: string;
   eventId: number | null;
-  activityId?: string;
+  activityId: string;
 }
 /**
  * Параметры для функции getIntervals
@@ -347,17 +348,6 @@ export interface SaveDocumentArg {
  */
 export interface HandlerProtocolCurrentArg extends Omit<HandlerProtocolArg, 'typeRaceCustom'> {}
 /**
- * Данные по Critical power
- */
-export interface CriticalPower {
-  isVirtualPower: boolean;
-  duration: number;
-  value: number;
-  date: number;
-  name: string;
-  isDisqualification: boolean;
-}
-/**
  * Получение данных по Эвентам Серии за выбранный сезон с ДБ
  */
 export interface GetCurrentEventsSeries {
@@ -377,11 +367,11 @@ export interface CurrentEventsSeriesGap extends Omit<GetCurrentEventsSeries, 'ev
  * Power из fitfiles
  */
 export interface PowerFitFiles {
-  name: string;
+  name: string; // Название активности.
   eventId: number | null; // id Эвента, если заезд был в организованном Эвенте, а не на тренеровке
   date: number;
-  powerInWatts: string;
-  weightInGrams: number;
+  powerInWatts: string; // Массив мощностей, записанных с интервалом 1 секунда. Сохранен в строчном формате.
+  weightInGrams: number; // Вес райдера.
 }
 /**
  * Аргументы для функции updatePowerCurveRider

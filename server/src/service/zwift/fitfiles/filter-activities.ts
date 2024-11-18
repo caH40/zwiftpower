@@ -13,8 +13,11 @@ export async function filterActivities(activities: ActivityFeedShort[], zwiftId:
   const activitiesFiltered = activities.filter((activity: ActivityFeedShort) => {
     const dateActivity = new Date(activity.date).getTime();
 
+    // Попадает ли активность в период актуальных активностей millisecondsIn90Days.
     const dateInPeriod90Days = Date.now() - millisecondsIn90Days < dateActivity;
 
+    // Проверка новые активности или нет, то есть есть они в БД.
+    // Проверка осуществляется сравнением дат активности и даты последней активности в БД.
     const isNewActivity = dateActivity > dateLastedActivity;
 
     // Каждый раз придется пробегаться по всем активностям, которые не старше 90 дней.

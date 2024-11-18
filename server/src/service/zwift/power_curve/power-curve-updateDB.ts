@@ -10,14 +10,27 @@ import { UpdatePowerCurveRiderArg } from '../../../types/types.interface.js';
  * Получение документа с FitFiles активностями.
  * Удаление активностей из БД которые старше 90 дней.
  */
-export const getFitFile = async (zwiftId: number) => {
-  const fitFileDB: FitFileSchema | null = await FitFile.findOneAndUpdate(
+export const getFitFile = async (zwiftId: number): Promise<FitFileSchema | null> => {
+  const fitFileDB = await FitFile.findOneAndUpdate(
     { zwiftId },
     { $pull: { activities: { date: { $lt: dateBefore90Days } } } },
     { new: true }
-  );
+  ).lean<FitFileSchema>();
 
-  return fitFileDB;
+  if (!fitFileDB) {
+    return null;
+  }
+
+  // Фильтрация активностей которые забанены.
+  const activitiesNotBanned = fitFileDB.activities.filter((activity) => !activity.banned);
+
+  // Создание актуального объекта фитфайла.
+  const fitFileActual: FitFileSchema = {
+    ...fitFileDB,
+    activities: activitiesNotBanned,
+  };
+
+  return fitFileActual;
 };
 
 /**

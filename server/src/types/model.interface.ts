@@ -20,7 +20,7 @@ export type FitFileSchema = {
   dateUpdate: number;
   activities: TActivitiesForFitFile[];
 };
-type TActivitiesForFitFile = PowerFitFiles & {
+export type TActivitiesForFitFile = PowerFitFiles & {
   isVirtualPower: boolean; // Данные используются для расчета кривой мощности, но не учитываются в таблицах лидеров.
   banned?: boolean; // Данные активности (фитфайла) нигде не учитываются. Данные глючные или читерские.
 };
@@ -49,31 +49,29 @@ export interface PasswordResetSchema {
 
 /**
  * Кривая мощности райдера.
- * Несколько точек измерения мощности и удельной мощности за последние 90 дней
+ * Несколько точек измерения мощности и удельной мощности за последние 90 дней.
+ * Фильтрация забанненных активностей осуществляется до момента создания кривой мощности.
+ * isDisqualification мощность участвующая в кривой мощности, но не учитывается в лидерах мощности.
+ * isDisqualification случай когда нет возможности определить isVirtualPower, но райдер точно использует isVirtualPower.
  */
 export interface PowerCurveSchema {
   zwiftId: number;
   isMale: boolean;
   date: number;
-  pointsWatts: {
-    isVirtualPower: boolean;
-    duration: number;
-    value: number;
-    date: number;
-    name: string;
-    eventId: number | null;
-    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
-  }[];
-  pointsWattsPerKg: {
-    isVirtualPower: boolean;
-    duration: number;
-    value: number;
-    date: number;
-    name: string;
-    eventId: number | null;
-    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
-  }[];
+  pointsWatts: CriticalPower[];
+  pointsWattsPerKg: CriticalPower[];
 }
+/**
+ * Данные по Critical power
+ */
+export type CriticalPower = {
+  isVirtualPower: boolean;
+  duration: number;
+  value: number;
+  date: number;
+  name: string;
+  isDisqualification: boolean; // Мощность участвующая в кривой мощности, но не учитывается в
+};
 //
 //
 export interface ResultSchema {

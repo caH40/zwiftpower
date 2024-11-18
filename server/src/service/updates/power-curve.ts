@@ -3,21 +3,21 @@ import { createFitFiles } from '../zwift/fitfiles/fitfiles.js';
 import { updatePowerCurve } from '../zwift/power_curve/power-curve-update.js';
 import { errorHandler } from '../../errors/error.js';
 
-// types
-import { PowerCurveSchema } from '../../types/model.interface.js';
-
 /**
  * Создание/обновления (FitFiles) фитфалов активностей райдера и
  * обновление кривой мощности за последние 90 дней
  */
 export async function updateAllPowerCurve() {
   try {
-    const powerCurvesDB: PowerCurveSchema[] = await PowerCurve.find();
-    for (const powerCurve of powerCurvesDB) {
-      await createFitFiles(powerCurve.zwiftId);
+    const powerCurvesDB = await PowerCurve.find({}, { zwiftId: true, _id: false }).lean<
+      { zwiftId: number }[]
+    >();
+
+    for (const { zwiftId } of powerCurvesDB) {
+      await createFitFiles(zwiftId);
     }
-    for (const powerCurve of powerCurvesDB) {
-      await updatePowerCurve(powerCurve.zwiftId);
+    for (const { zwiftId } of powerCurvesDB) {
+      await updatePowerCurve(zwiftId);
     }
     console.log(new Date().toLocaleString(), 'Обновление fitFiles and powerCurve'); // eslint-disable-line
   } catch (error) {
