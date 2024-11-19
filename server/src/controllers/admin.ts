@@ -276,9 +276,15 @@ export const putActivityInFitFile = async (req: Request, res: Response) => {
  */
 export const getActivityInFitFile = async (req: Request, res: Response) => {
   try {
-    const { _idUser } = req.params;
+    const { zwiftId } = req.params;
 
-    const response = await getActivityInFitFileService({ _idUser });
+    const parsedZwiftId = Number(zwiftId);
+
+    if (isNaN(parsedZwiftId) || !Number.isInteger(parsedZwiftId)) {
+      throw new Error(`Не верный формат zwiftId: ${zwiftId}`);
+    }
+
+    const response = await getActivityInFitFileService({ zwiftId: +zwiftId });
 
     res.status(200).json(response);
   } catch (error) {
@@ -300,9 +306,9 @@ export const getActivityInFitFile = async (req: Request, res: Response) => {
  */
 export const updateFitFileAndPowerCurve = async (req: Request, res: Response) => {
   try {
-    const { _idUser } = req.body;
+    const { zwiftId }: { zwiftId: number } = req.body;
 
-    const response = await updateFitFileAndPowerCurveService({ _idUser });
+    const response = await updateFitFileAndPowerCurveService({ zwiftId });
 
     res.status(200).json(response);
   } catch (error) {

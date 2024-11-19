@@ -12,10 +12,7 @@ export default function UserModeration() {
 
   const matchRoot = useMatch(`/admin/users/${_id}`); // Проверяем соответствие корневому маршруту
 
-  const items = [
-    { to: `/admin/users/${_id}/main`, title: 'Главная', icon: IconRaceType },
-    { to: `/admin/users/${_id}/activities`, title: 'Активности', icon: IconRaceType },
-  ];
+  const items = [{ to: `/admin/users/${_id}/main`, title: 'Главная', icon: IconRaceType }];
 
   return (
     <section className={styles.wrapper}>
@@ -24,7 +21,6 @@ export default function UserModeration() {
       {/* Контент, который отображается только на маршруте users/:_id */}
       {matchRoot && (
         <div className={styles.info}>
-          <h2>Добро пожаловать!</h2>
           <p>Здесь вы можете управлять профилем пользователя.</p>
         </div>
       )}

@@ -15,7 +15,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableUsersActivities({ activities, _idUser }) {
+function TableUsersActivities({ activities, zwiftId }) {
   const dispatch = useDispatch();
 
   // Обработчик нажатия checkbox для блокировки/разблокировки активности.
@@ -24,7 +24,7 @@ function TableUsersActivities({ activities, _idUser }) {
     const banned = e.target.checked;
     dispatch(fetchPutBannedFitfiles({ _idActivity, banned })).then((res) => {
       // Запрос обновленных данных активностей.
-      dispatch(fetchGetFitfiles({ _idUser }));
+      dispatch(fetchGetFitfiles({ zwiftId }));
 
       if (!res.error) {
         dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));

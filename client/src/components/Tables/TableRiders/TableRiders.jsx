@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -10,6 +11,7 @@ import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
 import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 import TdWeight from '../Td/TdWeight';
+import IconEdit from '../../icons/IconEdit';
 
 import styles from '../Table.module.css';
 
@@ -19,15 +21,23 @@ import { ridersColumnsCP } from './column-titles';
 const cx = classnames.bind(styles);
 
 function TableRiders({ riders = [], event }) {
+  const { role } = useSelector((state) => state.checkAuth.value.user);
   const [getLeaders, getSweepers] = useLeader(event);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
+  const navigate = useNavigate();
+
+  const isAdmin = ['admin'].includes(role);
 
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
 
+  const handlerClickModeration = (zwiftId) => {
+    navigate(`/admin/riders/${zwiftId}`);
+  };
+
   return (
     <table className={cx('table')}>
-      <Thead />
+      <Thead isAdmin={isAdmin} />
       <tbody>
         {riders.map((rider) => (
           <tr className={cx('hover', { current: zwiftId === rider.zwiftId })} key={rider._id}>
@@ -73,6 +83,16 @@ function TableRiders({ riders = [], event }) {
             <td>{tdHeight(rider.height / 10)}</td>
             <td>{getAgeCategory(rider.age)}</td>
             <td className={cx('link')}>{tdLinkZP(rider.zwiftId)}</td>
+
+            {/* Модерация данных райдера */}
+            {isAdmin && (
+              <td>
+                <IconEdit
+                  addCls="pointer"
+                  getClick={() => handlerClickModeration(rider.zwiftId)}
+                />
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

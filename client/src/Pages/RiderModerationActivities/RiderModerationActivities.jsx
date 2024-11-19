@@ -7,16 +7,16 @@ import useTitle from '../../hook/useTitle';
 import TableUsersActivities from '../../components/Tables/TableUsersActivities/TableUsersActivities';
 import { resetFitfiles } from '../../redux/features/api/fitfiles/fitfilesSlice';
 
-import styles from './UserModerationActivities.module.css';
+import styles from './RiderModerationActivities.module.css';
 
 export default function UserModerationActivities() {
   useTitle('Модерация активностей пользователя');
-  const { _id } = useParams();
+  const { zwiftId } = useParams();
   const { fitfile } = useSelector((state) => state.fitfiles);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGetFitfiles({ _idUser: _id }));
+    dispatch(fetchGetFitfiles({ zwiftId }));
 
     // Сброс хранилища для fitfile при размонтировании.
     return () => dispatch(resetFitfiles());
@@ -24,7 +24,7 @@ export default function UserModerationActivities() {
 
   return (
     <section className={styles.wrapper}>
-      {fitfile && <TableUsersActivities _idUser={_id} activities={fitfile.activities} />}
+      {fitfile && <TableUsersActivities zwiftId={zwiftId} activities={fitfile.activities} />}
     </section>
   );
 }

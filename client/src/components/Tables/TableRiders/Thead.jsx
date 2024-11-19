@@ -10,7 +10,7 @@ import { ridersColumnsStart, ridersColumnsEnd, ridersColumnsCP } from './column-
 // Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
 const columnsWithSorting = ['Рейтинговые очки', 'Финиш', 'Райдер'];
 
-function Thead() {
+function Thead({ isAdmin }) {
   const dispatch = useDispatch();
 
   // Установка подсвечивания стрелки, указывающей текущую сортировку.
@@ -62,6 +62,7 @@ function Thead() {
               </th>
             );
           }
+
           return null;
         })}
 
@@ -70,6 +71,12 @@ function Thead() {
             <ColumnName columnName={column.name} />
           </th>
         ))}
+
+        {isAdmin && (
+          <th>
+            <ColumnName columnName={'Управление'} />
+          </th>
+        )}
       </tr>
     </thead>
   );

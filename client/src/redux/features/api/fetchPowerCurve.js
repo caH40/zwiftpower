@@ -5,16 +5,16 @@ import { myAxios } from '../../../api/axios';
 import { serverExpress } from '../../../config/environment';
 
 /**
- * Обновление Fitfile и PowerCurve пользователя zwiftId.
+ * Обновление Fitfile и PowerCurve райдера zwiftId.
  */
 export const fetchPowerCurve = createAsyncThunk(
-  'userPowerCurve/put',
-  async ({ _idUser }, thunkAPI) => {
+  'riderPowerCurve/put',
+  async ({ zwiftId }, thunkAPI) => {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/user/power-curve`,
+        url: `${serverExpress}/api/admin/riders/power-curve`,
         method: 'put',
-        data: { _idUser },
+        data: { zwiftId },
       });
 
       return response.data;

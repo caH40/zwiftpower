@@ -9,10 +9,10 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const fetchGetFitfiles = createAsyncThunk(
   'fitfiles/get',
-  async ({ _idUser }, thunkAPI) => {
+  async ({ zwiftId }, thunkAPI) => {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/fitfile/${_idUser}`,
+        url: `${serverExpress}/api/admin/fitfile/${zwiftId}`,
         method: 'get',
       });
 

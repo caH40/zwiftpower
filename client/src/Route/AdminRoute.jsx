@@ -16,10 +16,16 @@ const ZwiftAddEvent = lazy(() => import('../Pages/ZwiftAddEvent/ZwiftAddEvent'))
 const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
 const Users = lazy(() => import('../Pages/Users/Users'));
 const UserModeration = lazy(() => import('../Pages/UserModeration/UserModeration'));
-const UserModerationActivities = lazy(() =>
-  import('../Pages/UserModerationActivities/UserModerationActivities')
+const RiderModerationActivities = lazy(() =>
+  import('../Pages/RiderModerationActivities/RiderModerationActivities')
 );
 const UserModerationMain = lazy(() => import('../Pages/UserModerationMain/UserModerationMain'));
+const RiderModerationMain = lazy(() =>
+  import('../Pages/RiderModerationMain/RiderModerationMain')
+);
+const RiderModerationLayout = lazy(() =>
+  import('../Pages/RiderModerationLayout/RiderModerationLayout')
+);
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 const ZwiftViewEvent = lazy(() => import('../Pages/ZwiftViewEvent/ZwiftViewEvent'));
 const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
@@ -39,10 +45,16 @@ export function AdminRoute(isAdmin) {
       {isAdmin && (
         <Route path={'/admin'} element={<Admin />}>
           <Route path="users" element={<Users />} />
+
           <Route path="users/:_id" element={<UserModeration />}>
-            <Route path="activities" element={<UserModerationActivities />} />
             <Route path="main" element={<UserModerationMain />} />
           </Route>
+
+          <Route path="riders/:zwiftId" element={<RiderModerationLayout />}>
+            <Route path="activities" element={<RiderModerationActivities />} />
+            <Route path="main" element={<RiderModerationMain />} />
+          </Route>
+
           <Route path="logs/admin" element={<LogsAdmin />} />
           <Route path="logs/errors" element={<LogsErrors />} />
           <Route path="organizer" element={<AdminOrganizer />} />

@@ -1,5 +1,4 @@
 import { FitFile } from '../Model/FitFile.js';
-import { User } from '../Model/User.js';
 import { TResponseService } from '../types/http.interface.js';
 import { FitFileSchema } from '../types/model.interface.js';
 
@@ -36,31 +35,20 @@ export async function putActivityInFitFileService({
  * Сервис получения фитфайла активностей райдера.
  */
 export async function getActivityInFitFileService({
-  _idUser,
+  zwiftId,
 }: {
-  _idUser: string;
+  zwiftId: number;
 }): Promise<TResponseService<FitFileSchema | null>> {
   try {
-    const userDB = await User.findOne({ _id: _idUser }, { _id: false, zwiftId: true }).lean<{
-      zwiftId: number;
-    }>();
-
-    if (!userDB) {
-      return {
-        data: null,
-        message: `Пользователь не найден с _id:${_idUser}!`,
-      };
-    }
-
     const response = await FitFile.findOne(
-      { zwiftId: userDB.zwiftId },
+      { zwiftId },
       { 'activities.powerInWatts': false }
     ).lean();
 
     if (!response) {
       return {
         data: null,
-        message: `Не найден фитфайл с активностями пользователя с zwiftId:${userDB.zwiftId}!`,
+        message: `Не найден фитфайл с активностями райдера с zwiftId:${zwiftId}!`,
       };
     }
 
@@ -70,7 +58,7 @@ export async function getActivityInFitFileService({
 
     return {
       data: fitfile,
-      message: `Фитфайл активностей пользователя _idUser:${_idUser} c zwiftId:${userDB.zwiftId}`,
+      message: `Фитфайл активностей райдера c zwiftId:${zwiftId}`,
     };
   } catch (error) {
     return {

@@ -32,5 +32,5 @@ routerAdmin.post('/organizers', authAdmin, postOrganizers);
 routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);
 routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.put('/fitfile', authAdmin, putActivityInFitFile);
-routerAdmin.get('/fitfile/:_idUser', authAdmin, getActivityInFitFile);
-routerAdmin.put('/user/power-curve', authAdmin, updateFitFileAndPowerCurve);
+routerAdmin.get('/fitfile/:zwiftId', authAdmin, getActivityInFitFile);
+routerAdmin.put('/riders/power-curve', authAdmin, updateFitFileAndPowerCurve);
