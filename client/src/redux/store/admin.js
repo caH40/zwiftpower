@@ -3,9 +3,10 @@ import organizerAdminSlice from '../features/api/organizer_admin/organizerAdminS
 import resultEditSlice from '../features/api/result_edit/resultEditSlice';
 import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowerSlice';
 import zwiftClubSlice from '../features/api/zwift_club/zwiftClubSlice';
+import fitfilesSlice from '../features/api/fitfiles/fitfilesSlice';
 
 /**
- * Редюсеры доступные админам/модераторам
+ * reducers доступные админам/модераторам
  */
 export const adminReducers = {
   resultEdit: resultEditSlice,
@@ -13,4 +14,5 @@ export const adminReducers = {
   zwiftClub: zwiftClubSlice,
   clubModerator: clubModeratorSlice,
   organizerAdmin: organizerAdminSlice,
+  fitfiles: fitfilesSlice,
 };

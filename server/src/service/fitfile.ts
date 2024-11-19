@@ -4,7 +4,7 @@ import { TResponseService } from '../types/http.interface.js';
 import { FitFileSchema } from '../types/model.interface.js';
 
 type ParamsPut = {
-  _id: string; // _id активности для обновления
+  _idActivity: string; // _id активности для обновления
   banned: boolean; // Значение для обновления свойства блокировки.
 };
 
@@ -12,22 +12,22 @@ type ParamsPut = {
  * Сервис установки/снятия блокировки (банна) с активности в фитфайле FileFile райдера.
  */
 export async function putActivityInFitFileService({
-  _id,
+  _idActivity,
   banned,
 }: ParamsPut): Promise<TResponseService<null>> {
   const response = await FitFile.findOneAndUpdate(
-    { 'activities._id': _id },
+    { 'activities._id': _idActivity },
     { $set: { 'activities.$.banned': banned } },
     { new: true }
   );
 
   if (!response) {
-    throw new Error(`Активность не найдена с _id:${_id}!`);
+    throw new Error(`Не найдена активность с _id:${_idActivity}!`);
   }
 
-  const message = `Активность с _id:${_id} в фитфайлах ${
-    banned ? 'заблокирована' : 'разблокирована'
-  }`;
+  const message = `${
+    banned ? 'Заблокирована' : 'Разблокирована'
+  } активность с _id:${_idActivity} в фитфайлах!`;
 
   return { data: null, message };
 }
@@ -64,8 +64,12 @@ export async function getActivityInFitFileService({
       };
     }
 
+    // Сортировка активностей у убыванию даты.
+    const activitiesSorted = response.activities.sort((a, b) => b.date - a.date);
+    const fitfile = { ...response, activities: activitiesSorted };
+
     return {
-      data: response,
+      data: fitfile,
       message: `Фитфайл активностей пользователя _idUser:${_idUser} c zwiftId:${userDB.zwiftId}`,
     };
   } catch (error) {

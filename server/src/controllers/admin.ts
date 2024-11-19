@@ -249,12 +249,12 @@ export const deleteOrganizers = async (req: Request, res: Response) => {
  */
 export const putActivityInFitFile = async (req: Request, res: Response) => {
   try {
-    const { _id, banned } = req.body as {
-      _id: string;
+    const { _idActivity, banned } = req.body as {
+      _idActivity: string;
       banned: boolean;
     };
 
-    const response = await putActivityInFitFileService({ _id, banned });
+    const response = await putActivityInFitFileService({ _idActivity, banned });
 
     res.status(200).json(response);
   } catch (error) {

@@ -2,7 +2,7 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './Checkbox.module.css';
 
-function CheckboxSimple({ checked, handleCheckboxChange, name, tooltip, disabled }) {
+function CheckboxSimple({ checked, handleCheckboxChange, name, tooltip, disabled, ...props }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <input
@@ -12,6 +12,7 @@ function CheckboxSimple({ checked, handleCheckboxChange, name, tooltip, disabled
         className={styles.input}
         name={name}
         disabled={disabled}
+        {...props}
       />
     </MyTooltip>
   );
