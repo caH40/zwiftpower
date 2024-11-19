@@ -24,6 +24,7 @@ import {
   getActivityInFitFileService,
   putActivityInFitFileService,
 } from '../service/fitfile.js';
+import { updateFitFileAndPowerCurveService } from '../service/power-curve.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -278,6 +279,30 @@ export const getActivityInFitFile = async (req: Request, res: Response) => {
     const { _idUser } = req.params;
 
     const response = await getActivityInFitFileService({ _idUser });
+
+    res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Создание/обновления (FitFiles) фитфайла активностей райдера и
+ * обновление кривой мощности за последние 90 дней
+ */
+export const updateFitFileAndPowerCurve = async (req: Request, res: Response) => {
+  try {
+    const { _idUser } = req.body;
+
+    const response = await updateFitFileAndPowerCurveService({ _idUser });
 
     res.status(200).json(response);
   } catch (error) {

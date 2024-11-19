@@ -24,3 +24,22 @@ export async function updateAllPowerCurve() {
     errorHandler(error);
   }
 }
+
+/**
+ * Добавление фитфайлов и данных из новых активностей райдера и обновление кривой мощности.
+ */
+export async function updateFitFileAndPowerCurve({
+  zwiftId,
+}: {
+  zwiftId: number;
+}): Promise<void> {
+  try {
+    // Добавление фитфайлов и данных из новых активностей.
+    await createFitFiles(zwiftId);
+
+    // Создание новой кривой мощности для обновленных активностей.
+    await updatePowerCurve(zwiftId);
+  } catch (error) {
+    errorHandler(error);
+  }
+}

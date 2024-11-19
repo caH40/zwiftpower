@@ -14,6 +14,7 @@ import {
   deleteOrganizers,
   putActivityInFitFile,
   getActivityInFitFile,
+  updateFitFileAndPowerCurve,
 } from '../controllers/admin.js';
 import { postNotification } from '../controllers/notification.js';
 
@@ -32,3 +33,4 @@ routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);
 routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.put('/fitfile', authAdmin, putActivityInFitFile);
 routerAdmin.get('/fitfile/:_idUser', authAdmin, getActivityInFitFile);
+routerAdmin.put('/user/power-curve', authAdmin, updateFitFileAndPowerCurve);

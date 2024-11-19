@@ -31,7 +31,6 @@ export async function createFitFiles(zwiftId: number): Promise<void> {
     if (!powers) {
       return;
     }
-    // console.log(powers);
 
     // сохранение в данных из fitFiles в БД
     await saveFitFiles(powers, zwiftId);

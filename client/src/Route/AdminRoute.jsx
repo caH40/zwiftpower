@@ -19,6 +19,7 @@ const UserModeration = lazy(() => import('../Pages/UserModeration/UserModeration
 const UserModerationActivities = lazy(() =>
   import('../Pages/UserModerationActivities/UserModerationActivities')
 );
+const UserModerationMain = lazy(() => import('../Pages/UserModerationMain/UserModerationMain'));
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 const ZwiftViewEvent = lazy(() => import('../Pages/ZwiftViewEvent/ZwiftViewEvent'));
 const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
@@ -40,6 +41,7 @@ export function AdminRoute(isAdmin) {
           <Route path="users" element={<Users />} />
           <Route path="users/:_id" element={<UserModeration />}>
             <Route path="activities" element={<UserModerationActivities />} />
+            <Route path="main" element={<UserModerationMain />} />
           </Route>
           <Route path="logs/admin" element={<LogsAdmin />} />
           <Route path="logs/errors" element={<LogsErrors />} />

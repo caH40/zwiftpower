@@ -35,7 +35,7 @@ function TableUsers({ users }) {
             </td>
 
             <td>
-              <Link to={`/admin/users/${user._id}`} className="link">
+              <Link to={`/admin/users/${user._id}/main`} className="link">
                 {user._id}
               </Link>
             </td>
