@@ -27,12 +27,12 @@ function TableUsers({ users }) {
             <td>
               {user.zwiftId ? (
                 <Link to={`/profile/${user.zwiftId}/results`} className="link">
-                  {user.username}
+                  {`${user.firstName} ${user.lastName}`}
                 </Link>
-              ) : (
-                user.username
-              )}
+              ) : null}
             </td>
+
+            <td>{user.username}</td>
 
             <td>
               <Link to={`/admin/users/${user._id}/main`} className="link">
@@ -64,9 +64,6 @@ function TableUsers({ users }) {
                   zp.com
                 </Link>
               )}
-            </td>
-            <td>
-              <Copy name={`_id "${user.username}"`}>{user._id}</Copy>
             </td>
           </tr>
         ))}
