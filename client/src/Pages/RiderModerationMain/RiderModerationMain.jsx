@@ -37,7 +37,12 @@ export default function RiderModerationMain() {
 
   return (
     <section className={styles.wrapper}>
-      <Button getClick={() => handleButtonUpdatePowerCurve()}>Обновить кривую мощности</Button>
+      <div className={styles.wrapper__group}>
+        <h3 className={styles.title__block}>
+          Обновление фитфайлов активностей и кривой мощности
+        </h3>
+        <Button getClick={() => handleButtonUpdatePowerCurve()}>Обновить</Button>
+      </div>
     </section>
   );
 }
