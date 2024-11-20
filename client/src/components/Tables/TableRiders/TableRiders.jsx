@@ -82,7 +82,7 @@ function TableRiders({ riders = [], event }) {
             {/* Модерация данных райдера */}
             {isAdmin && (
               <td>
-                <Link to={`/admin/riders/${zwiftId}/main`}>
+                <Link to={`/admin/riders/${rider.zwiftId}/main`}>
                   <IconEdit />
                 </Link>
               </td>
