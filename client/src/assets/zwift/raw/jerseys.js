@@ -147,6 +147,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Zwift_Ski01_thumb.png',
   },
   {
+    id: 124374424,
+    name: 'Team Skyline/Cadence',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TeamSkylineCadence2024_thumb.png',
+  },
+  {
     id: 138392085,
     name: 'Team Charles-Barclay',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/lucy_charles_barclay_thumb.png',
@@ -395,6 +400,16 @@ export const jerseys = [
     id: 310916269,
     name: 'WattFabrik',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/WattFabrik2022_thumb.png',
+  },
+  {
+    id: 311012497,
+    name: 'Tour de Zwift Challenge',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TourDeZwiftUltimate2025_thumb.png',
+  },
+  {
+    id: 314926535,
+    name: 'Sam Laidlow',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/SamLaidlow2024_thumb.png',
   },
   {
     id: 315634460,
@@ -1584,6 +1599,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/AlzheimersAssociation2021_thumb.png',
   },
   {
+    id: 1217780981,
+    name: 'KLUB',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftKlub2024_thumb.png',
+  },
+  {
     id: 1233478884,
     name: 'Mid Devon Cycling Club',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/MidDevonCC_thumb.png',
@@ -1984,6 +2004,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/CoalitionAlphaWmn2023_thumb.png',
   },
   {
+    id: 1598289898,
+    name: 'Baseline',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftCampBaseline2024_thumb.png',
+  },
+  {
     id: 1599435973,
     name: 'ZNC - Canada',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftNationalChampions_thumb.png',
@@ -2179,6 +2204,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/RaphaWomens1002022_thumb.png',
   },
   {
+    id: 1774347173,
+    name: '10th Anniversary Kit',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Zwift10YAnniversary2024_thumb.png',
+  },
+  {
     id: 1775021494,
     name: 'Zwift World Series',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftWorldSeriesCommunity2024_thumb.png',
@@ -2307,6 +2337,11 @@ export const jerseys = [
     id: 1886354418,
     name: 'Alpe du Knit Cozy',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/AlpeduKnit03_thumb.png',
+  },
+  {
+    id: 1890618348,
+    name: 'Ireland Nat Champs',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/IrelandNationalChampion2024_thumb.png',
   },
   {
     id: 1893222148,
@@ -3135,6 +3170,11 @@ export const jerseys = [
     id: 2662676193,
     name: 'Alpentroedler Velo Club',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Alpentroedler2022_thumb.png',
+  },
+  {
+    id: 2665651120,
+    name: '2025 Tour de Zwift',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TourDeZwift2025_thumb.png',
   },
   {
     id: 2667207033,
@@ -4010,6 +4050,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ValcarCylance2019_thumb.png',
   },
   {
+    id: 3377071816,
+    name: 'Off the MAAP',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/OffTheMAAP2024_thumb.png',
+  },
+  {
     id: 3382087244,
     name: 'UCI Federation New Zealand 2023',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/UCIFederationNewZealand2023_thumb.png',
@@ -4786,6 +4831,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TheFeed2023_thumb.png',
   },
   {
+    id: 3925895941,
+    name: 'LOC_ACCESSORY_EVO_CYCLING_CLUB_2024',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/EvoCyclingClub2024_thumb.png',
+  },
+  {
     id: 3926835792,
     name: 'Kinetic',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Kinetic_thumb.png',
@@ -4995,6 +5045,11 @@ export const jerseys = [
     id: 4065189818,
     name: 'Z Fondo March',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZFondo2020Mar_thumb.png',
+  },
+  {
+    id: 4065648970,
+    name: 'LeColCC',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/LeColCC2024_thumb.png',
   },
   {
     id: 4070625544,
