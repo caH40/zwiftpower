@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cn from 'classnames/bind';
 
@@ -13,6 +14,9 @@ import styles from './ProfileBlock.module.css';
 const cx = cn.bind(styles);
 
 function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
+  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const isAdmin = ['admin'].includes(role);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.bio}>{profile?.bio}</div>
@@ -73,9 +77,11 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
             <dt className={styles.term}>ZWIFTID</dt>
             <dd className={cx('term__description', 'box__zwiftId')}>
               {profile.zwiftId}
-              <Link to={`/admin/riders/${profile.zwiftId}/main`}>
-                <IconEdit />
-              </Link>
+              {isAdmin && (
+                <Link to={`/admin/riders/${profile.zwiftId}/main`}>
+                  <IconEdit />
+                </Link>
+              )}
             </dd>
           </div>
 
