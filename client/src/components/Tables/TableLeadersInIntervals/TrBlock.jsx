@@ -1,11 +1,14 @@
+import { Link } from 'react-router-dom';
+
 import TdRider from '../Td/TdRider';
 import { getTimerLocal } from '../../../utils/date-local';
+import IconEdit from '../../icons/IconEdit';
 
 import TdRank from '../Td/TdRank';
 
 import styles from '../Table.module.css';
 
-function TrBlock({ result, index, type }) {
+function TrBlock({ result, index, type, isAdmin }) {
   return (
     result.profileData && (
       <tr className={styles.hover}>
@@ -19,6 +22,15 @@ function TrBlock({ result, index, type }) {
         <TdRider profileId={result.zwiftId} profile={result.profileData} />
         <td className={styles.td__name}>{result.eventName}</td>
         <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
+
+        {/* Модерация данных райдера */}
+        {isAdmin && (
+          <td>
+            <Link to={`/admin/riders/${result.zwiftId}/main`}>
+              <IconEdit />
+            </Link>
+          </td>
+        )}
       </tr>
     )
   );

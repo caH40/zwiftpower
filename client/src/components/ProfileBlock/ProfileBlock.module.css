@@ -36,6 +36,11 @@
   align-items: center;
   gap: 0 10px;
 }
+.box__zwiftId {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
 .box__term + .box__term {
   margin-top: 6px;
 }

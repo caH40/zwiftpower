@@ -2,7 +2,7 @@ import ColumnName from '../Th/ColumnName';
 
 import { leadersInIntervalsColumns } from './column-titles';
 
-function Thead({ type }) {
+function Thead({ type, isAdmin }) {
   return (
     <thead>
       <tr>
@@ -11,6 +11,12 @@ function Thead({ type }) {
             <ColumnName columnName={column.name} />
           </th>
         ))}
+
+        {isAdmin && (
+          <th>
+            <ColumnName columnName={'Управление'} />
+          </th>
+        )}
       </tr>
     </thead>
   );

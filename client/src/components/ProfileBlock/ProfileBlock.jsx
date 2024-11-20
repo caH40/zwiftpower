@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+import cn from 'classnames/bind';
+
+import IconEdit from '../icons/IconEdit';
 import { getWeightStr } from '../../utils/event';
 import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
@@ -5,6 +9,8 @@ import { getAgeCategory } from '../../utils/age';
 import CategoryMF from '../CategoryMF/CategoryMF';
 
 import styles from './ProfileBlock.module.css';
+
+const cx = cn.bind(styles);
 
 function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
   return (
@@ -65,7 +71,12 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
 
           <div className={styles.box__term}>
             <dt className={styles.term}>ZWIFTID</dt>
-            <dd className={styles.term__description}>{profile.zwiftId}</dd>
+            <dd className={cx('term__description', 'box__zwiftId')}>
+              {profile.zwiftId}
+              <Link to={`/admin/riders/${profile.zwiftId}/main`}>
+                <IconEdit />
+              </Link>
+            </dd>
           </div>
 
           <div className={styles.box__term}>

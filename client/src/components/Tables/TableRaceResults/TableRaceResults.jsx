@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
@@ -6,6 +7,7 @@ import { useShowIndex } from '../../../hook/useShowIndex';
 import { useSortResults } from '../../../hook/useSortResults';
 import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdTime, tdWatts } from '../utils/td';
+import IconEdit from '../../icons/IconEdit';
 import useLeader from '../../../hook/useLeaders';
 import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
 import TdCpWatts from '../Td/TdCpWatts';
@@ -27,6 +29,8 @@ import { getCaption } from './utils';
 const cx = classnames.bind(styles);
 
 function TableRaceResults({ results, event, forDNF }) {
+  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const isAdmin = ['admin'].includes(role);
   // показывать сквозную нумерацию в таблице
   const [showIndex, setShowIndex] = useState(false);
 
@@ -44,7 +48,7 @@ function TableRaceResults({ results, event, forDNF }) {
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
-      <Thead columnsCP={columnsCP} showIndex={showIndex} />
+      <Thead columnsCP={columnsCP} showIndex={showIndex} isAdmin={isAdmin} />
 
       <tbody>
         {resultSortedAndFiltered?.map((result, index) => {
@@ -134,6 +138,15 @@ function TableRaceResults({ results, event, forDNF }) {
                   />
                 </>
               }
+
+              {/* Модерация данных райдера */}
+              {isAdmin && (
+                <td>
+                  <Link to={`/admin/riders/${result.profileId}/main`}>
+                    <IconEdit />
+                  </Link>
+                </td>
+              )}
             </tr>
           );
         })}

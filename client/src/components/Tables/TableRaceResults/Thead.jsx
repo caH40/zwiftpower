@@ -11,7 +11,7 @@ import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 // Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
 const columnsWithSorting = ['Время', 'Категория'];
 
-function Thead({ columnsCP, showIndex }) {
+function Thead({ columnsCP, showIndex, isAdmin }) {
   const dispatch = useDispatch();
 
   const setSortTable = (columnCPInterval) => {
@@ -67,6 +67,12 @@ function Thead({ columnsCP, showIndex }) {
             <ColumnName columnName={column.name} />
           </th>
         ))}
+
+        {isAdmin && (
+          <th>
+            <ColumnName columnName={'Управление'} />
+          </th>
+        )}
       </tr>
     </thead>
   );

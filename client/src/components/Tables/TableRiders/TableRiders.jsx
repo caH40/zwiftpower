@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
@@ -24,16 +24,11 @@ function TableRiders({ riders = [], event }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const [getLeaders, getSweepers] = useLeader(event);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
-  const navigate = useNavigate();
 
   const isAdmin = ['admin'].includes(role);
 
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
-
-  const handlerClickModeration = (zwiftId) => {
-    navigate(`/admin/riders/${zwiftId}`);
-  };
 
   return (
     <table className={cx('table')}>
@@ -87,10 +82,9 @@ function TableRiders({ riders = [], event }) {
             {/* Модерация данных райдера */}
             {isAdmin && (
               <td>
-                <IconEdit
-                  addCls="pointer"
-                  getClick={() => handlerClickModeration(rider.zwiftId)}
-                />
+                <Link to={`/admin/riders/${zwiftId}/main`}>
+                  <IconEdit />
+                </Link>
               </td>
             )}
           </tr>
