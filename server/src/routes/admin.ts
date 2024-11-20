@@ -16,6 +16,7 @@ import {
   getActivityInFitFile,
   updateFitFileAndPowerCurve,
   updateFairRideBan,
+  getFairRideBan,
 } from '../controllers/admin.js';
 import { postNotification } from '../controllers/notification.js';
 
@@ -36,3 +37,4 @@ routerAdmin.put('/fitfile', authAdmin, putActivityInFitFile);
 routerAdmin.get('/fitfile/:zwiftId', authAdmin, getActivityInFitFile);
 routerAdmin.put('/riders/power-curve', authAdmin, updateFitFileAndPowerCurve);
 routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
+routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);

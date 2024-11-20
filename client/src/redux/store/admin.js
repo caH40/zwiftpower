@@ -4,6 +4,7 @@ import resultEditSlice from '../features/api/result_edit/resultEditSlice';
 import usersZwiftpowerSlice from '../features/api/user_zwiftpower/usersZwiftpowerSlice';
 import zwiftClubSlice from '../features/api/zwift_club/zwiftClubSlice';
 import fitfilesSlice from '../features/api/fitfiles/fitfilesSlice';
+import riderBanSlice from '../features/api/rider-ban/riderBanSlice';
 
 /**
  * reducers доступные админам/модераторам
@@ -15,4 +16,5 @@ export const adminReducers = {
   clubModerator: clubModeratorSlice,
   organizerAdmin: organizerAdminSlice,
   fitfiles: fitfilesSlice,
+  riderBan: riderBanSlice,
 };
