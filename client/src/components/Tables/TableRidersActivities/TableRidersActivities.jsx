@@ -15,7 +15,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableUsersActivities({ activities, zwiftId }) {
+function TableRidersActivities({ activities, zwiftId }) {
   const dispatch = useDispatch();
 
   // Обработчик нажатия checkbox для блокировки/разблокировки активности.
@@ -58,4 +58,4 @@ function TableUsersActivities({ activities, zwiftId }) {
   );
 }
 
-export default TableUsersActivities;
+export default TableRidersActivities;

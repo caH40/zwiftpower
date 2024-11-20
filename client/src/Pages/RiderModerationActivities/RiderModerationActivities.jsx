@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetFitfiles } from '../../redux/features/api/fitfiles/fetchFitfiles';
 import useTitle from '../../hook/useTitle';
-import TableUsersActivities from '../../components/Tables/TableUsersActivities/TableUsersActivities';
+import TableRidersActivities from '../../components/Tables/TableRidersActivities/TableRidersActivities';
 import { resetFitfiles } from '../../redux/features/api/fitfiles/fitfilesSlice';
 
 import styles from './RiderModerationActivities.module.css';
@@ -24,7 +24,7 @@ export default function UserModerationActivities() {
 
   return (
     <section className={styles.wrapper}>
-      {fitfile && <TableUsersActivities zwiftId={zwiftId} activities={fitfile.activities} />}
+      {fitfile && <TableRidersActivities zwiftId={zwiftId} activities={fitfile.activities} />}
     </section>
   );
 }
