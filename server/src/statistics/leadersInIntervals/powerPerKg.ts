@@ -33,7 +33,9 @@ export const getRiderWithMaxWattsPerKgInInterval = (
     }))
     .filter(
       (power) =>
-        !power.pointsWattsPerKg?.isVirtualPower || !power.pointsWattsPerKg?.bannedForLeaderboard
+        !(
+          power.pointsWattsPerKg?.isVirtualPower || power.pointsWattsPerKg?.bannedForLeaderboard
+        )
     );
 
   // количество мест (лучших результатов) для поиска, первые places будут лидерами мощности

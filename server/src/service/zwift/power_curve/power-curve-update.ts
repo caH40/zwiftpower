@@ -5,6 +5,7 @@ import { errorHandler } from '../../../errors/error.js';
 
 // types
 import { CriticalPower } from '../../../types/model.interface.js';
+import { RiderBanned } from '../../../Model/RidersBanned.js';
 
 /**
  * Обновление Кривой мощности для райдера с zwiftId. Удаляется старая кривая и сохраняется новая в БД.
@@ -15,11 +16,13 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
     // получение актуальных фитфайлов райдера (zwiftId) из БД
     const fitFile = await getFitFile(zwiftId);
 
+    // Если имеется хоть какой то бан, то CP не учитываются в рейтинговых таблицах.
+    const riderBannedDB = await RiderBanned.findOne({ zwiftId }, { _id: true }).lean();
+    const bannedForLeaderboard = riderBannedDB ? true : false;
+
     if (!fitFile) {
       return;
     }
-
-    const bannedForLeaderboard = false;
 
     // инициализация массивов для хранения CP
     const cpWattsUpdated: CriticalPower[] = [];

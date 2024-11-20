@@ -13,7 +13,7 @@ import {
 } from '../types/types.interface.js';
 import { getRidersTotalAgeService } from '../statistics/ridersAge.js';
 import { setCache } from '../cache/cache.js';
-import { secondsIn6Hours } from '../assets/date.js';
+import { secondsInHour } from '../assets/date.js';
 import { getRidersTotalRacingScoreService } from '../statistics/ridersTotalRacingScore.js';
 
 export const getRidersInEvents = async (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ export const getRidersInEvents = async (req: Request, res: Response) => {
     const ridersInEvents = await getRidersInEventsService(+period);
 
     // кэширование данных
-    setCache(path, JSON.stringify(ridersInEvents), secondsIn6Hours);
+    setCache(path, JSON.stringify(ridersInEvents), secondsInHour);
 
     res.status(200).json(ridersInEvents);
   } catch (error) {
@@ -52,7 +52,7 @@ export const getLeadersInIntervals = async (req: Request, res: Response) => {
     const leadersInIntervals = await getLeadersInIntervalsService(isMale);
 
     // кэширование данных
-    setCache(path, JSON.stringify(leadersInIntervals), secondsIn6Hours);
+    setCache(path, JSON.stringify(leadersInIntervals), secondsInHour);
 
     res.status(200).json(leadersInIntervals);
   } catch (error) {
@@ -74,7 +74,7 @@ export const getRidersTotal = async (req: Request, res: Response) => {
     const ridersTotal: TotalRidersFTP[] = await getRidersTotalService();
 
     // кэширование данных
-    setCache(path, JSON.stringify(ridersTotal), secondsIn6Hours);
+    setCache(path, JSON.stringify(ridersTotal), secondsInHour);
 
     res.status(200).json(ridersTotal);
   } catch (error) {
@@ -97,7 +97,7 @@ export const getRidersTotalRacingScore = async (req: Request, res: Response) => 
       await getRidersTotalRacingScoreService();
 
     // кэширование данных
-    setCache(path, JSON.stringify(ridersTotalRacingScore), secondsIn6Hours);
+    setCache(path, JSON.stringify(ridersTotalRacingScore), secondsInHour);
 
     res.status(200).json(ridersTotalRacingScore);
   } catch (error) {
@@ -118,7 +118,7 @@ export const getRidersTotalAge = async (req: Request, res: Response) => {
     const ridersTotalAge: AgeCategories[] = await getRidersTotalAgeService();
 
     // кэширование данных
-    setCache(path, JSON.stringify(ridersTotalAge), secondsIn6Hours);
+    setCache(path, JSON.stringify(ridersTotalAge), secondsInHour);
 
     res.status(200).json(ridersTotalAge);
   } catch (error) {

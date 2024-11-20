@@ -31,7 +31,7 @@ export const getRiderWithMaxPowerInInterval = (
         elm.pointsWatts?.find((power) => power.duration === interval) || pointsWattsEmpty,
     }))
     .filter(
-      (power) => !power.pointsWatts?.isVirtualPower || !power.pointsWatts?.bannedForLeaderboard
+      (power) => !(power.pointsWatts?.isVirtualPower || power.pointsWatts?.bannedForLeaderboard)
     );
 
   // количество мест (лучших результатов) для поиска, первые places будут лидерами мощности
