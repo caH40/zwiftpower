@@ -23,6 +23,9 @@ const UserModerationMain = lazy(() => import('../Pages/UserModerationMain/UserMo
 const RiderModerationMain = lazy(() =>
   import('../Pages/RiderModerationMain/RiderModerationMain')
 );
+const RiderModerationBanList = lazy(() =>
+  import('../Pages/RiderModerationBanList/RiderModerationBanList')
+);
 const RiderModerationLayout = lazy(() =>
   import('../Pages/RiderModerationLayout/RiderModerationLayout')
 );
@@ -53,6 +56,7 @@ export function AdminRoute(isAdmin) {
           <Route path="riders/:zwiftId" element={<RiderModerationLayout />}>
             <Route path="activities" element={<RiderModerationActivities />} />
             <Route path="main" element={<RiderModerationMain />} />
+            <Route path="bans" element={<RiderModerationBanList />} />
           </Route>
 
           <Route path="logs/admin" element={<LogsAdmin />} />

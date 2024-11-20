@@ -40,6 +40,7 @@ export default function RiderModerationLayout() {
   const items = [
     { to: `/admin/riders/${zwiftId}/main`, title: 'Главная', icon: IconRaceType },
     { to: `/admin/riders/${zwiftId}/activities`, title: 'Активности', icon: IconRaceType },
+    { to: `/admin/riders/${zwiftId}/bans`, title: 'Блокировки', icon: IconRaceType },
   ];
 
   return (
