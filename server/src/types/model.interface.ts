@@ -1,6 +1,7 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { PowerFitFiles, ProfileDataInResultWithId } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
+import { bans } from '../assets/ban.js';
 // типизация схемы и модели документов mongodb
 //
 //
@@ -23,6 +24,7 @@ export type FitFileSchema = {
 export type TActivitiesForFitFile = PowerFitFiles & {
   _id: mongoose.Types.ObjectId;
   isVirtualPower: boolean; // Данные используются для расчета кривой мощности, но не учитываются в таблицах лидеров.
+  bannedForLeaderboard?: boolean; // Данные используются для расчета кривой мощности, но не учитываются в таблицах лидеров.
   banned?: boolean; // Данные активности (фитфайла) нигде не учитываются. Данные глючные или читерские.
 };
 
@@ -52,8 +54,8 @@ export interface PasswordResetSchema {
  * Кривая мощности райдера.
  * Несколько точек измерения мощности и удельной мощности за последние 90 дней.
  * Фильтрация забанненных активностей осуществляется до момента создания кривой мощности.
- * isDisqualification мощность участвующая в кривой мощности, но не учитывается в лидерах мощности.
- * isDisqualification случай когда нет возможности определить isVirtualPower, но райдер точно использует isVirtualPower.
+ * bannedForLeaderboard мощность участвующая в кривой мощности, но не учитывается в лидерах мощности.
+ * bannedForLeaderboard случай когда нет возможности определить isVirtualPower, но райдер точно использует isVirtualPower. Или несколько людей на одной учетной записи.
  */
 export interface PowerCurveSchema {
   zwiftId: number;
@@ -71,7 +73,7 @@ export type CriticalPower = {
   value: number;
   date: number;
   name: string;
-  isDisqualification: boolean; // Мощность участвующая в кривой мощности, но не учитывается в
+  bannedForLeaderboard: boolean; // Мощность участвующая в кривой мощности, но не учитывается в
 };
 //
 //
@@ -508,3 +510,23 @@ export type TRiderDailyMetric = {
   date: Date; // Дата записи метрик
   metrics: TMetrics;
 };
+
+/**
+ * Описание типа для документа MongoDB, представляющего метрики на определенную дату.
+ */
+
+export type TRiderBannedSchema = Document & TRiderBanned;
+export type TRiderBanned = {
+  zwiftId: number; // Идентификатор райдера в Zwift.
+  bannedReason: {
+    code: TBanCode;
+    description: string;
+  };
+  adminId: mongoose.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+};
+// Извлечение всех значений `code`:
+const banCodes = bans.map((ban) => ban.code);
+// Создание типа для `code`:
+export type TBanCode = (typeof banCodes)[number];

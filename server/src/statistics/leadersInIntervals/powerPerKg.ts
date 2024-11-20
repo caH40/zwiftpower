@@ -12,7 +12,7 @@ const pointsWattsPerKgEmpty = {
   value: 0,
   date: 0,
   name: '',
-  isDisqualification: false,
+  bannedForLeaderboard: false,
 };
 
 /**
@@ -33,7 +33,7 @@ export const getRiderWithMaxWattsPerKgInInterval = (
     }))
     .filter(
       (power) =>
-        !power.pointsWattsPerKg?.isVirtualPower || !power.pointsWattsPerKg?.isDisqualification
+        !power.pointsWattsPerKg?.isVirtualPower || !power.pointsWattsPerKg?.bannedForLeaderboard
     );
 
   // количество мест (лучших результатов) для поиска, первые places будут лидерами мощности

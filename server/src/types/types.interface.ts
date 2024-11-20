@@ -454,14 +454,7 @@ export interface UsersWithAdditionalProfiles {
  */
 export interface PowerCurvesCurrentInterval {
   zwiftId: number;
-  pointsWatts: {
-    isVirtualPower: boolean;
-    duration: number;
-    value: number;
-    date: number;
-    name: string;
-    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
-  };
+  pointsWatts: CriticalPower;
 }
 
 /**
@@ -469,14 +462,7 @@ export interface PowerCurvesCurrentInterval {
  */
 export interface PowerPerKgCurvesCurrentInterval {
   zwiftId: number;
-  pointsWattsPerKg: {
-    isVirtualPower: boolean;
-    duration: number;
-    value: number;
-    date: number;
-    name: string;
-    isDisqualification: boolean; // при DSQ не учитывается в Лидерах мощности
-  };
+  pointsWattsPerKg: CriticalPower;
 }
 
 /**

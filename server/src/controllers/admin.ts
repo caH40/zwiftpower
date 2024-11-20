@@ -13,7 +13,7 @@ import {
 } from '../service/admin/club.js';
 
 // types
-import { ClubSchema, OrganizerSchema } from '../types/model.interface.js';
+import { ClubSchema, OrganizerSchema, TBanCode } from '../types/model.interface.js';
 import { ClubZwift } from '../types/zwiftAPI/clubFromZwift.interface.js';
 import {
   deleteOrganizersService,
@@ -25,6 +25,7 @@ import {
   putActivityInFitFileService,
 } from '../service/fitfile.js';
 import { updateFitFileAndPowerCurveService } from '../service/power-curve.js';
+import { updateFairRideBanService } from '../service/riders/rider-ban.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -309,6 +310,54 @@ export const updateFitFileAndPowerCurve = async (req: Request, res: Response) =>
     const { zwiftId }: { zwiftId: number } = req.body;
 
     const response = await updateFitFileAndPowerCurveService({ zwiftId });
+
+    res.status(200).json(response);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        const message = JSON.stringify(error.response.data);
+        res.status(400).json({ message });
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+};
+
+/**
+ * Установки/снятия блокировки (банна) с активности в фитфайле FileFile райдера.
+ */
+export const updateFairRideBan = async (req: Request, res: Response) => {
+  try {
+    const { zwiftId, banned, code, description } = req.body as {
+      zwiftId: number;
+      banned: boolean;
+      code: TBanCode;
+      description?: string;
+    };
+
+    const { userId } = req.params;
+
+    const parsedZwiftId = Number(zwiftId);
+
+    if (isNaN(parsedZwiftId) || !Number.isInteger(parsedZwiftId)) {
+      throw new Error(`Не верный формат входного параметра zwiftId: ${zwiftId}`);
+    }
+
+    if (typeof banned !== 'boolean') {
+      throw new Error(
+        `Неверный формат входного параметра banned: ${banned} тип ${typeof banned}, а необходим тип boolean`
+      );
+    }
+
+    const response = await updateFairRideBanService({
+      zwiftId,
+      banned,
+      code,
+      description,
+      adminId: userId,
+    });
 
     res.status(200).json(response);
   } catch (error) {

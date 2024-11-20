@@ -19,6 +19,8 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
       return;
     }
 
+    const bannedForLeaderboard = false;
+
     // инициализация массивов для хранения CP
     const cpWattsUpdated: CriticalPower[] = [];
     const cpWattsPerKgUpdated: CriticalPower[] = [];
@@ -42,7 +44,7 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
             value: cpBestEfforts.watts,
             date: activity.date,
             name: activity.name,
-            isDisqualification: false,
+            bannedForLeaderboard,
           };
 
         if (cpBestEfforts.wattsKg >= cpWattsPerKgCurrent!.value)
@@ -52,7 +54,7 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
             value: cpBestEfforts.wattsKg,
             date: activity.date,
             name: activity.name,
-            isDisqualification: false,
+            bannedForLeaderboard,
           };
       }
       cpWattsUpdated.push(cpWattsCurrent);
