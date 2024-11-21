@@ -3,7 +3,7 @@ import { addPropertyAddition } from '../../utils/property-addition.js';
 import { secondesToTimeThousandths } from '../../utils/thousandths.js';
 import { filterByRankNewbies } from '../protocol/newbies/results-filter.js';
 import { changeProfileData } from '../profile-main.js';
-import { gapValue } from '../../utils/gaps-results.js';
+import { gapValueWithGroups } from '../../utils/gaps-results.js';
 import { filterThousandths } from '../../utils/thousandths-seconds.js';
 import { setValueMax } from '../../utils/value-max.js';
 
@@ -22,14 +22,10 @@ export async function getResultsNewbies(event: EventWithSubgroup) {
   // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
   const results = changeProfileData(resultsDB);
 
-  /**
-   * Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
-   */
+  // Сортировка зачётных категорий (C,D) и далее сортировка категорий вне зачета
   const resultsFiltered = filterByRankNewbies(results);
 
-  /**
-   * Замена некоторых свойств с number на object (string and object)
-   */
+  // Замена некоторых свойств с number на object (string and object)
   const resultsWithAdditions = addPropertyAddition(resultsFiltered);
 
   // добавление строки времени в addition durationInMilliseconds
@@ -38,8 +34,9 @@ export async function getResultsNewbies(event: EventWithSubgroup) {
       result.activityData.durationInMilliseconds.value
     );
   }
+  // Добавление отставаний от лидера и от предыдущего райдера.
+  const resultsWithGap = gapValueWithGroups([...resultsWithAdditions]);
 
-  const resultsWithGap = gapValue([...resultsWithAdditions]);
   const resultsWithThousandths = filterThousandths([...resultsWithGap]);
   const resultsPrepared = setValueMax([...resultsWithThousandths]);
 

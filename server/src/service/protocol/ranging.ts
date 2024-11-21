@@ -21,7 +21,7 @@ export const setRankResultTotal = async (
     E: 1,
   };
 
-  if (typeRaceCustom === 'classicGroup') {
+  if (['classicGroup', 'newbies'].includes(typeRaceCustom)) {
     for (const result of resultsWithRank) {
       const subgroupLabel = result.subgroupLabel as Label;
       const label: Label = subgroupLabel ? subgroupLabel : 'E';
