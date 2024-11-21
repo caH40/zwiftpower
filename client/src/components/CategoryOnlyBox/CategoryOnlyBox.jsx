@@ -6,9 +6,15 @@ import styles from './CategoryOnlyBox.module.css';
 
 const cx = classNames.bind(styles);
 
-function CategoryOnlyBox({ label = '', squareSize = 24, female, hideLabel, tooltip }) {
-  const labelCurrent = label === 'APlus' ? 'A+' : label;
-  const value = hideLabel ? '' : labelCurrent;
+function CategoryOnlyBox({ label = 'hidden', squareSize = 24, female, hideLabel, tooltip }) {
+  let labelCurrent = label;
+  switch (label) {
+    case 'APlus':
+      labelCurrent = 'A+';
+      break;
+  }
+
+  const value = labelCurrent === 'hidden' ? '?' : labelCurrent;
 
   return (
     <MyTooltip tooltip={tooltip}>
@@ -16,7 +22,7 @@ function CategoryOnlyBox({ label = '', squareSize = 24, female, hideLabel, toolt
         className={cx('category', label, { W: female })}
         style={{ width: squareSize, height: squareSize, fontSize: squareSize * 0.6 }}
       >
-        {value}
+        {!hideLabel && value}
       </div>
     </MyTooltip>
   );

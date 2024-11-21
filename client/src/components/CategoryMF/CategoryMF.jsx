@@ -6,9 +6,6 @@ import styles from './CategoryMF.module.css';
  * Блок категории совмещенный для женской и общей категории
  */
 function CategoryMF({ male, category, categoryWomen, squareSize }) {
-  if (!category) {
-    return null;
-  }
   return (
     <div className={styles.block}>
       {!male && (
