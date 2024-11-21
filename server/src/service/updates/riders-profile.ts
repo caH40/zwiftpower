@@ -8,6 +8,7 @@ import { getZwiftRiderService } from '../zwift/rider.js';
 // types
 import { RiderProfileRanks } from '../../types/types.interface.js';
 import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface.js';
+import { User } from '../../Model/User.js';
 
 type RiderIdsWithRank = {
   profileId: number;
@@ -25,12 +26,28 @@ const limit = pLimit(concurrency);
  */
 export const updateAllRidersProfiles = async () => {
   try {
-    const riderIdsWithRank = await ZwiftResult.find(
+    const riderIdsWithRankDB = await ZwiftResult.find(
       {},
       { profileId: true, rank: true, rankEvent: true, _id: false }
     ).lean<RiderIdsWithRank[]>();
 
-    await updateRidersProfilesService(riderIdsWithRank);
+    // Массив zwiftId, которые привязаны к зарегистрированным профилям User.
+    const riderIdsWithoutRankDB = await User.find(
+      { zwiftId: { $exists: true } }, // Ищем документы без поля zwiftId
+      { _id: false, zwiftId: true } // Выбираем только поле zwiftId
+    ).lean<{ zwiftId: number }[]>();
+
+    // Удаление zwiftId райдеров, которые есть в riderIdsWithRankDB,
+    // то есть получаем массив с райдерами которые не участвовали ни в одном заезде.
+    const riderIdsWithoutRankFiltered = riderIdsWithoutRankDB
+      .map((rider) => ({
+        profileId: rider.zwiftId,
+        rank: 0,
+        rankEvent: 0,
+      }))
+      .filter((rider) => !riderIdsWithRankDB.some((elm) => elm.profileId === rider.profileId));
+
+    await updateRidersProfilesService([...riderIdsWithRankDB, ...riderIdsWithoutRankFiltered]);
   } catch (error) {
     errorHandler(error);
   }
