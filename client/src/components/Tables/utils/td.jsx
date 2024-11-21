@@ -2,22 +2,6 @@ import { getHeightStr, getWeightStr } from '../../../utils/event';
 import { roundValue } from '../../../utils/round';
 import styles from '../Table.module.css';
 
-export function tdRider(name, imageSrc) {
-  return (
-    <div className={styles.rider}>
-      <div className={styles.rider__logo}>
-        {imageSrc ? (
-          <img className={styles.rider__img} src={imageSrc} alt="Ph" />
-        ) : (
-          <div className={styles.rider__img__empty}>{name.slice(0, 3)}</div>
-        )}
-      </div>
-
-      <span>{name}</span>
-    </div>
-  );
-}
-
 export function tdLinkZP(zwiftRiderId) {
   return (
     <a

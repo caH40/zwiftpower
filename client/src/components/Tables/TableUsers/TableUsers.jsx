@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 
-import TdLogo from '../Td/TdLogo';
 import TdBoolean from '../Td/TdBoolean';
 import Copy from '../../UI/Copy/Copy';
 import TdZwiftIdAdditional from '../Td/TdZwiftIdAdditional';
 import { getTimerLocal } from '../../../utils/date-local';
+import LogoRider from '../../LogoRider/LogoRider';
 
 import styles from '../Table.module.css';
 
@@ -22,7 +22,15 @@ function TableUsers({ users }) {
         {users.map((user, index) => (
           <tr className={styles.hover} key={user._id}>
             <td>{index + 1}</td>
-            <TdLogo srcPicture={user.imageSrc} />
+            <td>
+              <div className={styles.rider__logo}>
+                <LogoRider
+                  source={user.imageSrc}
+                  firstName={user.firstName}
+                  lastName={user.lastName}
+                />
+              </div>
+            </td>
 
             <td>
               {user.zwiftId ? (
@@ -32,11 +40,9 @@ function TableUsers({ users }) {
               ) : null}
             </td>
 
-            <td>{user.username}</td>
-
             <td>
               <Link to={`/admin/users/${user._id}/main`} className="link">
-                {user._id}
+                {user.username}
               </Link>
             </td>
             <td>{user.role}</td>
