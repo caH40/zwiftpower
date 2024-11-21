@@ -8,7 +8,6 @@ import { saveResults } from './results-save.js';
 import { setUpdatedToEvent } from './event-update.js';
 // фильтры
 import { filterByRankCatchup } from './catchup/results-filter.js';
-import { filterByRankNewbies } from './newbies/results-filter.js';
 import { filterByRankClassicCommon } from './classic_common/results-filter.js';
 
 // types
@@ -57,7 +56,7 @@ export async function handlerProtocol({
       resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
       break;
     case 'newbies':
-      resultsSorted = filterByRankNewbies(resultsWithMainProfiles);
+      resultsSorted = filterByRankClassicGroups(resultsWithMainProfiles);
       break;
     case 'classicGroup':
       resultsSorted = filterByRankClassicGroups(resultsWithMainProfiles);

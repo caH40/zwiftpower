@@ -1,7 +1,6 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsCatchup } from '../preparation/catchup.js';
 import { getResultsClassicCommon } from '../preparation/classic-common.js';
-import { getResultsNewbies } from '../preparation/newbies.js';
 import { getResultsClassicGroups } from '../preparation/classic-groups.js';
 
 // types
@@ -28,7 +27,7 @@ export async function getResultsService(eventId: number) {
       eventPrepared = await getResultsCatchup(eventDB);
       break;
     case 'newbies':
-      eventPrepared = await getResultsNewbies(eventDB);
+      eventPrepared = await getResultsClassicGroups(eventDB);
       break;
     case 'classicGroup':
       eventPrepared = await getResultsClassicGroups(eventDB);

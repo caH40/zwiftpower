@@ -2,7 +2,6 @@ import { Types } from 'mongoose';
 
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
 import { handlerCatchUpModified } from './handlers/catchup.js';
-import { handlerNewbiesModified } from './handlers/newbies.js';
 import { handlerDefaultModified } from './handlers/default.js';
 import { handlerClassicGroups } from './handlers/classic-groups.js';
 
@@ -27,7 +26,7 @@ export const changeRankResults = async (
       await handlerCatchUpModified(resultsDB);
       break;
     case 'newbies':
-      await handlerNewbiesModified(resultsDB);
+      await handlerClassicGroups(resultsDB);
       break;
     case 'classicGroup':
       await handlerClassicGroups(resultsDB);
