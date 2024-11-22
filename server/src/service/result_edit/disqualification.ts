@@ -17,6 +17,18 @@ export const setDisqualification = async ({
   // значение дисквалификации
   const isDisqualification = data.value === 'true' ? true : false;
 
+  // Если райдер не пересек финишную черту или с VP (virtual power), то есть disqualification: 'DNF', disqualification не изменяется.
+  const resultWithDNF = await ZwiftResult.findOne(
+    { _id: id },
+    { _id: false, disqualification: true }
+  ).lean<{ disqualification: null | string }>();
+
+  const disqualification = resultWithDNF?.disqualification;
+
+  if (disqualification && ['DNF', 'VIRTUAL_POWER'].includes(disqualification)) {
+    throw new Error(`Нельзя изменять результат с ${disqualification}!`);
+  }
+
   // внесение данных дисквалификации (или снятия дисквл.) в Результат райдера
   const resultDB = await ZwiftResult.findOneAndUpdate(
     { _id: id },
