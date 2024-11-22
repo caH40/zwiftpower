@@ -2,15 +2,18 @@
 import { ResultEventAdditional } from '../../types/types.interface.js';
 type Label = 'A' | 'B' | 'C' | 'D' | 'E';
 /**
- * Установка ранкинга райдерам
- * Необходимые результаты уже дисквалифицированы, остальные отсортированы по финишному времени
+ * Установка ранкинга в результатах райдеров в Эвенте.
  * Все группы в одном ранкинге!!!
  */
 export const setRankResultTotal = async (
   results: ResultEventAdditional[],
   typeRaceCustom: string
 ) => {
-  const resultsWithRank = [...results];
+  // Сортировка результатов по финишному времени для установки места в протоколе.
+  const resultsWithRank = results.toSorted(
+    (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+  );
+
   let rankEvent = 1;
 
   const rank: Record<Label, number> = {

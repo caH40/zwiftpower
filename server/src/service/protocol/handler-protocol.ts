@@ -6,9 +6,6 @@ import { addMainProfileZwiftToRaw } from '../profile_additional/main-add-row.js'
 import { setRankResultTotal } from './ranging.js';
 import { saveResults } from './results-save.js';
 import { setUpdatedToEvent } from './event-update.js';
-// фильтры
-import { filterByRankCatchup } from './catchup/results-filter.js';
-import { filterByRankClassicCommon } from './classic_common/results-filter.js';
 
 // types
 import {
@@ -16,7 +13,8 @@ import {
   HandlerProtocolArg,
   ResultEventAdditional,
 } from '../../types/types.interface.js';
-import { filterByRankClassicGroups } from './classic_groups/results-filter.js';
+
+import { setDSQWithVirtualPower } from './virtual-power.js';
 
 /**
  * Формирование финишного протокола в зависимости от typeRaceCustom и сохранение в БД
@@ -47,28 +45,11 @@ export async function handlerProtocol({
   // добавление данных основного профиля Zwift райдера в результат Эвента
   const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsWithWPK);
 
-  //=======================================================
-  // Фильтрация категорий, сортировка по финишному времени.
-  // Сортировка необходима для последующего проставления места в протоколе (ранкинг).
-  // Дисквалификация райдеров с "Виртуальной мощностью"
-  let resultsSorted = [] as ResultEventAdditional[];
-  switch (typeRaceCustom) {
-    case 'catchUp':
-      resultsSorted = filterByRankCatchup(resultsWithMainProfiles);
-      break;
-    case 'newbies':
-      resultsSorted = filterByRankClassicGroups(resultsWithMainProfiles);
-      break;
-    case 'classicGroup':
-      resultsSorted = filterByRankClassicGroups(resultsWithMainProfiles);
-      break;
-    default: // для всех остальных обрабатывать как 'classicCommon'
-      resultsSorted = filterByRankClassicCommon(resultsWithMainProfiles);
-  }
-  //=======================================================
+  // установка данных дисквалификации при использовании VirtualPower
+  const resultsWithVP = resultsWithMainProfiles.map((result) => setDSQWithVirtualPower(result));
 
   // установка ранкинга райдерам
-  const resultsWithRank = await setRankResultTotal(resultsSorted, typeRaceCustom);
+  const resultsWithRank = await setRankResultTotal(resultsWithVP, typeRaceCustom);
 
   // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);
