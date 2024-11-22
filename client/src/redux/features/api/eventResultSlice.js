@@ -2,7 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { prepareResults } from '../../../Pages/RaceResults/service';
 import { getAlert } from '../alertMessageSlice';
 import { serverExpress } from '../../../config/environment';
 
@@ -47,9 +46,8 @@ const eventResultSlice = createSlice({
     builder.addCase(fetchResultEvent.fulfilled, (state, action) => {
       state.status = 'resolved';
       const { results, ...eventRow } = action.payload;
-      const resultsPrepared = prepareResults(results);
 
-      state.resultsPrepared = resultsPrepared;
+      state.resultsPrepared = results;
       state.resultsRow = results;
       state.eventData = eventRow;
     });

@@ -17,7 +17,7 @@ export const useShowIndex = (setShowIndex, typeRaceCustom) => {
       setShowIndex(false);
     } else if (
       (activeSorting.columnName === 'Время' && filterCategory.name !== 'All') ||
-      (['classicGroup'].includes(typeRaceCustom) &&
+      (['classicGroup', 'newbies'].includes(typeRaceCustom) &&
         (activeSorting.columnName === 'Время' || activeSorting.columnName === 'Категория'))
     ) {
       setShowIndex(false);

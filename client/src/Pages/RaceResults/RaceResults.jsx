@@ -53,7 +53,7 @@ function RaceResults() {
   }, [eventId, dispatch]);
 
   useEffect(() => {
-    if (eventData.typeRaceCustom === 'classicGroup') {
+    if (['classicGroup', 'newbies'].includes(eventData.typeRaceCustom)) {
       dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
     }
   }, [eventData]);

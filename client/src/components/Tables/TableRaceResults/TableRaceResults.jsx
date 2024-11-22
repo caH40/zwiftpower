@@ -43,6 +43,8 @@ function TableRaceResults({ results, event, forDNF }) {
   const [getLeaders, getSweepers] = useLeader(event);
 
   useShowIndex(setShowIndex, event.typeRaceCustom);
+
+  // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
   const resultSortedAndFiltered = useSortResults(results, event.typeRaceCustom);
 
   return (

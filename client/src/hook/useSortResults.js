@@ -27,12 +27,15 @@ export const useSortResults = (results, typeRaceCustom) => {
     const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
 
     // условия для показа отставаний по общему времени
-    if (typeRaceCustom === 'classicGroup' && activeSorting.columnName === 'Категория') {
+    if (
+      ['classicGroup', 'newbies'].includes(typeRaceCustom) &&
+      activeSorting.columnName === 'Категория'
+    ) {
       return sortedAndFilteredResults;
     } else if (
       activeSorting.columnName !== 'Время' ||
       (activeSorting.columnName === 'Время' && activeSorting.isRasing === false) ||
-      typeRaceCustom === 'classicGroup'
+      ['classicGroup', 'newbies'].includes(typeRaceCustom)
     ) {
       return sortedAndFilteredResults.map((result) => {
         const newResult = { ...result };

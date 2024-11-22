@@ -15,7 +15,7 @@ import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.i
 import { updateRidersProfiles } from '../riders-profile.js';
 
 /**
- * Обновление результатов Эвента (event)
+ * Обновление результатов Эвента (event) по запросу или по автоматически после старта Эвента.
  */
 export async function updateResultsEvent(event: EventWithSubgroup, isFast?: boolean) {
   if (!event._id) {
