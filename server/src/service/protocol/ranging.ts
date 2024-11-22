@@ -13,7 +13,7 @@ export const setRankResultTotal = async (
   const resultsWithRank = [...results];
   let rankEvent = 1;
 
-  const rank = {
+  const rank: Record<Label, number> = {
     A: 1,
     B: 1,
     C: 1,
@@ -21,9 +21,12 @@ export const setRankResultTotal = async (
     E: 1,
   };
 
+  // Для заездов типа 'classicGroup', 'newbies'. Для каждой группы своя нумерация.
   if (['classicGroup', 'newbies'].includes(typeRaceCustom)) {
     for (const result of resultsWithRank) {
       const subgroupLabel = result.subgroupLabel as Label;
+
+      // Если subgroupLabel не задан, то присваивается 'E'.
       const label: Label = subgroupLabel ? subgroupLabel : 'E';
       result.rankEvent = result.isDisqualification ? 0 : rank[label]++;
     }
@@ -31,6 +34,7 @@ export const setRankResultTotal = async (
     return resultsWithRank;
   }
 
+  // Для для остальных типов заездов. Общая нумерация для всех результатов.
   for (const result of resultsWithRank) {
     result.rankEvent = result.isDisqualification ? 0 : rankEvent++;
   }

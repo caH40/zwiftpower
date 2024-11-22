@@ -48,8 +48,9 @@ export async function handlerProtocol({
   const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsWithWPK);
 
   //=======================================================
-  // фильтрация категорий, сортировка по финишному времени
-  // дисквалификация райдеров с "Виртуальной мощностью"
+  // Фильтрация категорий, сортировка по финишному времени.
+  // Сортировка необходима для последующего проставления места в протоколе (ранкинг).
+  // Дисквалификация райдеров с "Виртуальной мощностью"
   let resultsSorted = [] as ResultEventAdditional[];
   switch (typeRaceCustom) {
     case 'catchUp':

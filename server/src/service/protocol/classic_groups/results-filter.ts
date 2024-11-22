@@ -19,22 +19,21 @@ export const filterByRankClassicGroups = <T extends ResultEventAdditional | Zwif
     // установка данных дисквалификации при использовании VirtualPower
     const resultsWithVP = results.map((result) => setDSQWithVirtualPower(result));
 
-    // // фильтрация и сортировка валидных результатов
-    // const resultsABCDE = resultsWithVP
-    //   .filter((result) => result.isDisqualification !== true)
-    //   .sort(
-    //     (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    //   );
+    // фильтрация и сортировка валидных результатов
+    const resultsABCDE = resultsWithVP
+      .filter((result) => result.isDisqualification !== true)
+      .sort(
+        (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+      );
 
-    // // фильтрация и сортировка дисквалифицированных результатов
-    // const resultsOthers = resultsWithVP
-    //   .filter((result) => result.isDisqualification)
-    //   .sort(
-    //     (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    //   );
+    // фильтрация и сортировка дисквалифицированных результатов
+    const resultsOthers = resultsWithVP
+      .filter((result) => result.isDisqualification)
+      .sort(
+        (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+      );
 
-    // return [...resultsABCDE, ...resultsOthers];
-    return resultsWithVP;
+    return [...resultsABCDE, ...resultsOthers];
   } catch (error) {
     errorHandler(error);
     return results;
