@@ -5,7 +5,7 @@ import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './Checkbox.module.css';
 
-function Checkbox({ state, apiRequest, property, message, setUpdate, resultId, tooltip }) {
+function Checkbox({ state, apiRequest, property, message, resultId, tooltip }) {
   const [check, setCheck] = useState(() => state);
 
   const dispatch = useDispatch();

@@ -13,7 +13,7 @@ import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
 import TdWeight from '../Td/TdWeight';
-import Checkbox from '../../UI/Checkbox/Checkbox';
+import CheckboxU from '../../UI/Checkbox/CheckboxU';
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
@@ -21,12 +21,11 @@ import { getCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
-function TableRaceResultsEdit({ results, event, setUpdate }) {
+function TableRaceResultsEdit({ results, event, handlerCheckboxDSQ }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
 
   const [getLeaders, getSweepers] = useLeader(event);
-
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
@@ -53,13 +52,12 @@ function TableRaceResultsEdit({ results, event, setUpdate }) {
                 />
               </td>
               <td>
-                <Checkbox
-                  state={result.isDisqualification}
+                <CheckboxU
+                  checked={result.isDisqualification ? true : false}
                   property={'isDisqualification'}
-                  resultId={result._id}
                   tooltip={'Дисквалификация райдера'}
-                  apiRequest={fetchResultEdit}
-                  setUpdate={setUpdate}
+                  handlerCheckbox={handlerCheckboxDSQ}
+                  name={result._id}
                 />
               </td>
 

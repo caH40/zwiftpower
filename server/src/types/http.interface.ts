@@ -54,9 +54,10 @@ export interface PostZwiftEvent {
  * данные получаемые с фронтэнда для изменения результата Райдера в Эвенте
  */
 export interface PutResult {
-  property: string;
-  data: { value: string; message: string };
-  id: string;
+  id: string; // ObjectId документа результата.
+  property: 'disqualification'; // Какое свойство изменяется.
+  value: string; // Значение property.
+  message: string; // Описание устанавливаемого значения.
 }
 
 /**

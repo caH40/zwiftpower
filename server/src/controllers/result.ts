@@ -12,8 +12,9 @@ import { PutResult } from '../types/http.interface.js';
 export const putResult = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    const body: PutResult = req.body;
-    const response = await putResultService({ userId, ...body });
+    const data: PutResult = req.body;
+
+    const response = await putResultService({ moderatorId: userId, ...data });
     res.status(200).json(response);
   } catch (error) {
     errorHandler(error);

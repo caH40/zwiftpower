@@ -478,7 +478,7 @@ export interface TotalRidersFTP {
  * Параметры сервиса для изменения результата Райдера в Эвенте
  */
 export interface PutResultParams extends PutResult {
-  userId: string;
+  moderatorId: string;
 }
 
 /**
