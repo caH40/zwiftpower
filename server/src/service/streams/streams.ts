@@ -8,6 +8,7 @@ import { TUserStreams } from '../../types/model.interface.js';
 import { TResponseEnabledUserStream } from '../../types/types.interface.js';
 import { getTwitchChannelsService } from '../twitch/twitch.js';
 import { Rider } from '../../Model/Rider.js';
+import { getYoutubeChannelsService } from '../youtube/youtube.js';
 // import { getYoutubeChannelsService } from '../youtube/youtube.js';
 
 const zwiftDataSliced = {
@@ -54,13 +55,29 @@ export async function getEnabledUserStreamsService(): Promise<
     { _id: false, ...zwiftDataSliced }
   ).lean<TRidersFromDB[]>();
 
-  const channelsNames = streamsDB.map((stream) => stream.streams.twitch.channelName);
+  const { channelNamesTwitch, channelHandlesYoutube } = streamsDB.reduce(
+    (acc, cur) => {
+      if (cur.streams.twitch) {
+        acc.channelNamesTwitch.push(cur.streams.twitch.channelName);
+      }
+      if (cur.streams.youtube) {
+        acc.channelNamesTwitch.push(cur.streams.youtube.channelHandle);
+      }
+
+      return acc;
+    },
+    {
+      channelNamesTwitch: [] as string[],
+      channelHandlesYoutube: [] as string[],
+    }
+  );
 
   // Получение информации о каналах их трансляциях с twitch
-  const channelsTwitchData = await getTwitchChannelsService(channelsNames);
+  const channelsTwitchData = await getTwitchChannelsService(channelNamesTwitch);
 
   // Получение информации о каналах их трансляциях с youtube
-  // const channelsYoutubeData = await getYoutubeChannelsService(['caH40yc']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const channelsYoutubeData = await getYoutubeChannelsService(channelHandlesYoutube);
 
   // Формирование массива трансляций пользователей с данными zwiftData этих пользователей.
   const streams = streamsDB
@@ -81,7 +98,7 @@ export async function getEnabledUserStreamsService(): Promise<
         male: riderCurrent.male,
       };
 
-      const channelName = stream.streams.twitch.channelName?.toLocaleLowerCase();
+      const channelName = stream.streams.twitch?.channelName?.toLocaleLowerCase();
 
       const twitch =
         channelsTwitchData.find((channelData) => {

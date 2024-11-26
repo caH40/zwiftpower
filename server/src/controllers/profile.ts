@@ -263,12 +263,7 @@ export async function putNotifications(req: Request, res: Response) {
  * @returns {boolean} - Возвращает true, если объект соответствует типу TUserStreams.
  */
 function isValidUserStreams(streamsParams: unknown): streamsParams is TUserStreams {
-  return (
-    typeof streamsParams === 'object' &&
-    streamsParams !== null &&
-    typeof (streamsParams as TUserStreams).twitch.channelName === 'string' &&
-    typeof (streamsParams as TUserStreams).twitch.isEnabled === 'boolean'
-  );
+  return typeof streamsParams === 'object' && streamsParams !== null;
 }
 
 /**

@@ -53,6 +53,7 @@ const userSchema = new Schema<UserSchema>({
     type: streamsSchema,
     default: () => ({
       twitch: { channelName: '', isEnabled: false },
+      youtube: { channelHandle: '', isEnabled: false },
       streamingRestricted: false,
     }),
   },

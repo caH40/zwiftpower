@@ -268,9 +268,13 @@ export type TNotifications = {
   news: boolean; // Оповещение на email о новостях.
 };
 export type TUserStreams = {
-  twitch: {
+  twitch?: {
     channelName: string; // Название канала на Твиче.
-    isEnabled: boolean; // Включение/отключение пользователем отображения стрима на сайте.
+    isEnabled: boolean; // Включение/отключение пользователем отображения стрима twitch на сайте.
+  };
+  youtube?: {
+    channelHandle: string; // Ручка канала youtube, это название в url после знака @.
+    isEnabled: boolean; // Включение/отключение пользователем отображения стрима youtube на сайте.
   };
   streamingRestricted: boolean; // Флаг, ограничивающий добавление стримов пользователем. (устанавливается админом)
 };
