@@ -8,6 +8,7 @@ import { TUserStreams } from '../../types/model.interface.js';
 import { TResponseEnabledUserStream } from '../../types/types.interface.js';
 import { getTwitchChannelsService } from '../twitch/twitch.js';
 import { Rider } from '../../Model/Rider.js';
+import { getYoutubeChannelsService } from '../youtube/youtube.js';
 
 const zwiftDataSliced = {
   zwiftId: true,
@@ -56,7 +57,9 @@ export async function getEnabledUserStreamsService(): Promise<
   const channelsNames = streamsDB.map((stream) => stream.streams.twitch.channelName);
 
   const channelsData = await getTwitchChannelsService(channelsNames);
+  const channelsYoutubeData = await getYoutubeChannelsService(['msbud2']);
 
+  // Формирование массива трансляций пользователей с данными zwiftData этих пользователей.
   const streams = streamsDB.map((stream) => {
     const _id = String(stream._id);
 

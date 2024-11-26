@@ -668,3 +668,19 @@ export type TTwitchUserDto = {
   viewCount: number;
   createdAt: Date;
 };
+
+/**
+ * Ответ с Youtube с данными о трансляции и канале после Dto.
+ */
+export type TResponseStreamDto = {
+  online: boolean;
+  title: string | null; // Название трансляции.
+  thumbnailUrl: string | null; // Эскиз трансляции (стоп кадр).
+  viewerCount: number | null; // Количество зрителей.
+  startedAt: string | null; // Дата старта трансляции.
+  channel: {
+    title: string; // Имя канала (Ручка).
+    bannerUrl?: string; // Баннер канала.
+    description: string; // Описание канала.
+  };
+};

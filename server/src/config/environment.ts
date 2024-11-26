@@ -27,6 +27,8 @@ export const mailPassNotification: string = parsed.MAIL_PASS_NOTIFICATION;
 export const twitchClientId: string = parsed.TWITCH_CLIENT_ID;
 export const twitchClientSecret: string = parsed.TWITCH_CLIENT_SECRET;
 
+export const youtubeAPIKey: string = parsed.YOUTUBE_API_KEY;
+
 export const mailHost: string = parsed.MAIL_HOST;
 export const mailPort: number = +parsed.MAIL_PORT;
 export const mailSecure: boolean = parsed.MAIL_SECURE === 'true';
