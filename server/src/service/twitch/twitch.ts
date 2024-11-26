@@ -1,5 +1,6 @@
-import { dtoTwitchChannel, ResponseChannelDto } from '../../dto/twitch.js';
+import { dtoTwitchChannel } from '../../dto/twitch.js';
 import { TTwitchStreamsFromAPI, TTwitchUserFromAPI } from '../../types/http.interface.js';
+import { TResponseStreamDto } from '../../types/types.interface.js';
 
 import { fetchTwitchData } from './fetchTwitch.js';
 
@@ -18,7 +19,7 @@ export async function getTwitchChannel(channelName: string) {
     fetchTwitchData({ url: urlUser, params: paramsUser }),
   ]);
 
-  const channelAfterDto = dtoTwitchChannel(channel);
+  const channelAfterDto = dtoTwitchChannel({ streams: channel[0], users: channel[1] });
 
   return channelAfterDto;
 }
@@ -31,7 +32,7 @@ export async function getTwitchChannelsService(channelsNames: string[]) {
     channelsNames.map((channelName) => getTwitchChannel(channelName))
   );
 
-  const channelsForResponse: ResponseChannelDto[] = [];
+  const channelsForResponse: TResponseStreamDto[] = [];
 
   for (const channel of channels) {
     if (channel.status === 'fulfilled') {

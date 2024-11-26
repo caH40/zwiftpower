@@ -616,7 +616,7 @@ export type TResponseEnabledUserStream = {
         male: boolean;
       }
     | undefined;
-  twitch: { stream: TTwitchStreamDto; user: TTwitchUserDto } | null;
+  twitch: TResponseStreamDto | null;
 };
 
 /**

@@ -15,8 +15,7 @@ const cx = cn.bind(styles);
  * @param {string} props.title - Трансляция онлайн или нет.
  * @param {string} props.thumbnailUrl - Скриншот с трансляции.
  * @param {number} props.viewerCount - Количество зрителей.
- * @param {number} props.offlineImageUrl - Заставки профиля.
- * @param {number} props.profileImageUrl - Заставки профиля.
+ * @param {number} props.bannerUrl - Заставки профиля.
  * @param {number} props.description - Описание канала.
  * @param {Date} props.startedAt - Начало трансляции.
  * @returns {JSX.Element} Элемент, содержащий плеер Twitch или индикатор загрузки.
@@ -25,27 +24,18 @@ function TwitchStream({
   isLive,
   title,
   thumbnailUrl,
+  bannerUrl,
   viewerCount,
-  offlineImageUrl,
-  profileImageUrl,
   description,
   startedAt,
-  size = { width: 400, height: 225 },
 }) {
-  const { width, height } = size;
-  const thumbnailUrlCurrent =
-    thumbnailUrl &&
-    thumbnailUrl.replace('{width}x{height}', `${width}x${height}`).replace('{height}', 225);
-
-  const profileImage = offlineImageUrl ? offlineImageUrl : profileImageUrl;
-
   return (
     <div className={styles.wrapper}>
       {isLive ? (
         <>
-          <img src={thumbnailUrlCurrent} className={styles.thumbnail} />
+          <img src={thumbnailUrl} className={styles.thumbnail} />
           <div className={cx('boxes', 'live')}>live</div>
-          <div className={cx('boxes', 'viewers')}>{`${viewerCount} viewers`}</div>
+          <div className={cx('boxes', 'viewers')}>{`${viewerCount || 0} viewers`}</div>
           <h3 className={cx('boxes', 'title__stream')}>{title}</h3>
           <div className={cx('boxes', 'start')}>
             <TimeCounter startDate={startedAt} />
@@ -53,7 +43,7 @@ function TwitchStream({
         </>
       ) : (
         <>
-          <img src={profileImage} className={styles.profileImage} />
+          <img src={bannerUrl} className={styles.profileImage} />
           {description && <div className={cx('live', 'viewers')}>{description}</div>}
           <div className={cx('boxes', 'offline')}>Stream Ended</div>
         </>

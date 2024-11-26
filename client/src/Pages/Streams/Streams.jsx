@@ -30,6 +30,7 @@ export default function Streams() {
   const { streams, status: statusUsersEnabledStreams } = useSelector(
     (state) => state.usersEnabledStreams
   );
+
   const isVisibleBanner = useBannerVisibility({
     storageKey: storageKeyBanner,
     intervalMs: millisecondsInDay,
@@ -46,7 +47,7 @@ export default function Streams() {
   // Разделение каналов на которых идет трансляция и которые находятся в офлайне.
   const { streamsOnline, streamsOffline } = streams.reduce(
     (acc, stream) => {
-      if (stream.twitch.stream) {
+      if (stream.twitch.online) {
         acc.streamsOnline.push(stream);
       } else {
         acc.streamsOffline.push(stream);

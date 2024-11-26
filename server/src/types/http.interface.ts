@@ -100,7 +100,7 @@ export type TTwitchStreamsFromAPIData = {
   title: string;
   tags: string[];
   viewer_count: number;
-  started_at: Date;
+  started_at: string;
   language: string;
   thumbnail_url: string;
   tag_ids: unknown[];

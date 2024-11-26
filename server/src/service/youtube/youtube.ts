@@ -9,14 +9,31 @@ import {
   TYoutubeVideoListResponse,
 } from '../../types/youtubeAPI.types.js';
 import { dtoYoutubeStream } from '../../dto/youtube.js';
+import { TResponseStreamDto } from '../../types/types.interface.js';
 
 /**
- *
+ * Получение массива каналов с информацией о канале и запущенной трансляции всех участников channelHandles
+ * channelHandles - ручка в url канала youtube после символа @
  */
-export async function getYoutubeChannelsService(channelHandles: string[]) {
-  for (const channelHandle of channelHandles) {
-    await getYoutubeChannel(channelHandle);
+export async function getYoutubeChannelsService(
+  channelHandles: string[]
+): Promise<TResponseStreamDto[]> {
+  const channels = await Promise.allSettled(
+    channelHandles.map((channelHandle) => getYoutubeChannel(channelHandle))
+  );
+
+  // const channelsFiltered = channels
+  //   .filter((res) => res.status === 'fulfilled')
+  //   .map(({ value }) => value);
+  const channelsForResponse = [] as TResponseStreamDto[];
+
+  for (const channel of channels) {
+    if (channel.status === 'fulfilled') {
+      channelsForResponse.push(channel.value);
+    }
   }
+
+  return channelsForResponse;
 }
 
 /**
@@ -24,11 +41,10 @@ export async function getYoutubeChannelsService(channelHandles: string[]) {
  */
 export async function getYoutubeChannel(channelHandle: string) {
   const channelInfo = await getYoutubeChannelInfo(channelHandle);
+
   const liveBroadcastsInfo = await getLiveBroadcastsInfo(channelInfo.id);
 
   const streamAfterDto = dtoYoutubeStream(channelInfo, liveBroadcastsInfo);
-
-  console.log(streamAfterDto);
 
   return streamAfterDto;
 }
@@ -44,7 +60,7 @@ export async function getYoutubeChannelInfo(channelHandle: string): Promise<TCha
     url: urlChanelInfo,
     params: {
       forHandle: channelHandle,
-      part: 'id,snippet,statistics,brandingSettings',
+      part: 'id,snippet,brandingSettings',
     },
   });
 
