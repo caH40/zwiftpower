@@ -21,6 +21,7 @@ export function dtoYoutubeStream(
       title: channel.snippet.title,
       bannerUrl: channel.brandingSettings.image?.bannerExternalUrl,
       description: channel.brandingSettings.channel.description,
+      handleYoutube: channel.snippet.customUrl.replace('@', ''),
     },
   };
 

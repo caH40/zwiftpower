@@ -11,14 +11,15 @@ import styles from './CardTwitchStream.module.css';
  * Компонент для отображения блока Twitch-трансляции.
  */
 
-export default function CardTwitchStream({ stream: { twitch, zwiftData } }) {
+export default function CardTwitchStream({ stream: { data, zwiftData, platform } }) {
   const dispatch = useDispatch();
+
   // Проверка, что найден канал твича.
-  if (!twitch) {
+  if (!data) {
     return <></>;
   }
 
-  const urlChannel = `https://player.twitch.tv/?channel=${twitch.channel.title}&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=0.5`;
+  const urlChannel = `https://player.twitch.tv/?channel=${data.channel.title}&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=0.5`;
 
   const copyText = () => {
     navigator.clipboard
@@ -45,26 +46,30 @@ export default function CardTwitchStream({ stream: { twitch, zwiftData } }) {
 
   return (
     <div className={styles.wrapper}>
-      <a href={`https://twitch.tv/${twitch.channel.title}`} target="_blank" rel="noreferrer">
+      <a href={`https://twitch.tv/${data.channel.title}`} target="_blank" rel="noreferrer">
         <TwitchStream
-          isLive={twitch.online}
-          title={twitch.title}
-          thumbnailUrl={twitch.thumbnailUrl}
-          viewerCount={twitch.viewerCount}
-          bannerUrl={twitch.channel.bannerUrl}
-          description={twitch.channel.description}
-          startedAt={twitch.startedAt}
+          isLive={data.online}
+          title={data.title}
+          thumbnailUrl={data.thumbnailUrl}
+          viewerCount={data.viewerCount}
+          bannerUrl={data.channel.bannerUrl}
+          description={data.channel.description}
+          startedAt={data.startedAt}
         />
       </a>
 
       <div className={styles.description}>
         <h2 className={styles.title}>
-          {twitch.channel.title}
+          {data.channel.title}
 
           <MyTooltip tooltip="Ссылка на плеер twitch">
             <img
               className={styles.icon__twitch}
-              src={'/images/twitch_wordmark_extruded_purple.svg'}
+              src={
+                platform === 'twitch'
+                  ? '/images/twitch_wordmark_extruded_purple.svg'
+                  : '/images/youtube_wordmark_extruded.svg'
+              }
               onClick={copyText}
             />
           </MyTooltip>

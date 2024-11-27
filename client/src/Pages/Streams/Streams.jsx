@@ -13,6 +13,7 @@ import BannerInformation from '../../components/BannerInformation/BannerInformat
 import useBannerVisibility from '../../hook/useBannerVisibility';
 import { lsPrefixStreams } from '../../constants/localstorage';
 import { millisecondsInDay } from '../../assets/dates';
+import { useSeparateStreams } from '../../hook/useSeparateStreams';
 
 import styles from './Streams.module.css';
 
@@ -45,17 +46,8 @@ export default function Streams() {
   }, []);
 
   // Разделение каналов на которых идет трансляция и которые находятся в офлайне.
-  const { streamsOnline, streamsOffline } = streams.reduce(
-    (acc, stream) => {
-      if (stream.twitch.online) {
-        acc.streamsOnline.push(stream);
-      } else {
-        acc.streamsOffline.push(stream);
-      }
-      return acc;
-    },
-    { streamsOnline: [], streamsOffline: [] }
-  );
+  // Случайное перемешивание трансляций в массивах.
+  const { streamsOnline, streamsOffline } = useSeparateStreams(streams);
 
   useAd(adNumbers);
 
@@ -80,6 +72,7 @@ export default function Streams() {
           ))}
         </div>
 
+        {/* Блок с карточками каналов на которых запущена трансляция (LIVE) */}
         {!!streamsOnline.length && (
           <div className={styles.wrapper__streams}>
             {streamsOnline.map((stream) => (
@@ -88,6 +81,7 @@ export default function Streams() {
           </div>
         )}
 
+        {/* Блок с карточками каналов на которых трансляция не включена */}
         {!!streamsOffline.length && (
           <div className={styles.wrapper__streams}>
             {streamsOffline.map((stream) => (

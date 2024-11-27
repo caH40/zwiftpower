@@ -617,6 +617,7 @@ export type TResponseEnabledUserStream = {
       }
     | undefined;
   twitch: TResponseStreamDto | null;
+  youtube: TResponseStreamDto | null;
 };
 
 /**
@@ -681,6 +682,8 @@ export type TResponseStreamDto = {
   channel: {
     title: string; // Имя канала (Ручка).
     bannerUrl?: string; // Баннер канала.
-    description: string; // Описание канала.
+    description?: string; // Описание канала.
+    handleYoutube?: string; // Название ручки в youtube.
+    nameTwitch?: string; // Название канала в twitch.
   };
 };

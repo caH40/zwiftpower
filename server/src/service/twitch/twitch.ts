@@ -1,4 +1,5 @@
 import { dtoTwitchChannel } from '../../dto/twitch.js';
+import { errorHandler } from '../../errors/error.js';
 import { TTwitchStreamsFromAPI, TTwitchUserFromAPI } from '../../types/http.interface.js';
 import { TResponseStreamDto } from '../../types/types.interface.js';
 
@@ -28,17 +29,22 @@ export async function getTwitchChannel(channelName: string) {
  * Данные о канале с Твича:
  */
 export async function getTwitchChannelsService(channelsNames: string[]) {
-  const channels = await Promise.allSettled(
-    channelsNames.map((channelName) => getTwitchChannel(channelName))
-  );
+  try {
+    const channels = await Promise.allSettled(
+      channelsNames.map((channelName) => getTwitchChannel(channelName))
+    );
 
-  const channelsForResponse: TResponseStreamDto[] = [];
+    const channelsForResponse: TResponseStreamDto[] = [];
 
-  for (const channel of channels) {
-    if (channel.status === 'fulfilled') {
-      channelsForResponse.push(channel.value);
+    for (const channel of channels) {
+      if (channel.status === 'fulfilled') {
+        channelsForResponse.push(channel.value);
+      }
     }
-  }
 
-  return channelsForResponse;
+    return channelsForResponse;
+  } catch (error) {
+    errorHandler(error);
+    return [];
+  }
 }
