@@ -2,7 +2,6 @@
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  margin-bottom: 0.75rem;
   font-size: 14px;
   font-weight: 700;
   color: var(--color-text-dark);
@@ -21,6 +20,9 @@
   justify-content: space-between;
   gap: 5px;
   color: var(--color-text-minor);
+}
+.label__text::after {
+  content: ':';
 }
 .input:disabled {
   background-color: var(--color-bg-minor);

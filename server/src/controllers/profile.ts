@@ -258,15 +258,6 @@ export async function putNotifications(req: Request, res: Response) {
 }
 
 /**
- * Проверяет, что объект соответствует типу TUserStreams.
- * @param streamsParams - Объект для проверки.
- * @returns {boolean} - Возвращает true, если объект соответствует типу TUserStreams.
- */
-function isValidUserStreams(streamsParams: unknown): streamsParams is TUserStreams {
-  return typeof streamsParams === 'object' && streamsParams !== null;
-}
-
-/**
  * Контроллер обновления настроек для отображения трансляций с разных ресурсов.
  */
 export async function putUserStreams(req: Request, res: Response) {
@@ -282,11 +273,21 @@ export async function putUserStreams(req: Request, res: Response) {
       throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
     }
 
-    if (!isValidUserStreams(streams)) {
-      throw new Error(`Некорректные данные streams`);
-    }
+    // Изменение название свойств объекта с общих на корректные.
+    const streamsCorrectProperties: TUserStreams = {
+      ...(streams?.twitch && { twitch: streams.twitch }),
+      ...(streams?.youtube && {
+        youtube: {
+          channelHandle: streams.youtube.channelName,
+          isEnabled: streams.youtube.isEnabled,
+        },
+      }),
+    };
 
-    const response = await putUserStreamsService({ zwiftId: +zwiftId, streamsParams: streams });
+    const response = await putUserStreamsService({
+      zwiftId: +zwiftId,
+      streamsParams: streamsCorrectProperties,
+    });
 
     return res.status(200).json(response);
   } catch (error) {

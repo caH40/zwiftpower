@@ -19,9 +19,18 @@ export async function putUserStreamsService({
   zwiftId,
 }: TPutUserStreamsParams): Promise<TResponseService<{ streams: TUserStreams }>> {
   // Проверка обновляются/добавляются данные для youtube.
-  const youtubeChannel = youtube?.channelHandle
-    ? await getYoutubeChannel(youtube.channelHandle)
-    : null;
+  let youtubeChannel = null;
+
+  // Если происходит включение трансляции на zp.ru isEnabled:true и channelHandle заданно,
+  // то проверяется существование канала youtube c ручкой channelHandle.
+  if (youtube?.channelHandle && youtube?.isEnabled) {
+    youtubeChannel = !!(await getYoutubeChannel(youtube.channelHandle));
+    // Если происходит отключение трансляции на zp.ru isEnabled:false и channelHandle заданно,
+    // то не проверяется существование канала youtube c ручкой channelHandle, а обновляются данные в БД.
+    // Если channelHandle:undefined значит в запросе youtube данные не изменяются.
+  } else if (youtube?.channelHandle && !youtube?.isEnabled) {
+    youtubeChannel = true;
+  }
 
   const dataSet = {
     ...(twitch && { 'streams.twitch': twitch }),

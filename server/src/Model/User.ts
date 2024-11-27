@@ -18,6 +18,10 @@ const streamsSchema = new Schema<TUserStreams>(
       channelName: { type: String },
       isEnabled: { type: Boolean },
     },
+    youtube: {
+      channelHandle: { type: String },
+      isEnabled: { type: Boolean },
+    },
     streamingRestricted: { type: Boolean, default: false },
   },
   { _id: false }

@@ -12,7 +12,7 @@ export default function InputSimple({
   return (
     <>
       <label className={styles.label} htmlFor={id}>
-        <span>{label}</span>
+        <span className={styles.label__text}>{label}</span>
         <span className={styles.error}>{validationText}</span>
       </label>
 

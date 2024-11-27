@@ -1,0 +1,27 @@
+.wrapper {
+  width: 100%;
+}
+.subtitle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.1em;
+  margin-bottom: 0.5rem;
+}
+.subtitle__text::first-letter {
+  text-transform: uppercase;
+}
+.box__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 1.1em;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+.box__input {
+  margin-bottom: 5px;
+}

@@ -13,6 +13,10 @@ const initialState = {
       channelName: '',
       isEnabled: false,
     },
+    youtube: {
+      channelHandle: '',
+      isEnabled: false,
+    },
     streamingRestricted: false,
   },
   status: null,

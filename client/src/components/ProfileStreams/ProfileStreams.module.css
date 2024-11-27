@@ -1,25 +1,12 @@
 .wrapper {
   max-width: 400px;
 }
+.wrapper__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .title {
   margin-bottom: 0.8rem;
   text-decoration: underline;
-}
-.subtitle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 1.1em;
-  margin-bottom: 0.5rem;
-}
-.box__checkbox {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: space-between;
-  font-size: 1.1em;
-}
-.icon {
-  width: 20px;
-  height: 20px;
 }
