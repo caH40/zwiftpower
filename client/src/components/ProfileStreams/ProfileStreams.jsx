@@ -35,7 +35,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           channelName={channelNameTwitch}
           setChannelName={setChannelNameTwitch}
           zwiftIdAuth={zwiftIdAuth}
-          isEnabled={streams.twitch?.isEnabled}
+          isEnabled={streams.twitch?.isEnabled || false}
           iconSrc={'/images/glitch_flat_purple.svg'}
         />
 
@@ -45,7 +45,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           channelName={channelHandleYoutube}
           setChannelName={setChannelHandleYoutube}
           zwiftIdAuth={zwiftIdAuth}
-          isEnabled={streams.youtube?.isEnabled}
+          isEnabled={streams.youtube?.isEnabled || false}
           iconSrc={'/images/youtube_icon.svg'}
         />
       </div>
