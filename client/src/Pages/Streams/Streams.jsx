@@ -7,7 +7,7 @@ import { fetchUsersEnabledStreams } from '../../redux/features/api/streams/fetch
 import { resetStreams } from '../../redux/features/api/streams/usersEnabledStreamsSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
-import CardTwitchStream from '../../components/Streams/CardTwitchStream/CardTwitchStream';
+import CardStream from '../../components/Streams/CardStream/CardStream';
 import SkeletonCardTwitchStream from '../../components/SkeletonLoading/SkeletonCardTwitchStream/SkeletonCardTwitchStream';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
 import useBannerVisibility from '../../hook/useBannerVisibility';
@@ -76,7 +76,7 @@ export default function Streams() {
         {!!streamsOnline.length && (
           <div className={styles.wrapper__streams}>
             {streamsOnline.map((stream) => (
-              <CardTwitchStream stream={stream} key={stream._id} />
+              <CardStream stream={stream} key={stream._id} />
             ))}
           </div>
         )}
@@ -85,7 +85,7 @@ export default function Streams() {
         {!!streamsOffline.length && (
           <div className={styles.wrapper__streams}>
             {streamsOffline.map((stream) => (
-              <CardTwitchStream stream={stream} key={stream._id} />
+              <CardStream stream={stream} key={stream._id} />
             ))}
           </div>
         )}

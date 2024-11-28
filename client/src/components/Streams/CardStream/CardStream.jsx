@@ -1,29 +1,33 @@
 import { useDispatch } from 'react-redux';
+import cn from 'classnames/bind';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { useCardStream } from '../../../hook/useCardStream';
 import RiderStreamBlock from '../../RiderStreamBlock/RiderStreamBlock';
 import TwitchStream from '../TwitchStream/TwitchStream';
 import MyTooltip from '../../../HOC/MyTooltip';
 
-import styles from './CardTwitchStream.module.css';
+import styles from './CardStream.module.css';
+
+const cx = cn.bind(styles);
 
 /**
  * Компонент для отображения блока Twitch-трансляции.
  */
-
-export default function CardTwitchStream({ stream: { data, zwiftData, platform } }) {
+export default function CardStream({ stream: { data, zwiftData, platform } }) {
   const dispatch = useDispatch();
 
-  // Проверка, что найден канал твича.
-  if (!data) {
-    return <></>;
-  }
-
-  const urlChannel = `https://player.twitch.tv/?channel=${data.channel.title}&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=0.5`;
+  // Выбор данных в зависимости от платформы.
+  const { srcIconPlatform, urlsChannel, urlPlayerChannel } = useCardStream({
+    platform,
+    handleYoutube: data.channel.handleYoutube,
+    videoIdYoutube: data.channel.handleYoutube,
+    channelNameTwitch: data.channel.title,
+  });
 
   const copyText = () => {
     navigator.clipboard
-      .writeText(urlChannel)
+      .writeText(urlPlayerChannel)
       .then(() => {
         dispatch(
           getAlert({
@@ -46,7 +50,11 @@ export default function CardTwitchStream({ stream: { data, zwiftData, platform }
 
   return (
     <div className={styles.wrapper}>
-      <a href={`https://twitch.tv/${data.channel.title}`} target="_blank" rel="noreferrer">
+      <a
+        href={data.online ? urlsChannel.online : urlsChannel.offline}
+        target="_blank"
+        rel="noreferrer"
+      >
         <TwitchStream
           isLive={data.online}
           title={data.title}
@@ -62,14 +70,10 @@ export default function CardTwitchStream({ stream: { data, zwiftData, platform }
         <h2 className={styles.title}>
           {data.channel.title}
 
-          <MyTooltip tooltip="Ссылка на плеер twitch">
+          <MyTooltip tooltip={urlPlayerChannel && `Ссылка на плеер ${platform}`}>
             <img
-              className={styles.icon__twitch}
-              src={
-                platform === 'twitch'
-                  ? '/images/twitch_wordmark_extruded_purple.svg'
-                  : '/images/youtube_wordmark_extruded.svg'
-              }
+              className={cx('icon__logo', { icon__copy: urlPlayerChannel })}
+              src={srcIconPlatform}
               onClick={copyText}
             />
           </MyTooltip>

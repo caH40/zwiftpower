@@ -16,9 +16,11 @@
   margin-bottom: 1rem;
   overflow: hidden;
 }
-.icon__twitch {
+.icon__logo {
   width: auto;
   height: 24px;
+}
+.icon__copy {
   cursor: copy;
 }
 .watch {
