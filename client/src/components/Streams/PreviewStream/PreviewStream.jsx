@@ -2,12 +2,12 @@ import cn from 'classnames/bind';
 
 import TimeCounter from '../../UI/TimeCounter/TimeCounter';
 
-import styles from './TwitchStream.module.css';
+import styles from './PreviewStream.module.css';
 
 const cx = cn.bind(styles);
 
 /**
- * Компонент для отображения Twitch-трансляции с индикатором загрузки.
+ * Компонент для отображения Эскиза-трансляции с индикатором загрузки или заставки канала.
  *
  * @component
  * @param {Object} props - Свойства компонента.
@@ -18,9 +18,9 @@ const cx = cn.bind(styles);
  * @param {number} props.bannerUrl - Заставки профиля.
  * @param {number} props.description - Описание канала.
  * @param {Date} props.startedAt - Начало трансляции.
- * @returns {JSX.Element} Элемент, содержащий плеер Twitch или индикатор загрузки.
+ * @returns {JSX.Element} Элемент.
  */
-function TwitchStream({
+export default function PreviewStream({
   isLive,
   title,
   thumbnailUrl,
@@ -51,5 +51,3 @@ function TwitchStream({
     </div>
   );
 }
-
-export default TwitchStream;

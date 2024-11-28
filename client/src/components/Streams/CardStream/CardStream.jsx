@@ -4,7 +4,7 @@ import cn from 'classnames/bind';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { useCardStream } from '../../../hook/useCardStream';
 import RiderStreamBlock from '../../RiderStreamBlock/RiderStreamBlock';
-import TwitchStream from '../TwitchStream/TwitchStream';
+import PreviewStream from '../PreviewStream/PreviewStream';
 import MyTooltip from '../../../HOC/MyTooltip';
 
 import styles from './CardStream.module.css';
@@ -55,7 +55,7 @@ export default function CardStream({ stream: { data, zwiftData, platform } }) {
         target="_blank"
         rel="noreferrer"
       >
-        <TwitchStream
+        <PreviewStream
           isLive={data.online}
           title={data.title}
           thumbnailUrl={data.thumbnailUrl}

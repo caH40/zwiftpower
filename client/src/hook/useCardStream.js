@@ -27,7 +27,7 @@ export const useCardStream = ({
   const urlsByPlatform = {
     youtube: {
       online: `https://www.youtube.com/watch?v=${videoIdYoutube}`,
-      offline: `https://www.youtube.com/@${handleYoutube}`,
+      offline: `https://www.youtube.com/@${handleYoutube}/streams`,
     },
     twitch: {
       online: `https://twitch.tv/${channelNameTwitch}`,
