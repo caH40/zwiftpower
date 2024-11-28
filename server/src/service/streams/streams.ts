@@ -57,8 +57,11 @@ export async function getEnabledUserStreamsService(): Promise<
     { zwiftId: true, streams: true }
   ).lean<TStreamsFromDB[]>();
 
+  // Удаление свойств twitch или youtube, если их вложенное свойство isEnabled: false
+  const streamsFiltered = filterStreams(streamsDB);
+
   // Создание массива из zwiftId для последующего получения данных Riders.
-  const zwiftIds = streamsDB.map(({ zwiftId }) => zwiftId);
+  const zwiftIds = streamsFiltered.map(({ zwiftId }) => zwiftId);
 
   // Получение данных Riders для отображения в карточки канала с трансляцией.
   const ridersDB = await Rider.find(
@@ -67,12 +70,12 @@ export async function getEnabledUserStreamsService(): Promise<
   ).lean<TRidersFromDB[]>();
 
   // Получение данных активных(live) трансляций из twitch и youtube.
-  const { channelNamesTwitch, channelHandlesYoutube } = streamsDB.reduce(
+  const { channelNamesTwitch, channelHandlesYoutube } = streamsFiltered.reduce(
     (acc, cur) => {
-      if (cur.streams.twitch) {
+      if (cur.streams.twitch?.isEnabled) {
         acc.channelNamesTwitch.push(cur.streams.twitch.channelName);
       }
-      if (cur.streams.youtube) {
+      if (cur.streams.youtube?.isEnabled) {
         acc.channelHandlesYoutube.push(cur.streams.youtube.channelHandle);
       }
 
@@ -111,7 +114,7 @@ export async function getEnabledUserStreamsService(): Promise<
 
   // Формирование массива трансляций пользователей с данными zwiftData этих пользователей.
   const streams = createStreamsForClient(
-    streamsDB,
+    streamsFiltered,
     ridersDB,
     channelsTwitchData,
     channelsYoutubeData
@@ -120,6 +123,24 @@ export async function getEnabledUserStreamsService(): Promise<
   const message = 'Список трансляций пользователей, включенных для просмотра.';
 
   return { data: streams, message };
+}
+
+/**
+ * Удаление свойств twitch или youtube, если их вложенное свойство isEnabled: false
+ */
+function filterStreams(streamsArray: TStreamsFromDB[]): TStreamsFromDB[] {
+  return streamsArray.map((item) => {
+    const { twitch, youtube, ...otherStreams } = item.streams;
+
+    return {
+      ...item,
+      streams: {
+        ...otherStreams,
+        ...(twitch?.isEnabled && { twitch }),
+        ...(youtube?.isEnabled && { youtube }),
+      },
+    };
+  });
 }
 
 /**
