@@ -21,7 +21,7 @@ export default function CardStream({ stream: { data, zwiftData, platform } }) {
   const { srcIconPlatform, urlsChannel, urlPlayerChannel } = useCardStream({
     platform,
     handleYoutube: data.channel.handleYoutube,
-    videoIdYoutube: data.channel.handleYoutube,
+    videoIdYoutube: data.videoIdYoutube,
     channelNameTwitch: data.channel.title,
   });
 
@@ -74,7 +74,7 @@ export default function CardStream({ stream: { data, zwiftData, platform } }) {
             <img
               className={cx('icon__logo', { icon__copy: urlPlayerChannel })}
               src={srcIconPlatform}
-              onClick={copyText}
+              onClick={urlPlayerChannel ? copyText : null}
             />
           </MyTooltip>
         </h2>

@@ -679,6 +679,7 @@ export type TResponseStreamDto = {
   thumbnailUrl: string | null; // Эскиз трансляции (стоп кадр).
   viewerCount: number | null; // Количество зрителей.
   startedAt: string | null; // Дата старта трансляции.
+  videoIdYoutube?: string; // Id трансляции (видео) в youtube.
   channel: {
     title: string; // Имя канала (Ручка).
     bannerUrl?: string; // Баннер канала.

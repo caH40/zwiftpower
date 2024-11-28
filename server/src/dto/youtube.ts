@@ -14,9 +14,13 @@ export function dtoYoutubeStream(
   const stream = {
     online: liveBroadcastsInfo ? true : false,
     title: liveBroadcastsInfo?.snippet.title || null,
-    thumbnailUrl: liveBroadcastsInfo?.snippet.thumbnails.high.url || null,
+    thumbnailUrl:
+      liveBroadcastsInfo?.snippet.thumbnails.standard?.url ||
+      liveBroadcastsInfo?.snippet.thumbnails.high.url ||
+      null,
     viewerCount: Number.isInteger(viewerCountRaw) ? Number(viewerCountRaw) : null,
     startedAt: liveBroadcastsInfo?.liveStreamingDetails?.actualStartTime || null,
+    videoIdYoutube: liveBroadcastsInfo?.id,
     channel: {
       title: channel.snippet.title,
       bannerUrl: channel.brandingSettings.image?.bannerExternalUrl,

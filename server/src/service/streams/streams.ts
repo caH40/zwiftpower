@@ -86,27 +86,28 @@ export async function getEnabledUserStreamsService(): Promise<
 
   // Получение информации о каналах их трансляциях с twitch.
   // Получение информации о каналах их трансляциях с youtube.
-  const [channelsTwitchData] = await Promise.all([
+  const [channelsTwitchData, channelsYoutubeData] = await Promise.all([
     getTwitchChannelsService(channelNamesTwitch),
-    // getYoutubeChannelsService(channelHandlesYoutube),
+    getYoutubeChannelsService(channelHandlesYoutube),
   ]);
 
-  const channelsYoutubeData = [
-    {
-      online: false,
-      title: null,
-      thumbnailUrl: null,
-      viewerCount: null,
-      startedAt: null,
-      channel: {
-        title: 'Aleksandr Ber',
-        bannerUrl:
-          'https://yt3.googleusercontent.com/EQ73srhqkJ455TSmQnoEGZ9hMMUjcyw-4OECbTSC3HzfG7kS541o0nm-UMGWv758IgIJT6-5cQU',
-        description: undefined,
-        handleYoutube: 'cah40yc',
-      },
-    },
-  ];
+  // тестовые данные для уменьшения расхода квоты для youtube
+  // const channelsYoutubeData = [
+  //   {
+  //     online: false,
+  //     title: null,
+  //     thumbnailUrl: null,
+  //     viewerCount: null,
+  //     startedAt: null,
+  //     channel: {
+  //       title: 'Aleksandr Ber',
+  //       bannerUrl:
+  //         'https://yt3.googleusercontent.com/EQ73srhqkJ455TSmQnoEGZ9hMMUjcyw-4OECbTSC3HzfG7kS541o0nm-UMGWv758IgIJT6-5cQU',
+  //       description: undefined,
+  //       handleYoutube: 'cah40yc',
+  //     },
+  //   },
+  // ];
 
   // Формирование массива трансляций пользователей с данными zwiftData этих пользователей.
   const streams = createStreamsForClient(
