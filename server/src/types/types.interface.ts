@@ -308,6 +308,7 @@ export interface ResultsSeriesDtoArg {
     groupCategory: string;
     winsTotal: number;
   }[];
+  leaderboardCatchup: TLeaderboardsCatchupDto[] | null;
 }
 /**
  * Сокращенные данные активности с ленты активности райдера
@@ -688,3 +689,19 @@ export type TResponseStreamDto = {
     nameTwitch?: string; // Название канала в twitch.
   };
 };
+
+export type TCategory = 'A' | 'B' | 'C' | 'D' | 'E';
+/**
+ * Лидеры по победам в каждой группе в Догонялках.
+ */
+export type TLeaderboardsCatchupDto = {
+  category: TCategory;
+  leaders: TCatchupLeader[]; // Три лидера в каждой категории.
+};
+export type TCatchupLeader = {
+  zwiftId: number;
+  profileData: ProfileDataInResult; // Данные райдера.
+  wins: number; // Количество побед.
+};
+
+export type TCatchupLeaderMap = Map<number, { profileData: ProfileDataInResult; wins: number }>;

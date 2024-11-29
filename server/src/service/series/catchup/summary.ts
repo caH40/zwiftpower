@@ -7,7 +7,7 @@ import { ResultSeries, ResultSummaryCatchup } from '../../../types/types.interfa
  */
 export function getResultSummary(
   results: ResultSeries[],
-  totalCatchup: TotalCatchupSchema
+  totalCatchup: TotalCatchupSchema | null
 ): ResultSummaryCatchup[] {
   let winsA = 0;
   let winsB = 0;
@@ -44,31 +44,34 @@ export function getResultSummary(
     }
   }
 
-  // подсчет побед в заездах, добавленных вручную
-  for (const result of totalCatchup.manual) {
-    switch (result.winnerCategory) {
-      case 'A': {
-        winsA++;
-        break;
-      }
-      case 'B': {
-        winsB++;
-        break;
-      }
-      case 'C': {
-        winsC++;
-        break;
-      }
-      case 'D': {
-        winsD++;
-        break;
-      }
-      case 'E': {
-        winsE++;
-        break;
-      }
-      default: {
-        break;
+  // Если есть результаты добавленные в ручную, то рассчитываются данные победы.
+  if (totalCatchup?.manual) {
+    // подсчет побед в заездах, добавленных вручную
+    for (const result of totalCatchup.manual) {
+      switch (result.winnerCategory) {
+        case 'A': {
+          winsA++;
+          break;
+        }
+        case 'B': {
+          winsB++;
+          break;
+        }
+        case 'C': {
+          winsC++;
+          break;
+        }
+        case 'D': {
+          winsD++;
+          break;
+        }
+        case 'E': {
+          winsE++;
+          break;
+        }
+        default: {
+          break;
+        }
       }
     }
   }

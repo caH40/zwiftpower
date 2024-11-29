@@ -8,8 +8,8 @@ import { getEventsService } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
-import { getResultsSeriesService } from '../service/race/series_catchup/index.js';
 import { errorHandler } from '../errors/error.js';
+import { getResultsSeriesService } from '../service/series/index.js';
 
 // types
 import { GetEvents, PostEvent } from '../types/http.interface.js';
@@ -176,6 +176,7 @@ export async function getResultsSeries(req: Request, res: Response) {
   try {
     const { type, season } = req.params;
     const results = await getResultsSeriesService(type, season);
+
     res.status(200).json(results);
   } catch (error) {
     errorHandler(error);

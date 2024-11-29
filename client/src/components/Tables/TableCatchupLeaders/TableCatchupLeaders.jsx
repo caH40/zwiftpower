@@ -1,10 +1,11 @@
+import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { useSelector } from 'react-redux';
-
-import styles from '../Table.module.css';
-
 import TdRider from '../Td/TdRider';
+import TdRank from '../Td/TdRank';
+import CategoryBoxFull from '../../CategoryBoxFull/CategoryBoxFull';
+import styles from '../Table.module.css';
 
 import Thead from './Thead';
 
@@ -25,21 +26,34 @@ function TableCatchupLeaders({ leaderboard }) {
       <caption className={styles.caption}>Лидеры по победам в группах</caption>
       <Thead isModerator={isModerator} />
       <tbody>
-        {leaderboard.map((groupWithLeaders) => (
-          <>
-            <tr key={groupWithLeaders.id}>
-              <td colSpan={3}>{`Группа ${groupWithLeaders.category}`}</td>
-            </tr>
-
-            {groupWithLeaders.leaders.map((leader) => (
-              <tr className={styles.hover} key={leader.id}>
-                <td>{leader.rank}</td>
-                <TdRider profileId={leader.profileId} profile={leader.profileData} />
-                <td>{leader.wins}</td>
+        {leaderboard
+          .filter(({ leaders }) => !!leaders.length)
+          .map((groupWithLeaders) => (
+            <Fragment key={groupWithLeaders.category}>
+              <tr>
+                <td colSpan={3}>
+                  <CategoryBoxFull
+                    showLabel={true}
+                    label={
+                      groupWithLeaders.category !== 'E' ? groupWithLeaders.category : 'APlus'
+                    }
+                    full={true}
+                  />
+                </td>
+                {/* <td colSpan={3}>{`Группа ${groupWithLeaders.category}`}</td> */}
               </tr>
-            ))}
-          </>
-        ))}
+
+              {groupWithLeaders.leaders.map((leader, index) => (
+                <tr className={styles.hover} key={leader.zwiftId}>
+                  <td className={cx('onlyContent', 'centerTd')}>
+                    <TdRank value={index + 1} />
+                  </td>
+                  <TdRider profileId={leader.profileId} profile={leader.profileData} />
+                  <td>{leader.wins}</td>
+                </tr>
+              ))}
+            </Fragment>
+          ))}
       </tbody>
     </table>
   );

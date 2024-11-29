@@ -2,19 +2,20 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useAd } from '../../hook/useAd';
-import AdContainer from '../../components/AdContainer/AdContainer';
-import useTitle from '../../hook/useTitle';
-import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
 import {
   fetchResultsSeries,
   resetCatchData,
 } from '../../redux/features/api/resultsSeriesSlice';
-import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
-import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
+import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
+import AdContainer from '../../components/AdContainer/AdContainer';
+import useTitle from '../../hook/useTitle';
+import TableCatchup from '../../components/Tables/TableCatchup/TableCatchup';
+import TableCatchupSummary from '../../components/Tables/TableCatchupSummary/TableCatchupSummary';
+import FilterCatchup from '../../components/UI/Filters/FilterCatchup/FilterColumn';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import TableCatchupLeaders from '../../components/Tables/TableCatchupLeaders/TableCatchupLeaders';
 
 import styles from './Catchup.module.css';
 
@@ -40,6 +41,7 @@ function Catchup() {
   const {
     results,
     resultsSummary,
+    leaderboard,
     status: statusFetchResultsSeries,
   } = useSelector((state) => state.fetchResultsSeries);
 
@@ -64,6 +66,8 @@ function Catchup() {
     categories.push('D', 'E');
   }
 
+  // const leaderboardFiltered = leaderboard.filter((elm) => +season < 2024 && elm.category)
+
   useAd(adNumbers);
   return (
     <>
@@ -77,12 +81,28 @@ function Catchup() {
         </div>
 
         <div className={styles.block}>
+          {/* Таблица побед каждой группы */}
           {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
             <section className={styles.box__total}>
               <TableCatchupSummary resultsSummary={resultsSummary} categories={categories} />
             </section>
           )}
 
+          {/* Таблица лидеров по победам в группах */}
+          {!!leaderboard?.length && (
+            <section className={styles.wrapper__wide}>
+              {/* скелетон загрузки */}
+              <SkeletonTable
+                status={statusFetchResultsSeries}
+                rows={20}
+                needCaption={true}
+                height={40}
+              />
+              <TableCatchupLeaders leaderboard={leaderboard} />
+            </section>
+          )}
+
+          {/* Таблица победителей в заездах */}
           <section className={styles.wrapper__wide}>
             {/* скелетон загрузки */}
             <SkeletonTable

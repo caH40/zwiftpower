@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { ProfileDataInResult } from '../../types/model.interface.js';
+import { TLeaderboardsCatchupDto } from '../../types/types.interface.js';
 
 export interface ResultsSeriesFetch {
   results: {
@@ -47,4 +48,6 @@ export interface ResultsSeriesFetch {
     groupCategory: string;
     winsTotal: number;
   }[];
+
+  leaderboard: TLeaderboardsCatchupDto[] | null;
 }

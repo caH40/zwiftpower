@@ -12,10 +12,8 @@ export const fetchResultsSeries = createAsyncThunk(
         url: `${serverExpress}/api/race/series/results/${type}/${season || 'none'}`,
         method: 'get',
       });
-      return {
-        results: response.data.results,
-        resultsSummary: response.data.resultsSummary,
-      };
+
+      return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;
       thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
@@ -29,6 +27,7 @@ const resultsSeriesSlice = createSlice({
   initialState: {
     results: [],
     resultsSummary: [],
+    leaderboard: null,
 
     status: null,
     error: null,
@@ -49,8 +48,10 @@ const resultsSeriesSlice = createSlice({
     builder.addCase(fetchResultsSeries.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
+
       state.results = action.payload.results;
       state.resultsSummary = action.payload.resultsSummary;
+      state.leaderboard = action.payload.leaderboard;
     });
     builder.addCase(fetchResultsSeries.rejected, (state, action) => {
       state.status = 'rejected';
