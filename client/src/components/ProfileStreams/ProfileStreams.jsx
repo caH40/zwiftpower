@@ -37,6 +37,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           zwiftIdAuth={zwiftIdAuth}
           isEnabled={streams.twitch?.isEnabled || false}
           iconSrc={'/images/glitch_flat_purple.svg'}
+          description="Только название канала. Название в url: https://www.twitch.tv/название канала"
         />
 
         {/* Форма для Youtube */}
@@ -47,6 +48,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           zwiftIdAuth={zwiftIdAuth}
           isEnabled={streams.youtube?.isEnabled || false}
           iconSrc={'/images/youtube_icon.svg'}
+          description="Только название канала. Название в url после @: https://www.youtube.com/@название канала"
         />
       </div>
     </div>

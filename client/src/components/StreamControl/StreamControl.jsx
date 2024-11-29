@@ -19,6 +19,7 @@ export default function StreamControl({
   zwiftIdAuth,
   isEnabled,
   iconSrc,
+  description,
 }) {
   const [errorChannelName, setErrorChannelName] = useState('');
   const [disableCheckbox, setDisableCheckbox] = useState(false);
@@ -106,11 +107,12 @@ export default function StreamControl({
           name="channelName"
           label={'Название канала'}
           validationText={errorChannelName}
+          description={description}
         />
       </div>
 
       <div className={styles.box__checkbox}>
-        <span>Отображение трансляции</span>
+        <span>Отображение канала с трансляциями</span>
         <CheckboxSimple
           checked={isEnabled}
           handleCheckboxChange={handleCheckboxChange}
