@@ -1,19 +1,23 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { OrganizerSchema } from '../types/model.interface.js';
+import { OrganizerSchema, TOrganizerBotZwift } from '../types/model.interface.js';
 
 /**
  *  Схема Организатора заезда, у организатора может быть несколько клубов
  */
+const BotZwiftSchema = new Schema<TOrganizerBotZwift>({
+  token: { type: String },
+  email: { type: String },
+  password: { type: String },
+});
+
 const organizerSchema = new Schema<OrganizerSchema>(
   {
-    name: { type: String, unique: true, required: true },
-    label: String,
-    images: {
-      icon: String,
-      poster: String,
-    },
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    description: String,
+    botZwift: { type: BotZwiftSchema },
+    name: { type: String, unique: true, required: true },
+    label: { type: String },
+    backgroundImage: { type: String },
+    description: { type: String },
   },
   { timestamps: true }
 );
