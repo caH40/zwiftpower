@@ -22,6 +22,7 @@ const Streams = lazy(() => import('./Pages/Streams/Streams'));
 import { sendMetrika } from './yandex/metrika.js';
 
 import './css/App.css';
+import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
 
 function App() {
   useFirstAuth();
@@ -43,7 +44,9 @@ function App() {
         <Route path="/streams" element={<Streams />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
+        {isModerator ? OrganizerRoute(isModerator) : ''}
         <Route path="*" element={<Page404 />} />
+
         {ResultsRoute()}
         {ScheduleRouteRoute()}
         {ProfileRoute()}
