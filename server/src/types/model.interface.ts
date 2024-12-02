@@ -494,12 +494,9 @@ export interface ClubSchema {
 }
 
 /**
- * Схема Организатора заезда, у организатора может быть несколько клубов
+ * Организатора заезда, у организатора может быть несколько клубов
  */
-export type OrganizerSchema = TOrganizer & Document;
-
 export type TOrganizer = {
-  _id: Types.ObjectId;
   creator: Types.ObjectId; // модераторы клуба;
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
@@ -509,6 +506,8 @@ export type TOrganizer = {
   createdAt: string;
   updatedAt: string;
 };
+// !!! Оптимизировать, использовать везде TOrganizer
+export type OrganizerSchema = TOrganizer & Document;
 /**
  * Данные бота-модератора из звифта. Бот будет вносить изменения в Эвенты клуба.
  * Хранить email/password или token.

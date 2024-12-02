@@ -2,7 +2,10 @@ import { ObjectId } from 'mongoose';
 import { Request, Response } from 'express';
 
 import { errorHandler } from '../errors/error.js';
-import { putOrganizerBotZwiftService } from '../service/organizer/bot.js';
+import {
+  getOrganizerBotZwiftService,
+  putOrganizerBotZwiftService,
+} from '../service/organizer/bot.js';
 import { Organizer } from '../Model/Organizer.js';
 
 /**
@@ -47,6 +50,28 @@ export async function putOrganizerBotZwift(req: Request, res: Response) {
       password,
       importance,
     });
+
+    // Возврат успешного ответа
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок
+    errorHandler(error);
+
+    // Сообщение об ошибке
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для добавления или редактирования данных бота-модератора для организаторов в Звифт.
+ */
+export async function getOrganizerBotZwift(req: Request, res: Response) {
+  try {
+    const { userId } = req.params;
+
+    // Вызов сервиса для добавления/обновления данных бота
+    const response = await getOrganizerBotZwiftService({ creatorId: userId });
 
     // Возврат успешного ответа
     return res.status(200).json(response);

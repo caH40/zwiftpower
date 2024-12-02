@@ -705,3 +705,20 @@ export type TCatchupLeader = {
 };
 
 export type TCatchupLeaderMap = Map<number, { profileData: ProfileDataInResult; wins: number }>;
+
+/**
+ * Информация об звифт токене бота-модератора для клиента.
+ */
+export type TZwiftTokenDto = {
+  organizerId: string; // ID организатора в виде строки
+  tokenDecoded: {
+    expiresAt: string; // Время истечения токена в формате ISO
+    issuedAt: string; // Время выпуска токена в формате ISO
+    audience: string[]; // Целевые сервисы токена
+    userId: string; // Уникальный ID пользователя
+    name: string; // Имя пользователя
+    email: string; // Электронная почта пользователя
+  } | null; // Может быть null, если декодирование не удалось
+  username: string; // Имя пользователя (email бота)
+  importance: 'main' | 'secondary'; // Важность токена
+};
