@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import { worlds } from '../../../../assets/zwift/lib/esm/worlds';
 import { routes } from '../../../../assets/zwift/lib/esm/routes';
+import useBlockParameters from '../../../../hook/useBlockParameters';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import IconParamsDistance from '../../../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../../../icons/Params/IconParamsAscent';
@@ -13,10 +15,14 @@ import styles from './FormEditEventGroup.module.css';
  * Блок выбора маршрута и количества кругов (дистанции, времени заезда) для создания заезда
  */
 function MapBlock({ subGroup, groupNumber }) {
+  const [isMount, setIsMount] = useState(true);
   const [descriptionId, setDescriptionId] = useState(0);
   const worldCurrent = worlds.find((world) => world.id === subGroup.mapId);
   const routeCurrent = routes.find((route) => route.id === subGroup.routeId) || {};
   const routeName = routeCurrent?.name || 'Маршрут не найден';
+
+  const dispatch = useDispatch();
+  const { inputHandler } = useBlockParameters(groupNumber);
 
   const { distance, elevation, leadInDistance, leadInElevation } = routeCurrent;
 
@@ -32,6 +38,19 @@ function MapBlock({ subGroup, groupNumber }) {
     { title: 'Lap', distance: distanceMap, elevation },
     { title: 'LeadIn', distance: distanceLeadIn, elevation: leadInElevation },
   ];
+
+  // При изменении карты выставляется маршрут с новой карты(world).
+  useEffect(() => {
+    if (isMount) {
+      setIsMount(false);
+      return;
+    }
+
+    // Поиск маршрута в списке новой карты.
+    const routeInitId = routes.find((route) => route.world === worldCurrent?.slug) || {};
+
+    dispatch(inputHandler({ routeId: routeInitId.id, index: groupNumber }));
+  }, [worldCurrent?.id]);
 
   const changeDescription = () => {
     setDescriptionId(descriptionId === 2 ? 0 : descriptionId + 1);
