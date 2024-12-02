@@ -8,10 +8,10 @@
   flex-wrap: wrap;
 }
 .box__total {
-  flex: 0 1 500px;
+  flex: 1 1 500px;
 }
 .wrapper__wide {
-  flex: 1 1 750px;
+  flex: 1 1 500px;
   overflow-x: auto;
 }
 .box__filter {

@@ -48,8 +48,11 @@ function TableCatchupLeaders({ leaderboard }) {
                   <td className={cx('onlyContent', 'centerTd')}>
                     <TdRank value={index + 1} />
                   </td>
-                  <TdRider profileId={leader.zwiftId} profile={leader.profileData} />
+
+                  {/* Количество побед */}
                   <td>{leader.wins}</td>
+
+                  <TdRider profileId={leader.zwiftId} profile={leader.profileData} />
                 </tr>
               ))}
             </Fragment>
