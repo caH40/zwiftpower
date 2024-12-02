@@ -41,7 +41,8 @@ export async function getAccessToken(isMainToken?: boolean) {
 }
 
 /**
- * Создание общего токена доступа к Звифт и сохранение в БД
+ * Создание общего токена доступа к Звифт и сохранение в БД.
+ * !!! Заменить дублируемый код генерации токена на функцию generateAccessTokenZwift.
  */
 export async function updateAccessToken() {
   try {
@@ -65,4 +66,30 @@ export async function updateAccessToken() {
   } catch (error) {
     errorHandler(error);
   }
+}
+
+/**
+ * Получение токена доступа к Звифт.
+ */
+export async function generateAccessTokenZwift({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}): Promise<string> {
+  const data = {
+    client_id: 'Zwift_Mobile_Link',
+    username: email,
+    password,
+    grant_type: 'password',
+  };
+
+  const response = await axios.post(secureUrl, qs.stringify(data));
+
+  if (!response.data.access_token) {
+    throw new Error('Access token not found in response');
+  }
+
+  return response.data.access_token;
 }

@@ -204,6 +204,19 @@ export interface TokenSchema {
   user: Types.ObjectId;
   refreshToken: string;
 }
+
+/**
+ * Схема для Zwift token бота-модератора клуба в Звифт.
+ */
+export type TZwiftToken = {
+  organizer: mongoose.Types.ObjectId;
+  token: string;
+  username: string; // e-mail бота-модератора используется вместо username.
+  importance: 'main' | 'secondary';
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 //
 //
 export interface TotalCatchupSchema {
