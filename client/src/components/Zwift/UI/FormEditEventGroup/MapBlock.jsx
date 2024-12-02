@@ -24,8 +24,8 @@ function MapBlock({ subGroup, groupNumber }) {
   const distanceLeadIn = Math.round(leadInDistance * 100) / 100;
 
   const laps = subGroup.laps ?? 0;
-  const distanceTotal = Math.round((distance + leadInDistance) * laps * 100) / 100;
-  const elevationTotal = (elevation + leadInElevation) * laps;
+  const distanceTotal = Math.round((distance * laps + leadInDistance) * 100) / 100;
+  const elevationTotal = elevation * laps + leadInElevation;
 
   const descriptions = [
     { title: 'Total', distance: distanceTotal, elevation: elevationTotal },
