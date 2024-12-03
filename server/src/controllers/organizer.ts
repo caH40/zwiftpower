@@ -8,7 +8,8 @@ import {
   putOrganizerBotZwiftService,
 } from '../service/organizer/bot.js';
 import { Organizer } from '../Model/Organizer.js';
-import { getClubsZwiftService } from '../service/organizer/clubs.js';
+import { deleteClubsZwiftService, getClubsZwiftService } from '../service/organizer/clubs.js';
+import { Club } from '../Model/Club.js';
 
 /**
  * Контроллер для добавления или редактирования данных бота-модератора для организаторов в Звифт.
@@ -126,6 +127,49 @@ export async function getClubsZwift(req: Request, res: Response) {
 
     // Вызов сервиса.
     const response = await getClubsZwiftService({ organizerId });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для получение клубов из БД для Организатора.
+ */
+export async function deleteClubsZwift(req: Request, res: Response) {
+  try {
+    const { clubId } = req.body;
+    const { userId } = req.params;
+
+    if (!clubId) {
+      throw new Error('Нет clubId!');
+    }
+
+    // Проверка, что пользователь имеет доступ к организатору.
+    const organizerDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean<{
+      _id: ObjectId;
+    }>();
+    // Проверка, что пользователь является Организатором и добавлял удаляемый клуб.
+    const clubDB = await Club.findOne(
+      { id: clubId, organizer: organizerDB?._id },
+      { _id: true }
+    ).lean<{
+      _id: ObjectId;
+    }>();
+
+    if (!clubDB) {
+      return res.status(403).json({ message: 'У вас нет доступа на удаление данного клуба!' });
+    }
+
+    // Вызов сервиса.
+    const response = await deleteClubsZwiftService({ clubId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);
