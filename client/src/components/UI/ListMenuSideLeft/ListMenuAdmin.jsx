@@ -32,7 +32,7 @@ function ListMenuAdmin({ state }) {
 
       {user.organizer && (
         <li>
-          <NavLink to="/organizer" className={activeLink}>
+          <NavLink to="/organizer/main" className={activeLink}>
             {({ isActive }) => (
               <div className={styles.link__box}>
                 <IconOrganizer isActive={isActive} color={'#CECECE'} />

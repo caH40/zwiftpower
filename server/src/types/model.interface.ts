@@ -479,7 +479,9 @@ export interface LogsErrorSchema {
 /**
  * Схема клуба в котором создается Эвент
  */
-export interface ClubSchema {
+export type ClubSchema = TClubZwift;
+
+export type TClubZwift = {
   id: string; // id клуба в Звифте
   images: {
     icon: string; // ссылка (url) на иконку клуба
@@ -491,7 +493,9 @@ export interface ClubSchema {
   tagline: string; // полное название клуба;
   description: string; // описание клуба;
   moderators?: Types.ObjectId[]; // модераторы клуба;
-}
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 /**
  * Организатора заезда, у организатора может быть несколько клубов

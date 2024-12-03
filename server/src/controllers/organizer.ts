@@ -8,6 +8,7 @@ import {
   putOrganizerBotZwiftService,
 } from '../service/organizer/bot.js';
 import { Organizer } from '../Model/Organizer.js';
+import { getClubsZwiftService } from '../service/organizer/clubs.js';
 
 /**
  * Контроллер для добавления или редактирования данных бота-модератора для организаторов в Звифт.
@@ -100,7 +101,33 @@ export async function deleteOrganizerBotZwift(req: Request, res: Response) {
     // Вызов сервиса для удаления токена и данных бота.
     const response = await deleteOrganizerBotZwiftService({ tokenId });
 
-    // Возврат успешного ответаю
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для получение клубов из БД для Организатора.
+ */
+export async function getClubsZwift(req: Request, res: Response) {
+  try {
+    const { organizerId } = req.params;
+
+    if (!organizerId) {
+      throw new Error('Нет organizerId!');
+    }
+
+    // Вызов сервиса.
+    const response = await getClubsZwiftService({ organizerId });
+
+    // Возврат успешного ответа.
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.

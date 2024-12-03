@@ -1,7 +1,11 @@
-import mongoose, { Schema, model } from 'mongoose';
-import { ClubSchema } from '../types/model.interface.js';
+import mongoose, { Document, Schema, model } from 'mongoose';
 
-const clubSchema = new Schema<ClubSchema>(
+import { TClubZwift } from '../types/model.interface.js';
+
+/**
+ * Схема и модель для клуба из Звифт
+ */
+const clubSchema = new Schema<TClubZwift>(
   {
     id: { type: String, unique: true, required: true },
     images: {
@@ -18,4 +22,4 @@ const clubSchema = new Schema<ClubSchema>(
   { timestamps: true }
 );
 
-export const Club = model('Club', clubSchema);
+export const Club = model<TClubZwift & Document>('Club', clubSchema);

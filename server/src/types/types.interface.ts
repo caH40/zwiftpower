@@ -5,6 +5,7 @@ import {
   ProfileDataInResult,
   SeriesSchema,
   SignedRidersSchema,
+  TClubZwift,
   TMetrics,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
@@ -722,4 +723,25 @@ export type TZwiftTokenDto = {
   } | null; // Может быть null, если декодирование не удалось.
   username: string; // Имя пользователя (email бота).
   importance: 'main' | 'secondary'; // Важность токена.
+};
+
+/**
+ * Ответ с БД при запросе клубов Звифта для организатора.
+ */
+export type TResponseClubsFromDB = Omit<TClubZwift, 'organizer' | 'moderators'> & {
+  moderators: {
+    _id: Types.ObjectId;
+    username: string;
+    zwiftId: number;
+  }[];
+  organizer: { name: string };
+};
+
+/**
+ * Клубы звифта для организатора после ДТО.
+ */
+export type TClubsZwiftDto = Omit<TClubZwift, '_id' | 'organizer' | 'moderators'> & {
+  _id: string;
+  organizer: { name: string };
+  moderators: { _id: string; username: string; zwiftId: number }[];
 };
