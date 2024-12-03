@@ -77,19 +77,29 @@ export async function generateAccessTokenZwift({
 }: {
   email: string;
   password: string;
-}): Promise<string> {
-  const data = {
-    client_id: 'Zwift_Mobile_Link',
-    username: email,
-    password,
-    grant_type: 'password',
-  };
+}): Promise<string | undefined> {
+  try {
+    const data = {
+      client_id: 'Zwift_Mobile_Link',
+      username: email,
+      password,
+      grant_type: 'password',
+    };
 
-  const response = await axios.post(secureUrl, qs.stringify(data));
+    const response = await axios.post(secureUrl, qs.stringify(data));
 
-  if (!response.data.access_token) {
-    throw new Error('Access token not found in response');
+    if (!response.data.access_token) {
+      throw new Error('Access token not found in response');
+    }
+
+    return response.data.access_token;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error)) {
+        const description = error.response?.data?.error_description;
+        throw new Error(description ? description : error.message);
+      }
+      throw new Error('Неизвестная ошибка в модуле generateAccessTokenZwift()');
+    }
   }
-
-  return response.data.access_token;
 }

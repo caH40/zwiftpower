@@ -36,6 +36,10 @@ export async function putOrganizerBotZwiftService({
     password,
   });
 
+  if (!token) {
+    throw new Error('token не сгенерирован!');
+  }
+
   // Сохранение обновленного токена в БД.
   await ZwiftToken.findOneAndUpdate(
     { organizer: organizerId, importance },
@@ -70,5 +74,5 @@ export async function getOrganizerBotZwiftService({
   // Подготовка данных для клиента.
   const tokens = transformZwiftTokensToDto(zwiftTokensDB);
 
-  return { data: tokens, message: 'Токены организатора успешно получены!' };
+  return { data: tokens, message: 'Токены для бота-модератора успешно получены!' };
 }
