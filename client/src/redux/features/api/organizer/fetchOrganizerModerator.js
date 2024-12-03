@@ -15,7 +15,6 @@ export const fetchGetOrganizerBotsModerator = createAsyncThunk(
         url: `${serverExpress}/api/organizer/bots`,
         method: 'get',
       });
-
       return response.data;
     } catch (error) {
       const message = error.response.data.message || error.message;

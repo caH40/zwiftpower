@@ -25,13 +25,16 @@ export default function OrganizerBots({ organizerId }) {
   const [isVisibleForm, setIsVisibleForm] = useState(false);
   const [token, setToken] = useState({ importance: 'main' });
   useTitle('Модератор ботом');
-  const { tokens } = useSelector((state) => state.organizerModerator);
+  const { tokens, status } = useSelector((state) => state.organizerModerator);
   const dispatch = useDispatch();
 
+  // Обработчик обновления токена и данных бота.
   const handlerEdit = (importance) => {
     setIsVisibleForm(true);
     setToken(tokens.find((elm) => elm.importance === importance));
   };
+
+  // Обработчик удаления токена и бота.
   const handlerDelete = (tokenId) => {
     if (!tokenId) {
       dispatch(getAlert({ message: 'Не получен tokenId!', type: 'error', isOpened: true }));
@@ -77,8 +80,17 @@ export default function OrganizerBots({ organizerId }) {
   }, []);
   return (
     <section className={styles.wrapper}>
+      <p>
+        "Бот" это учетная запись в Звифте через которую будет происходить управление клубами
+        Организатора в которые добавлен данный Бот.
+      </p>
+      <p>В клубе необходимо Боту предоставить права модератора клуба.</p>
+      <p>После ввода логина(email) и пароля, Звифт генерирует токен-доступа.</p>
+      <p>Пароль от Бота не сохраняется в БД, сохраняется токен-доступа.</p>
+
       <div className={styles.spacer__cards}>
-        {tokens &&
+        {status !== 'loading' &&
+          tokens &&
           tokens.map((token) => (
             <CardBotZwift
               token={token}
@@ -90,7 +102,9 @@ export default function OrganizerBots({ organizerId }) {
       </div>
 
       {/* !tokens.length если токенов нет, то добавляется новый */}
-      {(isVisibleForm || !tokens.length) && <FormZwiftBot token={token} sendForm={sendForm} />}
+      {status !== 'loading' && (isVisibleForm || !tokens.length) && (
+        <FormZwiftBot token={token} sendForm={sendForm} />
+      )}
     </section>
   );
 }
