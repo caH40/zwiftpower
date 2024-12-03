@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {
   fetchPutOrganizerBotsModerator,
   fetchGetOrganizerBotsModerator,
+  fetchDeleteOrganizerBotsModerator,
 } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { resetOrganizerModerator } from '../../../redux/features/api/organizer/organizerModeratorSlice';
@@ -31,7 +32,28 @@ export default function OrganizerBots({ organizerId }) {
     setIsVisibleForm(true);
     setToken(tokens.find((elm) => elm.importance === importance));
   };
-  const handlerDelete = () => {};
+  const handlerDelete = (tokenId) => {
+    if (!tokenId) {
+      dispatch(getAlert({ message: 'Не получен tokenId!', type: 'error', isOpened: true }));
+      return;
+    }
+
+    const confirm = window.confirm('Вы действительно хотите удалить токен и бота с БД?');
+
+    if (!confirm) {
+      dispatch(
+        getAlert({ message: 'Отмена удаления токена!', type: 'warning', isOpened: true })
+      );
+      return;
+    }
+
+    dispatch(fetchDeleteOrganizerBotsModerator({ tokenId })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+        dispatch(fetchGetOrganizerBotsModerator());
+      }
+    });
+  };
 
   // Отправка формы.
   const sendForm = ({ username, password }) => {

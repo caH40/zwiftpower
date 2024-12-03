@@ -46,3 +46,25 @@ export const fetchPutOrganizerBotsModerator = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Удаление токена и данных Zwift бота-модератора для клубов в Звифте у Организатора.
+ */
+export const fetchDeleteOrganizerBotsModerator = createAsyncThunk(
+  'organizerBotsModerator/delete',
+  async ({ tokenId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/bots`,
+        method: 'delete',
+        data: { tokenId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

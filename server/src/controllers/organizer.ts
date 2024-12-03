@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 
 import { errorHandler } from '../errors/error.js';
 import {
+  deleteOrganizerBotZwiftService,
   getOrganizerBotZwiftService,
   putOrganizerBotZwiftService,
 } from '../service/organizer/bot.js';
@@ -80,6 +81,32 @@ export async function getOrganizerBotZwift(req: Request, res: Response) {
     errorHandler(error);
 
     // Сообщение об ошибке
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для удаления токена и данных бота-модератора для организаторов в Звифт.
+ */
+export async function deleteOrganizerBotZwift(req: Request, res: Response) {
+  try {
+    const { tokenId } = req.body;
+
+    if (!tokenId) {
+      throw new Error('Нет tokenId!');
+    }
+
+    // Вызов сервиса для удаления токена и данных бота.
+    const response = await deleteOrganizerBotZwiftService({ tokenId });
+
+    // Возврат успешного ответаю
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }

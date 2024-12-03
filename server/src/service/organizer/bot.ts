@@ -66,13 +66,30 @@ export async function getOrganizerBotZwiftService({
   }
 
   // Получение токенов организатора.
-  const zwiftTokensDB = await ZwiftToken.find(
-    { organizer: organizerDB._id },
-    { _id: false }
-  ).lean<TZwiftToken[]>();
+  const zwiftTokensDB = await ZwiftToken.find({ organizer: organizerDB._id }).lean<
+    (TZwiftToken & { _id: ObjectId })[]
+  >();
 
   // Подготовка данных для клиента.
   const tokens = transformZwiftTokensToDto(zwiftTokensDB);
 
   return { data: tokens, message: 'Токены для бота-модератора успешно получены!' };
+}
+
+/**
+ * Сервис удаления token бота-модератора для клубов в Звифте для Организатора из БД.
+ */
+export async function deleteOrganizerBotZwiftService({
+  tokenId,
+}: {
+  tokenId: string;
+}): Promise<TResponseService<null>> {
+  // Получение токенов организатора.
+  const zwiftTokensDB = await ZwiftToken.findOneAndDelete({ id: tokenId }).lean();
+
+  if (!zwiftTokensDB) {
+    throw new Error(`Не найден токен с _id:${zwiftTokensDB}`);
+  }
+
+  return { data: null, message: 'Удалён токен и бота-модератора!' };
 }

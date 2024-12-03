@@ -30,7 +30,7 @@ export default function CardBotZwift({ token, handlerDelete, handlerEdit }) {
       </h2>
       <div className={styles.wrapper__icons}>
         <IconEdit squareSize={18} getClick={() => handlerEdit(token.importance)} />
-        <IconDelete squareSize={18} getClick={() => handlerDelete(token.importance)} />
+        <IconDelete squareSize={18} getClick={() => handlerDelete(token._id)} />
       </div>
 
       <dl className={styles.list}>

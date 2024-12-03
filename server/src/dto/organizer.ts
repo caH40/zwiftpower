@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { TZwiftToken } from '../types/model.interface.js';
 import { TZwiftJwtToken } from '../types/http.interface.js';
 import { TZwiftTokenDto } from '../types/types.interface.js';
+import { ObjectId } from 'mongoose';
 
 /**
  * Декодирование токена.
@@ -11,7 +12,9 @@ function decodeZwiftToken(token: string): TZwiftJwtToken | null {
   return jwt.decode(token, { complete: true }) as TZwiftJwtToken | null;
 }
 
-export function transformZwiftTokenToDto(token: TZwiftToken): TZwiftTokenDto {
+export function transformZwiftTokenToDto(
+  token: TZwiftToken & { _id: ObjectId }
+): TZwiftTokenDto {
   const decoded = decodeZwiftToken(token.token);
 
   const tokenDecoded =
@@ -27,6 +30,7 @@ export function transformZwiftTokenToDto(token: TZwiftToken): TZwiftTokenDto {
       : null;
 
   return {
+    _id: String(token._id),
     organizerId: token.organizer.toString(),
     tokenDecoded,
     username: token.username,
@@ -34,6 +38,8 @@ export function transformZwiftTokenToDto(token: TZwiftToken): TZwiftTokenDto {
   };
 }
 
-export function transformZwiftTokensToDto(tokens: TZwiftToken[]): TZwiftTokenDto[] {
+export function transformZwiftTokensToDto(
+  tokens: (TZwiftToken & { _id: ObjectId })[]
+): TZwiftTokenDto[] {
   return tokens.map((token) => transformZwiftTokenToDto(token));
 }
