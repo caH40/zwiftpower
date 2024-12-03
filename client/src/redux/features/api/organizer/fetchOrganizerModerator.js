@@ -30,12 +30,12 @@ export const fetchGetOrganizerBotsModerator = createAsyncThunk(
  */
 export const fetchPutOrganizerBotsModerator = createAsyncThunk(
   'organizerBotsModerator/put',
-  async ({ organizerId, email, password }, thunkAPI) => {
+  async ({ organizerId, username, password }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/bots`,
         method: 'put',
-        data: { organizerId, email, password },
+        data: { organizerId, username, password },
       });
 
       return response.data;

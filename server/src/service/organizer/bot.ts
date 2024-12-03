@@ -12,7 +12,7 @@ import { TZwiftTokenDto } from '../../types/types.interface.js';
 
 type ParamsPutOrganizerBot = {
   organizerId: string;
-  email: string;
+  username: string;
   password: string;
   importance?: 'main' | 'secondary';
 };
@@ -26,20 +26,20 @@ type ParamsGetOrganizerBot = {
  */
 export async function putOrganizerBotZwiftService({
   organizerId,
-  email,
+  username,
   password,
   importance = 'main',
 }: ParamsPutOrganizerBot): Promise<TResponseService<null>> {
   // Получение токена для API Zwift из БД.
   const token = await generateAccessTokenZwift({
-    email,
+    email: username,
     password,
   });
 
   // Сохранение обновленного токена в БД.
   await ZwiftToken.findOneAndUpdate(
     { organizer: organizerId, importance },
-    { $set: { organizerId, token, username: email } },
+    { $set: { organizerId, token, username } },
     { upsert: true }
   );
 

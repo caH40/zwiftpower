@@ -44,7 +44,7 @@ function App() {
         <Route path="/streams" element={<Streams />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
-        {isModerator ? OrganizerRoute(isModerator) : ''}
+        {userAuth.organizer ? OrganizerRoute(userAuth.organizer) : ''}
         <Route path="*" element={<Page404 />} />
 
         {ResultsRoute()}

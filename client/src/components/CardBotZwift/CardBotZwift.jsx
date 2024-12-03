@@ -1,4 +1,6 @@
 import { getTimerLocal } from '../../utils/date-local';
+import IconDelete from '../icons/IconDelete';
+import IconEdit from '../icons/IconEdit';
 
 import styles from './CardBotZwift.module.css';
 
@@ -18,13 +20,18 @@ import styles from './CardBotZwift.module.css';
  * @property {string} username - Имя пользователя (email бота).
  * @property {'main'|'secondary'} importance - Важность токена.
  */
-
-export default function CardBotZwift({ token }) {
+export default function CardBotZwift({ token, handlerDelete, handlerEdit }) {
   return (
     <section className={styles.wrapper}>
-      <h3 className={styles.title}>{`Данные Бота-модератора (${
-        token.importance === 'main' ? 'основной' : 'дополнительный'
-      })`}</h3>
+      <h2 className={styles.title}>
+        {`Данные бота-модератора (${
+          token.importance === 'main' ? 'основной' : 'дополнительный'
+        })`}
+      </h2>
+      <div className={styles.wrapper__icons}>
+        <IconEdit squareSize={18} getClick={() => handlerEdit(token.importance)} />
+        <IconDelete squareSize={18} getClick={() => handlerDelete(token.importance)} />
+      </div>
 
       <dl className={styles.list}>
         <dt className={styles.term}>username (email)</dt>

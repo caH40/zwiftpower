@@ -13,12 +13,12 @@ import { Organizer } from '../Model/Organizer.js';
  */
 export async function putOrganizerBotZwift(req: Request, res: Response) {
   try {
-    const { organizerId, email, password, importance } = req.body;
+    const { organizerId, username, password, importance } = req.body;
     const { userId } = req.params;
 
     // Проверка обязательных параметров
-    if (!email) {
-      throw new Error('Нет email (username) для бота!');
+    if (!username) {
+      throw new Error('Нет username (email) для бота!');
     }
 
     if (!password) {
@@ -46,7 +46,7 @@ export async function putOrganizerBotZwift(req: Request, res: Response) {
     // Вызов сервиса для добавления/обновления данных бота
     const response = await putOrganizerBotZwiftService({
       organizerId,
-      email,
+      username,
       password,
       importance,
     });

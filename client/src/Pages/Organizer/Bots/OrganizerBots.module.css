@@ -2,3 +2,6 @@
   min-height: calc(100vh - 60px);
   margin-bottom: 15px;
 }
+.spacer__cards {
+  margin-bottom: 24px;
+}

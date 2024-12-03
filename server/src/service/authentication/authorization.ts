@@ -1,9 +1,11 @@
+import { ObjectId } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 import { User } from '../../Model/User.js';
 import { generateToken, removeToken, saveToken } from './token.js';
 import { UserSchema } from '../../types/model.interface.js';
 import { Rider } from '../../Model/Rider.js';
+import { Organizer } from '../../Model/Organizer.js';
 
 export async function authorizationService(
   username: string,
@@ -17,6 +19,10 @@ export async function authorizationService(
   if (!userDB || !userDB._id) {
     throw new Error(`Неверный Логин или Пароль`);
   }
+
+  const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
+    _id: ObjectId;
+  }>();
 
   const isValidPassword = await bcrypt.compare(password, userDB.password);
 
@@ -39,6 +45,7 @@ export async function authorizationService(
     zwiftId: userDB.zwiftId,
     role: userDB.role,
     moderator: userDB.moderator,
+    ...(organizerDB && { organizer: organizerDB._id }),
   });
 
   if (tokens) {
@@ -59,6 +66,7 @@ export async function authorizationService(
       photoProfile: riderDB?.imageSrc,
       zwiftId: userDB.zwiftId,
       moderator: userDB.moderator,
+      ...(organizerDB && { organizer: organizerDB._id }),
     },
   };
 }
