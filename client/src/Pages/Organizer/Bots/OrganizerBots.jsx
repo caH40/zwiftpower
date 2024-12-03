@@ -6,6 +6,7 @@ import {
   fetchGetOrganizerBotsModerator,
 } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 import useTitle from '../../../hook/useTitle';
+import CardBotZwift from '../../../components/CardBotZwift/CardBotZwift';
 
 import styles from './OrganizerBots.module.css';
 
@@ -17,12 +18,14 @@ export default function OrganizerBots() {
   useTitle('Модератор ботом');
   const { tokens } = useSelector((state) => state.organizerModerator);
 
-  console.log(tokens);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchGetOrganizerBotsModerator());
   }, []);
-  return <section className={styles.wrapper}>OrganizerBot</section>;
+  return (
+    <section className={styles.wrapper}>
+      {tokens && tokens.map((token) => <CardBotZwift token={token} key={token.username} />)}
+    </section>
+  );
 }
