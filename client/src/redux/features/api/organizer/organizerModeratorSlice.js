@@ -20,6 +20,7 @@ const organizerModeratorSlice = createSlice({
   initialState,
   reducers: {
     resetOrganizerModerator(state) {
+      state.tokens = [];
       state.organizer = {};
     },
   },

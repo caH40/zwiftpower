@@ -47,7 +47,7 @@ export async function putOrganizerBotZwiftService({
     { upsert: true }
   );
 
-  return { data: null, message: 'Данные бота изменены!' };
+  return { data: null, message: 'Токен для бота-модератора успешно обновлен!' };
 }
 
 /**

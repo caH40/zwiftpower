@@ -5,6 +5,8 @@ import {
   fetchPutOrganizerBotsModerator,
   fetchGetOrganizerBotsModerator,
 } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
+import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { resetOrganizerModerator } from '../../../redux/features/api/organizer/organizerModeratorSlice';
 import useTitle from '../../../hook/useTitle';
 import CardBotZwift from '../../../components/CardBotZwift/CardBotZwift';
 import FormZwiftBot from '../../../components/UI/FormZwiftBot/FormZwiftBot';
@@ -20,7 +22,7 @@ import styles from './OrganizerBots.module.css';
  */
 export default function OrganizerBots({ organizerId }) {
   const [isVisibleForm, setIsVisibleForm] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({ importance: 'main' });
   useTitle('Модератор ботом');
   const { tokens } = useSelector((state) => state.organizerModerator);
   const dispatch = useDispatch();
@@ -33,11 +35,23 @@ export default function OrganizerBots({ organizerId }) {
 
   // Отправка формы.
   const sendForm = ({ username, password }) => {
-    dispatch(fetchPutOrganizerBotsModerator({ organizerId, username, password }));
+    dispatch(fetchPutOrganizerBotsModerator({ organizerId, username, password })).then(
+      (res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+          dispatch(fetchGetOrganizerBotsModerator());
+          setIsVisibleForm(false);
+        }
+      }
+    );
   };
 
+  // Получение данных ботов-модераторов клубов в Звифте для текущего Организатора.
   useEffect(() => {
     dispatch(fetchGetOrganizerBotsModerator());
+
+    // Сброс данных в хранилище для текущего компонента.
+    return () => dispatch(resetOrganizerModerator());
   }, []);
   return (
     <section className={styles.wrapper}>
@@ -53,7 +67,8 @@ export default function OrganizerBots({ organizerId }) {
           ))}
       </div>
 
-      {isVisibleForm && <FormZwiftBot token={token} sendForm={sendForm} />}
+      {/* !tokens.length если токенов нет, то добавляется новый */}
+      {(isVisibleForm || !tokens.length) && <FormZwiftBot token={token} sendForm={sendForm} />}
     </section>
   );
 }

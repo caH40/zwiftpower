@@ -45,7 +45,9 @@ export default function CardBotZwift({ token, handlerDelete, handlerEdit }) {
             </dd>
 
             <dt className={styles.term}>Время выпуска токена</dt>
-            <dd className={styles.description}>{getTimerLocal(token.tokenDecoded.issuedAt)}</dd>
+            <dd className={styles.description}>
+              {getTimerLocal(token.tokenDecoded.issuedAt, 'DDMMYYHms')}
+            </dd>
 
             <dt className={styles.term}>Имя в Zwift</dt>
             <dd className={styles.description}>{token.tokenDecoded.name}</dd>
