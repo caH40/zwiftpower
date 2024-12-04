@@ -23,11 +23,13 @@ import { sendMetrika } from './yandex/metrika.js';
 
 import './css/App.css';
 import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
+import { ModeratorClubRoute } from './Route/ModeratorClubRoute.jsx';
 
 function App() {
   useFirstAuth();
   const userAuth = useSelector((state) => state.checkAuth.value.user);
 
+  const isModeratorClub = !!userAuth.moderator?.clubs?.length;
   const isModerator = ['admin', 'moderator'].includes(userAuth.role);
   const isAdmin = ['admin'].includes(userAuth.role);
 
@@ -44,6 +46,7 @@ function App() {
         <Route path="/streams" element={<Streams />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
+        {isModeratorClub || isModerator ? ModeratorClubRoute() : ''}
         {userAuth.organizer ? OrganizerRoute(userAuth.organizer) : ''}
         <Route path="*" element={<Page404 />} />
 
