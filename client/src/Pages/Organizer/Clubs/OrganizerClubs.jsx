@@ -10,6 +10,7 @@ import {
 } from '../../../redux/features/api/organizer/fetchClubsModerator';
 import {
   resetClubForAddModerator,
+  resetClubIdForAddModerator,
   resetClubsModerator,
   setClubId,
 } from '../../../redux/features/api/organizer/clubsModeratorSlice';
@@ -45,11 +46,13 @@ export default function OrganizerClubs({ organizerId }) {
     };
   }, []);
 
+  // Запуск поиска клуба в zwiftAPI при изменении id (id - ввод id клуба в поисковой форме).
   useEffect(() => {
     if (id === 0) {
       return;
     }
     dispatch(fetchGetClubZwiftModerator({ clubId: id }));
+    dispatch(resetClubIdForAddModerator());
   }, [dispatch, id]);
 
   // Удаление клуба из БД.

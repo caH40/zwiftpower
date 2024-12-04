@@ -104,13 +104,28 @@ export async function postClubsZwiftService({
     club_large: club.images.find((image) => image.type === 'CLUB_LARGE')?.imageUrl,
   };
 
-  const clubCandidate = await Club.findOne({
+  // Ищем клуб с указанным `id`, который привязан к другому организатору.
+  const conflictingOrganizer = await Club.findOne({
+    id: club.id,
+    organizer: { $ne: organizerId },
+  }).lean();
+
+  // Если клуб найден, это означает, что он уже управляется другим организатором.
+  // Выбрасываем ошибку с соответствующим сообщением, чтобы избежать конфликта владельцев.
+  if (conflictingOrganizer) {
+    throw new Error(`Клуб "${club.name}" управляется другим Организатором!`);
+  }
+
+  // Ищем клуб с указанным `id`, который уже привязан к текущему организатору (`organizerId`).
+  const existingClub = await Club.findOne({
     id: club.id,
     organizer: organizerId,
-  });
+  }).lean();
 
-  if (clubCandidate) {
-    throw new Error(`Данный клуб "${club.name}" уже добавлен Организатору!`);
+  // Если клуб найден, это означает, что данный клуб уже принадлежит текущему организатору.
+  // Выбрасываем ошибку с соответствующим сообщением.
+  if (existingClub) {
+    throw new Error(`Клуб "${club.name}" уже принадлежит вашему организатору.`);
   }
 
   const clubDB = await Club.create({

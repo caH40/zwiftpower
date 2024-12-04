@@ -504,7 +504,8 @@ export type TOrganizer = {
   creator: Types.ObjectId; // модераторы клуба;
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
-  label: string; // Лейбл (url);
+  label: string; // Лейбл короткое название;
+  logoSrc?: string; // Логотип (url);
   backgroundImage: string; // URL фоновой картинки
   description?: string; // описание Организатора;
   createdAt: string;
