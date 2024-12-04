@@ -11,5 +11,5 @@ import styles from './Organizer.module.css';
  */
 export default function Organizer() {
   useTitle('Управление Организатором');
-  return <section className={styles.wrapper}>Organizer</section>;
+  return <section className={styles.wrapper}>В разработке...</section>;
 }

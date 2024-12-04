@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchGetOrganizerModerator } from '../../redux/features/api/organizer/fetchOrganizerModerator';
 import IconUsers from '../../components/icons/IconUsers';
 import NavAdmin from '../../components/UI/NavAdmin/NavAdmin';
 
@@ -20,10 +23,21 @@ const items = [
  * 5. Редактирование фоновая картинки;
  * 6. Редактирование описания;
  */
-export default function OrganizerLayout() {
+export default function OrganizerLayout({ organizerId }) {
+  const dispatch = useDispatch();
+  const { organizer } = useSelector((state) => state.organizerModerator);
+
+  // Запрос данных организатора organizerId
+  useEffect(() => {
+    dispatch(fetchGetOrganizerModerator({ organizerId }));
+  }, []);
+
   return (
     <section className={styles.wrapper}>
       <NavAdmin items={items} />
+
+      <h2 className={styles.title}>Организатор: {organizer.name}</h2>
+
       <Outlet />
     </section>
   );

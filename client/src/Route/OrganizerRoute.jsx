@@ -10,7 +10,7 @@ export function OrganizerRoute(organizerId) {
   return (
     <>
       {organizerId && (
-        <Route path="/organizer" element={<OrganizerLayer />}>
+        <Route path="/organizer" element={<OrganizerLayer organizerId={organizerId} />}>
           <Route path="main" element={<Organizer organizerId={organizerId} />} />
           <Route path="clubs" element={<OrganizerClubs organizerId={organizerId} />} />
           <Route path="bots" element={<OrganizerBots organizerId={organizerId} />} />

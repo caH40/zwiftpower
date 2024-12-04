@@ -17,6 +17,34 @@ import {
   postClubsZwiftService,
 } from '../service/organizer/clubs.js';
 import { Club } from '../Model/Club.js';
+import { getClubZwiftModeratorService } from '../service/organizer/organizer.js';
+
+/**
+ * Контроллер данных Организатора при запросе модератором.
+ */
+export async function getClubZwiftModerator(req: Request, res: Response) {
+  try {
+    const { organizerId } = req.params;
+
+    // Проверка обязательных параметров.
+    if (!organizerId) {
+      throw new Error('Нет organizerId!');
+    }
+
+    // Вызов сервиса.
+    const response = await getClubZwiftModeratorService({ organizerId });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
 
 /**
  * Контроллер для добавления или редактирования данных бота-модератора для организаторов в Звифт.

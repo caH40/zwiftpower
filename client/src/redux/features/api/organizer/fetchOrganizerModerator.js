@@ -5,6 +5,27 @@ import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 
 /**
+ * Получение данных об Организаторе.
+ */
+export const fetchGetOrganizerModerator = createAsyncThunk(
+  'organizerOrganizerModerator/get',
+  async ({ organizerId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/${organizerId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Получение данных о Zwift бота-модератора для клубов в Звифте у Организатора.
  */
 export const fetchGetOrganizerBotsModerator = createAsyncThunk(

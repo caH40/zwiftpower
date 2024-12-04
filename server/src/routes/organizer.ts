@@ -8,6 +8,7 @@ import {
   deleteOrganizerBotZwift,
   getClubsZwift,
   getClubZwift,
+  getClubZwiftModerator,
   getOrganizerBotZwift,
   postClubsZwift,
   putOrganizerBotZwift,
@@ -24,3 +25,4 @@ routerOrganizer.get('/clubs/zwift/:clubId', authModerator, getClubZwift);
 routerOrganizer.post('/clubs/', authModerator, postClubsZwift);
 routerOrganizer.put('/clubs/moderators', authModerator, addClubModerator);
 routerOrganizer.delete('/clubs/moderators', authModerator, deleteClubModerator);
+routerOrganizer.get('/:organizerId', authModerator, getClubZwiftModerator);
