@@ -14,9 +14,10 @@ import {
 } from '../../../redux/features/api/organizer/clubsModeratorSlice';
 import TableClubs from '../../../components/Tables/TableClubs/TableClubs';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { fetchUsersZwiftpowerForModerator } from '../../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
+import FindUserNew from '../../../components/UI/FindUser/FindUserNew';
 import useTitle from '../../../hook/useTitle';
 import FormRequest from '../../../components/Zwift/UI/FormRequest/FormRequest';
-import FindUser from '../../../components/UI/FindUser/FindUser';
 
 import BlockClubDescription from './BlockClubDescription';
 
@@ -88,7 +89,7 @@ export default function OrganizerClubs({ organizerId }) {
   // Открытие формы поиска Модератора для добавления его в клуб модератором.
   const addModerator = (clubId, clubNameRaw) => {
     setClubCurrent({ id: clubId, name: clubNameRaw });
-    dispatch(fetchUsersZwiftpower());
+    dispatch(fetchUsersZwiftpowerForModerator());
     setShowAddModerator(true);
   };
 
@@ -104,7 +105,7 @@ export default function OrganizerClubs({ organizerId }) {
       </div>
 
       {showAddModerator && (
-        <FindUser
+        <FindUserNew
           clubCurrent={clubCurrent}
           setClubCurrent={setClubCurrent}
           setShowAddModerator={setShowAddModerator}

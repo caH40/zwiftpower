@@ -43,7 +43,7 @@ const usersZwiftpowerSlice = createSlice({
     });
 
     builder.addCase(fetchUsersZwiftpowerForModerator.fulfilled, (state, action) => {
-      state.usersForModerator = action.payload;
+      state.usersForModerator = action.payload.data;
       state.error = null;
       state.status = 'resolved';
     });

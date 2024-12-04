@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AxiosError } from 'axios';
 
 import { errorHandler } from '../errors/error.js';
-import { getUsersService } from '../service/admin/users.js';
+import { getUsersForModeratorService, getUsersService } from '../service/admin/users.js';
 import {
   addClubModeratorService,
   deleteClubModeratorService,
@@ -44,6 +44,26 @@ export const getUsers = async (req: Request, res: Response) => {
     } else {
       res.status(400).json('Непредвиденная ошибка в getUsers');
     }
+  }
+};
+
+/**
+ * Получение всех зарегистрированных Users по запросу Модератора.
+ */
+export const getUsersForModerator = async (req: Request, res: Response) => {
+  try {
+    // Вызов сервиса.
+    const users = await getUsersForModeratorService();
+
+    // Возврат успешного ответа.
+    res.status(200).json(users);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
   }
 };
 
