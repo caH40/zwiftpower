@@ -122,7 +122,13 @@ export async function postClubsZwiftService({
 /**
  * Сервис добавление модератора для клуба
  */
-export const addClubModeratorService = async (clubId: string, userId: string) => {
+export const addClubModeratorService = async ({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) => {
   // добавления userId в клуб
   // clubId - id присвоенный клубу в Звифте
   // userId - ObjectId из БД
