@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { authModerator } from '../middleware/authRole.js';
 import {
   addClubModerator,
+  deleteClubModerator,
   deleteClubsZwift,
   deleteOrganizerBotZwift,
   getClubsZwift,
@@ -22,3 +23,4 @@ routerOrganizer.delete('/clubs', authModerator, deleteClubsZwift);
 routerOrganizer.get('/clubs/zwift/:clubId', authModerator, getClubZwift);
 routerOrganizer.post('/clubs/', authModerator, postClubsZwift);
 routerOrganizer.put('/clubs/moderators', authModerator, addClubModerator);
+routerOrganizer.delete('/clubs/moderators', authModerator, deleteClubModerator);

@@ -120,7 +120,7 @@ export async function postClubsZwiftService({
 }
 
 /**
- * Сервис добавление модератора для клуба
+ * Сервис добавления пользователя в модераторы для клуба.
  */
 export const addClubModeratorService = async ({
   clubId,
@@ -129,9 +129,17 @@ export const addClubModeratorService = async ({
   clubId: string;
   userId: string;
 }) => {
-  // добавления userId в клуб
-  // clubId - id присвоенный клубу в Звифте
-  // userId - ObjectId из БД
+  // Добавление клуба в список клубов для модерации в документе User.
+  const userDB = await User.findOneAndUpdate(
+    { _id: userId },
+    { $addToSet: { 'moderator.clubs': clubId } }
+  );
+
+  if (!userDB) {
+    throw new Error(`Пользователь id:${userId} не найден в БД!`);
+  }
+
+  // Добавление userId в список модераторов клуба.
   const clubDB = await Club.findOneAndUpdate(
     { id: clubId },
     { $addToSet: { moderators: userId } }
@@ -141,19 +149,39 @@ export const addClubModeratorService = async ({
     throw new Error(`Не найден клуб с id:${clubId}`);
   }
 
-  // добавления userId в клуб
+  return {
+    message: `Пользователь "${userDB.username}" добавлен модератором для клуба "${clubDB.name}"`,
+  };
+};
+
+/**
+ * Сервис удаления пользователя из модераторов клуба.
+ */
+export const deleteClubModeratorService = async ({
+  clubId,
+  userId,
+}: {
+  clubId: string;
+  userId: string;
+}) => {
+  // Удаление клуба из списка клубов для модерации в документе User.
   const userDB = await User.findOneAndUpdate(
     { _id: userId },
-    { $addToSet: { 'moderator.clubs': clubId } }
+    { $pull: { 'moderator.clubs': clubId } }
   );
 
   if (!userDB) {
-    throw new Error(
-      `Пользователь id:${userId} был добавлен в клуб id:${clubId}, но не был найден в БД`
-    );
+    throw new Error(`Пользователь id:${userId} не был найден в БД`);
+  }
+
+  // Удаление userId из списка модераторов клуба.
+  const clubDB = await Club.findOneAndUpdate({ id: clubId }, { $pull: { moderators: userId } });
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб с id:${clubId}`);
   }
 
   return {
-    message: `Пользователь "${userDB.username}" добавлен модератором для клуба "${clubDB.name}"`,
+    message: `Пользователь "${userDB.username}" удалён из модераторов для клуба "${clubDB.name}"`,
   };
 };

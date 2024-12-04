@@ -10,6 +10,7 @@ import {
 import { Organizer } from '../Model/Organizer.js';
 import {
   addClubModeratorService,
+  deleteClubModeratorService,
   deleteClubsZwiftService,
   getClubsZwiftService,
   getClubZwiftService,
@@ -271,6 +272,36 @@ export async function addClubModerator(req: Request, res: Response) {
 
     // Вызов сервиса.
     const response = await addClubModeratorService({ clubId, userId });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер добавления модератора в клуб.
+ */
+export async function deleteClubModerator(req: Request, res: Response) {
+  try {
+    const { clubId, userId } = req.body;
+
+    if (!clubId) {
+      throw new Error('Нет данных clubId!');
+    }
+
+    if (!userId) {
+      throw new Error('Нет userId!');
+    }
+
+    // Вызов сервиса.
+    const response = await deleteClubModeratorService({ clubId, userId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);
