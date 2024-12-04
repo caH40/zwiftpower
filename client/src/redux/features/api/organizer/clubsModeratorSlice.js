@@ -24,6 +24,10 @@ const clubsModeratorSlice = createSlice({
     resetClubsModerator(state) {
       state.clubs = [];
     },
+    resetClubForAddModerator(state) {
+      state.id = 0;
+      state.clubForAdd = {};
+    },
     setClubId: (state, action) => {
       state.id = action.payload;
     },
@@ -82,6 +86,7 @@ const clubsModeratorSlice = createSlice({
   },
 });
 
-export const { resetClubsModerator, setClubId } = clubsModeratorSlice.actions;
+export const { resetClubsModerator, setClubId, resetClubForAddModerator } =
+  clubsModeratorSlice.actions;
 
 export default clubsModeratorSlice.reducer;

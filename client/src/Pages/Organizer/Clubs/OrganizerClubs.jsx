@@ -8,6 +8,7 @@ import {
   fetchPostClubsZwiftModerator,
 } from '../../../redux/features/api/organizer/fetchClubsModerator';
 import {
+  resetClubForAddModerator,
   resetClubsModerator,
   setClubId,
 } from '../../../redux/features/api/organizer/clubsModeratorSlice';
@@ -31,7 +32,11 @@ export default function OrganizerClubs({ organizerId }) {
   useEffect(() => {
     dispatch(fetchGetClubsZwiftModerator({ organizerId }));
 
-    return () => dispatch(resetClubsModerator());
+    // Сброс соответствующих данных из хранилища редакс после размонтирования компонента.
+    return () => {
+      dispatch(resetClubsModerator());
+      dispatch(resetClubForAddModerator());
+    };
   }, []);
 
   useEffect(() => {
