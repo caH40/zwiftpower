@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  fetchDeleteModeratorClubsZwiftModerator,
   fetchGetClubsZwiftModerator,
   fetchGetClubZwiftModerator,
   fetchPostClubsZwiftModerator,
-  fetchPutClubsZwiftModerator,
+  fetchPutModeratorClubsZwiftModerator,
 } from './fetchClubsModerator';
 
 const initialState = {
@@ -86,17 +87,33 @@ const clubsModeratorSlice = createSlice({
     });
 
     // =========== добавление модератора в клуб ==============
-    builder.addCase(fetchPutClubsZwiftModerator.pending, (state) => {
+    builder.addCase(fetchPutModeratorClubsZwiftModerator.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
 
-    builder.addCase(fetchPutClubsZwiftModerator.fulfilled, (state) => {
+    builder.addCase(fetchPutModeratorClubsZwiftModerator.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
     });
 
-    builder.addCase(fetchPutClubsZwiftModerator.rejected, (state, action) => {
+    builder.addCase(fetchPutModeratorClubsZwiftModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // =========== добавление модератора в клуб ==============
+    builder.addCase(fetchDeleteModeratorClubsZwiftModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchDeleteModeratorClubsZwiftModerator.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchDeleteModeratorClubsZwiftModerator.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

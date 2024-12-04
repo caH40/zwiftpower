@@ -91,15 +91,37 @@ export const fetchPostClubsZwiftModerator = createAsyncThunk(
 );
 
 /**
- * Добавление модератора в клуб.
+ * Добавление пользователя как модератора в клуб.
  */
-export const fetchPutClubsZwiftModerator = createAsyncThunk(
+export const fetchPutModeratorClubsZwiftModerator = createAsyncThunk(
   'organizerClubsModerator/addModerator',
   async function ({ userId, clubId }, thunkAPI) {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/clubs/moderators`,
         method: 'put',
+        data: { userId, clubId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
+ * Удаление пользователя из модераторов клуба.
+ */
+export const fetchDeleteModeratorClubsZwiftModerator = createAsyncThunk(
+  'organizerClubsModerator/deleteModerator',
+  async function ({ userId, clubId }, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/clubs/moderators`,
+        method: 'delete',
         data: { userId, clubId },
       });
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import {
   fetchDeleteClubsZwiftModerator,
+  fetchDeleteModeratorClubsZwiftModerator,
   fetchGetClubsZwiftModerator,
   fetchGetClubZwiftModerator,
   fetchPostClubsZwiftModerator,
@@ -93,6 +94,16 @@ export default function OrganizerClubs({ organizerId }) {
     setShowAddModerator(true);
   };
 
+  // Удаление пользователя из модераторов клуба.
+  const deleteModerator = (clubId, userId) => {
+    dispatch(fetchDeleteModeratorClubsZwiftModerator({ clubId, userId })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+        dispatch(fetchGetClubsZwiftModerator({ organizerId }));
+      }
+    });
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
@@ -100,7 +111,7 @@ export default function OrganizerClubs({ organizerId }) {
           clubs={clubs}
           deleteClub={deleteClub}
           addModerator={addModerator}
-          // deleteModerator={deleteModerator}
+          deleteModerator={deleteModerator}
         />
       </div>
 

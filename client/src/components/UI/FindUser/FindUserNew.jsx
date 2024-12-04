@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   fetchGetClubsZwiftModerator,
-  fetchPutClubsZwiftModerator,
+  fetchPutModeratorClubsZwiftModerator,
 } from '../../../redux/features/api/organizer/fetchClubsModerator';
 import IconAdd from '../../icons/IconAdd';
 import CommonInput from '../SimpleInput/CommonInput';
@@ -26,7 +26,7 @@ function FindUserNew({ clubCurrent, setClubCurrent, setShowAddModerator, organiz
     setClubCurrent({ id: '', name: '' });
     setShowAddModerator(false);
     setUserQuery('');
-    dispatch(fetchPutClubsZwiftModerator({ userId, clubId })).then((res) => {
+    dispatch(fetchPutModeratorClubsZwiftModerator({ userId, clubId })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
         dispatch(fetchGetClubsZwiftModerator({ organizerId }));
