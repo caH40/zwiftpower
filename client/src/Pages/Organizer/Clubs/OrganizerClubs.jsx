@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   fetchDeleteClubsZwiftModerator,
@@ -16,6 +16,7 @@ import TableClubs from '../../../components/Tables/TableClubs/TableClubs';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import useTitle from '../../../hook/useTitle';
 import FormRequest from '../../../components/Zwift/UI/FormRequest/FormRequest';
+import FindUser from '../../../components/UI/FindUser/FindUser';
 
 import BlockClubDescription from './BlockClubDescription';
 
@@ -27,6 +28,9 @@ import styles from './OrganizerClubs.module.css';
 export default function OrganizerClubs({ organizerId }) {
   useTitle('Управление Клубами');
   const { clubs, clubForAdd, id } = useSelector((state) => state.clubsModerator);
+  const [clubCurrent, setClubCurrent] = useState({ id: '', name: '' });
+  const [showAddModerator, setShowAddModerator] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -81,16 +85,31 @@ export default function OrganizerClubs({ organizerId }) {
     });
   };
 
+  // Открытие формы поиска Модератора для добавления его в клуб модератором.
+  const addModerator = (clubId, clubNameRaw) => {
+    setClubCurrent({ id: clubId, name: clubNameRaw });
+    dispatch(fetchUsersZwiftpower());
+    setShowAddModerator(true);
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
         <TableClubs
           clubs={clubs}
           deleteClub={deleteClub}
-          // addModerator={addModerator}
+          addModerator={addModerator}
           // deleteModerator={deleteModerator}
         />
       </div>
+
+      {showAddModerator && (
+        <FindUser
+          clubCurrent={clubCurrent}
+          setClubCurrent={setClubCurrent}
+          setShowAddModerator={setShowAddModerator}
+        />
+      )}
 
       <div className={styles.group}>
         <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />

@@ -11,7 +11,7 @@ import styles from './FindUser.module.css';
  * Блок поиска пользователя для добавления в клуб
  */
 function FindUser({ clubCurrent, setClubCurrent, setShowAddModerator }) {
-  const { users } = useSelector((state) => state.getUsers);
+  const { usersForModerator } = useSelector((state) => state.getUsers);
   // поиск пользователя по userQuery
   const [userQuery, setUserQuery] = useState('');
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function FindUser({ clubCurrent, setClubCurrent, setShowAddModerator }) {
           placeholder={'поиск по username'}
         />
         {userQuery.length > 2 ? (
-          [...users]
+          [...usersForModerator]
             .filter((user) => user.username.toLowerCase().includes(userQuery.toLowerCase()))
             .map((user) => (
               <div className={styles.box__user} key={user._id}>

@@ -7,6 +7,7 @@ import { transformClubsZwiftToDto } from '../../dto/clubsZwift.js';
 import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
 import { getRequest } from '../zwift/request-get.js';
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
+import { User } from '../../Model/User.js';
 
 /**
  * Сервис получение клубов из БД для Организатора.
@@ -117,3 +118,36 @@ export async function postClubsZwiftService({
 
   return { data: null, message: `Добавлен клуб "${clubDB.name}" в БД!` };
 }
+
+/**
+ * Сервис добавление модератора для клуба
+ */
+export const addClubModeratorService = async (clubId: string, userId: string) => {
+  // добавления userId в клуб
+  // clubId - id присвоенный клубу в Звифте
+  // userId - ObjectId из БД
+  const clubDB = await Club.findOneAndUpdate(
+    { id: clubId },
+    { $addToSet: { moderators: userId } }
+  );
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб с id:${clubId}`);
+  }
+
+  // добавления userId в клуб
+  const userDB = await User.findOneAndUpdate(
+    { _id: userId },
+    { $addToSet: { 'moderator.clubs': clubId } }
+  );
+
+  if (!userDB) {
+    throw new Error(
+      `Пользователь id:${userId} был добавлен в клуб id:${clubId}, но не был найден в БД`
+    );
+  }
+
+  return {
+    message: `Пользователь "${userDB.username}" добавлен модератором для клуба "${clubDB.name}"`,
+  };
+};

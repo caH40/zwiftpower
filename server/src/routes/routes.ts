@@ -22,3 +22,4 @@ router.delete('/logs/admins', authAdmin, deleteLogAdmin);
 router.get('/logs/error', authAdmin, getLogError);
 router.get('/riders', getRiders);
 router.get('/streams', getEnabledUserStreams);
+// router.get('/moderator/users', getEnabledUserStreams);
