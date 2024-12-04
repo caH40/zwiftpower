@@ -4,11 +4,19 @@ import { useEffect } from 'react';
 import {
   fetchDeleteClubsZwiftModerator,
   fetchGetClubsZwiftModerator,
+  fetchGetClubZwiftModerator,
+  fetchPostClubsZwiftModerator,
 } from '../../../redux/features/api/organizer/fetchClubsModerator';
-import { resetClubsModerator } from '../../../redux/features/api/organizer/clubsModeratorSlice';
+import {
+  resetClubsModerator,
+  setClubId,
+} from '../../../redux/features/api/organizer/clubsModeratorSlice';
 import TableClubs from '../../../components/Tables/TableClubs/TableClubs';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import useTitle from '../../../hook/useTitle';
+import FormRequest from '../../../components/Zwift/UI/FormRequest/FormRequest';
+
+import BlockClubDescription from './BlockClubDescription';
 
 import styles from './OrganizerClubs.module.css';
 
@@ -17,8 +25,9 @@ import styles from './OrganizerClubs.module.css';
  */
 export default function OrganizerClubs({ organizerId }) {
   useTitle('Управление Клубами');
-  const { clubs } = useSelector((state) => state.clubsModerator);
+  const { clubs, clubForAdd, id } = useSelector((state) => state.clubsModerator);
   const dispatch = useDispatch();
+  console.log(clubForAdd);
 
   useEffect(() => {
     dispatch(fetchGetClubsZwiftModerator({ organizerId }));
@@ -26,7 +35,14 @@ export default function OrganizerClubs({ organizerId }) {
     return () => dispatch(resetClubsModerator());
   }, []);
 
-  // удаление клуба из БД
+  useEffect(() => {
+    if (id === 0) {
+      return;
+    }
+    dispatch(fetchGetClubZwiftModerator({ clubId: id }));
+  }, [dispatch, id]);
+
+  // Удаление клуба из БД.
   const deleteClub = (clubId, name) => {
     const confirmDelete = window.confirm(
       `Вы действительно хотите удалить клуб "${name}" из БД?`
@@ -45,6 +61,22 @@ export default function OrganizerClubs({ organizerId }) {
       }
     });
   };
+
+  // Добавление клуба в БД.
+  const postClub = (club) => {
+    if (!club.id) {
+      getAlert({ message: 'Не получен id добавляемого клуба!', type: 'error', isOpened: true });
+      return;
+    }
+
+    dispatch(fetchPostClubsZwiftModerator({ clubId: club.id })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+        dispatch(fetchGetClubsZwiftModerator({ organizerId }));
+      }
+    });
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
@@ -55,7 +87,12 @@ export default function OrganizerClubs({ organizerId }) {
           // deleteModerator={deleteModerator}
         />
       </div>
-      <pre>{JSON.stringify(clubs, null, 2)}</pre>
+
+      <div className={styles.group}>
+        <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
+      </div>
+
+      {clubForAdd?.id && <BlockClubDescription club={clubForAdd} postClub={postClub} />}
     </section>
   );
 }

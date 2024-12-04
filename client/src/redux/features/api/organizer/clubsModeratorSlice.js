@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetClubsZwiftModerator } from './fetchClubsModerator';
+import {
+  fetchGetClubsZwiftModerator,
+  fetchGetClubZwiftModerator,
+  fetchPostClubsZwiftModerator,
+} from './fetchClubsModerator';
 
 const initialState = {
+  id: 0,
   clubs: [],
+  clubForAdd: {},
   status: null,
   error: null,
 };
@@ -18,10 +24,13 @@ const clubsModeratorSlice = createSlice({
     resetClubsModerator(state) {
       state.clubs = [];
     },
+    setClubId: (state, action) => {
+      state.id = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
-    // ============== получение данных о боте zwift=================
+    // ============== получение данных о добавленных клубах у Организатора =================
     builder.addCase(fetchGetClubsZwiftModerator.pending, (state) => {
       state.error = null;
       state.status = 'loading';
@@ -37,9 +46,42 @@ const clubsModeratorSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // =========== получение данных о клубе из ZwiftAPI для добавления Организатору ==============
+    builder.addCase(fetchGetClubZwiftModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetClubZwiftModerator.fulfilled, (state, action) => {
+      state.clubForAdd = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetClubZwiftModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // =========== добавление клуба в БД для Организатора ==============
+    builder.addCase(fetchPostClubsZwiftModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchPostClubsZwiftModerator.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchPostClubsZwiftModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetClubsModerator } = clubsModeratorSlice.actions;
+export const { resetClubsModerator, setClubId } = clubsModeratorSlice.actions;
 
 export default clubsModeratorSlice.reducer;

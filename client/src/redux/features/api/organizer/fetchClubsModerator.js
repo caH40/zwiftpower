@@ -26,6 +26,27 @@ export const fetchGetClubsZwiftModerator = createAsyncThunk(
 );
 
 /**
+ * Получение получение клуба из Zwift для добавления Организатору.
+ */
+export const fetchGetClubZwiftModerator = createAsyncThunk(
+  'organizerClubModerator/get',
+  async ({ clubId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/clubs/zwift/${clubId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Удаление клуба из БД для Организатора.
  */
 export const fetchDeleteClubsZwiftModerator = createAsyncThunk(
@@ -35,6 +56,28 @@ export const fetchDeleteClubsZwiftModerator = createAsyncThunk(
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/clubs`,
         method: 'delete',
+        data: { clubId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
+ * Добавление клуба в БД для Организатора.
+ */
+export const fetchPostClubsZwiftModerator = createAsyncThunk(
+  'organizerClubsModerator/post',
+  async function ({ clubId }, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/clubs`,
+        method: 'post',
         data: { clubId },
       });
 
