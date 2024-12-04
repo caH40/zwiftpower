@@ -83,6 +83,7 @@ export default function OrganizerClubs({ organizerId }) {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
         dispatch(fetchGetClubsZwiftModerator({ organizerId }));
+        dispatch(resetClubForAddModerator());
       }
     });
   };
