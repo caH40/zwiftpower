@@ -27,7 +27,6 @@ export default function OrganizerClubs({ organizerId }) {
   useTitle('Управление Клубами');
   const { clubs, clubForAdd, id } = useSelector((state) => state.clubsModerator);
   const dispatch = useDispatch();
-  console.log(clubForAdd);
 
   useEffect(() => {
     dispatch(fetchGetClubsZwiftModerator({ organizerId }));
@@ -69,7 +68,7 @@ export default function OrganizerClubs({ organizerId }) {
       return;
     }
 
-    dispatch(fetchPostClubsZwiftModerator({ clubId: club.id })).then((res) => {
+    dispatch(fetchPostClubsZwiftModerator({ club, organizerId })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
         dispatch(fetchGetClubsZwiftModerator({ organizerId }));

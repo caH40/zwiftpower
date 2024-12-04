@@ -12,6 +12,7 @@ import {
   deleteClubsZwiftService,
   getClubsZwiftService,
   getClubZwiftService,
+  postClubsZwiftService,
 } from '../service/organizer/clubs.js';
 import { Club } from '../Model/Club.js';
 
@@ -209,6 +210,36 @@ export async function getClubZwift(req: Request, res: Response) {
 
     // Вызов сервиса.
     const response = await getClubZwiftService({ clubId, organizerId: organizerDB._id });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для получение клуба из ZwiftAPI для добавления Организатору.
+ */
+export async function postClubsZwift(req: Request, res: Response) {
+  try {
+    const { club, organizerId } = req.body;
+
+    if (!club) {
+      throw new Error('Нет данных club!');
+    }
+
+    if (!organizerId) {
+      throw new Error('Нет organizerId!');
+    }
+
+    // Вызов сервиса.
+    const response = await postClubsZwiftService({ club, organizerId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

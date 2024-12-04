@@ -72,11 +72,48 @@ export async function getClubZwiftService({
   const url = `clubs/club/${clubId}`;
 
   const club: ClubZwift | null = await getRequest(url, true, tokenDB.token);
-  console.log(club);
 
   if (!club) {
     throw new Error(`Не найден Клуб с id:${clubId} в ZwiftAPI!`);
   }
 
   return { data: club, message: 'Получены данные клуба из ZwiftAPI' };
+}
+
+/**
+ * Сервис добавления клуба в БД для Организатора.
+ */
+export async function postClubsZwiftService({
+  club,
+  organizerId,
+}: {
+  club: ClubZwift;
+  organizerId: string;
+}): Promise<TResponseService<null>> {
+  const images = {
+    icon: club.images.find((image) => image.type === 'ICON')?.imageUrl,
+    event: club.images.find((image) => image.type === 'EVENT')?.imageUrl,
+    club_large: club.images.find((image) => image.type === 'CLUB_LARGE')?.imageUrl,
+  };
+
+  const clubCandidate = await Club.findOne({
+    id: club.id,
+    organizer: organizerId,
+  });
+
+  if (clubCandidate) {
+    throw new Error(`Данный клуб "${club.name}" уже добавлен Организатору!`);
+  }
+
+  const clubDB = await Club.create({
+    ...club,
+    images,
+    organizer: organizerId,
+  });
+
+  if (!clubDB?.id) {
+    throw new Error(`Ошибка создания клуба с id:${club.id}`);
+  }
+
+  return { data: null, message: `Добавлен клуб "${clubDB.name}" в БД!` };
 }

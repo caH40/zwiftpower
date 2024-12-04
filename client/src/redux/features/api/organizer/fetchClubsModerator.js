@@ -73,12 +73,12 @@ export const fetchDeleteClubsZwiftModerator = createAsyncThunk(
  */
 export const fetchPostClubsZwiftModerator = createAsyncThunk(
   'organizerClubsModerator/post',
-  async function ({ clubId }, thunkAPI) {
+  async function ({ club, organizerId }, thunkAPI) {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/clubs`,
         method: 'post',
-        data: { clubId },
+        data: { club, organizerId },
       });
 
       return response.data;
