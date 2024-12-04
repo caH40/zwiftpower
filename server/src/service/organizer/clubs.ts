@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 import { Club } from '../../Model/Club.js';
 import { TResponseService } from '../../types/http.interface.js';
@@ -8,6 +8,7 @@ import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
 import { getRequest } from '../zwift/request-get.js';
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
 import { User } from '../../Model/User.js';
+import { TClubZwift } from '../../types/model.interface.js';
 
 /**
  * Сервис получение клубов из БД для Организатора.
@@ -38,11 +39,17 @@ export async function deleteClubsZwiftService({
 }: {
   clubId: string;
 }): Promise<TResponseService<null>> {
-  const clubsDB = await Club.findOneAndDelete({ id: clubId }).lean<{ _id: ObjectId }>();
+  const clubsDB: (TClubZwift & Document) | null = await Club.findOneAndDelete({ id: clubId });
 
   if (!clubsDB) {
     throw new Error(`Не найден клуб с id:${clubId}`);
   }
+
+  // Удаление клуба из списка клубов для модерации в документах соответствующих пользователей User.
+  await User.updateMany(
+    { _id: { $in: clubsDB.moderators } },
+    { $pull: { 'moderator.clubs': clubId } }
+  );
 
   return { data: null, message: `Удалён клуб с id:${clubId} из БД!` };
 }
