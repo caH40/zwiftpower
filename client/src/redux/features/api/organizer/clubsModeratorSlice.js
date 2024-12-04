@@ -4,6 +4,7 @@ import {
   fetchGetClubsZwiftModerator,
   fetchGetClubZwiftModerator,
   fetchPostClubsZwiftModerator,
+  fetchPutClubsZwiftModerator,
 } from './fetchClubsModerator';
 
 const initialState = {
@@ -80,6 +81,22 @@ const clubsModeratorSlice = createSlice({
     });
 
     builder.addCase(fetchPostClubsZwiftModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // =========== добавление модератора в клуб ==============
+    builder.addCase(fetchPutClubsZwiftModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchPutClubsZwiftModerator.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchPutClubsZwiftModerator.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

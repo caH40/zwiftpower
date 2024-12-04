@@ -109,6 +109,7 @@ export default function OrganizerClubs({ organizerId }) {
           clubCurrent={clubCurrent}
           setClubCurrent={setClubCurrent}
           setShowAddModerator={setShowAddModerator}
+          organizerId={organizerId}
         />
       )}
 

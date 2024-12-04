@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchPutClubModerator } from '../../../redux/features/api/club_moderator/fetchClubModerator';
+import {
+  fetchGetClubsZwiftModerator,
+  fetchPutClubsZwiftModerator,
+} from '../../../redux/features/api/organizer/fetchClubsModerator';
 import IconAdd from '../../icons/IconAdd';
 import CommonInput from '../SimpleInput/CommonInput';
+import { getAlert } from '../../../redux/features/alertMessageSlice';
 
 import styles from './FindUser.module.css';
 
 /**
  * Блок поиска пользователя для добавления в клуб
  */
-function FindUserNew({ clubCurrent, setClubCurrent, setShowAddModerator }) {
+function FindUserNew({ clubCurrent, setClubCurrent, setShowAddModerator, organizerId }) {
   const { usersForModerator } = useSelector((state) => state.getUsers);
   // поиск пользователя по userQuery
   const [userQuery, setUserQuery] = useState('');
@@ -22,7 +26,12 @@ function FindUserNew({ clubCurrent, setClubCurrent, setShowAddModerator }) {
     setClubCurrent({ id: '', name: '' });
     setShowAddModerator(false);
     setUserQuery('');
-    dispatch(fetchPutClubModerator({ userId, clubId }));
+    dispatch(fetchPutClubsZwiftModerator({ userId, clubId })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+        dispatch(fetchGetClubsZwiftModerator({ organizerId }));
+      }
+    });
   };
 
   return (
