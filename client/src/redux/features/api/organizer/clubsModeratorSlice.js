@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   fetchDeleteModeratorClubsZwiftModerator,
+  fetchGetClubsForModeratorZwiftModerator,
   fetchGetClubsZwiftModerator,
   fetchGetClubZwiftModerator,
   fetchPostClubsZwiftModerator,
@@ -12,6 +13,7 @@ const initialState = {
   id: 0,
   clubs: [],
   clubForAdd: {},
+  clubsForModerator: [],
   status: null,
   error: null,
 };
@@ -56,7 +58,25 @@ const clubsModeratorSlice = createSlice({
       state.error = action.payload;
     });
 
-    // =========== получение данных о клубе из ZwiftAPI для добавления Организатору ==============
+    // ============== получение данных о клубах =================
+    // ==============  в которых пользователь является модератором =================
+    builder.addCase(fetchGetClubsForModeratorZwiftModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetClubsForModeratorZwiftModerator.fulfilled, (state, action) => {
+      state.clubsForModerator = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetClubsForModeratorZwiftModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ========== получение данных о клубе из ZwiftAPI для добавления Организатору ============
     builder.addCase(fetchGetClubZwiftModerator.pending, (state) => {
       state.error = null;
       state.status = 'loading';
@@ -89,7 +109,7 @@ const clubsModeratorSlice = createSlice({
       state.error = action.payload;
     });
 
-    // =========== добавление модератора в клуб ==============
+    // =========== добавление пользователя модератором в клуб ==============
     builder.addCase(fetchPutModeratorClubsZwiftModerator.pending, (state) => {
       state.error = null;
       state.status = 'loading';
@@ -105,7 +125,7 @@ const clubsModeratorSlice = createSlice({
       state.error = action.payload;
     });
 
-    // =========== добавление модератора в клуб ==============
+    // =========== удаление пользователя из модераторов клуба ==============
     builder.addCase(fetchDeleteModeratorClubsZwiftModerator.pending, (state) => {
       state.error = null;
       state.status = 'loading';

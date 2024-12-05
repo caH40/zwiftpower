@@ -32,6 +32,31 @@ export async function getClubsZwiftService({
 }
 
 /**
+ * Сервис получение клубов из БД для Модераторов клуба.
+ */
+export async function getClubsZwiftForModeratorService({
+  userModeratorId,
+}: {
+  userModeratorId: string;
+}): Promise<TResponseService<TClubsZwiftDto[]>> {
+  // Поиск всех клубов в которых пользователь userModeratorId является модератором данного клуба.
+  const clubsDB = await Club.find({ moderators: userModeratorId })
+    .populate({
+      path: 'moderators',
+      select: ['username', 'zwiftId'],
+    })
+    .populate({ path: 'organizer', select: 'name' })
+    .lean<(TResponseClubsFromDB & { _id: ObjectId })[]>();
+
+  const clubsAfterDTO = transformClubsZwiftToDto(clubsDB);
+
+  return {
+    data: clubsAfterDTO,
+    message: 'Получены клубы в которых пользователь является модератором.',
+  };
+}
+
+/**
  * Сервис удаление клуба из БД для Организатора.
  */
 export async function deleteClubsZwiftService({

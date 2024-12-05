@@ -12,6 +12,7 @@ import {
   addClubModeratorService,
   deleteClubModeratorService,
   deleteClubsZwiftService,
+  getClubsZwiftForModeratorService,
   getClubsZwiftService,
   getClubZwiftService,
   postClubsZwiftService,
@@ -162,6 +163,32 @@ export async function getClubsZwift(req: Request, res: Response) {
 
     // Вызов сервиса.
     const response = await getClubsZwiftService({ organizerId });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер для получение клубов из БД для Модераторов клуба.
+ */
+export async function getClubsZwiftForModerator(req: Request, res: Response) {
+  try {
+    const { userModeratorId } = req.params;
+
+    if (!userModeratorId) {
+      throw new Error('Нет userModeratorId!');
+    }
+
+    // Вызов сервиса.
+    const response = await getClubsZwiftForModeratorService({ userModeratorId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

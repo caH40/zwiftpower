@@ -26,6 +26,27 @@ export const fetchGetClubsZwiftModerator = createAsyncThunk(
 );
 
 /**
+ * Получение получение клубов из БД для модератора клубов.
+ */
+export const fetchGetClubsForModeratorZwiftModerator = createAsyncThunk(
+  'organizerClubsForModerator/get',
+  async ({ moderatorId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/clubs-for-moderator/${moderatorId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Получение получение клуба из Zwift для добавления Организатору.
  */
 export const fetchGetClubZwiftModerator = createAsyncThunk(
