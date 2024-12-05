@@ -12,14 +12,20 @@ export const checkModeratorClub = async (
     return;
   }
 
-  // есть ли клуб в списке модерируемых клубов у пользователя userId
+  // Есть ли клуб в списке модерируемых клубов у пользователя userId.
+  // !!! Почему нет дополнительной проверки наличия id пользователя в списке модераторов в документе Club???
   const userDB = await User.findOne({
     _id: userId,
     'moderator.clubs': clubId,
   });
 
-  // не достаточно иметь клуб в списке модерируемых, необходимо быть еще админом или модератором
-  if (!userDB || !['admin', 'moderator'].includes(userDB.role)) {
+  // Открыт доступ админам.
+  if (['admin'].includes(String(userDB?.role))) {
+    return;
+  }
+
+  // Достаточно иметь клуб в списке модерируемых.
+  if (!userDB) {
     throw new Error('У вас нет прав для редактирования/создания Эвента в данном клубе!');
   }
 };
