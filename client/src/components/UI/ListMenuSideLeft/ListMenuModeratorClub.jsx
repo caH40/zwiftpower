@@ -1,35 +1,33 @@
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import IconOrganizer from '../../icons/IconOrganizer';
 import IconZwiftEdit from '../../icons/IconZwiftEdit';
 
 import styles from './ListMenu.module.css';
+import ItemMenuSideLeft from './ItemMenuSideLeft/ItemMenuSideLeft';
 
-function ListMenuModeratorClub({ state }) {
+export default function ListMenuModeratorClub({ state }) {
   const { user } = useSelector((state) => state.checkAuth.value);
 
   const isModeratorClub = !!user.moderator?.clubs?.length;
 
   const isModerator = ['admin', 'moderator'].includes(user.role);
 
-  const activeLink = ({ isActive }) =>
-    isActive ? `${styles.link} ${styles.active}` : styles.link;
   return (
     <ul className={styles.list}>
       {(isModerator || isModeratorClub) && (
-        <li>
-          <NavLink to="/zwift" className={activeLink}>
-            {({ isActive }) => (
-              <div className={styles.link__box}>
-                <IconZwiftEdit isActive={isActive} />
-                <span className={`${styles.link__name} ${styles[state]}`}>Zwift</span>
-              </div>
-            )}
-          </NavLink>
-        </li>
+        <ItemMenuSideLeft to={'/zwift'} Icon={IconZwiftEdit} name={'Zwift'} state={state} />
+      )}
+
+      {user.organizer && (
+        <ItemMenuSideLeft
+          to={'/organizer/main'}
+          Icon={IconOrganizer}
+          name={'Организатор'}
+          iconProps={{ color: '#CECECE' }}
+          state={state}
+        />
       )}
     </ul>
   );
 }
-
-export default ListMenuModeratorClub;
