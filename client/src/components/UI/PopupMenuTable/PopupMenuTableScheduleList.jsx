@@ -11,9 +11,10 @@ import styles from './PopupMenuTable.module.css';
  */
 function PopupMenuTableScheduleList({ event, updateEvent, removeEvent }) {
   const { menus } = useSelector((state) => state.popupTableSchedule);
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
   const dispatch = useDispatch();
 
-  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
   const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
 
   const menu = menus.find((elm) => elm.eventId === event?.id) || {};

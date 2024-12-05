@@ -145,7 +145,7 @@ function TableRaceResults({ results, event, forDNF }) {
               {isAdmin && (
                 <td>
                   <Link to={`/admin/riders/${result.profileId}/main`}>
-                    <IconEdit />
+                    <IconEdit squareSize={20} />
                   </Link>
                 </td>
               )}

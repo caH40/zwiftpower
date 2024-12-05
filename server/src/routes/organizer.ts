@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authModerator, authModeratorClub } from '../middleware/authRole.js';
+import { authModeratorClub, authOrganizer } from '../middleware/authRole.js';
 import {
   addClubModerator,
   deleteClubModerator,
@@ -17,18 +17,18 @@ import {
 
 export const routerOrganizer = Router();
 
-routerOrganizer.put('/bots', authModerator, putOrganizerBotZwift);
-routerOrganizer.get('/bots', authModerator, getOrganizerBotZwift);
-routerOrganizer.delete('/bots', authModerator, deleteOrganizerBotZwift);
-routerOrganizer.get('/clubs/:organizerId', authModerator, getClubsZwift);
+routerOrganizer.put('/bots', authOrganizer, putOrganizerBotZwift);
+routerOrganizer.get('/bots', authOrganizer, getOrganizerBotZwift);
+routerOrganizer.delete('/bots', authOrganizer, deleteOrganizerBotZwift);
+routerOrganizer.get('/clubs/:organizerId', authOrganizer, getClubsZwift);
 routerOrganizer.get(
   '/clubs-for-moderator/:userModeratorId',
   authModeratorClub,
   getClubsZwiftForModerator
 );
-routerOrganizer.delete('/clubs', authModerator, deleteClubsZwift);
-routerOrganizer.get('/clubs/zwift/:clubId', authModerator, getClubZwift);
-routerOrganizer.post('/clubs/', authModerator, postClubsZwift);
-routerOrganizer.put('/clubs/moderators', authModerator, addClubModerator);
-routerOrganizer.delete('/clubs/moderators', authModerator, deleteClubModerator);
-routerOrganizer.get('/:organizerId', authModerator, getClubZwiftModerator);
+routerOrganizer.delete('/clubs', authOrganizer, deleteClubsZwift);
+routerOrganizer.get('/clubs/zwift/:clubId', authOrganizer, getClubZwift);
+routerOrganizer.post('/clubs/', authOrganizer, postClubsZwift);
+routerOrganizer.put('/clubs/moderators', authOrganizer, addClubModerator);
+routerOrganizer.delete('/clubs/moderators', authOrganizer, deleteClubModerator);
+routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);

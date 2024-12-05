@@ -6,6 +6,7 @@ const authSlice = createSlice({
     value: {
       status: false,
       user: {
+        isModeratorClub: false,
         email: '',
         id: '',
         zwiftId: '',
@@ -18,7 +19,10 @@ const authSlice = createSlice({
   },
   reducers: {
     getAuth(state, action) {
-      state.value = action.payload;
+      const { status, user } = action.payload;
+      // Если есть клуб(ы) в модерации пользователя, то isModeratorClub:true
+      const isModeratorClub = !!user?.moderator?.clubs?.length;
+      state.value = { status, user: { ...user, isModeratorClub } };
     },
   },
 });

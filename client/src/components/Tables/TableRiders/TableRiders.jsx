@@ -83,7 +83,7 @@ function TableRiders({ riders = [], event }) {
             {isAdmin && (
               <td>
                 <Link to={`/admin/riders/${rider.zwiftId}/main`}>
-                  <IconEdit />
+                  <IconEdit squareSize={20} />
                 </Link>
               </td>
             )}

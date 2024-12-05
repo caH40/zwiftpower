@@ -12,7 +12,7 @@ function IconMenuInfoDev({ setIsVisible, setIsVisibleDelete, setIsVisibleEdit })
   };
   return (
     <div className={styles.icons} onClick={getClick}>
-      <IconEdit addCls="pointer" />
+      <IconEdit addCls="pointer" squareSize={20} />
     </div>
   );
 }

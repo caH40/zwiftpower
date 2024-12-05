@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { getSeriesActual, getLogsAdmins } from '../controllers/controllers.js';
 
-import { authAdmin, authModerator, authModeratorClub } from '../middleware/authRole.js';
+import { authAdmin, authModeratorClub, authOrganizer } from '../middleware/authRole.js';
 import {
   getLogsErrors,
   getLogError,
@@ -23,4 +23,4 @@ router.delete('/logs/admins', authAdmin, deleteLogAdmin);
 router.get('/logs/error', authAdmin, getLogError);
 router.get('/riders', getRiders);
 router.get('/streams', getEnabledUserStreams);
-router.get('/moderator/users', authModerator, getUsersForModerator);
+router.get('/moderator/users', authOrganizer, getUsersForModerator);

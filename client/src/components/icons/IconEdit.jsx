@@ -10,7 +10,7 @@ function IconEdit({ isActive, getClick, tooltip, addCls = ' ', bgColor, squareSi
   return (
     <MyTooltip tooltip={tooltip}>
       <div
-        className={cn(styles.box, styles.box__alone, cns(styles, addCls))}
+        className={cn(styles.box, cns(styles, addCls))}
         onClick={getClick}
         style={{ width: squareSize, height: squareSize }}
       >

@@ -27,7 +27,7 @@ function TrBlock({ result, index, type, isAdmin }) {
         {isAdmin && (
           <td>
             <Link to={`/admin/riders/${result.zwiftId}/main`}>
-              <IconEdit />
+              <IconEdit squareSize={20} />
             </Link>
           </td>
         )}
