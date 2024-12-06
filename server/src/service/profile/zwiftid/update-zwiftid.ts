@@ -1,5 +1,6 @@
 import { User } from '../../../Model/User.js';
 import { addMainProfileZwift } from '../../profile_additional/main-add.js';
+import { updateProfileService } from '../rider.js';
 
 /**
  * Сервис обновления zwiftId у пользователя
@@ -37,6 +38,8 @@ export async function updateZwiftIdService(
     };
   } else {
     await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId } });
+
+    await updateProfileService(userId);
 
     return {
       message: `ZwiftId ${zwiftId} привязан к профилю`,
