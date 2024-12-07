@@ -6,6 +6,7 @@ import { millisecondsIn2Hours, millisecondsIn30Minutes } from '../../../assets/d
 
 // types
 import { EventWithSubgroup } from '../../../types/types.interface.js';
+import { getTokenForEvent } from '../../race/token.js';
 
 /**
  * Обновление всех результатов Эвентов которые не имеют результатов ( hasResults: false )
@@ -33,8 +34,12 @@ export async function updateResults() {
       // isLastUpdate: true происходит быстрое обновление результатов
       if (needUpdate) {
         // быстро обновлять результаты, если не последнее обновление
+        const token = await getTokenForEvent({
+          organizerLabel: event.organizer,
+          organizerId: event.organizerId,
+        });
         const isFast = !isLastUpdate;
-        await updateResultsEvent(event, isFast);
+        await updateResultsEvent(event, token, isFast);
       }
     }
   } catch (error) {

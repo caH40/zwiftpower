@@ -30,6 +30,7 @@ const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   name: { type: String, default: null },
   rulesSet: { type: [String], default: [] },
   organizer: { type: String, default: null },
+  organizerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' },
   tags: { type: [String], default: [] },
   visible: { type: Boolean, default: true },
   totalEntrantCount: { type: Number, default: null },

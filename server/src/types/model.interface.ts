@@ -314,7 +314,7 @@ export interface ZwiftEventSchema {
   name: string;
   rulesSet: string[];
   organizer: string; // label Организатора
-  organizerId: Types.ObjectId; // _id Организатора в БД.
+  organizerId?: Types.ObjectId; // _id Организатора в БД.
   tags: string[];
   visible: boolean;
   totalEntrantCount: number;

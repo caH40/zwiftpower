@@ -193,6 +193,7 @@ export interface GetResultsArg {
     subgroupId: number;
   };
   subgroupLabel: string;
+  token: string | null;
 }
 /**
  * Результат райдера в Event с дополнительными параметрами
@@ -757,6 +758,6 @@ export type ParamsGetRequestToZwift = Omit<ParamsRequestToZwift<unknown>, 'data'
 export type ParamsRequestToZwift<T> = {
   url: string;
   isMainToken?: boolean;
-  tokenOrganizer?: string; // Если нет токена Организатора, то выполняются запросы через тонен бота Race-Info.
+  tokenOrganizer?: string | null; // Если нет токена Организатора, то выполняются запросы через тонен бота Race-Info.
   data: T; // данные для post,put,delete запросов.
 };

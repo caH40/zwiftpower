@@ -1,6 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResults } from './results.js';
 import { addAgeAndFlag } from '../protocol/age-and-flag.js';
+import { getTokenForEvent } from '../race/token.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';
@@ -17,6 +18,11 @@ export async function getZwiftEventResultsService(eventId: string) {
     throw new Error(`Не найден Event ${eventId}`);
   }
 
+  const token = await getTokenForEvent({
+    organizerLabel: eventDB.organizer,
+    organizerId: eventDB.organizerId,
+  });
+
   const resultsTotal = [] as ResultEventAdditional[];
   for (const subgroup of eventDB.eventSubgroups) {
     const subgroupObj = { subgroup_id: subgroup._id, subgroupId: subgroup.id };
@@ -24,6 +30,7 @@ export async function getZwiftEventResultsService(eventId: string) {
     const resultsSubgroup = await getResults({
       subgroupObj,
       subgroupLabel: subgroup.subgroupLabel,
+      token,
     });
     resultsTotal.push(...resultsSubgroup);
   }

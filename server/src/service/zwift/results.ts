@@ -6,14 +6,17 @@ import { GetResultsArg, ResultsEventAdditional } from '../../types/types.interfa
 /**
  * Получение результатов заезда из Звифта
  */
-export async function getResults({ subgroupObj, subgroupLabel = 'E' }: GetResultsArg) {
+export async function getResults({ subgroupObj, subgroupLabel = 'E', token }: GetResultsArg) {
   let start = 0;
   let resultsQuantity = 50;
   const resultsSubgroup = [];
 
   while (resultsQuantity === 50) {
     const urlEventData = `race-results/entries?event_subgroup_id=${subgroupObj.subgroupId}&start=${start}&limit=50`;
-    const eventData: ResultsEventAdditional = await getRequest({ url: urlEventData });
+    const eventData: ResultsEventAdditional = await getRequest({
+      url: urlEventData,
+      tokenOrganizer: token,
+    });
     // добавление буквенного названия группы в каждый результат
 
     for (const entry of eventData.entries) {
