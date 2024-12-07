@@ -42,6 +42,7 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
 
   eventParams.clubName = clubDB.name;
   eventParams.organizer = clubDB.organizer.label;
+  eventParams.organizerId = clubDB.organizer._id;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
 

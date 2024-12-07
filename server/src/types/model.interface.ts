@@ -313,7 +313,8 @@ export interface ZwiftEventSchema {
   microserviceExternalResourceId: string;
   name: string;
   rulesSet: string[];
-  organizer: string;
+  organizer: string; // label Организатора
+  organizerId: Types.ObjectId; // _id Организатора в БД.
   tags: string[];
   visible: boolean;
   totalEntrantCount: number;
