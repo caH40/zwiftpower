@@ -1,4 +1,4 @@
-import { getRequest } from '../zwift/request-get.js';
+import { getRequest } from '../zwift/api/request-get.js';
 
 // types
 import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
@@ -27,7 +27,7 @@ export const getClubsService = async (): Promise<ClubSchema[]> => {
 export const getClubService = async (id: string) => {
   const url = `clubs/club/${id}`;
 
-  const club: ClubZwift | null = await getRequest(url);
+  const club: ClubZwift | null = await getRequest({ url });
   if (!club) {
     throw new Error(`Не найден Клуб с id:${id}`);
   }

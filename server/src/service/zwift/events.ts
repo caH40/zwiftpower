@@ -1,6 +1,6 @@
 import { loggingAdmin } from '../../logger/logger-admin.js';
-import { getRequest } from './request-get.js';
-import { putRequest } from './request-put.js';
+import { getRequest } from './api/request-get.js';
+import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
@@ -14,7 +14,7 @@ import { TAccessExpressionObj } from '../../types/model.interface.js';
 // запрос данных Эвента с сервера Zwift
 export async function getEventZwiftService(eventId: number) {
   const urlEventData = `events/${eventId}?skip_cache=false`;
-  const eventData: eventDataFromZwiftAPI | null = await getRequest(urlEventData);
+  const eventData: eventDataFromZwiftAPI | null = await getRequest({ url: urlEventData });
 
   if (!eventData) {
     throw new Error(`Не найден Эвент id:${eventId}`);
@@ -39,7 +39,7 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
 
   const id = event.eventData.id;
   const urlEventData = `events/${id}`;
-  const eventData = await putRequest(urlEventData, event);
+  const eventData = await putRequest({ url: urlEventData, data: event });
 
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(

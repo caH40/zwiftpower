@@ -1,4 +1,4 @@
-import { postRequest } from './request-post.js';
+import { postRequest } from './api/request-post.js';
 
 // types
 import { PostZwiftEvent } from '../../types/http.interface.js';
@@ -16,7 +16,7 @@ export async function postZwiftEventService(
 
   // создание Эвента в ZwiftAPI, в ответе возвращается id созданного Эвента
   const urlCreate = 'events-core/events';
-  const { id }: { id: number } = await postRequest(urlCreate, event);
+  const { id }: { id: number } = await postRequest({ url: urlCreate, data: event });
 
   return { eventId: id, message: `Создан заезд на сервере Zwift с id: ${id}` };
 }

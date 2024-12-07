@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-import { getAccessToken } from './token.js';
-import { zwiftAPI } from '../../config/environment.js';
+import { getAccessToken } from '../token.js';
+import { zwiftAPI } from '../../../config/environment.js';
 
 //types
-import { PostZwiftEvent } from '../../types/http.interface.js';
+import { PostZwiftEvent } from '../../../types/http.interface.js';
+import { ParamsRequestToZwift } from '../../../types/types.interface.js';
 
 const apiUrl = zwiftAPI;
 
@@ -30,7 +31,11 @@ const headersDefault = {
   Host: 'us-or-rly101.zwift.com',
 };
 
-export async function postRequest(url: string, data: PostZwiftEvent, isMainToken = true) {
+export async function postRequest({
+  url,
+  data,
+  isMainToken = true,
+}: ParamsRequestToZwift<PostZwiftEvent>) {
   const token = await getAccessToken(isMainToken);
 
   const response = await axios({

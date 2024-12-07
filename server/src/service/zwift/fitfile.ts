@@ -1,4 +1,4 @@
-import { getRequest } from './request-get.js';
+import { getRequest } from './api/request-get.js';
 
 // types
 import { FitfileFullDataFromZwiftAPI } from '../../types/zwiftAPI/fitfileFullDataFromZwift.interface.js';
@@ -9,6 +9,6 @@ import { FitfileFullDataFromZwiftAPI } from '../../types/zwiftAPI/fitfileFullDat
  */
 export async function getFitFileFromZwift(fullDataUrl: string) {
   const url = fullDataUrl.split('https://us-or-rly101.zwift.com/api/')[1];
-  const fitFile: FitfileFullDataFromZwiftAPI | null = await getRequest(url);
+  const fitFile: FitfileFullDataFromZwiftAPI | null = await getRequest({ url });
   return fitFile;
 }

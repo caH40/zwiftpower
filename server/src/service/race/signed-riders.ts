@@ -1,7 +1,7 @@
 import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
-import { getRequest } from '../zwift/request-get.js';
+import { getRequest } from '../zwift/api/request-get.js';
 import { errorHandler } from '../../errors/error.js';
 
 // types
@@ -29,7 +29,9 @@ export async function putSignedRidersService(eventId: number) {
 
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
-        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
+        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest({
+          url: urlSignedData,
+        });
 
         // количество зарегистрированных райдеров подсчет которых начинается с позиции start
         ridersQuantity = signedData?.length || 0;
@@ -93,7 +95,9 @@ export async function getSignedRiders(eventId: number) {
       let start = 0;
       while (ridersQuantity === 100) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
-        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest(urlSignedData);
+        const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest({
+          url: urlSignedData,
+        });
 
         if (!signedData) {
           continue;

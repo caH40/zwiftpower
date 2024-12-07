@@ -1,4 +1,4 @@
-import { getRequest } from '../request-get.js';
+import { getRequest } from '../api/request-get.js';
 
 // types
 import { activityFeedFromZwiftAPI } from '../../../types/zwiftAPI/activity-feedFromZwift.interface.js';
@@ -8,7 +8,7 @@ import { ActivitiesDataFromZwiftAPI } from '../../../types/zwiftAPI/activitiesFr
 
 export async function getActivities(zwiftId: number, limit = 50) {
   const url = `activity-feed/feed/?feedType=OTHER_PROFILE&profile_id=${zwiftId}&${limit}`;
-  const response: activityFeedFromZwiftAPI[] = await getRequest(url);
+  const response: activityFeedFromZwiftAPI[] = await getRequest({ url });
 
   // выход, если ошибка при получении активностей
   if (!response) {
@@ -31,7 +31,7 @@ export async function getActivities(zwiftId: number, limit = 50) {
 export async function getActivitiesFullData(activityId: string) {
   try {
     const url = `activities/${activityId}`;
-    const activity: ActivitiesDataFromZwiftAPI = await getRequest(url);
+    const activity: ActivitiesDataFromZwiftAPI = await getRequest({ url });
 
     // если нет данных активности (приватность аккаунта)
     if (!activity) {

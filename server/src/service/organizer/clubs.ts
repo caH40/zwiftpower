@@ -5,7 +5,7 @@ import { TResponseService } from '../../types/http.interface.js';
 import { TClubsZwiftDto, TResponseClubsFromDB } from '../../types/types.interface.js';
 import { transformClubsZwiftToDto } from '../../dto/clubsZwift.js';
 import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
-import { getRequest } from '../zwift/request-get.js';
+import { getRequest } from '../zwift/api/request-get.js';
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
 import { User } from '../../Model/User.js';
 import { TClubZwift } from '../../types/model.interface.js';
@@ -104,7 +104,7 @@ export async function getClubZwiftService({
 
   const url = `clubs/club/${clubId}`;
 
-  const club: ClubZwift | null = await getRequest(url, true, tokenDB.token);
+  const club: ClubZwift | null = await getRequest({ url, tokenOrganizer: tokenDB.token });
 
   if (!club) {
     throw new Error(`Не найден Клуб с id:${clubId} в ZwiftAPI!`);

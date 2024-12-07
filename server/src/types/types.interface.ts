@@ -745,3 +745,18 @@ export type TClubsZwiftDto = Omit<TClubZwift, '_id' | 'organizer' | 'moderators'
   organizer: { name: string };
   moderators: { _id: string; username: string; zwiftId: number }[];
 };
+
+/**
+ * Параметры для конфигурации get запросов на ZwiftAPI.
+ */
+export type ParamsGetRequestToZwift = Omit<ParamsRequestToZwift<unknown>, 'data'>;
+
+/**
+ * Параметры для конфигурации запросов на ZwiftAPI.
+ */
+export type ParamsRequestToZwift<T> = {
+  url: string;
+  isMainToken?: boolean;
+  tokenOrganizer?: string; // Если нет токена Организатора, то выполняются запросы через тонен бота Race-Info.
+  data: T; // данные для post,put,delete запросов.
+};

@@ -1,4 +1,4 @@
-import { getRequest } from '../zwift/request-get.js';
+import { getRequest } from './api/request-get.js';
 
 // types
 import { GetResultsArg, ResultsEventAdditional } from '../../types/types.interface.js';
@@ -13,7 +13,7 @@ export async function getResults({ subgroupObj, subgroupLabel = 'E' }: GetResult
 
   while (resultsQuantity === 50) {
     const urlEventData = `race-results/entries?event_subgroup_id=${subgroupObj.subgroupId}&start=${start}&limit=50`;
-    const eventData: ResultsEventAdditional = await getRequest(urlEventData);
+    const eventData: ResultsEventAdditional = await getRequest({ url: urlEventData });
     // добавление буквенного названия группы в каждый результат
 
     for (const entry of eventData.entries) {
