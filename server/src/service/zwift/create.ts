@@ -1,22 +1,22 @@
+import { Types } from 'mongoose';
+
 import { postRequest } from './api/request-post.js';
+import { getAccessTokenOrganizer } from './token.js';
+import { Club } from '../../Model/Club.js';
 
 // types
 import { PostZwiftEvent } from '../../types/http.interface.js';
-import { getAccessTokenOrganizer } from './token.js';
-import { Club } from '../../Model/Club.js';
-import { Types } from 'mongoose';
 
 /**
  * Сервис отправки запроса на создание Эвента в Zwift
  */
 export async function postZwiftEventService({
   event,
-  clubId,
 }: {
   event: PostZwiftEvent;
-  clubId: string;
 }): Promise<{ eventId: number; message: string }> {
   // Для получения токена-доступа к zwiftAPI запрашиваем клуб в котором создается Эвент, а затем получем id организатора.
+  const clubId = event.eventData.microserviceExternalResourceId;
   const clubDB = await Club.findOne({ id: clubId }, { _id: false, organizer: true }).lean<{
     organizer: Types.ObjectId;
   }>();
@@ -26,7 +26,7 @@ export async function postZwiftEventService({
   }
 
   const tokenOrganizer = await getAccessTokenOrganizer({
-    organizerId: String(clubDB.organizer),
+    clubId,
     importanceToken: 'main',
   });
 

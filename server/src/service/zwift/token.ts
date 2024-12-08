@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import { Types } from 'mongoose';
 
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
 import {
@@ -10,6 +11,7 @@ import {
   usernameZwiftSecondary,
 } from '../../config/environment.js';
 import { errorHandler } from '../../errors/error.js';
+import { Club } from '../../Model/Club.js';
 
 const zwiftUsers = [
   {
@@ -41,17 +43,26 @@ export async function getAccessToken(isMainToken?: boolean) {
 }
 
 /**
- * Получение токена доступа к API Zwift для Организатора.
+ * Получение токена доступа к API Zwift для Организатора по ID клуба, принадлежащего организатору..
  */
 export async function getAccessTokenOrganizer({
-  organizerId,
+  clubId,
   importanceToken,
 }: {
-  organizerId: string;
+  clubId: string;
   importanceToken: 'main' | 'secondary';
 }) {
+  // Для получения токена-доступа к zwiftAPI запрашиваем клуб в котором создается Эвент, а затем получем id организатора.
+  const clubDB = await Club.findOne({ id: clubId }, { _id: false, organizer: true }).lean<{
+    organizer: Types.ObjectId;
+  }>();
+
+  if (!clubDB) {
+    throw new Error('Не найден клуб в БД в котором создается Эвент!');
+  }
+
   const tokenDB = await ZwiftToken.findOne(
-    { organizer: organizerId, importance: importanceToken },
+    { organizer: clubDB.organizer, importance: importanceToken },
     { token: true, _id: false }
   ).lean<{
     token: string;

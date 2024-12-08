@@ -25,6 +25,10 @@ export async function postRequest({
   data,
   tokenOrganizer,
 }: ParamsRequestToZwift<PostZwiftEvent>) {
+  if (!tokenOrganizer) {
+    throw new Error('Не получен токен доступа организатора к ZwiftAPI!');
+  }
+
   const response = await axios({
     method: 'post',
     url: `${apiUrl}${url}`,

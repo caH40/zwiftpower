@@ -4,6 +4,7 @@ import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { getAccessTokenOrganizer } from './token.js';
 
 // types
 import { PutEvent } from '../../types/http.interface.js';
@@ -33,9 +34,14 @@ export async function getEventZwiftService(eventId: number) {
  * Сервис внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
  */
 export async function putEventZwiftService(event: PutEvent, userId: string) {
+  const tokenOrganizer = await getAccessTokenOrganizer({
+    clubId: String(event.eventData.microserviceExternalResourceId),
+    importanceToken: 'main',
+  });
+
   const id = event.eventData.id;
   const urlEventData = `events/${id}`;
-  const eventData = await putRequest({ url: urlEventData, data: event });
+  const eventData = await putRequest({ url: urlEventData, data: event, tokenOrganizer });
 
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(

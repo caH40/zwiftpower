@@ -124,7 +124,7 @@ export async function postZwiftEvent(req: Request, res: Response) {
     // Проверка является ли userId модератором клуба в котором создается данный Эвент
     await checkModeratorClub({ userId, clubId });
 
-    const { eventId, message } = await postZwiftEventService({ event, clubId });
+    const { eventId, message } = await postZwiftEventService({ event });
 
     res.status(201).json({ eventId, message });
   } catch (error) {
