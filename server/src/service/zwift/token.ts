@@ -5,10 +5,10 @@ import { Types } from 'mongoose';
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
 import {
   passwordZwift,
-  passwordZwiftSecondary,
+  // passwordZwiftSecondary,
   secureUrl,
   usernameZwift,
-  usernameZwiftSecondary,
+  // usernameZwiftSecondary,
 } from '../../config/environment.js';
 import { errorHandler } from '../../errors/error.js';
 import { Club } from '../../Model/Club.js';
@@ -19,11 +19,11 @@ const zwiftUsers = [
     password: passwordZwift,
     importance: 'main',
   },
-  {
-    username: usernameZwiftSecondary,
-    password: passwordZwiftSecondary,
-    importance: 'secondary',
-  },
+  // {
+  //   username: usernameZwiftSecondary,
+  //   password: passwordZwiftSecondary,
+  //   importance: 'secondary',
+  // },
 ];
 
 /**
