@@ -3,7 +3,6 @@ import { updateStartInfoEvent } from '../../updates/schedule/start-event.js';
 import { putSignedRidersService } from '../signed-riders.js';
 import { checkUnique } from './unique.js';
 import { saveEventToDB } from './save.js';
-import { checkModeratorClub } from '../../moderator-club.js';
 
 // types
 import {
@@ -24,8 +23,6 @@ interface ClubWithOrganizer extends Omit<ClubSchema, 'organizer'> {
  */
 export async function postEventService(eventParams: EventWithSubgroup, userId: string) {
   const clubId = eventParams.microserviceExternalResourceId;
-  // Проверка является ли userId модератором клуба в котором создается данный Эвент
-  await checkModeratorClub({ userId, clubId });
 
   // Проверка на уникальность id Эвента и id подгрупп
   await checkUnique(eventParams);
