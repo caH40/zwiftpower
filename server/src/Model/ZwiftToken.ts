@@ -1,11 +1,18 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Document, Schema, model } from 'mongoose';
 
-import { TokenSchema } from '../types/model.interface.js';
+import { TZwiftToken } from '../types/model.interface.js';
 
-const zwiftTokenSchema = new Schema<TokenSchema>({
-  token: String,
-  username: String,
-  importance: String, //main,secondary
-});
+/**
+ * Схема для Zwift token бота-модератора клуба в Звифт.
+ */
+const zwiftTokenSchema = new Schema<TZwiftToken>(
+  {
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' },
+    token: { type: String, required: true },
+    username: { type: String, required: true },
+    importance: { type: String, enum: ['main', 'secondary'] },
+  },
+  { timestamps: true }
+);
 
-export const ZwiftToken = model<TokenSchema>('ZwiftToken', zwiftTokenSchema);
+export const ZwiftToken = model<TZwiftToken & Document>('ZwiftToken', zwiftTokenSchema);

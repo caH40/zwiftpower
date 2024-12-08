@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AxiosError } from 'axios';
 
 import { errorHandler } from '../errors/error.js';
-import { getUsersService } from '../service/admin/users.js';
+import { getUsersForModeratorService, getUsersService } from '../service/admin/users.js';
 import {
   addClubModeratorService,
   deleteClubModeratorService,
@@ -48,6 +48,26 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 /**
+ * Получение всех зарегистрированных Users по запросу Модератора.
+ */
+export const getUsersForModerator = async (req: Request, res: Response) => {
+  try {
+    // Вызов сервиса.
+    const users = await getUsersForModeratorService();
+
+    // Возврат успешного ответа.
+    res.status(200).json(users);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+};
+
+/**
  * Получение всех клубов из БД
  */
 export const getClubs = async (req: Request, res: Response) => {
@@ -66,6 +86,7 @@ export const getClubs = async (req: Request, res: Response) => {
 
 /**
  * Получение данных Клуба из ZwiftAPI
+ * * Доступ данных к клубу в ZwiftAPI разрешается любым пользователям.
  */
 export const getClub = async (req: Request, res: Response) => {
   try {

@@ -1,0 +1,8 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
+}
+.title {
+  font-size: 20px;
+  margin-bottom: 15px;
+}

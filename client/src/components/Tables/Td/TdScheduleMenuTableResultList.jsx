@@ -17,7 +17,7 @@ function TdScheduleMenuTableResultList({
   return (
     <td>
       <div className={styles.icons} onClick={() => dispatch(showResultListMenu(event.id))}>
-        <IconEdit addCls="pointer" />
+        <IconEdit addCls="pointer" squareSize={20} />
         <PopupMenuTableResultList
           event={event}
           updateResults={updateResults}

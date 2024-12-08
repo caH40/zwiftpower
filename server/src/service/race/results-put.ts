@@ -4,20 +4,26 @@ import { updateResultsEvent } from '../updates/results_event/result-event.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
+import { getTokenForEvent } from '../zwift/token.js';
 
 /**
  * Ручное обновление результатов Эвента по запросу модератора
  */
 export async function putResultsService(eventId: number, userId: string) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId }).populate(
-    'eventSubgroups'
-  );
+  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId })
+    .populate('eventSubgroups')
+    .lean();
 
   if (!eventDB) {
     throw new Error(`Не найден Эвент ${eventId} для удаления из БД`);
   }
 
-  await updateResultsEvent(eventDB, false);
+  const token = await getTokenForEvent({
+    organizerLabel: eventDB.organizer,
+    organizerId: eventDB.organizerId,
+  });
+
+  await updateResultsEvent(eventDB, token, false);
 
   // логирование действия
   if (userId) {

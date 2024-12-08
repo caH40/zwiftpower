@@ -3,6 +3,7 @@ import { errorHandler } from '../../../errors/error.js';
 import { checkDurationUpdating } from '../results-check.js';
 import { updateResultsEvent } from './result-event.js';
 import { millisecondsIn2Hours, millisecondsIn30Minutes } from '../../../assets/date.js';
+import { getTokenForEvent } from '../../zwift/token.js';
 
 // types
 import { EventWithSubgroup } from '../../../types/types.interface.js';
@@ -33,8 +34,12 @@ export async function updateResults() {
       // isLastUpdate: true происходит быстрое обновление результатов
       if (needUpdate) {
         // быстро обновлять результаты, если не последнее обновление
+        const token = await getTokenForEvent({
+          organizerLabel: event.organizer,
+          organizerId: event.organizerId,
+        });
         const isFast = !isLastUpdate;
-        await updateResultsEvent(event, isFast);
+        await updateResultsEvent(event, token, isFast);
       }
     }
   } catch (error) {

@@ -1,20 +1,35 @@
 import { loggingAdmin } from '../../logger/logger-admin.js';
-import { getRequest } from './request-get.js';
-import { putRequest } from './request-put.js';
+import { getRequest } from './api/request-get.js';
+import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { checkModeratorClub } from '../moderator-club.js';
+import { getAccessTokenOrganizer } from './token.js';
 
 // types
 import { PutEvent } from '../../types/http.interface.js';
 import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
 import { TAccessExpressionObj } from '../../types/model.interface.js';
 
-// запрос данных Эвента с сервера Zwift
-export async function getEventZwiftService(eventId: number) {
+// Запрос данных Эвента с сервера Zwift от модераторов клубов.
+// При clubId:undefined значит запрос на ZwiftAPI будет осуществляться по общему токену-доступа.
+export async function getEventZwiftService({
+  eventId,
+  clubId,
+}: {
+  eventId: number;
+  clubId?: string;
+}) {
+  const tokenOrganizer = clubId
+    ? await getAccessTokenOrganizer({ clubId, importanceToken: 'main' })
+    : undefined;
+
+  // Получение данных Эвента из ZwiftAPI.
   const urlEventData = `events/${eventId}?skip_cache=false`;
-  const eventData: eventDataFromZwiftAPI | null = await getRequest(urlEventData);
+  const eventData: eventDataFromZwiftAPI | null = await getRequest({
+    url: urlEventData,
+    tokenOrganizer,
+  });
 
   if (!eventData) {
     throw new Error(`Не найден Эвент id:${eventId}`);
@@ -34,12 +49,14 @@ export async function getEventZwiftService(eventId: number) {
  * Сервис внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
  */
 export async function putEventZwiftService(event: PutEvent, userId: string) {
-  // Проверка является ли userId модератором клуба в котором создается данный Эвент
-  await checkModeratorClub(userId, event.eventData.microserviceExternalResourceId);
+  const tokenOrganizer = await getAccessTokenOrganizer({
+    clubId: event.eventData.microserviceExternalResourceId,
+    importanceToken: 'main',
+  });
 
   const id = event.eventData.id;
   const urlEventData = `events/${id}`;
-  const eventData = await putRequest(urlEventData, event);
+  const eventData = await putRequest({ url: urlEventData, data: event, tokenOrganizer });
 
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(

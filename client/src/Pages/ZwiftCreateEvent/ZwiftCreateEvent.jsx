@@ -21,7 +21,7 @@ import {
 } from '../../redux/features/api/zwift_event_params/initialState';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetClub } from '../../redux/features/api/zwift_club/zwiftClubSlice';
-import { fetchGetZwiftClubs } from '../../redux/features/api/zwift_club/fetchZwiftClub';
+import { fetchGetClubsForModeratorZwiftModerator } from '../../redux/features/api/organizer/fetchClubsModerator';
 
 import styles from './ZwiftCreateEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -31,7 +31,8 @@ function ZwiftCreateEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const eventParams = useSelector((state) => state.eventParams);
-  const { clubs } = useSelector((state) => state.zwiftClub);
+  const { clubsForModerator } = useSelector((state) => state.clubsModerator);
+  const userAuth = useSelector((state) => state.checkAuth.value.user);
 
   // Сброс хранилища при размонтировании компонента.
   useEffect(() => {
@@ -55,7 +56,7 @@ function ZwiftCreateEvent() {
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
-    dispatch(fetchGetZwiftClubs());
+    dispatch(fetchGetClubsForModeratorZwiftModerator({ moderatorId: userAuth.id }));
   }, []);
 
   const sendCreateNewEvent = () => {
@@ -66,7 +67,6 @@ function ZwiftCreateEvent() {
     }
     const event = prepareData(eventParams);
     dispatch(fetchEventCreatePost(event));
-    // dispatch(resetParams());
     navigate('/zwift/event/add');
   };
 
@@ -88,7 +88,7 @@ function ZwiftCreateEvent() {
 
       <div className={styles.group}>
         <div className={styles.group}>
-          <FormClub isCreating={true} clubs={clubs} />
+          <FormClub isCreating={true} clubs={clubsForModerator} />
         </div>
         <div className={styles.group}>
           <FormEditEvent

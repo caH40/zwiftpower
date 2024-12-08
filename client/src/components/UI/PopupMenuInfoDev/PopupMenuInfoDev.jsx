@@ -44,7 +44,7 @@ function PopupMenuInfoDev({ isVisible, setIsVisible, setIsVisibleDelete, setIsVi
             </li>
 
             <li className={styles.item} onClick={clickEditRelease}>
-              <IconEdit />
+              <IconEdit squareSize={20} />
               <span className={styles.label}>Изменение релиза</span>
             </li>
           </ul>

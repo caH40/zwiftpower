@@ -5,6 +5,7 @@ import {
   ProfileDataInResult,
   SeriesSchema,
   SignedRidersSchema,
+  TClubZwift,
   TMetrics,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
@@ -192,6 +193,7 @@ export interface GetResultsArg {
     subgroupId: number;
   };
   subgroupLabel: string;
+  token: string | null;
 }
 /**
  * Результат райдера в Event с дополнительными параметрами
@@ -705,3 +707,57 @@ export type TCatchupLeader = {
 };
 
 export type TCatchupLeaderMap = Map<number, { profileData: ProfileDataInResult; wins: number }>;
+
+/**
+ * Информация об звифт токене бота-модератора для клиента.
+ */
+export type TZwiftTokenDto = {
+  _id: string; // _id токена в БД.
+  organizerId: string; // ID организатора в виде строки.
+  tokenDecoded: {
+    expiresAt: string; // Время истечения токена в формате ISO.
+    issuedAt: string; // Время выпуска токена в формате ISO.
+    audience: string[]; // Целевые сервисы токена.
+    userId: string; // Уникальный ID пользователя.
+    name: string; // Имя пользователя.
+    email: string; // Электронная почта пользователя.
+  } | null; // Может быть null, если декодирование не удалось.
+  username: string; // Имя пользователя (email бота).
+  importance: 'main' | 'secondary'; // Важность токена.
+};
+
+/**
+ * Ответ с БД при запросе клубов Звифта для организатора.
+ */
+export type TResponseClubsFromDB = Omit<TClubZwift, 'organizer' | 'moderators'> & {
+  moderators: {
+    _id: Types.ObjectId;
+    username: string;
+    zwiftId: number;
+  }[];
+  organizer: { name: string };
+};
+
+/**
+ * Клубы звифта для организатора после ДТО.
+ */
+export type TClubsZwiftDto = Omit<TClubZwift, '_id' | 'organizer' | 'moderators'> & {
+  _id: string;
+  organizer: { name: string };
+  moderators: { _id: string; username: string; zwiftId: number }[];
+};
+
+/**
+ * Параметры для конфигурации get запросов на ZwiftAPI.
+ */
+export type ParamsGetRequestToZwift = Omit<ParamsRequestToZwift<unknown>, 'data'>;
+
+/**
+ * Параметры для конфигурации запросов на ZwiftAPI.
+ */
+export type ParamsRequestToZwift<T> = {
+  url: string;
+  isMainToken?: boolean;
+  tokenOrganizer?: string | null; // Если нет токена Организатора, то выполняются запросы через тонен бота Race-Info.
+  data: T; // данные для post,put,delete запросов.
+};

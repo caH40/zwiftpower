@@ -1,9 +1,11 @@
-import { generateToken, validateRefreshToken } from './token.js';
+import { ObjectId } from 'mongoose';
 
+import { generateToken, validateRefreshToken } from './token.js';
 import { Token } from '../../Model/Token.js';
 import { User } from '../../Model/User.js';
 import { errorHandler } from '../../errors/error.js';
 import { Rider } from '../../Model/Rider.js';
+import { Organizer } from '../../Model/Organizer.js';
 
 export async function refreshService(refreshToken: string) {
   try {
@@ -22,6 +24,10 @@ export async function refreshService(refreshToken: string) {
       throw new Error(`Неверный Логин или Пароль`);
     }
 
+    const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
+      _id: ObjectId;
+    }>();
+
     // Получение лого райдера из коллекции Rider.
     const riderDB = await Rider.findOne(
       { zwiftId: userDB.zwiftId },
@@ -35,6 +41,7 @@ export async function refreshService(refreshToken: string) {
       username: userDB.username,
       role: userDB.role,
       moderator: userDB.moderator,
+      ...(organizerDB && { organizer: organizerDB._id }),
     });
 
     if (!tokens) {
@@ -51,6 +58,7 @@ export async function refreshService(refreshToken: string) {
         photoProfile: riderDB?.imageSrc,
         zwiftId: userDB.zwiftId,
         moderator: userDB.moderator,
+        ...(organizerDB && { organizer: organizerDB._id }),
       },
     };
   } catch (error) {

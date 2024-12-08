@@ -79,7 +79,7 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
               {profile.zwiftId}
               {isAdmin && (
                 <Link to={`/admin/riders/${profile.zwiftId}/main`}>
-                  <IconEdit />
+                  <IconEdit squareSize={20} />
                 </Link>
               )}
             </dd>

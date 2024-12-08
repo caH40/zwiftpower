@@ -4,6 +4,7 @@ import { Transition } from 'react-transition-group';
 import ListMenuMain from '../ListMenuSideLeft/ListMenuMain';
 import ListMenuAdmin from '../ListMenuSideLeft/ListMenuAdmin';
 import { useResize } from '../../../hook/use-resize';
+import ListMenuModeratorClub from '../ListMenuSideLeft/ListMenuModeratorClub';
 
 import styles from './NavBarSideLeft.module.css';
 
@@ -23,6 +24,7 @@ function NavBarSideLeft() {
           onMouseLeave={closeMenu}
         >
           <ListMenuMain state={state} />
+          <ListMenuModeratorClub state={state} />
           <ListMenuAdmin state={state} />
         </nav>
       )}

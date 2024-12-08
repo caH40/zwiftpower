@@ -41,6 +41,10 @@ const resultsUpdateSlice = createSlice({
     builder.addCase(fetchUpdateResult.fulfilled, (state) => {
       state.status = 'resolved';
     });
+    builder.addCase(fetchUpdateResult.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 

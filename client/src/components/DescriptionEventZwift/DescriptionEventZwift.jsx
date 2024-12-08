@@ -17,17 +17,15 @@ import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 import { createHtml } from '../../utils/html';
 import { createDescription } from '../../Pages/ZwiftEditEvent/utils/description';
-import { accessExpressions } from '../../assets/zwift/accessExpression';
 
 import styles from './DescriptionEventZwift.module.css';
 
 function DescriptionEventZwift({ event, forSchedule, eventId }) {
   const [isOpened, setIsOpened] = useState(false);
-  const { role, moderator } = useSelector((state) => state.checkAuth.value.user);
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
 
-  const isModerator = ['admin', 'moderator'].includes(role);
+  // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
   const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
-  const showForModerate = isModerator && isAllowedModerate;
 
   const navigate = useNavigate();
 
@@ -52,7 +50,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         </div>
 
         {/* показывать только для страницы результатов */}
-        {!forSchedule && showForModerate && (
+        {!forSchedule && isAllowedModerate && (
           <div className={styles.box__modify}>
             <IconModify getClick={modifyResultsEvent} bgColor={'#ff7c00'} />
           </div>
@@ -65,9 +63,12 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           <div className={styles.box__left}>
             <div className={styles.box__title}>
               <h2 className={styles.title}>{event.name}</h2>
-              {forSchedule && showForModerate && (
+              {forSchedule && isAllowedModerate && (
                 <Link to={`/zwift/event/edit/${event.id}`}>
-                  <IconEdit tooltip={'Редактирование параметров заезда в Звифте'} />
+                  <IconEdit
+                    tooltip={'Редактирование параметров заезда в Звифте'}
+                    squareSize={20}
+                  />
                 </Link>
               )}
             </div>

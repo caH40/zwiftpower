@@ -59,6 +59,7 @@ export async function saveEventToDB(eventParams: EventWithSubgroup) {
     typeRaceCustom: eventParams.typeRaceCustom,
     accessExpressionObj: eventParams.accessExpressionObj,
     organizer: eventParams.organizer,
+    organizerId: eventParams.organizerId,
     id: eventParams.id,
     mapId: eventParams.mapId,
     categoryEnforcement: eventParams.categoryEnforcement,

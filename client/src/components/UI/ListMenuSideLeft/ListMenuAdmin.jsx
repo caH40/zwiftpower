@@ -1,45 +1,19 @@
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import IconZwiftEdit from '../../icons/IconZwiftEdit';
 import IconAdmin2 from '../../icons/IconAdmin2';
 
 import styles from './ListMenu.module.css';
+import ItemMenuSideLeft from './ItemMenuSideLeft/ItemMenuSideLeft';
 
 function ListMenuAdmin({ state }) {
   const { user } = useSelector((state) => state.checkAuth.value);
 
   const isAdmin = ['admin'].includes(user.role);
-  const isModerator = ['admin', 'moderator'].includes(user.role);
 
-  const activeLink = ({ isActive }) =>
-    isActive ? `${styles.link} ${styles.active}` : styles.link;
   return (
     <ul className={styles.list}>
-      {isModerator && (
-        <li>
-          <NavLink to="/zwift" className={activeLink}>
-            {({ isActive }) => (
-              <div className={styles.link__box}>
-                <IconZwiftEdit isActive={isActive} />
-                <span className={`${styles.link__name} ${styles[state]}`}>Zwift</span>
-              </div>
-            )}
-          </NavLink>
-        </li>
-      )}
-
       {isAdmin && (
-        <li>
-          <NavLink to="/admin" className={activeLink}>
-            {({ isActive }) => (
-              <div className={styles.link__box}>
-                <IconAdmin2 isActive={isActive} />
-                <span className={`${styles.link__name} ${styles[state]}`}>Админ</span>
-              </div>
-            )}
-          </NavLink>
-        </li>
+        <ItemMenuSideLeft to={'/admin'} Icon={IconAdmin2} name={'Админ'} state={state} />
       )}
     </ul>
   );

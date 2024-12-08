@@ -82,7 +82,7 @@ function MainInfoDev({ isModerator }) {
                   )}
                   {isVisibleEdit && (
                     <div className={styles.icon} onClick={() => openPopupFormRelease(info)}>
-                      <IconEdit />
+                      <IconEdit squareSize={20} />
                     </div>
                   )}
                 </div>

@@ -10,13 +10,18 @@ import { eventSubGroups } from '../../../assets/category.js';
 /**
  * Получение результатов райдеров, которые не финишировали в Эвенте (сход)
  */
-export async function getResultsDNFRiders(
-  ridersWithFinish: number[],
-  eventId: number
-): Promise<ResultEventAdditional[]> {
+export async function getResultsDNFRiders({
+  ridersWithFinish,
+  eventId,
+  clubId,
+}: {
+  ridersWithFinish: number[];
+  eventId: number;
+  clubId: string;
+}): Promise<ResultEventAdditional[]> {
   try {
     // получение зарегистрированных райдеров в Эвенте из ZwiftAPI
-    const signedRiders = await getSignedRiders(eventId);
+    const signedRiders = await getSignedRiders({ eventId, clubId });
 
     if (!signedRiders) {
       return [];

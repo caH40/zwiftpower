@@ -15,6 +15,7 @@ import { routerProfile } from './routes/profile.js';
 import { errorHandler } from './errors/error.js';
 import { statisticsRouter } from './routes/statistics.js';
 import { routerAdmin } from './routes/admin.js';
+import { routerOrganizer } from './routes/organizer.js';
 import { setMetaTags } from './meta_tags/meta-tags.js';
 
 // cache
@@ -52,6 +53,7 @@ app.use('/api/race/profile', routerProfile);
 app.use('/api/statistics', getCache, statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
+app.use('/api/organizer', routerOrganizer);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })

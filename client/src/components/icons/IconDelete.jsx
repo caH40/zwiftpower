@@ -5,7 +5,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconDelete({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
+function IconDelete({ getClick, color = '#CB0000', tooltip, addCls = ' ', squareSize = 24 }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div
@@ -25,7 +25,7 @@ function IconDelete({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
             cx="12"
             cy="12"
             r="10.5"
-            stroke="#CB0000"
+            stroke={color}
             strokeWidth="3"
           />
           <line
@@ -34,7 +34,7 @@ function IconDelete({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
             y1="6.94975"
             x2="16.8492"
             y2="16.8492"
-            stroke="#CB0000"
+            stroke={color}
             strokeWidth="2"
           />
           <line
@@ -43,7 +43,7 @@ function IconDelete({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
             y1="16.8493"
             x2="16.8492"
             y2="6.94976"
-            stroke="#CB0000"
+            stroke={color}
             strokeWidth="2"
           />
         </svg>

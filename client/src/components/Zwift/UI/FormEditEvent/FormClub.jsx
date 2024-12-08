@@ -9,19 +9,19 @@ import styles from './FormEditEvent.module.css';
  * Выбор Клуба в котором создается Эвент
  */
 function FormClub({ clubs = [] }) {
-  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  // const { moderator } = useSelector((state) => state.checkAuth.value.user);
   const dispatch = useDispatch();
   const { microserviceExternalResourceId: clubZwiftId } = useSelector(
     (state) => state.eventParams.eventMainParams
   );
 
   // фильтрация клубов в зависимости от того, какие клубы может модерировать Пользователь (модератор)
-  const clubsFiltered = [...clubs].filter((club) =>
-    moderator.clubs.find((clubId) => clubId === club.id)
-  );
+  // const clubsFiltered = [...clubs].filter((club) =>
+  //   moderator.clubs.find((clubId) => clubId === club.id)
+  // );
 
   // создание объекта для Selector
-  const clubsCurrentForm = clubsFiltered.map((club) => ({
+  const clubsCurrentForm = clubs.map((club) => ({
     id: club._id,
     value: club.name,
     name: club.name,

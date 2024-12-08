@@ -204,6 +204,19 @@ export interface TokenSchema {
   user: Types.ObjectId;
   refreshToken: string;
 }
+
+/**
+ * Схема для Zwift token бота-модератора клуба в Звифт.
+ */
+export type TZwiftToken = {
+  organizer: mongoose.Types.ObjectId;
+  token: string;
+  username: string; // e-mail бота-модератора используется вместо username.
+  importance: 'main' | 'secondary';
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 //
 //
 export interface TotalCatchupSchema {
@@ -300,7 +313,8 @@ export interface ZwiftEventSchema {
   microserviceExternalResourceId: string;
   name: string;
   rulesSet: string[];
-  organizer: string;
+  organizer: string; // label Организатора
+  organizerId?: Types.ObjectId; // _id Организатора в БД.
   tags: string[];
   visible: boolean;
   totalEntrantCount: number;
@@ -466,7 +480,9 @@ export interface LogsErrorSchema {
 /**
  * Схема клуба в котором создается Эвент
  */
-export interface ClubSchema {
+export type ClubSchema = TClubZwift;
+
+export type TClubZwift = {
   id: string; // id клуба в Звифте
   images: {
     icon: string; // ссылка (url) на иконку клуба
@@ -478,23 +494,33 @@ export interface ClubSchema {
   tagline: string; // полное название клуба;
   description: string; // описание клуба;
   moderators?: Types.ObjectId[]; // модераторы клуба;
-}
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 /**
- * Схема Организатора заезда, у организатора может быть несколько клубов
+ * Организатора заезда, у организатора может быть несколько клубов
  */
-export interface OrganizerSchema {
-  images: {
-    icon?: string; // ссылка (url) на иконку организатора
-    event?: string; // ссылка (url) на постер к на странице Организатора
-  };
-  name: string; // название организатора;
-  label: string; // название организатора;
+export type TOrganizer = {
   creator: Types.ObjectId; // модераторы клуба;
+  botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
+  name: string; // название организатора;
+  label: string; // Лейбл короткое название;
+  logoSrc?: string; // Логотип (url);
+  backgroundImage: string; // URL фоновой картинки
   description?: string; // описание Организатора;
-  // createdAt: string;
-  // updatedAt: string;
-}
+  createdAt: string;
+  updatedAt: string;
+};
+// !!! Оптимизировать, использовать везде TOrganizer
+export type OrganizerSchema = TOrganizer & Document;
+/**
+ * Данные бота-модератора из звифта. Бот будет вносить изменения в Эвенты клуба.
+ * Хранить email/password или token.
+ */
+export type TOrganizerBotZwift =
+  | { token: string; email?: never; password?: never } // token обязателен, email и password не должны быть заданы
+  | { token?: never; email: string; password: string }; // email и password обязаны быть заданы, token не может быть
 
 /**
  * Описание типа для метрик спортсмена.

@@ -63,7 +63,18 @@ export const updateRidersProfiles = async (zwiftIds: number[]) => {
       { profileId: true, rank: true, rankEvent: true, _id: false }
     ).lean<RiderIdsWithRank[]>();
 
-    await updateRidersProfilesService(riderIdsWithRank);
+    // Если у всех райдеров из входного массива zwiftIds есть результаты.
+    if (riderIdsWithRank.length === zwiftIds.length) {
+      await updateRidersProfilesService(riderIdsWithRank);
+    } else {
+      // Поиск райдеров у которых нет результатов в БД.
+      const ridersWithoutResults = zwiftIds.filter(
+        (zwiftId) => !riderIdsWithRank.some((elm) => elm.profileId === zwiftId)
+      );
+
+      // Обновление/создание документов Rider для райдеров без результатов.
+      await updateRidersProfilesWithoutResultsService(ridersWithoutResults);
+    }
   } catch (error) {
     errorHandler(error);
   }
@@ -133,4 +144,40 @@ function calculateEventsAndMedals(results: RiderIdsWithRank[]): Map<number, Ride
     zwiftProfiles.set(result.profileId, profileRank);
   }
   return zwiftProfiles;
+}
+
+/**
+ * Обновление(создание) данных Звифт-профайла (коллекция Rider) райдеров у которых нер результатов в БД сайта.
+ */
+async function updateRidersProfilesWithoutResultsService(zwiftIds: number[]) {
+  try {
+    const requestsProfiles = zwiftIds.map((zwiftId) =>
+      limit(() =>
+        getZwiftRiderService(zwiftId).catch((error) => {
+          errorHandler(error);
+          return null; // Возвращаем null вместо выброса ошибки.
+        })
+      )
+    );
+
+    // Массив данных профилей райдеров с Zwift API.
+    const profiles = await Promise.all(requestsProfiles);
+
+    // Фильтрация только успешных результатов.
+    const profilesFiltered = profiles.filter(
+      (profile) => profile !== null
+    ) as ProfileZwiftAPI[];
+
+    // Теперь можно продолжить работу с успешными профилями.
+    const updatePromises = profilesFiltered.map((profile) =>
+      Rider.findOneAndUpdate({ zwiftId: profile.id }, { ...profile }, { upsert: true }).catch(
+        (error) => errorHandler(error)
+      )
+    );
+
+    // Необходимо дождаться завершения всех асинхронных функций.
+    await Promise.allSettled(updatePromises);
+  } catch (error) {
+    errorHandler(error);
+  }
 }

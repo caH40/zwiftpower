@@ -126,3 +126,35 @@ export type TTwitchUserFromAPIData = {
   view_count: number;
   created_at: Date;
 };
+
+export type TZwiftJwtToken = {
+  header: {
+    alg: 'RS256'; // Алгоритм
+    typ: 'JWT'; // Тип токена
+    kid: string; // Идентификатор ключа
+  };
+  payload: {
+    exp: number; // Время истечения токена (Unix timestamp)
+    iat: number; // Время выпуска токена (Unix timestamp)
+    jti: string; // Уникальный идентификатор токена
+    iss: string; // Издатель токена
+    aud: string[]; // Целевые аудитории
+    sub: string; // Уникальный идентификатор субъекта
+    typ: 'Bearer'; // Тип токена
+    azp: string; // Авторизованная сторона
+    session_state: string; // Состояние сессии
+    acr: string; // Уровень аутентификации
+    realm_access: { roles: string[] }; // Роли в рамках области
+    resource_access: {
+      [key: string]: { roles: string[] }; // Доступ к ресурсам и их роли
+    };
+    scope: string; // Область токена
+    sid: string; // Идентификатор сессии
+    name: string; // Полное имя пользователя
+    preferred_username: string; // Предпочитаемое имя пользователя
+    given_name: string; // Имя пользователя
+    family_name: string; // Фамилия пользователя
+    email: string; // Электронная почта
+  };
+  signature: string; // Подпись токена
+};

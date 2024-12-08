@@ -10,7 +10,8 @@ import { ResultEventAdditional } from '../../../types/types.interface.js';
  * @returns массив результатов Райдеров из Эвента
  */
 export const getResultsFromZwift = async (
-  eventSubgroups: ZwiftEventSubgroupSchema[]
+  eventSubgroups: ZwiftEventSubgroupSchema[],
+  token: string | null
 ): Promise<ResultEventAdditional[]> => {
   const resultsTotal = [] as ResultEventAdditional[];
 
@@ -21,6 +22,7 @@ export const getResultsFromZwift = async (
     const resultsSubgroup = await getResults({
       subgroupObj,
       subgroupLabel: subgroup.subgroupLabel,
+      token,
     });
     resultsTotal.push(...resultsSubgroup);
   }

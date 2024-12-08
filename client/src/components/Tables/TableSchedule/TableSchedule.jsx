@@ -21,9 +21,12 @@ import Thead from './Thead';
 const cx = classnames.bind(styles);
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
-  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { isModeratorClub, moderator, role } = useSelector(
+    (state) => state.checkAuth.value.user
+  );
 
-  const isModerator = ['admin', 'moderator'].includes(role);
+  const isAdmin = ['admin'].includes(role);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,48 +38,60 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
       <caption className={cx('caption', 'hidden')}>
         Расписание заездов российского сообщества в Zwift (Звифт)
       </caption>
-      <Thead isModerator={isModerator} />
+      <Thead isModerator={isModeratorClub || isAdmin} />
       <tbody>
-        {events.map((event) => (
-          <tr className={cx('hover')} key={event._id}>
-            <td className={cx('td__nowrap')}>{getToday(event.eventStart)}</td>
-            <TdSeries seriesName={event.seriesId?.name} />
-            <td className={cx('td__nowrap')}>
-              <Link className={cx('link')} to={String(event.id)}>
-                <span className={cx('big')}>{event.name}</span>
-              </Link>
-            </td>
-            <td className={cx('td__nowrap')}>{event.organizer}</td>
-            <TdRaceType typeRaceCustom={event.typeRaceCustom} />
-            <td>
-              <CategoriesBox event={event} addCls={'nowrap'} />
-            </td>
-            <td>
-              <RulesBox event={event} squareSize={16} addCls={'nowrap'} />
-            </td>
-            <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-            <td className={cx('td__nowrap')}>{routeName(event.eventSubgroups[0]?.routeId)}</td>
-            <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
-            {TdDistance(
-              event.eventSubgroups[0].durationInSeconds,
-              event.eventSubgroups[0].distanceInMeters,
-              event.eventSubgroups[0].distanceSummary.distanceInKilometers
-            )}
-            {TdElevation(
-              event.eventSubgroups[0].durationInSeconds,
-              event.eventSubgroups[0].distanceInMeters,
-              event.eventSubgroups[0].distanceSummary.elevationGainInMeters
-            )}
-            <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
-            {isModerator && (
-              <TdScheduleMenuTableScheduleList
-                event={event}
-                updateEvent={updateEvent}
-                removeEvent={removeEvent}
-              />
-            )}
-          </tr>
-        ))}
+        {events.map((event) => {
+          // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
+          const isAllowedModerate = moderator?.clubs.includes(
+            event.microserviceExternalResourceId
+          );
+
+          return (
+            <tr className={cx('hover')} key={event._id}>
+              <td className={cx('td__nowrap')}>{getToday(event.eventStart)}</td>
+              <TdSeries seriesName={event.seriesId?.name} />
+              <td className={cx('td__nowrap')}>
+                <Link className={cx('link')} to={String(event.id)}>
+                  <span className={cx('big')}>{event.name}</span>
+                </Link>
+              </td>
+              <td className={cx('td__nowrap')}>{event.organizer}</td>
+              <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+              <td>
+                <CategoriesBox event={event} addCls={'nowrap'} />
+              </td>
+              <td>
+                <RulesBox event={event} squareSize={16} addCls={'nowrap'} />
+              </td>
+              <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+              <td className={cx('td__nowrap')}>
+                {routeName(event.eventSubgroups[0]?.routeId)}
+              </td>
+              <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
+              {TdDistance(
+                event.eventSubgroups[0].durationInSeconds,
+                event.eventSubgroups[0].distanceInMeters,
+                event.eventSubgroups[0].distanceSummary.distanceInKilometers
+              )}
+              {TdElevation(
+                event.eventSubgroups[0].durationInSeconds,
+                event.eventSubgroups[0].distanceInMeters,
+                event.eventSubgroups[0].distanceSummary.elevationGainInMeters
+              )}
+              <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
+
+              {isAllowedModerate || isAdmin ? (
+                <TdScheduleMenuTableScheduleList
+                  event={event}
+                  updateEvent={updateEvent}
+                  removeEvent={removeEvent}
+                />
+              ) : (
+                (isModeratorClub || isAdmin) && <td></td>
+              )}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

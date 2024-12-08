@@ -1,4 +1,4 @@
-import { getRequest } from './request-get.js';
+import { getRequest } from './api/request-get.js';
 import { errorHandler } from '../../errors/error.js';
 
 // types
@@ -10,7 +10,7 @@ import { ActivitiesDataFromZwiftAPI } from '../../types/zwiftAPI/activitiesFromZ
 export async function getFullDataUrl(activityId: string) {
   try {
     const url = `activities/${activityId}`;
-    const activity: ActivitiesDataFromZwiftAPI = await getRequest(url);
+    const activity: ActivitiesDataFromZwiftAPI = await getRequest({ url });
 
     // если нет данных активности (приватность аккаунта)
     if (!activity) {

@@ -11,6 +11,7 @@ export default function InputSimple({
   validationText,
   id,
   description,
+  ...props
 }) {
   return (
     <>
@@ -28,6 +29,7 @@ export default function InputSimple({
         onChange={(e) => setValue(e.target.value)}
         disabled={disabled}
         id={id}
+        {...props}
       />
     </>
   );

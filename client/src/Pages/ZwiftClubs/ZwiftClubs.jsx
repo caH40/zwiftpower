@@ -113,6 +113,7 @@ function ZwiftClubs() {
       <div className={styles.group}>
         <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
       </div>
+
       {club?.id && (
         <BlockClubDescription
           club={club}

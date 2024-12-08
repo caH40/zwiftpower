@@ -1,5 +1,5 @@
 import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface.js';
-import { getRequest } from './request-get.js';
+import { getRequest } from './api/request-get.js';
 
 /**
  *  запрос данных Райдера с сервера Zwift
@@ -11,7 +11,7 @@ export async function getZwiftRiderService(zwiftId: number): Promise<ProfileZwif
 
   const urlRiderData = `profiles/${zwiftId}`;
 
-  const riderData: ProfileZwiftAPI = await getRequest(urlRiderData);
+  const riderData: ProfileZwiftAPI = await getRequest({ url: urlRiderData });
 
   if (!riderData) {
     throw new Error('Не найден профиль на сервере Zwift');

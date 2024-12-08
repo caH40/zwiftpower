@@ -1,6 +1,8 @@
+import { ObjectId } from 'mongoose';
 import { Rider } from '../../Model/Rider.js';
 import { User } from '../../Model/User.js';
 import { UserSchema } from '../../types/model.interface.js';
+import { TResponseService } from '../../types/http.interface.js';
 
 /**
  * Сервис получения всех зарегистрированных Users на сайте zwiftpower.ru
@@ -33,3 +35,28 @@ export const getUsersService = async () => {
 
   return users;
 };
+
+/**
+ * Сервис получения всех зарегистрированных Users на сайте zwiftpower.ru по запросу модератора.
+ */
+export async function getUsersForModeratorService(): Promise<
+  TResponseService<
+    {
+      username: string;
+      zwiftId: number;
+      _id: string;
+    }[]
+  >
+> {
+  const usersDB = await User.find({}, { username: true, zwiftId: true }).lean<
+    {
+      username: string;
+      zwiftId: number;
+      _id: ObjectId;
+    }[]
+  >();
+
+  const usersAfterDto = usersDB.map((user) => ({ ...user, _id: String(user._id) }));
+
+  return { data: usersAfterDto, message: '' };
+}

@@ -10,6 +10,7 @@ import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
 import { errorHandler } from '../errors/error.js';
 import { getResultsSeriesService } from '../service/series/index.js';
+import { checkModeratorClub } from '../service/moderator-club.js';
 
 // types
 import { GetEvents, PostEvent } from '../types/http.interface.js';
@@ -56,6 +57,9 @@ export async function postEvent(req: Request, res: Response) {
 
     // подготовка данных для сервиса
     const eventAfterDto = eventParamsDto(event);
+
+    // Проверка является ли userId модератором клуба в котором создается данный Эвент
+    await checkModeratorClub({ userId, clubId: eventAfterDto.microserviceExternalResourceId });
 
     const eventSaved = await postEventService(eventAfterDto, userId);
     res.status(201).json(eventSaved);

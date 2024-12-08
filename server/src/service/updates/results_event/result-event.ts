@@ -17,7 +17,11 @@ import { updateRidersProfiles } from '../riders-profile.js';
 /**
  * Обновление результатов Эвента (event) по запросу или по автоматически после старта Эвента.
  */
-export async function updateResultsEvent(event: EventWithSubgroup, isFast?: boolean) {
+export async function updateResultsEvent(
+  event: EventWithSubgroup,
+  token: string | null,
+  isFast?: boolean
+) {
   if (!event._id) {
     throw new Error(`Не найден event._id ${event._id}`);
   }
@@ -26,7 +30,7 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   banUpdating(event.eventStart, periodActual);
 
   // получение результатов заезда из ZwiftAPI
-  const resultsTotal = await getResultsFromZwift(event.eventSubgroups);
+  const resultsTotal = await getResultsFromZwift(event.eventSubgroups, token);
 
   // дополнительные данные для фитфайла текущей активности добавляемого коллекцию FitFile в БД райдера
   const nameAndDate = {
@@ -43,7 +47,11 @@ export async function updateResultsEvent(event: EventWithSubgroup, isFast?: bool
   } else {
     // получение результатов райдеров которые не финишировали
     const ridersWithFinish = resultsTotal.map((result) => result.profileId);
-    const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
+    const resultsRidersDNF = await getResultsDNFRiders({
+      ridersWithFinish,
+      eventId: event.id,
+      clubId: event.microserviceExternalResourceId,
+    });
 
     // обновление документов в коллекции Rider.
     const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);

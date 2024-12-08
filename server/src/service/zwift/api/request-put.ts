@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { getAccessToken } from './token.js';
-import { zwiftAPI } from '../../config/environment.js';
+import { zwiftAPI } from '../../../config/environment.js';
 
 //types
-import { PutEvent } from '../../types/http.interface.js';
+import { PutEvent } from '../../../types/http.interface.js';
+import { ParamsRequestToZwift } from '../../../types/types.interface.js';
 
 const apiUrl = zwiftAPI;
 
@@ -21,15 +21,21 @@ const headersDefault = {
   Source: 'my-zwift',
 };
 
-export async function putRequest(url: string, data: PutEvent, isMainToken = true) {
-  const token = await getAccessToken(isMainToken);
+export async function putRequest({
+  url,
+  data,
+  tokenOrganizer,
+}: ParamsRequestToZwift<PutEvent>) {
+  if (!tokenOrganizer) {
+    throw new Error('Не получен токен доступа организатора к ZwiftAPI!');
+  }
 
   const response = await axios({
     method: 'put',
     url: `${apiUrl}${url}`,
     headers: {
       ...headersDefault,
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + tokenOrganizer,
     },
     data,
   });
