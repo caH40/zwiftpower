@@ -47,7 +47,11 @@ export async function updateResultsEvent(
   } else {
     // получение результатов райдеров которые не финишировали
     const ridersWithFinish = resultsTotal.map((result) => result.profileId);
-    const resultsRidersDNF = await getResultsDNFRiders(ridersWithFinish, event.id);
+    const resultsRidersDNF = await getResultsDNFRiders({
+      ridersWithFinish,
+      eventId: event.id,
+      clubId: event.microserviceExternalResourceId,
+    });
 
     // обновление документов в коллекции Rider.
     const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);

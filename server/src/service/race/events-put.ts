@@ -28,7 +28,7 @@ export async function putEventService(eventId: number, userId?: string) {
   // получение зарегистрированных райдеров с ZwiftAPI и сохранение в БД
   // обновление зарегистрированных райдеров происходит после обновления
   // подгрупп, так как меняются _id у подгрупп
-  await putSignedRidersService(eventId);
+  await putSignedRidersService({ eventId, clubId: eventSaved.microserviceExternalResourceId });
 
   // Обновление свойства старта заезда в одном event
   await updateStartInfoEvent(eventSaved);

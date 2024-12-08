@@ -86,6 +86,7 @@ export const getClubs = async (req: Request, res: Response) => {
 
 /**
  * Получение данных Клуба из ZwiftAPI
+ * * Доступ данных к клубу в ZwiftAPI разрешается любым пользователям.
  */
 export const getClub = async (req: Request, res: Response) => {
   try {

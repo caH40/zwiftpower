@@ -7,12 +7,22 @@ import { errorHandler } from '../../errors/error.js';
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
 import { SignedRiderFromZwiftAPI } from '../../types/zwiftAPI/signedRidersFromZwift.interface.js';
+import { getAccessTokenOrganizer } from '../zwift/token.js';
 
 /**
  * Получение зарегистрированных райдров с ZwiftAPI и сохранение в БД
  */
-export async function putSignedRidersService(eventId: number) {
+export async function putSignedRidersService({
+  eventId,
+  clubId,
+}: {
+  eventId: number;
+  clubId: string;
+}) {
   try {
+    // Токен доступа Организатора заездов, которому принадлежит клуб clubId.
+    const token = await getAccessTokenOrganizer({ clubId, importanceToken: 'main' });
+
     const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
       id: eventId,
     }).populate('eventSubgroups');
@@ -31,6 +41,7 @@ export async function putSignedRidersService(eventId: number) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
         const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest({
           url: urlSignedData,
+          tokenOrganizer: token,
         });
 
         // количество зарегистрированных райдеров подсчет которых начинается с позиции start
@@ -77,8 +88,17 @@ export async function putSignedRidersService(eventId: number) {
 /**
  * Получение зарегистрированных райдров с ZwiftAPI
  */
-export async function getSignedRiders(eventId: number) {
+export async function getSignedRiders({
+  eventId,
+  clubId,
+}: {
+  eventId: number;
+  clubId: string;
+}) {
   try {
+    // Токен доступа Организатора заездов, которому принадлежит клуб clubId.
+    const token = await getAccessTokenOrganizer({ clubId, importanceToken: 'main' });
+
     const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
       id: eventId,
     }).populate('eventSubgroups');
@@ -97,6 +117,7 @@ export async function getSignedRiders(eventId: number) {
         const urlSignedData = `events/subgroups/entrants/${eventSubgroup.id}/?limit=${ridersQuantity}&participation=signed_up&start=${start}&type=all`;
         const signedData: SignedRiderFromZwiftAPI[] | null = await getRequest({
           url: urlSignedData,
+          tokenOrganizer: token,
         });
 
         if (!signedData) {

@@ -22,7 +22,8 @@ export const getClubsService = async (): Promise<ClubSchema[]> => {
 };
 
 /**
- * Сервис получение данных Клуба из ZwiftAPI
+ * Сервис получение данных Клуба из ZwiftAPI.
+ * Доступ данных к клубу в ZwiftAPI разрешается любым пользователям.
  */
 export const getClubService = async (id: string) => {
   const url = `clubs/club/${id}`;

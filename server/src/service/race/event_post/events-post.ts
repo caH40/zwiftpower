@@ -43,7 +43,7 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
 
   // Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
-  await putSignedRidersService(eventSaved.id);
+  await putSignedRidersService({ eventId: eventSaved.id, clubId });
 
   // Обновление свойства старта заезда в одном event
   await updateStartInfoEvent(eventSaved);
