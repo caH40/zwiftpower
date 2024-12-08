@@ -41,6 +41,30 @@ export async function getAccessToken(isMainToken?: boolean) {
 }
 
 /**
+ * Получение токена доступа к API Zwift для Организатора.
+ */
+export async function getAccessTokenOrganizer({
+  organizerId,
+  importanceToken,
+}: {
+  organizerId: string;
+  importanceToken: 'main' | 'secondary';
+}) {
+  const tokenDB = await ZwiftToken.findOne(
+    { organizer: organizerId, importance: importanceToken },
+    { token: true, _id: false }
+  ).lean<{
+    token: string;
+  }>();
+
+  if (!tokenDB) {
+    throw new Error('Не найдет token доступа для бота-модератора клубов в Zwift!');
+  }
+
+  return tokenDB.token;
+}
+
+/**
  * Создание общего токена доступа к Звифт и сохранение в БД.
  * !!! Заменить дублируемый код генерации токена на функцию generateAccessTokenZwift.
  */

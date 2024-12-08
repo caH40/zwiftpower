@@ -1,14 +1,17 @@
 import { User } from '../Model/User.js';
 
+type Params = { userId: string; clubId: string; forView?: boolean };
+
 /**
  * Проверка является ли userId модератором клуба в котором создается данный Эвент
  */
-export const checkModeratorClub = async (
-  userId: string,
-  clubId: string,
-  forView?: string
-): Promise<void> => {
-  if (!forView || forView === 'true') {
+export const checkModeratorClub = async ({
+  userId,
+  clubId,
+  forView,
+}: Params): Promise<void> => {
+  // Если forView true, то открыт к просмотру всем пользователям.
+  if (forView) {
     return;
   }
 

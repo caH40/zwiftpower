@@ -35,7 +35,7 @@ export async function getEventZwiftService(eventId: number) {
  */
 export async function putEventZwiftService(event: PutEvent, userId: string) {
   // Проверка является ли userId модератором клуба в котором создается данный Эвент
-  await checkModeratorClub(userId, event.eventData.microserviceExternalResourceId);
+  await checkModeratorClub({ userId, clubId: event.eventData.microserviceExternalResourceId });
 
   const id = event.eventData.id;
   const urlEventData = `events/${id}`;

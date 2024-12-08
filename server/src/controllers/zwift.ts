@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
+import { AxiosError } from 'axios';
 
+import { postZwiftEventService } from '../service/zwift/create.js';
+import { checkModeratorClub } from '../service/moderator-club.js';
 import { getZwiftEventResultsService } from '../service/zwift/download.js';
 import { getEventZwiftService, putEventZwiftService } from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
@@ -7,9 +10,6 @@ import { errorHandler } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
-import { AxiosError } from 'axios';
-import { postZwiftEventService } from '../service/zwift/create.js';
-import { checkModeratorClub } from '../service/moderator-club.js';
 
 /**
  * Получение данных Эвента для последующего редактирование параметров Эвента
@@ -18,8 +18,15 @@ export async function getEventZwift(req: Request, res: Response) {
   try {
     const { eventId, userId, forView } = req.params;
 
+    // Преобразование параметра в логическое значение.
+    const forViewBoolean = forView === 'true';
+
     const event = await getEventZwiftService(+eventId);
-    await checkModeratorClub(userId, event.microserviceExternalResourceId, forView);
+    await checkModeratorClub({
+      userId,
+      clubId: event.microserviceExternalResourceId,
+      forView: forViewBoolean,
+    });
 
     res.status(200).json(event);
   } catch (error) {
@@ -101,7 +108,13 @@ export async function postZwiftEvent(req: Request, res: Response) {
     const { userId } = req.params;
     const event: PostZwiftEvent = req.body.event;
 
-    const { eventId, message } = await postZwiftEventService(userId, event);
+    // Id клуба в котором создается Эвент.
+    const clubId = event.eventData.microserviceExternalResourceId;
+
+    // Проверка является ли userId модератором клуба в котором создается данный Эвент
+    await checkModeratorClub({ userId, clubId });
+
+    const { eventId, message } = await postZwiftEventService({ event, clubId });
 
     res.status(201).json({ eventId, message });
   } catch (error) {
