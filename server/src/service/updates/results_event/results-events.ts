@@ -3,10 +3,10 @@ import { errorHandler } from '../../../errors/error.js';
 import { checkDurationUpdating } from '../results-check.js';
 import { updateResultsEvent } from './result-event.js';
 import { millisecondsIn2Hours, millisecondsIn30Minutes } from '../../../assets/date.js';
+import { getTokenForEvent } from '../../zwift/token.js';
 
 // types
 import { EventWithSubgroup } from '../../../types/types.interface.js';
-import { getTokenForEvent } from '../../race/token.js';
 
 /**
  * Обновление всех результатов Эвентов которые не имеют результатов ( hasResults: false )

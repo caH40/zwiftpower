@@ -12,6 +12,7 @@ import {
 } from '../../config/environment.js';
 import { errorHandler } from '../../errors/error.js';
 import { Club } from '../../Model/Club.js';
+import { Organizer } from '../../Model/Organizer.js';
 
 const zwiftUsers = [
   {
@@ -69,6 +70,46 @@ export async function getAccessTokenOrganizer({
   }>();
 
   if (!tokenDB) {
+    throw new Error('Не найдет token доступа для бота-модератора клубов в Zwift!');
+  }
+
+  return tokenDB.token;
+}
+
+type ParamsGetTokenForEvent = {
+  organizerLabel: string;
+  organizerId?: Types.ObjectId;
+};
+/**
+ * Получение токена доступа к ZwiftAPI для работы с данными Эвента по organizerLabel, или
+  organizerId.
+ * organizerId добавился когда уже были Эвенты в которых сохранялся только label.
+ */
+export async function getTokenForEvent({
+  organizerLabel,
+  organizerId,
+}: ParamsGetTokenForEvent): Promise<string> {
+  let query = {} as Record<string, Types.ObjectId>;
+
+  if (organizerId) {
+    query = { organizer: organizerId };
+  } else {
+    const organizerDB = await Organizer.findOne({ label: organizerLabel }, { _id: true }).lean<{
+      _id: Types.ObjectId;
+    }>();
+
+    if (!organizerDB) {
+      throw new Error(`Organizer с label "${organizerLabel}" не найден.`);
+    }
+
+    query = { organizer: organizerDB._id };
+  }
+
+  const tokenDB = await ZwiftToken.findOne(query, { _id: false, token: true }).lean<{
+    token: string | null;
+  }>();
+
+  if (!tokenDB?.token) {
     throw new Error('Не найдет token доступа для бота-модератора клубов в Zwift!');
   }
 

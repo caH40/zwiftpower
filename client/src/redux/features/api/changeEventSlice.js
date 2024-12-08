@@ -45,6 +45,10 @@ const changeEventSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
     });
+    builder.addCase(fetchChangeEvent.rejected, (state, action) => {
+      state.error = action.payload;
+      state.status = 'rejected';
+    });
   },
 });
 

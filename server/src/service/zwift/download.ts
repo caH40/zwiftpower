@@ -1,7 +1,7 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResults } from './results.js';
 import { addAgeAndFlag } from '../protocol/age-and-flag.js';
-import { getTokenForEvent } from '../race/token.js';
+import { getTokenForEvent } from './token.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';

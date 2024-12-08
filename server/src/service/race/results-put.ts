@@ -1,10 +1,10 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { loggingAdmin } from '../../logger/logger-admin.js';
 import { updateResultsEvent } from '../updates/results_event/result-event.js';
-import { getTokenForEvent } from './token.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
+import { getTokenForEvent } from '../zwift/token.js';
 
 /**
  * Ручное обновление результатов Эвента по запросу модератора

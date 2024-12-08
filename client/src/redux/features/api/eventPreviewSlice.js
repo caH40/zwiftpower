@@ -42,6 +42,7 @@ const eventPreviewSlice = createSlice({
     });
     builder.addCase(fetchEventPreview.fulfilled, (state, action) => {
       state.status = 'resolved';
+      state.error = null;
       state.event = action.payload;
     });
     builder.addCase(fetchEventPreview.rejected, (state, action) => {
