@@ -128,9 +128,7 @@ export default function OrganizerClubs({ organizerId }) {
         />
       )}
 
-      <div className={styles.group}>
-        <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
-      </div>
+      <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
 
       {clubForAdd?.id && <BlockClubDescription club={clubForAdd} postClub={postClub} />}
     </section>

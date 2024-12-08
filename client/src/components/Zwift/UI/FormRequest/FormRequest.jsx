@@ -11,25 +11,30 @@ function FormRequest({ name, reducer, type }) {
   const [localId, setLocalId] = useState({ id: 0 });
   const dispatch = useDispatch();
   return (
-    <form className={styles.form} name="requestData">
-      <SimpleInput
-        name={name}
-        state={localId}
-        setState={setLocalId}
-        property="id"
-        type={type === 'text' ? 'text' : 'number'}
-      />
-      <div className={styles.right}>
-        <Button
-          getClick={() => {
-            dispatch(reducer ? reducer(localId.id) : setEventId(localId.id));
-            setLocalId({ id: 0 });
-          }}
-        >
-          получить
-        </Button>
+    <>
+      <h2 className={styles.title}>Поиск клуба по id</h2>
+      <div className={styles.group}>
+        <form className={styles.form} name="requestData">
+          <SimpleInput
+            name={name}
+            state={localId}
+            setState={setLocalId}
+            property="id"
+            type={type === 'text' ? 'text' : 'number'}
+          />
+          <div className={styles.right}>
+            <Button
+              getClick={() => {
+                dispatch(reducer ? reducer(localId.id) : setEventId(localId.id));
+                setLocalId({ id: 0 });
+              }}
+            >
+              получить
+            </Button>
+          </div>
+        </form>
       </div>
-    </form>
+    </>
   );
 }
 
