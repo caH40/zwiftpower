@@ -22,6 +22,7 @@ export async function getEventZwift(req: Request, res: Response) {
     const forViewBoolean = forView === 'true';
 
     const event = await getEventZwiftService(+eventId);
+    // Проверка является ли userId модератором клуба в котором создается данный Эвент
     await checkModeratorClub({
       userId,
       clubId: event.microserviceExternalResourceId,
@@ -48,7 +49,16 @@ export async function putEventZwift(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const event: PutEvent = req.body.event;
+
+    // Проверка является ли userId модератором клуба в котором создается данный Эвент
+    await checkModeratorClub({
+      userId,
+      clubId: event.eventData.microserviceExternalResourceId,
+    });
+
+    // Сервис добавления Эвента в БД.
     const eventChanged = await putEventZwiftService(event, userId);
+
     res.status(200).json(eventChanged);
   } catch (error) {
     errorHandler(error);

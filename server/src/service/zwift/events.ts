@@ -4,7 +4,6 @@ import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { checkModeratorClub } from '../moderator-club.js';
 
 // types
 import { PutEvent } from '../../types/http.interface.js';
@@ -34,9 +33,6 @@ export async function getEventZwiftService(eventId: number) {
  * Сервис внесения изменений (обновление) данных заезда на сервере Zwift в Эвенте
  */
 export async function putEventZwiftService(event: PutEvent, userId: string) {
-  // Проверка является ли userId модератором клуба в котором создается данный Эвент
-  await checkModeratorClub({ userId, clubId: event.eventData.microserviceExternalResourceId });
-
   const id = event.eventData.id;
   const urlEventData = `events/${id}`;
   const eventData = await putRequest({ url: urlEventData, data: event });
