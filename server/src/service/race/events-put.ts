@@ -1,4 +1,5 @@
 import { loggingAdmin } from '../../logger/logger-admin.js';
+import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { updateStartInfoEvent } from '../updates/schedule/start-event.js';
 import { getEventZwiftService } from '../zwift/events.js';
 import { updateEventAndSubgroups } from './event-update.js';
@@ -10,10 +11,24 @@ import { putSignedRidersService } from './signed-riders.js';
  * -запроса на обновление Модератором;
  * -обновления по расписанию;
  * -внесения изменений в параметры Эвента;
+ *
+ * Event уже есть в БД, поэтому можно определить Организатора и его токен для запросов в ZwiftAPI.
  */
 export async function putEventService(eventId: number, userId?: string) {
+  const eventDB = await ZwiftEvent.findOne(
+    { id: eventId },
+    { microserviceExternalResourceId: true, _id: false }
+  ).lean<{ microserviceExternalResourceId: string }>();
+
+  if (!eventDB) {
+    throw new Error(`Не найден Эвент с id:${eventId} в БД!`);
+  }
+
+  // Id клуба в котором был создан Эвент, данные которого обновляются.
+  const clubId = eventDB.microserviceExternalResourceId;
+
   // Запрос данных Event (eventId) с API Zwift
-  const event = await getEventZwiftService(eventId);
+  const event = await getEventZwiftService({ eventId, clubId });
 
   if (!event) {
     throw new Error(`Не найден Эвент с id:${eventId} на сервере Zwift`);
@@ -28,7 +43,7 @@ export async function putEventService(eventId: number, userId?: string) {
   // получение зарегистрированных райдеров с ZwiftAPI и сохранение в БД
   // обновление зарегистрированных райдеров происходит после обновления
   // подгрупп, так как меняются _id у подгрупп
-  await putSignedRidersService({ eventId, clubId: eventSaved.microserviceExternalResourceId });
+  await putSignedRidersService({ eventId, clubId });
 
   // Обновление свойства старта заезда в одном event
   await updateStartInfoEvent(eventSaved);

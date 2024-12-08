@@ -11,10 +11,25 @@ import { PutEvent } from '../../types/http.interface.js';
 import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
 import { TAccessExpressionObj } from '../../types/model.interface.js';
 
-// запрос данных Эвента с сервера Zwift
-export async function getEventZwiftService(eventId: number) {
+// Запрос данных Эвента с сервера Zwift от модераторов клубов.
+// При clubId:undefined значит запрос на ZwiftAPI будет осуществляться по общему токену-доступа.
+export async function getEventZwiftService({
+  eventId,
+  clubId,
+}: {
+  eventId: number;
+  clubId?: string;
+}) {
+  const tokenOrganizer = clubId
+    ? await getAccessTokenOrganizer({ clubId, importanceToken: 'main' })
+    : undefined;
+
+  // Получение данных Эвента из ZwiftAPI.
   const urlEventData = `events/${eventId}?skip_cache=false`;
-  const eventData: eventDataFromZwiftAPI | null = await getRequest({ url: urlEventData });
+  const eventData: eventDataFromZwiftAPI | null = await getRequest({
+    url: urlEventData,
+    tokenOrganizer,
+  });
 
   if (!eventData) {
     throw new Error(`Не найден Эвент id:${eventId}`);
@@ -35,7 +50,7 @@ export async function getEventZwiftService(eventId: number) {
  */
 export async function putEventZwiftService(event: PutEvent, userId: string) {
   const tokenOrganizer = await getAccessTokenOrganizer({
-    clubId: String(event.eventData.microserviceExternalResourceId),
+    clubId: event.eventData.microserviceExternalResourceId,
     importanceToken: 'main',
   });
 

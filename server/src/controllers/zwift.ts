@@ -21,7 +21,7 @@ export async function getEventZwift(req: Request, res: Response) {
     // Преобразование параметра в логическое значение.
     const forViewBoolean = forView === 'true';
 
-    const event = await getEventZwiftService(+eventId);
+    const event = await getEventZwiftService({ eventId: +eventId });
     // Проверка является ли userId модератором клуба в котором создается данный Эвент
     await checkModeratorClub({
       userId,
