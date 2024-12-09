@@ -5,6 +5,7 @@ import { fetchEventCreatePost } from './fetchEventCreatePost';
 const initialState = {
   needNavigate: false,
   eventId: 0,
+  organizerId: 0,
   status: null,
   error: null,
 };
@@ -14,7 +15,8 @@ const eventCreateSlice = createSlice({
   initialState,
   reducers: {
     setEventId(state, action) {
-      state.eventId = action.payload;
+      state.eventId = action.payload.eventId;
+      state.organizerId = action.payload.organizerId;
     },
     resetEventIdCreated(state) {
       state.eventId = 0;

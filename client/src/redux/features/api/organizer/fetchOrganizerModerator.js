@@ -88,3 +88,24 @@ export const fetchDeleteOrganizerBotsModerator = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Получение Организаторов у которых пользователь userId является модератором.
+ */
+export const fetchGetOrganizersForModerator = createAsyncThunk(
+  'organizersForModerator/get',
+  async ({ userId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/organizers-for-moderator/${userId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

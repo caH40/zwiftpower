@@ -24,7 +24,7 @@ function ZwiftViewEvent() {
       return undefined;
     }
 
-    dispatch(fetchZwiftEventParams({ eventId, forView: true }));
+    dispatch(fetchZwiftEventParams({ eventId }));
     dispatch(resetEventIdCreated());
 
     return () => {

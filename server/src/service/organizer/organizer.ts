@@ -48,14 +48,16 @@ export async function getOrganizersForModeratorService({
 
   const clubsDB = await Club.find(
     { id: { $in: userDB.moderator.clubs } },
-    { organizer: true, name: true, _id: false }
-  ).lean<{ organizer: Types.ObjectId; name: string }[]>();
+    { organizer: true, _id: false }
+  ).lean<{ organizer: Types.ObjectId }[]>();
 
-  const organizers = new Map<Types.ObjectId, ResponseOrganizerForModerator>(
-    clubsDB.map((elm) => [
-      elm.organizer,
-      { organizerId: String(elm.organizer), name: elm.name },
-    ])
+  const organizersDB = await Organizer.find(
+    { _id: clubsDB.map((elm) => elm.organizer) },
+    { name: true }
+  ).lean<{ _id: Types.ObjectId; name: string }[]>();
+
+  const organizers = new Map<string, ResponseOrganizerForModerator>(
+    organizersDB.map((elm) => [String(elm._id), { _id: String(elm._id), name: elm.name }])
   );
 
   return {

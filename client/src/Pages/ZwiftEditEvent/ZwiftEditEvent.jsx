@@ -43,7 +43,7 @@ function ZwiftEditEvent() {
 
   useEffect(() => {
     if (id) {
-      dispatch(setEventId(id));
+      dispatch(setEventId({ eventId: id }));
     }
 
     return () => {

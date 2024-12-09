@@ -3,11 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchGetOrganizerBotsModerator,
   fetchGetOrganizerModerator,
+  fetchGetOrganizersForModerator,
   fetchPutOrganizerBotsModerator,
 } from './fetchOrganizerModerator';
 
 const initialState = {
   tokens: [],
+  organizersForModerator: [],
+  organizerForModerator: '',
   organizer: {},
   status: null,
   error: null,
@@ -25,6 +28,9 @@ const organizerModeratorSlice = createSlice({
     },
     resetOrganizerDataModerator(state) {
       state.organizer = {};
+    },
+    reducerSelectOrganizersForModerator(state, action) {
+      state.organizerForModerator = action.payload;
     },
   },
 
@@ -68,7 +74,7 @@ const organizerModeratorSlice = createSlice({
       state.status = 'loading';
     });
 
-    builder.addCase(fetchPutOrganizerBotsModerator.fulfilled, (state, action) => {
+    builder.addCase(fetchPutOrganizerBotsModerator.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
     });
@@ -77,10 +83,32 @@ const organizerModeratorSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== обновление token zwift=================
+    builder.addCase(fetchGetOrganizersForModerator.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetOrganizersForModerator.fulfilled, (state, action) => {
+      const organizers = action.payload.data;
+      state.organizersForModerator = organizers;
+      state.organizerForModerator = organizers[0]?._id;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetOrganizersForModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetOrganizerModerator, resetOrganizerDataModerator } =
-  organizerModeratorSlice.actions;
+export const {
+  resetOrganizerModerator,
+  resetOrganizerDataModerator,
+  reducerSelectOrganizersForModerator,
+} = organizerModeratorSlice.actions;
 
 export default organizerModeratorSlice.reducer;

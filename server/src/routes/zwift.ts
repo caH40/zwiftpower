@@ -11,7 +11,7 @@ import {
 
 export const routerZwift = Router();
 
-routerZwift.get('/events/:eventId/:forView', authModeratorClub, getEventZwift);
+routerZwift.get('/events/:eventId/:organizerId', authModeratorClub, getEventZwift);
 routerZwift.put('/events', authModeratorClub, putEventZwift);
 routerZwift.post('/events', authModeratorClub, postZwiftEvent);
 routerZwift.get('/rider/:zwiftId', getZwiftRider);

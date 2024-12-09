@@ -765,4 +765,4 @@ export type ParamsRequestToZwift<T> = {
 /**
  * Тип возвращаемых данных сервиса ответа получение Организаторов у которых пользователь userId является модератором.
  */
-export type ResponseOrganizerForModerator = { organizerId: string; name: string };
+export type ResponseOrganizerForModerator = { _id: string; name: string };

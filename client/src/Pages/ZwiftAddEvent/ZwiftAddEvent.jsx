@@ -17,22 +17,30 @@ import {
   accessExpressions,
   accessExpressionsDisabled,
 } from '../../assets/zwift/accessExpression';
+import { fetchGetOrganizersForModerator } from '../../redux/features/api/organizer/fetchOrganizerModerator';
+import SimpleSelectFunction from '../../components/UI/SimpleSelect/SimpleSelectFunction';
+import { reducerSelectOrganizersForModerator } from '../../redux/features/api/organizer/organizerModeratorSlice';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
-  const { eventId } = useSelector((state) => state.fetchEventCreate);
+  const { eventId, organizerId } = useSelector((state) => state.fetchEventCreate);
   useTitle('Добавление заезда из Zwift');
   const { eventMainParams } = useSelector((state) => state.eventParams);
   const [additionalParams, setAdditionalParams] = useState({ seriesId: null });
 
   const { id: userId } = useSelector((state) => state.checkAuth.value.user);
+  const { organizersForModerator, organizerForModerator } = useSelector(
+    (state) => state.organizerModerator
+  );
   const { series } = useSelector((state) => state.fetchActualSeries);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // запрос актуальных серий
+  // Сброс данных после размонтирования компонента.
   useEffect(() => {
+    dispatch(fetchGetOrganizersForModerator({ userId }));
+
     return () => {
       dispatch(resetSeries());
       dispatch(resetParams());
@@ -41,18 +49,19 @@ function ZwiftAddEvent() {
 
   // запрос параметров Эвента
   useEffect(() => {
-    if (eventId === 0) {
+    if (eventId === 0 || organizerId === 0) {
       return;
     }
-    dispatch(fetchZwiftEventParams({ eventId }));
+    dispatch(fetchZwiftEventParams({ eventId, organizerId }));
     dispatch(resetEventIdCreated());
-  }, [eventId, dispatch]);
+  }, [eventId, organizerId, dispatch]);
 
   // запрос актуальных серий
   useEffect(() => {
     if (!eventMainParams?.name) {
       return;
     }
+
     dispatch(fetchActualSeries());
   }, [eventMainParams, dispatch]);
 
@@ -100,14 +109,36 @@ function ZwiftAddEvent() {
     setAdditionalParams({});
   };
 
+  // Обработчик выбора селекта для выбора Организатора в один из клуба которого будет добавляться Эвент.
+  const handlerSelectOrganizersForModerator = (value) => {
+    dispatch(reducerSelectOrganizersForModerator(value));
+  };
+
   return (
     <section className={styles.block}>
-      <h3 className={styles.title}>
-        {'Добавление заезда из Звифта для отслеживания результатов'}
-      </h3>
+      {!!organizersForModerator.length && (
+        <>
+          <h4 className={styles.title}>Выбор Организатора в клуб которого добавляется Эвент</h4>
+          <div className={styles.group}>
+            <SimpleSelectFunction
+              value={organizerForModerator}
+              reducer={handlerSelectOrganizersForModerator}
+              options={organizersForModerator.map((elm) => ({
+                name: elm._id,
+                label: elm.name,
+                id: elm._id,
+              }))}
+            />
+          </div>
+        </>
+      )}
+
+      <h3 className={styles.title}>Добавление заезда из Звифта для отслеживания результатов</h3>
+
       <div className={styles.group}>
-        <FormRequest name={'Id Event'} />
+        <FormRequest name={'Id Event'} organizerId={organizerForModerator} />
       </div>
+
       {eventMainParams?.name && (
         <>
           <DescriptionEventZwift event={eventMainParams} />

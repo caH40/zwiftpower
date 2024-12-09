@@ -16,10 +16,11 @@ import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
  */
 export async function getEventZwift(req: Request, res: Response) {
   try {
-    const { eventId, userId, forView } = req.params;
+    const { eventId, userId, organizerId } = req.params;
+    // console.log({ eventId, userId, organizerId });
 
-    // Преобразование параметра в логическое значение.
-    const forViewBoolean = forView === 'true';
+    // Преобразование параметра в логическое значение. Если есть organizerId, значит для модерации.
+    const forViewBoolean = organizerId === 'undefined';
 
     const event = await getEventZwiftService({ eventId: +eventId });
     // Проверка является ли userId модератором клуба в котором создается данный Эвент
