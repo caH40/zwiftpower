@@ -10,6 +10,7 @@ import { errorHandler } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
+import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 
 /**
  * Получение данных Эвента для последующего редактирование параметров Эвента, просмотра параметров Эвента, или добавления в БД.
@@ -17,12 +18,22 @@ import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
 export async function getEventZwift(req: Request, res: Response) {
   try {
     const { eventId, userId, organizerId } = req.params;
-    // console.log({ eventId, userId, organizerId });
+
+    // Для страницы "редактирование Эвента", Эвент уже есть в БД.
+    const eventDB = await ZwiftEvent.findOne(
+      { id: eventId },
+      { organizer: true, _id: false }
+    ).lean();
 
     // Преобразование параметра в логическое значение. Если есть organizerId, значит для модерации.
     const forViewBoolean = organizerId === 'undefined';
 
-    const event = await getEventZwiftService({ eventId: +eventId });
+    const event = await getEventZwiftService({
+      eventId: +eventId,
+      ...(!forViewBoolean && { organizerId }),
+      ...(eventDB && { organizerLabel: eventDB.organizer }),
+    });
+
     // Проверка является ли userId модератором клуба в котором создается данный Эвент
     await checkModeratorClub({
       userId,

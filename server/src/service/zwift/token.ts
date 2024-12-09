@@ -78,8 +78,8 @@ export async function getAccessTokenOrganizer({
 }
 
 type ParamsGetTokenForEvent = {
-  organizerLabel: string;
-  organizerId?: Types.ObjectId;
+  organizerLabel?: string;
+  organizerId?: Types.ObjectId | string;
 };
 /**
  * Получение токена доступа к ZwiftAPI для работы с данными Эвента по organizerLabel, или
@@ -90,7 +90,7 @@ export async function getTokenForEvent({
   organizerLabel,
   organizerId,
 }: ParamsGetTokenForEvent): Promise<string> {
-  let query = {} as Record<string, Types.ObjectId>;
+  let query = {} as Record<string, Types.ObjectId | string>;
 
   if (organizerId) {
     query = { organizer: organizerId };

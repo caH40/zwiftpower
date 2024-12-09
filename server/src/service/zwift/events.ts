@@ -4,7 +4,7 @@ import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
 import { errorHandler } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { getAccessTokenOrganizer } from './token.js';
+import { getAccessTokenOrganizer, getTokenForEvent } from './token.js';
 
 // types
 import { PutEvent } from '../../types/http.interface.js';
@@ -16,13 +16,22 @@ import { TAccessExpressionObj } from '../../types/model.interface.js';
 export async function getEventZwiftService({
   eventId,
   clubId,
+  organizerId,
+  organizerLabel,
 }: {
   eventId: number;
   clubId?: string;
+  organizerId?: string;
+  organizerLabel?: string;
 }) {
-  const tokenOrganizer = clubId
-    ? await getAccessTokenOrganizer({ clubId, importanceToken: 'main' })
-    : undefined;
+  let tokenOrganizer;
+  if (clubId) {
+    tokenOrganizer = await getAccessTokenOrganizer({ clubId, importanceToken: 'main' });
+  } else if (organizerId || organizerLabel) {
+    tokenOrganizer = await getTokenForEvent({ organizerId, organizerLabel });
+  }
+
+  // console.log(tokenOrganizer);
 
   // Получение данных Эвента из ZwiftAPI.
   const urlEventData = `events/${eventId}?skip_cache=false`;
