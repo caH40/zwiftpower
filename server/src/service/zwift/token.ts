@@ -165,7 +165,7 @@ export async function generateAccessTokenZwift({
     const response = await axios.post(secureUrl, qs.stringify(data));
 
     if (!response.data.access_token) {
-      throw new Error('Access token not found in response');
+      throw new Error('Не получен токен с ZwiftAPI!');
     }
 
     return response.data.access_token;

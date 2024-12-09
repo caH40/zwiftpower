@@ -212,6 +212,7 @@ export type TZwiftToken = {
   organizer: mongoose.Types.ObjectId;
   token: string;
   username: string; // e-mail бота-модератора используется вместо username.
+  iv: string; // IV для дешифровки
   importance: 'main' | 'secondary';
   createdAt: Date;
   updatedAt: Date;

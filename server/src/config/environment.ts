@@ -41,3 +41,5 @@ export const usernameZwift: string = parsed.ZWIFT_USERNAME;
 export const passwordZwift: string = parsed.ZWIFT_PASS;
 export const usernameZwiftSecondary: string = parsed.ZWIFT_USERNAME_SECONDARY;
 export const passwordZwiftSecondary: string = parsed.ZWIFT_PASS_SECONDARY;
+
+export const aesSecretKey: string = parsed.AES_SECRET_KEY;
