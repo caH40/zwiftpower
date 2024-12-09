@@ -44,7 +44,8 @@ export async function getAccessToken(isMainToken?: boolean) {
 }
 
 /**
- * Получение токена доступа к API Zwift для Организатора по ID клуба, принадлежащего организатору..
+ * Получение токена доступа к API Zwift для Организатора по ID клуба,
+ * принадлежащего организатору из БД.
  */
 export async function getAccessTokenOrganizer({
   clubId,
@@ -117,7 +118,7 @@ export async function getTokenForEvent({
 }
 
 /**
- * Создание общего токена доступа к Звифт и сохранение в БД.
+ * Генерация общего токена доступа к Звифт в ZwiftAPI и сохранение в БД.
  * !!! Заменить дублируемый код генерации токена на функцию generateAccessTokenZwift.
  */
 export async function updateAccessToken() {
@@ -145,7 +146,7 @@ export async function updateAccessToken() {
 }
 
 /**
- * Получение токена доступа к Звифт.
+ * Генерация токена доступа к Звифт в ZwiftAPI.
  */
 export async function generateAccessTokenZwift({
   email,

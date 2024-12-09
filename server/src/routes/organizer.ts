@@ -11,6 +11,7 @@ import {
   getClubZwift,
   getClubZwiftModerator,
   getOrganizerBotZwift,
+  getOrganizersForModerator,
   postClubsZwift,
   putOrganizerBotZwift,
 } from '../controllers/organizer.js';
@@ -32,3 +33,4 @@ routerOrganizer.post('/clubs/', authOrganizer, postClubsZwift);
 routerOrganizer.put('/clubs/moderators', authOrganizer, addClubModerator);
 routerOrganizer.delete('/clubs/moderators', authOrganizer, deleteClubModerator);
 routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);
+routerOrganizer.get('/organizers-for-moderator/:userModeratorId', getOrganizersForModerator);

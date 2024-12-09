@@ -12,7 +12,7 @@ import { errorHandler } from '../errors/error.js';
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
 
 /**
- * Получение данных Эвента для последующего редактирование параметров Эвента
+ * Получение данных Эвента для последующего редактирование параметров Эвента, просмотра параметров Эвента, или добавления в БД.
  */
 export async function getEventZwift(req: Request, res: Response) {
   try {

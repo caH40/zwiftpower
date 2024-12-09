@@ -761,3 +761,8 @@ export type ParamsRequestToZwift<T> = {
   tokenOrganizer?: string | null; // Если нет токена Организатора, то выполняются запросы через тонен бота Race-Info.
   data: T; // данные для post,put,delete запросов.
 };
+
+/**
+ * Тип возвращаемых данных сервиса ответа получение Организаторов у которых пользователь userId является модератором.
+ */
+export type ResponseOrganizerForModerator = { organizerId: string; name: string };

@@ -18,7 +18,10 @@ import {
   postClubsZwiftService,
 } from '../service/organizer/clubs.js';
 import { Club } from '../Model/Club.js';
-import { getClubZwiftModeratorService } from '../service/organizer/organizer.js';
+import {
+  getClubZwiftModeratorService,
+  getOrganizersForModeratorService,
+} from '../service/organizer/organizer.js';
 
 /**
  * Контроллер данных Организатора при запросе модератором.
@@ -357,6 +360,32 @@ export async function deleteClubModerator(req: Request, res: Response) {
 
     // Вызов сервиса.
     const response = await deleteClubModeratorService({ clubId, userId });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    // Обработка ошибок.
+    errorHandler(error);
+
+    // Сообщение об ошибке.
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер получения Организаторов у которых пользователь userId является модератором.
+ */
+export async function getOrganizersForModerator(req: Request, res: Response) {
+  try {
+    const { userModeratorId } = req.params;
+
+    if (!userModeratorId) {
+      throw new Error('Нет userId!');
+    }
+
+    // Вызов сервиса.
+    const response = await getOrganizersForModeratorService({ userId: userModeratorId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);
