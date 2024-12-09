@@ -93,7 +93,7 @@ export async function getClubZwiftService({
 
   const tokenDB = await ZwiftToken.findOne(
     { organizer: organizerId },
-    { token: true, _id: false }
+    { token: true, _id: false, iv: true }
   ).lean<{
     token: string;
   }>();

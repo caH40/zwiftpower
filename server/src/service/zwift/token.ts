@@ -64,7 +64,7 @@ export async function getAccessTokenOrganizer({
 
   const tokenDB = await ZwiftToken.findOne(
     { organizer: clubDB.organizer, importance: importanceToken },
-    { token: true, _id: false }
+    { token: true, iv: true, _id: false }
   ).lean<{
     token: string;
   }>();
@@ -105,7 +105,7 @@ export async function getTokenForEvent({
     query = { organizer: organizerDB._id };
   }
 
-  const tokenDB = await ZwiftToken.findOne(query, { _id: false, token: true }).lean<{
+  const tokenDB = await ZwiftToken.findOne(query, { _id: false, token: true, iv: true }).lean<{
     token: string | null;
   }>();
 
