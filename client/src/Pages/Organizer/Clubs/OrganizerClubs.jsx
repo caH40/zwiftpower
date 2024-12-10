@@ -128,7 +128,10 @@ export default function OrganizerClubs({ organizerId }) {
         />
       )}
 
-      <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
+      <h3 className={styles.title}>Поиск клуба в Звифте по id</h3>
+      <div className={styles.group}>
+        <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
+      </div>
 
       {clubForAdd?.id && <BlockClubDescription club={clubForAdd} postClub={postClub} />}
     </section>

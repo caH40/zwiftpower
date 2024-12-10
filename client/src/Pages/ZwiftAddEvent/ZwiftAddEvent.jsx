@@ -140,9 +140,9 @@ function ZwiftAddEvent() {
           {/* Если не получены данные добавляемого Эвента,то отображается форма поиска Эвента для добавления */}
           {!!organizersForModerator.length && (
             <>
-              <h4 className={styles.title}>
+              <h3 className={styles.title}>
                 Выбор Организатора в клуб которого добавляется Эвент
-              </h4>
+              </h3>
               <div className={styles.group}>
                 <SimpleSelectFunction
                   value={organizerForModerator}
