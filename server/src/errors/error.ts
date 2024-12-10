@@ -1,3 +1,6 @@
+import { Response } from 'express';
+import { AxiosError } from 'axios';
+
 import { nodeEnvType } from '../config/environment.js';
 import { logError } from '../logger/logger.js';
 import { ignoreError } from './ignore.js';
@@ -26,3 +29,29 @@ export const errorHandler = (error: unknown): void => {
     console.log(error); // eslint-disable-line
   }
 };
+
+/**
+ * Функция для централизованной обработки ошибок в контроллерах
+ */
+export function handleErrorInController(res: Response, error: unknown) {
+  // Логируем ошибку с помощью внешнего обработчика.
+  errorHandler(error);
+
+  if (error instanceof AxiosError) {
+    // Ошибки от Axios (например, 401 или 400).
+    if (error.response) {
+      return res.status(error.response.status || 400).json({
+        message: error.response.data.message || 'Ошибка при запросе к стороннему API',
+      });
+    }
+    return res.status(500).json({ message: 'Ошибка сети или сервера Axios' });
+  }
+
+  if (error instanceof Error) {
+    // Обычные ошибки.
+    return res.status(400).json({ message: error.message });
+  }
+
+  // Непредвиденные ошибки.
+  return res.status(500).json({ message: 'Произошла неизвестная ошибка' });
+}

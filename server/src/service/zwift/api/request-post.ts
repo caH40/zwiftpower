@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 import { zwiftAPI } from '../../../config/environment.js';
 
@@ -25,22 +25,38 @@ export async function postRequest({
   data,
   tokenOrganizer,
 }: ParamsRequestToZwift<PostZwiftEvent>) {
-  if (!tokenOrganizer) {
-    throw new Error('Не получен токен доступа организатора к ZwiftAPI!');
-  }
+  try {
+    if (!tokenOrganizer) {
+      throw new Error('Не получен токен доступа организатора к ZwiftAPI!');
+    }
 
-  const response = await axios({
-    method: 'post',
-    url: `${apiUrl}${url}`,
-    headers: {
-      ...headersDefault,
-      Authorization: 'Bearer ' + tokenOrganizer,
-    },
-    data,
-  });
+    const response = await axios({
+      method: 'post',
+      url: `${apiUrl}${url}`,
+      headers: {
+        ...headersDefault,
+        Authorization: 'Bearer ' + tokenOrganizer,
+      },
+      data,
+    });
 
-  if (response) {
+    // Проверка на пустое тело ответа.
+    if (!response?.data) {
+      throw new Error('Пустое тело ответа от Zwift API. Возможно, токен устарел.');
+    }
+
     return response.data;
+  } catch (error) {
+    // Обработка ошибок, связанных с токеном.
+    if (isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error('Токен доступа невалидный или истёк! Пожалуйста, обновите токен.');
+      } else if (!error.response) {
+        throw new Error('Ошибка сети или недоступность API.');
+      }
+    }
+
+    // Повторно выбрасываем остальные ошибки
+    throw error;
   }
-  return null;
 }

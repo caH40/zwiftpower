@@ -10,7 +10,7 @@ import {
   putEventZwiftService,
 } from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
-import { errorHandler } from '../errors/error.js';
+import { errorHandler, handleErrorInController } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
@@ -99,14 +99,7 @@ export async function putEventZwift(req: Request, res: Response) {
 
     res.status(200).json(eventChanged);
   } catch (error) {
-    errorHandler(error);
-    if (error instanceof AxiosError) {
-      if (error.response) {
-        res.status(400).json(error.response.data);
-      }
-    } else if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    }
+    handleErrorInController(res, error);
   }
 }
 
@@ -166,14 +159,6 @@ export async function postZwiftEvent(req: Request, res: Response) {
 
     res.status(201).json(response);
   } catch (error) {
-    errorHandler(error);
-    if (error instanceof AxiosError) {
-      if (error.response) {
-        const message = JSON.stringify(error.response.data);
-        res.status(400).json({ message });
-      }
-    } else if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    }
+    handleErrorInController(res, error);
   }
 }

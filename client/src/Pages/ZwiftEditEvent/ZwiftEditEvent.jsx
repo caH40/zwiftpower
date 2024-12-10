@@ -74,9 +74,7 @@ function ZwiftEditEvent() {
       .catch((error) => {
         dispatch(
           getAlert({
-            message: error.response
-              ? JSON.stringify(error.response.data.message)
-              : 'Непредвиденная ошибка',
+            message: error.response ? error.response.data.message : 'Непредвиденная ошибка',
             type: 'error',
             isOpened: true,
           })
