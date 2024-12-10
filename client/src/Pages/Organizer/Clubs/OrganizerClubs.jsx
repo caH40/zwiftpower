@@ -129,6 +129,7 @@ export default function OrganizerClubs({ organizerId }) {
       )}
 
       <h3 className={styles.title}>Поиск клуба в Звифте по id</h3>
+
       <div className={styles.group}>
         <FormRequest name={'Id Club'} reducer={setClubId} type={'text'} />
       </div>

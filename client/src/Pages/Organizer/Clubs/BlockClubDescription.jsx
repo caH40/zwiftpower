@@ -52,6 +52,7 @@ function BlockClubDescription({ club, postClub }) {
           <Button getClick={() => postClub(club)}>Добавить</Button>
         </div>
       </div>
+
       <JSONBlock json={club} />
     </>
   );

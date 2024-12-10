@@ -85,23 +85,23 @@ function ZwiftEditEvent() {
     return false;
   };
 
-  const activatePattern = (pattern) => {
-    try {
-      dispatch(setPattern(pattern));
-      if (pattern === '' || pattern === 'Сброс настроек') {
-        return;
-      }
-      dispatch(
-        getAlert({
-          message: `Установлен пакет настроек "${pattern}"`,
-          type: 'success',
-          isOpened: true,
-        })
-      );
-    } catch (error) {
-      dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
-    }
-  };
+  // const activatePattern = (pattern) => {
+  //   try {
+  //     dispatch(setPattern(pattern));
+  //     if (pattern === '' || pattern === 'Сброс настроек') {
+  //       return;
+  //     }
+  //     dispatch(
+  //       getAlert({
+  //         message: `Установлен пакет настроек "${pattern}"`,
+  //         type: 'success',
+  //         isOpened: true,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
+  //   }
+  // };
 
   const selectCategoryEnforcement = (categoryEnforcementName) => {
     dispatch(setCategoryEnforcement(categoryEnforcementName));
@@ -131,9 +131,12 @@ function ZwiftEditEvent() {
           <Button getClick={goBack}>назад</Button>
         </>
       ) : undefined}
-      <JSONBlock
-        json={eventParams?.eventMainParams?.id === 0 ? null : eventParams?.eventMainParams}
-      />
+
+      <div className={styles.spacer__json}>
+        <JSONBlock
+          json={eventParams?.eventMainParams?.id === 0 ? null : eventParams?.eventMainParams}
+        />
+      </div>
     </section>
   );
 }
