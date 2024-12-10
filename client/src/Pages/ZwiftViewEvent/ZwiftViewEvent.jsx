@@ -21,16 +21,17 @@ function ZwiftViewEvent() {
 
   useEffect(() => {
     if (eventId === 0) {
-      return undefined;
+      return;
     }
 
     dispatch(fetchZwiftEventParams({ eventId }));
     dispatch(resetEventIdCreated());
-
-    return () => {
-      dispatch(resetParams());
-    };
   }, [eventId, dispatch]);
+
+  // Сброс данных в хранилище при размонтировании компонента.
+  useEffect(() => {
+    return () => dispatch(resetParams());
+  }, []);
 
   return (
     <section className={styles.block}>

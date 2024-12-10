@@ -48,10 +48,6 @@ function ZwiftEditEvent() {
     if (id) {
       dispatch(setEventId({ eventId: id }));
     }
-
-    return () => {
-      dispatch(resetParams());
-    };
   }, [id, dispatch]);
 
   useEffect(() => {
@@ -62,6 +58,11 @@ function ZwiftEditEvent() {
     dispatch(fetchZwiftEventParamsForModerator({ eventId }));
     dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
+
+  // Сброс данных в хранилище при размонтировании компонента.
+  useEffect(() => {
+    return () => dispatch(resetParams());
+  }, []);
 
   const sendNewEventParams = () => {
     const eventForPost = prepareData(eventParams);
