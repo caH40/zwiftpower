@@ -124,34 +124,8 @@ function ZwiftAddEvent() {
 
   return (
     <section className={styles.block}>
-      {!!organizersForModerator.length && (
-        <>
-          <h4 className={styles.title}>Выбор Организатора в клуб которого добавляется Эвент</h4>
-          <div className={styles.group}>
-            <SimpleSelectFunction
-              value={organizerForModerator}
-              reducer={handlerSelectOrganizersForModerator}
-              options={organizersForModerator.map((elm) => ({
-                name: elm._id,
-                label: elm.name,
-                id: elm._id,
-              }))}
-            />
-          </div>
-        </>
-      )}
-
-      <h3 className={styles.title}>Добавление заезда из Звифта для отслеживания результатов</h3>
-
-      <div className={styles.group}>
-        <FormRequest
-          name={'Id Event'}
-          organizerId={organizerForModerator}
-          disabled={organizerForModerator === 0}
-        />
-      </div>
-
-      {eventMainParams?.name && (
+      {/* Если получены данные добавляемого Эвента eventMainParams, то отображается форма добавления  */}
+      {eventMainParams?.name ? (
         <>
           <DescriptionEventZwift event={eventMainParams} />
           <FormAdditionalParamsEvent
@@ -160,6 +134,40 @@ function ZwiftAddEvent() {
             series={series}
             sendForm={addEvent}
           />
+        </>
+      ) : (
+        <>
+          {/* Если не получены данные добавляемого Эвента,то отображается форма поиска Эвента для добавления */}
+          {!!organizersForModerator.length && (
+            <>
+              <h4 className={styles.title}>
+                Выбор Организатора в клуб которого добавляется Эвент
+              </h4>
+              <div className={styles.group}>
+                <SimpleSelectFunction
+                  value={organizerForModerator}
+                  reducer={handlerSelectOrganizersForModerator}
+                  options={organizersForModerator.map((elm) => ({
+                    name: elm._id,
+                    label: elm.name,
+                    id: elm._id,
+                  }))}
+                />
+              </div>
+            </>
+          )}
+
+          <h3 className={styles.title}>
+            Добавление заезда из Звифта для отслеживания результатов
+          </h3>
+
+          <div className={styles.group}>
+            <FormRequest
+              name={'Id Event'}
+              organizerId={organizerForModerator}
+              disabled={organizerForModerator === 0}
+            />
+          </div>
         </>
       )}
     </section>
