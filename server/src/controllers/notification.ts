@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { isValidNotifications } from './profile.js';
 import { postNotificationService } from '../service/notifications/notofocations.js';
 
@@ -36,7 +36,7 @@ export async function postNotification(req: Request, res: Response) {
 
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }

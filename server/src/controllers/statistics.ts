@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { getRidersInEventsService } from '../statistics/ridersInEvents.js';
 import { getLeadersInIntervalsService } from '../statistics/leadersInIntervals/leadersInIntervals.js';
 import { getRidersTotalService } from '../statistics/ridersTotal.js';
@@ -31,7 +31,7 @@ export const getRidersInEvents = async (req: Request, res: Response) => {
 
     res.status(200).json(ridersInEvents);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -56,7 +56,7 @@ export const getLeadersInIntervals = async (req: Request, res: Response) => {
 
     res.status(200).json(leadersInIntervals);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -78,7 +78,7 @@ export const getRidersTotal = async (req: Request, res: Response) => {
 
     res.status(200).json(ridersTotal);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -101,7 +101,7 @@ export const getRidersTotalRacingScore = async (req: Request, res: Response) => 
 
     res.status(200).json(ridersTotalRacingScore);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -122,7 +122,7 @@ export const getRidersTotalAge = async (req: Request, res: Response) => {
 
     res.status(200).json(ridersTotalAge);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {

@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { putEventService } from '../../race/events-put.js';
 
 // types
@@ -15,6 +15,6 @@ export async function updateScheduleEvents() {
       await putEventService(event.id);
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

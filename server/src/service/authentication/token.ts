@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 import { Token } from '../../Model/Token.js';
 import { jwtAccessSecret, jwtRefreshSecret } from '../../config/environment.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { GenerateToken } from '../../types/auth.interface.js';
@@ -16,7 +16,7 @@ export async function generateToken(payload: GenerateToken) {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 
@@ -31,7 +31,7 @@ export async function saveToken(userId: Types.ObjectId, refreshToken: string) {
     const newTokenDB = await Token.create({ user: userId, refreshToken });
     return newTokenDB;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 
@@ -40,7 +40,7 @@ export async function removeToken(refreshToken: string) {
     const tokenDB = await Token.findOneAndDelete({ refreshToken });
     return tokenDB;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 

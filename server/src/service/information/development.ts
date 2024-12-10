@@ -1,5 +1,5 @@
 import { InfoDevelopment } from '../../Model/InfoDevelopment.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { PostDevelopment } from '../../types/http.interface.js';
@@ -22,7 +22,7 @@ export async function postDevelopmentService(releaseData: PostDevelopment, userI
       message: 'Информация о релизе сохранена в БД',
     };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 
@@ -51,7 +51,7 @@ export async function deleteDevelopmentService(id: string) {
     }
     return { message: `Релиз "${informationDev.text}" удалён!` };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 //
@@ -77,6 +77,6 @@ export async function putDevelopmentService(
 
     return { message: 'Изменение информации о релизе сохранены в БД' };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 export async function newPasswordService(userId: string, newPassword: string) {
   try {
@@ -17,6 +17,6 @@ export async function newPasswordService(userId: string, newPassword: string) {
     mailService(target, 'нет токена', userDB.email, userDB.username, newPassword);
     return { message: `Пароль изменен` };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

@@ -1,5 +1,5 @@
 import { User } from '../../../Model/User.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { getZwiftRiderService } from '../../zwift/rider.js';
 
 // types
@@ -21,7 +21,7 @@ export const getZwiftProfilesService = async (
 
   // запрос данных для основного райдера с сервера ZwiftAPI
   const zwiftProfileMainZP = await getZwiftRiderService(zwiftIdMain).catch((error) =>
-    errorHandler(error)
+    handleAndLogError(error)
   );
 
   if (!zwiftProfileMainZP) {
@@ -49,7 +49,7 @@ export const getZwiftProfilesService = async (
   // запрос и формирование данных для дополнительных райдеров с сервера ZwiftAPI
   for (const zwiftId of userDB.zwiftIdAdditional) {
     const zwiftProfileAdditionalZP = await getZwiftRiderService(zwiftId).catch((error) =>
-      errorHandler(error)
+      handleAndLogError(error)
     );
 
     if (!zwiftProfileAdditionalZP) {

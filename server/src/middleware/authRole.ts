@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { validateAccessToken } from '../service/authentication/token.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 /**
  * Проверка, что является модератором клуба(ов) или админом сайта.
@@ -27,7 +27,7 @@ export async function authModeratorClub(req: Request, res: Response, next: () =>
 
     return next();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
   }
 }
@@ -55,7 +55,7 @@ export async function authOrganizer(req: Request, res: Response, next: () => voi
 
     return next();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
   }
 }
@@ -77,7 +77,7 @@ export async function authModerator(req: Request, res: Response, next: () => voi
 
     return next();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
   }
 }
@@ -100,7 +100,7 @@ export async function authAdmin(req: Request, res: Response, next: () => void) {
 
     return next();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
   }
 }

@@ -1,4 +1,4 @@
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { RiderDailyMetricModel } from '../../Model/Metrics.js';
 import { TMetricsMap } from '../../types/types.interface.js';
 
@@ -44,7 +44,7 @@ export async function postMetrics({ metrics }: { metrics: TMetricsMap }): Promis
         },
       });
     } catch (error) {
-      errorHandler(error);
+      handleAndLogError(error);
     }
   });
 

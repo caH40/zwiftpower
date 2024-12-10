@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { createClient } from 'redis';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 /**
  * Проверка наличия данных в Кэше
@@ -11,7 +11,7 @@ import { errorHandler } from '../errors/error.js';
 export const getCache = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const client = await createClient()
-      .on('error', (error) => errorHandler(error))
+      .on('error', (error) => handleAndLogError(error))
       .connect();
 
     const path = req.path;

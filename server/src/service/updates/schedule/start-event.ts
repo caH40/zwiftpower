@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 // types
 import { ZwiftEventSchema } from '../../../types/model.interface.js';
@@ -13,6 +13,6 @@ export async function updateStartInfoEvent(event: ZwiftEventSchema) {
       await ZwiftEvent.findByIdAndUpdate(event._id, { $set: { started: true } });
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

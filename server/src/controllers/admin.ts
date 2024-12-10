@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AxiosError } from 'axios';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { getUsersForModeratorService, getUsersService } from '../service/admin/users.js';
 import {
   addClubModeratorService,
@@ -38,7 +38,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await getUsersService();
     res.status(200).json(users);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -59,7 +59,7 @@ export const getUsersForModerator = async (req: Request, res: Response) => {
     res.status(200).json(users);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -75,7 +75,7 @@ export const getClubs = async (req: Request, res: Response) => {
     const clubs: ClubSchema[] = await getClubsService();
     res.status(200).json(clubs);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -95,7 +95,7 @@ export const getClub = async (req: Request, res: Response) => {
 
     res.status(200).json(club);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -117,7 +117,7 @@ export const postClub = async (req: Request, res: Response) => {
 
     res.status(201).json(clubPosted);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -140,7 +140,7 @@ export const deleteClub = async (req: Request, res: Response) => {
 
     res.status(200).json(clubDeleted);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -167,7 +167,7 @@ export const addClubModerator = async (req: Request, res: Response) => {
 
     res.status(201).json(clubModeratorAdded);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -193,7 +193,7 @@ export const deleteClubModerator = async (req: Request, res: Response) => {
 
     res.status(200).json(clubModeratorAdded);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -214,7 +214,7 @@ export const getOrganizers = async (req: Request, res: Response) => {
 
     res.status(200).json(organizers);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -236,7 +236,7 @@ export const postOrganizers = async (req: Request, res: Response) => {
 
     res.status(201).json(organizers);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -258,7 +258,7 @@ export const deleteOrganizers = async (req: Request, res: Response) => {
 
     res.status(200).json(organizers);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -284,7 +284,7 @@ export const putActivityInFitFile = async (req: Request, res: Response) => {
 
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -313,7 +313,7 @@ export const getActivityInFitFile = async (req: Request, res: Response) => {
 
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -337,7 +337,7 @@ export const updateFitFileAndPowerCurve = async (req: Request, res: Response) =>
 
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -385,7 +385,7 @@ export const updateFairRideBan = async (req: Request, res: Response) => {
 
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);
@@ -416,7 +416,7 @@ export const getFairRideBan = async (req: Request, res: Response) => {
 
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);

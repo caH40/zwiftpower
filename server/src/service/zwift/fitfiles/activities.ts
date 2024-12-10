@@ -3,7 +3,7 @@ import { getRequest } from '../api/request-get.js';
 // types
 import { activityFeedFromZwiftAPI } from '../../../types/zwiftAPI/activity-feedFromZwift.interface.js';
 import { ActivityFeedShort } from '../../../types/types.interface.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { ActivitiesDataFromZwiftAPI } from '../../../types/zwiftAPI/activitiesFromZwift.interface.js';
 
 export async function getActivities(zwiftId: number, limit = 50) {
@@ -40,7 +40,7 @@ export async function getActivitiesFullData(activityId: string) {
 
     return activity;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return null;
   }
 }

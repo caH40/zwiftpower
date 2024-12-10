@@ -3,7 +3,7 @@ import { getActivities } from './activities.js';
 import { filterActivities } from './filter-activities.js';
 import { getFitFilesFromZwift } from './fitfileFromZwift.js';
 import { saveFitFiles } from './fitfilestoDB.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 /**
  * Сохранение fitfiles райдера в БД за последние 90 дней
@@ -35,6 +35,6 @@ export async function createFitFiles(zwiftId: number): Promise<void> {
     // сохранение в данных из fitFiles в БД
     await saveFitFiles(powers, zwiftId);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

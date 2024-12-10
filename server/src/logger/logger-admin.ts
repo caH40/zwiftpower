@@ -1,6 +1,6 @@
 import { LogsAdmin } from '../Model/LogsAdmin.js';
 import { descriptionLogsAdmins } from '../assets/logs/admins.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 // types
 import { LoggingAdminArg } from '../types/types.interface.js';
@@ -25,6 +25,6 @@ export async function loggingAdmin({
     });
     return { message: 'Успешное сохранение информации о действии админа (модератора)' };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

@@ -2,7 +2,7 @@ import pLimit from 'p-limit';
 
 import { Rider } from '../../Model/Rider.js';
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { getZwiftRiderService } from '../zwift/rider.js';
 
 // types
@@ -49,7 +49,7 @@ export const updateAllRidersProfiles = async () => {
 
     await updateRidersProfilesService([...riderIdsWithRankDB, ...riderIdsWithoutRankFiltered]);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };
 
@@ -76,7 +76,7 @@ export const updateRidersProfiles = async (zwiftIds: number[]) => {
       await updateRidersProfilesWithoutResultsService(ridersWithoutResults);
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };
 
@@ -91,7 +91,7 @@ async function updateRidersProfilesService(riderIdsWithRank: RiderIdsWithRank[])
     const requestsProfiles = [...profilesWithRanks.keys()].map((profileId) =>
       limit(() =>
         getZwiftRiderService(profileId).catch((error) => {
-          errorHandler(error);
+          handleAndLogError(error);
           return null; // Возвращаем null вместо выброса ошибки.
         })
       )
@@ -111,13 +111,13 @@ async function updateRidersProfilesService(riderIdsWithRank: RiderIdsWithRank[])
         { zwiftId: profile.id },
         { ...profile, ...profilesWithRanks.get(profile.id) },
         { upsert: true }
-      ).catch((error) => errorHandler(error))
+      ).catch((error) => handleAndLogError(error))
     );
 
     // Необходимо дождаться завершения всех асинхронных функций.
     await Promise.allSettled(updatePromises);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 
@@ -154,7 +154,7 @@ async function updateRidersProfilesWithoutResultsService(zwiftIds: number[]) {
     const requestsProfiles = zwiftIds.map((zwiftId) =>
       limit(() =>
         getZwiftRiderService(zwiftId).catch((error) => {
-          errorHandler(error);
+          handleAndLogError(error);
           return null; // Возвращаем null вместо выброса ошибки.
         })
       )
@@ -171,13 +171,13 @@ async function updateRidersProfilesWithoutResultsService(zwiftIds: number[]) {
     // Теперь можно продолжить работу с успешными профилями.
     const updatePromises = profilesFiltered.map((profile) =>
       Rider.findOneAndUpdate({ zwiftId: profile.id }, { ...profile }, { upsert: true }).catch(
-        (error) => errorHandler(error)
+        (error) => handleAndLogError(error)
       )
     );
 
     // Необходимо дождаться завершения всех асинхронных функций.
     await Promise.allSettled(updatePromises);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

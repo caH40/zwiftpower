@@ -10,7 +10,7 @@ import {
   usernameZwift,
   // usernameZwiftSecondary,
 } from '../../config/environment.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { Club } from '../../Model/Club.js';
 import { Organizer } from '../../Model/Organizer.js';
 
@@ -141,7 +141,7 @@ export async function updateAccessToken() {
       );
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 

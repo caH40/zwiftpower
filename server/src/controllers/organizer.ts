@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 import { Request, Response } from 'express';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import {
   deleteOrganizerBotZwiftService,
   getOrganizerBotZwiftService,
@@ -42,7 +42,7 @@ export async function getClubZwiftModerator(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -97,7 +97,7 @@ export async function putOrganizerBotZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -119,7 +119,7 @@ export async function getOrganizerBotZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -145,7 +145,7 @@ export async function deleteOrganizerBotZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -171,7 +171,7 @@ export async function getClubsZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -197,7 +197,7 @@ export async function getClubsZwiftForModerator(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -240,7 +240,7 @@ export async function deleteClubsZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -275,7 +275,7 @@ export async function getClubZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -305,7 +305,7 @@ export async function postClubsZwift(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -335,7 +335,7 @@ export async function addClubModerator(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -365,7 +365,7 @@ export async function deleteClubModerator(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
@@ -391,7 +391,7 @@ export async function getOrganizersForModerator(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error) {
     // Обработка ошибок.
-    errorHandler(error);
+    handleAndLogError(error);
 
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';

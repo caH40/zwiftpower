@@ -1,5 +1,5 @@
 import { setDSQWithVirtualPower } from '../virtual-power.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 // types
 import { ZwiftResultSchema } from '../../../types/model.interface.js';
@@ -29,7 +29,7 @@ export const filterByRankCatchup = <T extends ResultEventAdditional | ZwiftResul
 
     return [...resultsNorm, ...resultsOthers];
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return results;
   }
 };

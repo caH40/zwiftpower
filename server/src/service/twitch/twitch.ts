@@ -1,5 +1,5 @@
 import { dtoTwitchChannel } from '../../dto/twitch.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { TTwitchStreamsFromAPI, TTwitchUserFromAPI } from '../../types/http.interface.js';
 import { TResponseStreamDto } from '../../types/types.interface.js';
 
@@ -44,7 +44,7 @@ export async function getTwitchChannelsService(channelsNames: string[]) {
 
     return channelsForResponse;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return [];
   }
 }

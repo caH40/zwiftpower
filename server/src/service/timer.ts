@@ -7,7 +7,7 @@ import { updateResults } from './updates/results_event/results-events.js';
 import { updateScheduleEvents } from './updates/schedule/events.js';
 import { updateStartInfo } from './updates/schedule/start.js';
 import { updateAccessToken } from './zwift/token.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { createSitemap } from './sitemap/generate-sitemap.js';
 import {
   millisecondsInDay,
@@ -31,7 +31,7 @@ export async function setTimers() {
       await controlConfirmEmail();
       await controlNewPasswords();
     } catch (error) {
-      errorHandler(error);
+      handleAndLogError(error);
     }
   }, millisecondsInDay);
 
@@ -41,7 +41,7 @@ export async function setTimers() {
       await updateScheduleEvents();
       await updateStartInfo();
     } catch (error) {
-      errorHandler(error);
+      handleAndLogError(error);
     }
   }, millisecondsIn23Minutes);
 
@@ -50,7 +50,7 @@ export async function setTimers() {
     try {
       await updateResults();
     } catch (error) {
-      errorHandler(error);
+      handleAndLogError(error);
     }
   }, millisecondsIn5Minutes);
 

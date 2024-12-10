@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { getSeriesActualService } from '../service/series.js';
 import { getLogsAdminsService } from '../service/logs_service/admins.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 // types
 import { GetLogsAdmins } from '../types/http.interface.js';
@@ -13,7 +13,7 @@ export async function getSeriesActual(req: Request, res: Response) {
     const series = await getSeriesActualService();
     return res.status(200).json(series);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -29,7 +29,7 @@ export async function getLogsAdmins(req: Request, res: Response) {
 
     return res.status(200).json(logs);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }

@@ -1,4 +1,4 @@
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { getNormalizedPower } from '../../power/normalized.js';
 import { sliceExcess } from './criticalpower/slice-excess.js';
 
@@ -40,6 +40,6 @@ export const addNormalizedPowers = async (results: ResultEventAdditional[]) => {
       result.normalizedPower = normalizedPower;
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };

@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -38,7 +38,7 @@ export const checkDurationUpdating = async (
       return { isLastUpdate: false, needUpdate };
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     // при возникновении ошибки не обновлять результаты Эвента
     return { isLastUpdate: false, needUpdate: false };
   }

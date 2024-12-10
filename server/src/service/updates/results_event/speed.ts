@@ -1,5 +1,5 @@
 import { millisecondsInHour } from '../../../assets/date.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
 
 /**
@@ -18,7 +18,7 @@ export async function addSpeed(
     );
 
     if (!subgroup) {
-      errorHandler(`Не найдена подгруппа в результате eventId:${result.eventId}`);
+      handleAndLogError(`Не найдена подгруппа в результате eventId:${result.eventId}`);
 
       continue;
     }

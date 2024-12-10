@@ -1,5 +1,5 @@
 import { routes } from '../assets/zwift/lib/cjs/routes.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { ZwiftEventSubgroupSchema } from '../types/model.interface.js';
 
 /**
@@ -30,7 +30,7 @@ export function countDistance(eventSubgroup: ZwiftEventSubgroupSchema) {
 
     return { distanceInKilometers, elevationGainInMeters };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return { distanceInKilometers: null, elevationGainInMeters: null };
   }
 }

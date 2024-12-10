@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 import { getMetaTags } from './handler.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 const __dirname = path.resolve();
 
@@ -36,7 +36,7 @@ export const setMetaTags = async (url: string): Promise<string> => {
 
     return htmlContent;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return htmlError(error, url);
   }
 };

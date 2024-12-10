@@ -2,7 +2,7 @@ import { PowerCurve } from '../../Model/PowerCurve.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { ZwiftSignedRiders } from '../../Model/ZwiftSignedRiders.js';
 import { getRequest } from '../zwift/api/request-get.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
@@ -74,14 +74,14 @@ export async function putSignedRidersService({
         // добавление кривой мощности зарегистрированного райдера в БД (пустого шаблона)
         await PowerCurve.create({ zwiftId: rider.id, isMale: rider.male }).catch((error) => {
           if (error.code === 11000) return true;
-          errorHandler(error);
+          handleAndLogError(error);
         });
       }
     }
 
     return { message: 'Изменения сохранены' };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }
 
@@ -132,6 +132,6 @@ export async function getSignedRiders({
 
     return signedDataTotal;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

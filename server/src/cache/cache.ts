@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 /**
  * Кэширование данных
  */
@@ -11,7 +11,7 @@ export const setCache = async (
   try {
     // создание клиента для Редис
     const client = await createClient()
-      .on('error', (error) => errorHandler(error))
+      .on('error', (error) => handleAndLogError(error))
       .connect();
 
     // запись в Кэш. Удаляется запись каждые 6 часов после записи её в БД-Редис.
@@ -19,6 +19,6 @@ export const setCache = async (
 
     await client.disconnect();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };

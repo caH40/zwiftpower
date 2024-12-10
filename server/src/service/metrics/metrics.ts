@@ -1,4 +1,4 @@
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { getTotalMetrics } from './getTotalMetrics.js';
 import { postMetrics } from './postMetrics.js';
 
@@ -10,6 +10,6 @@ export async function updateRidersDailyMetrics(): Promise<void> {
     const totalMetrics = await getTotalMetrics();
     await postMetrics({ metrics: totalMetrics });
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

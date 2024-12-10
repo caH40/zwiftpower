@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PasswordReset } from '../../Model/Password-reset.js';
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 export async function resetPasswordService(email: string) {
   try {
@@ -23,6 +23,6 @@ export async function resetPasswordService(email: string) {
 
     return { message: `Сброс пароля `, email };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

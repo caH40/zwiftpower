@@ -5,7 +5,7 @@ import {
   getLogErrorService,
   getLogsErrorsService,
 } from '../service/logs_service/errors.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 // types
 import { GetLogsAdmins } from '../types/http.interface.js';
@@ -24,7 +24,7 @@ export async function getLogsErrors(req: Request, res: Response) {
 
     return res.status(200).json(logs);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -45,7 +45,7 @@ export async function getLogError(req: Request, res: Response) {
 
     return res.status(200).json(logError);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -60,7 +60,7 @@ export async function deleteLogError(req: Request, res: Response) {
     const response = await deleteLogErrorService(ids);
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -75,7 +75,7 @@ export async function deleteLogAdmin(req: Request, res: Response) {
     const response = await deleteLogAdminService(ids);
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }

@@ -1,4 +1,4 @@
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { Rider } from '../../Model/Rider.js';
 
 // types
@@ -32,6 +32,6 @@ export async function addRacingScores(event: EventWithSubgroup) {
       result.profileData.racingScore = racingScore;
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

@@ -1,4 +1,4 @@
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { getSignedRiders } from '../../race/signed-riders.js';
 import { getActivities, getActivitiesFullData } from '../../zwift/fitfiles/activities.js';
 
@@ -115,7 +115,7 @@ export async function getResultsDNFRiders({
 
     return results;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return [];
   }
 }

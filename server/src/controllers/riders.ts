@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AxiosError } from 'axios';
 
 import { getRidersService } from '../service/riders/riders.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 
 // types
 import { GetRidersQuery } from '../types/http.interface.js';
@@ -29,7 +29,7 @@ export const getRiders = async (req: Request, res: Response) => {
 
     res.status(200).json(riders);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         const message = JSON.stringify(error.response.data);

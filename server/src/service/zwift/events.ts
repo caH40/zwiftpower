@@ -2,7 +2,7 @@ import { loggingAdmin } from '../../logger/logger-admin.js';
 import { getRequest } from './api/request-get.js';
 import { putRequest } from './api/request-put.js';
 import { putEventService } from '../race/events-put.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getAccessTokenOrganizer, getTokenForEvent } from './token.js';
 
@@ -134,7 +134,7 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
   // задержка нужная, что бы на сервере Звифта данные Эвента успели обновиться
   const eventId = event.eventData.id;
   setTimeout(
-    async () => await putEventService(eventId, userId).catch((e) => errorHandler(e)),
+    async () => await putEventService(eventId, userId).catch((e) => handleAndLogError(e)),
     1500
   );
 

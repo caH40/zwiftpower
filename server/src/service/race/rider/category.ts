@@ -1,6 +1,6 @@
 import { PowerCurve } from '../../../Model/PowerCurve.js';
 import { categoryFemale as female, categoryMale as male } from '../../../assets/category.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 /**
  * Определение категории по ftp=CP20*0*95 и старым zwiftpwer правилам
@@ -48,7 +48,7 @@ export async function getCategory(zwiftId: number) {
       return 'C';
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return 'E';
   }
 }

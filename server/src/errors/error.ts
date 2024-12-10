@@ -7,7 +7,10 @@ import { ignoreError } from './ignore.js';
 import { parseError } from './parse.js';
 import { logErrorToDB } from '../logger/logger-db.js';
 
-export const errorHandler = (error: unknown): void => {
+/**
+ * Функция выбирает способ и необходимость логирования ошибок.
+ */
+export const handleAndLogError = (error: unknown): void => {
   try {
     // выход, если ошибка из списка игнорируемых
     if (ignoreError(error)) {
@@ -35,7 +38,7 @@ export const errorHandler = (error: unknown): void => {
  */
 export function handleErrorInController(res: Response, error: unknown) {
   // Логируем ошибку с помощью внешнего обработчика.
-  errorHandler(error);
+  handleAndLogError(error);
 
   if (error instanceof AxiosError) {
     // Ошибки от Axios (например, 401 или 400).

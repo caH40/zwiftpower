@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import {
   getDevelopmentService,
   postDevelopmentService,
@@ -30,7 +30,7 @@ export async function getDevelopment(req: Request, res: Response) {
     const informationDev = await getDevelopmentService(quantityPosts);
     res.status(200).json(informationDev);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -52,11 +52,13 @@ export async function postDevelopment(req: Request, res: Response) {
     const { infoDevelopment, ...response } = responsePosted;
 
     if (infoDevelopment) {
-      await sendMessageToTelegramBot(infoDevelopment).catch((error) => errorHandler(error));
+      await sendMessageToTelegramBot(infoDevelopment).catch((error) =>
+        handleAndLogError(error)
+      );
     }
     res.status(201).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -72,7 +74,7 @@ export async function putDevelopment(req: Request, res: Response) {
     const response = await putDevelopmentService(releaseData, userId);
     res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -86,7 +88,7 @@ export async function deleteDevelopment(req: Request, res: Response) {
     const response = await deleteDevelopmentService(id);
     res.status(201).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }

@@ -1,5 +1,5 @@
 import { ZwiftResult } from '../../Model/ZwiftResult.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Создание url для страницы профайла райдера с результатами
@@ -25,6 +25,6 @@ export async function getUrlsProfileResults() {
 
     return urlsResults.join('');
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

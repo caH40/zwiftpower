@@ -2,7 +2,7 @@ import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
 import { mailHost, mailPort, mailSecure } from '../../config/environment.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { TMailServiceParams } from '../../types/types.interface.js';
 
 /**
@@ -38,11 +38,11 @@ export async function mailService({
     if (result.accepted.length > 0) {
       return true;
     } else {
-      errorHandler(new Error(result.response));
+      handleAndLogError(new Error(result.response));
       return false;
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return false;
   }
 }

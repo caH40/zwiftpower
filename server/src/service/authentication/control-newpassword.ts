@@ -1,6 +1,6 @@
 import { PasswordReset } from '../../Model/Password-reset.js';
 import { millisecondsInHour } from '../../assets/date.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Контроль времени для смены пароля.
@@ -23,6 +23,6 @@ export async function controlNewPasswords() {
       }
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

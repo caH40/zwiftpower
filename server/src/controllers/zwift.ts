@@ -10,7 +10,7 @@ import {
   putEventZwiftService,
 } from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
-import { errorHandler, handleErrorInController } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
@@ -39,7 +39,7 @@ export async function getEventZwift(req: Request, res: Response) {
 
     res.status(200).json(event);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         res.status(400).json(error.response.data);
@@ -69,7 +69,7 @@ export async function getEventZwiftForEdit(req: Request, res: Response) {
 
     res.status(200).json(event);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         res.status(400).json(error.response.data);
@@ -109,7 +109,7 @@ export async function getZwiftRider(req: Request, res: Response) {
     const rider = await getZwiftRiderService(+zwiftId);
     res.status(200).json(rider);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         res.status(400).json(error.response.data);
@@ -130,7 +130,7 @@ export async function getZwiftEventResults(req: Request, res: Response) {
 
     res.send(results);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof AxiosError) {
       if (error.response) {
         res.status(400).json(error.response.data);

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { getUrlsScheduleDescription } from './schedule.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { getUrlsResultsDescription } from './results.js';
 import { getUrlsProfileResults } from './profile-results.js';
 import { urlsStatic } from './static.js';
@@ -47,6 +47,6 @@ export async function createSitemap() {
       return;
     }
 
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

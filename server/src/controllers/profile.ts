@@ -4,7 +4,7 @@ import {
   getUserPowerService,
   getUserProfileService,
 } from '../service/race/rider/rider-profile.js';
-import { errorHandler } from '../errors/error.js';
+import { handleAndLogError } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
@@ -35,7 +35,7 @@ export async function getUserResults(req: Request, res: Response) {
     const userResults = await getUserResultsService(query);
     res.status(200).json(userResults);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -52,7 +52,7 @@ export async function getUserProfile(req: Request, res: Response) {
     const userResults = await getUserProfileService(+zwiftId);
     res.status(200).json(userResults);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -69,7 +69,7 @@ export async function getUserPower(req: Request, res: Response) {
     const userPower = await getUserPowerService(zwiftId);
     res.status(200).json(userPower);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -90,7 +90,7 @@ export async function getRiderMetric(req: Request, res: Response) {
     const riderMetric = await getMetricService({ zwiftId: +zwiftId });
     res.status(200).json(riderMetric);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -107,7 +107,7 @@ export async function getZwiftProfiles(req: Request, res: Response) {
     const zwiftProfiles = await getZwiftProfilesService(+zwiftId);
     res.status(200).json(zwiftProfiles);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
@@ -127,7 +127,7 @@ export async function putUserZwiftId(req: Request, res: Response) {
 
     return res.status(200).json(user);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -146,7 +146,7 @@ export async function deleteUserZwiftId(req: Request, res: Response) {
 
     return res.status(200).json(user);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -163,7 +163,7 @@ export async function refreshProfile(req: Request, res: Response) {
 
     return res.status(200).json(user);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     if (error instanceof Error) {
       res.status(401).json({ message: error.message });
     }
@@ -185,7 +185,7 @@ export async function getNotifications(req: Request, res: Response) {
 
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }
@@ -206,7 +206,7 @@ export async function getUserSettings(req: Request, res: Response) {
 
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }
@@ -251,7 +251,7 @@ export async function putNotifications(req: Request, res: Response) {
 
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }
@@ -291,7 +291,7 @@ export async function putUserStreams(req: Request, res: Response) {
 
     return res.status(200).json(response);
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
   }

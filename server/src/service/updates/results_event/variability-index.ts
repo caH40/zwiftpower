@@ -1,4 +1,4 @@
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 // types
 import { ResultEventAdditional } from '../../../types/types.interface.js';
@@ -20,6 +20,6 @@ export const addVariabilityIndex = async (results: ResultEventAdditional[]) => {
         Math.round((100 * result.normalizedPower) / result.sensorData.avgWatts) / 100;
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };

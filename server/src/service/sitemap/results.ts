@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Создание url для страницы описания прошедшего Эвента с результатами райдеров
@@ -24,6 +24,6 @@ export async function getUrlsResultsDescription() {
 
     return urlsResults.join('');
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

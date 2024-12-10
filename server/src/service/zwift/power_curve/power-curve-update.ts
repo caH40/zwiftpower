@@ -1,7 +1,7 @@
 import { intervals } from './intervals-cp.js';
 import { getInterval } from './powerintervals.js';
 import { getFitFile, updatePowerCurveRider } from './power-curve-updateDB.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 
 // types
 import { CriticalPower } from '../../../types/model.interface.js';
@@ -71,6 +71,6 @@ export async function updatePowerCurve(zwiftId: number): Promise<void> {
       cpWattsPerKgUpdated,
     });
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

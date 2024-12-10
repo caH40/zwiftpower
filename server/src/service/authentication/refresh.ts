@@ -3,7 +3,7 @@ import { ObjectId } from 'mongoose';
 import { generateToken, validateRefreshToken } from './token.js';
 import { Token } from '../../Model/Token.js';
 import { User } from '../../Model/User.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { Rider } from '../../Model/Rider.js';
 import { Organizer } from '../../Model/Organizer.js';
 
@@ -62,6 +62,6 @@ export async function refreshService(refreshToken: string) {
       },
     };
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

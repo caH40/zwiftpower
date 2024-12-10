@@ -1,5 +1,5 @@
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
-import { errorHandler } from '../../../errors/error.js';
+import { handleAndLogError } from '../../../errors/error.js';
 import { updateStartInfoEvent } from './start-event.js';
 
 /**
@@ -13,6 +13,6 @@ export async function updateStartInfo() {
       await updateStartInfoEvent(event);
     }
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 }

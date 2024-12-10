@@ -10,7 +10,7 @@ import {
 } from '../../types/youtubeAPI.types.js';
 import { dtoYoutubeStream } from '../../dto/youtube.js';
 import { TResponseStreamDto } from '../../types/types.interface.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 import { youtubeAPIBaseUrl } from '../../config/environment.js';
 
 /**
@@ -39,7 +39,7 @@ export async function getYoutubeChannelsService(
 
     return channelsForResponse;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return [];
   }
 }
@@ -59,7 +59,7 @@ export async function getYoutubeChannel(
 
     return streamAfterDto;
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
     return null;
   }
 }

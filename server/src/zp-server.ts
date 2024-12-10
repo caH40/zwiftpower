@@ -12,7 +12,7 @@ import { routerZwift } from './routes/zwift.js';
 import { routerRace } from './routes/race.js';
 import { routerInformation } from './routes/information.js';
 import { routerProfile } from './routes/profile.js';
-import { errorHandler } from './errors/error.js';
+import { handleAndLogError } from './errors/error.js';
 import { statisticsRouter } from './routes/statistics.js';
 import { routerAdmin } from './routes/admin.js';
 import { routerOrganizer } from './routes/organizer.js';
@@ -29,7 +29,7 @@ await mongoose
   .set('strictQuery', true) //в базе будут только данные которые есть в схеме
   .connect(mongodb)
   .then(() => console.log('Connected to Mongo..')) // eslint-disable-line
-  .catch((error) => errorHandler(error));
+  .catch((error) => handleAndLogError(error));
 
 const app = express();
 
@@ -71,7 +71,7 @@ const start = async () => {
     // Первоначальная инициализация, чтобы сразу был после build.
     await createSitemap();
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };
 start();

@@ -1,6 +1,6 @@
 import { FitFile } from '../../Model/FitFile.js';
 import { millisecondsIn90Days } from '../../assets/date.js';
-import { errorHandler } from '../../errors/error.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Удаление активностей которые старше 90 дней из FitFiles
@@ -23,11 +23,11 @@ export const removeActivityFromFitFile = async (): Promise<void> => {
       await FitFile.findByIdAndUpdate(
         { _id: fitFile._id },
         { $set: { activities: currentActivities } }
-      ).catch((error) => errorHandler(error));
+      ).catch((error) => handleAndLogError(error));
     }
 
     console.log('Очистка фитфайлов от активностей старше 90 дней'); // eslint-disable-line
   } catch (error) {
-    errorHandler(error);
+    handleAndLogError(error);
   }
 };
