@@ -21,3 +21,21 @@ export const fetchZwiftEventParams = createAsyncThunk(
     }
   }
 );
+
+export const fetchZwiftEventParamsForModerator = createAsyncThunk(
+  'zwift/eventParamsForModerator',
+  async function ({ eventId }, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/zwift/events/moderator/${eventId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

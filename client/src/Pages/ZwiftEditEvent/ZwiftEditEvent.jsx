@@ -11,7 +11,10 @@ import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
-import { fetchZwiftEventParams } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
+import {
+  fetchZwiftEventParams,
+  fetchZwiftEventParamsForModerator,
+} from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import {
   resetParams,
   setCategoryEnforcement,
@@ -56,7 +59,7 @@ function ZwiftEditEvent() {
       return;
     }
 
-    dispatch(fetchZwiftEventParams({ eventId }));
+    dispatch(fetchZwiftEventParamsForModerator({ eventId }));
     dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
 

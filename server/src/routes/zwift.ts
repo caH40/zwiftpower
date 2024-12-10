@@ -7,10 +7,12 @@ import {
   putEventZwift,
   getZwiftEventResults,
   postZwiftEvent,
+  getEventZwiftForEdit,
 } from '../controllers/zwift.js';
 
 export const routerZwift = Router();
 
+routerZwift.get('/events/moderator/:eventId', authModeratorClub, getEventZwiftForEdit);
 routerZwift.get('/events/:eventId/:organizerId', authModeratorClub, getEventZwift);
 routerZwift.put('/events', authModeratorClub, putEventZwift);
 routerZwift.post('/events', authModeratorClub, postZwiftEvent);

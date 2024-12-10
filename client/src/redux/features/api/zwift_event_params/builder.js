@@ -1,15 +1,16 @@
 import { rules } from '../../../../assets/zwift/rule';
 import { tags } from '../../../../assets/zwift/tags';
 
-import { fetchZwiftEventParams } from './fetchZwiftEventParams';
+import {
+  fetchZwiftEventParams,
+  fetchZwiftEventParamsForModerator,
+} from './fetchZwiftEventParams';
 
-export const builderZwiftEventParams = (builder) => {
-  builder.addCase(fetchZwiftEventParams.pending, (state) => {
-    state.error = null;
-    state.status = 'loading';
-  });
-
-  builder.addCase(fetchZwiftEventParams.fulfilled, (state, action) => {
+/**
+ * Общая функция для обработки успешного ответа.
+ */
+function handleEventParamsFulfilled(state, action) {
+  {
     state.error = null;
     state.status = 'resolved';
 
@@ -45,9 +46,31 @@ export const builderZwiftEventParams = (builder) => {
         checked: tagsInEven.includes(tag.value) || tagsInEventSubgroup.includes(tag.value),
       };
     });
+  }
+}
+
+export const builderZwiftEventParams = (builder) => {
+  builder.addCase(fetchZwiftEventParams.pending, (state) => {
+    state.error = null;
+    state.status = 'loading';
   });
 
+  builder.addCase(fetchZwiftEventParams.fulfilled, handleEventParamsFulfilled);
+
   builder.addCase(fetchZwiftEventParams.rejected, (state, action) => {
+    state.status = 'rejected';
+    state.error = action.payload;
+  });
+
+  // ========================= Обработка fetchZwiftEventParamsForModerator ==========================
+  builder.addCase(fetchZwiftEventParamsForModerator.pending, (state) => {
+    state.error = null;
+    state.status = 'loading';
+  });
+
+  builder.addCase(fetchZwiftEventParamsForModerator.fulfilled, handleEventParamsFulfilled);
+
+  builder.addCase(fetchZwiftEventParamsForModerator.rejected, (state, action) => {
     state.status = 'rejected';
     state.error = action.payload;
   });

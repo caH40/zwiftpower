@@ -4,13 +4,16 @@ import { AxiosError } from 'axios';
 import { postZwiftEventService } from '../service/zwift/create.js';
 import { checkModeratorClub } from '../service/moderator-club.js';
 import { getZwiftEventResultsService } from '../service/zwift/download.js';
-import { getEventZwiftService, putEventZwiftService } from '../service/zwift/events.js';
+import {
+  getEventZwiftForEditService,
+  getEventZwiftService,
+  putEventZwiftService,
+} from '../service/zwift/events.js';
 import { getZwiftRiderService } from '../service/zwift/rider.js';
 import { errorHandler } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
-import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 
 /**
  * Получение данных Эвента для последующего редактирование параметров Эвента, просмотра параметров Эвента, или добавления в БД.
@@ -19,19 +22,12 @@ export async function getEventZwift(req: Request, res: Response) {
   try {
     const { eventId, userId, organizerId } = req.params;
 
-    // Для страницы "редактирование Эвента", Эвент уже есть в БД.
-    const eventDB = await ZwiftEvent.findOne(
-      { id: eventId },
-      { organizer: true, _id: false }
-    ).lean();
-
     // Преобразование параметра в логическое значение. Если есть organizerId, значит для модерации.
     const forViewBoolean = organizerId === 'undefined';
 
     const event = await getEventZwiftService({
       eventId: +eventId,
       ...(!forViewBoolean && { organizerId }),
-      ...(eventDB && { organizerLabel: eventDB.organizer }),
     });
 
     // Проверка является ли userId модератором клуба в котором создается данный Эвент
@@ -39,6 +35,36 @@ export async function getEventZwift(req: Request, res: Response) {
       userId,
       clubId: event.microserviceExternalResourceId,
       forView: forViewBoolean,
+    });
+
+    res.status(200).json(event);
+  } catch (error) {
+    errorHandler(error);
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        res.status(400).json(error.response.data);
+      }
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+}
+
+/**
+ * Получение данных Эвента для последующего редактирование параметров Эвента.
+ */
+export async function getEventZwiftForEdit(req: Request, res: Response) {
+  try {
+    const { eventId, userId } = req.params;
+
+    const event = await getEventZwiftForEditService({
+      eventId: +eventId,
+    });
+
+    // Проверка является ли userId модератором клуба в котором создается данный Эвент
+    await checkModeratorClub({
+      userId,
+      clubId: event.microserviceExternalResourceId,
     });
 
     res.status(200).json(event);
