@@ -7,7 +7,7 @@ import { setEventId } from '../../../../redux/features/api/event-create/eventCre
 
 import styles from './FormRequest.module.css';
 
-function FormRequest({ name, reducer, type, organizerId }) {
+function FormRequest({ name, reducer, type, organizerId, disabled }) {
   const [localId, setLocalId] = useState({ id: 0 });
   const dispatch = useDispatch();
   return (
@@ -27,6 +27,7 @@ function FormRequest({ name, reducer, type, organizerId }) {
             );
             setLocalId({ id: 0 });
           }}
+          disabled={disabled}
         >
           получить
         </Button>

@@ -66,8 +66,11 @@ function ZwiftCreateEvent() {
       return;
     }
     const event = prepareData(eventParams);
-    dispatch(fetchEventCreatePost(event));
-    navigate('/zwift/event/add');
+    dispatch(fetchEventCreatePost(event)).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        navigate('/zwift/event/add');
+      }
+    });
   };
 
   const selectCategoryEnforcement = (categoryEnforcementName) => {

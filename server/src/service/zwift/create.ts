@@ -5,7 +5,7 @@ import { getAccessTokenOrganizer } from './token.js';
 import { Club } from '../../Model/Club.js';
 
 // types
-import { PostZwiftEvent } from '../../types/http.interface.js';
+import { PostZwiftEvent, TResponseService } from '../../types/http.interface.js';
 
 /**
  * Сервис отправки запроса на создание Эвента в Zwift
@@ -14,7 +14,7 @@ export async function postZwiftEventService({
   event,
 }: {
   event: PostZwiftEvent;
-}): Promise<{ eventId: number; message: string }> {
+}): Promise<TResponseService<{ eventId: number; organizerId: string }>> {
   // Для получения токена-доступа к zwiftAPI запрашиваем клуб в котором создается Эвент, а затем получем id организатора.
   const clubId = event.eventData.microserviceExternalResourceId;
   const clubDB = await Club.findOne({ id: clubId }, { _id: false, organizer: true }).lean<{
@@ -38,5 +38,8 @@ export async function postZwiftEventService({
     tokenOrganizer,
   });
 
-  return { eventId: id, message: `Создан заезд на сервере Zwift с id: ${id}` };
+  return {
+    data: { eventId: id, organizerId: String(clubDB.organizer) },
+    message: `Создан заезд на сервере Zwift с id: ${id}`,
+  };
 }

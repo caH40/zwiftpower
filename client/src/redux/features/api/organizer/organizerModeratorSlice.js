@@ -10,7 +10,7 @@ import {
 const initialState = {
   tokens: [],
   organizersForModerator: [],
-  organizerForModerator: '',
+  organizerForModerator: 0,
   organizer: {},
   status: null,
   error: null,
@@ -28,8 +28,12 @@ const organizerModeratorSlice = createSlice({
     },
     resetOrganizerDataModerator(state) {
       state.organizer = {};
+      state.organizerForModerator = 0;
     },
     reducerSelectOrganizersForModerator(state, action) {
+      state.organizerForModerator = action.payload;
+    },
+    setOrganizersForModerator(state, action) {
       state.organizerForModerator = action.payload;
     },
   },
@@ -93,7 +97,7 @@ const organizerModeratorSlice = createSlice({
     builder.addCase(fetchGetOrganizersForModerator.fulfilled, (state, action) => {
       const organizers = action.payload.data;
       state.organizersForModerator = organizers;
-      state.organizerForModerator = organizers[0]?._id;
+      // state.organizerForModerator = organizers[0]?._id;
       state.error = null;
       state.status = 'resolved';
     });
@@ -109,6 +113,7 @@ export const {
   resetOrganizerModerator,
   resetOrganizerDataModerator,
   reducerSelectOrganizersForModerator,
+  setOrganizersForModerator,
 } = organizerModeratorSlice.actions;
 
 export default organizerModeratorSlice.reducer;

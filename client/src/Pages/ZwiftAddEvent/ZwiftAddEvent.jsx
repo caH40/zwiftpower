@@ -19,12 +19,17 @@ import {
 } from '../../assets/zwift/accessExpression';
 import { fetchGetOrganizersForModerator } from '../../redux/features/api/organizer/fetchOrganizerModerator';
 import SimpleSelectFunction from '../../components/UI/SimpleSelect/SimpleSelectFunction';
-import { reducerSelectOrganizersForModerator } from '../../redux/features/api/organizer/organizerModeratorSlice';
+import {
+  reducerSelectOrganizersForModerator,
+  resetOrganizerDataModerator,
+  setOrganizersForModerator,
+} from '../../redux/features/api/organizer/organizerModeratorSlice';
 
 import styles from './ZwiftAddEvent.module.css';
 
 function ZwiftAddEvent() {
   const { eventId, organizerId } = useSelector((state) => state.fetchEventCreate);
+
   useTitle('Добавление заезда из Zwift');
   const { eventMainParams } = useSelector((state) => state.eventParams);
   const [additionalParams, setAdditionalParams] = useState({ seriesId: null });
@@ -42,6 +47,7 @@ function ZwiftAddEvent() {
     dispatch(fetchGetOrganizersForModerator({ userId }));
 
     return () => {
+      dispatch(resetOrganizerDataModerator());
       dispatch(resetSeries());
       dispatch(resetParams());
     };
@@ -52,6 +58,8 @@ function ZwiftAddEvent() {
     if (eventId === 0 || organizerId === 0) {
       return;
     }
+
+    dispatch(setOrganizersForModerator(organizerId));
     dispatch(fetchZwiftEventParams({ eventId, organizerId }));
     dispatch(resetEventIdCreated());
   }, [eventId, organizerId, dispatch]);
@@ -136,7 +144,11 @@ function ZwiftAddEvent() {
       <h3 className={styles.title}>Добавление заезда из Звифта для отслеживания результатов</h3>
 
       <div className={styles.group}>
-        <FormRequest name={'Id Event'} organizerId={organizerForModerator} />
+        <FormRequest
+          name={'Id Event'}
+          organizerId={organizerForModerator}
+          disabled={organizerForModerator === 0}
+        />
       </div>
 
       {eventMainParams?.name && (

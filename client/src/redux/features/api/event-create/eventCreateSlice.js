@@ -32,8 +32,10 @@ const eventCreateSlice = createSlice({
     builder.addCase(fetchEventCreatePost.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
+
       // id созданного Эвента в Звифте
-      state.eventId = action.payload.eventId;
+      state.eventId = action.payload.data.eventId;
+      state.organizerId = action.payload.data.organizerId;
     });
 
     builder.addCase(fetchEventCreatePost.rejected, (state, action) => {
