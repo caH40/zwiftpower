@@ -84,11 +84,11 @@ export async function deleteOrganizerBotZwiftService({
 }: {
   tokenId: string;
 }): Promise<TResponseService<null>> {
-  // Получение токенов организатора.
-  const zwiftTokensDB = await ZwiftToken.findOneAndDelete({ id: tokenId }).lean();
+  // Поиск и удаление токена организатора.
+  const zwiftTokensDB = await ZwiftToken.findOneAndDelete({ _id: tokenId }).lean();
 
   if (!zwiftTokensDB) {
-    throw new Error(`Не найден токен с _id:${zwiftTokensDB}`);
+    throw new Error(`Не найден токен с _id:${tokenId}`);
   }
 
   return { data: null, message: 'Удалён токен и бота-модератора!' };
