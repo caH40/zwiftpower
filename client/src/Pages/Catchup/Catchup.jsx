@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import cn from 'classnames';
 
 import {
   fetchResultsSeries,
@@ -80,10 +81,10 @@ function Catchup() {
           <FilterCatchup season={season} reducer={getLink} />
         </div>
 
-        <div className={styles.block}>
+        <div className={styles.wrapper__tables}>
           {/* Таблица побед каждой группы */}
           {!!resultsSummary?.length && statusFetchResultsSeries === 'resolved' && (
-            <section className={styles.box__total}>
+            <section className={styles.table__total}>
               <TableCatchupSummary resultsSummary={resultsSummary} categories={categories} />
             </section>
           )}
@@ -103,7 +104,7 @@ function Catchup() {
           )}
 
           {/* Таблица победителей в заездах */}
-          <section className={styles.wrapper__wide}>
+          <section className={cn(styles.wrapper__wide, styles.table__main)}>
             {/* скелетон загрузки */}
             <SkeletonTable
               status={statusFetchResultsSeries}

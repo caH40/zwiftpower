@@ -1,18 +1,21 @@
 .wrapper {
   min-height: calc(100vh - 60px);
 }
-.block {
+.wrapper__tables {
   display: flex;
   align-items: flex-start;
   gap: 10px 20px;
   flex-wrap: wrap;
 }
-.box__total {
+.table__total {
   flex: 1 1 500px;
 }
 .wrapper__wide {
   flex: 1 1 500px;
   overflow-x: auto;
+}
+.table__main {
+  flex: 1 1 100%;
 }
 .box__filter {
   text-align: right;
