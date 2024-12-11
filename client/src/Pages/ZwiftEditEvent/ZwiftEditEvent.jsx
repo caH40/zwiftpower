@@ -25,9 +25,13 @@ import {
   resetEventIdCreated,
   setEventId,
 } from '../../redux/features/api/event-create/eventCreateSlice';
+import IconQuestion from '../../components/icons/IconQuestion';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
+
+const descriptionForTitle =
+  'Редактируются заезды которые есть в БД сайта и в которых вы являетесь модератором, назначенным на сайте zwiftpower.ru. В других случаях заезд не будет найден по его id или будет предупреждение об отсутствии прав доступа.';
 
 /**
  * Страница "Редактирования заезда". Изменение параметров Эвента, подгрупп, выбор пакета настроек
@@ -108,7 +112,11 @@ function ZwiftEditEvent() {
 
   return (
     <section className={styles.block}>
-      <h3 className={styles.title}>{'Изменение данных создаваемого заезда в Звифте'}</h3>
+      <div className={styles.header}>
+        <h3 className={styles.title}>Изменение данных создаваемого заезда в Звифте</h3>
+        <IconQuestion squareSize={16} tooltip={descriptionForTitle} />
+      </div>
+
       <div className={styles.group}>
         <FormRequest name={'Id изменяемого Event'} />
       </div>

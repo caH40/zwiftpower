@@ -7,7 +7,11 @@
 .article {
   margin-bottom: 15px;
 }
-.article p {
+.list {
+  list-style: circle;
+  list-style-position: inside;
+}
+.item {
   font-size: 15px;
   line-height: 1.2;
   letter-spacing: 0.02em;

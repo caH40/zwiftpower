@@ -1,10 +1,16 @@
 .block {
   margin-bottom: 35px;
 }
+.header {
+  display: flex;
+  gap: 3px;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
 .title {
   font-size: 18px;
-  margin-bottom: 10px;
   font-weight: 700;
+  flex-basis: auto;
 }
 .right {
   text-align: right;

@@ -24,8 +24,12 @@ import {
   resetOrganizerDataModerator,
   setOrganizersForModerator,
 } from '../../redux/features/api/organizer/organizerModeratorSlice';
+import IconQuestion from '../../components/icons/IconQuestion';
 
 import styles from './ZwiftAddEvent.module.css';
+
+const descriptionForTitle =
+  'Добавляются только заезды из клуба, в котором вы являетесь модератором, назначенным на сайте zwiftpower.ru.';
 
 function ZwiftAddEvent() {
   const { eventId, organizerId } = useSelector((state) => state.fetchEventCreate);
@@ -140,9 +144,13 @@ function ZwiftAddEvent() {
           {/* Если не получены данные добавляемого Эвента,то отображается форма поиска Эвента для добавления */}
           {!!organizersForModerator.length && (
             <>
-              <h3 className={styles.title}>
-                Выбор Организатора в клуб которого добавляется Эвент
-              </h3>
+              <div className={styles.header}>
+                <h3 className={styles.title}>
+                  Выбор Организатора в клуб которого добавляется Эвент
+                </h3>
+                <IconQuestion squareSize={16} tooltip={descriptionForTitle} />
+              </div>
+
               <div className={styles.group}>
                 <SimpleSelectFunction
                   value={organizerForModerator}
