@@ -19,19 +19,21 @@ function CPBlock({ criticalPowers = [], label }) {
 
   const title = label === 'watts' ? 'МОЩНОСТЬ (ватты)' : 'УДЕЛЬНАЯ МОЩНОСТЬ (вт/кг)';
   return (
-    <div className={styles.wrapper}>
-      <h3 className={styles.title}>{title}</h3>
-      {criticalPowersFiltered.map((cp) => (
-        <CPBox
-          value={cp.value}
-          duration={cp.duration}
-          date={cp.date}
-          name={cp.name}
-          label={label}
-          key={cp.duration}
-        />
-      ))}
-    </div>
+    !!criticalPowersFiltered.length && (
+      <div className={styles.wrapper}>
+        <h3 className={styles.title}>{title}</h3>
+        {criticalPowersFiltered.map((cp) => (
+          <CPBox
+            value={cp.value}
+            duration={cp.duration}
+            date={cp.date}
+            name={cp.name}
+            label={label}
+            key={cp.duration}
+          />
+        ))}
+      </div>
+    )
   );
 }
 
