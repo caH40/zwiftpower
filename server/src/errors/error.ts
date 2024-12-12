@@ -44,7 +44,10 @@ export function handleErrorInController(res: Response, error: unknown) {
     // Ошибки от Axios (например, 401 или 400).
     if (error.response) {
       return res.status(error.response.status || 400).json({
-        message: error.response.data.message || 'Ошибка при запросе к стороннему API',
+        message:
+          error.response.data?.message ||
+          error.response.data?.key ||
+          'Ошибка при запросе к стороннему API',
       });
     }
     return res.status(500).json({ message: 'Ошибка сети или сервера Axios' });
