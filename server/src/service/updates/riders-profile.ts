@@ -32,20 +32,20 @@ export const updateAllRidersProfiles = async () => {
     ).lean<RiderIdsWithRank[]>();
 
     // Массив zwiftId, которые привязаны к зарегистрированным профилям User.
-    const riderIdsWithoutRankDB = await User.find(
-      { zwiftId: { $exists: true } }, // Ищем документы без поля zwiftId
+    const riderIdsInUserProfileDB = await User.find(
+      { zwiftId: { $exists: true } }, // Ищем документы у которых поле zwiftId имеет значение.
       { _id: false, zwiftId: true } // Выбираем только поле zwiftId
     ).lean<{ zwiftId: number }[]>();
 
     // Удаление zwiftId райдеров, которые есть в riderIdsWithRankDB,
-    // то есть получаем массив с райдерами которые не участвовали ни в одном заезде.
-    const riderIdsWithoutRankFiltered = riderIdsWithoutRankDB
+    // то есть получаем массив с райдерами которые привязаны к профилям User на сайте, но не участвовали ни в одном заезде.
+    const riderIdsWithoutRankFiltered = riderIdsInUserProfileDB
+      .filter((rider) => !riderIdsWithRankDB.some((elm) => elm.profileId === rider.zwiftId))
       .map((rider) => ({
         profileId: rider.zwiftId,
         rank: 0,
         rankEvent: 0,
-      }))
-      .filter((rider) => !riderIdsWithRankDB.some((elm) => elm.profileId === rider.profileId));
+      }));
 
     await updateRidersProfilesService([...riderIdsWithRankDB, ...riderIdsWithoutRankFiltered]);
   } catch (error) {
@@ -58,23 +58,22 @@ export const updateAllRidersProfiles = async () => {
  */
 export const updateRidersProfiles = async (zwiftIds: number[]) => {
   try {
+    // Поиск райдеров из массива zwiftIds у которых есть хоть один результат в БД. Получение данных о занятом месте в Эвенте и месте после модерации результатов Организатором заезда(модератором).
     const riderIdsWithRank = await ZwiftResult.find(
       { profileId: zwiftIds },
       { profileId: true, rank: true, rankEvent: true, _id: false }
     ).lean<RiderIdsWithRank[]>();
 
-    // Если у всех райдеров из входного массива zwiftIds есть результаты.
-    if (riderIdsWithRank.length === zwiftIds.length) {
-      await updateRidersProfilesService(riderIdsWithRank);
-    } else {
-      // Поиск райдеров у которых нет результатов в БД.
-      const ridersWithoutResults = zwiftIds.filter(
-        (zwiftId) => !riderIdsWithRank.some((elm) => elm.profileId === zwiftId)
-      );
+    // Обновление профилей у которых есть результаты:
+    await updateRidersProfilesService(riderIdsWithRank);
 
-      // Обновление/создание документов Rider для райдеров без результатов.
-      await updateRidersProfilesWithoutResultsService(ridersWithoutResults);
-    }
+    // Поиск райдеров у которых нет результатов в БД.
+    const ridersWithoutResults = zwiftIds.filter(
+      (zwiftId) => !riderIdsWithRank.some((elm) => elm.profileId === zwiftId)
+    );
+
+    // Обновление/создание документов Rider для райдеров без результатов.
+    await updateRidersProfilesWithoutResultsService(ridersWithoutResults);
   } catch (error) {
     handleAndLogError(error);
   }
