@@ -42,7 +42,7 @@ export async function authOrganizer(req: Request, res: Response, next: () => voi
 
     const isValidAccessToken = validateAccessToken(accessToken);
 
-    const isOrganizer = !!isValidAccessToken.moderator;
+    const isOrganizer = !!isValidAccessToken.organizer;
 
     if (!isValidAccessToken)
       return res.status(401).json({ message: 'Неактуальный accessToken' });
