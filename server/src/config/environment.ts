@@ -43,3 +43,6 @@ export const usernameZwiftSecondary: string = parsed.ZWIFT_USERNAME_SECONDARY;
 export const passwordZwiftSecondary: string = parsed.ZWIFT_PASS_SECONDARY;
 
 export const aesSecretKey: string = parsed.AES_SECRET_KEY;
+
+// id приложения в VK для авторизации.
+export const clientVkID: string = parsed.VK_CLIENT_ID;

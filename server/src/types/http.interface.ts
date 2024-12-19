@@ -158,3 +158,31 @@ export type TZwiftJwtToken = {
   };
   signature: string; // Подпись токена
 };
+
+/**
+ * Ответ на получение данных об токинах через sdk.
+ */
+export type VkAuthResponse = {
+  refresh_token: string;
+  access_token: string;
+  id_token: string;
+  token_type: string;
+  expires_in: number;
+  user_id: number;
+  state: string;
+  scope: string;
+};
+
+/**
+ * Ответ на запрос данных об пользователе /user_info.
+ */
+export type VkUserInfoResponse = {
+  user_id: number; // Идентификатор пользователя.
+  first_name: string; // Имя пользователя.
+  last_name: string; // Фамилия пользователя.
+  avatar: string; // Ссылка на аватар пользователя.
+  email?: string; // Электронная почта (опционально, если предоставлена).
+  sex: 0 | 1 | 2; // Пол: 0 - не указан, 1 - женский, 2 - мужской.
+  verified: boolean; // Статус подтверждения аккаунта.
+  birthday?: string; // Дата рождения в формате 'DD.MM.YYYY' (опционально).
+};

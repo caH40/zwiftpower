@@ -9,6 +9,7 @@ import {
   resetPassword,
   checkRequestPassword,
   newPassword,
+  registrationVKID,
 } from '../controllers/authentication.js';
 
 export const routerAuth = Router();
@@ -22,3 +23,5 @@ routerAuth.put('/confirm-email', confirmEmail);
 routerAuth.put('/reset-password', resetPassword);
 routerAuth.get('/check-request-password/:token', checkRequestPassword);
 routerAuth.put('/new-password', newPassword);
+
+routerAuth.post('/registration/vk', registrationVKID);

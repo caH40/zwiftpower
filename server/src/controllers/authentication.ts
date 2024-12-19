@@ -9,8 +9,10 @@ import { confirmEmailService } from '../service/authentication/confirm-email.js'
 import { resetPasswordService } from '../service/authentication/reset-password.js';
 import { checkRequestPasswordService } from '../service/authentication/checkRequestPassword.js';
 import { newPasswordService } from '../service/authentication/new-password.js';
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { AxiosError } from 'axios';
+import { registrationVKIDService } from '../service/authentication/vkid/registration.js';
+import { VkAuthResponse } from '../types/http.interface.js';
 
 export async function registration(req: Request, res: Response) {
   try {
@@ -156,5 +158,23 @@ export async function newPassword(req: Request, res: Response) {
   } catch (error) {
     handleAndLogError(error);
     res.status(400).json(error);
+  }
+}
+
+/**
+ * Контроллер для регистрации нового пользователя через VK ID.
+ */
+export async function registrationVKID(req: Request, res: Response) {
+  try {
+    const tokens: VkAuthResponse = req.body.tokens;
+
+    if (!tokens?.access_token || !tokens.refresh_token) {
+      return res.status(400).json({ message: 'Не получены токены доступа и(или) обновления' });
+    }
+
+    const response = await registrationVKIDService({ tokens });
+    res.status(201).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }
