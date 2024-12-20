@@ -47,3 +47,9 @@
   font-size: 18px;
   align-self: flex-start;
 }
+.line {
+  border: none;
+  height: 2px;
+  background-color: var(--color-blue-4);
+  margin: 25px 0 15px;
+}
