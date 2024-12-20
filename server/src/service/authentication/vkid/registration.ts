@@ -82,14 +82,15 @@ export async function registrationVKIDService({
     'externalTokens.vk': [vkTokens],
   });
 
-  if (!tokenDB?._id) {
+  const accessToken = tokenDB.externalTokens.vk[0].accessToken;
+  if (!accessToken) {
     throw new Error(
       'Ошибка при создании токенов для пользователя в БД, модуль registrationVKIDService'
     );
   }
 
   const dataForResponse = dtoResponseAfterRegistration({
-    accessToken: tokenDB.externalTokens.vk[0].accessToken,
+    accessToken,
     authType: 'vk',
     user: userDB,
   });

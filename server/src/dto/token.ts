@@ -18,6 +18,7 @@ export function dtoResponseAfterRegistration({
       email: user.email,
       _id: String(user._id),
       role: user.role,
+      photoProfile: user.externalAccounts?.vk?.avatarSrc,
     },
     token: {
       authType,

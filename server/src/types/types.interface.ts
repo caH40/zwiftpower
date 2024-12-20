@@ -776,6 +776,7 @@ export type TResponseAfterRegistrationDto = {
     username: string;
     email: string;
     role: string;
+    photoProfile?: string;
   };
   token: {
     authType: AuthType;

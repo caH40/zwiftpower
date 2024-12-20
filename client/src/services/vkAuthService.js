@@ -14,32 +14,42 @@ export const handleVkAuth = async () => {
 
   const floatingOneTap = new VKID.FloatingOneTap();
 
-  floatingOneTap
-    .render({
-      appName: 'Авторизация на сайте zwiftpower.ru',
-      showAlternativeLogin: true,
-      oauthList: ['vkid'], // 'mail_ru', 'ok_ru'
-    })
-    .on(VKID.WidgetEvents.ERROR, vkidOnError)
-    .on(VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS, async function (payload) {
-      const { code, device_id } = payload;
+  return new Promise((resolve, reject) => {
+    floatingOneTap
+      .render({
+        appName: 'Авторизация на сайте zwiftpower.ru',
+        showAlternativeLogin: true,
+        oauthList: ['vkid'], // 'mail_ru', 'ok_ru'
+      })
+      .on(VKID.WidgetEvents.ERROR, vkidOnError)
+      .on(VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS, async function (payload) {
+        const { code, device_id } = payload;
 
-      try {
-        floatingOneTap.close();
+        try {
+          floatingOneTap.close();
 
-        const tokens = await VKID.Auth.exchangeCode(code, device_id);
-        await postRegistrationVk({ tokens, deviceId: device_id });
-        window.alert('Регистрация прошла успешно!');
-        // const profile = await VKID.Auth.userInfo(tokens.access_token);
-      } catch (error) {
-        vkidOnError(error);
-      }
-    });
+          // Получаем токены с помощью VKID SDK
+          const tokens = await VKID.Auth.exchangeCode(code, device_id);
 
-  function vkidOnError(error) {
-    // eslint-disable-next-line no-console
-    console.error('Ошибка VKID:', error);
-  }
+          // Делаем запрос на сервер для регистрации пользователя
+          const registrationData = await postRegistrationVk({ tokens, deviceId: device_id });
+
+          // Возвращаем registrationData из функции
+          resolve(registrationData.data.data);
+
+          // Можете использовать profile, если нужно
+          // const profile = await VKID.Auth.userInfo(tokens.access_token);
+        } catch (error) {
+          vkidOnError(error);
+          reject(error); // Возвращаем ошибку через reject
+        }
+      });
+
+    function vkidOnError(error) {
+      // eslint-disable-next-line no-console
+      console.error('Ошибка VKID:', error);
+    }
+  });
 };
 
 /**
