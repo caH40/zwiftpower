@@ -27,6 +27,20 @@ const streamsSchema = new Schema<TUserStreams>(
   { _id: false }
 );
 
+// Внешние аккаунты: VK, Yandex и т.д
+const externalAccountsSchema = new Schema({
+  vk: {
+    id: { type: Number, require: true },
+    firstName: String,
+    lastName: String,
+    avatarSrc: String,
+    verified: Boolean,
+    gender: { type: String, enum: ['male', 'female'] },
+    birthday: String,
+    email: String,
+  },
+});
+
 const userSchema = new Schema<UserSchema>({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
@@ -61,6 +75,7 @@ const userSchema = new Schema<UserSchema>({
       streamingRestricted: false,
     }),
   },
+  externalAccounts: { type: externalAccountsSchema },
 });
 
 export const User = model('User', userSchema);

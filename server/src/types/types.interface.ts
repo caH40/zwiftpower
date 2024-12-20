@@ -766,3 +766,23 @@ export type ParamsRequestToZwift<T> = {
  * Тип возвращаемых данных сервиса ответа получение Организаторов у которых пользователь userId является модератором.
  */
 export type ResponseOrganizerForModerator = { _id: string; name: string };
+
+/**
+ * DTO ответ с сервиса после регистрации.
+ */
+export type TResponseAfterRegistrationDto = {
+  user: {
+    _id: string;
+    username: string;
+    email: string;
+    role: string;
+  };
+  token: {
+    authType: AuthType;
+    accessToken: string;
+  };
+};
+/**
+ * Тип сервиса для авторизации
+ */
+export type AuthType = 'vk' | 'credential' | 'yandex';

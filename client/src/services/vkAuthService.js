@@ -28,7 +28,8 @@ export const handleVkAuth = async () => {
         floatingOneTap.close();
 
         const tokens = await VKID.Auth.exchangeCode(code, device_id);
-        await postRegistrationVk(tokens);
+        await postRegistrationVk({ tokens, deviceId: device_id });
+        window.alert('Регистрация прошла успешно!');
         // const profile = await VKID.Auth.userInfo(tokens.access_token);
       } catch (error) {
         vkidOnError(error);

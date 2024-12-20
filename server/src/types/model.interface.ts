@@ -1,10 +1,11 @@
 import mongoose, { Document, Types } from 'mongoose';
+
 import { PowerFitFiles, ProfileDataInResultWithId } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
+
 // типизация схемы и модели документов mongodb
-//
-//
+
 export interface DescriptionSchema {
   name: string;
   description: string;
@@ -199,12 +200,30 @@ export interface LogsAdminSchema {
     start: number;
   };
 }
-//
+
+/**
+ * Токен обновления для аутентификации через логин/пароль.
+ */
 export interface TokenSchema {
   user: Types.ObjectId;
+  // credentialTokens: {
+  //   refreshToken: string;
+  // };
   refreshToken: string;
+  externalTokens: {
+    vk: VkAuth[];
+  };
 }
 
+export type VkAuth = {
+  deviceId: string; // Уникальный идентификатор устройства.
+  refreshToken: string;
+  accessToken: string;
+  state: string; // Строка состояния в виде случайного набора символов.
+  scope: string; // Список прав доступа.
+  expiresIn: number; // Срок действия токена в миллисекундах.
+  issuedAt: Date; // Дата получения токена.
+};
 /**
  * Схема для Zwift token бота-модератора клуба в Звифт.
  */
@@ -248,7 +267,8 @@ export interface UserConfirmSchema {
 }
 //
 //
-export interface UserSchema {
+
+export type UserSchema = {
   _id?: Types.ObjectId;
   username: string;
   password: string;
@@ -275,7 +295,21 @@ export interface UserSchema {
   bio: string;
   notifications: TNotifications;
   streams: TUserStreams;
-}
+
+  // Внешние аккаунты: VK, Yandex и т.д.
+  externalAccounts?: {
+    vk?: {
+      id: number;
+      first_name: string; // Имя пользователя.
+      last_name: string; // Фамилия пользователя.
+      avatarSrc: string;
+      verified: boolean;
+      gender: 'male' | 'female';
+      birthday?: string; // 'DD.MM.YYYY'
+      email?: string;
+    };
+  };
+};
 export type TNotifications = {
   development: boolean; // Оповещение на email об изменениях на сайте.
   events: boolean; // Оповещение на email об новых Эвентах.

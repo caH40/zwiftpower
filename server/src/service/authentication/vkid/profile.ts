@@ -11,7 +11,7 @@ export async function getUserProfileVkService({
 }: {
   accessToken: string;
 }): Promise<TResponseService<VkUserInfoResponse>> {
-  const response: AxiosResponse<VkUserInfoResponse> = await axios({
+  const response: AxiosResponse<{ user: VkUserInfoResponse }> = await axios({
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,8 +20,12 @@ export async function getUserProfileVkService({
     data: { client_id: clientVkID, access_token: accessToken },
   });
 
+  if (!response.data.user.user_id) {
+    throw new Error('Не получен id пользователя VK ID, модуль getUserProfileVkService');
+  }
+
   return {
-    data: response.data,
+    data: response.data.user,
     message: 'Данные профиля авторизовавшегося пользователя из  VK ID',
   };
 }

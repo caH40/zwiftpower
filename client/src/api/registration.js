@@ -20,12 +20,12 @@ export async function postRegistration(dataForm) {
 /**
  * Регистрация пользователя через сервис VK ID.
  */
-export async function postRegistrationVk(tokens) {
+export async function postRegistrationVk({ tokens, deviceId }) {
   try {
     const response = await axios({
       method: 'post',
       url: `${serverExpress}/api/auth/registration/vk`,
-      data: { tokens },
+      data: { tokens, deviceId },
     });
 
     return response;

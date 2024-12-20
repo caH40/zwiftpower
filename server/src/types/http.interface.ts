@@ -165,12 +165,12 @@ export type TZwiftJwtToken = {
 export type VkAuthResponse = {
   refresh_token: string;
   access_token: string;
-  id_token: string;
-  token_type: string;
-  expires_in: number;
-  user_id: number;
-  state: string;
-  scope: string;
+  id_token: string; // JSON Web Token пользователя.
+  token_type: string; // Тип токена — по умолчанию Bearer.
+  expires_in: number; // Срок действия токена в миллисекундах.
+  user_id: number; // Идентификатор пользователя.
+  state: string; // Строка состояния в виде случайного набора символов.
+  scope: string; // Список прав доступа.
 };
 
 /**
