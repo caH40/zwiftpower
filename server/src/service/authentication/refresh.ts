@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 
 import { generateToken, validateRefreshToken } from './token.js';
-import { Token } from '../../Model/Token.js';
+import { TokenAuthModel } from '../../Model/TokenAuth.js';
 import { User } from '../../Model/User.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { Rider } from '../../Model/Rider.js';
@@ -13,7 +13,7 @@ export async function refreshService(refreshToken: string) {
 
     const userFromToken = validateRefreshToken(refreshToken);
 
-    const tokenDb = await Token.findOne({ refreshToken });
+    const tokenDb = await TokenAuthModel.findOne({ refreshToken });
 
     if (!userFromToken || !tokenDb) return;
 

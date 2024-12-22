@@ -779,11 +779,11 @@ export type TResponseAfterRegistrationDto = {
     photoProfile?: string;
   };
   token: {
-    authType: AuthType;
+    authType: TAuthService;
     accessToken: string;
   };
 };
 /**
  * Тип сервиса для авторизации
  */
-export type AuthType = 'vk' | 'credential' | 'yandex';
+export type TAuthService = 'vk' | 'credential' | 'yandex';

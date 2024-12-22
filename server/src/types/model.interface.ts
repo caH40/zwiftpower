@@ -1,6 +1,6 @@
 import mongoose, { Document, Types } from 'mongoose';
 
-import { PowerFitFiles, ProfileDataInResultWithId } from './types.interface.js';
+import { PowerFitFiles, ProfileDataInResultWithId, TAuthService } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 
@@ -202,28 +202,42 @@ export interface LogsAdminSchema {
 }
 
 /**
- * Токен обновления для аутентификации через логин/пароль.
+ * Токен аутентификации.
  */
-export interface TokenSchema {
-  user: Types.ObjectId;
-  // credentialTokens: {
-  //   refreshToken: string;
-  // };
-  refreshToken: string;
-  externalTokens: {
-    vk: VkAuth[];
+export type TAuthToken = {
+  userId: Types.ObjectId; // Идентификатор пользователя.
+  authService: TAuthService; // Сервис, через который произошла авторизация.
+  device: TDeviceInfo;
+  tokens: {
+    accessToken: string; // JWT access-токен.
+    refreshToken: string; // JWT refresh-токен.
   };
-}
-
-export type VkAuth = {
-  deviceId: string; // Уникальный идентификатор устройства.
-  refreshToken: string;
-  accessToken: string;
-  state: string; // Строка состояния в виде случайного набора символов.
-  scope: string; // Список прав доступа.
-  expiresIn: number; // Срок действия токена в миллисекундах.
-  issuedAt: Date; // Дата получения токена.
+  location?: TLocationInfo;
+  createdAt: Date; // Дата создания записи.
+  updatedAt: Date; // Дата последнего обновления записи.
+  expiresAt: Date;
 };
+/**
+ * Данные об оборудовании и ПО с которого происходила авторизация пользователя.
+ */
+export type TDeviceInfo = {
+  deviceId: string; // Уникальный идентификатор устройства.
+  userAgent?: string; // User-Agent устройства.
+  platform?: string; // Платформа устройства.
+  language?: string; // Язык браузера.
+  screenResolution?: string; // Разрешение экрана.
+};
+/**
+ * Данные об локации из которой происходила авторизация пользователя.
+ */
+export type TLocationInfo = {
+  ip?: string; // IP-адрес.
+  city?: string; // Город.
+  region?: string; // Регион.
+  country?: string; // Страна.
+  timezone?: string; // Часовой пояс.
+};
+
 /**
  * Схема для Zwift token бота-модератора клуба в Звифт.
  */
@@ -297,19 +311,20 @@ export type UserSchema = {
   streams: TUserStreams;
 
   // Внешние аккаунты: VK, Yandex и т.д.
-  externalAccounts?: {
-    vk?: {
-      id: number;
-      first_name: string; // Имя пользователя.
-      last_name: string; // Фамилия пользователя.
-      avatarSrc: string;
-      verified: boolean;
-      gender: 'male' | 'female';
-      birthday?: string; // 'DD.MM.YYYY'
-      email?: string;
-    };
-  };
+  externalAccounts?: { vk?: TExternalAccountVk };
 };
+
+export type TExternalAccountVk = {
+  id: number;
+  first_name: string; // Имя пользователя.
+  last_name: string; // Фамилия пользователя.
+  avatarSrc: string;
+  verified: boolean;
+  gender: 'male' | 'female';
+  birthday?: string; // 'DD.MM.YYYY'
+  email?: string;
+};
+
 export type TNotifications = {
   development: boolean; // Оповещение на email об изменениях на сайте.
   events: boolean; // Оповещение на email об новых Эвентах.

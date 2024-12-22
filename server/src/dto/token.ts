@@ -1,11 +1,11 @@
 // types
 import { UserSchema } from '../types/model.interface.js';
-import { AuthType, TResponseAfterRegistrationDto } from '../types/types.interface.js';
+import { TAuthService, TResponseAfterRegistrationDto } from '../types/types.interface.js';
 
 type Params = {
   user: UserSchema;
   accessToken: string;
-  authType: AuthType;
+  authType: TAuthService;
 };
 export function dtoResponseAfterRegistration({
   accessToken,

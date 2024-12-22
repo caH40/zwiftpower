@@ -1,22 +1,18 @@
 import { Response } from 'express';
 
 import { nodeEnvType } from '../config/environment.js';
-import { AuthType } from '../types/types.interface.js';
 
 type Params = {
   res: Response;
-  accessToken: {
-    authType: AuthType;
-    accessToken: string;
-  };
+  refreshToken: string;
   maxAge: number;
 };
 
 /**
  * Установка куков для токена доступа авторизации.
  */
-export function setAccessTokenCookie({ res, accessToken, maxAge }: Params) {
-  res.cookie('accessToken', JSON.stringify(accessToken), {
+export function setAccessTokenCookie({ res, refreshToken, maxAge }: Params) {
+  res.cookie('refreshToken', refreshToken, {
     maxAge,
     httpOnly: true,
     secure: nodeEnvType !== 'development', // Secure только в production.
