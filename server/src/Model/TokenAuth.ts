@@ -32,4 +32,4 @@ const TokenSchema: Schema<TAuthToken> = new Schema(
   { timestamps: true }
 );
 
-export const TokenAuthModel = mongoose.model<TAuthToken & Document>('Token', TokenSchema);
+export const TokenAuthModel = mongoose.model<TAuthToken & Document>('TokenAuth', TokenSchema);
