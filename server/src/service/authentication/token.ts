@@ -14,21 +14,17 @@ import { GenerateToken } from '../../types/auth.interface.js';
  * @param payload - Данные, которые будут включены в токены.
  * @returns Объект с `accessToken` и `refreshToken`, если генерация успешна.
  */
-export function generateToken(
-  payload: GenerateToken
-): { accessToken: string; refreshToken: string } | undefined {
-  try {
-    // Создание access-токена с периодом действия 1 день.
-    const accessToken = jwt.sign(payload, jwtAccessSecret, { expiresIn: '1d' });
+export function generateToken(payload: GenerateToken): {
+  accessToken: string;
+  refreshToken: string;
+} {
+  // Создание access-токена с периодом действия 1 день.
+  const accessToken = jwt.sign(payload, jwtAccessSecret, { expiresIn: '1d' });
 
-    // Создание refresh-токена с периодом действия 30 дней.
-    const refreshToken = jwt.sign(payload, jwtRefreshSecret, { expiresIn: '30d' });
+  // Создание refresh-токена с периодом действия 30 дней.
+  const refreshToken = jwt.sign(payload, jwtRefreshSecret, { expiresIn: '30d' });
 
-    return { accessToken, refreshToken };
-  } catch (error) {
-    // Обработка и логирование ошибки с помощью вспомогательной функции.
-    handleAndLogError(error);
-  }
+  return { accessToken, refreshToken };
 }
 
 export async function saveToken(userId: Types.ObjectId, refreshToken: string) {

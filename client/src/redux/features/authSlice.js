@@ -14,6 +14,17 @@ const authSlice = createSlice({
         moderator: { clubs: [] },
         username: '',
         photoProfile: '',
+        externalAccounts: {
+          vk: {
+            id: null,
+            firstName: null,
+            lastName: null,
+            avatarSrc: null,
+            gender: null,
+            birthday: null,
+            email: null,
+          },
+        },
       },
     },
   },

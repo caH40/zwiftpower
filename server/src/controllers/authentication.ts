@@ -73,9 +73,7 @@ export async function authorization(req: Request, res: Response) {
 export async function logout(req: Request, res: Response) {
   try {
     const { refreshToken } = req.cookies;
-
     const token = await logoutService(refreshToken);
-
     res.clearCookie('refreshToken');
     res.status(201).json({ ...token });
   } catch (error) {

@@ -1,7 +1,5 @@
 import { Response } from 'express';
 
-import { nodeEnvType } from '../config/environment.js';
-
 type Params = {
   res: Response;
   refreshToken: string;
@@ -15,7 +13,7 @@ export function setAccessTokenCookie({ res, refreshToken, maxAge }: Params) {
   res.cookie('refreshToken', refreshToken, {
     maxAge,
     httpOnly: true,
-    secure: nodeEnvType !== 'development', // Secure только в production.
+    secure: true, // Secure только в production.
     // sameSite: 'strict', // Улучшает безопасность.
   });
 }

@@ -768,22 +768,6 @@ export type ParamsRequestToZwift<T> = {
 export type ResponseOrganizerForModerator = { _id: string; name: string };
 
 /**
- * DTO ответ с сервиса после регистрации.
- */
-export type TResponseAfterRegistrationDto = {
-  user: {
-    _id: string;
-    username: string;
-    email: string;
-    role: string;
-    photoProfile?: string;
-  };
-  token: {
-    authType: TAuthService;
-    accessToken: string;
-  };
-};
-/**
  * Тип сервиса для авторизации
  */
 export type TAuthService = 'vk' | 'credential' | 'yandex';

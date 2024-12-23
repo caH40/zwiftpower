@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { serverExpress } from '../config/environment';
 
+import { myAxios } from './axios';
+
 export async function postRegistration(dataForm) {
   try {
     const response = await axios({
@@ -22,7 +24,7 @@ export async function postRegistration(dataForm) {
  */
 export async function postRegistrationVk({ tokens, device, location }) {
   try {
-    const response = await axios({
+    const response = await myAxios({
       method: 'post',
       url: `${serverExpress}/api/auth/registration/vk`,
       data: { tokens, device, location },

@@ -14,7 +14,6 @@ export function useDeviceInfo() {
   const [deviceInfo, setDeviceInfo] = useState({
     deviceId: '', // Уникальный идентификатор устройства.
     userAgent: '', // Информация о браузере и ОС.
-    platform: '', // Платформа устройства.
     language: '', // Язык браузера.
     screenResolution: '', // Разрешение экрана.
   });

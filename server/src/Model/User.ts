@@ -1,6 +1,11 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { TNotifications, TUserStreams, UserSchema } from '../types/model.interface.js';
+import {
+  TExternalAccountVk,
+  TNotifications,
+  TUserStreams,
+  UserSchema,
+} from '../types/model.interface.js';
 
 const notificationsSchema = new Schema<TNotifications>(
   {
@@ -28,7 +33,7 @@ const streamsSchema = new Schema<TUserStreams>(
 );
 
 // Внешние аккаунты: VK, Yandex и т.д
-const externalAccountsSchema = new Schema({
+const externalAccountsSchema = new Schema<{ vk?: TExternalAccountVk }>({
   vk: {
     id: { type: Number, require: true },
     firstName: String,

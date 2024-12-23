@@ -10,7 +10,10 @@ const useFirstAuth = () => {
   useEffect(() => {
     checkAuth()
       .then((response) => {
-        if (!response) return;
+        if (!response) {
+          return;
+        }
+
         dispatch(getAuth({ status: true, user: response.data.user }));
         localStorage.setItem('accessToken', response.data.accessToken);
       })
