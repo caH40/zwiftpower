@@ -83,19 +83,21 @@ export async function logout(req: Request, res: Response) {
   }
 }
 
+/**
+ * Запрос на обновление ключа доступа и данных пользователя для клиента.
+ */
 export async function refresh(req: Request, res: Response) {
   try {
     const { refreshToken } = req.cookies;
 
     const user = await refreshService(refreshToken);
     if (!user) {
-      return res.status(401).json({ message: 'Не авторизован' });
+      return res.status(200).json({ success: false, message: 'Не авторизован' });
     }
 
-    res.status(201).json({ ...user });
+    res.status(201).json({ success: true, ...user });
   } catch (error) {
-    handleAndLogError(error);
-    res.status(401).json({ message: 'Не авторизован' });
+    handleErrorInController(res, error);
   }
 }
 
