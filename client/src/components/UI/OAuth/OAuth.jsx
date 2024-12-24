@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { authenticateWithVk } from '../../../services/vkAuthService';
@@ -14,6 +15,7 @@ import styles from './OAuth.module.css';
  * Блок регистрации через OAuth.
  */
 export default function OAuth({ isRegistration }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const device = useDeviceInfo();
@@ -40,6 +42,10 @@ export default function OAuth({ isRegistration }) {
         : await authorizeUserVk(tokens);
 
       dispatch(getAuth({ status: true, user: user.data }));
+      dispatch(getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true }));
+
+      // Редирект на домашнюю страницу.
+      navigate('/', { replace: true });
     } catch (error) {
       const messageAxios = error.response?.data?.message;
 
