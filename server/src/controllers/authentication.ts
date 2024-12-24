@@ -92,6 +92,9 @@ export async function refresh(req: Request, res: Response) {
 
     const user = await refreshService(refreshToken);
     if (!user) {
+      // success для дополнительной проверки на клиенте при получении ответа от этого запроса.
+      // Так как отправляется статус код 200 на ошибку!
+      // Реализовано для исключения отображения этой ошибки если пользователь не авторизован.
       return res.status(200).json({ success: false, message: 'Не авторизован' });
     }
 

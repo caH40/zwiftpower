@@ -77,6 +77,7 @@ function Authorization() {
 
           <hr className={styles.line} />
 
+          {/* Аутентификация через сторонние сервисы с помощью OAuth */}
           <OAuth />
         </form>
         <div className={styles.additional}>
