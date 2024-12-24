@@ -11,6 +11,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postAuthorization } from '../../api/authorization';
 import { getAuth } from '../../redux/features/authSlice';
 import { setBackground } from '../../redux/features/backgroundSlice';
+import OAuth from '../../components/UI/OAuth/OAuth';
 
 import styles from './Auth.module.css';
 
@@ -73,6 +74,10 @@ function Authorization() {
           <Button type={'submit'} addCls={'w_full'}>
             Вход
           </Button>
+
+          <hr className={styles.line} />
+
+          <OAuth />
         </form>
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/registration">

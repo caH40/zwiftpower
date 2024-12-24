@@ -26,7 +26,7 @@ export async function postRegistrationVk({ tokens, device, location }) {
   try {
     const response = await myAxios({
       method: 'post',
-      url: `${serverExpress}/api/auth/registration/vk`,
+      url: '/api/auth/registration/vk',
       data: { tokens, device, location },
     });
 

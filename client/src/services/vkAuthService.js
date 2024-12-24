@@ -1,6 +1,4 @@
-import { postRegistrationVk } from '../api/registration';
-
-export const handleVkAuth = async ({ device, location }) => {
+export const authenticateWithVk = async () => {
   const VKID = await loadVKIDSDK();
 
   // Инициализация VKID
@@ -31,11 +29,8 @@ export const handleVkAuth = async ({ device, location }) => {
           // Получаем токены с помощью VKID SDK
           const tokens = await VKID.Auth.exchangeCode(code, device_id);
 
-          // Делаем запрос на сервер для регистрации пользователя
-          const registrationData = await postRegistrationVk({ tokens, device, location });
-
           // Возвращаем registrationData из функции
-          resolve(registrationData.data.data);
+          resolve(tokens);
         } catch (error) {
           vkidOnError(error);
           reject(error); // Возвращаем ошибку через reject

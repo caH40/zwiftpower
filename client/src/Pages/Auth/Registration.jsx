@@ -84,7 +84,7 @@ function Registration() {
 
           <hr className={styles.line} />
 
-          <OAuth />
+          <OAuth isRegistration={true} />
         </div>
 
         <div className={styles.additional}>
