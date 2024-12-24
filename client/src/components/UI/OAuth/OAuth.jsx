@@ -39,7 +39,7 @@ export default function OAuth({ isRegistration }) {
         ? await registerUserVk(tokens)
         : await authorizeUserVk(tokens);
 
-      dispatch(getAuth({ status: true, user }));
+      dispatch(getAuth({ status: true, user: user.data }));
     } catch (error) {
       const messageAxios = error.response?.data?.message;
 

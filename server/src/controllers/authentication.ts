@@ -15,6 +15,7 @@ import { registrationVKIDService } from '../service/authentication/vkid/registra
 import { VkAuthResponse } from '../types/http.interface.js';
 import { setAccessTokenCookie } from '../utils/cookie.js';
 import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
+import { authorizationVKIDService } from '../service/authentication/vkid/authorization.js';
 
 export async function registration(req: Request, res: Response) {
   try {
@@ -184,6 +185,39 @@ export async function registrationVKID(req: Request, res: Response) {
     }
 
     const { data, message } = await registrationVKIDService({ tokens, device, location });
+
+    // Установка токена доступа в куки.
+    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+
+    res.status(201).json({ message, data: data.user });
+  } catch (error) {
+    handleErrorInController(res, error);
+  }
+}
+
+/**
+ * Контроллер для авторизации пользователя, прошедшего аутентификацию через VK ID.
+ */
+export async function authorizationVKID(req: Request, res: Response) {
+  try {
+    const {
+      tokens,
+      device,
+      location,
+    }: {
+      tokens: VkAuthResponse;
+      device: TDeviceInfo;
+      location?: TLocationInfo;
+    } = req.body;
+
+    if (!tokens?.access_token || !tokens.refresh_token) {
+      return res.status(400).json({ message: 'Не получены токены доступа и(или) обновления' });
+    }
+    if (!device.deviceId) {
+      return res.status(400).json({ message: 'Не получен deviceId' });
+    }
+
+    const { data, message } = await authorizationVKIDService({ tokens, device, location });
 
     // Установка токена доступа в куки.
     setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });

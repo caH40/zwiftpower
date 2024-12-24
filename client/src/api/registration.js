@@ -30,7 +30,7 @@ export async function postRegistrationVk({ tokens, device, location }) {
       data: { tokens, device, location },
     });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error); // eslint-disable-line
     throw error;

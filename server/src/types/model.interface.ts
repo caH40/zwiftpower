@@ -317,7 +317,7 @@ export type UserSchema = {
 export type TExternalAccountVk = {
   id: number;
   firstName: string; // Имя пользователя.
-  last_name: string; // Фамилия пользователя.
+  lastName: string; // Фамилия пользователя.
   avatarSrc: string;
   verified: boolean;
   gender: 'male' | 'female';

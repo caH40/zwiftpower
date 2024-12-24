@@ -10,6 +10,7 @@ import {
   checkRequestPassword,
   newPassword,
   registrationVKID,
+  authorizationVKID,
 } from '../controllers/authentication.js';
 
 export const routerAuth = Router();
@@ -25,3 +26,4 @@ routerAuth.get('/check-request-password/:token', checkRequestPassword);
 routerAuth.put('/new-password', newPassword);
 
 routerAuth.post('/registration/vk', registrationVKID);
+routerAuth.post('/authorization/vk', authorizationVKID);

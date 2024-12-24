@@ -7,6 +7,7 @@ export interface GenerateToken {
   zwiftId?: number;
   id: Types.ObjectId;
   role: string;
+  photoProfile?: string | null;
   moderator?: {
     clubs: string[];
   };

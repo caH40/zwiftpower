@@ -1,14 +1,13 @@
-import { Types } from 'mongoose';
 import { User as UserModel } from '../../../Model/User.js';
 import { getUserProfileVkService } from './profile.js';
-import { generateTemporaryValue } from '../../../utils/temporaryValue.js';
 import { TokenAuthModel } from '../../../Model/TokenAuth.js';
+import { generateToken } from '../token.js';
 
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
-import { generateToken } from '../token.js';
 import { GenerateToken } from '../../../types/auth.interface.js';
+import { Rider } from '../../../Model/Rider.js';
 
 type ResponseRegistrationVKIDService = {
   user: GenerateToken;
@@ -16,14 +15,14 @@ type ResponseRegistrationVKIDService = {
 };
 
 /**
- * Регистрация нового пользователя через VK ID.
+ * Авторизация пользователя, прошедшего аутентификацию через VK ID.
  *
  * @param tokens - Токены, полученные от VK API.
  * @param device - Информация об устройстве пользователя.
  * @param location - (Необязательно) Данные о местоположении пользователя.
  * @returns Данные о зарегистрированном пользователе и сгенерированные токены.
  */
-export async function registrationVKIDService({
+export async function authorizationVKIDService({
   tokens,
   device,
   location,
@@ -33,47 +32,41 @@ export async function registrationVKIDService({
   location?: TLocationInfo;
 }): Promise<TResponseService<ResponseRegistrationVKIDService>> {
   // Запрос данных пользователя из VK API.
-  const { data: candidate } = await getUserProfileVkService({
+  const { data: userDataFromVK } = await getUserProfileVkService({
     accessToken: tokens.access_token,
   });
 
   // Проверяем, существует ли пользователь с указанным VK ID в БД.
-  const userDBForCheck = await UserModel.findOne(
-    { 'externalAccounts.vk.id': candidate.user_id },
-    { _id: true }
-  ).lean<{ _id: Types.ObjectId }>();
+  const userDB = await UserModel.findOne({ 'externalAccounts.vk.id': userDataFromVK.user_id });
 
-  if (userDBForCheck) {
+  if (!userDB) {
     throw new Error(
-      'Пользователь с таким VK ID уже зарегистрирован. Пройдите аутентификацию через страницу "Вход на сайт ZP"'
+      'Не найден пользователь с таким VK ID. Пройдите регистрацию на сайте через сервис VK ID.'
     );
   }
 
-  // Создаем нового пользователя в БД.
-  const userDB = await UserModel.create({
-    username: generateTemporaryValue(`temp_${candidate.first_name}`),
-    email: `${generateTemporaryValue('temp_email')}@example.com`,
-    password: generateTemporaryValue('temp_password'),
-    role: 'user',
-    date: Date.now(),
-    externalAccounts: {
-      vk: {
-        id: candidate.user_id,
-        firstName: candidate.first_name,
-        lastName: candidate.last_name,
-        avatarSrc: candidate.avatar,
-        verified: candidate.verified,
-        gender: candidate.sex === 1 ? 'female' : 'male', // 1 - женский, 2 - мужской.
-        birthday: candidate.birthday,
-        email: candidate.email,
-      },
+  // Обновляем данные пользователя в БД.
+  userDB.externalAccounts = {
+    vk: {
+      id: userDataFromVK.user_id,
+      firstName: userDataFromVK.first_name,
+      lastName: userDataFromVK.last_name,
+      avatarSrc: userDataFromVK.avatar,
+      verified: userDataFromVK.verified,
+      gender: userDataFromVK.sex === 1 ? 'female' : 'male', // 1 - женский, 2 - мужской.
+      birthday: userDataFromVK.birthday,
+      email: userDataFromVK.email,
     },
-    emailConfirm: true, // Пропускаем подтверждение email для регистрации через VK.
-  });
+  };
+  userDB.emailConfirm = true; // Пропускаем подтверждение email для регистрации через VK.
 
-  if (!userDB?._id) {
-    throw new Error('Ошибка при создании пользователя в БД, модуль registrationVKIDService');
-  }
+  await userDB.save();
+
+  // Получение лого райдера из коллекции Rider.
+  const riderDB = await Rider.findOne(
+    { zwiftId: userDB.zwiftId },
+    { _id: false, imageSrc: true }
+  ).lean<{ imageSrc: string | null }>();
 
   // Устанавливаем дату истечения токенов (7 дней) (время, через которое удалится документ с токенами из БД).
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -84,6 +77,7 @@ export async function registrationVKIDService({
     email: userDB.email,
     id: userDB._id,
     role: userDB.role,
+    photoProfile: riderDB?.imageSrc,
     externalAccounts: {
       vk: userDB.externalAccounts?.vk,
     },
@@ -95,21 +89,19 @@ export async function registrationVKIDService({
     throw new Error('Ошибка при генерации пары JWT токенов!');
   }
 
-  // Создаем запись токенов в БД.
-  const tokenDB = await TokenAuthModel.create({
-    userId: userDB._id,
-    authService: 'vk',
-    tokens: tokensGenerated,
-    device,
-    location,
-    expiresAt,
-  });
-
-  if (!tokenDB) {
-    throw new Error(
-      'Ошибка при создании токенов для пользователя в БД, модуль registrationVKIDService'
-    );
-  }
+  // Обновляем или создаем запись токенов в БД для пользователя с соответствующим device.id
+  await TokenAuthModel.findOneAndUpdate(
+    { userId: userDB._id, 'device.deviceId': device.deviceId },
+    {
+      userId: userDB._id,
+      authService: 'vk',
+      tokens: tokensGenerated,
+      device,
+      location,
+      expiresAt,
+    },
+    { upsert: true }
+  );
 
   // Возвращаем данные для клиента.
   return {

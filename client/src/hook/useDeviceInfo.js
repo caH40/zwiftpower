@@ -1,36 +1,31 @@
 import { useEffect, useState } from 'react';
 
+import { useLocalStorageDeviceId } from './useLocalStorageDeviceId'; // Импортируем ваш хук
+
 /**
  * Хук для получения информации об устройстве пользователя.
- *
- * Возвращает объект с информацией о текущем устройстве, включая:
- * - Уникальный идентификатор устройства (deviceId).
- * - Информацию о браузере и операционной системе (userAgent).
- * - Язык браузера (language).
- * - Разрешение экрана устройства (screenResolution).
  */
 export function useDeviceInfo() {
+  // Используем хук для получения deviceId
+  const deviceId = useLocalStorageDeviceId();
+
   // Состояние для хранения информации об устройстве.
   const [deviceInfo, setDeviceInfo] = useState({
-    deviceId: '', // Уникальный идентификатор устройства.
-    userAgent: '', // Информация о браузере и ОС.
-    language: '', // Язык браузера.
-    screenResolution: '', // Разрешение экрана.
+    deviceId: '',
+    userAgent: '',
+    language: '',
+    screenResolution: '',
   });
 
   useEffect(() => {
-    /**
-     * Функция для обновления информации об устройстве.
-     * Генерирует новый deviceId и обновляет другие данные.
-     */
-
+    // Обновление информации об устройстве один раз при монтировании компонента
     setDeviceInfo({
-      deviceId: crypto.randomUUID(), // Генерация уникального идентификатора устройства.
-      userAgent: navigator.userAgent, // Информация о браузере и ОС.
-      language: navigator.language, // Язык браузера.
-      screenResolution: `${window.screen.width}x${window.screen.height}`, // Разрешение экрана.
+      deviceId, // Используем deviceId из useLocalStorageDeviceId
+      userAgent: navigator.userAgent, // Информация о браузере и ОС
+      language: navigator.language, // Язык браузера
+      screenResolution: `${window.screen.width}x${window.screen.height}`, // Разрешение экрана
     });
-  }, []);
+  }, []); // Пустой массив зависимостей, хук сработает только один раз
 
   return deviceInfo;
 }
