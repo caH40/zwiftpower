@@ -86,7 +86,7 @@ function Authorization() {
 
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/registration">
-            Создание аккаунта
+            Регистрация на сайте ZP
           </Link>
         </div>
       </div>

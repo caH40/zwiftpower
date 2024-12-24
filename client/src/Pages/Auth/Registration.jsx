@@ -52,7 +52,7 @@ function Registration() {
   return (
     <main className={styles.wrapper}>
       <div className={styles.inner}>
-        <h2 className={styles.title}>Регистрация на сайт ZP</h2>
+        <h2 className={styles.title}>Регистрация на сайте ZP</h2>
 
         <div className={styles.form}>
           {/* <h3 className={styles.title__menu}>Регистрация через сервисы</h3> */}
@@ -86,12 +86,25 @@ function Registration() {
               Зарегистрироваться
             </Button>
           </form>
+          {/* 
+          <hr className={styles.line} />
+
+          <div className={styles.privacy}>
+            Нажимая на кнопки сервисов или «Зарегистрироваться», вы принимаете{' '}
+            <Link className={styles.link} to={'/agreement'}>
+              пользовательское соглашение
+            </Link>{' '}
+            и{' '}
+            <Link className={styles.link} to={'/privacy'}>
+              политику конфиденциальности
+            </Link>
+          </div> */}
         </div>
 
-        <div className={styles.additional}>
-          Нажимая на кнопки сервисов или «Зарегистрироваться», вы подтверждаете, что полностью
-          принимаете условия соглашения и ознакомились с политикой конфиденциальности
-        </div>
+        {/* <div className={styles.additional}>
+          Нажимая на кнопки сервисов или «Зарегистрироваться», вы принимаете пользовательское
+          соглашение и политику конфиденциальности
+        </div> */}
 
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/authorization">
