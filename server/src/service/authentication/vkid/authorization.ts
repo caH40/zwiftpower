@@ -78,6 +78,7 @@ export async function authorizationVKIDService({
     id: userDB._id,
     role: userDB.role,
     photoProfile: riderDB?.imageSrc,
+    zwiftId: userDB.zwiftId,
     externalAccounts: {
       vk: userDB.externalAccounts?.vk,
     },

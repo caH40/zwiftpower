@@ -5,8 +5,8 @@
   justify-content: center;
 }
 .icon {
-  flex: 0 0 30px;
-  height: 30px;
+  flex: 0 0 40px;
+  height: 40px;
   cursor: pointer;
   transition: all ease-in 0.2s;
 }

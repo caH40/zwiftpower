@@ -52,9 +52,14 @@ function Registration() {
   return (
     <main className={styles.wrapper}>
       <div className={styles.inner}>
-        <h1 className={styles.title}>Регистрация на сайт ZP</h1>
+        <h2 className={styles.title}>Регистрация на сайт ZP</h2>
 
         <div className={styles.form}>
+          {/* <h3 className={styles.title__menu}>Регистрация через сервисы</h3> */}
+          <OAuth isRegistration={true} />
+
+          <hr className={styles.line} />
+
           <form className={styles.credentials} onSubmit={handleSubmit(onSubmit)}>
             <InputAuth
               label={'E-mail'}
@@ -81,10 +86,11 @@ function Registration() {
               Зарегистрироваться
             </Button>
           </form>
+        </div>
 
-          <hr className={styles.line} />
-
-          <OAuth isRegistration={true} />
+        <div className={styles.additional}>
+          Нажимая на кнопки сервисов или «Зарегистрироваться», вы подтверждаете, что полностью
+          принимаете условия соглашения и ознакомились с политикой конфиденциальности
         </div>
 
         <div className={styles.additional}>
