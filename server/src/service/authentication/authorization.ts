@@ -38,7 +38,7 @@ export async function authorizationService(
 
   await removeToken(refreshToken);
 
-  const tokens = await generateToken({
+  const tokens = generateToken({
     username,
     email: userDB.email,
     id: userDB._id,

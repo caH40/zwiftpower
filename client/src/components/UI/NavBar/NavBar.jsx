@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { postLogout } from '../../../api/logout';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { resetAuth } from '../../../redux/features/authSlice';
-import { lsPrefixDeviceId } from '../../../constants/localstorage';
+import { lsAccessToken, lsPrefixDeviceId } from '../../../constants/localstorage';
 import UserAccount from '../UserAccount/UserAccount';
 
 import styles from './NavBar.module.css';
@@ -15,7 +15,7 @@ function NavBar() {
 
   const logout = () => {
     postLogout().then((_) => {
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem(lsAccessToken);
       localStorage.removeItem(lsPrefixDeviceId);
 
       dispatch(resetAuth());

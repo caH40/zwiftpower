@@ -11,6 +11,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { postAuthorization } from '../../api/authorization';
 import { getAuth } from '../../redux/features/authSlice';
 import { setBackground } from '../../redux/features/backgroundSlice';
+import { lsAccessToken } from '../../constants/localstorage';
 import OAuth from '../../components/UI/OAuth/OAuth';
 
 import styles from './Auth.module.css';
@@ -36,7 +37,7 @@ function Authorization() {
       .then((data) => {
         dispatch(getAlert({ message: data?.data?.message, type: 'success', isOpened: true }));
         if (data.data.accessToken) {
-          localStorage.setItem('accessToken', data.data.accessToken);
+          localStorage.setItem(lsAccessToken, data.data.accessToken);
           dispatch(getAuth({ status: true, user: data.data.user }));
           dispatch(
             getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true })

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { checkAuth } from '../api/auth-check';
 import { getAuth } from '../redux/features/authSlice';
+import { lsAccessToken } from '../constants/localstorage';
 
 // Проверка авторизации при загрузке бандла.
 const useFirstAuth = () => {
@@ -15,11 +16,11 @@ const useFirstAuth = () => {
         }
 
         dispatch(getAuth({ status: true, user: response.data.user }));
-        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem(lsAccessToken, response.data.accessToken);
       })
       .catch((error) => {
         dispatch(getAuth({ status: false, user: {} }));
-        localStorage.setItem('accessToken', '');
+        localStorage.setItem(lsAccessToken, '');
       });
   }, [dispatch]);
 };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { serverExpress } from '../../config/environment';
+import { lsAccessToken } from '../../constants/localstorage';
 
 export const myAxios = axios.create({
   // что бы куки цеплялись автоматически
@@ -9,7 +10,7 @@ export const myAxios = axios.create({
 });
 
 myAxios.interceptors.request.use((config) => {
-  config.headers.Authorization = ` Bearer ${localStorage.getItem('accessToken')}`;
+  config.headers.Authorization = ` Bearer ${localStorage.getItem(lsAccessToken)}`;
   return config;
 });
 
@@ -25,7 +26,7 @@ myAxios.interceptors.response.use(
           url: 'http://localhost:5000/api/auth/refresh',
           withCredentials: true,
         });
-        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem(lsAccessToken, response.data.accessToken);
         return myAxios.request(originalRequest);
       } catch (error) {
         console.log('After refresh. Need auth.'); // eslint-disable-line no-console

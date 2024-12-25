@@ -9,6 +9,7 @@ import { handleAndLogError } from '../errors/error.js';
 export async function checkAuth(req: Request, res: Response, next: () => void) {
   try {
     const { authorization } = req.headers;
+
     if (!authorization) {
       return res.status(401).json({ message: 'Нет Authorization' });
     }

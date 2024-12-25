@@ -6,6 +6,7 @@ import { getAuth } from '../../authSlice';
 import { checkAuth } from '../../../../api/auth-check';
 import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
 import { serverExpress } from '../../../../config/environment';
+import { lsAccessToken } from '../../../../constants/localstorage';
 
 // привязка ZwiftId к аккаунту
 export const fetchUserPut = createAsyncThunk(
@@ -23,7 +24,7 @@ export const fetchUserPut = createAsyncThunk(
 
       if (auth) {
         thunkAPI.dispatch(getAuth({ status: true, user: auth.data.user }));
-        localStorage.setItem('accessToken', auth.data.accessToken);
+        localStorage.setItem(lsAccessToken, auth.data.accessToken);
       } else {
         throw new Error('Ошибка при запросе авторизации');
       }

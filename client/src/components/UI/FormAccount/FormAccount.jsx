@@ -7,6 +7,7 @@ import { putUsername } from '../../../redux/features/api/user-settings/putUserna
 import { checkAuth } from '../../../api/auth-check';
 import { getAuth } from '../../../redux/features/authSlice';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { lsAccessToken } from '../../../constants/localstorage';
 
 import styles from './FormAccount.module.css';
 
@@ -23,8 +24,12 @@ function FormAccount({ role, username }) {
           if (!response || response.data.success !== true) {
             return;
           }
+
+          // Обновление данных пользователя в хранилище.
           dispatch(getAuth({ status: true, user: response.data.user }));
-          localStorage.setItem('accessToken', response.data.accessToken);
+
+          // Обновление accessToken в локальном хранилище.
+          localStorage.setItem(lsAccessToken, response.data.accessToken);
           dispatch(
             getAlert({
               message: dataUpdatedUsername.payload.message,

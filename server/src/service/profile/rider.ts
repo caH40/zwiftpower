@@ -34,7 +34,7 @@ export async function putUsernameService({
   const userDB = await User.findOne({ username, _id: { $ne: userId } }, { _id: true }).lean();
 
   if (userDB) {
-    throw new Error('Данный username уже используется.');
+    throw new Error('Данный username уже используется другим пользователем!');
   }
 
   const userDBUpdated = await User.findByIdAndUpdate(
