@@ -1,15 +1,14 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { profileButtons, profileButtonsSeconds } from '../../../assets/profile-buttons';
+import { profileSettingsButtons } from '../../../assets/profile-buttons';
 
-import styles from './NavBarProfile.module.css';
+import styles from './NavBarProfileSettings.module.css';
 
-function NavBarProfile({ zwiftId, addCls }) {
+function NavBarProfileSettings({ zwiftId, addCls }) {
   const { status, user } = useSelector((state) => state.checkAuth.value);
-  const location = useLocation();
 
   // Отображать кнопку настроек только для своего профиля.
   const showSettings = status && zwiftId === user.zwiftId;
@@ -19,7 +18,7 @@ function NavBarProfile({ zwiftId, addCls }) {
 
   const getStyle = (isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили
-    const quantityBtn = profileButtons.length;
+    const quantityBtn = profileSettingsButtons.length;
 
     const positions = {
       [styles.button__left]: index === 0 && quantityBtn !== 1,
@@ -38,10 +37,10 @@ function NavBarProfile({ zwiftId, addCls }) {
     <nav className={cn(styles.wrapper, cns(styles, addCls))}>
       {!hideProfileButtons && (
         <div className={styles.wrapper__buttons}>
-          {profileButtons.map((buttonLink, index) => (
+          {profileSettingsButtons.map((buttonLink, index) => (
             <NavLink
               className={({ isActive }) => getStyle(isActive, index)}
-              to={`/profile/${zwiftId}/${buttonLink.page}`}
+              to={`/profile/${zwiftId}/settings/${buttonLink.page}`}
               key={buttonLink.id}
             >
               {buttonLink.name}
@@ -49,24 +48,8 @@ function NavBarProfile({ zwiftId, addCls }) {
           ))}
         </div>
       )}
-
-      {showSettings && (
-        <div className={styles.wrapper__buttons}>
-          {profileButtonsSeconds.map((buttonLink) => (
-            <Link
-              className={cn(styles.button, styles.button__solo, {
-                [styles.active]: location.pathname.includes('settings'),
-              })}
-              to={`/profile/${zwiftId}/${buttonLink.page}`}
-              key={buttonLink.id}
-            >
-              {buttonLink.name}
-            </Link>
-          ))}
-        </div>
-      )}
     </nav>
   );
 }
 
-export default NavBarProfile;
+export default NavBarProfileSettings;

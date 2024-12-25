@@ -5,8 +5,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 1.1em;
-  margin-bottom: 0.5rem;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 .subtitle__text::first-letter {
   text-transform: uppercase;

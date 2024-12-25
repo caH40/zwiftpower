@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  resetProfileZwift,
+  resetZwiftProfile,
   setZwiftId,
 } from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
 import LogoRider from '../../LogoRider/LogoRider';
@@ -28,7 +28,7 @@ function FindZwiftProfile({ showAdditionalCheckbox }) {
 
   const saveZwiftId = () => {
     dispatch(fetchUserPut({ zwiftId: profile.id, isAdditional: form.isAdditional }));
-    dispatch(resetProfileZwift());
+    dispatch(resetZwiftProfile());
     navigate(`/profile/${zwiftId}/settings`);
   };
 

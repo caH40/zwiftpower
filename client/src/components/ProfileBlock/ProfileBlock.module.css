@@ -6,28 +6,43 @@
 .wrapper__border {
   position: relative;
   flex: 1 1 auto;
-
   border-radius: 5px;
   padding: 10px;
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
 }
 .title {
-  font-size: 17px;
+  font-size: 16px;
   margin-bottom: 10px;
   padding-right: 35px;
+  font-weight: 700;
 }
 .params {
   display: flex;
   flex-wrap: wrap;
   gap: 15px 20px;
 }
+.block__img {
+  text-align: center;
+}
 .box__img {
   font-size: 30px;
-  flex: 0 0 140px;
+  width: 140px;
   height: 140px;
   border-radius: 20px;
   overflow: hidden;
+}
+.btn {
+  font-size: 10px;
+  text-transform: uppercase;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover {
+  background-color: lawngreen;
+  border-radius: 5px;
 }
 .box__term {
   width: 300px;
@@ -60,7 +75,7 @@
 }
 .term__description {
   flex: 0 1 auto;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.03em;
   margin-inline-start: 0px;
