@@ -8,6 +8,7 @@ import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { GenerateToken } from '../../types/auth.interface.js';
+import { TParamsSaveAuthToken } from '../../types/types.interface.js';
 
 /**
  * Генерация пары токенов (accessToken и refreshToken).
@@ -37,6 +38,29 @@ export async function saveToken(userId: Types.ObjectId, refreshToken: string) {
 
     const newTokenDB = await TokenAuthModel.create({ user: userId, refreshToken });
     return newTokenDB;
+  } catch (error) {
+    handleAndLogError(error);
+  }
+}
+
+/**
+ * Сохранение документа токина в БД при регистрации нового пользователя.
+ */
+export async function saveAuthToken({
+  userId,
+  authService,
+  tokens,
+  device,
+  location,
+}: TParamsSaveAuthToken): Promise<void> {
+  try {
+    // Устанавливаем дату истечения токенов (7 дней) (время, через которое удалится документ с токенами из БД).
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+    const query = { userId, authService, tokens, device, location, expiresAt };
+
+    // Создаем запись токенов в БД.
+    await TokenAuthModel.create(query);
   } catch (error) {
     handleAndLogError(error);
   }

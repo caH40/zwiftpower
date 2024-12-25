@@ -2,12 +2,11 @@ import { Types } from 'mongoose';
 import { User as UserModel } from '../../../Model/User.js';
 import { getUserProfileVkService } from './profile.js';
 import { generateTemporaryValue } from '../../../utils/temporaryValue.js';
-import { TokenAuthModel } from '../../../Model/TokenAuth.js';
 
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
-import { generateToken } from '../token.js';
+import { generateToken, saveAuthToken } from '../token.js';
 import { GenerateToken } from '../../../types/auth.interface.js';
 
 type ResponseRegistrationVKIDService = {
@@ -50,7 +49,13 @@ export async function registrationVKIDService({
   }
 
   // Создаем нового пользователя в БД.
-  const userDB = await UserModel.create({
+  const {
+    _id: userId,
+    username,
+    role,
+    email,
+    externalAccounts,
+  } = await UserModel.create({
     username: generateTemporaryValue(`temp_${candidate.first_name}`),
     email: `${generateTemporaryValue('temp_email')}@example.com`,
     password: generateTemporaryValue('temp_password'),
@@ -71,45 +76,20 @@ export async function registrationVKIDService({
     emailConfirm: true, // Пропускаем подтверждение email для регистрации через VK.
   });
 
-  if (!userDB?._id) {
-    throw new Error('Ошибка при создании пользователя в БД, модуль registrationVKIDService');
-  }
-
-  // Устанавливаем дату истечения токенов (7 дней) (время, через которое удалится документ с токенами из БД).
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-  // Генерируем accessToken и refreshToken.
+  // Данные для токенов и для возвращения клиент на клиент.
   const dataForClient: GenerateToken = {
-    username: userDB.username,
-    email: userDB.email,
-    id: userDB._id,
-    role: userDB.role,
-    externalAccounts: {
-      vk: userDB.externalAccounts?.vk,
-    },
+    username,
+    email,
+    id: userId,
+    role,
+    externalAccounts,
   };
 
+  // Генерация пары токенов: доступа и обновления.
   const tokensGenerated = generateToken(dataForClient);
 
-  if (!tokensGenerated) {
-    throw new Error('Ошибка при генерации пары JWT токенов!');
-  }
-
-  // Создаем запись токенов в БД.
-  const tokenDB = await TokenAuthModel.create({
-    userId: userDB._id,
-    authService: 'vk',
-    tokens: tokensGenerated,
-    device,
-    location,
-    expiresAt,
-  });
-
-  if (!tokenDB) {
-    throw new Error(
-      'Ошибка при создании токенов для пользователя в БД, модуль registrationVKIDService'
-    );
-  }
+  // Сохранения токенов и дополнительной информации об аутентификации в БД.
+  await saveAuthToken({ userId, authService: 'vk', tokens: tokensGenerated, device, location });
 
   // Возвращаем данные для клиента.
   return {

@@ -12,15 +12,21 @@ import {
   validateUsername,
 } from '../../utils/validatorService';
 import Button from '../../components/UI/Button/Button';
-import { postRegistration } from '../../api/registration';
+import { postRegistrationCredential } from '../../api/registration';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { setBackground } from '../../redux/features/backgroundSlice';
 import OAuth from '../../components/UI/OAuth/OAuth';
+import { useLocationInfo } from '../../hook/useLocationInfo';
+import { useDeviceInfo } from '../../hook/useDeviceInfo';
+import { getAuth } from '../../redux/features/authSlice';
 
 import styles from './Auth.module.css';
 
 function Registration() {
   useTitle('Регистрация');
+
+  const device = useDeviceInfo();
+  const location = useLocationInfo();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,17 +42,22 @@ function Registration() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (dataForm) => {
-    postRegistration(dataForm)
-      .then((data) => {
-        dispatch(getAlert({ message: data?.data?.message, type: 'success', isOpened: true }));
-        navigate(`/message/registration/${dataForm.email}`);
-      })
-      .catch((error) =>
-        dispatch(
-          getAlert({ message: error?.response?.data?.message, type: 'error', isOpened: true })
-        )
+  const onSubmit = async (dataForm) => {
+    try {
+      const { username, email, password } = dataForm;
+
+      const user = postRegistrationCredential({ username, email, password, device, location });
+
+      // Установка состояния аутентификации в браузере.
+      dispatch(getAuth({ status: true, user: user.data }));
+
+      // dispatch(getAlert({ message: data?.data?.message, type: 'success', isOpened: true }));
+      navigate(`/message/registration/${email}`);
+    } catch (error) {
+      dispatch(
+        getAlert({ message: error?.response?.data?.message, type: 'error', isOpened: true })
       );
+    }
   };
 
   return (
@@ -56,7 +67,7 @@ function Registration() {
 
         <div className={styles.form}>
           {/* <h3 className={styles.title__menu}>Регистрация через сервисы</h3> */}
-          <OAuth isRegistration={true} />
+          <OAuth isRegistration={true} device={device} location={location} />
 
           <hr className={styles.line} />
 

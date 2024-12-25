@@ -17,29 +17,44 @@ import { setAccessTokenCookie } from '../utils/cookie.js';
 import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
 import { authorizationVKIDService } from '../service/authentication/vkid/authorization.js';
 
+/**
+ * Контроллер регистрации нового пользователя через логин/пароль.
+ */
 export async function registration(req: Request, res: Response) {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, device, location } = req.body;
 
-    const response = await registrationService(username, email, password);
-
-    if (!response) {
-      return res.status(401).json({ message: 'Не авторизован' });
+    // !!! проверять на все разрешенные символы
+    if (!username) {
+      return res.status(400).json({ message: 'Не получен username!' });
+    }
+    if (!email) {
+      return res.status(400).json({ message: 'Не получен email!' });
+    }
+    if (!password) {
+      return res.status(400).json({ message: 'Не получен password!' });
+    }
+    if (username.includes(' ')) {
+      return res.status(400).json({ message: 'В логине не должно быть пробелов!' });
+    }
+    if (!device?.deviceId) {
+      return res.status(400).json({ message: 'Не получен deviceId!' });
     }
 
-    res.cookie('refreshToken', response.refreshToken, {
-      maxAge: 30 * 24 * 3600 * 1000,
-      httpOnly: true,
-      secure: true,
+    const { data, message } = await registrationService({
+      username,
+      email,
+      password,
+      device,
+      location,
     });
-    res.status(201).json({ ...response, refreshToken: undefined });
+
+    // Установка токена доступа в куки.
+    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+
+    res.status(201).json({ message, data: data.user });
   } catch (error) {
-    handleAndLogError(error);
-    if (error instanceof AxiosError || error instanceof Error) {
-      res.status(401).json({ message: error.message });
-    } else {
-      res.status(401).json(error);
-    }
+    handleErrorInController(res, error);
   }
 }
 
@@ -185,7 +200,7 @@ export async function registrationVKID(req: Request, res: Response) {
     if (!tokens?.access_token || !tokens.refresh_token) {
       return res.status(400).json({ message: 'Не получены токены доступа и(или) обновления' });
     }
-    if (!device.deviceId) {
+    if (!device?.deviceId) {
       return res.status(400).json({ message: 'Не получен deviceId' });
     }
 

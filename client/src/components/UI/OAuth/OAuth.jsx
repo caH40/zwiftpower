@@ -14,12 +14,9 @@ import styles from './OAuth.module.css';
 /**
  * Блок регистрации через OAuth.
  */
-export default function OAuth({ isRegistration }) {
+export default function OAuth({ isRegistration, device, location }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const device = useDeviceInfo();
-  const location = useLocationInfo();
 
   // Регистрация на сайте используя данные с сервиса VK ID.
   const registerUserVk = async (tokens) => {

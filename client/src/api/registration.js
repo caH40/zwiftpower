@@ -4,12 +4,18 @@ import { serverExpress } from '../config/environment';
 
 import { myAxios } from './axios';
 
-export async function postRegistration(dataForm) {
+export async function postRegistrationCredential({
+  username,
+  email,
+  password,
+  device,
+  location,
+}) {
   try {
-    const response = await axios({
+    const response = await myAxios({
       method: 'post',
       url: `${serverExpress}/api/auth/registration`,
-      data: { username: dataForm.username, email: dataForm.email, password: dataForm.password },
+      data: { username, email, password, device, location },
     });
 
     return response;

@@ -26,20 +26,12 @@ export function ProfileRoute() {
     <>
       <Route
         path="/profile/"
-        element={
-          status ? (
-            user?.zwiftId ? (
-              // с zwiftId редирект на профиль с результатами
-              <Navigate to={`/profile/${user?.zwiftId}/results`} replace />
-            ) : (
-              // с авторизацией и без привязки zwiftId редирект на настройки в профиле
-              <Navigate to={'/profile/0/settings/zwift'} replace />
-            )
-          ) : (
-            // без авторизации редирект на домашнюю страницу
-            <Navigate to={'/'} replace />
-          )
-        }
+        element={<Navigate to={getRedirectPath(status, user)} replace />}
+      />
+
+      <Route
+        path="/profile/"
+        element={<Navigate to={getRedirectPath(status, user)} replace />}
       />
 
       <Route path="/profile/:zwiftId" element={<Profile />}>
@@ -59,4 +51,16 @@ export function ProfileRoute() {
       </Route>
     </>
   );
+}
+
+// Функция для определения пути перенаправления.
+function getRedirectPath(status, user) {
+  // -без авторизации редирект на домашнюю страницу.
+  if (!status) {
+    return '/';
+  }
+
+  // -с zwiftId редирект на профиль с результатами.
+  // -с авторизацией и без привязки zwiftId редирект на настройки в профиле.
+  return user?.zwiftId ? `/profile/${user.zwiftId}/results` : '/profile/0/settings/zwift';
 }

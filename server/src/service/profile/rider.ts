@@ -31,7 +31,11 @@ export async function putUsernameService({
   username: string;
   userId: string;
 }): Promise<TResponseService<null>> {
-  const userDB = await User.findOne({ username, _id: { $ne: userId } }, { _id: true }).lean();
+  // Проверка пользователя с таким username, игнорируя регистр символов, а также игнорируя документ самого пользователя с userId.
+  const userDB = await User.findOne(
+    { username: { $regex: '\\b' + username + '\\b', $options: 'i' }, _id: { $ne: userId } },
+    { _id: true }
+  ).lean();
 
   if (userDB) {
     throw new Error('Данный username уже используется другим пользователем!');
