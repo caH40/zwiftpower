@@ -9,12 +9,12 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const putUsername = createAsyncThunk(
   'user/putUsername',
-  async function ({ userId, username }, thunkAPI) {
+  async function ({ username }, thunkAPI) {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/race/profile/username`,
         method: 'put',
-        data: { userId, username },
+        data: { username },
       });
 
       return response.data;

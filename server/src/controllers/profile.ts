@@ -17,7 +17,7 @@ import {
 import { TNotifications, TUserStreams } from '../types/model.interface.js';
 import { putUserStreamsService } from '../service/profile/streams.js';
 import { getUserSettingsService } from '../service/profile/settings.js';
-import { updateProfileService } from '../service/profile/rider.js';
+import { putUsernameService, updateProfileService } from '../service/profile/rider.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -217,16 +217,16 @@ export async function getUserSettings(req: Request, res: Response) {
  */
 export async function putUsername(req: Request, res: Response) {
   try {
-    const { userId, username } = req.body;
+    const { username } = req.body;
+    const { userId } = req.params;
 
-    if (!userId) {
-      return res.status(400).json({ message: 'Не получен userId' });
-    }
     if (!username) {
       return res.status(400).json({ message: 'Не получен username' });
     }
 
-    return res.status(200).json({});
+    const response = await putUsernameService({ userId, username });
+
+    return res.status(200).json(response);
   } catch (error) {
     handleErrorInController(res, error);
   }

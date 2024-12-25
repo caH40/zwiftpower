@@ -1,4 +1,5 @@
 import { User } from '../../Model/User.js';
+import { TResponseService } from '../../types/http.interface.js';
 import { updateRidersProfiles } from '../updates/riders-profile.js';
 
 /**
@@ -17,5 +18,37 @@ export async function updateProfileService(userId: string) {
 
   return {
     message: `Обновлены данные профиля ${userDB.zwiftId} на zwiftpower.ru `,
+  };
+}
+
+/**
+ * Сервис обновления username пользователя.
+ */
+export async function putUsernameService({
+  username,
+  userId,
+}: {
+  username: string;
+  userId: string;
+}): Promise<TResponseService<null>> {
+  const userDB = await User.findOne({ username, _id: { $ne: userId } }, { _id: true }).lean();
+
+  if (userDB) {
+    throw new Error('Данный username уже используется.');
+  }
+
+  const userDBUpdated = await User.findByIdAndUpdate(
+    userId,
+    { $set: { username } },
+    { new: true }
+  ).lean();
+
+  if (!userDBUpdated) {
+    throw new Error(`Не найден пользователь с _id:${userId} для обновления username!`);
+  }
+
+  return {
+    data: null,
+    message: `Обновлен username пользователя.`,
   };
 }
