@@ -27,7 +27,7 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
     dispatch(fetchProfileRefresh()).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
         // Запрос обновленных данных профиля и обновление стора на клиенте.
-        dispatch(fetchUserProfile({ zwiftId: zwiftId }));
+        dispatch(fetchUserProfile({ zwiftId }));
       }
     });
   };

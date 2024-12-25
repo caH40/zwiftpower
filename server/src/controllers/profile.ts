@@ -4,7 +4,7 @@ import {
   getUserPowerService,
   getUserProfileService,
 } from '../service/race/rider/rider-profile.js';
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
@@ -209,6 +209,26 @@ export async function getUserSettings(req: Request, res: Response) {
     handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер изменения username пользователя.
+ */
+export async function putUsername(req: Request, res: Response) {
+  try {
+    const { userId, username } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'Не получен userId' });
+    }
+    if (!username) {
+      return res.status(400).json({ message: 'Не получен username' });
+    }
+
+    return res.status(200).json({});
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }
 
