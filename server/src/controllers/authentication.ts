@@ -12,9 +12,10 @@ import { newPasswordService } from '../service/authentication/new-password.js';
 import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { registrationVKIDService } from '../service/authentication/vkid/registration.js';
 import { VkAuthResponse } from '../types/http.interface.js';
-import { setAccessTokenCookie } from '../utils/cookie.js';
+import { setRefreshTokenCookie } from '../utils/cookie.js';
 import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
 import { authorizationVKIDService } from '../service/authentication/vkid/authorization.js';
+import { currentNameRefreshToken } from '../assets/constants.js';
 
 /**
  * Контроллер регистрации нового пользователя через логин/пароль.
@@ -49,7 +50,7 @@ export async function registration(req: Request, res: Response) {
     });
 
     // Установка токена доступа в куки.
-    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
 
     res.status(201).json({ message, data: data.user });
   } catch (error) {
@@ -57,6 +58,9 @@ export async function registration(req: Request, res: Response) {
   }
 }
 
+/**
+ * Аутентификация через логин/пароль.
+ */
 export async function authorization(req: Request, res: Response) {
   try {
     const { username, password, device, location } = req.body;
@@ -76,7 +80,10 @@ export async function authorization(req: Request, res: Response) {
       return res.status(400).json({ message: 'Не получен deviceId!' });
     }
 
-    const { data, message } = await authorizationService({
+    const {
+      data: { user, tokens },
+      message,
+    } = await authorizationService({
       username,
       password,
       device,
@@ -84,11 +91,9 @@ export async function authorization(req: Request, res: Response) {
     });
 
     // Установка токена доступа в куки.
-    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({ res, refreshToken: tokens.refreshToken, maxAge: 3600 * 1000 });
 
-    res
-      .status(201)
-      .json({ message, data: { user: data.user, accessToken: data.tokens.accessToken } });
+    res.status(201).json({ message, data: { user, accessToken: tokens.accessToken } });
   } catch (error) {
     handleErrorInController(res, error);
   }
@@ -96,9 +101,13 @@ export async function authorization(req: Request, res: Response) {
 
 export async function logout(req: Request, res: Response) {
   try {
-    const { refreshToken } = req.cookies;
-    const token = await logoutService(refreshToken);
-    res.clearCookie('refreshToken');
+    const { cookies } = req;
+
+    const token = await logoutService(cookies[currentNameRefreshToken]);
+
+    // Очистка куков для токена обновления.
+    res.clearCookie(currentNameRefreshToken);
+
     res.status(201).json({ ...token });
   } catch (error) {
     handleAndLogError(error);
@@ -111,17 +120,18 @@ export async function logout(req: Request, res: Response) {
  */
 export async function refresh(req: Request, res: Response) {
   try {
-    const { refreshToken } = req.cookies;
+    const { cookies } = req;
 
-    const user = await refreshService(refreshToken);
-    if (!user) {
+    const responseFromService = await refreshService(cookies[currentNameRefreshToken]);
+
+    if (!responseFromService) {
       // success для дополнительной проверки на клиенте при получении ответа от этого запроса.
       // Так как отправляется статус код 200 на ошибку!
       // Реализовано для исключения отображения этой ошибки если пользователь не авторизован.
       return res.status(200).json({ success: false, message: 'Не авторизован' });
     }
 
-    res.status(201).json({ success: true, ...user });
+    res.status(201).json({ success: true, ...responseFromService });
   } catch (error) {
     handleErrorInController(res, error);
   }
@@ -215,7 +225,7 @@ export async function registrationVKID(req: Request, res: Response) {
     const { data, message } = await registrationVKIDService({ tokens, device, location });
 
     // Установка токена доступа в куки.
-    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
 
     res.status(201).json({ message, data: data.user });
   } catch (error) {
@@ -248,7 +258,7 @@ export async function authorizationVKID(req: Request, res: Response) {
     const { data, message } = await authorizationVKIDService({ tokens, device, location });
 
     // Установка токена доступа в куки.
-    setAccessTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
 
     res.status(201).json({ message, data: data.user });
   } catch (error) {

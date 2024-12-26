@@ -110,6 +110,6 @@ export async function authorizationVKIDService({
   // Возвращаем данные для клиента.
   return {
     data: { user: dataForClient, tokens: tokensGenerated },
-    message: 'Успешная регистрация!',
+    message: 'Успешная аутентификация!',
   };
 }

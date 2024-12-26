@@ -26,11 +26,6 @@ export async function checkAuth(req: Request, res: Response, next: () => void) {
     req.params.userZwiftId = isValidAccessToken?.zwiftId;
 
     return next();
-
-    // const { refreshToken } = req.cookies;
-    // if (!refreshToken) return res.status(401).json({ message: 'Необходима авторизация' });
-    // const isValidRefreshToken = validateRefreshToken(refreshToken);
-    // if (isValidRefreshToken) return next();
   } catch (error) {
     handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });
