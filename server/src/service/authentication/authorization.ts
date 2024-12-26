@@ -1,34 +1,46 @@
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 import { User } from '../../Model/User.js';
-import { generateToken, removeToken, saveToken } from './token.js';
-import { UserSchema } from '../../types/model.interface.js';
+import { generateToken } from './token.js';
+import { TDeviceInfo, TLocationInfo, UserSchema } from '../../types/model.interface.js';
 import { Rider } from '../../Model/Rider.js';
 import { Organizer } from '../../Model/Organizer.js';
+import { GenerateToken, ResponseAuthService } from '../../types/auth.interface.js';
+import { TokenAuthModel } from '../../Model/TokenAuth.js';
+import { TResponseService } from '../../types/http.interface.js';
 
-export async function authorizationService(
-  username: string,
-  password: string,
-  refreshToken: string
-) {
+type Params = {
+  username: string;
+  password: string;
+  device: TDeviceInfo;
+  location?: TLocationInfo;
+};
+
+export async function authorizationService({
+  username,
+  password,
+  device,
+  location,
+}: Params): Promise<TResponseService<ResponseAuthService>> {
+  // Поиск пользователя с таким username, игнорируя регистр символов.
   const userDB = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
   }).lean<UserSchema>();
-
   if (!userDB || !userDB._id) {
     throw new Error(`Неверный Логин или Пароль`);
   }
 
-  const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
-    _id: ObjectId;
-  }>();
-
+  // Проверка пароля пользователя, который проходит аутентификацию.
   const isValidPassword = await bcrypt.compare(password, userDB.password);
-
   if (!isValidPassword) {
     throw new Error(`Неверный Логин или Пароль`);
   }
+
+  // Получение данных организатора, ели пользователь является организатором.
+  const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
+    _id: Types.ObjectId;
+  }>();
 
   // Получение лого райдера из коллекции Rider.
   const riderDB = await Rider.findOne(
@@ -36,37 +48,45 @@ export async function authorizationService(
     { _id: false, imageSrc: true }
   ).lean<{ imageSrc: string | null }>();
 
-  await removeToken(refreshToken);
-
-  const tokens = generateToken({
-    username,
+  // Данные для токенов и для возвращения клиент на клиент.
+  const dataForClient: GenerateToken = {
+    username: userDB.username,
     email: userDB.email,
     id: userDB._id,
-    zwiftId: userDB.zwiftId,
     role: userDB.role,
-    moderator: userDB.moderator,
-    ...(organizerDB && { organizer: organizerDB._id }),
-  });
+    photoProfile: riderDB?.imageSrc,
+    zwiftId: userDB.zwiftId,
+    externalAccounts: userDB.externalAccounts,
+    ...(organizerDB && { organizer: String(organizerDB._id) }),
+  };
 
-  if (tokens) {
-    await saveToken(userDB._id, tokens.refreshToken);
-  } else {
-    throw new Error('Ошибка при получении токенов');
+  // Генерируем accessToken и refreshToken.
+  const tokensGenerated = generateToken(dataForClient);
+
+  if (!tokensGenerated) {
+    throw new Error('Ошибка при генерации пары JWT токенов!');
   }
 
-  const message = 'Авторизация прошла успешно';
-  return {
-    ...tokens,
-    message,
-    user: {
-      username,
-      email: userDB.email,
-      id: userDB._id,
-      role: userDB.role,
-      photoProfile: riderDB?.imageSrc,
-      zwiftId: userDB.zwiftId,
-      moderator: userDB.moderator,
-      ...(organizerDB && { organizer: organizerDB._id }),
+  // Устанавливаем дату истечения токенов (7 дней) (время, через которое удалится документ с токенами из БД).
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  // Обновляем или создаем запись токенов в БД для пользователя с соответствующим device.id
+  await TokenAuthModel.findOneAndUpdate(
+    { userId: userDB._id, 'device.deviceId': device.deviceId, authService: 'credential' },
+    {
+      userId: userDB._id,
+      authService: 'credential',
+      tokens: tokensGenerated,
+      device,
+      location,
+      expiresAt,
     },
+    { upsert: true }
+  );
+
+  // Возвращаем данные для клиента.
+  return {
+    data: { user: dataForClient, tokens: tokensGenerated },
+    message: 'Успешная аутентификация!',
   };
 }

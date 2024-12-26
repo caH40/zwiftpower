@@ -12,4 +12,13 @@ export interface GenerateToken {
     clubs: string[];
   };
   externalAccounts?: { vk?: TExternalAccountVk };
+  organizer?: string;
 }
+
+/**
+ * Ответ с сервисов регистрации/авторизации.
+ */
+export type ResponseAuthService = {
+  user: GenerateToken;
+  tokens: { accessToken: string; refreshToken: string };
+};

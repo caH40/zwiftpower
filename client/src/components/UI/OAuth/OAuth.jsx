@@ -41,8 +41,8 @@ export default function OAuth({ isRegistration, device, location }) {
       dispatch(getAuth({ status: true, user: user.data }));
       dispatch(getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true }));
 
-      // Редирект на домашнюю страницу.
-      navigate('/', { replace: true });
+      // Возвращение на предыдущую страницу.
+      navigate(-1);
     } catch (error) {
       const messageAxios = error.response?.data?.message;
 

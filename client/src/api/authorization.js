@@ -3,15 +3,15 @@ import { myAxios } from './axios';
 /**
  * Аутентификация пользователя через логин/пароль.
  */
-export async function postAuthorization(dataForm) {
+export async function postAuthorization({ username, password, device, location }) {
   try {
     const response = await myAxios({
       method: 'post',
       url: '/api/auth/authorization',
-      data: { username: dataForm.username, password: dataForm.password },
+      data: { username, password, device, location },
     });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error); // eslint-disable-line
     throw error;

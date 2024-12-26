@@ -6,13 +6,10 @@ import { generateToken } from '../token.js';
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
-import { GenerateToken } from '../../../types/auth.interface.js';
+import { GenerateToken, ResponseAuthService } from '../../../types/auth.interface.js';
 import { Rider } from '../../../Model/Rider.js';
-
-type ResponseRegistrationVKIDService = {
-  user: GenerateToken;
-  tokens: { accessToken: string; refreshToken: string };
-};
+import { Organizer } from '../../../Model/Organizer.js';
+import { ObjectId } from 'mongoose';
 
 /**
  * Авторизация пользователя, прошедшего аутентификацию через VK ID.
@@ -30,7 +27,7 @@ export async function authorizationVKIDService({
   tokens: VkAuthResponse;
   device: TDeviceInfo;
   location?: TLocationInfo;
-}): Promise<TResponseService<ResponseRegistrationVKIDService>> {
+}): Promise<TResponseService<ResponseAuthService>> {
   // Запрос данных пользователя из VK API.
   const { data: userDataFromVK } = await getUserProfileVkService({
     accessToken: tokens.access_token,
@@ -62,6 +59,11 @@ export async function authorizationVKIDService({
 
   await userDB.save();
 
+  // Получение данных организатора для генерации новой пары токенов.
+  const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
+    _id: ObjectId;
+  }>();
+
   // Получение лого райдера из коллекции Rider.
   const riderDB = await Rider.findOne(
     { zwiftId: userDB.zwiftId },
@@ -82,6 +84,7 @@ export async function authorizationVKIDService({
     externalAccounts: {
       vk: userDB.externalAccounts?.vk,
     },
+    ...(organizerDB && { organizer: String(organizerDB._id) }),
   };
 
   const tokensGenerated = generateToken(dataForClient);

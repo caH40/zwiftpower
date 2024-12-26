@@ -25,6 +25,7 @@ import styles from './Auth.module.css';
 function Registration() {
   useTitle('Регистрация');
 
+  // Данные оборудования, браузера, по и места расположения откуда производится работа с сайтом.
   const device = useDeviceInfo();
   const location = useLocationInfo();
 

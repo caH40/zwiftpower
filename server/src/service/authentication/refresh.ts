@@ -69,7 +69,7 @@ export async function refreshService(refreshToken: string) {
       },
       zwiftId: userDB.zwiftId,
       moderator: userDB.moderator,
-      ...(organizerDB && { organizer: organizerDB._id }),
+      ...(organizerDB && { organizer: String(organizerDB._id) }),
     };
 
     // Генерация новой пары токенов.

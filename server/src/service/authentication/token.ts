@@ -66,6 +66,9 @@ export async function saveAuthToken({
   }
 }
 
+/**
+ * Удаление документа токена авторизации.
+ */
 export async function removeToken(refreshToken: string) {
   try {
     const tokenDB = await TokenAuthModel.findOneAndDelete({ refreshToken });
