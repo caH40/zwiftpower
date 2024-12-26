@@ -80,6 +80,7 @@ export async function removeToken(refreshToken: string) {
 
 export function validateAccessToken(token: string) {
   const userData = jwt.verify(token, jwtAccessSecret);
+
   if (typeof userData === 'string') {
     throw new Error('ошибка при проверке токена');
   }

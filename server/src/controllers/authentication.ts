@@ -222,12 +222,19 @@ export async function registrationVKID(req: Request, res: Response) {
       return res.status(400).json({ message: 'Не получен deviceId' });
     }
 
-    const { data, message } = await registrationVKIDService({ tokens, device, location });
+    const {
+      data: { user, tokens: tokensGenerated },
+      message,
+    } = await registrationVKIDService({ tokens, device, location });
 
     // Установка токена доступа в куки.
-    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({
+      res,
+      refreshToken: tokensGenerated.refreshToken,
+      maxAge: 3600 * 1000,
+    });
 
-    res.status(201).json({ message, data: data.user });
+    res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });
   } catch (error) {
     handleErrorInController(res, error);
   }
@@ -255,12 +262,19 @@ export async function authorizationVKID(req: Request, res: Response) {
       return res.status(400).json({ message: 'Не получен deviceId' });
     }
 
-    const { data, message } = await authorizationVKIDService({ tokens, device, location });
+    const {
+      data: { user, tokens: tokensGenerated },
+      message,
+    } = await authorizationVKIDService({ tokens, device, location });
 
     // Установка токена доступа в куки.
-    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({
+      res,
+      refreshToken: tokensGenerated.refreshToken,
+      maxAge: 3600 * 1000,
+    });
 
-    res.status(201).json({ message, data: data.user });
+    res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });
   } catch (error) {
     handleErrorInController(res, error);
   }

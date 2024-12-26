@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux';
 import { authenticateWithVk } from '../../../services/vkAuthService';
 import { getAuth } from '../../../redux/features/authSlice';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { useDeviceInfo } from '../../../hook/useDeviceInfo';
-import { useLocationInfo } from '../../../hook/useLocationInfo';
+import { lsAccessToken } from '../../../constants/localstorage';
 import { postRegistrationVk } from '../../../api/registration';
 import { postAuthorizationVk } from '../../../api/authorization';
 
@@ -34,12 +33,16 @@ export default function OAuth({ isRegistration, device, location }) {
       const tokens = await authenticateWithVk({ device, location });
 
       // Регистрация или авторизация на сервере сайта.
-      const user = isRegistration
-        ? await registerUserVk(tokens)
-        : await authorizeUserVk(tokens);
+      const {
+        message: messageSuccess,
+        data: { accessToken, user },
+      } = isRegistration ? await registerUserVk(tokens) : await authorizeUserVk(tokens);
 
-      dispatch(getAuth({ status: true, user: user.data }));
-      dispatch(getAlert({ message: 'Успешная авторизация!', type: 'success', isOpened: true }));
+      // Установка состояния аутентификации в браузере.
+      localStorage.setItem(lsAccessToken, accessToken);
+
+      dispatch(getAuth({ status: true, user }));
+      dispatch(getAlert({ message: messageSuccess, type: 'success', isOpened: true }));
 
       // Возвращение на предыдущую страницу.
       navigate(-1);

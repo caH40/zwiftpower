@@ -14,6 +14,7 @@ function ProfileSetting() {
 
   const dispatch = useDispatch();
 
+  // Запрос настроек в профиле, таких как Оповещения и т.д
   useEffect(() => {
     if (zwiftIdAuth !== undefined) {
       dispatch(fetchUserSettings({ zwiftId: zwiftIdAuth }));
