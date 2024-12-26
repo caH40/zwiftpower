@@ -11,11 +11,14 @@ import { checkRequestPasswordService } from '../service/authentication/checkRequ
 import { newPasswordService } from '../service/authentication/new-password.js';
 import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { registrationVKIDService } from '../service/authentication/vkid/registration.js';
-import { VkAuthResponse } from '../types/http.interface.js';
 import { setRefreshTokenCookie } from '../utils/cookie.js';
-import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
 import { authorizationVKIDService } from '../service/authentication/vkid/authorization.js';
 import { currentNameRefreshToken } from '../assets/constants.js';
+import { millisecondsInHour } from '../assets/date.js';
+
+// types
+import { VkAuthResponse } from '../types/http.interface.js';
+import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
 
 /**
  * Контроллер регистрации нового пользователя через логин/пароль.
@@ -271,7 +274,7 @@ export async function authorizationVKID(req: Request, res: Response) {
     setRefreshTokenCookie({
       res,
       refreshToken: tokensGenerated.refreshToken,
-      maxAge: 3600 * 1000,
+      maxAge: millisecondsInHour,
     });
 
     res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });

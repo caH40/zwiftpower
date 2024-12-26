@@ -1,22 +1,19 @@
 import { User as UserModel } from '../../../Model/User.js';
 import { getUserProfileVkService } from './profile.js';
-import { TokenAuthModel } from '../../../Model/TokenAuth.js';
-import { generateToken } from '../token.js';
 
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
-import { GenerateToken, ResponseAuthService } from '../../../types/auth.interface.js';
-import { Rider } from '../../../Model/Rider.js';
-import { Organizer } from '../../../Model/Organizer.js';
-import { ObjectId } from 'mongoose';
+import { ResponseAuthService } from '../../../types/auth.interface.js';
+import { generateAuthResponse } from '../auth-response.js';
 
 /**
- * Авторизация пользователя, прошедшего аутентификацию через VK ID.
+ * Авторизация пользователя, прошедшего аутентификацию через VK ID, генерирует токены, обновляет или создает запись токенов в базе данных.
  *
  * @param tokens - Токены, полученные от VK API.
  * @param device - Информация об устройстве пользователя.
  * @param location - (Необязательно) Данные о местоположении пользователя.
+ *
  * @returns Данные о зарегистрированном пользователе и сгенерированные токены.
  */
 export async function authorizationVKIDService({
@@ -59,53 +56,13 @@ export async function authorizationVKIDService({
 
   await userDB.save();
 
-  // Получение данных организатора для генерации новой пары токенов.
-  const organizerDB = await Organizer.findOne({ creator: userDB._id }, { _id: true }).lean<{
-    _id: ObjectId;
-  }>();
-
-  // Получение лого райдера из коллекции Rider.
-  const riderDB = await Rider.findOne(
-    { zwiftId: userDB.zwiftId },
-    { _id: false, imageSrc: true }
-  ).lean<{ imageSrc: string | null }>();
-
-  // Устанавливаем дату истечения токенов (7 дней) (время, через которое удалится документ с токенами из БД).
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-  // Генерируем accessToken и refreshToken.
-  const dataForClient: GenerateToken = {
-    username: userDB.username,
-    email: userDB.email,
-    id: userDB._id,
-    role: userDB.role,
-    photoProfile: riderDB?.imageSrc,
-    zwiftId: userDB.zwiftId,
-    externalAccounts: {
-      vk: userDB.externalAccounts?.vk,
-    },
-    ...(organizerDB && { organizer: String(organizerDB._id) }),
-  };
-
-  const tokensGenerated = generateToken(dataForClient);
-
-  if (!tokensGenerated) {
-    throw new Error('Ошибка при генерации пары JWT токенов!');
-  }
-
-  // Обновляем или создаем запись токенов в БД для пользователя с соответствующим device.id
-  await TokenAuthModel.findOneAndUpdate(
-    { userId: userDB._id, 'device.deviceId': device.deviceId },
-    {
-      userId: userDB._id,
-      authService: 'vk',
-      tokens: tokensGenerated,
-      device,
-      location,
-      expiresAt,
-    },
-    { upsert: true }
-  );
+  // Генерация токенов для пользователя, обновление/создание записи в базе данных, формирование необходимых данных о пользователе, отправляемых на клиент.
+  const { dataForClient, tokensGenerated } = await generateAuthResponse({
+    user: userDB,
+    device,
+    location,
+    authService: 'vk',
+  });
 
   // Возвращаем данные для клиента.
   return {
