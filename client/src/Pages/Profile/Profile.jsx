@@ -47,7 +47,7 @@ function Profile() {
     dispatch(fetchUserProfile({ zwiftId }));
 
     return () => dispatch(resetUserProfile());
-  }, [dispatch, zwiftId, userAuth]);
+  }, [dispatch, userAuth, zwiftId]);
 
   // увеличение размера лого райдера
   const enlargeLogo = (src) => {

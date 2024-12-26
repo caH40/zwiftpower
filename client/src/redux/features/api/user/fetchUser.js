@@ -8,7 +8,9 @@ import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
 import { serverExpress } from '../../../../config/environment';
 import { lsAccessToken } from '../../../../constants/localstorage';
 
-// привязка ZwiftId к аккаунту
+/**
+ * Привязка основного или дополнительного ZwiftId к аккаунту на сайте.
+ */
 export const fetchUserPut = createAsyncThunk(
   'user/putSettingsAddZwiftId',
   async function ({ zwiftId, isAdditional }, thunkAPI) {
@@ -22,19 +24,18 @@ export const fetchUserPut = createAsyncThunk(
       // запрос обновленных данных аккаунта с БД
       const auth = await checkAuth();
 
-      if (auth) {
+      // Обновление данных авторизованного пользователя на сайте, обновление токена доступа в локальном хранилище.
+      if (auth && auth.data.success === true) {
         thunkAPI.dispatch(getAuth({ status: true, user: auth.data.user }));
         localStorage.setItem(lsAccessToken, auth.data.accessToken);
-      } else {
-        throw new Error('Ошибка при запросе авторизации');
       }
 
       thunkAPI.dispatch(
         getAlert({ message: response.data.message, type: 'success', isOpened: true })
       );
 
-      // обновление блока профайлов ZwiftId
-      thunkAPI.dispatch(fetchZwiftProfiles(response.data.zwiftIdMain));
+      // Обновление блока привязанных аккаунтов из Zwift в настройках профиля.
+      thunkAPI.dispatch(fetchZwiftProfiles(response.data.data.zwiftIdMain));
 
       return response.data;
     } catch (error) {
@@ -62,7 +63,7 @@ export const fetchUserDeleteZwiftId = createAsyncThunk(
         getAlert({ message: response.data.message, type: 'success', isOpened: true })
       );
 
-      // обновление блока профайлов ZwiftId
+      // Обновление блока привязанных аккаунтов зи Zwift.
       thunkAPI.dispatch(fetchZwiftProfiles(response.data.zwiftIdMain));
 
       return response.data;

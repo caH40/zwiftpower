@@ -20,16 +20,29 @@ function FindZwiftProfile({ showAdditionalCheckbox }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { zwiftId, profile } = useSelector((state) => state.getZwiftProfile);
+  const { zwiftId, profile: zwiftProfile } = useSelector((state) => state.getZwiftProfile);
 
   const findRider = () => {
     dispatch(fetchZwiftProfile(zwiftId));
   };
 
   const saveZwiftId = () => {
-    dispatch(fetchUserPut({ zwiftId: profile.id, isAdditional: form.isAdditional }));
+    // Запуск акшена на запрос на привязку основного или дополнительного аккаунта Zwift к профилю на сайте.
+    const { isAdditional } = form;
+
+    dispatch(fetchUserPut({ zwiftId: zwiftProfile.id, isAdditional })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        // Переход на страницу с новым привязанным zwiftId, если привязывается основной zwiftId.
+        // При привязке дополнительного zwiftId остаемся на той же странице..
+
+        if (!isAdditional) {
+          navigate(`/profile/${zwiftId}/settings/zwift`);
+        }
+      }
+    });
+
+    // Сброс из хранилища найденного профиля zwiftId для привязки.
     dispatch(resetZwiftProfile());
-    navigate(`/profile/${zwiftId}/settings`);
   };
 
   return (
@@ -40,7 +53,7 @@ function FindZwiftProfile({ showAdditionalCheckbox }) {
         <Button getClick={findRider}>НАЙТИ</Button>
       </div>
 
-      {profile?.id && (
+      {zwiftProfile?.id && (
         <>
           <div className={styles.box__checkbox}>
             <SimpleCheckbox
@@ -56,17 +69,17 @@ function FindZwiftProfile({ showAdditionalCheckbox }) {
           <div className={styles.box__rider}>
             <div className={styles.box__img}>
               <LogoRider
-                source={profile?.imageSrc}
-                firstName={profile.firstName}
-                lastName={profile?.lastName}
+                source={zwiftProfile?.imageSrc}
+                firstName={zwiftProfile.firstName}
+                lastName={zwiftProfile?.lastName}
               />
             </div>
             <div className={styles.box__name}>
-              <span>{profile.firstName}</span>
-              <span>{profile.lastName}</span>
+              <span>{zwiftProfile.firstName}</span>
+              <span>{zwiftProfile.lastName}</span>
               <div>
                 <span>zwiftId:</span>
-                <span>{profile.id}</span>
+                <span>{zwiftProfile.id}</span>
               </div>
             </div>
           </div>

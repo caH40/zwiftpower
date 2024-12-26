@@ -123,9 +123,9 @@ export async function putUserZwiftId(req: Request, res: Response) {
 
     const zwiftId: number = req.body.zwiftId;
     const isAdditional: boolean = req.body.isAdditional;
-    const user = await updateZwiftIdService(userId, zwiftId, isAdditional);
+    const response = await updateZwiftIdService(userId, zwiftId, isAdditional);
 
-    return res.status(200).json(user);
+    return res.status(200).json(response);
   } catch (error) {
     handleAndLogError(error);
     if (error instanceof Error) {
