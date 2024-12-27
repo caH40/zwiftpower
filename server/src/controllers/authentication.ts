@@ -14,7 +14,7 @@ import { registrationVKIDService } from '../service/authentication/vkid/registra
 import { setRefreshTokenCookie } from '../utils/cookie.js';
 import { authorizationVKIDService } from '../service/authentication/vkid/authorization.js';
 import { currentNameRefreshToken } from '../assets/constants.js';
-import { millisecondsInHour } from '../assets/date.js';
+import { millisecondsInWeekDays } from '../assets/date.js';
 
 // types
 import { VkAuthResponse } from '../types/http.interface.js';
@@ -53,7 +53,11 @@ export async function registration(req: Request, res: Response) {
     });
 
     // Установка токена доступа в куки.
-    setRefreshTokenCookie({ res, refreshToken: data.tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({
+      res,
+      refreshToken: data.tokens.refreshToken,
+      maxAge: millisecondsInWeekDays,
+    });
 
     res.status(201).json({ message, data: data.user });
   } catch (error) {
@@ -94,7 +98,11 @@ export async function authorization(req: Request, res: Response) {
     });
 
     // Установка токена доступа в куки.
-    setRefreshTokenCookie({ res, refreshToken: tokens.refreshToken, maxAge: 3600 * 1000 });
+    setRefreshTokenCookie({
+      res,
+      refreshToken: tokens.refreshToken,
+      maxAge: millisecondsInWeekDays,
+    });
 
     res.status(201).json({ message, data: { user, accessToken: tokens.accessToken } });
   } catch (error) {
@@ -234,7 +242,7 @@ export async function registrationVKID(req: Request, res: Response) {
     setRefreshTokenCookie({
       res,
       refreshToken: tokensGenerated.refreshToken,
-      maxAge: 3600 * 1000,
+      maxAge: millisecondsInWeekDays,
     });
 
     res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });
@@ -274,7 +282,7 @@ export async function authorizationVKID(req: Request, res: Response) {
     setRefreshTokenCookie({
       res,
       refreshToken: tokensGenerated.refreshToken,
-      maxAge: millisecondsInHour,
+      maxAge: millisecondsInWeekDays,
     });
 
     res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });

@@ -2,7 +2,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .icon {
   flex: 0 0 40px;

@@ -68,7 +68,9 @@ function Authorization() {
 
         <div className={styles.form}>
           {/* Аутентификация через сторонние сервисы с помощью OAuth */}
-          <OAuth isRegistration={false} device={device} location={location} />
+          <div className={styles.wrapper__oauth}>
+            <OAuth isRegistration={false} device={device} location={location} />
+          </div>
 
           <hr className={styles.line} />
 

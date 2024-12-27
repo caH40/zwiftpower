@@ -18,6 +18,10 @@
 .inner {
   flex: 0 0 300px;
 }
+.wrapper__oauth {
+  display: flex;
+  justify-content: center;
+}
 .form {
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
