@@ -49,6 +49,10 @@ export async function getUserProfile(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
 
+    if (isNaN(+zwiftId) || +zwiftId === 0) {
+      throw new Error('Не получен zwiftId!');
+    }
+
     const userResults = await getUserProfileService(+zwiftId);
     res.status(200).json(userResults);
   } catch (error) {

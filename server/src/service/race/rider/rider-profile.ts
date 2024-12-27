@@ -11,11 +11,7 @@ import { User } from '../../../Model/User.js';
 /**
  * Получение профайла райдера (анкеты), основных значений CriticalPower, всех результатов райдера
  */
-export async function getUserProfileService(zwiftId?: number) {
-  if (zwiftId === undefined) {
-    return null;
-  }
-
+export async function getUserProfileService(zwiftId: number) {
   const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
 
   const profile = await getProfileService(zwiftId);
