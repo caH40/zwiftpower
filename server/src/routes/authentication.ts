@@ -11,7 +11,9 @@ import {
   newPassword,
   registrationVKID,
   authorizationVKID,
+  linkVKID,
 } from '../controllers/authentication.js';
+import { checkAuth as checkAuthMiddleware } from '../middleware/auth.js';
 
 export const routerAuth = Router();
 
@@ -27,3 +29,4 @@ routerAuth.put('/new-password', newPassword);
 
 routerAuth.post('/registration/vk', registrationVKID);
 routerAuth.post('/authorization/vk', authorizationVKID);
+routerAuth.post('/link/vk', checkAuthMiddleware, linkVKID);

@@ -19,6 +19,7 @@ import { millisecondsInWeekDays } from '../assets/date.js';
 // types
 import { VkAuthResponse } from '../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../types/model.interface.js';
+import { linkVKIDService } from '../service/authentication/vkid/link.js';
 
 /**
  * Контроллер регистрации нового пользователя через логин/пароль.
@@ -158,7 +159,10 @@ export async function checkAuth(req: Request, res: Response) {
 
     const accessToken = authorization.split(' ')[1];
     const user = validateAccessToken(accessToken);
-    if (!user) return res.status(401).json({ message: 'Не авторизован' });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
 
     res.status(201).json({ user });
   } catch (error) {
@@ -286,6 +290,30 @@ export async function authorizationVKID(req: Request, res: Response) {
     });
 
     res.status(201).json({ message, data: { user, accessToken: tokensGenerated.accessToken } });
+  } catch (error) {
+    handleErrorInController(res, error);
+  }
+}
+
+/**
+ *  Привязка аккаунта VK ID к текущему пользователю.
+ */
+export async function linkVKID(req: Request, res: Response) {
+  try {
+    const { tokens }: { tokens: VkAuthResponse } = req.body;
+
+    const { userId } = req.params;
+
+    if (!tokens?.access_token || !tokens.refresh_token) {
+      return res.status(400).json({ message: 'Не получены токены доступа и(или) обновления' });
+    }
+
+    const {
+      data: { user },
+      message,
+    } = await linkVKIDService({ tokens, userId });
+
+    res.status(201).json({ message, data: { user } });
   } catch (error) {
     handleErrorInController(res, error);
   }

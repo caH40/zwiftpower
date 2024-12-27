@@ -43,11 +43,18 @@ function Registration() {
     formState: { errors },
   } = useForm();
 
+  // Обработчик отправки формы. Происходит регистрация пользователя через логин/пароль.
   const onSubmit = async (dataForm) => {
     try {
       const { username, email, password } = dataForm;
 
-      const user = postRegistrationCredential({ username, email, password, device, location });
+      const user = await postRegistrationCredential({
+        username,
+        email,
+        password,
+        device,
+        location,
+      });
 
       // Установка состояния аутентификации в браузере.
       dispatch(getAuth({ status: true, user: user.data }));
@@ -68,7 +75,7 @@ function Registration() {
 
         <div className={styles.form}>
           {/* <h3 className={styles.title__menu}>Регистрация через сервисы</h3> */}
-          <OAuth isRegistration={true} device={device} location={location} />
+          <OAuth mode="register" device={device} location={location} />
 
           <hr className={styles.line} />
 

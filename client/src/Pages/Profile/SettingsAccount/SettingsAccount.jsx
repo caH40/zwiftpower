@@ -50,7 +50,11 @@ export default function SettingsAccount() {
 
       <h3 className={styles.title}>Сервисы аутентификации для привязки</h3>
       <div className={styles.wrapper__block}>
-        {noAvailableAuthServices ? 'Нет доступных сервисов аутентификации' : <OAuth />}
+        {noAvailableAuthServices ? (
+          'Нет доступных сервисов аутентификации'
+        ) : (
+          <OAuth mode="link" />
+        )}
       </div>
 
       <JSONBlock json={user} />

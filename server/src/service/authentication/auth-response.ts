@@ -37,28 +37,8 @@ export async function generateAuthResponse({
   dataForClient: GenerateToken;
   tokensGenerated: { accessToken: string; refreshToken: string };
 }> {
-  // Получение данных организатора для генерации новой пары токенов.
-  const organizerDB = await Organizer.findOne({ creator: user._id }, { _id: true }).lean<{
-    _id: Types.ObjectId;
-  }>();
-
-  // Получение лого райдера из коллекции Rider.
-  const riderDB = await Rider.findOne(
-    { zwiftId: user.zwiftId },
-    { _id: false, imageSrc: true }
-  ).lean<{ imageSrc: string | null }>();
-
-  // Данные для токенов и для возвращения клиенту.
-  const dataForClient: GenerateToken = {
-    username: user.username,
-    email: user.email,
-    id: user._id!,
-    role: user.role,
-    photoProfile: riderDB?.imageSrc,
-    zwiftId: user.zwiftId,
-    externalAccounts: user.externalAccounts,
-    ...(organizerDB && { organizer: String(organizerDB._id) }),
-  };
+  // Создание объекта данных пользователя для отправки на клиент.
+  const dataForClient = await createDataForClient({ user });
 
   // Генерируем accessToken и refreshToken.
   const tokensGenerated = generateToken(dataForClient);
@@ -85,4 +65,36 @@ export async function generateAuthResponse({
   );
 
   return { dataForClient, tokensGenerated };
+}
+
+/**
+ * Создание объекта данных пользователя для отправки на клиент.
+ */
+export async function createDataForClient({
+  user,
+}: {
+  user: UserSchema;
+}): Promise<GenerateToken> {
+  // Получение данных организатора для генерации новой пары токенов.
+  const organizerDB = await Organizer.findOne({ creator: user._id }, { _id: true }).lean<{
+    _id: Types.ObjectId;
+  }>();
+
+  // Получение лого райдера из коллекции Rider.
+  const riderDB = await Rider.findOne(
+    { zwiftId: user.zwiftId },
+    { _id: false, imageSrc: true }
+  ).lean<{ imageSrc: string | null }>();
+
+  // Данные для токенов и для возвращения клиенту.
+  return {
+    username: user.username,
+    email: user.email,
+    id: user._id!,
+    role: user.role,
+    photoProfile: riderDB?.imageSrc,
+    zwiftId: user.zwiftId,
+    externalAccounts: user.externalAccounts,
+    ...(organizerDB && { organizer: String(organizerDB._id) }),
+  };
 }

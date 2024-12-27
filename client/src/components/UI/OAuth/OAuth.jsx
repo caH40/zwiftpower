@@ -7,53 +7,73 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { lsAccessToken } from '../../../constants/localstorage';
 import { postRegistrationVk } from '../../../api/registration';
 import { postAuthorizationVk } from '../../../api/authorization';
+import { postLinkVkAccount } from '../../../api/link';
 
 import styles from './OAuth.module.css';
 
 /**
- * Блок регистрации через OAuth.
+ * Компонент для работы с OAuth.
+ *
+ * @param {Object} props - Свойства компонента.
+ * @param {'register' | 'login' | 'link'} props.mode - Режим работы компонента:
+ * - `register`: Регистрация пользователя.
+ * - `login`: Авторизация пользователя.
+ * - `link`: Привязка аккаунта.
+ * @param {string} props.device - Информация об устройстве пользователя.
+ * @param {string} props.location - Местоположение пользователя.
  */
-export default function OAuth({ isRegistration, device, location }) {
+export default function OAuth({ mode, device, location }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Регистрация на сайте используя данные с сервиса VK ID.
-  const registerUserVk = async (tokens) => {
-    return await postRegistrationVk({ tokens, device, location });
+  /**
+   * Выполнение действия в зависимости от режима.
+   *
+   * @param {Object} tokens - Токены VK ID.
+   * @returns {Promise<Object>} Ответ от API.
+   */
+  const performAction = async (tokens) => {
+    switch (mode) {
+      case 'register':
+        return postRegistrationVk({ tokens, device, location });
+
+      case 'login':
+        return postAuthorizationVk({ tokens, device, location });
+
+      case 'link':
+        return postLinkVkAccount({ tokens });
+
+      default:
+        throw new Error('Некорректный режим работы компонента. Не определён пропс mode.');
+    }
   };
 
-  // Авторизация на сайте используя данные с сервиса VK ID.
-  const authorizeUserVk = async (tokens) => {
-    return await postAuthorizationVk({ tokens, device, location });
-  };
-
+  /**
+   * Обработчик клика по иконке VK ID.
+   */
   const handlerOnClickVk = async () => {
     try {
       // Аутентификация через VK ID.
-      const tokens = await authenticateWithVk({ device, location });
+      const tokens = await authenticateWithVk();
 
-      // Регистрация или авторизация на сервере сайта.
-      const {
-        message: messageSuccess,
-        data: { accessToken, user },
-      } = isRegistration ? await registerUserVk(tokens) : await authorizeUserVk(tokens);
+      // Выполнение действия в зависимости от режима.
+      const response = await performAction(tokens);
 
-      // Установка состояния аутентификации в браузере.
-      localStorage.setItem(lsAccessToken, accessToken);
+      if (mode !== 'link') {
+        // Сохранение токена в localStorage и переход на предыдущую страницу.
+        localStorage.setItem(lsAccessToken, response.data.accessToken);
+        navigate(-1);
+      }
 
-      dispatch(getAuth({ status: true, user }));
-      dispatch(getAlert({ message: messageSuccess, type: 'success', isOpened: true }));
-
-      // Возвращение на предыдущую страницу.
-      navigate(-1);
+      // Обновление состояния аутентификации и отображение уведомления.
+      dispatch(getAuth({ status: true, user: response.data.user }));
+      dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
     } catch (error) {
-      const messageAxios = error.response?.data?.message;
-
-      dispatch(
-        getAlert({ message: messageAxios || error.message, type: 'error', isOpened: true })
-      );
+      const message = error.response?.data?.message || error.message;
+      dispatch(getAlert({ message, type: 'error', isOpened: true }));
     }
   };
+
   return (
     <section className={styles.wrapper}>
       <img
