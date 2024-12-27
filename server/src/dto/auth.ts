@@ -31,6 +31,7 @@ export function dtoProfileDataForClient({
     role: user.role,
     photoProfile: riderImg,
     zwiftId: user.zwiftId,
+    moderator: user.moderator,
     externalAccounts: {
       vk,
     },

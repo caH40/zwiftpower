@@ -11,6 +11,9 @@ import { lsAccessToken } from '../../../constants/localstorage';
 
 import styles from './FormAccount.module.css';
 
+/**
+ * Форма для изменения данных аккаунта.
+ */
 function FormAccount({ role, username }) {
   const [name, setName] = useState(username);
   const dispatch = useDispatch();
@@ -45,7 +48,7 @@ function FormAccount({ role, username }) {
   return (
     <form>
       <CommonInput name={'логин'} state={name} setState={setName} />
-      <CommonInput name={'роль на сайте'} state={role} disabled={true} />
+      {/* <CommonInput name={'роль на сайте'} state={role} disabled={true} /> */}
 
       <div className={styles.button__right}>
         <Button getClick={submit} disabled={!name.length}>

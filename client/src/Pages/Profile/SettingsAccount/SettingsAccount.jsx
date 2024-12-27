@@ -33,7 +33,7 @@ export default function SettingsAccount() {
       </div>
 
       {/* Используемые сервисы аутентификации */}
-      <h3 className={styles.title}>Используемые сервисы аутентификации</h3>
+      <h3 className={styles.title}>Используемые сервисы для входа в аккаунт</h3>
       {/* Блок аутентификации через логин/пароль */}
       {hasCredentialAuth && (
         <div className={styles.wrapper__block}>
@@ -48,7 +48,7 @@ export default function SettingsAccount() {
         </div>
       )}
 
-      <h3 className={styles.title}>Сервисы аутентификации для привязки</h3>
+      <h3 className={styles.title}>Дополнительные сервисы для входа в аккаунт</h3>
       <div className={styles.wrapper__block}>
         {noAvailableAuthServices ? (
           'Нет доступных сервисов аутентификации'
@@ -57,7 +57,7 @@ export default function SettingsAccount() {
         )}
       </div>
 
-      <JSONBlock json={user} />
+      {/* <JSONBlock json={user} /> */}
     </div>
   );
 }
