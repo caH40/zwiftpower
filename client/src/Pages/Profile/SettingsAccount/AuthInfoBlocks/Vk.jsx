@@ -15,8 +15,8 @@ export default function VkIdAuthInfoBlock({ user }) {
         <img src={user.externalAccounts.vk.avatarSrc} className={styles.image} alt="Avatar" />
 
         <dl className={styles.list}>
-          <dt className={styles.term}>id</dt>
-          <dd className={styles.description}>{user.externalAccounts.vk.id}</dd>
+          {/* <dt className={styles.term}>id</dt>
+          <dd className={styles.description}>{user.externalAccounts.vk.id}</dd> */}
 
           <dt className={styles.term}>firstName</dt>
           <dd className={styles.description}>{user.externalAccounts.vk.firstName}</dd>
@@ -24,8 +24,8 @@ export default function VkIdAuthInfoBlock({ user }) {
           <dt className={styles.term}>lastName</dt>
           <dd className={styles.description}>{user.externalAccounts.vk.lastName}</dd>
 
-          <dt className={styles.term}>email</dt>
-          <dd className={styles.description}>{user.externalAccounts.vk.email}</dd>
+          {/* <dt className={styles.term}>email</dt>
+          <dd className={styles.description}>{user.externalAccounts.vk.email}</dd> */}
         </dl>
       </div>
     </div>

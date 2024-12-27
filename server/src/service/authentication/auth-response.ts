@@ -10,6 +10,7 @@ import { TDeviceInfo, TLocationInfo, UserSchema } from '../../types/model.interf
 import { generateToken } from './token.js';
 import { millisecondsInWeekDays } from '../../assets/date.js';
 import { TAuthService } from '../../types/types.interface.js';
+import { dtoProfileDataForClient } from '../../dto/auth.js';
 
 type Params = {
   user: UserSchema;
@@ -87,14 +88,9 @@ export async function createDataForClient({
   ).lean<{ imageSrc: string | null }>();
 
   // Данные для токенов и для возвращения клиенту.
-  return {
-    username: user.username,
-    email: user.email,
-    id: user._id!,
-    role: user.role,
-    photoProfile: riderDB?.imageSrc,
-    zwiftId: user.zwiftId,
-    externalAccounts: user.externalAccounts,
-    ...(organizerDB && { organizer: String(organizerDB._id) }),
-  };
+  return dtoProfileDataForClient({
+    user,
+    organizerId: organizerDB?._id,
+    riderImg: riderDB?.imageSrc,
+  });
 }

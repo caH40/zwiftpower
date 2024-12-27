@@ -8,6 +8,7 @@ import { TResponseService, VkAuthResponse } from '../../../types/http.interface.
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
 import { generateToken, saveAuthToken } from '../token.js';
 import { GenerateToken } from '../../../types/auth.interface.js';
+import { dtoProfileDataForClientAfterReg } from '../../../dto/auth.js';
 
 type ResponseRegistrationVKIDService = {
   user: GenerateToken;
@@ -49,13 +50,7 @@ export async function registrationVKIDService({
   }
 
   // Создаем нового пользователя в БД.
-  const {
-    _id: userId,
-    username,
-    role,
-    email,
-    externalAccounts,
-  } = await UserModel.create({
+  const userDB = await UserModel.create({
     username: generateTemporaryValue(`temp_${candidate.first_name}`),
     email: `${generateTemporaryValue('temp_email')}@example.com`,
     password: generateTemporaryValue('temp_password'),
@@ -77,19 +72,19 @@ export async function registrationVKIDService({
   });
 
   // Данные для токенов и для возвращения клиент на клиент.
-  const dataForClient: GenerateToken = {
-    username,
-    email,
-    id: userId,
-    role,
-    externalAccounts,
-  };
+  const dataForClient = dtoProfileDataForClientAfterReg({ user: userDB });
 
   // Генерация пары токенов: доступа и обновления.
   const tokensGenerated = generateToken(dataForClient);
 
   // Сохранения токенов и дополнительной информации об аутентификации в БД.
-  await saveAuthToken({ userId, authService: 'vk', tokens: tokensGenerated, device, location });
+  await saveAuthToken({
+    userId: userDB._id,
+    authService: 'vk',
+    tokens: tokensGenerated,
+    device,
+    location,
+  });
 
   // Возвращаем данные для клиента.
   return {

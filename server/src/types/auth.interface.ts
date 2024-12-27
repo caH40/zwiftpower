@@ -11,7 +11,9 @@ export interface GenerateToken {
   moderator?: {
     clubs: string[];
   };
-  externalAccounts?: { vk?: TExternalAccountVk };
+  externalAccounts?: {
+    vk?: Pick<TExternalAccountVk, 'firstName' | 'lastName' | 'avatarSrc'>;
+  };
   organizer?: string;
 }
 
