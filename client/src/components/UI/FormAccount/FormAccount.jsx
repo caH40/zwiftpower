@@ -1,13 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import CommonInput from '../SimpleInput/CommonInput';
+import { validateUsername } from '../../../utils/validatorService';
 import Button from '../Button/Button';
 import { putUsername } from '../../../redux/features/api/user-settings/putUsername';
 import { checkAuth } from '../../../api/auth-check';
 import { getAuth } from '../../../redux/features/authSlice';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { lsAccessToken } from '../../../constants/localstorage';
+import InputAuth from '../InputAuth/InputAuth';
 
 import styles from './FormAccount.module.css';
 
@@ -15,12 +17,17 @@ import styles from './FormAccount.module.css';
  * Форма для изменения данных аккаунта.
  */
 function FormAccount({ role, username }) {
-  const [name, setName] = useState(username);
   const dispatch = useDispatch();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: { username }, mode: 'all' });
+
   // отправка запроса создания Эвента на сервер
-  const submit = () => {
-    dispatch(putUsername({ username: name })).then((dataUpdatedUsername) => {
+  const onSubmit = (dataForm) => {
+    dispatch(putUsername({ username: dataForm.username })).then((dataUpdatedUsername) => {
       if (dataUpdatedUsername.meta.requestStatus === 'fulfilled') {
         // Запрос обновленных данных профиля и обновление стора на клиенте.
         checkAuth().then((response) => {
@@ -46,12 +53,17 @@ function FormAccount({ role, username }) {
   };
 
   return (
-    <form>
-      <CommonInput name={'логин'} state={name} setState={setName} />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputAuth
+        label={'Логин'}
+        register={validateUsername(register)}
+        validationText={errors.username?.message || ''}
+        input={{ id: 'username', type: 'text' }}
+      />
       {/* <CommonInput name={'роль на сайте'} state={role} disabled={true} /> */}
 
       <div className={styles.button__right}>
-        <Button getClick={submit} disabled={!name.length}>
+        <Button type={'submit'} disabled={Boolean(errors.username)}>
           Сохранить
         </Button>
       </div>

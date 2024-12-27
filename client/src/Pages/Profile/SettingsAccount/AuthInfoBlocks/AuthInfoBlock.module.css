@@ -16,7 +16,7 @@
 }
 .list {
   display: grid;
-  grid-template-columns: 100px auto;
+  grid-template-columns: 70px auto;
   gap: 5px;
   padding: 0;
   margin: 0;
