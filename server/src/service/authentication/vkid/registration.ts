@@ -2,13 +2,13 @@ import { Types } from 'mongoose';
 import { User as UserModel } from '../../../Model/User.js';
 import { getUserProfileVkService } from './profile.js';
 import { generateTemporaryValue } from '../../../utils/temporaryValue.js';
+import { dtoProfileDataForClientAfterReg } from '../../../dto/auth.js';
 
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { TDeviceInfo, TLocationInfo } from '../../../types/model.interface.js';
 import { generateToken, saveAuthToken } from '../token.js';
 import { GenerateToken } from '../../../types/auth.interface.js';
-import { dtoProfileDataForClientAfterReg } from '../../../dto/auth.js';
 
 type ResponseRegistrationVKIDService = {
   user: GenerateToken;
@@ -38,16 +38,7 @@ export async function registrationVKIDService({
   });
 
   // Проверяем, существует ли пользователь с указанным VK ID в БД.
-  const userDBForCheck = await UserModel.findOne(
-    { 'externalAccounts.vk.id': candidate.user_id },
-    { _id: true }
-  ).lean<{ _id: Types.ObjectId }>();
-
-  if (userDBForCheck) {
-    throw new Error(
-      'Пользователь с таким VK ID уже зарегистрирован. Пройдите аутентификацию через страницу "Вход на сайт ZP"'
-    );
-  }
+  await checkUserExistsByVkId(candidate.user_id);
 
   // Создаем нового пользователя в БД.
   const userDB = await UserModel.create({
@@ -91,4 +82,18 @@ export async function registrationVKIDService({
     data: { user: dataForClient, tokens: tokensGenerated },
     message: 'Успешная регистрация!',
   };
+}
+
+/**
+ *  Проверка, существует ли пользователь с указанным VK ID в БД.
+ */
+export async function checkUserExistsByVkId(userVkId: number) {
+  const userDBForCheck = await UserModel.findOne(
+    { 'externalAccounts.vk.id': userVkId },
+    { _id: true }
+  ).lean<{ _id: Types.ObjectId }>();
+
+  if (userDBForCheck) {
+    throw new Error(`Пользователь с таким VK ID уже существует vkId:${userVkId}`);
+  }
 }

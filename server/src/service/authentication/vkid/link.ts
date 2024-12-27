@@ -1,10 +1,11 @@
 import { User as UserModel } from '../../../Model/User.js';
 import { getUserProfileVkService } from './profile.js';
+import { createDataForClient } from '../auth-response.js';
+import { checkUserExistsByVkId } from './registration.js';
 
 // types
 import { TResponseService, VkAuthResponse } from '../../../types/http.interface.js';
 import { GenerateToken } from '../../../types/auth.interface.js';
-import { createDataForClient } from '../auth-response.js';
 
 /**
  * Авторизация пользователя, прошедшего аутентификацию через VK ID, генерирует токены, обновляет или создает запись токенов в базе данных.
@@ -20,6 +21,9 @@ export async function linkVKIDService({
   const { data: userDataFromVK } = await getUserProfileVkService({
     accessToken: tokens.access_token,
   });
+
+  // Проверяем, существует ли пользователь с указанным VK ID в БД.
+  await checkUserExistsByVkId(userDataFromVK.user_id);
 
   // Проверяем, существует ли пользователь с указанным userId в БД.
   const userDB = await UserModel.findOne({ _id: userId });
