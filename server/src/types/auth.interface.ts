@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { TExternalAccountVk } from './model.interface.js';
 
 export interface GenerateToken {
   username: string;
@@ -6,7 +7,20 @@ export interface GenerateToken {
   zwiftId?: number;
   id: Types.ObjectId;
   role: string;
+  photoProfile?: string | null;
   moderator?: {
     clubs: string[];
   };
+  externalAccounts?: {
+    vk?: Pick<TExternalAccountVk, 'firstName' | 'lastName' | 'avatarSrc'>;
+  };
+  organizer?: string;
 }
+
+/**
+ * Ответ с сервисов регистрации/авторизации.
+ */
+export type ResponseAuthService = {
+  user: GenerateToken;
+  tokens: { accessToken: string; refreshToken: string };
+};

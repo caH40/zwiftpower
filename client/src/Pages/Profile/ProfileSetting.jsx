@@ -1,19 +1,12 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
 import { fetchUserSettings } from '../../redux/features/api/user-settings/fetchUserSettings';
 import { resetUserSettings } from '../../redux/features/api/user-settings/userSettingsSlice';
-import ProfileStreams from '../../components/ProfileStreams/ProfileStreams';
-import ProfileSettingsZwift from '../../components/ProfileSettingsZwift/ProfileSettingsZwift';
-import ProfileNotification from '../../components/ProfileNotification/ProfileNotification';
-import IconRefresh from '../../components/icons/IconRefresh';
-import { fetchUserProfile } from '../../redux/features/api/userProfileSlice';
+import NavBarProfileSettings from '../../components/UI/NavBarProfileSettings/NavBarProfileSettings';
 
 import styles from './ProfileSetting.module.css';
-
-const notificationsTest = { development: false, news: true, events: true };
 
 function ProfileSetting() {
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
@@ -21,6 +14,7 @@ function ProfileSetting() {
 
   const dispatch = useDispatch();
 
+  // Запрос настроек в профиле, таких как Оповещения и т.д
   useEffect(() => {
     if (zwiftIdAuth !== undefined) {
       dispatch(fetchUserSettings({ zwiftId: zwiftIdAuth }));
@@ -31,15 +25,6 @@ function ProfileSetting() {
     };
   }, []);
 
-  const refreshProfile = () => {
-    dispatch(fetchProfileRefresh()).then((data) => {
-      if (data.meta.requestStatus === 'fulfilled') {
-        // Запрос обновленных данных профиля и обновление стора на клиенте.
-        dispatch(fetchUserProfile({ zwiftId: zwiftIdAuth }));
-      }
-    });
-  };
-
   // Не отображать страницу настроек для чужого пользователя..
   const isOtherUser = +zwiftIdPage !== zwiftIdAuth && +zwiftIdPage !== 0;
   if (isOtherUser) {
@@ -48,22 +33,10 @@ function ProfileSetting() {
 
   return (
     <section className={styles.wrapper}>
-      <div className={styles.wrapper__blocks}>
-        <div className={styles.refresh}>
-          <span>Обновить данные основного профиля</span>
-          <IconRefresh getClick={refreshProfile} />
-        </div>
-
-        <ProfileSettingsZwift zwiftIdAuth={zwiftIdAuth} />
-
-        {zwiftIdAuth && (
-          <>
-            <ProfileNotification notifications={notificationsTest} zwiftIdAuth={zwiftIdAuth} />
-
-            <ProfileStreams zwiftIdAuth={zwiftIdAuth} />
-          </>
-        )}
+      <div className={styles.spacer}>
+        <NavBarProfileSettings zwiftId={zwiftIdPage} />
       </div>
+      <Outlet zwiftIdAuth={zwiftIdAuth} />
     </section>
   );
 }

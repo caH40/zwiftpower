@@ -12,6 +12,12 @@ const ProfileRacingScore = lazy(() =>
 const ProfileWeightAndHeight = lazy(() =>
   import('../Pages/Profile/ProfileWeightAndHeight/ProfileWeightAndHeight')
 );
+const SettingsAccount = lazy(() => import('../Pages/Profile/SettingsAccount/SettingsAccount'));
+const SettingsNotifications = lazy(() =>
+  import('../Pages/Profile/SettingsNotifications/SettingsNotifications')
+);
+const SettingsZwift = lazy(() => import('../Pages/Profile/SettingsZwift/SettingsZwift'));
+const SettingsStream = lazy(() => import('../Pages/Profile/SettingsStream/SettingsStream'));
 
 export function ProfileRoute() {
   const { status, user } = useSelector((state) => state.checkAuth.value);
@@ -20,28 +26,41 @@ export function ProfileRoute() {
     <>
       <Route
         path="/profile/"
-        element={
-          status ? (
-            user?.zwiftId ? (
-              // с zwiftId редирект на профиль с результатами
-              <Navigate to={`/profile/${user?.zwiftId}/results`} replace />
-            ) : (
-              // с авторизацией и без привязки zwiftId редирект на настройки в профиле
-              <Navigate to={'/profile/0/settings'} replace />
-            )
-          ) : (
-            // без авторизации редирект на домашнюю страницу
-            <Navigate to={'/'} replace />
-          )
-        }
-      ></Route>
+        element={<Navigate to={getRedirectPath(status, user)} replace />}
+      />
+
+      <Route
+        path="/profile/"
+        element={<Navigate to={getRedirectPath(status, user)} replace />}
+      />
+
       <Route path="/profile/:zwiftId" element={<Profile />}>
         <Route path="results" element={<ProfileResults />} />
         <Route path="power" element={<ProfilePower />} />
         <Route path="weight-and-height" element={<ProfileWeightAndHeight />} />
         <Route path="racing-score" element={<ProfileRacingScore />} />
-        {status && <Route path="settings" element={<ProfileSetting />} />}
+
+        {status && (
+          <Route path="settings" element={<ProfileSetting />}>
+            <Route path="account" element={<SettingsAccount />} />
+            <Route path="notifications" element={<SettingsNotifications />} />
+            <Route path="zwift" element={<SettingsZwift />} />
+            <Route path="stream" element={<SettingsStream />} />
+          </Route>
+        )}
       </Route>
     </>
   );
+}
+
+// Функция для определения пути перенаправления.
+function getRedirectPath(status, user) {
+  // -без авторизации редирект на домашнюю страницу.
+  if (!status) {
+    return '/';
+  }
+
+  // -с zwiftId редирект на профиль с результатами.
+  // -с авторизацией и без привязки zwiftId редирект на настройки в профиле.
+  return user?.zwiftId ? `/profile/${user.zwiftId}/results` : '/profile/0/settings/zwift';
 }

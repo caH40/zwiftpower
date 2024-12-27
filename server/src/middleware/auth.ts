@@ -9,10 +9,18 @@ import { handleAndLogError } from '../errors/error.js';
 export async function checkAuth(req: Request, res: Response, next: () => void) {
   try {
     const { authorization } = req.headers;
-    if (!authorization) {
-      return res.status(401).json({ message: 'Нет Authorization' });
+
+    // Проверка наличия Authorization
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Нет Authorization или неправильный формат' });
     }
-    const accessToken = authorization?.split(' ')[1];
+
+    const accessToken = authorization.split(' ')[1];
+
+    // Проверка наличия токена после Bearer
+    if (!accessToken || accessToken === 'null') {
+      return res.status(401).json({ message: 'Токен отсутствует или равен null' });
+    }
 
     const isValidAccessToken = validateAccessToken(accessToken);
 
@@ -25,11 +33,6 @@ export async function checkAuth(req: Request, res: Response, next: () => void) {
     req.params.userZwiftId = isValidAccessToken?.zwiftId;
 
     return next();
-
-    // const { refreshToken } = req.cookies;
-    // if (!refreshToken) return res.status(401).json({ message: 'Необходима авторизация' });
-    // const isValidRefreshToken = validateRefreshToken(refreshToken);
-    // if (isValidRefreshToken) return next();
   } catch (error) {
     handleAndLogError(error);
     return res.status(401).json({ message: 'Необходима авторизация' });

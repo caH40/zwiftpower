@@ -1,10 +1,11 @@
 import mongoose, { Document, Types } from 'mongoose';
-import { PowerFitFiles, ProfileDataInResultWithId } from './types.interface.js';
+
+import { PowerFitFiles, ProfileDataInResultWithId, TAuthService } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
+
 // типизация схемы и модели документов mongodb
-//
-//
+
 export interface DescriptionSchema {
   name: string;
   description: string;
@@ -199,11 +200,43 @@ export interface LogsAdminSchema {
     start: number;
   };
 }
-//
-export interface TokenSchema {
-  user: Types.ObjectId;
-  refreshToken: string;
-}
+
+/**
+ * Токен аутентификации.
+ */
+export type TAuthToken = {
+  userId: Types.ObjectId; // Идентификатор пользователя.
+  authService: TAuthService; // Сервис, через который произошла авторизация.
+  device: TDeviceInfo;
+  tokens: {
+    accessToken: string; // JWT access-токен.
+    refreshToken: string; // JWT refresh-токен.
+  };
+  location?: TLocationInfo;
+  createdAt: Date; // Дата создания записи.
+  updatedAt: Date; // Дата последнего обновления записи.
+  expiresAt: Date;
+};
+/**
+ * Данные об оборудовании и ПО с которого происходила авторизация пользователя.
+ */
+export type TDeviceInfo = {
+  deviceId: string; // Уникальный идентификатор устройства.
+  userAgent?: string; // User-Agent устройства.
+  platform?: string; // Платформа устройства.
+  language?: string; // Язык браузера.
+  screenResolution?: string; // Разрешение экрана.
+};
+/**
+ * Данные об локации из которой происходила авторизация пользователя.
+ */
+export type TLocationInfo = {
+  ip?: string; // IP-адрес.
+  city?: string; // Город.
+  region?: string; // Регион.
+  country?: string; // Страна.
+  timezone?: string; // Часовой пояс.
+};
 
 /**
  * Схема для Zwift token бота-модератора клуба в Звифт.
@@ -248,7 +281,8 @@ export interface UserConfirmSchema {
 }
 //
 //
-export interface UserSchema {
+
+export type UserSchema = {
   _id?: Types.ObjectId;
   username: string;
   password: string;
@@ -275,7 +309,22 @@ export interface UserSchema {
   bio: string;
   notifications: TNotifications;
   streams: TUserStreams;
-}
+
+  // Внешние аккаунты: VK, Yandex и т.д.
+  externalAccounts?: { vk?: TExternalAccountVk };
+};
+
+export type TExternalAccountVk = {
+  id: number;
+  firstName: string; // Имя пользователя.
+  lastName: string; // Фамилия пользователя.
+  avatarSrc: string;
+  verified: boolean;
+  gender: 'male' | 'female';
+  birthday?: string; // 'DD.MM.YYYY'
+  email?: string;
+};
+
 export type TNotifications = {
   development: boolean; // Оповещение на email об изменениях на сайте.
   events: boolean; // Оповещение на email об новых Эвентах.

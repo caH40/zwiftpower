@@ -5,19 +5,30 @@
   align-items: center;
 }
 .title {
-  font-size: 20px;
-  line-height: 23px;
-  color: var(--color-text-main);
-  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 1.1;
+  color: var(--color-blue-main);
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 15px;
+  padding: 15px;
 }
 .inner {
   flex: 0 0 300px;
+}
+.title__oauth {
+  color: var(--color-text-minor);
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 .form {
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
   border-radius: 6px;
-  text-align: center;
+  /* text-align: center; */
   padding: 20px 13px;
 }
 .additional {
@@ -25,15 +36,15 @@
   border: 1px solid var(--color-border-minor);
   border-radius: 6px;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 15px;
   padding: 17px;
 }
 .link {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: inherit;
+  line-height: inherit;
   color: var(--color-blue-4);
   text-decoration: none;
 }
@@ -46,4 +57,14 @@
 .text {
   font-size: 18px;
   align-self: flex-start;
+}
+.line {
+  border: none;
+  height: 2px;
+  background-color: var(--color-blue-4);
+  margin: 25px 0 15px;
+}
+.privacy {
+  font-size: 12px;
+  line-height: 1.1;
 }

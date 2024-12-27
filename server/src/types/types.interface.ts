@@ -6,6 +6,8 @@ import {
   SeriesSchema,
   SignedRidersSchema,
   TClubZwift,
+  TDeviceInfo,
+  TLocationInfo,
   TMetrics,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
@@ -766,3 +768,19 @@ export type ParamsRequestToZwift<T> = {
  * Тип возвращаемых данных сервиса ответа получение Организаторов у которых пользователь userId является модератором.
  */
 export type ResponseOrganizerForModerator = { _id: string; name: string };
+
+/**
+ * Тип сервиса для авторизации
+ */
+export type TAuthService = 'vk' | 'credential' | 'yandex';
+
+/**
+ * Входные параметры функции сохранения токенов доступа, создания токена авторизации.
+ */
+export type TParamsSaveAuthToken = {
+  userId: Types.ObjectId;
+  authService: TAuthService;
+  tokens: { accessToken: string; refreshToken: string };
+  device: TDeviceInfo;
+  location?: TLocationInfo;
+};

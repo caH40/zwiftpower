@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -9,6 +9,7 @@ import styles from './NavBarProfile.module.css';
 
 function NavBarProfile({ zwiftId, addCls }) {
   const { status, user } = useSelector((state) => state.checkAuth.value);
+  const location = useLocation();
 
   // Отображать кнопку настроек только для своего профиля.
   const showSettings = status && zwiftId === user.zwiftId;
@@ -52,15 +53,15 @@ function NavBarProfile({ zwiftId, addCls }) {
       {showSettings && (
         <div className={styles.wrapper__buttons}>
           {profileButtonsSeconds.map((buttonLink) => (
-            <NavLink
-              className={({ isActive }) =>
-                cn(styles.button, styles.button__solo, { [styles.active]: isActive })
-              }
+            <Link
+              className={cn(styles.button, styles.button__solo, {
+                [styles.active]: location.pathname.includes('settings'),
+              })}
               to={`/profile/${zwiftId}/${buttonLink.page}`}
               key={buttonLink.id}
             >
               {buttonLink.name}
-            </NavLink>
+            </Link>
           ))}
         </div>
       )}

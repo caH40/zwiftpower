@@ -9,7 +9,7 @@ import styles from './ProfileStreams.module.css';
  * Форма изменения настроек для трансляций.
  */
 export default function ProfileStreams({ zwiftIdAuth }) {
-  const { streams, status } = useSelector((state) => state.userSettings);
+  const { streams } = useSelector((state) => state.userSettings);
 
   const [channelNameTwitch, setChannelNameTwitch] = useState('');
   const [channelHandleYoutube, setChannelHandleYoutube] = useState('');
@@ -26,10 +26,8 @@ export default function ProfileStreams({ zwiftIdAuth }) {
 
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.title}>Трансляции</h3>
-
-      <div className={styles.wrapper__controls}>
-        {/* Форма для Twitch */}
+      {/* Форма для Twitch */}
+      <div className={styles.wrapper__block}>
         <StreamControl
           platformName={'twitch'}
           channelName={channelNameTwitch}
@@ -39,8 +37,10 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           iconSrc={'/images/glitch_flat_purple.svg'}
           description="Только название канала. Название в url: https://www.twitch.tv/название канала"
         />
+      </div>
 
-        {/* Форма для Youtube */}
+      {/* Форма для Youtube */}
+      <div className={styles.wrapper__block}>
         <StreamControl
           platformName={'youtube'}
           channelName={channelHandleYoutube}

@@ -4,35 +4,49 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserConfirm } from '../../Model/User-confirm.js';
 import { User } from '../../Model/User.js';
 import { mailService } from './nodemailer.js';
-import { generateToken, saveToken } from './token.js';
+import { generateToken, saveAuthToken } from './token.js';
 
+// types
+import { TDeviceInfo, TLocationInfo } from '../../types/model.interface.js';
+import { GenerateToken } from '../../types/auth.interface.js';
+
+type Params = {
+  username: string;
+  email: string;
+  password: string;
+  device: TDeviceInfo;
+  location?: TLocationInfo;
+};
 /**
  * Регистрация нового пользователя
  */
-export async function registrationService(username: string, email: string, password: string) {
-  // !!! проверять на все разрешенные символы
-  if (username.includes(' ')) {
-    throw new Error('В логине не должно быть пробелов');
-  }
-
+export async function registrationService({
+  username,
+  email,
+  password,
+  device,
+  location,
+}: Params) {
+  // Проверка пользователя с таким username, игнорируя регистр символов.
   const checkUsername = await User.findOne({
     username: { $regex: '\\b' + username + '\\b', $options: 'i' },
   });
-
-  // проверка уникальности Логина
   if (checkUsername) {
-    throw new Error(`Username "${username}" уже занят`);
+    throw new Error('Данный username уже используется другим пользователем!');
   }
 
-  // проверка уникальности e-mail
-  const checkEmail = await User.findOne({ email });
+  // Проверка уникальности e-mail.
+  const checkEmail = await User.findOne({
+    email: { $regex: '\\b' + email + '\\b', $options: 'i' },
+  });
   if (checkEmail) {
-    throw new Error(`Пользователь с "${email}" уже существует`);
+    throw new Error('Данный email уже используется другим пользователем!');
   }
 
+  // Хеширование пароля перед сохранением в БД.
   const hashPassword = await bcrypt.hash(password, 10);
-  const activationToken = uuidv4();
-  const { _id: id, role } = await User.create({
+
+  const { _id: userId, role } = await User.create({
     username,
     email,
     password: hashPassword,
@@ -40,26 +54,44 @@ export async function registrationService(username: string, email: string, passw
     date: Date.now(),
   });
 
-  // создание документа для контроля подтверждения e-mail при регистрации
+  // Уникальный token для сервиса активации аккаунта через почту.
+  const activationToken = uuidv4();
+
+  // Создание документа для контроля подтверждения e-mail при регистрации.
   await UserConfirm.create({
-    userId: id,
+    userId: userId,
     date: Date.now(),
     activationToken,
     email,
   });
 
-  // отправка письма зарегистрировавшемуся пользователю, для активации (подтверждения e-mail)
+  // Отправка письма зарегистрировавшемуся пользователю, для активации (подтверждения e-mail)
   const target = 'registration'; //для отправки письма для активации
   await mailService(target, activationToken, email, username, password);
 
-  const tokens = await generateToken({ username, email, id, role });
+  // Данные для токенов и для возвращения клиент на клиент.
+  const dataForClient: GenerateToken = {
+    username,
+    email,
+    id: userId,
+    role,
+  };
 
-  if (!tokens) {
-    throw new Error('Ошибка при получении токенов');
-  }
+  // Генерация пары токенов: доступа и обновления.
+  const tokensGenerated = generateToken(dataForClient);
 
-  await saveToken(id, tokens.refreshToken);
+  // Сохранения токенов и дополнительной информации об аутентификации в БД.
+  await saveAuthToken({
+    userId,
+    authService: 'credential',
+    tokens: tokensGenerated,
+    device,
+    location,
+  });
 
-  const message = 'Регистрация прошла успешно';
-  return { ...tokens, message, user: { username, email, id, role } };
+  // Возвращаем данные для клиента.
+  return {
+    data: { user: dataForClient, tokens: tokensGenerated },
+    message: 'Успешная регистрация!',
+  };
 }

@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames/bind';
 
 import IconEdit from '../icons/IconEdit';
@@ -8,27 +8,50 @@ import LogoRider from '../LogoRider/LogoRider';
 import MyTooltip from '../../HOC/MyTooltip';
 import { getAgeCategory } from '../../utils/age';
 import CategoryMF from '../CategoryMF/CategoryMF';
+import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
+import { fetchUserProfile } from '../../redux/features/api/userProfileSlice';
 
 import styles from './ProfileBlock.module.css';
 
 const cx = cn.bind(styles);
 
 function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
-  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { role, zwiftId } = useSelector((state) => state.checkAuth.value.user);
+  const { zwiftId: zwiftIdPage } = useParams();
+
   const isAdmin = ['admin'].includes(role);
+
+  const dispatch = useDispatch();
+
+  const refreshProfile = () => {
+    dispatch(fetchProfileRefresh()).then((data) => {
+      if (data.meta.requestStatus === 'fulfilled') {
+        // Запрос обновленных данных профиля и обновление стора на клиенте.
+        dispatch(fetchUserProfile({ zwiftId }));
+      }
+    });
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.bio}>{profile?.bio}</div>
       <div className={styles.params}>
-        <div className={styles.box__img}>
-          <LogoRider
-            source={profile.imageSrc}
-            firstName={profile.firstName}
-            lastName={profile.lastName}
-            enlargeLogo={enlargeLogo}
-          />
+        <div className={styles.block__img}>
+          <div className={styles.box__img}>
+            <LogoRider
+              source={profile.imageSrc}
+              firstName={profile.firstName}
+              lastName={profile.lastName}
+              enlargeLogo={enlargeLogo}
+            />
+          </div>
+          {zwiftId == zwiftIdPage && (
+            <button onClick={refreshProfile} className={styles.btn}>
+              обновить данные
+            </button>
+          )}
         </div>
+
         <dl className={styles.list}>
           <div className={styles.box__term}>
             <dt className={styles.term}>РАЙДЕР</dt>

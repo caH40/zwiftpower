@@ -5,12 +5,13 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconRefresh({ getClick, tooltip, addCls = ' ' }) {
+function IconRefresh({ getClick, tooltip, addCls = ' ', squareSize = 24 }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div
         className={cn(styles.box, styles.box__alone, cns(styles, addCls))}
         onClick={getClick}
+        style={{ width: squareSize, height: squareSize }}
       >
         <svg
           width="24"

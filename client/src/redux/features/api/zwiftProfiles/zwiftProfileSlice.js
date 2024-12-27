@@ -19,7 +19,7 @@ const zwiftIdSlice = createSlice({
     resetZwiftId: (state) => {
       state.zwiftId = 0;
     },
-    resetProfileZwift: (state) => {
+    resetZwiftProfile: (state) => {
       state.profile = {};
     },
   },
@@ -43,6 +43,6 @@ const zwiftIdSlice = createSlice({
   },
 });
 
-export const { setZwiftId, resetZwiftId, resetProfileZwift } = zwiftIdSlice.actions;
+export const { setZwiftId, resetZwiftId, resetZwiftProfile } = zwiftIdSlice.actions;
 
 export default zwiftIdSlice.reducer;

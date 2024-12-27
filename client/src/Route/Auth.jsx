@@ -1,6 +1,8 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
+import CallbackVKID from '../Pages/Auth/Callback/CallbackVKID';
+
 const Authorization = lazy(() => import('../Pages/Auth/Authorization'));
 const Registration = lazy(() => import('../Pages/Auth/Registration'));
 const ResetPassword = lazy(() => import('../Pages/Auth/ResetPassword'));
@@ -15,6 +17,7 @@ export function AuthRoute() {
       <Route path="/auth/reset" element={<ResetPassword />} />
       <Route path="/auth/confirm-email/:token" element={<ConfirmEmail />} />
       <Route path="/auth/new-password/:token" element={<NewPassword />} />
+      <Route path="/api/auth/callback/vk" element={<CallbackVKID />} />
     </>
   );
 }

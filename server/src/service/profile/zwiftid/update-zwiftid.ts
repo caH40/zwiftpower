@@ -1,4 +1,5 @@
 import { User } from '../../../Model/User.js';
+import { TResponseService } from '../../../types/http.interface.js';
 import { addMainProfileZwift } from '../../profile_additional/main-add.js';
 import { updateProfileService } from '../rider.js';
 
@@ -9,12 +10,12 @@ export async function updateZwiftIdService(
   userId: string,
   zwiftId: number,
   isAdditional: boolean
-) {
+): Promise<TResponseService<{ zwiftIdMain: number }>> {
+  // Проверка был ли присвоен данный zwiftId другому пользователю.
   const userWithZwiftId = await User.findOne({
     $or: [{ zwiftId }, { zwiftIdAdditional: [zwiftId] }],
   });
 
-  // проверка был ли присвоен данный zwiftId другому пользователю
   if (userWithZwiftId) {
     const message = `Данный zwiftId "${zwiftId}" уже присвоен другому пользователю.`;
     throw new Error(message);
@@ -34,7 +35,7 @@ export async function updateZwiftIdService(
     await addMainProfileZwift({ zwiftIdMain: userDB?.zwiftId, zwiftIdAdditional: zwiftId });
     return {
       message: `Дополнительный ZwiftId ${zwiftId} привязан к профилю`,
-      zwiftIdMain: userDB!.zwiftId,
+      data: { zwiftIdMain: userDB.zwiftId },
     };
   } else {
     await User.findOneAndUpdate({ _id: userId }, { $set: { zwiftId } });
@@ -43,7 +44,7 @@ export async function updateZwiftIdService(
 
     return {
       message: `ZwiftId ${zwiftId} привязан к профилю`,
-      zwiftIdMain: zwiftId,
+      data: { zwiftIdMain: zwiftId },
     };
   }
 }

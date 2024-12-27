@@ -4,7 +4,7 @@ import {
   getUserPowerService,
   getUserProfileService,
 } from '../service/race/rider/rider-profile.js';
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { getZwiftProfilesService } from '../service/race/rider/rider-zprofiles.js';
 import { updateZwiftIdService } from '../service/profile/zwiftid/update-zwiftid.js';
 import { deleteUserZwiftIdService } from '../service/profile/zwiftid/delete-additional.js';
@@ -17,7 +17,7 @@ import {
 import { TNotifications, TUserStreams } from '../types/model.interface.js';
 import { putUserStreamsService } from '../service/profile/streams.js';
 import { getUserSettingsService } from '../service/profile/settings.js';
-import { updateProfileService } from '../service/profile/rider.js';
+import { putUsernameService, updateProfileService } from '../service/profile/rider.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -123,9 +123,9 @@ export async function putUserZwiftId(req: Request, res: Response) {
 
     const zwiftId: number = req.body.zwiftId;
     const isAdditional: boolean = req.body.isAdditional;
-    const user = await updateZwiftIdService(userId, zwiftId, isAdditional);
+    const response = await updateZwiftIdService(userId, zwiftId, isAdditional);
 
-    return res.status(200).json(user);
+    return res.status(200).json(response);
   } catch (error) {
     handleAndLogError(error);
     if (error instanceof Error) {
@@ -209,6 +209,26 @@ export async function getUserSettings(req: Request, res: Response) {
     handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер изменения username пользователя.
+ */
+export async function putUsername(req: Request, res: Response) {
+  try {
+    const { username } = req.body;
+    const { userId } = req.params;
+
+    if (!username) {
+      return res.status(400).json({ message: 'Не получен username' });
+    }
+
+    const response = await putUsernameService({ userId, username });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }
 

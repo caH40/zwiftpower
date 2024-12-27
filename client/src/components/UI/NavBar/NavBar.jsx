@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import { postLogout } from '../../../api/logout';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { getAuth } from '../../../redux/features/authSlice';
+import { resetAuth } from '../../../redux/features/authSlice';
+import { lsAccessToken, lsPrefixDeviceId } from '../../../constants/localstorage';
 import UserAccount from '../UserAccount/UserAccount';
 
 import styles from './NavBar.module.css';
@@ -14,16 +15,15 @@ function NavBar() {
 
   const logout = () => {
     postLogout().then((_) => {
-      localStorage.removeItem('accessToken');
-      dispatch(
-        getAuth({
-          status: false,
-          user: { email: '', id: '', role: '', username: '', photoProfile: '' },
-        })
-      );
+      localStorage.removeItem(lsAccessToken);
+      localStorage.removeItem(lsPrefixDeviceId);
+
+      dispatch(resetAuth());
+
       dispatch(getAlert({ message: 'Вы вышли из аккаунта!', type: 'warning', isOpened: true }));
     });
   };
+
   return (
     <ul className={styles.list}>
       <li className={styles.item}>
