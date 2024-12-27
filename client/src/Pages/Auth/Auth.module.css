@@ -18,15 +18,17 @@
 .inner {
   flex: 0 0 300px;
 }
-.wrapper__oauth {
-  display: flex;
-  justify-content: center;
+.title__oauth {
+  color: var(--color-text-minor);
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 .form {
   background-color: var(--color-bg-minor);
   border: 1px solid var(--color-border-minor);
   border-radius: 6px;
-  text-align: center;
+  /* text-align: center; */
   padding: 20px 13px;
 }
 .additional {
@@ -60,7 +62,7 @@
   border: none;
   height: 2px;
   background-color: var(--color-blue-4);
-  margin: 15px 0;
+  margin: 25px 0 15px;
 }
 .privacy {
   font-size: 12px;

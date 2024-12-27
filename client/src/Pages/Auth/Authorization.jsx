@@ -67,13 +67,6 @@ function Authorization() {
         <h1 className={styles.title}>Вход на сайт ZP</h1>
 
         <div className={styles.form}>
-          {/* Аутентификация через сторонние сервисы с помощью OAuth */}
-          <div className={styles.wrapper__oauth}>
-            <OAuth mode="login" device={device} location={location} />
-          </div>
-
-          <hr className={styles.line} />
-
           <form className={styles.credentials} onSubmit={handleSubmit(onSubmit)}>
             <InputAuth
               label={'Логин'}
@@ -94,6 +87,12 @@ function Authorization() {
               Вход
             </Button>
           </form>
+
+          <hr className={styles.line} />
+
+          {/* Блок авторизации через сторонние сервисы */}
+          <h3 className={styles.title__oauth}>Или продолжить через сервисы</h3>
+          <OAuth mode="login" device={device} location={location} />
         </div>
 
         <div className={styles.additional}>

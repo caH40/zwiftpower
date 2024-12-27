@@ -74,11 +74,6 @@ function Registration() {
         <h2 className={styles.title}>Регистрация на сайте ZP</h2>
 
         <div className={styles.form}>
-          {/* <h3 className={styles.title__menu}>Регистрация через сервисы</h3> */}
-          <OAuth mode="register" device={device} location={location} />
-
-          <hr className={styles.line} />
-
           <form className={styles.credentials} onSubmit={handleSubmit(onSubmit)}>
             <InputAuth
               label={'E-mail'}
@@ -105,6 +100,13 @@ function Registration() {
               Зарегистрироваться
             </Button>
           </form>
+
+          <hr className={styles.line} />
+
+          {/* Блок регистрации через сторонние сервисы */}
+          <h3 className={styles.title__oauth}>Регистрация через сервисы</h3>
+          <OAuth mode="register" device={device} location={location} />
+
           {/* 
           <hr className={styles.line} />
 
