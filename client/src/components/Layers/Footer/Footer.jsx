@@ -13,8 +13,9 @@ const mapSite = [
   { id: 5, name: 'Лидеры мощности', href: `${serverFront}/race/statistics/leaders/male` },
   { id: 6, name: 'Райдеры по FTP', href: `${serverFront}/race/statistics/riders-ftp` },
   { id: 7, name: 'Догонялки', href: `${serverFront}/race/series/catchup/2023` },
-  { id: 8, name: 'Часто задаваемые вопросы', href: `${serverFront}/faq` },
+  { id: 8, name: 'Трансляции', href: `${serverFront}/streams` },
   { id: 9, name: 'Поиск райдера', href: `${serverFront}/riders` },
+  { id: 10, name: 'Часто задаваемые вопросы', href: `${serverFront}/faq` },
 ];
 
 const usefulLinks = [
@@ -24,6 +25,12 @@ const usefulLinks = [
   { id: 3, name: 'zwiftinsider.com', href: 'https://zwiftinsider.com' },
   { id: 4, name: 'zwifthub.com', href: 'https://zwifthub.com' },
 ];
+
+const documentsLegal = [
+  { id: 0, name: 'Политика конфиденциальности', href: `${serverFront}/legal/privacy-policy` },
+  { id: 1, name: 'Пользовательское соглашение', href: `${serverFront}/legal/terms-of-use` },
+];
+
 const usefulLinksWithIcon = [
   {
     id: 0,
@@ -62,6 +69,19 @@ function Footer() {
           </div>
         </div>
 
+        {/* Блок документов */}
+        <div className={styles.block}>
+          <h3 className={styles.title}>Документы:</h3>
+
+          <div className={styles.column}>
+            {documentsLegal.map((page) => (
+              <a className={styles.link} href={page.href} key={page.id}>
+                {page.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
         {lg && (
           <div className={styles.block}>
             <h3 className={styles.title}>Карта сайта:</h3>
@@ -75,6 +95,7 @@ function Footer() {
             </div>
           </div>
         )}
+
         <div className={styles.block}>
           <h3 className={styles.title}>Тематические ссылки:</h3>
           <div className={styles.column}>
