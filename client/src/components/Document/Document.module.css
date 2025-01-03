@@ -1,6 +1,6 @@
 .wrapper {
-  padding: 20px 100px;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 .wrapper__application {
   text-align: right;
@@ -32,12 +32,9 @@
 .content__item {
   margin-bottom: 15px;
 }
-.content__text,
 .contentSecond__text {
-  font-size: 16px;
-  line-height: 1.5;
+  margin: 0 0 10px 25px;
 }
-
 .list__term {
   margin-top: 10px;
   padding-left: 20px;
