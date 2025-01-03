@@ -107,25 +107,20 @@ function Registration() {
           <h3 className={styles.title__oauth}>Регистрация через сервисы</h3>
           <OAuth mode="register" device={device} location={location} />
 
-          {/* 
           <hr className={styles.line} />
 
-          <div className={styles.privacy}>
-            Нажимая на кнопки сервисов или «Зарегистрироваться», вы принимаете{' '}
-            <Link className={styles.link} to={'/agreement'}>
+          {/* Блок акцепта с политикой конфиденциальности */}
+          <div className={styles.legal}>
+            Нажимая «Зарегистрироваться» или иконки сервисов аутентификации, вы принимаете{' '}
+            <Link className={styles.link} to="/legal/terms-of-use">
               пользовательское соглашение
             </Link>{' '}
             и{' '}
-            <Link className={styles.link} to={'/privacy'}>
-              политику конфиденциальности
+            <Link className={styles.link} to="/legal/privacy-policy">
+              политику конфиденциальности.
             </Link>
-          </div> */}
+          </div>
         </div>
-
-        {/* <div className={styles.additional}>
-          Нажимая на кнопки сервисов или «Зарегистрироваться», вы принимаете пользовательское
-          соглашение и политику конфиденциальности
-        </div> */}
 
         <div className={styles.additional}>
           <Link className={styles.link} to="/auth/authorization">

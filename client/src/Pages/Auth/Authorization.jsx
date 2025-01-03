@@ -93,6 +93,20 @@ function Authorization() {
           {/* Блок авторизации через сторонние сервисы */}
           <h3 className={styles.title__oauth}>Или продолжить через сервисы</h3>
           <OAuth mode="login" device={device} location={location} />
+
+          <hr className={styles.line} />
+
+          {/* Блок акцепта с политикой конфиденциальности */}
+          <div className={styles.legal}>
+            Нажимая «Вход» или иконки сервисов аутентификации, вы принимаете{' '}
+            <Link className={styles.link} to="/legal/terms-of-use">
+              пользовательское соглашение
+            </Link>{' '}
+            и{' '}
+            <Link className={styles.link} to="/legal/privacy-policy">
+              политику конфиденциальности.
+            </Link>
+          </div>
         </div>
 
         <div className={styles.additional}>
