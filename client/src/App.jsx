@@ -24,6 +24,7 @@ import { sendMetrika } from './yandex/metrika.js';
 import './css/App.css';
 import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
 import { ModeratorClubRoute } from './Route/ModeratorClubRoute.jsx';
+import { LegalRoute } from './Route/Legal.jsx';
 
 function App() {
   useFirstAuth();
@@ -56,6 +57,7 @@ function App() {
         {SeriesRoute()}
         {StatisticsRoute()}
         {AuthRoute()}
+        {LegalRoute()}
       </Route>
     </Routes>
   );
