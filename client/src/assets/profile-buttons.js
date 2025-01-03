@@ -5,7 +5,7 @@ export const profileButtons = [
   { id: 3, page: 'weight-and-height', name: 'Вес' },
 ];
 
-export const profileButtonsSeconds = [{ id: 0, page: 'settings/account', name: 'Настройки' }];
+export const profileButtonsSeconds = [{ id: 0, page: 'settings/account', name: 'ЛК' }];
 
 export const profileSettingsButtons = [
   { id: 0, page: 'account', name: 'Аккаунт' },
