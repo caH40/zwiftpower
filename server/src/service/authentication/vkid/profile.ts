@@ -20,7 +20,7 @@ export async function getUserProfileVkService({
     data: { client_id: clientVkID, access_token: accessToken },
   });
 
-  if (!response.data.user.user_id) {
+  if (!response.data.user?.user_id) {
     throw new Error('Не получен id пользователя VK ID, модуль getUserProfileVkService');
   }
 
