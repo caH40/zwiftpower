@@ -48,7 +48,7 @@ export default function SettingsAccount() {
         </div>
       )}
 
-      <h3 className={styles.title}>Дополнительные сервисы для входа в аккаунт</h3>
+      <h3 className={styles.title}>Привязать дополнительные сервисы для входа в аккаунт</h3>
       <div className={styles.wrapper__block}>
         {noAvailableAuthServices ? (
           'Нет доступных сервисов аутентификации'
