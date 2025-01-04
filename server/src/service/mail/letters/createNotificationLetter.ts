@@ -170,7 +170,7 @@ export function createNotificationLetter({ text, title, tags, zwiftId }: TLetter
                   <td>
                     <br>
                     <p style="margin: 0; padding: 0 0 20px 0; text-align: center;">
-                      <a href="${serverFront}/profile/${zwiftId}/settings" style="color: blue; font-size: 12px;">
+                      <a href="${serverFront}/profile/${zwiftId}/settings/notifications" style="color: blue; font-size: 12px;">
                         Управление оповещениями
                       </a>
                     </p>
