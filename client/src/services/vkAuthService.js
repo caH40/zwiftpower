@@ -1,10 +1,12 @@
+import { serverFront } from '../config/environment';
+
 export const authenticateWithVk = async () => {
   const VKID = await loadVKIDSDK();
 
   // Инициализация VKID
   VKID.Config.init({
     app: 52861345, // ID вашего приложения VK
-    redirectUrl: 'http://localhost/api/auth/callback/vk',
+    redirectUrl: `${serverFront}/api/auth/callback/vk`,
     responseMode: VKID.ConfigResponseMode.Callback,
     source: VKID.ConfigSource.LOWCODE,
     scope: 'email', // Укажите нужные доступы, необходимые данные в профиле пользователя vk.
