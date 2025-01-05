@@ -125,7 +125,7 @@ export const accessExpressions = [
     label: 'Догонялки. По удельной мощности.',
     value: `(subgroup.label == 5 && powerCurves.zFTPwkg < 6) ||
 (subgroup.label == 1 && powerCurves.zFTPwkg < 4.6) ||
-(subgroup.label == 2 && (powerCurves.zFTPwkg < 4.2) || powerCurves.zFTP < 240)) ||
+(subgroup.label == 2 && (powerCurves.zFTPwkg < 4.2 || powerCurves.zFTP < 240)) ||
 (subgroup.label == 3 && powerCurves.zFTPwkg < 3.5) ||
 (subgroup.label == 4 && (powerCurves.zFTPwkg < 2.5 || powerCurves.zFTP < 180))`,
     description: `Группа E: zFTP (W/kg): 4.6 - 6.0;
