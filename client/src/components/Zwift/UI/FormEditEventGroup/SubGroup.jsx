@@ -122,24 +122,6 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
             </div>
 
             <div className={cx('box__inputs')}>
-              {/* скрывать блок если форма используется для создания Эвента */}
-              {!isCreating && (
-                <BoxParameter
-                  title={'Номер "кармана" на старте'}
-                  sample={true}
-                  pen={true}
-                  inputParams={{
-                    label: 'Номер "кармана" на старте',
-                    property: 'startLocation',
-                    type: 'input',
-                    typeValue: 'number',
-                    subgroupIndex: groupNumber,
-                  }}
-                >
-                  {subGroup.startLocation}
-                </BoxParameter>
-              )}
-
               <BoxParameter
                 title={'Приглашенные лидеры'}
                 sample={true}
@@ -186,7 +168,7 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
             </div>
 
             <div className={cx('box__inputs')}>
-              <MapBlock subGroup={subGroup} groupNumber={groupNumber} />
+              <MapBlock subGroup={subGroup} groupNumber={groupNumber} isCreating={isCreating} />
             </div>
           </div>
         </div>

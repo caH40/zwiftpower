@@ -1,6 +1,3 @@
-// добавляются карты с помощью zwift-app
-// в текущем файле, кроме замеры массива, сгенерированного в zwift-app добавляется
-// imageUrl в метод map
 export const routes = [
   [
     5103974,
@@ -17,7 +14,13 @@ export const routes = [
     0.694,
     0,
     ['new-york-kom-rev', 'new-york-sprint-rev'],
-    [{ from: 2.751, to: 3.893, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 2.751,
+        to: 3.893,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -30,6 +33,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/lady-liberty',
     'https://zwifterbikes.web.app/route/lady-liberty',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Lady_Liberty.png',
+    '1,2,3,4',
   ],
   [
     5745690,
@@ -47,9 +51,21 @@ export const routes = [
     3,
     ['titans-grove-kom-rev', 'zwift-kom', 'watopia-sprint'],
     [
-      { from: 5.776, to: 6.693, segment: 'titans-grove-kom-rev' },
-      { from: 16.349, to: 17.241, segment: 'zwift-kom' },
-      { from: 21.567, to: 21.892, segment: 'watopia-sprint' },
+      {
+        from: 5.776,
+        to: 6.693,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 16.349,
+        to: 17.241,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 21.567,
+        to: 21.892,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -63,6 +79,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/downtown-titans',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Downtown_Titans.png',
+    '1,2,3,4',
   ],
   [
     46799750,
@@ -79,7 +96,13 @@ export const routes = [
     5.112,
     28,
     ['breakaway-brae-rev'],
-    [{ from: 8.338, to: 8.959, segment: 'breakaway-brae-rev' }],
+    [
+      {
+        from: 8.338,
+        to: 8.959,
+        segment: 'breakaway-brae-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -92,6 +115,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/rolling-highlands',
     'https://zwifterbikes.web.app/route/rolling-highlands',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Rolling_Highlands.png',
+    '6,7,8,9',
   ],
   [
     54700404,
@@ -109,13 +133,41 @@ export const routes = [
     0,
     ['richmond-sprint', 'broad-st', 'richmond-kom'],
     [
-      { from: 3.73, to: 3.942, segment: 'richmond-sprint' },
-      { from: 8.794, to: 9.006, segment: 'richmond-sprint' },
-      { from: 13.858, to: 14.07, segment: 'richmond-sprint' },
-      { from: 18.921, to: 19.134, segment: 'richmond-sprint' },
-      { from: 24.003, to: 24.216, segment: 'richmond-sprint' },
-      { from: 27.414, to: 27.678, segment: 'broad-st' },
-      { from: 32.258, to: 32.882, segment: 'richmond-kom' },
+      {
+        from: 3.73,
+        to: 3.942,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 8.794,
+        to: 9.006,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 13.858,
+        to: 14.07,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 18.921,
+        to: 19.134,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 24.003,
+        to: 24.216,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 27.414,
+        to: 27.678,
+        segment: 'broad-st',
+      },
+      {
+        from: 32.258,
+        to: 32.882,
+        segment: 'richmond-kom',
+      },
     ],
     false,
     false,
@@ -129,6 +181,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/libby-hill-after-party',
     'https://zwifterbikes.web.app/route/libby-hill-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Libby_Hill_After_Party.png',
+    '1,2,3,4',
   ],
   [
     86621553,
@@ -145,7 +198,13 @@ export const routes = [
     0.038,
     0,
     ['lutece-sprint', 'champs-elysees-rev'],
-    [{ from: 0, to: 6.585, segment: 'champs-elysees-rev' }],
+    [
+      {
+        from: 0,
+        to: 6.585,
+        segment: 'champs-elysees-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -158,6 +217,7 @@ export const routes = [
     'https://whatsonzwift.com/world/paris/route/lutece-express-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/PARIS_Lutece_Express_Run.png',
+    '1,2,3,4',
   ],
   [
     87055383,
@@ -174,7 +234,13 @@ export const routes = [
     0.725,
     7,
     ['box-hill'],
-    [{ from: 15.228, to: 18.227, segment: 'box-hill' }],
+    [
+      {
+        from: 15.228,
+        to: 18.227,
+        segment: 'box-hill',
+      },
+    ],
     false,
     true,
     false,
@@ -187,6 +253,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greater-london-8',
     'https://zwifterbikes.web.app/route/greater-london-8',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greater_London_8.png',
+    '1,2,3,4',
   ],
   [
     87631443,
@@ -216,6 +283,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/queens-highway-after-party',
     'https://zwifterbikes.web.app/route/queens-highway-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Queens_Highway_After_Party.png',
+    '1,2,3,4',
   ],
   [
     107363867,
@@ -233,8 +301,16 @@ export const routes = [
     null,
     ['hilly-loop-rev', 'watopia-sprint-rev', 'zwift-kom-rev'],
     [
-      { from: 0, to: 9.107, segment: 'hilly-loop-rev' },
-      { from: 4.789, to: 7.25, segment: 'zwift-kom-rev' },
+      {
+        from: 0,
+        to: 9.107,
+        segment: 'hilly-loop-rev',
+      },
+      {
+        from: 4.789,
+        to: 7.25,
+        segment: 'zwift-kom-rev',
+      },
     ],
     false,
     true,
@@ -248,6 +324,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/hilly-route-reverse',
     'https://zwifterbikes.web.app/route/hilly-route-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Hilly_Route_Reverse.png',
+    '1,2,3,4',
   ],
   [
     136957568,
@@ -277,6 +354,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/jon-s-route',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Jons_Route.png',
+    '101,102,103,104',
   ],
   [
     156457316,
@@ -294,8 +372,16 @@ export const routes = [
     21,
     ['innsbruck-kom'],
     [
-      { from: 3.129, to: 10.553, segment: 'innsbruck-kom' },
-      { from: 16.803, to: 24.223, segment: 'innsbruck-kom' },
+      {
+        from: 3.129,
+        to: 10.553,
+        segment: 'innsbruck-kom',
+      },
+      {
+        from: 16.803,
+        to: 24.223,
+        segment: 'innsbruck-kom',
+      },
     ],
     false,
     true,
@@ -309,6 +395,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/lutscher',
     'https://zwifterbikes.web.app/route/lutscher',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_Lutscher.png',
+    '1,2,3,4',
   ],
   [
     163688809,
@@ -326,10 +413,26 @@ export const routes = [
     5,
     ['london-sprint', 'fox-hill', 'london-sprint-rev', 'box-hill'],
     [
-      { from: 14.277, to: 14.468, segment: 'london-sprint' },
-      { from: 31.768, to: 34.166, segment: 'fox-hill' },
-      { from: 41.706, to: 41.887, segment: 'london-sprint-rev' },
-      { from: 47.004, to: 49.984, segment: 'box-hill' },
+      {
+        from: 14.277,
+        to: 14.468,
+        segment: 'london-sprint',
+      },
+      {
+        from: 31.768,
+        to: 34.166,
+        segment: 'fox-hill',
+      },
+      {
+        from: 41.706,
+        to: 41.887,
+        segment: 'london-sprint-rev',
+      },
+      {
+        from: 47.004,
+        to: 49.984,
+        segment: 'box-hill',
+      },
     ],
     false,
     true,
@@ -343,6 +446,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/the-london-pretzel',
     'https://zwifterbikes.web.app/route/the-london-pretzel',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_The_London_Pretzel.png',
+    '1,2,3,4',
   ],
   [
     183635628,
@@ -359,7 +463,13 @@ export const routes = [
     0.028,
     0,
     ['sasquatch-sprint', 'the-grade-kom', 'woodland-sprint-rev', 'sasquatch-sprint-rev'],
-    [{ from: 2.839, to: 6.36, segment: 'the-grade-kom' }],
+    [
+      {
+        from: 2.839,
+        to: 6.36,
+        segment: 'the-grade-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -372,6 +482,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/elevation-evaluation',
     'https://zwifterbikes.web.app/route/elevation-evaluation',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Elevation_Evaluation.png',
+    '21,22,23,24',
   ],
   [
     211138252,
@@ -401,6 +512,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/island-outskirts',
     'https://zwifterbikes.web.app/route/island-outskirts',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Island_Outskirts.png',
+    '21,22,23,24',
   ],
   [
     226950646,
@@ -418,8 +530,16 @@ export const routes = [
     0,
     ['mayan-mountainside-kom', 'itza-kom'],
     [
-      { from: 9.855, to: 11.857, segment: 'mayan-mountainside-kom' },
-      { from: 12.453, to: 16.212, segment: 'itza-kom' },
+      {
+        from: 9.855,
+        to: 11.857,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 12.453,
+        to: 16.212,
+        segment: 'itza-kom',
+      },
     ],
     false,
     false,
@@ -433,6 +553,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mayan-san-remo',
     'https://zwifterbikes.web.app/route/mayan-san-remo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Mayan_San_Remo.png',
+    '6,7,8,9',
   ],
   [
     240388043,
@@ -449,7 +570,13 @@ export const routes = [
     5.544,
     9,
     ['stoneway-sprint', 'acropolis-sprint', 'sasquatch-sprint', 'woodland-sprint'],
-    [{ from: 15.144, to: 15.648, segment: 'woodland-sprint' }],
+    [
+      {
+        from: 15.144,
+        to: 15.648,
+        segment: 'woodland-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -462,6 +589,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/sugar-cookie',
     'https://zwifterbikes.web.app/route/sugar-cookie',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Sugar_Cookie.png',
+    '6,7,8,9',
   ],
   [
     242381847,
@@ -486,11 +614,31 @@ export const routes = [
       'epic-kom',
     ],
     [
-      { from: 6.913, to: 9.385, segment: 'zwift-kom-rev' },
-      { from: 14.47, to: 18.185, segment: 'volcano-kom' },
-      { from: 50.358, to: 50.693, segment: 'watopia-sprint' },
-      { from: 59.745, to: 60.633, segment: 'zwift-kom' },
-      { from: 80.401, to: 80.734, segment: 'watopia-sprint' },
+      {
+        from: 6.913,
+        to: 9.385,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 14.47,
+        to: 18.185,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 50.358,
+        to: 50.693,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 59.745,
+        to: 60.633,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 80.401,
+        to: 80.734,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     false,
@@ -504,6 +652,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/zwift-gran-fondo',
     'https://zwifterbikes.web.app/route/gran-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Gran_Fondo.png',
+    '1,2,3,4',
   ],
   [
     243949867,
@@ -520,7 +669,13 @@ export const routes = [
     0.05,
     0,
     ['watopia-sprint-rev', 'zwift-kom'],
-    [{ from: 8.099, to: 8.99, segment: 'zwift-kom' }],
+    [
+      {
+        from: 8.099,
+        to: 8.99,
+        segment: 'zwift-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -533,6 +688,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/loop-de-loop',
     'https://zwifterbikes.web.app/route/loop-de-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Loop_de_Loop.png',
+    '1,2,3,4',
   ],
   [
     246712730,
@@ -549,7 +705,13 @@ export const routes = [
     1.716,
     20,
     ['railway-sprint'],
-    [{ from: 0.2, to: 0.683, segment: 'railway-sprint' }],
+    [
+      {
+        from: 0.2,
+        to: 0.683,
+        segment: 'railway-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -562,6 +724,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/railways-and-rooftops',
     'https://zwifterbikes.web.app/route/railways-and-rooftops',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Railways_and_Rooftops.png',
+    '11,12,13,14',
   ],
   [
     263936293,
@@ -591,6 +754,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/that-s-amore',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Thats_Amore.png',
+    '101,102,103,104',
   ],
   [
     270817258,
@@ -607,7 +771,13 @@ export const routes = [
     0.03,
     0,
     ['sasquatch-sprint', 'woodland-sprint', 'stoneway-sprint', 'acropolis-sprint'],
-    [{ from: 4.293, to: 4.791, segment: 'woodland-sprint' }],
+    [
+      {
+        from: 4.293,
+        to: 4.791,
+        segment: 'woodland-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -620,6 +790,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/tides-and-temples',
     'https://zwifterbikes.web.app/route/tides-and-temples',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Tides_and_Temples.png',
+    '21,22,23,24',
   ],
   [
     274639515,
@@ -649,6 +820,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/the-6-train-reverse',
     'https://zwifterbikes.web.app/route/the-6-train-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_The_6_Train_Reverse.png',
+    '1,2,3,4',
   ],
   [
     274775181,
@@ -660,8 +832,8 @@ export const routes = [
     9,
     0.11,
     1,
-    0.19,
-    2,
+    0.03,
+    0,
     null,
     null,
     [],
@@ -678,6 +850,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/shuman-trail-reverse',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Shuman_Trail_Reverse.png',
+    '101,102,103,104',
   ],
   [
     352245150,
@@ -707,6 +880,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/gotham-grind-reverse',
     'https://zwifterbikes.web.app/route/gotham-grind-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Gotham_Grind_Reverse.png',
+    '1,2,3,4',
   ],
   [
     377566656,
@@ -723,7 +897,13 @@ export const routes = [
     1.322,
     35,
     ['sgurr-summit-south', 'the-clyde-kicker', 'champions-sprint', 'breakaway-brae-rev'],
-    [{ from: 19.797, to: 20.793, segment: 'sgurr-summit-south' }],
+    [
+      {
+        from: 19.797,
+        to: 20.793,
+        segment: 'sgurr-summit-south',
+      },
+    ],
     false,
     true,
     false,
@@ -736,6 +916,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/braek-fast-crits-and-grits',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_BRAEk_fast_Crits_and_Grits.png',
+    '6,7,8,9',
   ],
   [
     387309391,
@@ -752,7 +933,13 @@ export const routes = [
     null,
     null,
     ['volcano-kom'],
-    [{ from: 36.343, to: 40.057, segment: 'volcano-kom' }],
+    [
+      {
+        from: 36.343,
+        to: 40.057,
+        segment: 'volcano-kom',
+      },
+    ],
     false,
     false,
     false,
@@ -765,6 +952,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-climb-after-party',
     'https://zwifterbikes.web.app/route/volcano-climb-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Climb_After_Party.png',
+    '1,2,3,4',
   ],
   [
     454871454,
@@ -782,16 +970,56 @@ export const routes = [
     17,
     ['jarvis-sprint-rev', 'jarvis-kom-rev'],
     [
-      { from: 0.235, to: 1.529, segment: 'jarvis-kom-rev' },
-      { from: 5.055, to: 6.345, segment: 'jarvis-kom-rev' },
-      { from: 9.871, to: 11.174, segment: 'jarvis-kom-rev' },
-      { from: 14.701, to: 15.991, segment: 'jarvis-kom-rev' },
-      { from: 19.531, to: 20.82, segment: 'jarvis-kom-rev' },
-      { from: 24.346, to: 25.642, segment: 'jarvis-kom-rev' },
-      { from: 29.164, to: 30.459, segment: 'jarvis-kom-rev' },
-      { from: 33.993, to: 35.286, segment: 'jarvis-kom-rev' },
-      { from: 38.809, to: 40.103, segment: 'jarvis-kom-rev' },
-      { from: 43.626, to: 44.929, segment: 'jarvis-kom-rev' },
+      {
+        from: 0.232,
+        to: 1.528,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 5.05,
+        to: 6.344,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 9.866,
+        to: 11.16,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 14.681,
+        to: 15.976,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 19.497,
+        to: 20.792,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 24.312,
+        to: 25.608,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 29.141,
+        to: 30.435,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 33.956,
+        to: 35.25,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 38.767,
+        to: 40.065,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 43.599,
+        to: 44.893,
+        segment: 'jarvis-kom-rev',
+      },
     ],
     false,
     true,
@@ -799,12 +1027,13 @@ export const routes = [
     true,
     ['running', 'cycling'],
     1000,
-    38138485,
-    'https://www.strava.com/segments/38138485',
+    38146678,
+    'https://www.strava.com/segments/38146678',
     'https://zwiftinsider.com/route/deca-dash',
     'https://whatsonzwift.com/world/watopia/route/deca-dash',
     'https://zwifterbikes.web.app/route/deca-dash',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Deca_Dash.png',
+    '1,2,3,4',
   ],
   [
     468624015,
@@ -834,6 +1063,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/fine-and-sandy',
     'https://zwifterbikes.web.app/route/fine-and-sandy',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Fine_and_Sandy.png',
+    '21,22,23,24',
   ],
   [
     474781994,
@@ -843,14 +1073,20 @@ export const routes = [
     true,
     20.978,
     255,
-    0.176,
+    0.173,
     1,
-    null,
-    null,
-    null,
-    null,
+    0.017,
+    0,
+    0.027,
+    0,
     ['fox-hill'],
-    [{ from: 3.119, to: 5.514, segment: 'fox-hill' }],
+    [
+      {
+        from: 3.119,
+        to: 5.514,
+        segment: 'fox-hill',
+      },
+    ],
     true,
     true,
     false,
@@ -863,6 +1099,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greater-london-loop-reverse',
     'https://zwifterbikes.web.app/route/greater-london-loop-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greater_London_Loop_Reverse.png',
+    '1,2,3,4',
   ],
   [
     480315274,
@@ -892,6 +1129,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/gotham-grind',
     'https://zwifterbikes.web.app/route/gotham-grind',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Gotham_Grind.png',
+    '1,2,3,4',
   ],
   [
     525587103,
@@ -921,6 +1159,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/mech-isle-loop-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Mech_Isle_Loop_Run.png',
+    '21,22,23,24',
   ],
   [
     525689100,
@@ -937,7 +1176,13 @@ export const routes = [
     0.026,
     0,
     ['country-sprint', 'temple-kom-from-fishing-village-side'],
-    [{ from: 8.872, to: 11.371, segment: 'temple-kom-from-fishing-village-side' }],
+    [
+      {
+        from: 8.872,
+        to: 11.371,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
+    ],
     false,
     true,
     false,
@@ -950,6 +1195,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/countryside-tour',
     'https://zwifterbikes.web.app/route/countryside-tour',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Countryside_Tour.png',
+    '1,2,3,4',
   ],
   [
     553661379,
@@ -967,9 +1213,21 @@ export const routes = [
     0,
     ['watopia-sprint-rev', 'zwift-kom-rev', 'watopia-sprint', 'zwift-kom'],
     [
-      { from: 4.792, to: 7.267, segment: 'zwift-kom-rev' },
-      { from: 15.235, to: 15.573, segment: 'watopia-sprint' },
-      { from: 19.174, to: 20.068, segment: 'zwift-kom' },
+      {
+        from: 4.792,
+        to: 7.267,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 15.235,
+        to: 15.573,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 19.174,
+        to: 20.068,
+        segment: 'zwift-kom',
+      },
     ],
     false,
     true,
@@ -983,6 +1241,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/figure-8-reverse',
     'https://zwifterbikes.web.app/route/figure-8-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Figure_8_Reverse.png',
+    '1,2,3,4',
   ],
   [
     576953930,
@@ -1012,6 +1271,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/country-to-coastal',
     'https://zwifterbikes.web.app/route/country-to-coastal',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Country_to_Coastal.png',
+    '1,2,3,4',
   ],
   [
     604330868,
@@ -1029,8 +1289,16 @@ export const routes = [
     6,
     ['titans-grove-kom', 'fuego-flats'],
     [
-      { from: 10.251, to: 12.859, segment: 'titans-grove-kom' },
-      { from: 19.635, to: 20.133, segment: 'fuego-flats' },
+      {
+        from: 10.251,
+        to: 12.859,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 19.635,
+        to: 20.133,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -1044,6 +1312,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/sand-and-sequoias',
     'https://zwifterbikes.web.app/route/sand-and-sequoias',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Sand_And_Sequoias.png',
+    '11,12,13,14',
   ],
   [
     620436060,
@@ -1061,8 +1330,16 @@ export const routes = [
     null,
     ['yorkshire-sprint-rev', 'yorkshire-kom-rev'],
     [
-      { from: 2.39, to: 2.787, segment: 'yorkshire-sprint-rev' },
-      { from: 3.852, to: 5.017, segment: 'yorkshire-kom-rev' },
+      {
+        from: 2.39,
+        to: 2.787,
+        segment: 'yorkshire-sprint-rev',
+      },
+      {
+        from: 3.852,
+        to: 5.017,
+        segment: 'yorkshire-kom-rev',
+      },
     ],
     false,
     true,
@@ -1076,6 +1353,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/harrogate-circuit-reverse',
     'https://zwifterbikes.web.app/route/harrogate-circuit-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Harrogate_Circuit_Reverse.png',
+    '1,2,3,4',
   ],
   [
     686828068,
@@ -1092,7 +1370,13 @@ export const routes = [
     1.391,
     7,
     ['volcano-circuit'],
-    [{ from: 0, to: 4.067, segment: 'volcano-circuit' }],
+    [
+      {
+        from: 0,
+        to: 4.067,
+        segment: 'volcano-circuit',
+      },
+    ],
     false,
     true,
     false,
@@ -1105,6 +1389,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-circuit',
     'https://zwifterbikes.web.app/route/volcano-circuit',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Circuit.png',
+    '1,2,3,4',
   ],
   [
     711818913,
@@ -1134,6 +1419,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/flat-irons',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Flat_Irons.png',
+    '101,102,103,104',
   ],
   [
     742057576,
@@ -1163,6 +1449,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/loch-loop',
     'https://zwifterbikes.web.app/route/loch-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Loch_Loop.png',
+    '6,7,8,9',
   ],
   [
     743730361,
@@ -1179,7 +1466,13 @@ export const routes = [
     5.937,
     17,
     ['jungle-loop-rev'],
-    [{ from: 0, to: 7.858, segment: 'jungle-loop-rev' }],
+    [
+      {
+        from: 0,
+        to: 7.858,
+        segment: 'jungle-loop-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -1192,6 +1485,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/jungle-circuit',
     'https://zwifterbikes.web.app/route/jungle-circuit',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Jungle_Circuit.png',
+    '6,7,8,9',
   ],
   [
     762151244,
@@ -1219,11 +1513,31 @@ export const routes = [
       'watopia-sprint',
     ],
     [
-      { from: 0.84, to: 1.737, segment: 'zwift-kom' },
-      { from: 15.132, to: 16.044, segment: 'titans-grove-kom-rev' },
-      { from: 58.327, to: 60.947, segment: 'titans-grove-kom' },
-      { from: 72.477, to: 74.946, segment: 'zwift-kom-rev' },
-      { from: 80.593, to: 81.485, segment: 'zwift-kom' },
+      {
+        from: 0.84,
+        to: 1.737,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 15.132,
+        to: 16.044,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 58.327,
+        to: 60.947,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 72.477,
+        to: 74.946,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 80.593,
+        to: 81.485,
+        segment: 'zwift-kom',
+      },
     ],
     false,
     true,
@@ -1237,6 +1551,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/zwift-games-2024-epic',
     'https://zwifterbikes.web.app/route/zwift-games-2024-epic',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Games_2024_Epic.png',
+    '1,2,3,4',
   ],
   [
     762747962,
@@ -1266,6 +1581,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/repack-rush',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Repack_Rush.png',
+    '19,20',
   ],
   [
     764532081,
@@ -1283,15 +1599,51 @@ export const routes = [
     5,
     ['box-hill', 'london-sprint-rev', 'london-loop'],
     [
-      { from: 0, to: 14.831, segment: 'london-loop' },
-      { from: 6.278, to: 9.283, segment: 'box-hill' },
-      { from: 14.84, to: 29.679, segment: 'london-loop' },
-      { from: 21.132, to: 24.131, segment: 'box-hill' },
-      { from: 29.699, to: 44.529, segment: 'london-loop' },
-      { from: 35.982, to: 38.979, segment: 'box-hill' },
-      { from: 44.548, to: 59.381, segment: 'london-loop' },
-      { from: 50.832, to: 53.826, segment: 'box-hill' },
-      { from: 68.768, to: 68.949, segment: 'london-sprint-rev' },
+      {
+        from: 0,
+        to: 14.831,
+        segment: 'london-loop',
+      },
+      {
+        from: 6.278,
+        to: 9.283,
+        segment: 'box-hill',
+      },
+      {
+        from: 14.84,
+        to: 29.679,
+        segment: 'london-loop',
+      },
+      {
+        from: 21.132,
+        to: 24.131,
+        segment: 'box-hill',
+      },
+      {
+        from: 29.699,
+        to: 44.529,
+        segment: 'london-loop',
+      },
+      {
+        from: 35.982,
+        to: 38.979,
+        segment: 'box-hill',
+      },
+      {
+        from: 44.548,
+        to: 59.381,
+        segment: 'london-loop',
+      },
+      {
+        from: 50.832,
+        to: 53.826,
+        segment: 'box-hill',
+      },
+      {
+        from: 68.768,
+        to: 68.949,
+        segment: 'london-sprint-rev',
+      },
     ],
     false,
     false,
@@ -1305,6 +1657,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/the-prl-half',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_PRL_Half.png',
+    '1,2,3,4',
   ],
   [
     772562418,
@@ -1334,6 +1687,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/run-path-reverse',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Run_Path_Reverse.png',
+    '101,102,103,104',
   ],
   [
     806114032,
@@ -1361,10 +1715,26 @@ export const routes = [
       'fuego-flats',
     ],
     [
-      { from: 25.736, to: 27.736, segment: 'mayan-mountainside-kom' },
-      { from: 28.333, to: 32.088, segment: 'itza-kom' },
-      { from: 41.147, to: 41.648, segment: 'woodland-sprint' },
-      { from: 63.486, to: 63.981, segment: 'fuego-flats' },
+      {
+        from: 25.736,
+        to: 27.736,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 28.333,
+        to: 32.088,
+        segment: 'itza-kom',
+      },
+      {
+        from: 41.147,
+        to: 41.648,
+        segment: 'woodland-sprint',
+      },
+      {
+        from: 63.486,
+        to: 63.981,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -1378,6 +1748,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/navig8',
     'https://zwifterbikes.web.app/route/navig8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Navig8.png',
+    '11,12,13,14',
   ],
   [
     849508252,
@@ -1394,7 +1765,13 @@ export const routes = [
     1.141,
     1,
     ['volcano-kom'],
-    [{ from: 11.78, to: 15.496, segment: 'volcano-kom' }],
+    [
+      {
+        from: 11.78,
+        to: 15.496,
+        segment: 'volcano-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -1407,6 +1784,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-climb',
     'https://zwifterbikes.web.app/route/volcano-climb',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Climb.png',
+    '1,2,3,4',
   ],
   [
     872351836,
@@ -1424,8 +1802,16 @@ export const routes = [
     108,
     ['aqueduc-kom', 'pave-sprint', 'marina-sprint'],
     [
-      { from: 5.75, to: 6.169, segment: 'aqueduc-kom' },
-      { from: 18.744, to: 19.094, segment: 'marina-sprint' },
+      {
+        from: 5.75,
+        to: 6.169,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 18.744,
+        to: 19.094,
+        segment: 'marina-sprint',
+      },
     ],
     false,
     true,
@@ -1439,6 +1825,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/roule-ma-poule',
     'https://zwifterbikes.web.app/route/roule-ma-poule',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Roule_Ma_Poule.png',
+    '1,2,3,4',
   ],
   [
     890800649,
@@ -1474,6 +1861,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/makuri-40',
     'https://zwifterbikes.web.app/route/makuri-40',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Makuri_40.png',
+    '1,2,3,4',
   ],
   [
     910684583,
@@ -1503,6 +1891,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/electric-loop',
     'https://zwifterbikes.web.app/route/electric-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Electric_Loop.png',
+    '16,17,18,19',
   ],
   [
     913172163,
@@ -1520,8 +1909,16 @@ export const routes = [
     5,
     ['london-loop', 'box-hill'],
     [
-      { from: 0, to: 14.826, segment: 'london-loop' },
-      { from: 6.285, to: 9.258, segment: 'box-hill' },
+      {
+        from: 0,
+        to: 14.826,
+        segment: 'london-loop',
+      },
+      {
+        from: 6.285,
+        to: 9.258,
+        segment: 'box-hill',
+      },
     ],
     false,
     true,
@@ -1535,6 +1932,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/london-loop',
     'https://zwifterbikes.web.app/route/london-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_Loop.png',
+    '1,2,3,4',
   ],
   [
     928793662,
@@ -1564,6 +1962,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greater-london-flat',
     'https://zwifterbikes.web.app/route/greater-london-flat',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greater_London_Flat.png',
+    '1,2,3,4',
   ],
   [
     947394567,
@@ -1593,6 +1992,7 @@ export const routes = [
     'https://whatsonzwift.com/world/crit-city/route/downtown-dolphin',
     'https://zwifterbikes.web.app/route/downtown-dolphin',
     'https://cdn.zwift.com/static/zc/ROUTES/CRITCITY_Downtown_Dolphin.png',
+    '1,2,3,4',
   ],
   [
     948831673,
@@ -1622,6 +2022,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/richmond-rollercoaster',
     'https://zwifterbikes.web.app/route/richmond-rollercoaster',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Richmond_Rollercoaster.png',
+    '1,2,3,4',
   ],
   [
     982239385,
@@ -1638,7 +2039,13 @@ export const routes = [
     3.473,
     18,
     ['volcano-kom'],
-    [{ from: 2.624, to: 6.328, segment: 'volcano-kom' }],
+    [
+      {
+        from: 2.624,
+        to: 6.328,
+        segment: 'volcano-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -1651,6 +2058,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/whole-lotta-lava',
     'https://zwifterbikes.web.app/route/whole-lotta-lava',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Whole_Lotta_Lava.png',
+    '1,2,3,4',
   ],
   [
     986252325,
@@ -1668,8 +2076,16 @@ export const routes = [
     3,
     ['ballon-sprint', 'aqueduc-kom', 'pave-sprint', 'marina-sprint'],
     [
-      { from: 10.843, to: 11.258, segment: 'aqueduc-kom' },
-      { from: 23.842, to: 24.187, segment: 'marina-sprint' },
+      {
+        from: 10.843,
+        to: 11.258,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 23.842,
+        to: 24.187,
+        segment: 'marina-sprint',
+      },
     ],
     false,
     true,
@@ -1683,6 +2099,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/douce-france',
     'https://zwifterbikes.web.app/route/douce-france',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Douce_France.png',
+    '1,2,3,4',
   ],
   [
     1033940053,
@@ -1712,6 +2129,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/castle-crit-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Castle_Crit_Run.png',
+    '1,2,3,4',
   ],
   [
     1039983620,
@@ -1729,8 +2147,16 @@ export const routes = [
     0,
     ['23rd-st-rev', 'richmond-kom-rev', 'broad-st-rev', 'richmond-sprint-rev'],
     [
-      { from: 1.303, to: 2.396, segment: '23rd-st-rev' },
-      { from: 2.873, to: 3.528, segment: 'richmond-kom-rev' },
+      {
+        from: 1.303,
+        to: 2.396,
+        segment: '23rd-st-rev',
+      },
+      {
+        from: 2.873,
+        to: 3.528,
+        segment: 'richmond-kom-rev',
+      },
     ],
     false,
     true,
@@ -1744,6 +2170,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/richmond-uci-reverse',
     'https://zwifterbikes.web.app/route/richmond-uci-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Richmond_2015_Worlds_Reverse.png',
+    '1,2,3,4',
   ],
   [
     1064303857,
@@ -1760,7 +2187,13 @@ export const routes = [
     2.478,
     6,
     ['fuego-flats'],
-    [{ from: 25.013, to: 25.511, segment: 'fuego-flats' }],
+    [
+      {
+        from: 25.013,
+        to: 25.511,
+        segment: 'fuego-flats',
+      },
+    ],
     false,
     true,
     false,
@@ -1773,6 +2206,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/watopia-s-waistband',
     'https://zwifterbikes.web.app/route/watopias-waistband',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopias_Waistband.png',
+    '11,12,13,14',
   ],
   [
     1082034232,
@@ -1802,6 +2236,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Mayan_Bridge_Loop.png',
+    '6,7,8,9',
   ],
   [
     1086718516,
@@ -1818,7 +2253,13 @@ export const routes = [
     0.305,
     0,
     ['yorkshire-kom-rev'],
-    [{ from: 0.902, to: 2.068, segment: 'yorkshire-kom-rev' }],
+    [
+      {
+        from: 0.902,
+        to: 2.068,
+        segment: 'yorkshire-kom-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -1831,6 +2272,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/tour-of-tewit-well',
     'https://zwifterbikes.web.app/route/tour-of-tewit-well',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Tour_Of_Tewit_Well.png',
+    '1,2,3,4',
   ],
   [
     1092181131,
@@ -1848,9 +2290,21 @@ export const routes = [
     16,
     ['jarvis-kom', 'jarvis-sprint', 'volcano-kom'],
     [
-      { from: 0.653, to: 2.459, segment: 'jarvis-kom' },
-      { from: 3.793, to: 3.996, segment: 'jarvis-sprint' },
-      { from: 5.207, to: 8.945, segment: 'volcano-kom' },
+      {
+        from: 0.653,
+        to: 2.459,
+        segment: 'jarvis-kom',
+      },
+      {
+        from: 3.793,
+        to: 3.996,
+        segment: 'jarvis-sprint',
+      },
+      {
+        from: 5.207,
+        to: 8.945,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     true,
@@ -1864,6 +2318,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/loopin-lava',
     'https://zwifterbikes.web.app/route/loopin-lava',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Loopin_Lava.png',
+    '1,2,3,4',
   ],
   [
     1115260805,
@@ -1887,7 +2342,13 @@ export const routes = [
       'stoneway-sprint-rev',
       'alpe-du-zwift',
     ],
-    [{ from: 28.873, to: 41.101, segment: 'alpe-du-zwift' }],
+    [
+      {
+        from: 28.873,
+        to: 41.101,
+        segment: 'alpe-du-zwift',
+      },
+    ],
     false,
     false,
     false,
@@ -1900,6 +2361,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/accelerate-to-elevate',
     'https://zwifterbikes.web.app/route/accelerate-to-elevate',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Accelerate_to_Elevate.png',
+    '11,12,13,14',
   ],
   [
     1127056801,
@@ -1929,6 +2391,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/neokyo-crit-course',
     'https://zwifterbikes.web.app/route/neokyo-crit-course',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Neokyo_Crit_Course.png',
+    '16,17,18,19',
   ],
   [
     1230300449,
@@ -1938,17 +2401,29 @@ export const routes = [
     true,
     41.543,
     434,
-    0.465,
+    0.462,
     4,
-    null,
-    null,
-    null,
-    null,
+    0.026,
+    0,
+    0.043,
+    1,
     ['london-sprint', 'leith-hill'],
     [
-      { from: 14.309, to: 14.502, segment: 'london-sprint' },
-      { from: 25.949, to: 26.141, segment: 'london-sprint' },
-      { from: 39.505, to: 41.454, segment: 'leith-hill' },
+      {
+        from: 14.309,
+        to: 14.502,
+        segment: 'london-sprint',
+      },
+      {
+        from: 25.949,
+        to: 26.141,
+        segment: 'london-sprint',
+      },
+      {
+        from: 39.505,
+        to: 41.454,
+        segment: 'leith-hill',
+      },
     ],
     false,
     false,
@@ -1962,6 +2437,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/leith-hill-after-party',
     'https://zwifterbikes.web.app/route/leith-hill-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Leith_Hill_After_Party.png',
+    '1,2,3,4',
   ],
   [
     1233527301,
@@ -1991,6 +2467,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/duchy-estate',
     'https://zwifterbikes.web.app/route/2019-uci-worlds-harrogate-circuit',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Duchy_Estate.png',
+    '1,2,3,4',
   ],
   [
     1236439870,
@@ -2007,7 +2484,13 @@ export const routes = [
     3.395,
     26,
     ['lutece-sprint-rev', 'champs-elysees-rev'],
-    [{ from: 0, to: 6.595, segment: 'champs-elysees-rev' }],
+    [
+      {
+        from: 0,
+        to: 6.595,
+        segment: 'champs-elysees-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -2020,6 +2503,7 @@ export const routes = [
     'https://whatsonzwift.com/world/paris/route/lutece-express',
     'https://zwifterbikes.web.app/route/lutece-express',
     'https://cdn.zwift.com/static/zc/ROUTES/PARIS_Lutece_Express.png',
+    '1,2,3,4',
   ],
   [
     1258415487,
@@ -2049,6 +2533,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/glasgow-reverse',
     'https://zwifterbikes.web.app/route/glasgow-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Glasgow_Reverse.png',
+    '1,2,3,4',
   ],
   [
     1327147942,
@@ -2075,14 +2560,46 @@ export const routes = [
       'epic-kom-rev',
     ],
     [
-      { from: 5.602, to: 5.932, segment: 'watopia-sprint' },
-      { from: 17.971, to: 25.062, segment: 'fuego-flats-rev' },
-      { from: 26.54, to: 27.028, segment: 'fuego-flats' },
-      { from: 40.638, to: 41.528, segment: 'zwift-kom' },
-      { from: 53.092, to: 53.993, segment: 'titans-grove-kom-rev' },
-      { from: 66.455, to: 70.524, segment: 'volcano-circuit' },
-      { from: 72.355, to: 76.078, segment: 'volcano-kom' },
-      { from: 86.184, to: 92.364, segment: 'epic-kom-rev' },
+      {
+        from: 5.602,
+        to: 5.932,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 17.971,
+        to: 25.062,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 26.54,
+        to: 27.028,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 40.638,
+        to: 41.528,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 53.092,
+        to: 53.993,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 66.455,
+        to: 70.524,
+        segment: 'volcano-circuit',
+      },
+      {
+        from: 72.355,
+        to: 76.078,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 86.184,
+        to: 92.364,
+        segment: 'epic-kom-rev',
+      },
     ],
     false,
     false,
@@ -2096,6 +2613,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/2022-gran-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Gran_Fondo_2022.png',
+    '1,2,3,4',
   ],
   [
     1327665278,
@@ -2113,8 +2631,16 @@ export const routes = [
     0,
     ['new-york-kom-rev', 'new-york-sprint', 'new-york-kom', 'new-york-sprint-rev'],
     [
-      { from: 2.765, to: 3.889, segment: 'new-york-kom-rev' },
-      { from: 24.236, to: 25.594, segment: 'new-york-kom' },
+      {
+        from: 2.765,
+        to: 3.889,
+        segment: 'new-york-kom-rev',
+      },
+      {
+        from: 24.236,
+        to: 25.594,
+        segment: 'new-york-kom',
+      },
     ],
     true,
     true,
@@ -2128,6 +2654,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/everything-bagel',
     'https://zwifterbikes.web.app/route/everything-bagel',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Everything_Bagel.png',
+    '1,2,3,4',
   ],
   [
     1366943680,
@@ -2163,6 +2690,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/mech-isle-loop',
     'https://zwifterbikes.web.app/route/mech-isle-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Mech_Isle_Loop.png',
+    '21,22,23,24',
   ],
   [
     1373909093,
@@ -2192,6 +2720,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/chili-pepper',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Chili_Pepper.png',
+    '101,102,103,104',
   ],
   [
     1378559127,
@@ -2221,6 +2750,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/park-to-peak',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Park_To_Peak.png',
+    '101,102,103,104',
   ],
   [
     1384155764,
@@ -2238,8 +2768,16 @@ export const routes = [
     0,
     ['loch-loop-rev', 'breakaway-brae-rev'],
     [
-      { from: 0, to: 8.022, segment: 'loch-loop-rev' },
-      { from: 4.475, to: 5.095, segment: 'breakaway-brae-rev' },
+      {
+        from: 0,
+        to: 8.022,
+        segment: 'loch-loop-rev',
+      },
+      {
+        from: 4.475,
+        to: 5.095,
+        segment: 'breakaway-brae-rev',
+      },
     ],
     false,
     true,
@@ -2253,6 +2791,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/loch-loop-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Loch_Loop_Run.png',
+    '6,7,8,9',
   ],
   [
     1386460176,
@@ -2282,6 +2821,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/ocean-lava-cliffside-loop',
     'https://zwifterbikes.web.app/route/ocean-lava-cliffside-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Ocean_Lava_Cliffside_Loop.png',
+    '1,2,3,4',
   ],
   [
     1397026382,
@@ -2311,6 +2851,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-flat-reverse',
     'https://zwifterbikes.web.app/route/volcano-flat-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Flat_Reverse.png',
+    '1,2,3,4',
   ],
   [
     1433431343,
@@ -2327,7 +2868,13 @@ export const routes = [
     0.154,
     0,
     ['ballon-sprint', 'petit-kom'],
-    [{ from: 8.086, to: 10.762, segment: 'petit-kom' }],
+    [
+      {
+        from: 8.086,
+        to: 10.762,
+        segment: 'petit-kom',
+      },
+    ],
     false,
     false,
     false,
@@ -2340,6 +2887,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/la-reine',
     'https://zwifterbikes.web.app/route/la-reine',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_La_Reine.png',
+    '1,2,3,4',
   ],
   [
     1453570384,
@@ -2357,8 +2905,16 @@ export const routes = [
     0,
     ['castle-park-sprint', 'alley-sprint', 'alley-sprint-rev', 'tower-sprint', 'rooftop-kom'],
     [
-      { from: 11.173, to: 11.485, segment: 'tower-sprint' },
-      { from: 16.569, to: 18.44, segment: 'rooftop-kom' },
+      {
+        from: 11.173,
+        to: 11.485,
+        segment: 'tower-sprint',
+      },
+      {
+        from: 16.569,
+        to: 18.44,
+        segment: 'rooftop-kom',
+      },
     ],
     false,
     true,
@@ -2372,6 +2928,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/neokyo-all-nighter',
     'https://zwifterbikes.web.app/route/neokyo-all-nighter',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Neokyo_All_Nighter.png',
+    '11,12,13,14',
   ],
   [
     1454553567,
@@ -2388,7 +2945,13 @@ export const routes = [
     5.008,
     130,
     ['temple-kom-from-castle-side'],
-    [{ from: 7.147, to: 9.04, segment: 'temple-kom-from-castle-side' }],
+    [
+      {
+        from: 7.147,
+        to: 9.04,
+        segment: 'temple-kom-from-castle-side',
+      },
+    ],
     false,
     true,
     false,
@@ -2401,6 +2964,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/kappa-quest-reverse',
     'https://zwifterbikes.web.app/route/kappa-quest-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Kappa_Quest_Reverse.png',
+    '6,7,8,9',
   ],
   [
     1457923570,
@@ -2417,7 +2981,13 @@ export const routes = [
     0.009,
     0,
     ['alley-sprint', 'tower-sprint'],
-    [{ from: 1.609, to: 1.916, segment: 'tower-sprint' }],
+    [
+      {
+        from: 1.609,
+        to: 1.916,
+        segment: 'tower-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -2430,6 +3000,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/twilight-harbor',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Twilight_Harbor.png',
+    '16,17,18,19',
   ],
   [
     1475638265,
@@ -2456,13 +3027,41 @@ export const routes = [
       'alpe-du-zwift',
     ],
     [
-      { from: 4.065, to: 13.468, segment: 'epic-kom' },
-      { from: 13.905, to: 14.995, segment: 'radio-tower-kom' },
-      { from: 42.031, to: 45.741, segment: 'volcano-kom' },
-      { from: 62.56, to: 69.646, segment: 'fuego-flats-rev' },
-      { from: 79.736, to: 82.202, segment: 'zwift-kom-rev' },
-      { from: 87.46, to: 87.954, segment: 'fuego-flats' },
-      { from: 115.72, to: 127.944, segment: 'alpe-du-zwift' },
+      {
+        from: 4.065,
+        to: 13.468,
+        segment: 'epic-kom',
+      },
+      {
+        from: 13.905,
+        to: 14.995,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 42.031,
+        to: 45.741,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 62.56,
+        to: 69.646,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 79.736,
+        to: 82.202,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 87.46,
+        to: 87.954,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 115.72,
+        to: 127.944,
+        segment: 'alpe-du-zwift',
+      },
     ],
     false,
     false,
@@ -2476,6 +3075,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-uber-pretzel',
     'https://zwifterbikes.web.app/route/the-uber-pretzel',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Uber_Pretzel.png',
+    '1,2,3,4',
   ],
   [
     1509089537,
@@ -2505,6 +3105,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/astoria-line-8',
     'https://zwifterbikes.web.app/route/astoria-line-8',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Astoria_Line_8.png',
+    '1,2,3,4',
   ],
   [
     1545087483,
@@ -2522,8 +3123,16 @@ export const routes = [
     8,
     ['richmond-kom', '23rd-st'],
     [
-      { from: 4.915, to: 5.542, segment: 'richmond-kom' },
-      { from: 6.45, to: 6.722, segment: '23rd-st' },
+      {
+        from: 4.915,
+        to: 5.542,
+        segment: 'richmond-kom',
+      },
+      {
+        from: 6.45,
+        to: 6.722,
+        segment: '23rd-st',
+      },
     ],
     false,
     true,
@@ -2537,6 +3146,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/cobbled-climbs',
     'https://zwifterbikes.web.app/route/cobbled-climbs',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Cobbled_Climbs.png',
+    '1,2,3,4',
   ],
   [
     1562187590,
@@ -2553,7 +3163,13 @@ export const routes = [
     3.296,
     108,
     ['temple-kom-from-fishing-village-side'],
-    [{ from: 6.551, to: 9.051, segment: 'temple-kom-from-fishing-village-side' }],
+    [
+      {
+        from: 6.551,
+        to: 9.051,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
+    ],
     false,
     true,
     false,
@@ -2566,6 +3182,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/kappa-quest',
     'https://zwifterbikes.web.app/route/kappa-quest',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Kappa_Quest.png',
+    '6,7,8,9',
   ],
   [
     1586193601,
@@ -2595,6 +3212,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/that-s-amore-reverse',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Thats_Amore_Reverse.png',
+    '101,102,103,104',
   ],
   [
     1631692097,
@@ -2612,8 +3230,16 @@ export const routes = [
     81,
     ['acropolis-sprint-rev', 'stoneway-sprint-rev', 'mayan-mountainside-kom', 'itza-kom'],
     [
-      { from: 0.596, to: 4.35, segment: 'itza-kom' },
-      { from: 23.31, to: 25.307, segment: 'mayan-mountainside-kom' },
+      {
+        from: 0.596,
+        to: 4.35,
+        segment: 'itza-kom',
+      },
+      {
+        from: 23.31,
+        to: 25.307,
+        segment: 'mayan-mountainside-kom',
+      },
     ],
     false,
     true,
@@ -2627,6 +3253,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/glyph-heights',
     'https://zwifterbikes.web.app/route/glyph-heights',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Glyph_Heights.png',
+    '21,22,23,24',
   ],
   [
     1635842477,
@@ -2656,6 +3283,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/going-coastal',
     'https://zwifterbikes.web.app/route/going-coastal',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Going_Coastal.png',
+    '11,12,13,14',
   ],
   [
     1638640398,
@@ -2672,7 +3300,13 @@ export const routes = [
     2.666,
     15,
     ['richmond-sprint'],
-    [{ from: 4.817, to: 5.027, segment: 'richmond-sprint' }],
+    [
+      {
+        from: 4.817,
+        to: 5.027,
+        segment: 'richmond-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -2685,6 +3319,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/the-fan-flats',
     'https://zwifterbikes.web.app/route/the-fan-flats',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_The_Fan_Flats.png',
+    '1,2,3,4',
   ],
   [
     1656629976,
@@ -2707,7 +3342,13 @@ export const routes = [
       'acropolis-sprint-rev',
       'stoneway-sprint-rev',
     ],
-    [{ from: 48.383, to: 48.887, segment: 'fuego-flats' }],
+    [
+      {
+        from: 48.383,
+        to: 48.887,
+        segment: 'fuego-flats',
+      },
+    ],
     false,
     true,
     false,
@@ -2720,6 +3361,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-big-ring',
     'https://zwifterbikes.web.app/route/the-big-ring',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Big_Ring.png',
+    '11,12,13,14',
   ],
   [
     1695691428,
@@ -2736,7 +3378,13 @@ export const routes = [
     0.031,
     34,
     ['radio-tower-kom'],
-    [{ from: 3.165, to: 4.251, segment: 'radio-tower-kom' }],
+    [
+      {
+        from: 3.165,
+        to: 4.251,
+        segment: 'radio-tower-kom',
+      },
+    ],
     false,
     false,
     false,
@@ -2749,6 +3397,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/epic-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Epic_Run.png',
+    '21,22,23,24',
   ],
   [
     1696938496,
@@ -2766,8 +3415,16 @@ export const routes = [
     0,
     ['hilly-loop-rev', 'watopia-sprint-rev', 'zwift-kom-rev'],
     [
-      { from: 0, to: 9.181, segment: 'hilly-loop-rev' },
-      { from: 4.824, to: 7.296, segment: 'zwift-kom-rev' },
+      {
+        from: 0,
+        to: 9.181,
+        segment: 'hilly-loop-rev',
+      },
+      {
+        from: 4.824,
+        to: 7.296,
+        segment: 'zwift-kom-rev',
+      },
     ],
     false,
     true,
@@ -2781,6 +3438,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/hilly-route-reverse-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Hilly_Route_Reverse_Run.png',
+    '1,2,3,4',
   ],
   [
     1732356505,
@@ -2797,7 +3455,13 @@ export const routes = [
     5.179,
     127,
     ['new-york-kom'],
-    [{ from: 9.102, to: 10.48, segment: 'new-york-kom' }],
+    [
+      {
+        from: 9.102,
+        to: 10.48,
+        segment: 'new-york-kom',
+      },
+    ],
     true,
     true,
     false,
@@ -2810,6 +3474,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/the-highline',
     'https://zwifterbikes.web.app/route/the-highline',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_The_Highline.png',
+    '1,2,3,4',
   ],
   [
     1760877317,
@@ -2839,6 +3504,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/bridges-and-boardwalks',
     'https://zwifterbikes.web.app/route/bridges-and-boardwalks',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Bridges_and_Boardwalks.png',
+    '21,22,23,24',
   ],
   [
     1763213625,
@@ -2855,7 +3521,13 @@ export const routes = [
     null,
     null,
     ['new-york-kom-rev'],
-    [{ from: 9.401, to: 10.548, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 9.401,
+        to: 10.548,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -2868,6 +3540,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/the-highline-reverse',
     'https://zwifterbikes.web.app/route/the-highline-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_The_Highline_Reverse.png',
+    '1,2,3,4',
   ],
   [
     1766405776,
@@ -2884,7 +3557,13 @@ export const routes = [
     0.109,
     2,
     ['alpe-du-zwift'],
-    [{ from: 12.86, to: 25.072, segment: 'alpe-du-zwift' }],
+    [
+      {
+        from: 12.86,
+        to: 25.072,
+        segment: 'alpe-du-zwift',
+      },
+    ],
     false,
     false,
     false,
@@ -2897,6 +3576,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/tour-of-fire-and-ice',
     'https://zwifterbikes.web.app/route/tour-of-fire-and-ice',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Tour_of_Fire_and_Ice.png',
+    '1,2,3,4',
   ],
   [
     1776635757,
@@ -2914,8 +3594,16 @@ export const routes = [
     0,
     ['pave-sprint-rev', 'aqueduc-kom-rev', 'ballon-sprint-rev', 'marina-sprint-rev'],
     [
-      { from: 12.495, to: 12.906, segment: 'aqueduc-kom-rev' },
-      { from: 16.884, to: 17.222, segment: 'ballon-sprint-rev' },
+      {
+        from: 12.495,
+        to: 12.906,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 16.884,
+        to: 17.222,
+        segment: 'ballon-sprint-rev',
+      },
     ],
     false,
     true,
@@ -2929,6 +3617,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/r-g-v',
     'https://zwifterbikes.web.app/route/rgv',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_R_G_V_.png',
+    '1,2,3,4',
   ],
   [
     1788218813,
@@ -2946,10 +3635,26 @@ export const routes = [
     null,
     ['yorkshire-kom-rev', 'yorkshire-sprint-rev', 'yorkshire-kom', 'yorkshire-sprint'],
     [
-      { from: 0.773, to: 1.94, segment: 'yorkshire-kom-rev' },
-      { from: 13.123, to: 13.518, segment: 'yorkshire-sprint-rev' },
-      { from: 22.918, to: 24.122, segment: 'yorkshire-kom' },
-      { from: 28.446, to: 29.608, segment: 'yorkshire-kom-rev' },
+      {
+        from: 0.773,
+        to: 1.94,
+        segment: 'yorkshire-kom-rev',
+      },
+      {
+        from: 13.123,
+        to: 13.518,
+        segment: 'yorkshire-sprint-rev',
+      },
+      {
+        from: 22.918,
+        to: 24.122,
+        segment: 'yorkshire-kom',
+      },
+      {
+        from: 28.446,
+        to: 29.608,
+        segment: 'yorkshire-kom-rev',
+      },
     ],
     false,
     false,
@@ -2963,6 +3668,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/yorkshire-double-loop',
     'https://zwifterbikes.web.app/route/yorkshire-double-loops',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Yorkshire_Double_Loop.png',
+    '1,2,3,4',
   ],
   [
     1788889233,
@@ -2972,14 +3678,20 @@ export const routes = [
     true,
     14.834,
     231,
-    0.175,
+    0.172,
     1,
+    0.005,
     null,
-    null,
-    null,
-    null,
+    0.011,
+    0,
     ['fox-hill'],
-    [{ from: 3.131, to: 5.534, segment: 'fox-hill' }],
+    [
+      {
+        from: 3.131,
+        to: 5.534,
+        segment: 'fox-hill',
+      },
+    ],
     false,
     true,
     false,
@@ -2992,6 +3704,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/london-loop-reverse',
     'https://zwifterbikes.web.app/route/london-loop-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_Loop_Reverse.png',
+    '1,2,3,4',
   ],
   [
     1790569309,
@@ -3021,6 +3734,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/couch-to-sky-k',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Couch_To_Sky_K.png',
+    '101,102,103,104',
   ],
   [
     1880443431,
@@ -3037,7 +3751,13 @@ export const routes = [
     0.477,
     5,
     ['london-sprint'],
-    [{ from: 23.368, to: 23.555, segment: 'london-sprint' }],
+    [
+      {
+        from: 23.368,
+        to: 23.555,
+        segment: 'london-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -3050,6 +3770,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greatest-london-flat',
     'https://zwifterbikes.web.app/route/greatest-london-flat',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greatest_London_Flat.png',
+    '1,2,3,4',
   ],
   [
     1917017591,
@@ -3066,7 +3787,13 @@ export const routes = [
     0.019,
     0,
     ['fuego-flats'],
-    [{ from: 28.719, to: 29.217, segment: 'fuego-flats' }],
+    [
+      {
+        from: 28.719,
+        to: 29.217,
+        segment: 'fuego-flats',
+      },
+    ],
     false,
     true,
     false,
@@ -3079,6 +3806,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/big-flat-8',
     'https://zwifterbikes.web.app/route/big-flat-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Big_Flat_8.png',
+    '11,12,13,14',
   ],
   [
     1919980508,
@@ -3108,6 +3836,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/park-perimeter-loop',
     'https://zwifterbikes.web.app/route/park-perimeter-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Park_Perimeter_Loop.png',
+    '1,2,3,4',
   ],
   [
     1941800093,
@@ -3124,7 +3853,13 @@ export const routes = [
     0.012,
     0,
     ['temple-kom-from-castle-side'],
-    [{ from: 2.695, to: 4.583, segment: 'temple-kom-from-castle-side' }],
+    [
+      {
+        from: 2.695,
+        to: 4.583,
+        segment: 'temple-kom-from-castle-side',
+      },
+    ],
     false,
     false,
     false,
@@ -3137,6 +3872,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/valley-to-mountaintop',
     'https://zwifterbikes.web.app/route/valley-to-mountaintop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Valley_to_Mountaintop.png',
+    '6,7,8,9',
   ],
   [
     1988847319,
@@ -3166,6 +3902,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Splash_and_Dash.png',
+    '116',
   ],
   [
     1993374659,
@@ -3195,6 +3932,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/handful-of-gravel',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Handful_Of_Gravel.png',
+    '6,7,8,9',
   ],
   [
     2001106885,
@@ -3211,7 +3949,13 @@ export const routes = [
     0.143,
     0,
     ['new-york-kom-rev', 'new-york-sprint-rev'],
-    [{ from: 11.46, to: 12.588, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 11.46,
+        to: 12.588,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -3224,6 +3968,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/knickerbocker-reverse',
     'https://zwifterbikes.web.app/route/knickerbocker-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Knickerbocker_Reverse.png',
+    '1,2,3,4',
   ],
   [
     2007026433,
@@ -3240,7 +3985,13 @@ export const routes = [
     0.035,
     0,
     ['yorkshire-kom', 'yorkshire-sprint'],
-    [{ from: 7.578, to: 8.787, segment: 'yorkshire-kom' }],
+    [
+      {
+        from: 7.578,
+        to: 8.787,
+        segment: 'yorkshire-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -3253,6 +4004,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/2019-uci-worlds-harrogate-circuit',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_2019_Worlds_Harrogate_Circuit.png',
+    '1,2,3,4',
   ],
   [
     2062126722,
@@ -3270,8 +4022,16 @@ export const routes = [
     2,
     ['watopia-sprint', 'titans-grove-kom-rev'],
     [
-      { from: 13.564, to: 13.889, segment: 'watopia-sprint' },
-      { from: 30.619, to: 31.531, segment: 'titans-grove-kom-rev' },
+      {
+        from: 13.564,
+        to: 13.889,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 30.619,
+        to: 31.531,
+        segment: 'titans-grove-kom-rev',
+      },
     ],
     false,
     false,
@@ -3285,6 +4045,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/tair-dringfa-fechan',
     'https://zwifterbikes.web.app/route/tair-dringfa-fechan',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Tair_Dringfa_Fechan.png',
+    '1,2,3,4',
   ],
   [
     2064290391,
@@ -3302,10 +4063,26 @@ export const routes = [
     3,
     ['epic-kom-rev', 'the-grade-sprint-rev', 'the-grade-kom', 'epic-kom', 'radio-tower-kom'],
     [
-      { from: 3.846, to: 10.048, segment: 'epic-kom-rev' },
-      { from: 17.089, to: 20.621, segment: 'the-grade-kom' },
-      { from: 33.375, to: 42.792, segment: 'epic-kom' },
-      { from: 43.223, to: 44.313, segment: 'radio-tower-kom' },
+      {
+        from: 3.846,
+        to: 10.048,
+        segment: 'epic-kom-rev',
+      },
+      {
+        from: 17.089,
+        to: 20.621,
+        segment: 'the-grade-kom',
+      },
+      {
+        from: 33.375,
+        to: 42.792,
+        segment: 'epic-kom',
+      },
+      {
+        from: 43.223,
+        to: 44.313,
+        segment: 'radio-tower-kom',
+      },
     ],
     false,
     false,
@@ -3319,6 +4096,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/power-to-the-tower',
     'https://zwifterbikes.web.app/route/power-to-the-tower',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Power_to_the_Tower.png',
+    '1,2,3,4',
   ],
   [
     2128890027,
@@ -3335,7 +4113,13 @@ export const routes = [
     2.554,
     6,
     ['fuego-flats-rev', 'fuego-flats'],
-    [{ from: 8.187, to: 15.274, segment: 'fuego-flats-rev' }],
+    [
+      {
+        from: 8.187,
+        to: 15.274,
+        segment: 'fuego-flats-rev',
+      },
+    ],
     false,
     true,
     true,
@@ -3348,6 +4132,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/tempus-fugit',
     'https://zwifterbikes.web.app/route/tempus-fugit',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Tempus_Fugit.png',
+    '11,12,13,14',
   ],
   [
     2136907048,
@@ -3375,18 +4160,66 @@ export const routes = [
       'petit-kom',
     ],
     [
-      { from: 12.498, to: 12.91, segment: 'aqueduc-kom-rev' },
-      { from: 16.897, to: 17.233, segment: 'ballon-sprint-rev' },
-      { from: 36.603, to: 37.005, segment: 'aqueduc-kom-rev' },
-      { from: 40.539, to: 43.211, segment: 'petit-kom' },
-      { from: 54.417, to: 57.102, segment: 'petit-kom' },
-      { from: 71.063, to: 71.489, segment: 'aqueduc-kom' },
-      { from: 84.056, to: 84.398, segment: 'marina-sprint' },
-      { from: 95.171, to: 95.586, segment: 'aqueduc-kom' },
-      { from: 108.165, to: 108.507, segment: 'marina-sprint' },
-      { from: 115.936, to: 116.261, segment: 'ballon-sprint-rev' },
-      { from: 135.617, to: 136.029, segment: 'aqueduc-kom-rev' },
-      { from: 139.542, to: 142.224, segment: 'petit-kom' },
+      {
+        from: 12.498,
+        to: 12.91,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 16.897,
+        to: 17.233,
+        segment: 'ballon-sprint-rev',
+      },
+      {
+        from: 36.603,
+        to: 37.005,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 40.539,
+        to: 43.211,
+        segment: 'petit-kom',
+      },
+      {
+        from: 54.417,
+        to: 57.102,
+        segment: 'petit-kom',
+      },
+      {
+        from: 71.063,
+        to: 71.489,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 84.056,
+        to: 84.398,
+        segment: 'marina-sprint',
+      },
+      {
+        from: 95.171,
+        to: 95.586,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 108.165,
+        to: 108.507,
+        segment: 'marina-sprint',
+      },
+      {
+        from: 115.936,
+        to: 116.261,
+        segment: 'ballon-sprint-rev',
+      },
+      {
+        from: 135.617,
+        to: 136.029,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 139.542,
+        to: 142.224,
+        segment: 'petit-kom',
+      },
     ],
     false,
     false,
@@ -3400,6 +4233,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/france-classic-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_France_Classic_Fondo.png',
+    '1,2,3,4',
   ],
   [
     2139465450,
@@ -3417,9 +4251,21 @@ export const routes = [
     122,
     ['epic-kom', 'radio-tower-kom', 'titans-grove-kom-rev'],
     [
-      { from: 6.059, to: 15.477, segment: 'epic-kom' },
-      { from: 15.903, to: 16.991, segment: 'radio-tower-kom' },
-      { from: 32.968, to: 33.891, segment: 'titans-grove-kom-rev' },
+      {
+        from: 6.059,
+        to: 15.477,
+        segment: 'epic-kom',
+      },
+      {
+        from: 15.903,
+        to: 16.991,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 32.968,
+        to: 33.891,
+        segment: 'titans-grove-kom-rev',
+      },
     ],
     false,
     true,
@@ -3433,6 +4279,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/muir-and-the-mountain',
     'https://zwifterbikes.web.app/route/muir-and-the-mountain',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Muir_And_The_Mountain.png',
+    '11,12,13,14',
   ],
   [
     2139708890,
@@ -3450,8 +4297,16 @@ export const routes = [
     1,
     ['fuego-flats', 'epic-kom'],
     [
-      { from: 4.527, to: 5.02, segment: 'fuego-flats' },
-      { from: 15.059, to: 24.462, segment: 'epic-kom' },
+      {
+        from: 4.527,
+        to: 5.02,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 15.059,
+        to: 24.462,
+        segment: 'epic-kom',
+      },
     ],
     false,
     true,
@@ -3465,6 +4320,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/bigger-loop',
     'https://zwifterbikes.web.app/route/bigger-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Bigger_Loop.png',
+    '1,2,3,4',
   ],
   [
     2140131142,
@@ -3494,6 +4350,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/island-hopper',
     'https://zwifterbikes.web.app/route/island-hopper',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Island_Hopper.png',
+    '21,22,23,24',
   ],
   [
     2165880404,
@@ -3503,16 +4360,24 @@ export const routes = [
     true,
     20.291,
     256,
-    0.175,
+    0.172,
     1,
-    null,
-    null,
-    null,
-    null,
+    0.029,
+    0,
+    0.021,
+    0,
     ['fox-hill', 'london-sprint-rev'],
     [
-      { from: 2.78, to: 5.186, segment: 'fox-hill' },
-      { from: 12.762, to: 12.952, segment: 'london-sprint-rev' },
+      {
+        from: 2.78,
+        to: 5.186,
+        segment: 'fox-hill',
+      },
+      {
+        from: 12.762,
+        to: 12.952,
+        segment: 'london-sprint-rev',
+      },
     ],
     false,
     true,
@@ -3526,6 +4391,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/london-8-reverse',
     'https://zwifterbikes.web.app/route/london-8-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_8_Reverse.png',
+    '1,2,3,4',
   ],
   [
     2196019512,
@@ -3543,11 +4409,31 @@ export const routes = [
     8,
     ['richmond-uci-course', 'richmond-sprint', 'broad-st', 'richmond-kom', '23rd-st'],
     [
-      { from: 0, to: 16.215, segment: 'richmond-uci-course' },
-      { from: 3.697, to: 3.903, segment: 'richmond-sprint' },
-      { from: 7.111, to: 7.377, segment: 'broad-st' },
-      { from: 11.956, to: 12.579, segment: 'richmond-kom' },
-      { from: 13.484, to: 13.754, segment: '23rd-st' },
+      {
+        from: 0,
+        to: 16.215,
+        segment: 'richmond-uci-course',
+      },
+      {
+        from: 3.697,
+        to: 3.903,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 7.111,
+        to: 7.377,
+        segment: 'broad-st',
+      },
+      {
+        from: 11.956,
+        to: 12.579,
+        segment: 'richmond-kom',
+      },
+      {
+        from: 13.484,
+        to: 13.754,
+        segment: '23rd-st',
+      },
     ],
     false,
     true,
@@ -3561,6 +4447,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/2015-uci-worlds-course',
     'https://zwifterbikes.web.app/route/2015-uci-worlds-course',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Richmond_UCI_Worlds.png',
+    '1,2,3,4',
   ],
   [
     2202609830,
@@ -3577,7 +4464,13 @@ export const routes = [
     0.246,
     0,
     ['central-park-loop-rev', 'new-york-sprint-rev'],
-    [{ from: 0, to: 9.727, segment: 'central-park-loop-rev' }],
+    [
+      {
+        from: 0,
+        to: 9.727,
+        segment: 'central-park-loop-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -3590,6 +4483,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/park-perimeter-reverse',
     'https://zwifterbikes.web.app/route/park-perimeter-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Park_Perimeter_Reverse.png',
+    '1,2,3,4',
   ],
   [
     2204461619,
@@ -3607,28 +4501,116 @@ export const routes = [
     5,
     ['london-loop', 'box-hill', 'london-sprint-rev'],
     [
-      { from: 0, to: 14.806, segment: 'london-loop' },
-      { from: 6.247, to: 9.212, segment: 'box-hill' },
-      { from: 14.806, to: 29.571, segment: 'london-loop' },
-      { from: 21.058, to: 24.021, segment: 'box-hill' },
-      { from: 29.59, to: 44.365, segment: 'london-loop' },
-      { from: 35.843, to: 38.808, segment: 'box-hill' },
-      { from: 44.383, to: 59.121, segment: 'london-loop' },
-      { from: 50.637, to: 53.579, segment: 'box-hill' },
-      { from: 59.121, to: 73.916, segment: 'london-loop' },
-      { from: 65.399, to: 68.37, segment: 'box-hill' },
-      { from: 73.916, to: 88.683, segment: 'london-loop' },
-      { from: 80.192, to: 83.16, segment: 'box-hill' },
-      { from: 88.701, to: 103.465, segment: 'london-loop' },
-      { from: 94.976, to: 97.942, segment: 'box-hill' },
-      { from: 103.483, to: 118.244, segment: 'london-loop' },
-      { from: 109.761, to: 112.727, segment: 'box-hill' },
-      { from: 118.262, to: 133.008, segment: 'london-loop' },
-      { from: 124.537, to: 127.49, segment: 'box-hill' },
-      { from: 133.027, to: 147.769, segment: 'london-loop' },
-      { from: 139.301, to: 142.253, segment: 'box-hill' },
-      { from: 147.787, to: 162.524, segment: 'london-loop' },
-      { from: 154.06, to: 157.009, segment: 'box-hill' },
+      {
+        from: 0,
+        to: 14.806,
+        segment: 'london-loop',
+      },
+      {
+        from: 6.247,
+        to: 9.212,
+        segment: 'box-hill',
+      },
+      {
+        from: 14.806,
+        to: 29.571,
+        segment: 'london-loop',
+      },
+      {
+        from: 21.058,
+        to: 24.021,
+        segment: 'box-hill',
+      },
+      {
+        from: 29.59,
+        to: 44.365,
+        segment: 'london-loop',
+      },
+      {
+        from: 35.843,
+        to: 38.808,
+        segment: 'box-hill',
+      },
+      {
+        from: 44.383,
+        to: 59.121,
+        segment: 'london-loop',
+      },
+      {
+        from: 50.637,
+        to: 53.579,
+        segment: 'box-hill',
+      },
+      {
+        from: 59.121,
+        to: 73.916,
+        segment: 'london-loop',
+      },
+      {
+        from: 65.399,
+        to: 68.37,
+        segment: 'box-hill',
+      },
+      {
+        from: 73.916,
+        to: 88.683,
+        segment: 'london-loop',
+      },
+      {
+        from: 80.192,
+        to: 83.16,
+        segment: 'box-hill',
+      },
+      {
+        from: 88.701,
+        to: 103.465,
+        segment: 'london-loop',
+      },
+      {
+        from: 94.976,
+        to: 97.942,
+        segment: 'box-hill',
+      },
+      {
+        from: 103.483,
+        to: 118.244,
+        segment: 'london-loop',
+      },
+      {
+        from: 109.761,
+        to: 112.727,
+        segment: 'box-hill',
+      },
+      {
+        from: 118.262,
+        to: 133.008,
+        segment: 'london-loop',
+      },
+      {
+        from: 124.537,
+        to: 127.49,
+        segment: 'box-hill',
+      },
+      {
+        from: 133.027,
+        to: 147.769,
+        segment: 'london-loop',
+      },
+      {
+        from: 139.301,
+        to: 142.253,
+        segment: 'box-hill',
+      },
+      {
+        from: 147.787,
+        to: 162.524,
+        segment: 'london-loop',
+      },
+      {
+        from: 154.06,
+        to: 157.009,
+        segment: 'box-hill',
+      },
     ],
     false,
     false,
@@ -3642,6 +4624,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/the-prl-full',
     'https://zwifterbikes.web.app/route/the-prl-full',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_PRL_FULL.png',
+    '1,2,3,4',
   ],
   [
     2207442179,
@@ -3659,8 +4642,16 @@ export const routes = [
     0,
     ['zwift-kom-rev', 'fuego-flats'],
     [
-      { from: 6.887, to: 9.35, segment: 'zwift-kom-rev' },
-      { from: 14.609, to: 15.098, segment: 'fuego-flats' },
+      {
+        from: 6.887,
+        to: 9.35,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 14.609,
+        to: 15.098,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -3674,6 +4665,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-magnificent-8',
     'https://zwifterbikes.web.app/route/the-magnificent-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Magnificent_8.png',
+    '1,2,3,4',
   ],
   [
     2218409282,
@@ -3691,10 +4683,26 @@ export const routes = [
     null,
     ['epic-kom', 'radio-tower-kom', 'watopia-sprint'],
     [
-      { from: 4.291, to: 13.695, segment: 'epic-kom' },
-      { from: 14.127, to: 15.213, segment: 'radio-tower-kom' },
-      { from: 26.384, to: 26.71, segment: 'watopia-sprint' },
-      { from: 33.771, to: 43.182, segment: 'epic-kom' },
+      {
+        from: 4.291,
+        to: 13.695,
+        segment: 'epic-kom',
+      },
+      {
+        from: 14.127,
+        to: 15.213,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 26.384,
+        to: 26.71,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 33.771,
+        to: 43.182,
+        segment: 'epic-kom',
+      },
     ],
     false,
     false,
@@ -3708,6 +4716,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/wbr-climbing-series',
     'https://zwifterbikes.web.app/route/wbr-climbing-series',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_WBR_Climbing_Series.png',
+    '1,2,3,4',
   ],
   [
     2328501978,
@@ -3715,8 +4724,8 @@ export const routes = [
     'shorelines-and-summits',
     'watopia',
     false,
-    46.188,
-    772,
+    46.186,
+    773,
     4.163,
     19,
     3.901,
@@ -3732,9 +4741,21 @@ export const routes = [
       'radio-tower-kom',
     ],
     [
-      { from: 16.532, to: 17.035, segment: 'woodland-sprint' },
-      { from: 23.904, to: 33.322, segment: 'epic-kom' },
-      { from: 33.741, to: 34.836, segment: 'radio-tower-kom' },
+      {
+        from: 16.532,
+        to: 17.035,
+        segment: 'woodland-sprint',
+      },
+      {
+        from: 23.904,
+        to: 33.322,
+        segment: 'epic-kom',
+      },
+      {
+        from: 33.741,
+        to: 34.836,
+        segment: 'radio-tower-kom',
+      },
     ],
     false,
     true,
@@ -3748,6 +4769,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/shorelines-and-summits',
     'https://zwifterbikes.web.app/route/shorelines-and-summits',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Shorelines_and_Summits.png',
+    '6,7,8,9',
   ],
   [
     2330634655,
@@ -3777,6 +4799,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/temple-trek',
     'https://zwifterbikes.web.app/route/temple-trek',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Temple_Trek.png',
+    '6,7,8,9',
   ],
   [
     2333249368,
@@ -3801,8 +4824,16 @@ export const routes = [
       'itza-kom',
     ],
     [
-      { from: 23.781, to: 25.77, segment: 'mayan-mountainside-kom' },
-      { from: 26.358, to: 30.132, segment: 'itza-kom' },
+      {
+        from: 23.781,
+        to: 25.77,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 26.358,
+        to: 30.132,
+        segment: 'itza-kom',
+      },
     ],
     false,
     false,
@@ -3816,6 +4847,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/itza-climb-finish',
     'https://zwifterbikes.web.app/route/itza-climb-finish',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Itza_Climb_Finish.png',
+    '1,2,3,4',
   ],
   [
     2372883204,
@@ -3832,7 +4864,13 @@ export const routes = [
     0.033,
     1,
     ['new-york-sprint-rev', 'new-york-kom'],
-    [{ from: 35.689, to: 37.061, segment: 'new-york-kom' }],
+    [
+      {
+        from: 35.689,
+        to: 37.061,
+        segment: 'new-york-kom',
+      },
+    ],
     true,
     false,
     false,
@@ -3845,6 +4883,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/nyc-kom-after-party',
     'https://zwifterbikes.web.app/route/nyc-kom-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_NYC_KOM_After_Party.png',
+    '1,2,3,4',
   ],
   [
     2413440572,
@@ -3872,11 +4911,31 @@ export const routes = [
       'marina-sprint',
     ],
     [
-      { from: 3.484, to: 3.796, segment: 'ballon-sprint-rev' },
-      { from: 23.149, to: 23.564, segment: 'aqueduc-kom-rev' },
-      { from: 27.077, to: 29.753, segment: 'petit-kom' },
-      { from: 43.694, to: 44.106, segment: 'aqueduc-kom' },
-      { from: 56.683, to: 57.029, segment: 'marina-sprint' },
+      {
+        from: 3.484,
+        to: 3.796,
+        segment: 'ballon-sprint-rev',
+      },
+      {
+        from: 23.149,
+        to: 23.564,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 27.077,
+        to: 29.753,
+        segment: 'petit-kom',
+      },
+      {
+        from: 43.694,
+        to: 44.106,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 56.683,
+        to: 57.029,
+        segment: 'marina-sprint',
+      },
     ],
     false,
     true,
@@ -3890,6 +4949,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/tire-bouchon',
     'https://zwifterbikes.web.app/route/tire-bouchon',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Tire_Bouchon.png',
+    '1,2,3,4',
   ],
   [
     2422779354,
@@ -3899,7 +4959,7 @@ export const routes = [
     true,
     2.79,
     27,
-    1.479,
+    1.424,
     19,
     null,
     null,
@@ -3919,6 +4979,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/laguardia-loop',
     'https://zwifterbikes.web.app/route/laguardia-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_LaGuardia_Loop.png',
+    '1,2,3,4',
   ],
   [
     2436095601,
@@ -3936,9 +4997,21 @@ export const routes = [
     0,
     ['new-york-sprint-rev', 'new-york-kom'],
     [
-      { from: 8.4, to: 9.762, segment: 'new-york-kom' },
-      { from: 30.93, to: 32.292, segment: 'new-york-kom' },
-      { from: 53.459, to: 54.825, segment: 'new-york-kom' },
+      {
+        from: 8.4,
+        to: 9.762,
+        segment: 'new-york-kom',
+      },
+      {
+        from: 30.93,
+        to: 32.292,
+        segment: 'new-york-kom',
+      },
+      {
+        from: 53.459,
+        to: 54.825,
+        segment: 'new-york-kom',
+      },
     ],
     true,
     false,
@@ -3952,6 +5025,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/2022-cycling-esports-world-championships-route',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_2022_Cycling_Esports_World_Championships_Route.png',
+    '1,2,3,4',
   ],
   [
     2474227587,
@@ -3968,7 +5042,13 @@ export const routes = [
     0.034,
     0,
     ['watopia-sprint'],
-    [{ from: 5.608, to: 5.938, segment: 'watopia-sprint' }],
+    [
+      {
+        from: 5.608,
+        to: 5.938,
+        segment: 'watopia-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -3981,6 +5061,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/beach-island-loop',
     'https://zwifterbikes.web.app/route/beach-island-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Beach_Island_Loop.png',
+    '1,2,3,4',
   ],
   [
     2494975884,
@@ -4006,12 +5087,36 @@ export const routes = [
       'watopia-sprint',
     ],
     [
-      { from: 4.414, to: 13.841, segment: 'epic-kom' },
-      { from: 14.269, to: 15.363, segment: 'radio-tower-kom' },
-      { from: 26.317, to: 28.777, segment: 'zwift-kom-rev' },
-      { from: 40.716, to: 41.611, segment: 'zwift-kom' },
-      { from: 47.646, to: 53.834, segment: 'epic-kom-rev' },
-      { from: 69.206, to: 69.547, segment: 'watopia-sprint' },
+      {
+        from: 4.414,
+        to: 13.841,
+        segment: 'epic-kom',
+      },
+      {
+        from: 14.269,
+        to: 15.363,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 26.317,
+        to: 28.777,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 40.716,
+        to: 41.611,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 47.646,
+        to: 53.834,
+        segment: 'epic-kom-rev',
+      },
+      {
+        from: 69.206,
+        to: 69.547,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -4025,6 +5130,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-pretzel',
     'https://zwifterbikes.web.app/route/the-pretzel',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Pretzel.png',
+    '1,2,3,4',
   ],
   [
     2569385980,
@@ -4050,7 +5156,13 @@ export const routes = [
       'acropolis-sprint-rev',
       'stoneway-sprint-rev',
     ],
-    [{ from: 12.56, to: 13.05, segment: 'woodland-sprint' }],
+    [
+      {
+        from: 12.56,
+        to: 13.05,
+        segment: 'woodland-sprint',
+      },
+    ],
     false,
     false,
     false,
@@ -4063,6 +5175,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/coast-crusher',
     'https://zwifterbikes.web.app/route/coast-crusher',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Coast_Crusher.png',
+    '6,7,8,9',
   ],
   [
     2573468147,
@@ -4079,7 +5192,13 @@ export const routes = [
     0.272,
     0,
     ['ventoux-kom'],
-    [{ from: 1.819, to: 20.87, segment: 'ventoux-kom' }],
+    [
+      {
+        from: 1.819,
+        to: 20.87,
+        segment: 'ventoux-kom',
+      },
+    ],
     false,
     false,
     false,
@@ -4092,6 +5211,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/ven-top',
     'https://zwifterbikes.web.app/route/ven-top',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Ven_Top.png',
+    '1,2,3,4',
   ],
   [
     2590569306,
@@ -4121,6 +5241,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/shuman-trail-loop',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Shuman_Trail_Loop.png',
+    '101,102,103,104',
   ],
   [
     2592027600,
@@ -4150,6 +5271,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/innsbruckring',
     'https://zwifterbikes.web.app/route/innsbruckring',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_Innsbruckring.png',
+    '1,2,3,4',
   ],
   [
     2595459121,
@@ -4185,6 +5307,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/canopies-and-coastlines',
     'https://zwifterbikes.web.app/route/canopies-and-coastlines',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Canopies_and_Coastlines.png',
+    '11,12,13,14',
   ],
   [
     2627606248,
@@ -4202,9 +5325,21 @@ export const routes = [
     3,
     ['zwift-kom', 'titans-grove-kom', 'volcano-kom'],
     [
-      { from: 0.935, to: 1.839, segment: 'zwift-kom' },
-      { from: 12.959, to: 15.565, segment: 'titans-grove-kom' },
-      { from: 25.46, to: 29.172, segment: 'volcano-kom' },
+      {
+        from: 0.935,
+        to: 1.839,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 12.959,
+        to: 15.565,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 25.46,
+        to: 29.172,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     true,
@@ -4218,6 +5353,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/three-little-sisters',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Three_Little_Sisters.png',
+    '1,2,3,4',
   ],
   [
     2644664789,
@@ -4235,8 +5371,16 @@ export const routes = [
     21,
     ['jarvis-sprint-rev', 'jarvis-kom-rev', 'watopia-sprint-rev', 'zwift-kom-rev'],
     [
-      { from: 0.227, to: 1.528, segment: 'jarvis-kom-rev' },
-      { from: 11.018, to: 13.476, segment: 'zwift-kom-rev' },
+      {
+        from: 0.227,
+        to: 1.528,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 11.018,
+        to: 13.476,
+        segment: 'zwift-kom-rev',
+      },
     ],
     false,
     true,
@@ -4250,6 +5394,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/triple-twist',
     'https://zwifterbikes.web.app/route/triple-twist',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Triple_Twist.png',
+    '1,2,3,4',
   ],
   [
     2653858696,
@@ -4279,6 +5424,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/two-village-loop',
     'https://zwifterbikes.web.app/route/two-village-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Two_Village_Loop.png',
+    '1,2,3,4',
   ],
   [
     2663908549,
@@ -4295,7 +5441,13 @@ export const routes = [
     0.383,
     7,
     ['alpe-du-zwift'],
-    [{ from: 5.033, to: 17.259, segment: 'alpe-du-zwift' }],
+    [
+      {
+        from: 5.033,
+        to: 17.259,
+        segment: 'alpe-du-zwift',
+      },
+    ],
     false,
     false,
     false,
@@ -4308,6 +5460,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/road-to-sky',
     'https://zwifterbikes.web.app/route/road-to-sky',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Road_to_Sky.png',
+    '6,7,8,9',
   ],
   [
     2675063596,
@@ -4325,8 +5478,16 @@ export const routes = [
     0,
     ['titans-grove-kom-rev', 'fuego-flats-rev'],
     [
-      { from: 33.497, to: 34.39, segment: 'titans-grove-kom-rev' },
-      { from: 40.195, to: 47.302, segment: 'fuego-flats-rev' },
+      {
+        from: 33.497,
+        to: 34.39,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 40.195,
+        to: 47.302,
+        segment: 'fuego-flats-rev',
+      },
     ],
     false,
     false,
@@ -4340,6 +5501,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/dust-in-the-wind',
     'https://zwifterbikes.web.app/route/dust-in-the-wind',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Dust_In_The_Wind.png',
+    '11,12,13,14',
   ],
   [
     2681889340,
@@ -4369,6 +5531,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Climb_Portal___Volcano.png',
+    '1,2,3,4',
   ],
   [
     2694166390,
@@ -4398,6 +5561,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/classique',
     'https://zwifterbikes.web.app/route/classique',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_Classique.png',
+    '1,2,3,4',
   ],
   [
     2698009951,
@@ -4415,8 +5579,16 @@ export const routes = [
     16,
     ['jarvis-kom', 'jarvis-sprint'],
     [
-      { from: 0.655, to: 2.461, segment: 'jarvis-kom' },
-      { from: 3.804, to: 4.002, segment: 'jarvis-sprint' },
+      {
+        from: 0.655,
+        to: 2.461,
+        segment: 'jarvis-kom',
+      },
+      {
+        from: 3.804,
+        to: 4.002,
+        segment: 'jarvis-sprint',
+      },
     ],
     false,
     true,
@@ -4430,6 +5602,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-classic',
     'https://zwifterbikes.web.app/route/the-classic',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Classic.png',
+    '1,2,3,4',
   ],
   [
     2708527018,
@@ -4459,6 +5632,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Handful_of_Gravel_Run.png',
+    '6,7,8,9',
   ],
   [
     2737483381,
@@ -4476,9 +5650,21 @@ export const routes = [
     1,
     ['hilly-loop', 'zwift-kom', 'watopia-sprint'],
     [
-      { from: 0, to: 9.081, segment: 'hilly-loop' },
-      { from: 0.941, to: 1.825, segment: 'zwift-kom' },
-      { from: 6.148, to: 6.49, segment: 'watopia-sprint' },
+      {
+        from: 0,
+        to: 9.081,
+        segment: 'hilly-loop',
+      },
+      {
+        from: 0.941,
+        to: 1.825,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 6.148,
+        to: 6.49,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -4492,6 +5678,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/hilly-route',
     'https://zwifterbikes.web.app/route/hilly-route',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Hilly_Route.png',
+    '1,2,3,4',
   ],
   [
     2746475460,
@@ -4509,10 +5696,26 @@ export const routes = [
     0,
     ['titans-grove-kom', 'fuego-flats-rev', 'titans-grove-kom-rev', 'fuego-flats'],
     [
-      { from: 10.257, to: 12.863, segment: 'titans-grove-kom' },
-      { from: 24.367, to: 31.439, segment: 'fuego-flats-rev' },
-      { from: 37.831, to: 38.729, segment: 'titans-grove-kom-rev' },
-      { from: 51.171, to: 51.673, segment: 'fuego-flats' },
+      {
+        from: 10.257,
+        to: 12.863,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 24.367,
+        to: 31.439,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 37.831,
+        to: 38.729,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 51.171,
+        to: 51.673,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -4526,6 +5729,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/eastern-eight',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Eastern_Eight.png',
+    '11,12,13,14',
   ],
   [
     2748657713,
@@ -4543,10 +5747,26 @@ export const routes = [
     6,
     ['watopia-sprint', 'volcano-kom', 'zwift-kom-rev', 'fuego-flats'],
     [
-      { from: 15.339, to: 15.674, segment: 'watopia-sprint' },
-      { from: 19.761, to: 23.455, segment: 'volcano-kom' },
-      { from: 31.648, to: 34.115, segment: 'zwift-kom-rev' },
-      { from: 39.365, to: 39.863, segment: 'fuego-flats' },
+      {
+        from: 15.339,
+        to: 15.674,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 19.761,
+        to: 23.455,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 31.648,
+        to: 34.115,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 39.365,
+        to: 39.863,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -4560,6 +5780,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/out-and-back-again',
     'https://zwifterbikes.web.app/route/out-and-back-again',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Out_And_Back_Again.png',
+    '11,12,13,14',
   ],
   [
     2768300955,
@@ -4577,8 +5798,16 @@ export const routes = [
     72,
     ['itza-kom', 'acropolis-sprint-rev', 'stoneway-sprint-rev', 'mayan-mountainside-kom'],
     [
-      { from: 0.594, to: 4.334, segment: 'itza-kom' },
-      { from: 13.02, to: 15.021, segment: 'mayan-mountainside-kom' },
+      {
+        from: 0.594,
+        to: 4.334,
+        segment: 'itza-kom',
+      },
+      {
+        from: 13.02,
+        to: 15.021,
+        segment: 'mayan-mountainside-kom',
+      },
     ],
     false,
     true,
@@ -4592,6 +5821,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/coastal-crown-loop',
     'https://zwifterbikes.web.app/route/coastal-crown-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Coastal_Crown_Loop.png',
+    '21,22,23,24',
   ],
   [
     2818536273,
@@ -4608,7 +5838,13 @@ export const routes = [
     0.022,
     0,
     ['champs-elysees'],
-    [{ from: 0, to: 6.631, segment: 'champs-elysees' }],
+    [
+      {
+        from: 0,
+        to: 6.631,
+        segment: 'champs-elysees',
+      },
+    ],
     false,
     true,
     false,
@@ -4621,6 +5857,7 @@ export const routes = [
     'https://whatsonzwift.com/world/paris/route/champs-elysees-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/PARIS_Champs__lys_es_Run.png',
+    '1,2,3,4',
   ],
   [
     2826340040,
@@ -4650,6 +5887,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Outer_Scotland.png',
+    '1,2,3,4',
   ],
   [
     2829629527,
@@ -4679,6 +5917,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/serpentine-8',
     'https://zwifterbikes.web.app/route/serpentine-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Serpentine_8.png',
+    '6,7,8,9',
   ],
   [
     2839057126,
@@ -4708,6 +5947,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/jungle-circuit-reverse',
     'https://zwifterbikes.web.app/route/jungle-circuit-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Jungle_Circuit_Reverse.png',
+    '6,7,8,9',
   ],
   [
     2843604888,
@@ -4724,7 +5964,13 @@ export const routes = [
     null,
     null,
     ['bologna-tt'],
-    [{ from: 0, to: 8.031, segment: 'bologna-tt' }],
+    [
+      {
+        from: 0,
+        to: 8.031,
+        segment: 'bologna-tt',
+      },
+    ],
     false,
     false,
     true,
@@ -4737,6 +5983,7 @@ export const routes = [
     'https://whatsonzwift.com/world/bologna-tt/route/bologna-time-trial',
     'https://zwifterbikes.web.app/route/time-trial-lap',
     'https://cdn.zwift.com/static/zc/ROUTES/BOLOGNATT_Bologna_Time_Trial.png',
+    '1,2,3,4',
   ],
   [
     2852153296,
@@ -4764,11 +6011,31 @@ export const routes = [
       'marina-sprint-rev',
     ],
     [
-      { from: 12.492, to: 12.899, segment: 'aqueduc-kom-rev' },
-      { from: 16.885, to: 17.225, segment: 'ballon-sprint-rev' },
-      { from: 33.027, to: 33.45, segment: 'aqueduc-kom' },
-      { from: 46.009, to: 46.369, segment: 'marina-sprint' },
-      { from: 54.341, to: 57.026, segment: 'petit-kom' },
+      {
+        from: 12.492,
+        to: 12.899,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 16.885,
+        to: 17.225,
+        segment: 'ballon-sprint-rev',
+      },
+      {
+        from: 33.027,
+        to: 33.45,
+        segment: 'aqueduc-kom',
+      },
+      {
+        from: 46.009,
+        to: 46.369,
+        segment: 'marina-sprint',
+      },
+      {
+        from: 54.341,
+        to: 57.026,
+        segment: 'petit-kom',
+      },
     ],
     false,
     true,
@@ -4782,6 +6049,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/petit-boucle',
     'https://zwifterbikes.web.app/route/petit-boucle',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Petit_Boucle.png',
+    '1,2,3,4',
   ],
   [
     2866480562,
@@ -4805,8 +6073,16 @@ export const routes = [
       'temple-kom-from-fishing-village-side',
     ],
     [
-      { from: 3.886, to: 4.38, segment: 'railway-sprint' },
-      { from: 21.064, to: 23.582, segment: 'temple-kom-from-fishing-village-side' },
+      {
+        from: 3.886,
+        to: 4.38,
+        segment: 'railway-sprint',
+      },
+      {
+        from: 21.064,
+        to: 23.582,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
     ],
     false,
     true,
@@ -4820,6 +6096,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/chasing-the-sun',
     'https://zwifterbikes.web.app/route/chasing-the-sun',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Chasing_the_Sun.png',
+    '16,17,18,19',
   ],
   [
     2875658892,
@@ -4836,7 +6113,13 @@ export const routes = [
     0.038,
     null,
     ['crit-city-rev', 'prime-rev'],
-    [{ from: 0, to: 1.943, segment: 'crit-city-rev' }],
+    [
+      {
+        from: 0,
+        to: 1.943,
+        segment: 'crit-city-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -4849,6 +6132,7 @@ export const routes = [
     'https://whatsonzwift.com/world/crit-city/route/the-bell-lap',
     'https://zwifterbikes.web.app/route/bell-lap',
     'https://cdn.zwift.com/static/zc/ROUTES/CRITCITY_The_Bell_Lap.png',
+    '1,2,3,4',
   ],
   [
     2878180967,
@@ -4873,12 +6157,36 @@ export const routes = [
       'watopia-sprint',
     ],
     [
-      { from: 0.932, to: 1.833, segment: 'zwift-kom' },
-      { from: 8.401, to: 12.11, segment: 'volcano-kom' },
-      { from: 23.81, to: 33.227, segment: 'epic-kom' },
-      { from: 33.651, to: 34.74, segment: 'radio-tower-kom' },
-      { from: 46.958, to: 59.187, segment: 'alpe-du-zwift' },
-      { from: 86.053, to: 86.382, segment: 'watopia-sprint' },
+      {
+        from: 0.932,
+        to: 1.833,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 8.401,
+        to: 12.11,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 23.81,
+        to: 33.227,
+        segment: 'epic-kom',
+      },
+      {
+        from: 33.651,
+        to: 34.74,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 46.958,
+        to: 59.187,
+        segment: 'alpe-du-zwift',
+      },
+      {
+        from: 86.053,
+        to: 86.382,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -4892,6 +6200,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/four-horsemen',
     'https://zwifterbikes.web.app/route/four-horsemen',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Four_Horsemen.png',
+    '1,2,3,4',
   ],
   [
     2896159042,
@@ -4909,9 +6218,21 @@ export const routes = [
     1,
     ['rooftop-kom', 'castle-kom', 'temple-kom-from-fishing-village-side'],
     [
-      { from: 2.598, to: 4.458, segment: 'rooftop-kom' },
-      { from: 14.371, to: 17.033, segment: 'castle-kom' },
-      { from: 19.315, to: 21.819, segment: 'temple-kom-from-fishing-village-side' },
+      {
+        from: 2.598,
+        to: 4.458,
+        segment: 'rooftop-kom',
+      },
+      {
+        from: 14.371,
+        to: 17.033,
+        segment: 'castle-kom',
+      },
+      {
+        from: 19.315,
+        to: 21.819,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
     ],
     false,
     true,
@@ -4925,6 +6246,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/temples-and-towers',
     'https://zwifterbikes.web.app/route/temples-and-towers',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Temples_and_Towers.png',
+    '11,12,13,14',
   ],
   [
     2900074211,
@@ -4950,13 +6272,41 @@ export const routes = [
       'epic-kom',
     ],
     [
-      { from: 5.614, to: 5.94, segment: 'watopia-sprint' },
-      { from: 17.997, to: 25.087, segment: 'fuego-flats-rev' },
-      { from: 26.568, to: 27.06, segment: 'fuego-flats' },
-      { from: 37.344, to: 39.961, segment: 'titans-grove-kom' },
-      { from: 51.499, to: 53.959, segment: 'zwift-kom-rev' },
-      { from: 59.222, to: 59.711, segment: 'fuego-flats' },
-      { from: 69.752, to: 79.165, segment: 'epic-kom' },
+      {
+        from: 5.614,
+        to: 5.94,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 17.997,
+        to: 25.087,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 26.568,
+        to: 27.06,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 37.344,
+        to: 39.961,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 51.499,
+        to: 53.959,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 59.222,
+        to: 59.711,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 69.752,
+        to: 79.165,
+        segment: 'epic-kom',
+      },
     ],
     false,
     false,
@@ -4970,6 +6320,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/2022-medio-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Medio_Fondo_2022.png',
+    '1,2,3,4',
   ],
   [
     2905381067,
@@ -4987,9 +6338,21 @@ export const routes = [
     0,
     ['yorkshire-sprint-rev', 'yorkshire-kom', 'yorkshire-sprint', 'yorkshire-kom-rev'],
     [
-      { from: 2.395, to: 2.791, segment: 'yorkshire-sprint-rev' },
-      { from: 12.187, to: 13.399, segment: 'yorkshire-kom' },
-      { from: 17.719, to: 18.873, segment: 'yorkshire-kom-rev' },
+      {
+        from: 2.395,
+        to: 2.791,
+        segment: 'yorkshire-sprint-rev',
+      },
+      {
+        from: 12.187,
+        to: 13.399,
+        segment: 'yorkshire-kom',
+      },
+      {
+        from: 17.719,
+        to: 18.873,
+        segment: 'yorkshire-kom-rev',
+      },
     ],
     false,
     true,
@@ -5003,6 +6366,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/royal-pump-room-8',
     'https://zwifterbikes.web.app/route/royal-pump-room-8',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Royal_Pump_Room_8.png',
+    '1,2,3,4',
   ],
   [
     2927651296,
@@ -5028,7 +6392,13 @@ export const routes = [
       'tower-sprint-rev',
       'alley-sprint-rev',
     ],
-    [{ from: 36.643, to: 36.954, segment: 'tower-sprint' }],
+    [
+      {
+        from: 36.643,
+        to: 36.954,
+        segment: 'tower-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -5041,6 +6411,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/makuri-pretzel',
     'https://zwifterbikes.web.app/route/makuri-pretzel',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Makuri_Pretzel.png',
+    '16,17,18,19',
   ],
   [
     2945813240,
@@ -5057,19 +6428,26 @@ export const routes = [
     0.034,
     0,
     ['new-york-kom-rev', 'new-york-sprint'],
-    [{ from: 1.464, to: 2.606, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 1.464,
+        to: 2.606,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
     true,
     ['running', 'cycling'],
-    140,
+    135,
     19141192,
     'https://www.strava.com/segments/19141192',
     'https://zwiftinsider.com/route/grand-central-circuit',
     'https://whatsonzwift.com/world/new-york/route/grand-central-circuit',
     'https://zwifterbikes.web.app/route/grand-central-circuit',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Grand_Central_Circuit.png',
+    '1,2,3,4',
   ],
   [
     2947111049,
@@ -5086,7 +6464,13 @@ export const routes = [
     1.184,
     1,
     ['epic-kom'],
-    [{ from: 4.408, to: 13.808, segment: 'epic-kom' }],
+    [
+      {
+        from: 4.408,
+        to: 13.808,
+        segment: 'epic-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -5099,6 +6483,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/big-loop',
     'https://zwifterbikes.web.app/route/big-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Big_Loop.png',
+    '1,2,3,4',
   ],
   [
     2953010285,
@@ -5128,6 +6513,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mountain-mash',
     'https://zwifterbikes.web.app/route/mountain-mash',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Mountain_Mash.png',
+    '6,7,8,9',
   ],
   [
     2954366662,
@@ -5144,7 +6530,13 @@ export const routes = [
     0.242,
     6,
     ['new-york-sprint', 'new-york-kom'],
-    [{ from: 8.498, to: 9.866, segment: 'new-york-kom' }],
+    [
+      {
+        from: 8.498,
+        to: 9.866,
+        segment: 'new-york-kom',
+      },
+    ],
     true,
     true,
     false,
@@ -5157,6 +6549,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/knickerbocker',
     'https://zwifterbikes.web.app/route/knickerbocker',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Knickerbocker.png',
+    '1,2,3,4',
   ],
   [
     2966818006,
@@ -5174,9 +6567,21 @@ export const routes = [
     1,
     ['epic-kom', 'radio-tower-kom', 'watopia-sprint'],
     [
-      { from: 4.391, to: 13.801, segment: 'epic-kom' },
-      { from: 14.241, to: 15.331, segment: 'radio-tower-kom' },
-      { from: 26.495, to: 26.829, segment: 'watopia-sprint' },
+      {
+        from: 4.391,
+        to: 13.801,
+        segment: 'epic-kom',
+      },
+      {
+        from: 14.241,
+        to: 15.331,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 26.495,
+        to: 26.829,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -5190,6 +6595,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mountain-route',
     'https://zwifterbikes.web.app/route/mountain-route',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Mountain_Route.png',
+    '1,2,3,4',
   ],
   [
     2967612381,
@@ -5219,6 +6625,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/road-to-ruins-reverse',
     'https://zwifterbikes.web.app/route/road-to-ruins-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Road_To_Ruins_Reverse.png',
+    '1,2,3,4',
   ],
   [
     2969952077,
@@ -5236,9 +6643,21 @@ export const routes = [
     0,
     ['titans-grove-kom-rev', 'epic-kom', 'alpe-du-zwift'],
     [
-      { from: 3.637, to: 4.539, segment: 'titans-grove-kom-rev' },
-      { from: 10.642, to: 20.048, segment: 'epic-kom' },
-      { from: 33.698, to: 45.916, segment: 'alpe-du-zwift' },
+      {
+        from: 3.637,
+        to: 4.539,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 10.642,
+        to: 20.048,
+        segment: 'epic-kom',
+      },
+      {
+        from: 33.698,
+        to: 45.916,
+        segment: 'alpe-du-zwift',
+      },
     ],
     false,
     false,
@@ -5252,6 +6671,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/quatch-quest',
     'https://zwifterbikes.web.app/route/quatch-quest',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Quatch_Quest.png',
+    '11,12,13,14',
   ],
   [
     2980619755,
@@ -5281,6 +6701,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/farmland-loop',
     'https://zwifterbikes.web.app/route/farmland-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Farmland_Loop.png',
+    '1,2,3,4',
   ],
   [
     3007266671,
@@ -5297,7 +6718,13 @@ export const routes = [
     2.654,
     42,
     ['yorkshire-sprint-rev'],
-    [{ from: 2.573, to: 2.976, segment: 'yorkshire-sprint-rev' }],
+    [
+      {
+        from: 2.573,
+        to: 2.976,
+        segment: 'yorkshire-sprint-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -5310,6 +6737,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/queen-s-highway',
     'https://zwifterbikes.web.app/route/queens-highway',
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Queens_Highway.png',
+    '1,2,3,4',
   ],
   [
     3012588561,
@@ -5339,6 +6767,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/may-field',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_May_Field.png',
+    '116',
   ],
   [
     3023359358,
@@ -5356,8 +6785,16 @@ export const routes = [
     0,
     ['watopia-sprint-rev', 'titans-grove-kom-rev', 'epic-kom-rev'],
     [
-      { from: 11.711, to: 12.61, segment: 'titans-grove-kom-rev' },
-      { from: 21.516, to: 27.681, segment: 'epic-kom-rev' },
+      {
+        from: 11.711,
+        to: 12.61,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 21.516,
+        to: 27.681,
+        segment: 'epic-kom-rev',
+      },
     ],
     false,
     false,
@@ -5371,6 +6808,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/climber-s-gambit',
     'https://zwifterbikes.web.app/route/climbers-gambit',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Climbers_Gambit.png',
+    '1,2,3,4',
   ],
   [
     3030004732,
@@ -5400,6 +6838,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Power_to_the_Portal.png',
+    '1,2,3,4',
   ],
   [
     3068694512,
@@ -5417,8 +6856,16 @@ export const routes = [
     7,
     ['jarvis-kom', 'jarvis-sprint'],
     [
-      { from: 0.655, to: 2.461, segment: 'jarvis-kom' },
-      { from: 3.804, to: 4.002, segment: 'jarvis-sprint' },
+      {
+        from: 0.655,
+        to: 2.461,
+        segment: 'jarvis-kom',
+      },
+      {
+        from: 3.804,
+        to: 4.002,
+        segment: 'jarvis-sprint',
+      },
     ],
     false,
     true,
@@ -5432,6 +6879,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-classic-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Classic_Run.png',
+    '1,2,3,4',
   ],
   [
     3078665969,
@@ -5449,8 +6897,16 @@ export const routes = [
     15,
     ['new-york-kom', 'new-york-sprint-rev', 'new-york-kom-rev'],
     [
-      { from: 8.614, to: 9.979, segment: 'new-york-kom' },
-      { from: 15.869, to: 16.995, segment: 'new-york-kom-rev' },
+      {
+        from: 8.614,
+        to: 9.979,
+        segment: 'new-york-kom',
+      },
+      {
+        from: 15.869,
+        to: 16.995,
+        segment: 'new-york-kom-rev',
+      },
     ],
     true,
     true,
@@ -5464,6 +6920,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/rising-empire',
     'https://zwifterbikes.web.app/route/rising-empire',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Rising_Empire.png',
+    '1,2,3,4',
   ],
   [
     3099224394,
@@ -5480,7 +6937,13 @@ export const routes = [
     0.028,
     0,
     ['titans-grove-kom-rev'],
-    [{ from: 3.503, to: 4.414, segment: 'titans-grove-kom-rev' }],
+    [
+      {
+        from: 3.503,
+        to: 4.414,
+        segment: 'titans-grove-kom-rev',
+      },
+    ],
     false,
     false,
     false,
@@ -5493,6 +6956,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/titan-s-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Titans_Run.png',
+    '11,12,13,14',
   ],
   [
     3101693166,
@@ -5509,7 +6973,13 @@ export const routes = [
     0.254,
     0,
     ['innsbruck-sprint-rev', 'innsbruck-kom-rev'],
-    [{ from: 7.205, to: 12.942, segment: 'innsbruck-kom-rev' }],
+    [
+      {
+        from: 7.205,
+        to: 12.942,
+        segment: 'innsbruck-kom-rev',
+      },
+    ],
     false,
     false,
     false,
@@ -5522,6 +6992,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_InnsbruckConti.png',
+    '1,2,3,4',
   ],
   [
     3114603308,
@@ -5538,7 +7009,13 @@ export const routes = [
     0.387,
     1,
     ['innsbruck-kom', 'innsbruck-sprint', 'innsbruck-uci-lap'],
-    [{ from: 3.131, to: 10.544, segment: 'innsbruck-kom' }],
+    [
+      {
+        from: 3.131,
+        to: 10.544,
+        segment: 'innsbruck-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -5551,6 +7028,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/2018-uci-worlds-short-lap',
     'https://zwifterbikes.web.app/route/2018-uci-worlds-course-short-lap',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_2018_Worlds_Short_Lap.png',
+    '1,2,3,4',
   ],
   [
     3166535632,
@@ -5568,8 +7046,16 @@ export const routes = [
     0,
     ['richmond-kom', '23rd-st'],
     [
-      { from: 4.948, to: 5.562, segment: 'richmond-kom' },
-      { from: 6.476, to: 6.745, segment: '23rd-st' },
+      {
+        from: 4.948,
+        to: 5.562,
+        segment: 'richmond-kom',
+      },
+      {
+        from: 6.476,
+        to: 6.745,
+        segment: '23rd-st',
+      },
     ],
     false,
     true,
@@ -5583,6 +7069,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/cobbled-climbs-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Cobbled_Climbs_Run.png',
+    '1,2,3,4',
   ],
   [
     3219074012,
@@ -5600,8 +7087,16 @@ export const routes = [
     1,
     ['radio-tower-kom', 'watopia-sprint'],
     [
-      { from: 10.709, to: 11.805, segment: 'radio-tower-kom' },
-      { from: 29.021, to: 29.362, segment: 'watopia-sprint' },
+      {
+        from: 10.709,
+        to: 11.805,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 29.021,
+        to: 29.362,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -5615,6 +7110,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mountain-8',
     'https://zwifterbikes.web.app/route/mountain-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Mountain_8.png',
+    '1,2,3,4',
   ],
   [
     3261167746,
@@ -5632,9 +7128,21 @@ export const routes = [
     0,
     ['volcano-kom', 'watopia-sprint', 'fuego-flats-rev'],
     [
-      { from: 13.355, to: 20.434, segment: 'fuego-flats-rev' },
-      { from: 43.4, to: 43.729, segment: 'watopia-sprint' },
-      { from: 51.908, to: 55.612, segment: 'volcano-kom' },
+      {
+        from: 13.355,
+        to: 20.434,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 43.4,
+        to: 43.729,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 51.908,
+        to: 55.612,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     false,
@@ -5648,6 +7156,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/spiral-into-the-volcano',
     'https://zwifterbikes.web.app/route/spiral-into-the-volcano',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Spiral_into_the_Volcano.png',
+    '1,2,3,4',
   ],
   [
     3262665065,
@@ -5677,6 +7186,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_Flat.png',
+    '1,2,3,4',
   ],
   [
     3276403604,
@@ -5693,7 +7203,13 @@ export const routes = [
     0.725,
     7,
     ['box-hill'],
-    [{ from: 12.432, to: 15.428, segment: 'box-hill' }],
+    [
+      {
+        from: 12.432,
+        to: 15.428,
+        segment: 'box-hill',
+      },
+    ],
     false,
     true,
     false,
@@ -5706,6 +7222,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greater-london-loop',
     'https://zwifterbikes.web.app/route/greater-london-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greater_London_Loop.png',
+    '1,2,3,4',
   ],
   [
     3282611437,
@@ -5735,6 +7252,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/flatland-loop',
     'https://zwifterbikes.web.app/route/flatland-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Flatland_Loop.png',
+    '1,2,3,4',
   ],
   [
     3302953739,
@@ -5747,9 +7265,9 @@ export const routes = [
     0.051,
     0,
     0.01,
-    215,
+    0,
     0.022,
-    215,
+    0,
     ['castle-park-sprint-rev'],
     [],
     false,
@@ -5764,6 +7282,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/sleepless-city',
     'https://zwifterbikes.web.app/route/sleepless-city',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Sleepless_City.png',
+    '11,12,13,14',
   ],
   [
     3312037616,
@@ -5793,6 +7312,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/two-bridges-loop',
     'https://zwifterbikes.web.app/route/two-bridges-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Two_Bridges_Loop.png',
+    '1,2,3,4',
   ],
   [
     3324272424,
@@ -5810,8 +7330,16 @@ export const routes = [
     0,
     ['watopia-sprint-rev', 'mayan-mountainside-kom', 'itza-kom'],
     [
-      { from: 21.744, to: 23.728, segment: 'mayan-mountainside-kom' },
-      { from: 24.321, to: 28.077, segment: 'itza-kom' },
+      {
+        from: 21.744,
+        to: 23.728,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 24.321,
+        to: 28.077,
+        segment: 'itza-kom',
+      },
     ],
     false,
     true,
@@ -5825,6 +7353,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/snowman',
     'https://zwifterbikes.web.app/route/snowman',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Snowman.png',
+    '1,2,3,4',
   ],
   [
     3330165223,
@@ -5849,9 +7378,21 @@ export const routes = [
       'shisa-sprint',
     ],
     [
-      { from: 17.748, to: 18.243, segment: 'railway-sprint' },
-      { from: 30.233, to: 32.917, segment: 'castle-kom' },
-      { from: 35.189, to: 37.701, segment: 'temple-kom-from-fishing-village-side' },
+      {
+        from: 17.748,
+        to: 18.243,
+        segment: 'railway-sprint',
+      },
+      {
+        from: 30.233,
+        to: 32.917,
+        segment: 'castle-kom',
+      },
+      {
+        from: 35.189,
+        to: 37.701,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
     ],
     false,
     true,
@@ -5865,6 +7406,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/shisha-shakedown',
     'https://zwifterbikes.web.app/route/shisa-shakedown',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Shisa_Shakedown.png',
+    '21,22,23,24',
   ],
   [
     3351665212,
@@ -5894,6 +7436,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/glasgow-crit-circuit-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Glasgow_Crit_Circuit_Run.png',
+    '1,2,3,4',
   ],
   [
     3356878261,
@@ -5910,7 +7453,13 @@ export const routes = [
     0.027,
     0,
     ['tower-sprint-rev', 'castle-park-sprint-rev', 'alley-sprint-rev', 'railway-sprint'],
-    [{ from: 7.647, to: 8.13, segment: 'railway-sprint' }],
+    [
+      {
+        from: 7.647,
+        to: 8.13,
+        segment: 'railway-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -5923,6 +7472,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/sprinter-s-playground',
     'https://zwifterbikes.web.app/route/sprinters-playground',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Sprinters_Playground.png',
+    '11,12,13,14',
   ],
   [
     3364574135,
@@ -5939,7 +7489,13 @@ export const routes = [
     3.283,
     14,
     ['lutece-sprint', 'champs-elysees'],
-    [{ from: 0, to: 6.617, segment: 'champs-elysees' }],
+    [
+      {
+        from: 0,
+        to: 6.617,
+        segment: 'champs-elysees',
+      },
+    ],
     false,
     true,
     false,
@@ -5952,6 +7508,7 @@ export const routes = [
     'https://whatsonzwift.com/world/paris/route/champs-elysees',
     'https://zwifterbikes.web.app/route/champs-elysees',
     'https://cdn.zwift.com/static/zc/ROUTES/PARIS_Champs__lys_es.png',
+    '1,2,3,4',
   ],
   [
     3366225080,
@@ -5968,7 +7525,13 @@ export const routes = [
     2.478,
     6,
     ['fuego-flats'],
-    [{ from: 16.385, to: 16.879, segment: 'fuego-flats' }],
+    [
+      {
+        from: 16.385,
+        to: 16.879,
+        segment: 'fuego-flats',
+      },
+    ],
     false,
     true,
     false,
@@ -5981,6 +7544,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/tick-tock',
     'https://zwifterbikes.web.app/route/tick-tock',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Tick_Tock.png',
+    '11,12,13,14',
   ],
   [
     3367186349,
@@ -6010,6 +7574,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/suki-s-playground',
     'https://zwifterbikes.web.app/route/sukis-playground',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Sukis_Playground.png',
+    '1,2,3,4',
   ],
   [
     3368626651,
@@ -6027,11 +7592,31 @@ export const routes = [
     0,
     ['watopia-sprint', 'fuego-flats-rev', 'fuego-flats', 'volcano-circuit', 'volcano-kom'],
     [
-      { from: 5.618, to: 5.944, segment: 'watopia-sprint' },
-      { from: 17.991, to: 25.081, segment: 'fuego-flats-rev' },
-      { from: 26.561, to: 27.065, segment: 'fuego-flats' },
-      { from: 43.477, to: 47.551, segment: 'volcano-circuit' },
-      { from: 49.377, to: 53.107, segment: 'volcano-kom' },
+      {
+        from: 5.618,
+        to: 5.944,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 17.991,
+        to: 25.081,
+        segment: 'fuego-flats-rev',
+      },
+      {
+        from: 26.561,
+        to: 27.065,
+        segment: 'fuego-flats',
+      },
+      {
+        from: 43.477,
+        to: 47.551,
+        segment: 'volcano-circuit',
+      },
+      {
+        from: 49.377,
+        to: 53.107,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     false,
@@ -6045,6 +7630,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/2022-bambino-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Bambino_Fondo_2022.png',
+    '1,2,3,4',
   ],
   [
     3378411990,
@@ -6062,8 +7648,16 @@ export const routes = [
     0,
     ['jarvis-sprint-rev', 'jarvis-kom-rev', 'fuego-flats-rev'],
     [
-      { from: 4.258, to: 5.557, segment: 'jarvis-kom-rev' },
-      { from: 18.582, to: 25.665, segment: 'fuego-flats-rev' },
+      {
+        from: 4.258,
+        to: 5.557,
+        segment: 'jarvis-kom-rev',
+      },
+      {
+        from: 18.582,
+        to: 25.665,
+        segment: 'fuego-flats-rev',
+      },
     ],
     false,
     true,
@@ -6077,6 +7671,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/waisted-8',
     'https://zwifterbikes.web.app/route/waisted-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Waisted_8.png',
+    '1,2,3,4',
   ],
   [
     3379779247,
@@ -6106,6 +7701,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/three-village-loop',
     'https://zwifterbikes.web.app/route/three-village-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Three_Village_Loop.png',
+    '6,7,8,9',
   ],
   [
     3382019812,
@@ -6123,9 +7719,21 @@ export const routes = [
     1,
     ['zwift-kom-rev', 'watopia-sprint-rev', 'zwift-kom', 'watopia-sprint'],
     [
-      { from: 7.022, to: 9.492, segment: 'zwift-kom-rev' },
-      { from: 21.449, to: 22.345, segment: 'zwift-kom' },
-      { from: 26.661, to: 26.986, segment: 'watopia-sprint' },
+      {
+        from: 7.022,
+        to: 9.492,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 21.449,
+        to: 22.345,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 26.661,
+        to: 26.986,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     true,
@@ -6139,6 +7747,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/figure-8',
     'https://zwifterbikes.web.app/route/figure-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Figure_8.png',
+    '1,2,3,4',
   ],
   [
     3395698268,
@@ -6155,7 +7764,13 @@ export const routes = [
     1.119,
     1,
     ['watopia-sprint'],
-    [{ from: 7.244, to: 7.588, segment: 'watopia-sprint' }],
+    [
+      {
+        from: 7.244,
+        to: 7.588,
+        segment: 'watopia-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -6168,6 +7783,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/flat-route',
     'https://zwifterbikes.web.app/route/flat-route',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Watopia_Flat_Route.png',
+    '1,2,3,4',
   ],
   [
     3407362320,
@@ -6184,7 +7800,13 @@ export const routes = [
     0.035,
     0,
     ['tower-sprint', 'alley-sprint', 'castle-park-sprint'],
-    [{ from: 2.108, to: 2.419, segment: 'tower-sprint' }],
+    [
+      {
+        from: 2.108,
+        to: 2.419,
+        segment: 'tower-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -6197,6 +7819,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/neon-flats',
     'https://zwifterbikes.web.app/route/neon-flats',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Neon_Flats.png',
+    '11,12,13,14',
   ],
   [
     3453194200,
@@ -6213,7 +7836,13 @@ export const routes = [
     0.114,
     0,
     ['watopia-sprint-rev', 'fuego-flats', 'watopia-sprint'],
-    [{ from: 33.431, to: 33.923, segment: 'fuego-flats' }],
+    [
+      {
+        from: 33.431,
+        to: 33.923,
+        segment: 'fuego-flats',
+      },
+    ],
     false,
     true,
     false,
@@ -6226,6 +7855,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/triple-flat-loops',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Triple_Flat_Loops.png',
+    '11,12,13,14',
   ],
   [
     3454338139,
@@ -6255,6 +7885,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/seaside-sprint',
     'https://zwifterbikes.web.app/route/seaside-sprint',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Seaside_Sprint.png',
+    '1,2,3,4',
   ],
   [
     3523806426,
@@ -6284,6 +7915,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/spirit-forest',
     'https://zwifterbikes.web.app/route/spirit-forest',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Spirit_Forest.png',
+    '6,7,8,9',
   ],
   [
     3532866973,
@@ -6300,7 +7932,13 @@ export const routes = [
     0.008,
     0,
     ['the-grade-kom'],
-    [{ from: 0, to: 3.517, segment: 'the-grade-kom' }],
+    [
+      {
+        from: 0,
+        to: 3.517,
+        segment: 'the-grade-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -6313,6 +7951,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/oh-hill-no',
     'https://zwifterbikes.web.app/route/oh-hill-no',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Oh_Hill_No.png',
+    '21,22,23,24',
   ],
   [
     3558689342,
@@ -6330,8 +7969,16 @@ export const routes = [
     2,
     ['titans-grove-kom-rev', 'woodland-sprint-rev', 'sasquatch-sprint-rev', 'the-grade-kom'],
     [
-      { from: 4.927, to: 5.842, segment: 'titans-grove-kom-rev' },
-      { from: 23.143, to: 26.666, segment: 'the-grade-kom' },
+      {
+        from: 4.927,
+        to: 5.842,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 23.143,
+        to: 26.666,
+        segment: 'the-grade-kom',
+      },
     ],
     false,
     true,
@@ -6345,6 +7992,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/peak-performance',
     'https://zwifterbikes.web.app/route/peak-performance',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Peak_Performance.png',
+    '1,2,3,4',
   ],
   [
     3565430790,
@@ -6361,7 +8009,13 @@ export const routes = [
     2.48,
     25,
     ['rooftop-kom'],
-    [{ from: 0.072, to: 1.946, segment: 'rooftop-kom' }],
+    [
+      {
+        from: 0.072,
+        to: 1.946,
+        segment: 'rooftop-kom',
+      },
+    ],
     false,
     true,
     false,
@@ -6374,6 +8028,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/rooftop-rendezvous',
     'https://zwifterbikes.web.app/route/rooftop-rendezvous',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Rooftop_Rendezvous.png',
+    '11,12,13,14',
   ],
   [
     3569674525,
@@ -6383,16 +8038,24 @@ export const routes = [
     true,
     36.188,
     431,
-    0.464,
+    0.461,
     4,
-    null,
-    null,
-    null,
-    null,
+    0.021,
+    0,
+    0.037,
+    1,
     ['london-sprint', 'keith-hill'],
     [
-      { from: 14.316, to: 14.499, segment: 'london-sprint' },
-      { from: 31.951, to: 36.16, segment: 'keith-hill' },
+      {
+        from: 14.316,
+        to: 14.499,
+        segment: 'london-sprint',
+      },
+      {
+        from: 31.951,
+        to: 36.16,
+        segment: 'keith-hill',
+      },
     ],
     true,
     false,
@@ -6406,6 +8069,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/keith-hill-after-party',
     'https://zwifterbikes.web.app/route/keith-hill-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Keith_Hill_After_Party.png',
+    '1,2,3,4',
   ],
   [
     3573087582,
@@ -6422,7 +8086,13 @@ export const routes = [
     2.382,
     16,
     ['watopia-sprint'],
-    [{ from: 1.558, to: 1.884, segment: 'watopia-sprint' }],
+    [
+      {
+        from: 1.558,
+        to: 1.884,
+        segment: 'watopia-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -6435,6 +8105,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Italian_Villas_Circuit.png',
+    '101,102,103,104',
   ],
   [
     3597939700,
@@ -6464,6 +8135,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/the-6-train',
     'https://zwifterbikes.web.app/route/the-6-train',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_The_6_Train.png',
+    '1,2,3,4',
   ],
   [
     3599973269,
@@ -6480,7 +8152,13 @@ export const routes = [
     null,
     null,
     ['london-sprint'],
-    [{ from: 5.26, to: 5.443, segment: 'london-sprint' }],
+    [
+      {
+        from: 5.26,
+        to: 5.443,
+        segment: 'london-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -6493,6 +8171,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/classique-reverse',
     'https://zwifterbikes.web.app/route/classique-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_Classique_Reverse.png',
+    '1,2,3,4',
   ],
   [
     3603635554,
@@ -6509,7 +8188,13 @@ export const routes = [
     0.024,
     1,
     ['temple-kom-from-fishing-village-side'],
-    [{ from: 0.658, to: 3.174, segment: 'temple-kom-from-fishing-village-side' }],
+    [
+      {
+        from: 0.658,
+        to: 3.174,
+        segment: 'temple-kom-from-fishing-village-side',
+      },
+    ],
     false,
     false,
     false,
@@ -6522,6 +8207,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/sea-to-tree',
     'https://zwifterbikes.web.app/route/sea-to-tree',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Sea_to_Tree.png',
+    '6,7,8,9',
   ],
   [
     3621162212,
@@ -6539,10 +8225,26 @@ export const routes = [
     null,
     ['watopia-sprint', 'hilly-loop', 'zwift-kom', 'volcano-kom'],
     [
-      { from: 7.113, to: 7.442, segment: 'watopia-sprint' },
-      { from: 10.109, to: 19.214, segment: 'hilly-loop' },
-      { from: 11.059, to: 11.947, segment: 'zwift-kom' },
-      { from: 16.265, to: 16.593, segment: 'watopia-sprint' },
+      {
+        from: 7.113,
+        to: 7.442,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 10.109,
+        to: 19.214,
+        segment: 'hilly-loop',
+      },
+      {
+        from: 11.059,
+        to: 11.947,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 16.265,
+        to: 16.593,
+        segment: 'watopia-sprint',
+      },
     ],
     false,
     false,
@@ -6556,6 +8258,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/zwift-bambino-fondo',
     'https://zwifterbikes.web.app/route/bambino-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Bambino_Fondo.png',
+    '1,2,3,4',
   ],
   [
     3649347250,
@@ -6572,7 +8275,13 @@ export const routes = [
     null,
     null,
     ['innsbruck-uci-lap', 'innsbruck-sprint', 'innsbruck-kom'],
-    [{ from: 29.709, to: 37.137, segment: 'innsbruck-kom' }],
+    [
+      {
+        from: 29.709,
+        to: 37.137,
+        segment: 'innsbruck-kom',
+      },
+    ],
     false,
     false,
     false,
@@ -6585,6 +8294,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/innsbruck-kom-after-party',
     'https://zwifterbikes.web.app/route/kom-after-party',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_Innsbruck_KOM_After_Party.png',
+    '1,2,3,4',
   ],
   [
     3662705581,
@@ -6609,9 +8319,21 @@ export const routes = [
       'champions-sprint',
     ],
     [
-      { from: 8.239, to: 9.808, segment: 'sgurr-summit-north' },
-      { from: 13.968, to: 14.594, segment: 'breakaway-brae-rev' },
-      { from: 17.839, to: 18.83, segment: 'sgurr-summit-south' },
+      {
+        from: 8.239,
+        to: 9.808,
+        segment: 'sgurr-summit-north',
+      },
+      {
+        from: 13.968,
+        to: 14.594,
+        segment: 'breakaway-brae-rev',
+      },
+      {
+        from: 17.839,
+        to: 18.83,
+        segment: 'sgurr-summit-south',
+      },
     ],
     false,
     true,
@@ -6625,6 +8347,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/the-muckle-yin',
     'https://zwifterbikes.web.app/route/the-muckle-yin',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_The_Muckle_Yin.png',
+    '1,2,3,4',
   ],
   [
     3665959404,
@@ -6654,6 +8377,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/hudson-roll',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Hudson_Roll.png',
+    '101,102,103,104',
   ],
   [
     3687251774,
@@ -6663,14 +8387,20 @@ export const routes = [
     true,
     6.857,
     144,
-    2.411,
-    23,
+    2.356,
+    21,
     null,
     null,
     null,
     null,
     ['new-york-kom-rev', 'new-york-sprint-rev'],
-    [{ from: 1.464, to: 2.606, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 1.464,
+        to: 2.606,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -6683,6 +8413,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/grand-central-circuit-reverse',
     'https://zwifterbikes.web.app/route/grand-central-circuit-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Grand_Central_Circuit_Reverse.png',
+    '1,2,3,4',
   ],
   [
     3691918883,
@@ -6700,8 +8431,16 @@ export const routes = [
     0,
     ['castle-kom', 'temple-kom-from-castle-side', 'country-sprint'],
     [
-      { from: 1.432, to: 4.097, segment: 'castle-kom' },
-      { from: 5.342, to: 7.238, segment: 'temple-kom-from-castle-side' },
+      {
+        from: 1.432,
+        to: 4.097,
+        segment: 'castle-kom',
+      },
+      {
+        from: 5.342,
+        to: 7.238,
+        segment: 'temple-kom-from-castle-side',
+      },
     ],
     false,
     true,
@@ -6715,6 +8454,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/chain-chomper',
     'https://zwifterbikes.web.app/route/chain-chomper',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Chain_Chomper.png',
+    '6,7,8,9',
   ],
   [
     3694952104,
@@ -6744,6 +8484,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/chili-pepper-reverse',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Chili_Pepper_Reverse.png',
+    '101,102,103,104',
   ],
   [
     3701568815,
@@ -6773,6 +8514,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/road-to-ruins',
     'https://zwifterbikes.web.app/route/road-to-ruins',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Road_to_Ruins.png',
+    '1,2,3,4',
   ],
   [
     3706527503,
@@ -6802,6 +8544,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/castle-crit',
     'https://zwifterbikes.web.app/route/castle-crit',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Castle_Crit.png',
+    '1,2,3,4',
   ],
   [
     3707791029,
@@ -6819,9 +8562,21 @@ export const routes = [
     156,
     ['leith-hill', 'keith-hill', 'fox-hill'],
     [
-      { from: 0.484, to: 2.889, segment: 'fox-hill' },
-      { from: 10.25, to: 12.211, segment: 'leith-hill' },
-      { from: 25.4, to: 29.594, segment: 'keith-hill' },
+      {
+        from: 0.484,
+        to: 2.889,
+        segment: 'fox-hill',
+      },
+      {
+        from: 10.25,
+        to: 12.211,
+        segment: 'leith-hill',
+      },
+      {
+        from: 25.4,
+        to: 29.594,
+        segment: 'keith-hill',
+      },
     ],
     true,
     true,
@@ -6835,6 +8590,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/surrey-hills',
     'https://zwifterbikes.web.app/route/surrey-hills',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Surrey_Hills.png',
+    '1,2,3,4',
   ],
   [
     3742187716,
@@ -6851,7 +8607,13 @@ export const routes = [
     0.029,
     0,
     ['alley-sprint', 'tower-sprint'],
-    [{ from: 20.747, to: 21.054, segment: 'tower-sprint' }],
+    [
+      {
+        from: 20.747,
+        to: 21.054,
+        segment: 'tower-sprint',
+      },
+    ],
     false,
     true,
     false,
@@ -6864,6 +8626,7 @@ export const routes = [
     null,
     'https://zwifterbikes.web.app/route/castle-to-castle',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Castle_to_Castle.png',
+    '11,12,13,14',
   ],
   [
     3748780161,
@@ -6881,10 +8644,26 @@ export const routes = [
     0,
     ['zwift-kom-rev', 'volcano-kom', 'watopia-sprint', 'epic-kom'],
     [
-      { from: 6.898, to: 9.356, segment: 'zwift-kom-rev' },
-      { from: 14.445, to: 18.15, segment: 'volcano-kom' },
-      { from: 50.337, to: 50.671, segment: 'watopia-sprint' },
-      { from: 63.18, to: 72.592, segment: 'epic-kom' },
+      {
+        from: 6.898,
+        to: 9.356,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 14.445,
+        to: 18.15,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 50.337,
+        to: 50.671,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 63.18,
+        to: 72.592,
+        segment: 'epic-kom',
+      },
     ],
     false,
     false,
@@ -6898,6 +8677,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/zwift-medio-fondo',
     'https://zwifterbikes.web.app/route/medio-fondo',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Zwift_Medio_Fondo.png',
+    '1,2,3,4',
   ],
   [
     3765339356,
@@ -6927,6 +8707,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/glasgow-crit-circuit',
     'https://zwifterbikes.web.app/route/glasgow-crit-circuit',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_Glasgow_Crit_Circuit.png',
+    '1,2,3,4',
   ],
   [
     3774003351,
@@ -6936,8 +8717,8 @@ export const routes = [
     true,
     2.791,
     27,
-    2.446,
-    25,
+    2.356,
+    21,
     null,
     null,
     null,
@@ -6956,6 +8737,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/laguardia-loop-reverse',
     'https://zwifterbikes.web.app/route/laguardia-loop-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_LaGuardia_Loop_Reverse.png',
+    '1,2,3,4',
   ],
   [
     3801241714,
@@ -6972,7 +8754,13 @@ export const routes = [
     0.221,
     7,
     ['innsbruck-kom-rev'],
-    [{ from: 2.916, to: 8.642, segment: 'innsbruck-kom-rev' }],
+    [
+      {
+        from: 2.916,
+        to: 8.642,
+        segment: 'innsbruck-kom-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -6985,6 +8773,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/lutscher-ccw',
     'https://zwifterbikes.web.app/route/lutscher-ccw',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_Lutscher_CCW.png',
+    '1,2,3,4',
   ],
   [
     3811569265,
@@ -7014,6 +8803,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/flat-route-reverse',
     'https://zwifterbikes.web.app/route/flat-route-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Flat_Route_Reverse.png',
+    '1,2,3,4',
   ],
   [
     3819095753,
@@ -7043,6 +8833,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/5k-loop',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_5K_Loop.png',
+    '101,102,103,104',
   ],
   [
     3848492017,
@@ -7060,11 +8851,31 @@ export const routes = [
     0,
     ['zwift-kom', 'volcano-kom', 'watopia-sprint', 'epic-kom', 'zwift-kom-rev'],
     [
-      { from: 38.185, to: 39.087, segment: 'zwift-kom' },
-      { from: 47.974, to: 51.68, segment: 'volcano-kom' },
-      { from: 58.595, to: 58.929, segment: 'watopia-sprint' },
-      { from: 65.996, to: 75.402, segment: 'epic-kom' },
-      { from: 98.714, to: 101.191, segment: 'zwift-kom-rev' },
+      {
+        from: 38.185,
+        to: 39.087,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 47.974,
+        to: 51.68,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 58.595,
+        to: 58.929,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 65.996,
+        to: 75.402,
+        segment: 'epic-kom',
+      },
+      {
+        from: 98.714,
+        to: 101.191,
+        segment: 'zwift-kom-rev',
+      },
     ],
     false,
     false,
@@ -7078,6 +8889,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/the-mega-pretzel',
     'https://zwifterbikes.web.app/route/the-mega-pretzel',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_The_Mega_Pretzel.png',
+    '1,2,3,4',
   ],
   [
     3853654821,
@@ -7094,7 +8906,13 @@ export const routes = [
     0.585,
     5,
     ['leith-hill'],
-    [{ from: 16.197, to: 18.149, segment: 'leith-hill' }],
+    [
+      {
+        from: 16.197,
+        to: 18.149,
+        segment: 'leith-hill',
+      },
+    ],
     true,
     true,
     false,
@@ -7107,6 +8925,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greatest-london-loop',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greatest_London_Loop.png',
+    '1,2,3,4',
   ],
   [
     3864857876,
@@ -7124,9 +8943,21 @@ export const routes = [
     0,
     ['titans-grove-kom-rev', 'watopia-sprint', 'volcano-kom'],
     [
-      { from: 3.576, to: 4.469, segment: 'titans-grove-kom-rev' },
-      { from: 15.888, to: 16.216, segment: 'watopia-sprint' },
-      { from: 20.263, to: 23.973, segment: 'volcano-kom' },
+      {
+        from: 3.576,
+        to: 4.469,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 15.888,
+        to: 16.216,
+        segment: 'watopia-sprint',
+      },
+      {
+        from: 20.263,
+        to: 23.973,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     false,
@@ -7140,6 +8971,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/legends-and-lava',
     'https://zwifterbikes.web.app/route/legends-and-lava',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Legends_and_Lava.png',
+    '11,12,13,14',
   ],
   [
     3866241330,
@@ -7156,7 +8988,13 @@ export const routes = [
     3.473,
     18,
     ['volcano-circuit-rev'],
-    [{ from: 0, to: 4.094, segment: 'volcano-circuit-rev' }],
+    [
+      {
+        from: 0,
+        to: 4.094,
+        segment: 'volcano-circuit-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -7169,6 +9007,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-circuit-ccw',
     'https://zwifterbikes.web.app/route/volcano-circuit-ccw',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Circuit_CCW.png',
+    '1,2,3,4',
   ],
   [
     3872978134,
@@ -7185,7 +9024,13 @@ export const routes = [
     0.499,
     7,
     ['new-york-kom-rev'],
-    [{ from: 9.035, to: 10.176, segment: 'new-york-kom-rev' }],
+    [
+      {
+        from: 9.035,
+        to: 10.176,
+        segment: 'new-york-kom-rev',
+      },
+    ],
     true,
     true,
     false,
@@ -7198,6 +9043,7 @@ export const routes = [
     'https://whatsonzwift.com/world/new-york/route/mighty-metropolitan',
     'https://zwifterbikes.web.app/route/mighty-metropolitan',
     'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Mighty_Metropolitan.png',
+    '1,2,3,4',
   ],
   [
     3878295865,
@@ -7214,7 +9060,13 @@ export const routes = [
     0.034,
     0,
     ['yorkshire-sprint-rev'],
-    [{ from: 2.581, to: 2.969, segment: 'yorkshire-sprint-rev' }],
+    [
+      {
+        from: 2.581,
+        to: 2.969,
+        segment: 'yorkshire-sprint-rev',
+      },
+    ],
     false,
     true,
     false,
@@ -7227,6 +9079,7 @@ export const routes = [
     'https://whatsonzwift.com/world/yorkshire/route/queen-s-highway-run',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/YORKSHIRE_Queens_Highway_Run.png',
+    '1,2,3,4',
   ],
   [
     3912793970,
@@ -7251,16 +9104,56 @@ export const routes = [
       '23rd-st',
     ],
     [
-      { from: 0.951, to: 2.058, segment: '23rd-st-rev' },
-      { from: 2.529, to: 3.19, segment: 'richmond-kom-rev' },
-      { from: 10.091, to: 11.198, segment: '23rd-st-rev' },
-      { from: 11.654, to: 12.331, segment: 'richmond-kom-rev' },
-      { from: 19.232, to: 20.337, segment: '23rd-st-rev' },
-      { from: 20.795, to: 21.458, segment: 'richmond-kom-rev' },
-      { from: 29.912, to: 30.127, segment: 'richmond-sprint' },
-      { from: 33.329, to: 33.593, segment: 'broad-st' },
-      { from: 38.173, to: 38.792, segment: 'richmond-kom' },
-      { from: 39.686, to: 39.97, segment: '23rd-st' },
+      {
+        from: 0.951,
+        to: 2.058,
+        segment: '23rd-st-rev',
+      },
+      {
+        from: 2.529,
+        to: 3.19,
+        segment: 'richmond-kom-rev',
+      },
+      {
+        from: 10.091,
+        to: 11.198,
+        segment: '23rd-st-rev',
+      },
+      {
+        from: 11.654,
+        to: 12.331,
+        segment: 'richmond-kom-rev',
+      },
+      {
+        from: 19.232,
+        to: 20.337,
+        segment: '23rd-st-rev',
+      },
+      {
+        from: 20.795,
+        to: 21.458,
+        segment: 'richmond-kom-rev',
+      },
+      {
+        from: 29.912,
+        to: 30.127,
+        segment: 'richmond-sprint',
+      },
+      {
+        from: 33.329,
+        to: 33.593,
+        segment: 'broad-st',
+      },
+      {
+        from: 38.173,
+        to: 38.792,
+        segment: 'richmond-kom',
+      },
+      {
+        from: 39.686,
+        to: 39.97,
+        segment: '23rd-st',
+      },
     ],
     false,
     false,
@@ -7274,6 +9167,7 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/richmond-loop-around',
     'https://zwifterbikes.web.app/route/richmond-loop-around',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Richmond_Loop_Around.png',
+    '1,2,3,4',
   ],
   [
     3914529041,
@@ -7286,9 +9180,9 @@ export const routes = [
     0.109,
     0,
     0.012,
-    247,
+    0,
     0.022,
-    247,
+    0,
     ['country-sprint', 'tower-sprint-rev', 'alley-sprint-rev'],
     [],
     false,
@@ -7303,6 +9197,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/wandering-flats',
     'https://zwifterbikes.web.app/route/wandering-flats',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Wandering_Flats.png',
+    '6,7,8,9',
   ],
   [
     3919912289,
@@ -7320,8 +9215,16 @@ export const routes = [
     0,
     ['pave-sprint-rev', 'aqueduc-kom-rev', 'petit-kom', 'marina-sprint-rev'],
     [
-      { from: 12.503, to: 12.911, segment: 'aqueduc-kom-rev' },
-      { from: 16.428, to: 19.114, segment: 'petit-kom' },
+      {
+        from: 12.503,
+        to: 12.911,
+        segment: 'aqueduc-kom-rev',
+      },
+      {
+        from: 16.428,
+        to: 19.114,
+        segment: 'petit-kom',
+      },
     ],
     false,
     true,
@@ -7335,6 +9238,7 @@ export const routes = [
     'https://whatsonzwift.com/world/france/route/casse-pattes',
     'https://zwifterbikes.web.app/route/casse-pattes',
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Casse_Pattes.png',
+    '1,2,3,4',
   ],
   [
     3921412335,
@@ -7359,12 +9263,36 @@ export const routes = [
       'fuego-flats',
     ],
     [
-      { from: 10.25, to: 12.858, segment: 'titans-grove-kom' },
-      { from: 19.324, to: 20.219, segment: 'zwift-kom' },
-      { from: 29.108, to: 32.827, segment: 'volcano-kom' },
-      { from: 47.131, to: 48.03, segment: 'titans-grove-kom-rev' },
-      { from: 59.232, to: 61.689, segment: 'zwift-kom-rev' },
-      { from: 66.931, to: 67.443, segment: 'fuego-flats' },
+      {
+        from: 10.25,
+        to: 12.858,
+        segment: 'titans-grove-kom',
+      },
+      {
+        from: 19.324,
+        to: 20.219,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 29.108,
+        to: 32.827,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 47.131,
+        to: 48.03,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 59.232,
+        to: 61.689,
+        segment: 'zwift-kom-rev',
+      },
+      {
+        from: 66.931,
+        to: 67.443,
+        segment: 'fuego-flats',
+      },
     ],
     false,
     true,
@@ -7378,6 +9306,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/big-foot-hills',
     'https://zwifterbikes.web.app/route/big-foot-hills',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Big_Foot_Hills.png',
+    '11,12,13,14',
   ],
   [
     3976402826,
@@ -7387,14 +9316,20 @@ export const routes = [
     true,
     25.671,
     355,
-    0.175,
+    0.172,
     1,
-    null,
-    null,
-    null,
-    null,
+    0.012,
+    0,
+    0.023,
+    0,
     ['keith-hill'],
-    [{ from: 3.255, to: 7.469, segment: 'keith-hill' }],
+    [
+      {
+        from: 3.255,
+        to: 7.469,
+        segment: 'keith-hill',
+      },
+    ],
     true,
     true,
     false,
@@ -7407,6 +9342,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/greatest-london-loop-reverse',
     'https://zwifterbikes.web.app/route/greatest-london-loop-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Greatest_London_Loop_Reverse.png',
+    '1,2,3,4',
   ],
   [
     3994934674,
@@ -7436,6 +9372,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/volcano-flat',
     'https://zwifterbikes.web.app/route/volcano-flat',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Volcano_Flat.png',
+    '1,2,3,4',
   ],
   [
     4009130866,
@@ -7452,7 +9389,13 @@ export const routes = [
     0.155,
     0,
     ['titans-grove-kom-rev', 'woodland-sprint-rev', 'sasquatch-sprint-rev'],
-    [{ from: 4.18, to: 5.096, segment: 'titans-grove-kom-rev' }],
+    [
+      {
+        from: 4.18,
+        to: 5.096,
+        segment: 'titans-grove-kom-rev',
+      },
+    ],
     false,
     false,
     false,
@@ -7465,6 +9408,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/jurassic-coast',
     'https://zwifterbikes.web.app/route/jurassic-coast',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Jurassic_Coast.png',
+    '11,12,13,14',
   ],
   [
     4009235104,
@@ -7482,8 +9426,16 @@ export const routes = [
     1,
     ['innsbruck-kom-rev', 'innsbruck-kom', 'innsbruck-sprint'],
     [
-      { from: 2.899, to: 8.641, segment: 'innsbruck-kom-rev' },
-      { from: 26.861, to: 34.277, segment: 'innsbruck-kom' },
+      {
+        from: 2.899,
+        to: 8.641,
+        segment: 'innsbruck-kom-rev',
+      },
+      {
+        from: 26.861,
+        to: 34.277,
+        segment: 'innsbruck-kom',
+      },
     ],
     false,
     true,
@@ -7497,6 +9449,7 @@ export const routes = [
     'https://whatsonzwift.com/world/innsbruck/route/achterbahn',
     'https://zwifterbikes.web.app/route/achterbahn',
     'https://cdn.zwift.com/static/zc/ROUTES/INNSBRUCK_Achterbahn.png',
+    '1,2,3,4',
   ],
   [
     4012646479,
@@ -7514,8 +9467,16 @@ export const routes = [
     7,
     ['london-sprint', 'box-hill'],
     [
-      { from: 6.759, to: 6.951, segment: 'london-sprint' },
-      { from: 11.744, to: 14.732, segment: 'box-hill' },
+      {
+        from: 6.759,
+        to: 6.951,
+        segment: 'london-sprint',
+      },
+      {
+        from: 11.744,
+        to: 14.732,
+        segment: 'box-hill',
+      },
     ],
     false,
     true,
@@ -7529,6 +9490,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/london-8',
     'https://zwifterbikes.web.app/route/greatest-london-loop',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_London_8.png',
+    '1,2,3,4',
   ],
   [
     4084028627,
@@ -7546,8 +9508,16 @@ export const routes = [
     0,
     ['stoneway-sprint-rev', 'mayan-mountainside-kom', 'itza-kom', 'acropolis-sprint-rev'],
     [
-      { from: 11.527, to: 13.522, segment: 'mayan-mountainside-kom' },
-      { from: 14.123, to: 17.883, segment: 'itza-kom' },
+      {
+        from: 11.527,
+        to: 13.522,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 14.123,
+        to: 17.883,
+        segment: 'itza-kom',
+      },
     ],
     false,
     true,
@@ -7561,6 +9531,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mayan-8',
     'https://zwifterbikes.web.app/route/mayan-8',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Mayan_8.png',
+    '21,22,23,24',
   ],
   [
     4102513789,
@@ -7584,10 +9555,26 @@ export const routes = [
       'radio-tower-kom',
     ],
     [
-      { from: 3.528, to: 5.531, segment: 'mayan-mountainside-kom' },
-      { from: 6.125, to: 9.881, segment: 'itza-kom' },
-      { from: 12.143, to: 15.68, segment: 'the-grade-kom' },
-      { from: 19.241, to: 20.332, segment: 'radio-tower-kom' },
+      {
+        from: 3.528,
+        to: 5.531,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 6.125,
+        to: 9.881,
+        segment: 'itza-kom',
+      },
+      {
+        from: 12.143,
+        to: 15.68,
+        segment: 'the-grade-kom',
+      },
+      {
+        from: 19.241,
+        to: 20.332,
+        segment: 'radio-tower-kom',
+      },
     ],
     false,
     false,
@@ -7601,6 +9588,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/radio-rendezvous',
     'https://zwifterbikes.web.app/route/radio-rendezvous',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Radio_Rendezvous.png',
+    '21,22,23,24',
   ],
   [
     4107749591,
@@ -7618,8 +9606,16 @@ export const routes = [
     63,
     ['sgurr-summit-south', 'sgurr-summit-north'],
     [
-      { from: 1.445, to: 2.432, segment: 'sgurr-summit-south' },
-      { from: 4.32, to: 5.89, segment: 'sgurr-summit-north' },
+      {
+        from: 1.445,
+        to: 2.432,
+        segment: 'sgurr-summit-south',
+      },
+      {
+        from: 4.32,
+        to: 5.89,
+        segment: 'sgurr-summit-north',
+      },
     ],
     false,
     true,
@@ -7633,6 +9629,7 @@ export const routes = [
     'https://whatsonzwift.com/world/scotland/route/city-and-the-sgurr',
     'https://zwifterbikes.web.app/route/city-and-the-sgurr',
     'https://cdn.zwift.com/static/zc/ROUTES/SCOTLAND_City_and_the_Sgurr.png',
+    '1,2,3,4',
   ],
   [
     4107844490,
@@ -7662,6 +9659,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/big-loop-reverse',
     'https://zwifterbikes.web.app/route/big-loop-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Big_Loop_Reverse.png',
+    '1,2,3,4',
   ],
   [
     4131664304,
@@ -7688,10 +9686,26 @@ export const routes = [
       'itza-kom',
     ],
     [
-      { from: 0.831, to: 1.731, segment: 'zwift-kom' },
-      { from: 15.13, to: 16.033, segment: 'titans-grove-kom-rev' },
-      { from: 39.743, to: 41.731, segment: 'mayan-mountainside-kom' },
-      { from: 42.339, to: 46.098, segment: 'itza-kom' },
+      {
+        from: 0.831,
+        to: 1.731,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 15.13,
+        to: 16.033,
+        segment: 'titans-grove-kom-rev',
+      },
+      {
+        from: 39.743,
+        to: 41.731,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 42.339,
+        to: 46.098,
+        segment: 'itza-kom',
+      },
     ],
     false,
     false,
@@ -7705,6 +9719,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/itza-party',
     'https://zwifterbikes.web.app/route/itza-party',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Itza_Party.png',
+    '1,2,3,4',
   ],
   [
     4142772830,
@@ -7722,10 +9737,26 @@ export const routes = [
     1,
     ['zwift-kom', 'epic-kom', 'radio-tower-kom', 'volcano-kom'],
     [
-      { from: 0.935, to: 1.823, segment: 'zwift-kom' },
-      { from: 10.092, to: 19.521, segment: 'epic-kom' },
-      { from: 19.942, to: 21.042, segment: 'radio-tower-kom' },
-      { from: 36.781, to: 40.503, segment: 'volcano-kom' },
+      {
+        from: 0.935,
+        to: 1.823,
+        segment: 'zwift-kom',
+      },
+      {
+        from: 10.092,
+        to: 19.521,
+        segment: 'epic-kom',
+      },
+      {
+        from: 19.942,
+        to: 21.042,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 36.781,
+        to: 40.503,
+        segment: 'volcano-kom',
+      },
     ],
     false,
     true,
@@ -7739,6 +9770,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/three-sisters',
     'https://zwifterbikes.web.app/route/three-sisters',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Three_Sisters.png',
+    '1,2,3,4',
   ],
   [
     4149936043,
@@ -7768,6 +9800,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Climb_Portal___Mont_Saint_Michel.png',
+    '1,2,3,4',
   ],
   [
     4159356920,
@@ -7797,6 +9830,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/FRANCE_Petite_Douleur.png',
+    '1,2,3,4',
   ],
   [
     4194352271,
@@ -7814,8 +9848,16 @@ export const routes = [
     null,
     ['richmond-kom-rev', '23rd-st-rev'],
     [
-      { from: 1.3, to: 2.403, segment: '23rd-st-rev' },
-      { from: 2.867, to: 3.553, segment: 'richmond-kom-rev' },
+      {
+        from: 1.3,
+        to: 2.403,
+        segment: '23rd-st-rev',
+      },
+      {
+        from: 2.867,
+        to: 3.553,
+        segment: 'richmond-kom-rev',
+      },
     ],
     false,
     true,
@@ -7829,11 +9871,12 @@ export const routes = [
     'https://whatsonzwift.com/world/richmond/route/cobbled-climbs-reverse',
     'https://zwifterbikes.web.app/route/cobbled-climbs-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/RICHMOND_Cobbled_Climbs_Reverse.png',
+    '1,2,3,4',
   ],
   [
     4199497144,
     'Coast to Coast',
-    'cost-to-coast',
+    'coast-to-coast',
     'watopia',
     false,
     24.092,
@@ -7846,9 +9889,21 @@ export const routes = [
     10,
     ['sasquatch-sprint', 'woodland-sprint', 'jarvis-kom', 'jarvis-sprint'],
     [
-      { from: 4.297, to: 4.8, segment: 'woodland-sprint' },
-      { from: 19.948, to: 21.76, segment: 'jarvis-kom' },
-      { from: 23.098, to: 23.299, segment: 'jarvis-sprint' },
+      {
+        from: 4.297,
+        to: 4.8,
+        segment: 'woodland-sprint',
+      },
+      {
+        from: 19.948,
+        to: 21.76,
+        segment: 'jarvis-kom',
+      },
+      {
+        from: 23.098,
+        to: 23.299,
+        segment: 'jarvis-sprint',
+      },
     ],
     false,
     false,
@@ -7860,8 +9915,9 @@ export const routes = [
     'https://www.strava.com/segments/38138499',
     'https://zwiftinsider.com/route/coast-to-coast',
     'https://whatsonzwift.com/world/watopia/route/coast-to-coast',
-    'https://zwifterbikes.web.app/route/cost-to-coast',
+    'https://zwifterbikes.web.app/route/coast-to-coast',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Coast_to_Coast.png',
+    '21,22,23,24',
   ],
   [
     4210048937,
@@ -7879,8 +9935,16 @@ export const routes = [
     5,
     ['london-sprint-rev', 'leith-hill'],
     [
-      { from: 13.969, to: 14.154, segment: 'london-sprint-rev' },
-      { from: 23.052, to: 24.986, segment: 'leith-hill' },
+      {
+        from: 13.969,
+        to: 14.154,
+        segment: 'london-sprint-rev',
+      },
+      {
+        from: 23.052,
+        to: 24.986,
+        segment: 'leith-hill',
+      },
     ],
     true,
     true,
@@ -7894,6 +9958,7 @@ export const routes = [
     'https://whatsonzwift.com/world/london/route/triple-loops',
     'https://zwifterbikes.web.app/route/triple-loops',
     'https://cdn.zwift.com/static/zc/ROUTES/LONDON_Triple_Loops.png',
+    '1,2,3,4',
   ],
   [
     4232726854,
@@ -7923,6 +9988,7 @@ export const routes = [
     null,
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Surfin_Safari.png',
+    '6,7,8,9',
   ],
   [
     4240327959,
@@ -7952,6 +10018,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/11-1-ocean-blvd',
     null,
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_11_1_Ocean_Blvd.png',
+    '101,102,103,104',
   ],
   [
     4258943387,
@@ -7981,6 +10048,7 @@ export const routes = [
     'https://whatsonzwift.com/world/makuri-islands/route/turf-n-surf',
     'https://zwifterbikes.web.app/route/turf-n-surf',
     'https://cdn.zwift.com/static/zc/ROUTES/MAKURIISLANDS_Turf_N_Surf.png',
+    '16,17,18,19',
   ],
   [
     4263172118,
@@ -7998,9 +10066,21 @@ export const routes = [
     null,
     ['volcano-kom', 'radio-tower-kom', 'zwift-kom-rev'],
     [
-      { from: 3.166, to: 6.876, segment: 'volcano-kom' },
-      { from: 25.304, to: 26.403, segment: 'radio-tower-kom' },
-      { from: 43.414, to: 45.895, segment: 'zwift-kom-rev' },
+      {
+        from: 3.166,
+        to: 6.876,
+        segment: 'volcano-kom',
+      },
+      {
+        from: 25.304,
+        to: 26.403,
+        segment: 'radio-tower-kom',
+      },
+      {
+        from: 43.414,
+        to: 45.895,
+        segment: 'zwift-kom-rev',
+      },
     ],
     false,
     true,
@@ -8014,6 +10094,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/three-sisters-reverse',
     'https://zwifterbikes.web.app/route/three-sisters-reverse',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Three_Sisters_Reverse.png',
+    '1,2,3,4',
   ],
   [
     4280627426,
@@ -8031,8 +10112,16 @@ export const routes = [
     0,
     ['acropolis-sprint-rev', 'stoneway-sprint-rev', 'mayan-mountainside-kom', 'itza-kom'],
     [
-      { from: 3.532, to: 5.52, segment: 'mayan-mountainside-kom' },
-      { from: 6.126, to: 9.869, segment: 'itza-kom' },
+      {
+        from: 3.532,
+        to: 5.52,
+        segment: 'mayan-mountainside-kom',
+      },
+      {
+        from: 6.126,
+        to: 9.869,
+        segment: 'itza-kom',
+      },
     ],
     false,
     true,
@@ -8046,6 +10135,7 @@ export const routes = [
     'https://whatsonzwift.com/world/watopia/route/mayan-mash',
     'https://zwifterbikes.web.app/route/mayan-mash',
     'https://cdn.zwift.com/static/zc/ROUTES/WATOPIA_Mayan_Mash.png',
+    '21,22,23,24',
   ],
 ].map(
   ([
@@ -8076,6 +10166,7 @@ export const routes = [
     whatsOnZwiftUrl,
     zwifterBikesUrl,
     imageUrl,
+    eventPaddocks,
   ]) => ({
     id,
     name,
@@ -8104,5 +10195,6 @@ export const routes = [
     whatsOnZwiftUrl,
     zwifterBikesUrl,
     imageUrl,
+    eventPaddocks,
   })
 );

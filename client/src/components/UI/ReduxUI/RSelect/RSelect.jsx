@@ -8,7 +8,7 @@ import styles from './RSelect.module.css';
 /**
  * Select при работе с redux, выбор value происходит по name
  */
-function RSelect({ subgroupIndex, label, property, disabled, options }) {
+function RSelect({ subgroupIndex, label, property, disabled, options, closeEmptyOption }) {
   const dispatch = useDispatch();
   const { inputHandler, blockWithParameters } = useBlockParameters(subgroupIndex);
 
@@ -25,7 +25,8 @@ function RSelect({ subgroupIndex, label, property, disabled, options }) {
         }}
         disabled={disabled}
       >
-        <option className={styles.option} value=""></option>
+        {!closeEmptyOption && <option className={styles.option} value=""></option>}
+        {/* <option className={styles.option} value=""></option> */}
         {options.map((element) => (
           <option className={styles.option} value={element.name} key={element.id}>
             {element.translate ? element.translate : element.name}

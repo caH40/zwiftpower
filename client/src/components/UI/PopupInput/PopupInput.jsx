@@ -63,6 +63,7 @@ function PopupInput() {
                 property={inputParams.property}
                 type={inputParams.typeValue}
                 options={inputParams.options}
+                closeEmptyOption={inputParams.closeEmptyOption}
               />
             )}
             {inputParams?.type === 'selectId' && (

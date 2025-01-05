@@ -14,17 +14,27 @@ import styles from './FormEditEventGroup.module.css';
 /**
  * Блок выбора маршрута и количества кругов (дистанции, времени заезда) для создания заезда
  */
-function MapBlock({ subGroup, groupNumber }) {
+function MapBlock({ subGroup, groupNumber, isCreating }) {
   const [isMount, setIsMount] = useState(true);
   const [descriptionId, setDescriptionId] = useState(0);
   const worldCurrent = worlds.find((world) => world.id === subGroup.mapId);
   const routeCurrent = routes.find((route) => route.id === subGroup.routeId) || {};
   const routeName = routeCurrent?.name || 'Маршрут не найден';
 
+  // Стартовые карманы на карте.
+  const eventPaddocks =
+    routeCurrent?.eventPaddocks &&
+    routeCurrent.eventPaddocks.split(',').map((elm) => ({
+      id: elm,
+      label: elm,
+      name: elm,
+      translate: elm,
+    }));
+
   const dispatch = useDispatch();
   const { inputHandler } = useBlockParameters(groupNumber);
 
-  const { distance, elevation, leadInDistance, leadInElevation } = routeCurrent;
+  const { distance, elevation, leadInDistance, leadInElevation, id: routeId } = routeCurrent;
 
   const distanceMap = Math.round(distance * 100) / 100;
   const distanceLeadIn = Math.round(leadInDistance * 100) / 100;
@@ -51,6 +61,18 @@ function MapBlock({ subGroup, groupNumber }) {
 
     dispatch(inputHandler({ routeId: routeInitId.id, index: groupNumber }));
   }, [worldCurrent?.id]);
+
+  // При изменении маршрута изменять карманы.
+  useEffect(() => {
+    if (isMount) {
+      setIsMount(false);
+      return;
+    }
+
+    if (eventPaddocks?.[0]?.name) {
+      dispatch(inputHandler({ startLocation: eventPaddocks[0]?.name, index: groupNumber }));
+    }
+  }, [routeId]);
 
   const changeDescription = () => {
     setDescriptionId(descriptionId === 2 ? 0 : descriptionId + 1);
@@ -157,6 +179,32 @@ function MapBlock({ subGroup, groupNumber }) {
       >
         {subGroup.durationInSeconds}
       </BoxParameter>
+
+      {/* скрывать блок если форма используется для создания Эвента */}
+      {!eventPaddocks && (
+        <div className={styles.error}>
+          Внимание! Не определенны стартовые карманы для данного маршрута. Выберите другой
+          маршрут!
+        </div>
+      )}
+      {!isCreating && eventPaddocks && (
+        <BoxParameter
+          title={'Номер "кармана" на старте'}
+          sample={true}
+          pen={true}
+          inputParams={{
+            label: 'Номер "кармана" на старте',
+            property: 'startLocation',
+            type: 'select',
+            typeValue: 'number',
+            subgroupIndex: groupNumber,
+            options: eventPaddocks,
+            closeEmptyOption: true,
+          }}
+        >
+          {subGroup.startLocation}
+        </BoxParameter>
+      )}
     </>
   );
 }
