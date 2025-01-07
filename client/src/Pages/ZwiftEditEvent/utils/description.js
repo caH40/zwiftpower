@@ -66,7 +66,7 @@ export const createDescription = (eventParams) => {
 
       const route = routes.find((elm) => elm.id === eventParams.eventSubgroups[0].routeId);
       const leadInDistance = distance
-        ? `Дистанция до старта круга: <b>${Math.round(route.leadInDistance * 100)}м</b>\n`
+        ? `Дистанция до старта круга: <b>${formatDistance(route.leadInDistance)}</b>\n`
         : '';
       const leadInElevation = distance
         ? `Набор высоты до старта круга: <b>${Math.round(route.leadInElevation)}м</b>\n`
@@ -102,3 +102,16 @@ ${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadIn
 
   return event + strGroups;
 };
+
+function formatDistance(distanceInKm) {
+  if (!distanceInKm) {
+    return '0м';
+  }
+
+  const km = Math.trunc(distanceInKm);
+  const meters = Math.round((distanceInKm % 1) * 1000);
+
+  const metersStr = meters !== 0 ? meters + 'м' : '';
+
+  return +km ? `${km}км ${metersStr}` : metersStr;
+}
