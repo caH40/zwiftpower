@@ -30,7 +30,7 @@ export default function CustomizedSnackbars({ children }) {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        key={Date.now()}
+        key={snackbar.message}
       >
         <Alert onClose={handleClose} severity={snackbar.type} sx={{ width: '100%' }}>
           {snackbar.message}
