@@ -15,7 +15,12 @@ import styles from './ProfileBlock.module.css';
 
 const cx = cn.bind(styles);
 
-function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
+const platformIcons = {
+  twitch: '/images/twitch_glitch_flat_purple.svg',
+  youtube: '/images/youtube_icon.svg',
+};
+
+function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
   const { role, zwiftId } = useSelector((state) => state.checkAuth.value.user);
   const { zwiftId: zwiftIdPage } = useParams();
 
@@ -45,10 +50,27 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo }) {
               enlargeLogo={enlargeLogo}
             />
           </div>
+
+          {/* кнопка запроса на обновление данных аккаунта */}
           {zwiftId == zwiftIdPage && (
             <button onClick={refreshProfile} className={styles.btn}>
               обновить данные
             </button>
+          )}
+
+          {/* блок отображение сервисов трансляций которые подключил пользователь */}
+          {!!streamsEnabled?.length && (
+            <div className={styles.platform}>
+              {streamsEnabled.map((stream) => (
+                <a href={stream.url} target="_blank" rel="noreferrer" key={stream.platform}>
+                  <img
+                    src={platformIcons[stream.platform]}
+                    alt={'stream platform'}
+                    className={styles.icon__platform}
+                  />
+                </a>
+              ))}
+            </div>
           )}
         </div>
 

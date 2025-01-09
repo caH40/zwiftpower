@@ -31,6 +31,7 @@ const userProfileSlice = createSlice({
     profile: {},
     powerCurve: {},
     quantityRace: null,
+    streamsEnabled: null,
 
     status: null,
     error: null,
@@ -53,6 +54,7 @@ const userProfileSlice = createSlice({
       state.profile = action.payload.profile;
       state.powerCurve = action.payload.powerCurve;
       state.quantityRace = action.payload.quantityRace;
+      state.streamsEnabled = action.payload.streams;
     });
     builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.status = 'rejected';

@@ -1,3 +1,5 @@
+import { StreamEnabled } from '../../types/types.interface.js';
+
 // общий тип, используемый на сервере и фронте, UserProfile отправляемый/получаемый через API
 export interface UserProfileFetch {
   powerCurve: {
@@ -34,6 +36,7 @@ export interface UserProfileFetch {
     category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
     bio?: string;
   };
+  streams: StreamEnabled[] | null;
 
   quantityRace: number;
   message: string;

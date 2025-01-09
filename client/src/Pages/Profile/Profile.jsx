@@ -31,6 +31,7 @@ function Profile() {
   const {
     profile,
     quantityRace,
+    streamsEnabled,
     status: statusProfile,
   } = useSelector((state) => state.fetchUserProfile);
   const [source, setSource] = useState('');
@@ -77,6 +78,7 @@ function Profile() {
           <ProfileBlock
             profile={profile}
             enlargeLogo={enlargeLogo}
+            streamsEnabled={streamsEnabled}
             quantityRace={quantityRace || 0}
           />
         )}

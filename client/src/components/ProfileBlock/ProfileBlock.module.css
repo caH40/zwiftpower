@@ -94,6 +94,20 @@
   display: flex;
   gap: 5px;
 }
+.platform {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.icon__platform {
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s;
+}
+.icon__platform:hover {
+  transform: translateY(-2px);
+}
 
 @media screen and (max-width: 576px) {
   .wrapper {

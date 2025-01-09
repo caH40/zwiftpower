@@ -784,3 +784,8 @@ export type TParamsSaveAuthToken = {
   device: TDeviceInfo;
   location?: TLocationInfo;
 };
+
+/**
+ * Данные по включенным платформам трансляций у Пользователя.
+ */
+export type StreamEnabled = { platform: string; url: string };
