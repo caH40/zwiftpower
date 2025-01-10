@@ -2,6 +2,7 @@ import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 import CallbackVKID from '../Pages/Auth/Callback/CallbackVKID';
+import CallbackYandexID from '../Pages/Auth/Callback/CallbackYandexID';
 
 const Authorization = lazy(() => import('../Pages/Auth/Authorization'));
 const Registration = lazy(() => import('../Pages/Auth/Registration'));
@@ -18,6 +19,7 @@ export function AuthRoute() {
       <Route path="/auth/confirm-email/:token" element={<ConfirmEmail />} />
       <Route path="/auth/new-password/:token" element={<NewPassword />} />
       <Route path="/api/auth/callback/vk" element={<CallbackVKID />} />
+      <Route path="/api/auth/callback/yandex" element={<CallbackYandexID />} />
     </>
   );
 }
