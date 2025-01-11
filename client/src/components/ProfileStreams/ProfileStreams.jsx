@@ -34,7 +34,7 @@ export default function ProfileStreams({ zwiftIdAuth }) {
           setChannelName={setChannelNameTwitch}
           zwiftIdAuth={zwiftIdAuth}
           isEnabled={streams.twitch?.isEnabled || false}
-          iconSrc={'/images/glitch_flat_purple.svg'}
+          iconSrc={'/images/twitch_glitch_flat_purple.svg'}
           description="Только название канала. Название в url: https://www.twitch.tv/название канала"
         />
       </div>
