@@ -26,7 +26,7 @@ export async function getUserProfileService(zwiftId: number) {
     streams: TUserStreams;
   }>();
 
-  const zwiftIdAdditional: number[] = userDB ? userDB.zwiftIdAdditional : [];
+  const zwiftIdAdditional: number[] = userDB?.zwiftIdAdditional ? userDB.zwiftIdAdditional : [];
   const quantityRace = await ZwiftResult.countDocuments({
     profileId: [zwiftId, ...zwiftIdAdditional],
   });
