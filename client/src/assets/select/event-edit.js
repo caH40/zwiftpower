@@ -6,7 +6,7 @@ export const optionsCulling = [
     translate: 'Видны райдеры из одной группы',
   },
   { id: 1, name: 'CULLING_EVENT_ONLY', translate: 'Видны все райдеры заезда' },
-  { id: 2, name: 'CULLING_EVERYBODY', translate: 'CULLING_EVERYBODY' },
+  { id: 2, name: 'CULLING_EVERYBODY', translate: 'Видны все райдеры в данной карте' },
 ];
 export const optionPrivate = [
   {
