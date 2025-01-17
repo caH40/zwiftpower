@@ -9,21 +9,26 @@ import styles from './CardOrganizer.module.css';
  * Карточка является ссылкой (`<Link>`) на страницу организатора.
  * @param {Object} props - Свойства компонента
  * @param {string} props.name - Название организатора
- * @param {string} props.logo - URL логотипа организатора
- * @param {string} props.background - URL фонового изображения
+ * @param {string} props.logoSrc - URL логотипа организатора
+ * @param {string} props.backgroundSrc - URL фонового изображения
  *
  * @returns {JSX.Element} Карточка организатора
  */
-export default function CardOrganizer({ name, logo, background }) {
+export default function CardOrganizer({ name, logoSrc, backgroundSrc }) {
   return (
     <Link to={name?.toLowerCase()} className={styles.card}>
       <div
         className={styles.background}
-        style={{ backgroundImage: `url(${background})` }}
+        style={{ backgroundImage: `url(${backgroundSrc})` }}
       ></div>
       <div className={styles.overlay}></div>
       <div className={styles.content}>
-        <img src={logo} alt={name} className={styles.logo} />
+        {/* <img src={logoSrc} alt={name} className={styles.logo} /> */}
+        {logoSrc ? (
+          <img src={logoSrc} alt={name} className={styles.logo} />
+        ) : (
+          <div className={styles.logo} />
+        )}
         <h2 className={styles.name}>{name}</h2>
       </div>
     </Link>
