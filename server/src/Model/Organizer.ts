@@ -19,6 +19,7 @@ const organizerSchema = new Schema<TOrganizer>(
     logoSrc: { type: String },
     backgroundImage: { type: String },
     description: { type: String },
+    isPublished: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
+import { ObjectId, Types } from 'mongoose';
 
-import { TZwiftToken } from '../types/model.interface.js';
+// types
+import { TOrganizer, TZwiftToken } from '../types/model.interface.js';
 import { TZwiftJwtToken } from '../types/http.interface.js';
-import { TZwiftTokenDto } from '../types/types.interface.js';
-import { ObjectId } from 'mongoose';
+import { TOrganizerPublicDto, TZwiftTokenDto } from '../types/types.interface.js';
 
 /**
  * Декодирование токена.
@@ -42,4 +43,65 @@ export function transformZwiftTokensToDto(
   tokens: (TZwiftToken & { _id: ObjectId })[]
 ): TZwiftTokenDto[] {
   return tokens.map((token) => transformZwiftTokenToDto(token));
+}
+
+/**
+ * DTO организаторы заездов для клиента.
+ */
+export function organizersPublicDto({
+  organizersFromDB,
+}: {
+  organizersFromDB: (TOrganizer & { _id: Types.ObjectId })[];
+}): TOrganizerPublicDto[] {
+  return organizersFromDB.map((organizer) =>
+    organizerPublicDto({ organizerFromDB: organizer })
+  );
+}
+
+/**
+ * DTO организатора заездов для клиента.
+ */
+export function organizerPublicDto({
+  organizerFromDB,
+}: {
+  organizerFromDB: TOrganizer & { _id: Types.ObjectId };
+}): TOrganizerPublicDto {
+  const {
+    _id,
+    name,
+    label,
+    clubMain,
+    logoSrc,
+    backgroundImage,
+    description,
+    website,
+    country,
+    socialLinks,
+    telegram,
+  } = organizerFromDB;
+
+  return {
+    id: String(_id),
+    name,
+    label,
+    ...(clubMain && {
+      clubMain: `https://www.zwift.com/eu/clubs/${clubMain}/join`,
+    }),
+    ...(logoSrc && { logoSrc }),
+    ...(backgroundImage && { backgroundImage }),
+    ...(description && { description }),
+    ...(website && { website }),
+    ...(country && { country }),
+    ...(socialLinks && { socialLinks }),
+    ...(telegram && {
+      telegram: {
+        ...(telegram.group && {
+          group: `https://t.me/${telegram.group}`,
+        }),
+        ...(telegram.channel && {
+          channel: `https://t.me/${telegram.channel}`,
+        }),
+      },
+    }),
+  };
 }

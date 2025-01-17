@@ -9,6 +9,7 @@ import {
   TDeviceInfo,
   TLocationInfo,
   TMetrics,
+  TOrganizer,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -789,3 +790,11 @@ export type TParamsSaveAuthToken = {
  * Данные по включенным платформам трансляций у Пользователя.
  */
 export type StreamEnabled = { platform: string; url: string };
+
+/**
+ * Данные организатора
+ */
+export type TOrganizerPublicDto = Omit<
+  TOrganizer,
+  'isPublished' | 'creator' | 'botZwift' | 'contact' | 'createdAt' | 'updatedAt' | 'clubMain'
+> & { id: string; clubMain?: string };

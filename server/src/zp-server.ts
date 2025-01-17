@@ -21,6 +21,7 @@ import { setMetaTags } from './meta_tags/meta-tags.js';
 // cache
 import { getCache } from './middleware/cache.js';
 import { createSitemap } from './service/sitemap/generate-sitemap.js';
+import { routerOrganizerPublic } from './routes/organizer-public.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -54,6 +55,7 @@ app.use('/api/statistics', getCache, statisticsRouter);
 app.use('/api/information', routerInformation);
 app.use('/api/admin', routerAdmin);
 app.use('/api/organizer', routerOrganizer);
+app.use('/api/organizers', routerOrganizerPublic);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
