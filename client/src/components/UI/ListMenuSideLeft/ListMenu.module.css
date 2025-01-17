@@ -1,7 +1,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 18px 0px;
+  gap: 16px 0px;
   padding: 20px 13px;
   color: var(--color-text-main);
 }
