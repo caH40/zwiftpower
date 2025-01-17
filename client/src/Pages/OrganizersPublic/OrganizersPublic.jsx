@@ -5,11 +5,12 @@ import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
+import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 
-import styles from './Organizers.module.css';
+import styles from './OrganizersPublic.module.css';
 
 // Рекламные блоки на странице.
 const adOverFooter = 8;
@@ -19,7 +20,7 @@ const adNumbers = [adOverFooter, adUnderHeader];
 /**
  * Страница Организаторов заездов.
  */
-function Organizers() {
+function OrganizersPublic() {
   const { isScreenLg: isDesktop } = useResize();
   useTitle('Организаторы заездов');
 
@@ -31,6 +32,8 @@ function Organizers() {
   // Запрос на получение списка организаторов.
   useEffect(() => {
     dispatch(fetchOrganizersPublic());
+
+    return () => dispatch(resetOrganizersPublic());
   }, []);
 
   // Хук работы с рекламными блоками на странице.
@@ -66,4 +69,4 @@ function Organizers() {
   );
 }
 
-export default Organizers;
+export default OrganizersPublic;

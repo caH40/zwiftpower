@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
+import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
+import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
+import JSONBlock from '../../components/JSONBlock/JSONBlock';
 
 import styles from './Organizers.module.css';
 
@@ -20,13 +23,21 @@ const adNumbers = [adOverFooter, adUnderHeader];
  */
 function OrganizerPublic() {
   const { isScreenLg: isDesktop } = useResize();
-  const { organizerName } = useParams();
+  const { urlSlug } = useParams();
 
-  useTitle(`Организатор заездов ${organizerName}`);
+  // Данные организатора из хранилища редакс.
+  const { organizer } = useSelector((state) => state.organizersPublic);
+
+  useTitle(`Организатор заездов ${organizer?.name || ''}`);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  // Запрос на получение списка организаторов.
+  useEffect(() => {
+    dispatch(fetchOrganizerPublic({ urlSlug }));
+
+    return () => dispatch(resetOrganizerPublic());
+  }, []);
 
   useAd(adNumbers);
   return (
@@ -36,6 +47,8 @@ function OrganizerPublic() {
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
+
+        <JSONBlock json={organizer} />
       </div>
 
       {isDesktop ? (

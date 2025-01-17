@@ -38,7 +38,7 @@ export async function getOrganizerPublicService({
 
   if (!organizerDB) {
     throw new Error(
-      `Не найден запрашиваемый Организатор "${urlSlug}" или он закрыт показ своей страницы.`
+      `Запрашиваемый организатор "${urlSlug}" не найден или отключил отображение страницы.`
     );
   }
 
