@@ -32,13 +32,13 @@ export async function getOrganizerPublicService({
   urlSlug: string;
 }): Promise<TResponseService<TOrganizerPublicDto>> {
   const organizerDB = await Organizer.findOne({
-    urlSlug: urlSlug,
+    urlSlug: urlSlug.toLowerCase(),
     isPublished: true,
   }).lean<TOrganizer & { _id: Types.ObjectId }>();
 
   if (!organizerDB) {
     throw new Error(
-      `Не найден запрашиваемый Организатор ${urlSlug} или он закрыт показ своей страницы.`
+      `Не найден запрашиваемый Организатор "${urlSlug}" или он закрыт показ своей страницы.`
     );
   }
 

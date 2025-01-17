@@ -40,16 +40,16 @@ export const postOrganizersService = async (
   ]);
 
   if (organizerCheckName) {
-    throw new Error(`Название: ${name} уже используется у другого организатора!`);
+    throw new Error(`Название: "${name}" уже используется у другого организатора!`);
   }
 
   if (organizerCheckLabel) {
-    throw new Error(`Лейбл: ${label} уже используется у другого организатора!`);
+    throw new Error(`Лейбл: "${label}" уже используется у другого организатора!`);
   }
 
   if (organizerCheckUrlSlug) {
     throw new Error(
-      `Произошла ошибка при генерации urlSlug, сформированная строка уже используется у другого организатора с названием: ${organizerCheckUrlSlug.name}. Попробуйте изменить название для создаваемого Организатора!`
+      `Произошла ошибка при генерации urlSlug, сформированная строка уже используется у другого организатора с названием: "${organizerCheckUrlSlug.name}". Попробуйте изменить название для создаваемого Организатора!`
     );
   }
 

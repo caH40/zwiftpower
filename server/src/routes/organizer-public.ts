@@ -6,4 +6,4 @@ import { getOrganizerPublic, getOrganizersPublic } from '../controllers/organize
 export const routerOrganizerPublic = Router();
 
 routerOrganizerPublic.get('/', getOrganizersPublic);
-routerOrganizerPublic.get('/:organizerId', getOrganizerPublic);
+routerOrganizerPublic.get('/:urlSlug', getOrganizerPublic);
