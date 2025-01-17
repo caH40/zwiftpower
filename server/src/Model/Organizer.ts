@@ -16,6 +16,7 @@ const organizerSchema = new Schema<TOrganizer>(
     botZwift: { type: BotZwiftSchema },
     name: { type: String, unique: true, required: true },
     label: { type: String },
+    urlSlug: { type: String },
     logoSrc: { type: String },
     backgroundImage: { type: String },
     description: { type: String },

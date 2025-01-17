@@ -27,17 +27,18 @@ export async function getOrganizersPublicService(): Promise<
  * Сервис получение данных Организатора.
  */
 export async function getOrganizerPublicService({
-  organizerId,
+  urlSlug,
 }: {
-  organizerId: string;
+  urlSlug: string;
 }): Promise<TResponseService<TOrganizerPublicDto>> {
-  const organizerDB = await Organizer.findOne({ _id: organizerId, isPublished: true }).lean<
-    TOrganizer & { _id: Types.ObjectId }
-  >();
+  const organizerDB = await Organizer.findOne({
+    urlSlug: urlSlug,
+    isPublished: true,
+  }).lean<TOrganizer & { _id: Types.ObjectId }>();
 
   if (!organizerDB) {
     throw new Error(
-      `Не найден запрашиваемый Организатор с _id:${organizerId} или он закрыт показ своей страницы.`
+      `Не найден запрашиваемый Организатор ${urlSlug} или он закрыт показ своей страницы.`
     );
   }
 

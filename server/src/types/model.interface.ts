@@ -557,6 +557,7 @@ export type TOrganizer = {
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
   label: string; // Лейбл короткое название;
+  urlSlug: string;
   logoSrc?: string; // Логотип (url);
   backgroundImage?: string; // URL фоновой картинки
   description?: string; // описание Организатора;

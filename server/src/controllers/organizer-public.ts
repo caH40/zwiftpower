@@ -27,15 +27,15 @@ export async function getOrganizersPublic(req: Request, res: Response) {
  */
 export async function getOrganizerPublic(req: Request, res: Response) {
   try {
-    const { organizerId } = req.params;
+    const { urlSlug } = req.params;
 
     // Проверка на наличие id запрашиваемого организатора заездов.
-    if (!organizerId || organizerId === 'undefined') {
+    if (!urlSlug || urlSlug === 'undefined') {
       throw new Error('Не получен id организатора');
     }
 
     // Вызов сервиса.
-    const response = await getOrganizerPublicService({ organizerId });
+    const response = await getOrganizerPublicService({ urlSlug });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

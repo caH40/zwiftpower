@@ -1,3 +1,5 @@
+import slugify from 'slugify';
+
 import { Organizer } from '../../Model/Organizer.js';
 import { OrganizerSchema } from '../../types/model.interface.js';
 
@@ -27,10 +29,35 @@ export const postOrganizersService = async (
   label: string,
   creatorId: string
 ): Promise<{ message: string }> => {
+  // Создание уникального названия для url.
+  const urlSlug = slugify(name, { lower: true, strict: true });
+
+  // Проверка на дубли.
+  const [organizerCheckName, organizerCheckLabel, organizerCheckUrlSlug] = await Promise.all([
+    Organizer.findOne({ name: name.toLowerCase() }).lean(),
+    Organizer.findOne({ label: label.toLowerCase() }).lean(),
+    Organizer.findOne({ urlSlug }).lean(),
+  ]);
+
+  if (organizerCheckName) {
+    throw new Error(`Название: ${name} уже используется у другого организатора!`);
+  }
+
+  if (organizerCheckLabel) {
+    throw new Error(`Лейбл: ${label} уже используется у другого организатора!`);
+  }
+
+  if (organizerCheckUrlSlug) {
+    throw new Error(
+      `Произошла ошибка при генерации urlSlug, сформированная строка уже используется у другого организатора с названием: ${organizerCheckUrlSlug.name}. Попробуйте изменить название для создаваемого Организатора!`
+    );
+  }
+
   const response = await Organizer.create({
     name,
     label,
     creator: creatorId,
+    urlSlug,
   });
 
   return { message: `Организатор ${response.name} добавлен в БД сайта` };
