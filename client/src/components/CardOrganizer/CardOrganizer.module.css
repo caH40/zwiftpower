@@ -1,0 +1,59 @@
+.card {
+  position: relative;
+  width: 496px;
+  height: 279px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.3s ease-in-out;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: background 0.3s ease-in-out;
+}
+.content {
+  position: relative;
+  text-align: center;
+}
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+.name {
+  margin-top: 12px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+.card:hover .background {
+  filter: brightness(0.7);
+}
+.card:hover .overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+.card:hover .logo {
+  transform: scale(1.1);
+}
+.card:active {
+  transform: scale(0.98);
+}
