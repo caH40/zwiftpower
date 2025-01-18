@@ -7,11 +7,11 @@ import CommonInput from '../SimpleInput/CommonInput';
 import Button from '../Button/Button';
 import { fetchUsersZwiftpower } from '../../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
 
-import styles from './FormOrganizer.module.css';
+import styles from './FormOrganizerAdmin.module.css';
 
 const creatorInit = { _id: '', username: '' };
 
-function FormOrganizer() {
+function FormOrganizerAdmin() {
   const [name, setName] = useState('');
   const [label, setLabel] = useState('');
   const [creator, setCreator] = useState(creatorInit);
@@ -80,4 +80,4 @@ function FormOrganizer() {
   );
 }
 
-export default FormOrganizer;
+export default FormOrganizerAdmin;

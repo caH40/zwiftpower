@@ -5,7 +5,7 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetOrganizers } from '../../redux/features/api/organizer_admin/organizerAdminSlice';
 import Button from '../../components/UI/Button/Button';
 import TableOrganizer from '../../components/Tables/TableOrganizer/TableOrganizer';
-import FormOrganizer from '../../components/UI/FormOrganizer/FormOrganizer';
+import FormOrganizerAdmin from '../../components/UI/FormOrganizerAdmin/FormOrganizerAdmin';
 import useTitle from '../../hook/useTitle';
 import {
   fetchDeleteOrganizerAdmin,
@@ -60,7 +60,7 @@ function AdminOrganizer() {
         <>
           <h2 className={styles.title}>Добавление организатора</h2>
           <div className={styles.group}>
-            <FormOrganizer />
+            <FormOrganizerAdmin />
           </div>
         </>
       )}
