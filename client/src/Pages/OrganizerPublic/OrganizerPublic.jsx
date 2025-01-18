@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
-import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
+import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
@@ -42,7 +42,7 @@ function OrganizerPublic() {
   useAd(adNumbers);
   return (
     <>
-      <HelmetCatchup />
+      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.backgroundImage} />
       <div className={styles.wrapper}>
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />

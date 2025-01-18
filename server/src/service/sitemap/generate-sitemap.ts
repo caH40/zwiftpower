@@ -6,7 +6,7 @@ import { handleAndLogError } from '../../errors/error.js';
 import { getUrlsResultsDescription } from './results.js';
 import { getUrlsProfileResults } from './profile-results.js';
 import { urlsStatic } from './static.js';
-import { getUrlsProfileRacingScore } from './profile-racingScore.js';
+import { getUrlsOrganizerPublic } from './organizer.js';
 
 const __dirname = path.resolve();
 
@@ -24,7 +24,7 @@ export async function createSitemap() {
       getUrlsScheduleDescription(),
       getUrlsResultsDescription(),
       getUrlsProfileResults(),
-      getUrlsProfileRacingScore(),
+      getUrlsOrganizerPublic(),
     ]);
 
     const data = `<?xml version="1.0" encoding="UTF-8"?>

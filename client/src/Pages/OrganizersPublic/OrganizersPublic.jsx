@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
-import { HelmetCatchup } from '../../components/Helmets/HelmetCatchup';
+import { HelmetOrganizersPublic } from '../../components/Helmets/HelmetOrganizersPublic';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
@@ -40,7 +40,7 @@ function OrganizersPublic() {
   useAd(adNumbers);
   return (
     <>
-      <HelmetCatchup />
+      <HelmetOrganizersPublic />
       <div className={styles.wrapper}>
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
