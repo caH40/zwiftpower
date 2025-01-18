@@ -185,3 +185,17 @@ export const getStreamsMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Организаторы заездов"
+ */
+export const getOrganizersPublicMeta = (url: string): MetaTags => {
+  const title = 'Организаторы гонок Zwift – Серии заездов, Туры, Коферайды';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Найдите организаторов гонок Zwift! Индивидуальные и командные заезды, серии, туры, TT и коферайды. Выбирайте события и участвуйте в виртуальных заездах! 🚴‍♂️🔥';
+  const image = 'http://zwiftpower.ru/images/open_graph/organizers.webp';
+  const recommendationsTag = 'organizers';
+
+  return { title, canonical, description, image, recommendationsTag };
+};

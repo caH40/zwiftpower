@@ -9,6 +9,7 @@ import IconHome from '../../icons/IconHome';
 import IconProfile from '../../icons/IconProfile';
 import IconRider2 from '../../icons/IconRider2';
 import IconStream from '../../icons/IconStream';
+import IconOrganizerPublic from '../../icons/IconOrganizerPublic';
 
 import styles from './ListMenu.module.css';
 
@@ -16,12 +17,13 @@ const iconItems = [
   { id: 0, to: '/', icon: IconHome, label: 'Домашняя' },
   { id: 1, to: '/race/schedule', icon: IconSchedule, label: 'Расписание' },
   { id: 2, to: '/race/results', icon: IconResults, label: 'Результаты' },
-  { id: 3, to: '/race/series', icon: IconWorld, label: 'Серии гонок' },
-  { id: 4, to: '/race/statistics/main', icon: IconDiagram, label: 'Статистика' },
-  { id: 5, to: '/riders', icon: IconRider2, label: 'Райдеры' },
-  { id: 6, to: '/profile', icon: IconProfile, label: 'Профиль' },
-  { id: 7, to: '/streams', icon: IconStream, label: 'Трансляции' },
-  { id: 8, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
+  { id: 3, to: '/organizers', icon: IconOrganizerPublic, label: 'Организаторы' },
+  { id: 4, to: '/race/series', icon: IconWorld, label: 'Серии гонок' },
+  { id: 5, to: '/race/statistics/main', icon: IconDiagram, label: 'Статистика' },
+  { id: 6, to: '/riders', icon: IconRider2, label: 'Райдеры' },
+  { id: 7, to: '/profile', icon: IconProfile, label: 'Профиль' },
+  { id: 8, to: '/streams', icon: IconStream, label: 'Трансляции' },
+  { id: 9, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
 ];
 
 function ListMenuMain({ state }) {

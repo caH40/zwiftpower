@@ -25,6 +25,7 @@ import './css/App.css';
 import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
 import { ModeratorClubRoute } from './Route/ModeratorClubRoute.jsx';
 import { LegalRoute } from './Route/Legal.jsx';
+import { OrganizersPublicRoute } from './Route/OrganizersPublic.jsx';
 
 function App() {
   useFirstAuth();
@@ -58,6 +59,7 @@ function App() {
         {StatisticsRoute()}
         {AuthRoute()}
         {LegalRoute()}
+        {OrganizersPublicRoute()}
       </Route>
     </Routes>
   );

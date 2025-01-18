@@ -1,5 +1,6 @@
 import { MetaTags } from '../types/types.interface.js';
 import {
+  getOrganizerPublicMeta,
   getProfileResultsMeta,
   getRaceResultsMeta,
   getSignedRidersMeta,
@@ -11,6 +12,7 @@ import {
   getHomeMeta,
   getLeadersMeta,
   getMetaOtherPages,
+  getOrganizersPublicMeta,
   getRacingScoreMeta,
   getResultListMeta,
   getRidersMeta,
@@ -56,6 +58,10 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = await getProfileResultsMeta(url);
   } else if (url.includes('/streams')) {
     tags = getStreamsMeta(url);
+  } else if (url.includes('/organizers')) {
+    tags = getOrganizersPublicMeta(url);
+  } else if (url.includes('/organizer/')) {
+    tags = getOrganizerPublicMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

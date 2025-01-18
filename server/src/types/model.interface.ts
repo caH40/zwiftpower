@@ -552,13 +552,33 @@ export type TClubZwift = {
  * Организатора заезда, у организатора может быть несколько клубов
  */
 export type TOrganizer = {
+  isPublished: boolean; // Флаг активности организатора, отображать или нет его в списке.
   creator: Types.ObjectId; // модераторы клуба;
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
   label: string; // Лейбл короткое название;
+  urlSlug: string;
   logoSrc?: string; // Логотип (url);
-  backgroundImage: string; // URL фоновой картинки
+  backgroundImage?: string; // URL фоновой картинки
   description?: string; // описание Организатора;
+  clubMain?: Types.ObjectId; // Ссылка на основной клуб организатора в Zwift.
+  telegram?: {
+    group?: string; // Только id.
+    channel?: string; // Только id.
+  };
+  website?: string; // Ссылка на сайт организатора.
+  contact?: {
+    email?: string;
+    phone?: string;
+  };
+  country?: string; // Страна организатора. RU, BY, KZ и т.д.
+  socialLinks?: {
+    vk?: string;
+    facebook?: string;
+    twitter?: string;
+    instagram?: string;
+    youtube?: string;
+  };
   createdAt: string;
   updatedAt: string;
 };

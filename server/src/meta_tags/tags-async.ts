@@ -8,6 +8,7 @@ import { getMetaOtherPages } from './tags.js';
 import { MetaTags } from '../types/types.interface.js';
 import { millisecondsInWeekDays } from '../assets/date.js';
 import { Rider } from '../Model/Rider.js';
+import { Organizer } from '../Model/Organizer.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -173,6 +174,52 @@ export const getProfileResultsMeta = async (url: string): Promise<MetaTags> => {
     const canonical = serverWoWWW + url;
     const image = imageSrc;
     const recommendationsTag = 'profile';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы "Организатор заездов"
+ */
+export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    // Парсинг url.
+    const parts = url.split('/');
+    const urlSlug = parts.at(-1);
+
+    if (!urlSlug) {
+      return getMetaOtherPages(url);
+    }
+
+    const organizerDB = await Organizer.findOne(
+      { urlSlug, isPublished: true },
+      {
+        name: true,
+        backgroundImage: true,
+        _id: false,
+      }
+    ).lean<{ name: string; backgroundImage?: string }>();
+
+    // если не найден Организатор, или Организатор закрыл страницу для просмотра.
+    if (!organizerDB) {
+      return getMetaOtherPages(url);
+    }
+
+    // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
+    const descriptionRaw = `${organizerDB.name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
+    const titleRaw = `${organizerDB.name} – Гонки и серии заездов Zwift 🚴`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const canonical = serverWoWWW + url;
+    const image =
+      organizerDB.backgroundImage || 'https://zwiftpower.ru/images/open_graph/organizers.webp';
+    const recommendationsTag = 'organizer';
 
     return { title, canonical, description, image, recommendationsTag };
   } catch (error) {
