@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
+import cn from 'classnames/bind';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
 
 import styles from './InputAuth.module.css';
 
-function InputAuth({ label, register, input, validationText, link, addCls = ' ' }) {
+const cx = cn.bind(styles);
+
+function InputAuth({ label, register, input, validationText, link, addCls = ' ', ...props }) {
   return (
-    <div className={cn(styles.box, cns(styles, addCls))}>
+    <div className={cn(styles.wrapper, cns(styles, addCls))}>
       <div className={styles.box__text}>
         {label ? (
           <label className={styles.label} htmlFor={input.id}>
@@ -24,7 +26,13 @@ function InputAuth({ label, register, input, validationText, link, addCls = ' ' 
           </Link>
         ) : undefined}
       </div>
-      <input {...register} {...input} className={styles.input} />
+
+      <input
+        {...register}
+        {...input}
+        className={cx('input', { error: validationText?.length > 0 })}
+        {...props}
+      />
     </div>
   );
 }

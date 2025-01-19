@@ -1,3 +1,4 @@
+import FormOrganizerMain from '../../../components/UI/FormOrganizerMain/FormOrganizerMain';
 import useTitle from '../../../hook/useTitle';
 
 import styles from './Organizer.module.css';
@@ -11,5 +12,9 @@ import styles from './Organizer.module.css';
  */
 export default function Organizer() {
   useTitle('Управление Организатором');
-  return <section className={styles.wrapper}>В разработке...</section>;
+  return (
+    <section className={styles.wrapper}>
+      <FormOrganizerMain />
+    </section>
+  );
 }

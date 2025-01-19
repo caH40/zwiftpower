@@ -33,3 +33,38 @@ export function validatePassword(register) {
     }),
   };
 }
+
+export function validateTelegram({ property, register }) {
+  return {
+    ...register(property, {
+      // Регулярное выражение для проверки
+      pattern: {
+        value: /^[a-z0-9_]{5,32}$/i,
+        message: 'Разрешены только (a-z), (0-9) и (_)',
+      },
+      // Проверка минимальной длины
+      minLength: {
+        value: 5,
+        message: 'Необходимо минимум 5 символов',
+      },
+      // Проверка максимальной длины
+      maxLength: {
+        value: 32,
+        message: 'Не более 32 символа',
+      },
+    }),
+  };
+}
+
+export function validateWebsite({ property, register }) {
+  return {
+    ...register(property, {
+      pattern: {
+        value: /^(https?:\/\/)?([a-z0-9]+\.)+[a-z]{2,6}(\/[\w#?&%=.,;]*)?$/i,
+        message: 'Введите правильный URL (например, https://example.com)',
+      },
+      minLength: { value: 5, message: 'Необходимо минимум 5 символов' },
+      maxLength: { value: 100, message: 'Не более 100 символов' },
+    }),
+  };
+}
