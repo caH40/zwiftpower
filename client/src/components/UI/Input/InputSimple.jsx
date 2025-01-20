@@ -25,7 +25,7 @@ export default function InputSimple({
       <input
         className={styles.input}
         type={type}
-        value={value}
+        value={value || ''} // Не должно быть undefined или null.
         onChange={(e) => setValue(e.target.value)}
         disabled={disabled}
         id={id}

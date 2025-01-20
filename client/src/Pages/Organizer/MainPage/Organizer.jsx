@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import FormOrganizerMain from '../../../components/UI/FormOrganizerMain/FormOrganizerMain';
 import useTitle from '../../../hook/useTitle';
 
@@ -12,9 +14,12 @@ import styles from './Organizer.module.css';
  */
 export default function Organizer() {
   useTitle('Управление Организатором');
+
+  const { organizer, clubs } = useSelector((state) => state.organizerModerator);
+
   return (
     <section className={styles.wrapper}>
-      <FormOrganizerMain />
+      <FormOrganizerMain organizer={organizer} clubs={clubs} />
     </section>
   );
 }

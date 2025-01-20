@@ -70,6 +70,7 @@ export function organizerPublicDto({
     _id,
     name,
     label,
+    shortName,
     urlSlug,
     clubMain,
     logoSrc,
@@ -85,6 +86,7 @@ export function organizerPublicDto({
     id: String(_id),
     name,
     label,
+    shortName,
     urlSlug,
     ...(clubMain && {
       clubMain: `https://www.zwift.com/eu/clubs/${clubMain}/join`,

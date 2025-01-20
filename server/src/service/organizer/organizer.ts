@@ -7,6 +7,7 @@ import { Club } from '../../Model/Club.js';
 // types
 import { TResponseService } from '../../types/http.interface.js';
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
+import { TOrganizer, TOrganizerMainDto } from '../../types/model.interface.js';
 
 /**
  * Сервис получение данных Организатора по запросу модератора.
@@ -15,18 +16,31 @@ export async function getClubZwiftModeratorService({
   organizerId,
 }: {
   organizerId: string;
-}): Promise<TResponseService<{ name: string }>> {
-  // Получение данных организатора. Находится в разработке, поэтому запрашивается только название.
-  const organizersDB = await Organizer.findOne(
-    { _id: organizerId },
-    { name: true, _id: false }
-  ).lean<{ name: string }>();
+}): Promise<TResponseService<TOrganizerMainDto>> {
+  // Получение данных организатора.
+  // Получение клубов организатора.
+  const [organizerDB, clubsDB] = await Promise.all([
+    Organizer.findOne(
+      { _id: organizerId },
+      { _id: false, createdAt: false, updatedAt: false, botZwift: false, creator: false }
+    ).lean<Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'>>(),
 
-  if (!organizersDB) {
+    Club.find({ organizer: organizerId }, { _id: false, id: true, name: true }).lean<
+      {
+        name: string;
+        id: string;
+      }[]
+    >(),
+  ]);
+
+  if (!organizerDB) {
     throw new Error(`Не найден запрашиваемый Организатор с _id:${organizerId}`);
   }
 
-  return { data: organizersDB, message: 'Получены клубы запрашиваемого организатора.' };
+  return {
+    data: { organizer: organizerDB, clubs: clubsDB },
+    message: 'Получены клубы запрашиваемого организатора.',
+  };
 }
 
 /**

@@ -29,7 +29,7 @@ function SelectWithRHF({
         {!closeEmptyOption && <option className={styles.option} value=""></option>}
 
         {options.map((element) => (
-          <option className={styles.option} value={element.name} key={element.id}>
+          <option className={styles.option} value={element.value} key={element.id}>
             {element.name}
           </option>
         ))}

@@ -15,6 +15,7 @@ const organizerSchema = new Schema<TOrganizer>(
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     botZwift: { type: BotZwiftSchema },
     name: { type: String, unique: true, required: true },
+    shortName: { type: String },
     label: { type: String },
     urlSlug: { type: String },
     logoSrc: { type: String },

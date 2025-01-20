@@ -557,6 +557,7 @@ export type TOrganizer = {
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
   label: string; // Лейбл короткое название;
+  shortName: string; // Короткое название;
   urlSlug: string;
   logoSrc?: string; // Логотип (url);
   backgroundImage?: string; // URL фоновой картинки
@@ -630,3 +631,11 @@ export type TRiderBanned = {
 const banCodes = bans.map((ban) => ban.code);
 // Создание типа для `code`:
 export type TBanCode = (typeof banCodes)[number];
+
+/**
+ * Данные Организатора основные и модерируемые клубы для клиента.
+ */
+export type TOrganizerMainDto = {
+  organizer: Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'>;
+  clubs: { name: string; id: string }[];
+};

@@ -12,6 +12,7 @@ const initialState = {
   organizersForModerator: [],
   organizerForModerator: 0,
   organizer: {},
+  clubs: [], // получение клубов для Организатора в одно запросе вместе с главными данными Организатора.
   status: null,
   error: null,
 };
@@ -29,6 +30,7 @@ const organizerModeratorSlice = createSlice({
     resetOrganizerDataModerator(state) {
       state.organizer = {};
       state.organizerForModerator = 0;
+      state.clubs = [];
     },
     reducerSelectOrganizersForModerator(state, action) {
       state.organizerForModerator = action.payload;
@@ -46,7 +48,8 @@ const organizerModeratorSlice = createSlice({
     });
 
     builder.addCase(fetchGetOrganizerModerator.fulfilled, (state, action) => {
-      state.organizer = action.payload.data || {};
+      state.organizer = action.payload.data.organizer;
+      state.clubs = action.payload.data.clubs;
       state.error = null;
       state.status = 'resolved';
     });

@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { sendNotification } from '../../../redux/features/api/notifications/sendNotification';
-import { getAlert } from '../../../redux/features/alertMessageSlice';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
@@ -11,6 +9,7 @@ import InputSimple from '../Input/InputSimple';
 import InputAuth from '../InputAuth/InputAuth';
 import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
+import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 
 import styles from './FormOrganizerMain.module.css';
 
@@ -18,31 +17,41 @@ import styles from './FormOrganizerMain.module.css';
  * Форма изменения данных организатора (описание, лого, изображение и т.д...).
  */
 export default function FormOrganizerMain({
-  isPublished,
-  name = 'NameTest',
-  shortName = 'ShortNameTest ',
-  logoSrc,
-  backgroundImage,
-  description,
-  clubMain,
-  telegram,
-  website,
-  country,
-  socialLinks,
+  organizer: {
+    isPublished,
+    name,
+    shortName,
+    logoSrc,
+    backgroundImage,
+    description,
+    clubMain,
+    telegram,
+    website,
+    country,
+    socialLinks,
+  },
+  clubs = [{ id: '', name: '' }],
 }) {
+  // Ссылка на лого Организатора.
+  const [logoSrcState, setLogoSrcState] = useState(logoSrc);
+
+  // Ссылка на постер Организатора.
+  const [backgroundImageSrcState, setBackgroundImageSrcState] = useState(backgroundImage);
+
   const dispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     mode: 'all',
     defaultValues: {
       isPublished,
-      logoSrc,
-      backgroundImage,
+      logoFile: null,
+      backgroundImageFile: null,
       description,
       clubMain,
       telegram,
@@ -53,8 +62,7 @@ export default function FormOrganizerMain({
   });
 
   const onSubmit = (formData) => {
-    console.log(formData);
-
+    // console.log(formData);
     // dispatch(sendNotification({ notificationsTypes, text, title, subject })).then((data) => {
     //   if (data.meta.requestStatus === 'fulfilled') {
     //     dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
@@ -68,8 +76,6 @@ export default function FormOrganizerMain({
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wrapper__fields}>
-        <h3 className={styles.title}>Тип оповещения на e-mail</h3>
-
         <div className={styles.box__checkbox}>
           <span>Отображать страницы Организатора</span>
           <CheckboxRFH
@@ -111,17 +117,51 @@ export default function FormOrganizerMain({
           register={register('clubMain')}
           validationText={errors.clubMain?.message || ''}
           id={'clubMain-FormOrganizerMain'}
-          options={[{ id: 'id-test', name: 'name-test' }]}
+          options={clubs.map((club) => ({ id: club.id, value: club.id, name: club.name }))}
         />
-      </div>
 
-      <div className={styles.wrapper__textarea}>
-        <TextAreaRFH
-          id={'description-FormOrganizerMain'}
-          register={register('description')}
-          label={'Описание'}
-          validationText={errors.subject ? errors.subject.message : ''}
+        {/* Блок загрузки Главного изображения (обложки) */}
+        <Controller
+          name="logoFile"
+          control={control}
+          defaultValue={null}
+          render={({ field }) => (
+            <BlockUploadImage
+              title={'Загрузка лого Организатора'}
+              poster={field.value}
+              setPoster={field.onChange}
+              posterUrl={logoSrcState}
+              setPosterUrl={setLogoSrcState}
+              validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+            />
+          )}
         />
+
+        {/* Блок загрузки Главного изображения (обложки) */}
+        <Controller
+          name="backgroundImageFile"
+          control={control}
+          defaultValue={null}
+          render={({ field }) => (
+            <BlockUploadImage
+              title={'Загрузка постера для страницы Организатора'}
+              poster={field.value}
+              setPoster={field.onChange}
+              posterUrl={backgroundImageSrcState}
+              setPosterUrl={setBackgroundImageSrcState}
+              validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+            />
+          )}
+        />
+
+        <div className={styles.wrapper__textarea}>
+          <TextAreaRFH
+            id={'description-FormOrganizerMain'}
+            register={register('description')}
+            label={'Описание'}
+            validationText={errors.subject ? errors.subject.message : ''}
+          />
+        </div>
       </div>
 
       <div className={styles.box__btn}>
