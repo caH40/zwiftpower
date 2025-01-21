@@ -1,7 +1,7 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { Request, Response } from 'express';
 
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import {
   deleteOrganizerBotZwiftService,
   getOrganizerBotZwiftService,
@@ -21,7 +21,10 @@ import { Club } from '../Model/Club.js';
 import {
   getClubZwiftModeratorService,
   getOrganizersForModeratorService,
+  putOrganizerMainService,
 } from '../service/organizer/organizer.js';
+import { OrganizerDataZSchema } from '../utils/deserialization/organizer-data.js';
+import { TPutOrganizerMain } from '../types/http.interface.js';
 
 /**
  * Контроллер данных Организатора при запросе модератором.
@@ -396,5 +399,47 @@ export async function getOrganizersForModerator(req: Request, res: Response) {
     // Сообщение об ошибке.
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер получения обновлённых данных Организатора.
+ */
+export async function putOrganizerMain(req: Request, res: Response) {
+  try {
+    // _id Создателя Организатора в БД.
+    const creatorId = req.params.userId;
+
+    // Получение файлов изображений, если они есть
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const logoFile = files?.logoFile?.[0];
+    const backgroundImageFile = files?.backgroundImageFile?.[0];
+
+    // Десериализация данных.
+    const deserializedOrganizerData = OrganizerDataZSchema.parse(req.body) as Omit<
+      TPutOrganizerMain,
+      'logoFile' | 'backgroundImageFile'
+    >;
+
+    // Проверка, что изменяет данные Организатора сам создатель Организатора.
+    const organizerDB = await Organizer.findOne({ creator: creatorId }, { _id: true }).lean<{
+      _id: Types.ObjectId;
+    }>();
+
+    if (!organizerDB || String(organizerDB._id) !== deserializedOrganizerData.organizerId) {
+      throw new Error('У вас нет прав для редактирования данных этого Организатора!');
+    }
+
+    // Вызов сервиса.
+    const response = await putOrganizerMainService({
+      ...deserializedOrganizerData,
+      logoFile,
+      backgroundImageFile,
+    });
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }

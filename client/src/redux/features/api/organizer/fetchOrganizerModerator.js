@@ -115,12 +115,13 @@ export const fetchGetOrganizersForModerator = createAsyncThunk(
  */
 export const fetchPutOrganizersMainData = createAsyncThunk(
   'organizersMainData/put',
-  async (dataFormOrganizerMain, thunkAPI) => {
+  async (dataFromForm, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/main`,
         method: 'put',
-        data: dataFormOrganizerMain,
+        data: dataFromForm,
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       return response.data;

@@ -563,26 +563,29 @@ export type TOrganizer = {
   backgroundImage?: string; // URL фоновой картинки
   description?: string; // описание Организатора;
   clubMain?: Types.ObjectId; // Ссылка на основной клуб организатора в Zwift.
-  telegram?: {
-    group?: string; // Только id.
-    channel?: string; // Только id.
-  };
+  telegram?: TTelegram;
   website?: string; // Ссылка на сайт организатора.
   contact?: {
     email?: string;
     phone?: string;
   };
   country?: string; // Страна организатора. RU, BY, KZ и т.д.
-  socialLinks?: {
-    vk?: string;
-    facebook?: string;
-    twitter?: string;
-    instagram?: string;
-    youtube?: string;
-  };
+  socialLinks?: TSocialLinks;
   createdAt: string;
   updatedAt: string;
 };
+export type TTelegram = {
+  group?: string; // Только id.
+  channel?: string; // Только id.
+};
+export type TSocialLinks = {
+  vk?: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+  youtube?: string;
+};
+
 // !!! Оптимизировать, использовать везде TOrganizer
 export type OrganizerSchema = TOrganizer & Document;
 /**
@@ -636,6 +639,8 @@ export type TBanCode = (typeof banCodes)[number];
  * Данные Организатора основные и модерируемые клубы для клиента.
  */
 export type TOrganizerMainDto = {
-  organizer: Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'>;
+  organizer: Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'> & {
+    organizerId: string;
+  };
   clubs: { name: string; id: string }[];
 };

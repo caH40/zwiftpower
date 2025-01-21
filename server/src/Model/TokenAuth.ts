@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { TAuthToken } from '../types/model.interface.js';
 
-const TokenSchema: Schema<TAuthToken> = new Schema(
+const TokenSchema: Schema<TAuthToken & Document> = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     authService: {

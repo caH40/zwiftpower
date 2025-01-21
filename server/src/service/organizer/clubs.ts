@@ -1,4 +1,4 @@
-import { Document, ObjectId } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 import { Club } from '../../Model/Club.js';
 import { TResponseService } from '../../types/http.interface.js';
@@ -64,7 +64,7 @@ export async function deleteClubsZwiftService({
 }: {
   clubId: string;
 }): Promise<TResponseService<null>> {
-  const clubsDB: (TClubZwift & Document) | null = await Club.findOneAndDelete({ id: clubId });
+  const clubsDB = await Club.findOneAndDelete({ id: clubId }).lean<TClubZwift>();
 
   if (!clubsDB) {
     throw new Error(`Не найден клуб с id:${clubId}`);

@@ -10,6 +10,8 @@ import InputAuth from '../InputAuth/InputAuth';
 import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
+import { serializeOrganizerData } from '../../../utils/serialization/organizer-data';
+import { fetchPutOrganizersMainData } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 
 import styles from './FormOrganizerMain.module.css';
 
@@ -18,6 +20,7 @@ import styles from './FormOrganizerMain.module.css';
  */
 export default function FormOrganizerMain({
   organizer: {
+    organizerId,
     isPublished,
     name,
     shortName,
@@ -30,7 +33,7 @@ export default function FormOrganizerMain({
     country,
     socialLinks,
   },
-  clubs = [{ id: '', name: '' }],
+  clubs = [],
 }) {
   // Ссылка на лого Организатора.
   const [logoSrcState, setLogoSrcState] = useState(logoSrc);
@@ -48,10 +51,8 @@ export default function FormOrganizerMain({
     formState: { errors },
   } = useForm({
     mode: 'all',
-    defaultValues: {
+    values: {
       isPublished,
-      logoFile: null,
-      backgroundImageFile: null,
       description,
       clubMain,
       telegram,
@@ -59,9 +60,16 @@ export default function FormOrganizerMain({
       country,
       socialLinks,
     },
+    defaultValues: { logoFile: null, backgroundImageFile: null },
   });
 
-  const onSubmit = (formData) => {
+  const onSubmit = async (formData) => {
+    // Необходима сериализация данных перед передачей на сервер, так как передаются данные типа File (изображения).
+
+    const serializedOrganizerData = serializeOrganizerData({ ...formData, organizerId });
+
+    dispatch(fetchPutOrganizersMainData(serializedOrganizerData));
+
     // console.log(formData);
     // dispatch(sendNotification({ notificationsTypes, text, title, subject })).then((data) => {
     //   if (data.meta.requestStatus === 'fulfilled') {

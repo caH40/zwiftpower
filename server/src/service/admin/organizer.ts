@@ -1,7 +1,9 @@
 import slugify from 'slugify';
 
 import { Organizer } from '../../Model/Organizer.js';
-import { OrganizerSchema } from '../../types/model.interface.js';
+
+// types
+import { OrganizerSchema, TOrganizer } from '../../types/model.interface.js';
 
 /**
  * Сервис получения всех Организаторов заезда
@@ -69,7 +71,7 @@ export const postOrganizersService = async (
 export const deleteOrganizersService = async (
   organizerId: string
 ): Promise<{ message: string }> => {
-  const organizerDB = await Organizer.findOneAndDelete({ _id: organizerId });
+  const organizerDB = await Organizer.findOneAndDelete({ _id: organizerId }).lean<TOrganizer>();
 
   if (!organizerDB) {
     throw new Error(`Организатор ${organizerDB} не найден в БД`);

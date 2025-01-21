@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
-import { TAccessExpressionObj } from './model.interface.js';
+import { TAccessExpressionObj, TSocialLinks, TTelegram } from './model.interface.js';
 
 // данные из query параметров url
 export interface GetLogsAdmins {
@@ -186,3 +186,21 @@ export type VkUserInfoResponse = {
   verified: boolean; // Статус подтверждения аккаунта.
   birthday?: string; // Дата рождения в формате 'DD.MM.YYYY' (опционально).
 };
+
+/**
+ * данные получаемые с фронтэнда для обновления данных Организатора.
+ */
+export interface TPutOrganizerMain {
+  organizerId: string;
+  isPublished: boolean;
+  name: string;
+  shortName: string;
+  logoFile?: Express.Multer.File;
+  backgroundImageFile?: Express.Multer.File;
+  description?: string;
+  clubMain?: string;
+  telegram?: TTelegram;
+  website?: string;
+  country?: string;
+  socialLinks?: TSocialLinks;
+}

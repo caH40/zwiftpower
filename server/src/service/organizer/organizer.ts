@@ -5,7 +5,7 @@ import { User } from '../../Model/User.js';
 import { Club } from '../../Model/Club.js';
 
 // types
-import { TResponseService } from '../../types/http.interface.js';
+import { TPutOrganizerMain, TResponseService } from '../../types/http.interface.js';
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
 import { TOrganizer, TOrganizerMainDto } from '../../types/model.interface.js';
 
@@ -22,8 +22,12 @@ export async function getClubZwiftModeratorService({
   const [organizerDB, clubsDB] = await Promise.all([
     Organizer.findOne(
       { _id: organizerId },
-      { _id: false, createdAt: false, updatedAt: false, botZwift: false, creator: false }
-    ).lean<Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'>>(),
+      { createdAt: false, updatedAt: false, botZwift: false, creator: false }
+    ).lean<
+      Omit<TOrganizer, 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'> & {
+        _id: Types.ObjectId;
+      }
+    >(),
 
     Club.find({ organizer: organizerId }, { _id: false, id: true, name: true }).lean<
       {
@@ -37,8 +41,11 @@ export async function getClubZwiftModeratorService({
     throw new Error(`Не найден запрашиваемый Организатор с _id:${organizerId}`);
   }
 
+  const { _id, ...organizerWithId } = organizerDB;
+  const id = String(_id);
+
   return {
-    data: { organizer: organizerDB, clubs: clubsDB },
+    data: { organizer: { ...organizerWithId, organizerId: id }, clubs: clubsDB },
     message: 'Получены клубы запрашиваемого организатора.',
   };
 }
@@ -77,5 +84,43 @@ export async function getOrganizersForModeratorService({
   return {
     data: [...organizers.values()],
     message: 'Получены _id организаторов, в клубах которых пользователь является модератором.',
+  };
+}
+
+/**
+ * Сервис обновления данных Организатора.
+ */
+export async function putOrganizerMainService({
+  organizerId,
+  // isPublished,
+  // logoFile,
+  // backgroundImageFile,
+  description,
+  clubMain,
+  telegram,
+  website,
+  country,
+  socialLinks,
+}: TPutOrganizerMain): Promise<TResponseService<null>> {
+  const query = {
+    ...(description && { description }),
+    ...(clubMain && { clubMain }),
+    ...(telegram && { telegram }),
+    ...(website && { website }),
+    ...(country && { country }),
+    ...(socialLinks && { socialLinks }),
+  };
+
+  const organizerDB = await Organizer.findOneAndUpdate({ _id: organizerId }, query, {
+    new: true,
+  }).lean();
+
+  if (!organizerDB) {
+    throw new Error(`Организатор с ID ${organizerId} не найден`);
+  }
+
+  return {
+    data: null,
+    message: 'Успешно обновлены данные организатора!',
   };
 }

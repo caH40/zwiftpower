@@ -5,6 +5,7 @@ import {
   fetchGetOrganizerModerator,
   fetchGetOrganizersForModerator,
   fetchPutOrganizerBotsModerator,
+  fetchPutOrganizersMainData,
 } from './fetchOrganizerModerator';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   organizerForModerator: 0,
   organizer: {},
   clubs: [], // получение клубов для Организатора в одно запросе вместе с главными данными Организатора.
+  organizerUpdated: null, // Сообщение после удачного обновления главных данных Организатора.
   status: null,
   error: null,
 };
@@ -31,6 +33,7 @@ const organizerModeratorSlice = createSlice({
       state.organizer = {};
       state.organizerForModerator = 0;
       state.clubs = [];
+      state.organizerUpdated = null;
     },
     reducerSelectOrganizersForModerator(state, action) {
       state.organizerForModerator = action.payload;
@@ -106,6 +109,23 @@ const organizerModeratorSlice = createSlice({
     });
 
     builder.addCase(fetchGetOrganizersForModerator.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== обновление главных данных Организатора =================
+    builder.addCase(fetchPutOrganizersMainData.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchPutOrganizersMainData.fulfilled, (state, action) => {
+      state.organizerUpdated = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchPutOrganizersMainData.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
