@@ -8,6 +8,9 @@ import { Club } from '../../Model/Club.js';
 import { TPutOrganizerMain, TResponseService } from '../../types/http.interface.js';
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
 import { TOrganizer, TOrganizerMainDto } from '../../types/model.interface.js';
+import { convertMulterFileToWebFile } from '../../utils/file.js';
+import { saveFileToCloud } from '../file-save.js';
+import { Cloud } from '../cloud.js';
 
 /**
  * Сервис получение данных Организатора по запросу модератора.
@@ -17,8 +20,7 @@ export async function getClubZwiftModeratorService({
 }: {
   organizerId: string;
 }): Promise<TResponseService<TOrganizerMainDto>> {
-  // Получение данных организатора.
-  // Получение клубов организатора.
+  // Получение данных организатора и клубов организатора.
   const [organizerDB, clubsDB] = await Promise.all([
     Organizer.findOne(
       { _id: organizerId },
@@ -92,9 +94,9 @@ export async function getOrganizersForModeratorService({
  */
 export async function putOrganizerMainService({
   organizerId,
-  // isPublished,
-  // logoFile,
-  // backgroundImageFile,
+  isPublished,
+  logoFile,
+  posterFile,
   description,
   clubMain,
   telegram,
@@ -102,25 +104,106 @@ export async function putOrganizerMainService({
   country,
   socialLinks,
 }: TPutOrganizerMain): Promise<TResponseService<null>> {
-  const query = {
+  const organizerDB = await Organizer.findOne({ _id: organizerId });
+
+  if (!organizerDB) {
+    throw new Error(`Организатор с ID ${organizerId} не найден`);
+  }
+
+  const { logoSrc, posterSrc } = await handleImages({
+    shortName: organizerDB.shortName.toLowerCase(),
+    logoOldSrc: organizerDB.logoSrc,
+    posterOldSrc: organizerDB.posterSrc,
+    logoFile,
+    posterFile,
+  });
+
+  // Формирование объекта для обновления.
+  const updateFields: Partial<typeof organizerDB> = {
+    ...(logoSrc && { logoSrc }),
+    ...(posterSrc && { posterSrc }),
     ...(description && { description }),
     ...(clubMain && { clubMain }),
     ...(telegram && { telegram }),
     ...(website && { website }),
     ...(country && { country }),
     ...(socialLinks && { socialLinks }),
+    ...(typeof isPublished === 'boolean' && { isPublished }),
   };
 
-  const organizerDB = await Organizer.findOneAndUpdate({ _id: organizerId }, query, {
-    new: true,
-  }).lean();
+  // Применение новых данных к документу
+  Object.assign(organizerDB, updateFields);
 
-  if (!organizerDB) {
-    throw new Error(`Организатор с ID ${organizerId} не найден`);
-  }
+  await organizerDB.save();
 
   return {
     data: null,
     message: 'Успешно обновлены данные организатора!',
   };
+}
+
+/**
+ * Обработчик файлов изображений logo и poster Организатора.
+ * Сохранение в облаке, возвращение url в облаке данных изображений.
+ */
+async function handleImages({
+  shortName,
+  logoOldSrc,
+  posterOldSrc,
+  logoFile,
+  posterFile,
+}: {
+  shortName: string; // Короткое название Организатора в нижнем регистре.
+  logoOldSrc?: string; // Url к существующим изображениям в облаке.
+  posterOldSrc?: string; // Url к существующим изображениям в облаке.
+  logoFile?: Express.Multer.File;
+  posterFile?: Express.Multer.File;
+}): Promise<{ logoSrc: null | string; posterSrc: null | string }> {
+  // Регулярное выражения для извлечения названия файла с расширением из url облака.
+  // eslint-disable-next-line no-useless-escape
+  const fileNameFormUrl = /^.*\/([^\/]+)$/;
+
+  const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
+
+  // Инициализация возвращаемого объекта.
+  const urls: { logoSrc: string | null; posterSrc: string | null } = {
+    logoSrc: null,
+    posterSrc: null,
+  };
+
+  if (logoFile) {
+    const suffixImage = `organizers-${shortName}-logo-`;
+    const urlSavedImage = await saveFileToCloud({
+      file: convertMulterFileToWebFile({ file: logoFile }),
+      type: 'image',
+      suffix: suffixImage,
+    });
+
+    urls.logoSrc = urlSavedImage;
+
+    // Удаление замещенных (старых) файлов изображений из облака.
+    logoOldSrc &&
+      (await cloud.deleteFile({
+        prefix: logoOldSrc.replace(fileNameFormUrl, '$1'),
+      }));
+  }
+
+  if (posterFile) {
+    const suffixImage = `organizers-${shortName}-poster-`;
+    const urlSavedImage = await saveFileToCloud({
+      file: convertMulterFileToWebFile({ file: posterFile }),
+      type: 'image',
+      suffix: suffixImage,
+    });
+
+    urls.posterSrc = urlSavedImage;
+
+    // Удаление замещенных (старых) файлов изображений из облака.
+    posterOldSrc &&
+      (await cloud.deleteFile({
+        prefix: posterOldSrc.replace(fileNameFormUrl, '$1'),
+      }));
+  }
+
+  return urls;
 }

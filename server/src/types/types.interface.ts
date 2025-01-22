@@ -798,3 +798,12 @@ export type TOrganizerPublicDto = Omit<
   TOrganizer,
   'isPublished' | 'creator' | 'botZwift' | 'contact' | 'createdAt' | 'updatedAt' | 'clubMain'
 > & { id: string; clubMain?: string };
+
+/**
+ * Сохранение файла в облаке.
+ */
+export type TSaveFile = {
+  file: File;
+  type: 'image' | 'GPX' | 'pdf';
+  suffix: string;
+};

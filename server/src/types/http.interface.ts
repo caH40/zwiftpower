@@ -196,7 +196,7 @@ export interface TPutOrganizerMain {
   name: string;
   shortName: string;
   logoFile?: Express.Multer.File;
-  backgroundImageFile?: Express.Multer.File;
+  posterFile?: Express.Multer.File;
   description?: string;
   clubMain?: string;
   telegram?: TTelegram;

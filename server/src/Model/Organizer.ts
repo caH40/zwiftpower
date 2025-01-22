@@ -36,7 +36,7 @@ const organizerSchema = new Schema<TOrganizer & Document>(
     label: { type: String },
     urlSlug: { type: String },
     logoSrc: { type: String },
-    backgroundImage: { type: String },
+    posterSrc: { type: String },
     description: { type: String },
     clubMain: { type: String },
     telegram: { type: TelegramSchema },

@@ -413,12 +413,12 @@ export async function putOrganizerMain(req: Request, res: Response) {
     // Получение файлов изображений, если они есть
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const logoFile = files?.logoFile?.[0];
-    const backgroundImageFile = files?.backgroundImageFile?.[0];
+    const posterFile = files?.posterFile?.[0];
 
     // Десериализация данных.
     const deserializedOrganizerData = OrganizerDataZSchema.parse(req.body) as Omit<
       TPutOrganizerMain,
-      'logoFile' | 'backgroundImageFile'
+      'logoFile' | 'posterFile'
     >;
 
     // Проверка, что изменяет данные Организатора сам создатель Организатора.
@@ -434,7 +434,7 @@ export async function putOrganizerMain(req: Request, res: Response) {
     const response = await putOrganizerMainService({
       ...deserializedOrganizerData,
       logoFile,
-      backgroundImageFile,
+      posterFile,
     });
 
     // Возврат успешного ответа.

@@ -4,7 +4,7 @@ export function serializeOrganizerData(data) {
   Object.entries(data)
     .filter(([_, value]) => value !== undefined && value !== null)
     .forEach(([key, value]) => {
-      if (['logoFile', 'backgroundImageFile'].includes(key)) {
+      if (['logoFile', 'posterFile'].includes(key)) {
         // Добавляем файл как есть
         formData.append(key, value);
       } else {

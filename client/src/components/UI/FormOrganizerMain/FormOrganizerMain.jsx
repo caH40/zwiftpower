@@ -25,7 +25,7 @@ export default function FormOrganizerMain({
     name,
     shortName,
     logoSrc,
-    backgroundImage,
+    posterSrc,
     description,
     clubMain,
     telegram,
@@ -39,7 +39,7 @@ export default function FormOrganizerMain({
   const [logoSrcState, setLogoSrcState] = useState(logoSrc);
 
   // Ссылка на постер Организатора.
-  const [backgroundImageSrcState, setBackgroundImageSrcState] = useState(backgroundImage);
+  const [posterSrcState, setPosterSrcState] = useState(posterSrc);
 
   const dispatch = useDispatch();
 
@@ -60,7 +60,7 @@ export default function FormOrganizerMain({
       country,
       socialLinks,
     },
-    defaultValues: { logoFile: null, backgroundImageFile: null },
+    defaultValues: { logoFile: null, posterFile: null },
   });
 
   const onSubmit = async (formData) => {
@@ -140,14 +140,14 @@ export default function FormOrganizerMain({
               setPoster={field.onChange}
               posterUrl={logoSrcState}
               setPosterUrl={setLogoSrcState}
-              validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+              validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
             />
           )}
         />
 
         {/* Блок загрузки Главного изображения (обложки) */}
         <Controller
-          name="backgroundImageFile"
+          name="posterFile"
           control={control}
           defaultValue={null}
           render={({ field }) => (
@@ -155,8 +155,8 @@ export default function FormOrganizerMain({
               title={'Загрузка постера для страницы Организатора'}
               poster={field.value}
               setPoster={field.onChange}
-              posterUrl={backgroundImageSrcState}
-              setPosterUrl={setBackgroundImageSrcState}
+              posterUrl={posterSrcState}
+              setPosterUrl={setPosterSrcState}
               validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
             />
           )}

@@ -41,7 +41,7 @@ routerOrganizer.put(
   authOrganizer,
   fileMiddleware([
     { name: 'logoFile', maxCount: 1 },
-    { name: 'backgroundImageFile', maxCount: 1 },
+    { name: 'posterFile', maxCount: 1 },
   ]),
   putOrganizerMain
 );

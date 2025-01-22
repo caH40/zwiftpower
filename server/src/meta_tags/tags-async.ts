@@ -198,10 +198,10 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
       { urlSlug, isPublished: true },
       {
         name: true,
-        backgroundImage: true,
+        posterSrc: true,
         _id: false,
       }
-    ).lean<{ name: string; backgroundImage?: string }>();
+    ).lean<{ name: string; posterSrc?: string }>();
 
     // если не найден Организатор, или Организатор закрыл страницу для просмотра.
     if (!organizerDB) {
@@ -218,7 +218,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
 
     const canonical = serverWoWWW + url;
     const image =
-      organizerDB.backgroundImage || 'https://zwiftpower.ru/images/open_graph/organizers.webp';
+      organizerDB.posterSrc || 'https://zwiftpower.ru/images/open_graph/organizers.webp';
     const recommendationsTag = 'organizer';
 
     return { title, canonical, description, image, recommendationsTag };

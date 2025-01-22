@@ -560,9 +560,9 @@ export type TOrganizer = {
   shortName: string; // Короткое название;
   urlSlug: string;
   logoSrc?: string; // Логотип (url);
-  backgroundImage?: string; // URL фоновой картинки
+  posterSrc?: string; // URL фоновой картинки
   description?: string; // описание Организатора;
-  clubMain?: Types.ObjectId; // Ссылка на основной клуб организатора в Zwift.
+  clubMain?: string; // id клуба организатора в Zwift.
   telegram?: TTelegram;
   website?: string; // Ссылка на сайт организатора.
   contact?: {
