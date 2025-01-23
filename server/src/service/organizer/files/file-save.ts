@@ -28,7 +28,7 @@ export async function saveFileToCloud({
   }
 
   const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
-  const timeStump = Date.now(); // Время используется в именах файлов
+  const timeStump = Date.now(); // Время используется в именах файлов.
   const fileNames: string[] = [];
 
   const saveFile = async (inputFile: File, sizeKey?: TImagesSizeKey): Promise<void> => {

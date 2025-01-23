@@ -109,7 +109,6 @@ export async function putOrganizerMainService({
     throw new Error(`Организатор с ID ${organizerId} не найден`);
   }
 
-  console.time();
   const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
     shortName: organizerDB.shortName.toLowerCase(),
     baseNameLogoOld: organizerDB.logoFileInfo?.baseName,
@@ -117,7 +116,6 @@ export async function putOrganizerMainService({
     logoFile,
     posterFile,
   });
-  console.timeEnd();
 
   const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
   const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);

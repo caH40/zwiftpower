@@ -37,7 +37,7 @@ export async function uploadFileToCloudHandler({
   // Удаление замещенных (старых) файлов изображений из облака.
   baseNameOld &&
     (await cloud
-      .deleteFile({
+      .deleteFiles({
         prefix: baseNameOld,
       })
       .catch((e) => handleAndLogError(e)));
