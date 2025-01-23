@@ -3,14 +3,13 @@ import { Types } from 'mongoose';
 import { Organizer } from '../../Model/Organizer.js';
 import { User } from '../../Model/User.js';
 import { Club } from '../../Model/Club.js';
+import { imageStorageHandler } from './files/imageStorage-handler.js';
+import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 
 // types
 import { TPutOrganizerMain, TResponseService } from '../../types/http.interface.js';
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
 import { TOrganizer, TOrganizerMainDto } from '../../types/model.interface.js';
-import { convertMulterFileToWebFile } from '../../utils/file.js';
-import { saveFileToCloud } from '../file-save.js';
-import { Cloud } from '../cloud.js';
 
 /**
  * Сервис получение данных Организатора по запросу модератора.
@@ -110,18 +109,23 @@ export async function putOrganizerMainService({
     throw new Error(`Организатор с ID ${organizerId} не найден`);
   }
 
-  const { logoSrc, posterSrc } = await handleImages({
+  console.time();
+  const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
     shortName: organizerDB.shortName.toLowerCase(),
-    logoOldSrc: organizerDB.logoSrc,
-    posterOldSrc: organizerDB.posterSrc,
+    baseNameLogoOld: organizerDB.logoFileInfo?.baseName,
+    baseNamePosterOld: organizerDB.posterFileInfo?.baseName,
     logoFile,
     posterFile,
   });
+  console.timeEnd();
+
+  const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
+  const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);
 
   // Формирование объекта для обновления.
   const updateFields: Partial<typeof organizerDB> = {
-    ...(logoSrc && { logoSrc }),
-    ...(posterSrc && { posterSrc }),
+    ...(logoFileInfo && { logoFileInfo }),
+    ...(posterFileInfo && { posterFileInfo }),
     ...(description && { description }),
     ...(clubMain && { clubMain }),
     ...(telegram && { telegram }),
@@ -140,70 +144,4 @@ export async function putOrganizerMainService({
     data: null,
     message: 'Успешно обновлены данные организатора!',
   };
-}
-
-/**
- * Обработчик файлов изображений logo и poster Организатора.
- * Сохранение в облаке, возвращение url в облаке данных изображений.
- */
-async function handleImages({
-  shortName,
-  logoOldSrc,
-  posterOldSrc,
-  logoFile,
-  posterFile,
-}: {
-  shortName: string; // Короткое название Организатора в нижнем регистре.
-  logoOldSrc?: string; // Url к существующим изображениям в облаке.
-  posterOldSrc?: string; // Url к существующим изображениям в облаке.
-  logoFile?: Express.Multer.File;
-  posterFile?: Express.Multer.File;
-}): Promise<{ logoSrc: null | string; posterSrc: null | string }> {
-  // Регулярное выражения для извлечения названия файла с расширением из url облака.
-  // eslint-disable-next-line no-useless-escape
-  const fileNameFormUrl = /^.*\/([^\/]+)$/;
-
-  const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
-
-  // Инициализация возвращаемого объекта.
-  const urls: { logoSrc: string | null; posterSrc: string | null } = {
-    logoSrc: null,
-    posterSrc: null,
-  };
-
-  if (logoFile) {
-    const suffixImage = `organizers-${shortName}-logo-`;
-    const urlSavedImage = await saveFileToCloud({
-      file: convertMulterFileToWebFile({ file: logoFile }),
-      type: 'image',
-      suffix: suffixImage,
-    });
-
-    urls.logoSrc = urlSavedImage;
-
-    // Удаление замещенных (старых) файлов изображений из облака.
-    logoOldSrc &&
-      (await cloud.deleteFile({
-        prefix: logoOldSrc.replace(fileNameFormUrl, '$1'),
-      }));
-  }
-
-  if (posterFile) {
-    const suffixImage = `organizers-${shortName}-poster-`;
-    const urlSavedImage = await saveFileToCloud({
-      file: convertMulterFileToWebFile({ file: posterFile }),
-      type: 'image',
-      suffix: suffixImage,
-    });
-
-    urls.posterSrc = urlSavedImage;
-
-    // Удаление замещенных (старых) файлов изображений из облака.
-    posterOldSrc &&
-      (await cloud.deleteFile({
-        prefix: posterOldSrc.replace(fileNameFormUrl, '$1'),
-      }));
-  }
-
-  return urls;
 }

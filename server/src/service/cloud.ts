@@ -53,6 +53,14 @@ export class Cloud {
     this.endpointDomain = cloudConfig.endpointDomain;
   }
 
+  getBucketName(): string {
+    return this.bucketName;
+  }
+
+  getEndpointDomain(): string {
+    return this.endpointDomain;
+  }
+
   /**
    * Отправка файла на сохранение в облаке
    * @param file сохраняемый файл в формате File

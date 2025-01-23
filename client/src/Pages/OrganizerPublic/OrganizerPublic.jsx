@@ -42,7 +42,7 @@ function OrganizerPublic() {
   useAd(adNumbers);
   return (
     <>
-      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.backgroundImage} />
+      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.posterSrc} />
       <div className={styles.wrapper}>
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />

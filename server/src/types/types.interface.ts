@@ -802,8 +802,19 @@ export type TOrganizerPublicDto = Omit<
 /**
  * Сохранение файла в облаке.
  */
-export type TSaveFile = {
+export type TSaveFileToCloud = {
   file: File;
   type: 'image' | 'GPX' | 'pdf';
   suffix: string;
+  needOptimizedImages?: boolean;
 };
+
+/**
+ * Url файлов изображений logo, poster для сущности Организатор.
+ */
+export type TOrganizerImageUrls = { logoSrc: string[] | null; posterSrc: string[] | null };
+
+/**
+ * Размеры оптимизированных изображений.
+ */
+export type TImagesSizeKey = 'small' | 'medium' | 'large' | 'original';

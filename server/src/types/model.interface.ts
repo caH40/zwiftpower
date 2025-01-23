@@ -561,6 +561,8 @@ export type TOrganizer = {
   urlSlug: string;
   logoSrc?: string; // Логотип (url);
   posterSrc?: string; // URL фоновой картинки
+  logoFileInfo?: TFileMetadataForCloud;
+  posterFileInfo?: TFileMetadataForCloud;
   description?: string; // описание Организатора;
   clubMain?: string; // id клуба организатора в Zwift.
   telegram?: TTelegram;
@@ -584,6 +586,12 @@ export type TSocialLinks = {
   twitter?: string;
   instagram?: string;
   youtube?: string;
+};
+export type TFileMetadataForCloud = {
+  baseName: string; // Базовое имя файла без .
+  originalExtension: string; // Исходное расширение файла (например, jpg, png).
+  optimizedExtension: string; // Расширение для оптимизированных файлов (например, webp).
+  availableSizes: ('original' | 'large' | 'medium' | 'small')[];
 };
 
 // !!! Оптимизировать, использовать везде TOrganizer

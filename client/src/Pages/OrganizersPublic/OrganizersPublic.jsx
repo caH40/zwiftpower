@@ -52,7 +52,7 @@ function OrganizersPublic() {
               <CardOrganizer
                 name={organizer.name}
                 logoSrc={organizer.logoSrc}
-                backgroundSrc={organizer.backgroundImage}
+                backgroundSrc={organizer.posterSrc}
                 key={organizer.id}
               />
             ))}

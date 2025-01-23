@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema, model } from 'mongoose';
 import {
+  TFileMetadataForCloud,
   TOrganizer,
   TOrganizerBotZwift,
   TSocialLinks,
@@ -25,6 +26,25 @@ const SocialLinksSchema = new Schema<TSocialLinks>({
   instagram: { type: String },
   youtube: { type: String },
 });
+const FileMetadataSchema = new Schema<TFileMetadataForCloud>({
+  baseName: {
+    type: String,
+    trim: true,
+  },
+  originalExtension: {
+    type: String,
+    trim: true,
+  },
+  optimizedExtension: {
+    type: String,
+    trim: true,
+  },
+  availableSizes: {
+    type: [String],
+    enum: ['original', 'large', 'medium', 'small'],
+    default: ['original'],
+  },
+});
 
 const organizerSchema = new Schema<TOrganizer & Document>(
   {
@@ -37,6 +57,8 @@ const organizerSchema = new Schema<TOrganizer & Document>(
     urlSlug: { type: String },
     logoSrc: { type: String },
     posterSrc: { type: String },
+    logoFileInfo: { type: FileMetadataSchema },
+    posterFileInfo: { type: FileMetadataSchema },
     description: { type: String },
     clubMain: { type: String },
     telegram: { type: TelegramSchema },
