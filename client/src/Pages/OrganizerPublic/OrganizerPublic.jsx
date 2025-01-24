@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
+import { AdaptiveImage } from '../../components/AdaptiveImage/AdaptiveImage';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
@@ -47,6 +48,8 @@ function OrganizerPublic() {
         {isDesktop ? (
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
+
+        {organizer && <AdaptiveImage sources={organizer.posterUrls} />}
 
         <JSONBlock json={organizer} />
       </div>

@@ -813,8 +813,3 @@ export type TSaveFileToCloud = {
  * Url файлов изображений logo, poster для сущности Организатор.
  */
 export type TOrganizerImageUrls = { logoSrc: string[] | null; posterSrc: string[] | null };
-
-/**
- * Размеры оптимизированных изображений.
- */
-export type TImagesSizeKey = 'small' | 'medium' | 'large' | 'original';

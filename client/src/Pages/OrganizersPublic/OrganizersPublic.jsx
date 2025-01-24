@@ -51,8 +51,8 @@ function OrganizersPublic() {
             {organizers.map((organizer) => (
               <CardOrganizer
                 name={organizer.name}
-                logoSrc={organizer.logoSrc}
-                backgroundSrc={organizer.posterSrc}
+                logoUrls={organizer.logoUrls}
+                posterUrls={organizer.posterUrls}
                 key={organizer.id}
               />
             ))}

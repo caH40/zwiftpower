@@ -1,9 +1,12 @@
 import { fileTypes } from '../../../assets/files.js';
 import { imageSizeMapping } from '../../../assets/image-sizes.js';
-import { TImagesSizeKey, TSaveFileToCloud } from '../../../types/types.interface.js';
 import { generateFileName } from '../../../utils/file-name.js';
 import { convertToWebP } from '../../../utils/image-resize.js';
 import { Cloud } from '../../cloud.js';
+
+// types
+import { TAvailableSizes } from '../../../types/model.interface.js';
+import { TSaveFileToCloud } from '../../../types/types.interface.js';
 
 /**
  * Сохраняет файл и оптимизированные файлы изображений в облаке с уникальным суффиксом и возвращает массив имен сохраненных файлов.
@@ -32,7 +35,7 @@ export async function saveFileToCloud({
   const fileNames: string[] = [];
 
   // Оптимизация и сохранение на облаке.
-  const saveFile = async (inputFile: File, sizeKey?: TImagesSizeKey): Promise<void> => {
+  const saveFile = async (inputFile: File, sizeKey?: TAvailableSizes): Promise<void> => {
     // Не проводиться оптимизация если ключ размера не задан, или если это оригинальное изображение.
     const optimizedFile =
       sizeKey && sizeKey !== 'original' ? await convertToWebP(inputFile, sizeKey) : inputFile;
@@ -46,7 +49,7 @@ export async function saveFileToCloud({
   };
 
   if (needOptimizedImages) {
-    const tasks = (Object.keys(imageSizeMapping) as TImagesSizeKey[]).map((sizeKey) =>
+    const tasks = (Object.keys(imageSizeMapping) as TAvailableSizes[]).map((sizeKey) =>
       saveFile(file, sizeKey)
     );
     await Promise.all(tasks);

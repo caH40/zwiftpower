@@ -1,4 +1,4 @@
-import { TFileMetadataForCloud } from '../types/model.interface';
+import { TAvailableSizes, TFileMetadataForCloud } from '../types/model.interface';
 
 /**
  * Парсит массив названий файлов и возвращает объект TFileMetadataForCloud.
@@ -13,7 +13,7 @@ export function parseAndGroupFileNames(
   }
 
   const fileRegex =
-    /^(?<baseName>[\w-]+)-(?<size>original|large|medium|small)\.(?<extension>\w+)$/;
+    /^(?<baseName>[\w-]+)-(?<size>original|large|medium|small|xLarge)\.(?<extension>\w+)$/;
 
   const metadata: TFileMetadataForCloud = {
     baseName: '',
@@ -31,7 +31,7 @@ export function parseAndGroupFileNames(
 
     const { baseName, size, extension } = match.groups;
 
-    if (!['original', 'large', 'medium', 'small'].includes(size)) {
+    if (!['original', 'large', 'medium', 'small', 'xLarge'].includes(size)) {
       throw new Error(`Некорректный размер изображения в файле: ${fileName}`);
     }
 
@@ -42,8 +42,8 @@ export function parseAndGroupFileNames(
     }
 
     // Добавляем размер в список доступных размеров
-    if (!metadata.availableSizes.includes(size as 'original' | 'large' | 'medium' | 'small')) {
-      metadata.availableSizes.push(size as 'original' | 'large' | 'medium' | 'small');
+    if (!metadata.availableSizes.includes(size as TAvailableSizes)) {
+      metadata.availableSizes.push(size as TAvailableSizes);
     }
   }
 

@@ -589,8 +589,10 @@ export type TFileMetadataForCloud = {
   baseName: string; // Базовое имя файла без .
   originalExtension: string; // Исходное расширение файла (например, jpg, png).
   optimizedExtension: string; // Расширение для оптимизированных файлов (например, webp).
-  availableSizes: ('original' | 'large' | 'medium' | 'small')[];
+  availableSizes: TAvailableSizes[];
 };
+// Названия для размеров изображений.
+export type TAvailableSizes = 'original' | 'large' | 'medium' | 'small' | 'xLarge';
 
 // !!! Оптимизировать, использовать везде TOrganizer
 export type OrganizerSchema = TOrganizer & Document;

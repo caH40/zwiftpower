@@ -3,9 +3,10 @@ import { fileTypes } from '../assets/files.js';
 import { generateFileName } from '../utils/file-name.js';
 
 // types
-import { TImagesSizeKey, TSaveFileToCloud } from '../types/types.interface.js';
+import { TSaveFileToCloud } from '../types/types.interface.js';
 import { imageSizeMapping } from '../assets/image-sizes.js';
 import { convertToWebP } from '../utils/image-resize.js';
+import { TAvailableSizes } from '../types/model.interface.js';
 
 /**
  * Сохраняет файл и оптимизированные файлы изображений в облаке с уникальным суффиксом suffix и возвращает массив имен сохраненных файлов с расширениями.
@@ -39,7 +40,7 @@ export async function saveFileToCloud({
     const timeStump = Date.now();
 
     // Создание массива промисов для выполнения задач.
-    const tasks = (Object.keys(imageSizeMapping) as TImagesSizeKey[]).map(async (sizeKey) => {
+    const tasks = (Object.keys(imageSizeMapping) as TAvailableSizes[]).map(async (sizeKey) => {
       // Создание оптимизированной версии изображения.
       const fileOptimized = await convertToWebP(file, sizeKey);
 

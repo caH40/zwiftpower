@@ -1,8 +1,9 @@
 import sharp from 'sharp';
 
-// types
-import { TImagesSizeKey } from '../types/types.interface.js';
 import { imageSizeMapping } from '../assets/image-sizes.js';
+
+// types
+import { TAvailableSizes } from '../types/model.interface.js';
 
 /**
  * Конвертирует изображение в WebP формат и изменяет размер (если нужно).
@@ -10,7 +11,7 @@ import { imageSizeMapping } from '../assets/image-sizes.js';
  * @param sizeKey - Ключ размера ('small' | 'medium' | 'large' | 'original').
  * @returns Новый объект File в формате WebP.
  */
-export async function convertToWebP(file: File, sizeKey: TImagesSizeKey): Promise<File> {
+export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promise<File> {
   if (!imageSizeMapping[sizeKey]) {
     // Если размер - "original", конвертируем оригинал без изменения размера
     const originalBuffer = Buffer.from(await file.arrayBuffer());

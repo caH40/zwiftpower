@@ -41,7 +41,7 @@ const FileMetadataSchema = new Schema<TFileMetadataForCloud>({
   },
   availableSizes: {
     type: [String],
-    enum: ['original', 'large', 'medium', 'small'],
+    enum: ['original', 'large', 'medium', 'small', 'xLarge'],
     default: ['original'],
   },
 });

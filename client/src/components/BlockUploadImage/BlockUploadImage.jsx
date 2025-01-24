@@ -112,7 +112,13 @@ export default function BlockUploadImage({
 
       <div className={cx('relative', { square: isSquare })}>
         {/* в данном случае компонент Image не нужен */}
-        <img src={posterUrl || imageTitle} alt="title image" className={styles.img} />
+        <img
+          src={posterUrl || imageTitle}
+          alt="title image"
+          className={styles.img}
+          width={180}
+          height={120}
+        />
 
         {poster && (
           <>

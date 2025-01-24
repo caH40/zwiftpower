@@ -1,5 +1,5 @@
 // types
-import { TImagesSizeKey } from '../types/types.interface';
+import { TAvailableSizes } from '../types/model.interface';
 
 /**
  * Создает имя файла для сохранения в облаке.
@@ -14,7 +14,7 @@ export function generateFileName({
   file: File;
   suffix: string;
   timeStump: number;
-  sizeKey?: TImagesSizeKey;
+  sizeKey?: TAvailableSizes;
 }): string {
   const fileName = suffix + timeStump;
   const extension = file.name.split('.').pop()?.toLowerCase();
