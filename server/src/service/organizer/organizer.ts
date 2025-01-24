@@ -5,11 +5,13 @@ import { User } from '../../Model/User.js';
 import { Club } from '../../Model/Club.js';
 import { imageStorageHandler } from './files/imageStorage-handler.js';
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
+import { createUrlsToFileCloud } from '../../utils/url.js';
 
 // types
 import { TPutOrganizerMain, TResponseService } from '../../types/http.interface.js';
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
-import { TOrganizer, TOrganizerMainDto } from '../../types/model.interface.js';
+import { TOrganizer } from '../../types/model.interface.js';
+import { TOrganizerMainDto } from '../../types/dto.interface.js';
 
 /**
  * Сервис получение данных Организатора по запросу модератора.
@@ -42,11 +44,17 @@ export async function getClubZwiftModeratorService({
     throw new Error(`Не найден запрашиваемый Организатор с _id:${organizerId}`);
   }
 
+  const logoUrls = createUrlsToFileCloud(organizerDB.logoFileInfo);
+  const posterUrls = createUrlsToFileCloud(organizerDB.posterFileInfo);
+
   const { _id, ...organizerWithId } = organizerDB;
   const id = String(_id);
 
   return {
-    data: { organizer: { ...organizerWithId, organizerId: id }, clubs: clubsDB },
+    data: {
+      organizer: { ...organizerWithId, organizerId: id, logoUrls, posterUrls },
+      clubs: clubsDB,
+    },
     message: 'Получены клубы запрашиваемого организатора.',
   };
 }

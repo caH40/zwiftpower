@@ -24,8 +24,8 @@ export default function FormOrganizerMain({
     isPublished,
     name,
     shortName,
-    logoSrc,
-    posterSrc,
+    logoUrls,
+    posterUrls,
     description,
     clubMain,
     telegram,
@@ -36,10 +36,10 @@ export default function FormOrganizerMain({
   clubs = [],
 }) {
   // Ссылка на лого Организатора.
-  const [logoSrcState, setLogoSrcState] = useState(logoSrc);
+  const [logoSrcState, setLogoSrcState] = useState(logoUrls.original);
 
   // Ссылка на постер Организатора.
-  const [posterSrcState, setPosterSrcState] = useState(posterSrc);
+  const [posterSrcState, setPosterSrcState] = useState(posterUrls.small);
 
   const dispatch = useDispatch();
 

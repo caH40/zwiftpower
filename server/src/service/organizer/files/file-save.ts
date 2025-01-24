@@ -31,8 +31,11 @@ export async function saveFileToCloud({
   const timeStump = Date.now(); // Время используется в именах файлов.
   const fileNames: string[] = [];
 
+  // Оптимизация и сохранение на облаке.
   const saveFile = async (inputFile: File, sizeKey?: TImagesSizeKey): Promise<void> => {
-    const optimizedFile = sizeKey ? await convertToWebP(inputFile, sizeKey) : inputFile;
+    // Не проводиться оптимизация если ключ размера не задан, или если это оригинальное изображение.
+    const optimizedFile =
+      sizeKey && sizeKey !== 'original' ? await convertToWebP(inputFile, sizeKey) : inputFile;
     const fileName = generateFileName({ file: optimizedFile, suffix, timeStump, sizeKey });
     fileNames.push(fileName);
 

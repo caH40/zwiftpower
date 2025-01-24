@@ -559,10 +559,8 @@ export type TOrganizer = {
   label: string; // Лейбл короткое название;
   shortName: string; // Короткое название;
   urlSlug: string;
-  logoSrc?: string; // Логотип (url);
-  posterSrc?: string; // URL фоновой картинки
-  logoFileInfo?: TFileMetadataForCloud;
-  posterFileInfo?: TFileMetadataForCloud;
+  logoFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений лого.
+  posterFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений постера.
   description?: string; // описание Организатора;
   clubMain?: string; // id клуба организатора в Zwift.
   telegram?: TTelegram;
@@ -642,13 +640,3 @@ export type TRiderBanned = {
 const banCodes = bans.map((ban) => ban.code);
 // Создание типа для `code`:
 export type TBanCode = (typeof banCodes)[number];
-
-/**
- * Данные Организатора основные и модерируемые клубы для клиента.
- */
-export type TOrganizerMainDto = {
-  organizer: Omit<TOrganizer, '_id' | 'createdAt' | 'updatedAt' | 'botZwift' | 'creator'> & {
-    organizerId: string;
-  };
-  clubs: { name: string; id: string }[];
-};

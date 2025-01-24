@@ -5,6 +5,7 @@ import { ObjectId, Types } from 'mongoose';
 import { TOrganizer, TZwiftToken } from '../types/model.interface.js';
 import { TZwiftJwtToken } from '../types/http.interface.js';
 import { TOrganizerPublicDto, TZwiftTokenDto } from '../types/types.interface.js';
+import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
  * Декодирование токена.
@@ -73,14 +74,17 @@ export function organizerPublicDto({
     shortName,
     urlSlug,
     clubMain,
-    logoSrc,
-    posterSrc,
+    logoFileInfo,
+    posterFileInfo,
     description,
     website,
     country,
     socialLinks,
     telegram,
   } = organizerFromDB;
+
+  const logoUrls = createUrlsToFileCloud(logoFileInfo);
+  const posterUrls = createUrlsToFileCloud(posterFileInfo);
 
   return {
     id: String(_id),
@@ -91,8 +95,8 @@ export function organizerPublicDto({
     ...(clubMain && {
       clubMain: `https://www.zwift.com/eu/clubs/${clubMain}/join`,
     }),
-    ...(logoSrc && { logoSrc }),
-    ...(posterSrc && { posterSrc }),
+    ...(logoUrls && { logoUrls }),
+    ...(posterUrls && { posterUrls }),
     ...(description && { description }),
     ...(website && { website }),
     ...(country && { country }),

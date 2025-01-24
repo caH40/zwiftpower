@@ -25,17 +25,17 @@ export class Cloud {
   private s3: S3Client;
   // eslint-disable-next-line no-unused-vars
   private handleAndLogError: (error: unknown) => void;
-  private bucketName: string;
-  private endpointDomain: string;
+  private _bucketName: string;
+  private _endpointDomain: string;
 
   maxSizeFileInMBytes: number;
 
   constructor({
     cloudName = 'vk',
-    maxSizeFileInMBytes,
+    maxSizeFileInMBytes = 5,
   }: {
     cloudName: Clouds;
-    maxSizeFileInMBytes: number;
+    maxSizeFileInMBytes?: number;
   }) {
     // Получение соответствующего конфигурацию для облака "cloudName".
     const cloudConfig = new CloudConfig();
@@ -49,16 +49,16 @@ export class Cloud {
     this.config = config;
     this.s3 = new S3Client(this.config);
     this.handleAndLogError = handleAndLogError;
-    this.bucketName = cloudConfig.bucketName;
-    this.endpointDomain = cloudConfig.endpointDomain;
+    this._bucketName = cloudConfig.bucketName;
+    this._endpointDomain = cloudConfig.endpointDomain;
   }
 
-  getBucketName(): string {
-    return this.bucketName;
+  get bucketName(): string {
+    return this._bucketName;
   }
 
-  getEndpointDomain(): string {
-    return this.endpointDomain;
+  get endpointDomain(): string {
+    return this._endpointDomain;
   }
 
   /**
@@ -69,7 +69,7 @@ export class Cloud {
   public async postFile({ file, fileName }: { file: File; fileName?: string }): Promise<
     TResponseService<{
       responseCloud: ResponseMetadata;
-      file: { bucketName: string; endpointDomain: string };
+      file: { _bucketName: string; _endpointDomain: string };
     }>
   > {
     if (!file) {
@@ -86,7 +86,7 @@ export class Cloud {
 
     //
     const params: PutObjectCommandInput = {
-      Bucket: this.bucketName,
+      Bucket: this._bucketName,
       Body: buffer,
       Key: fileName ?? file.name,
       ContentType: file.type,
@@ -99,8 +99,8 @@ export class Cloud {
       data: {
         responseCloud: response.$metadata,
         file: {
-          bucketName: this.bucketName,
-          endpointDomain: this.endpointDomain,
+          _bucketName: this._bucketName,
+          _endpointDomain: this._endpointDomain,
         },
       },
       message: 'Успешное сохранение файла в облаке!',
@@ -132,7 +132,7 @@ export class Cloud {
 
       // Создание параметров для команды удаления файла.
       const params: DeleteObjectCommandInput = {
-        Bucket: this.bucketName,
+        Bucket: this._bucketName,
         Key: prefix,
       };
 
@@ -161,7 +161,7 @@ export class Cloud {
     try {
       // Создаем параметры запроса для получения списка объектов с заданным префиксом
       const params = {
-        Bucket: this.bucketName, // Имя ведра (bucket) в облаке
+        Bucket: this._bucketName, // Имя ведра (bucket) в облаке
         Prefix: prefix, // Префикс (путь) к объектам, которые нужно удалить
       };
 

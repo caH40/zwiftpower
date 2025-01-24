@@ -55,8 +55,6 @@ const organizerSchema = new Schema<TOrganizer & Document>(
     shortName: { type: String },
     label: { type: String },
     urlSlug: { type: String },
-    logoSrc: { type: String },
-    posterSrc: { type: String },
     logoFileInfo: { type: FileMetadataSchema },
     posterFileInfo: { type: FileMetadataSchema },
     description: { type: String },
