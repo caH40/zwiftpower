@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { resetOrganizerDataModerator } from '../../../redux/features/api/organizer/organizerModeratorSlice';
 import FormOrganizerMain from '../../../components/UI/FormOrganizerMain/FormOrganizerMain';
 import useTitle from '../../../hook/useTitle';
 
@@ -16,13 +14,8 @@ import styles from './Organizer.module.css';
  */
 export default function Organizer() {
   useTitle('Управление Организатором');
-  const dispatch = useDispatch();
 
   const { organizer, clubs, status } = useSelector((state) => state.organizerModerator);
-
-  useEffect(() => {
-    return () => dispatch(resetOrganizerDataModerator());
-  }, []);
 
   return (
     <section className={styles.wrapper}>
