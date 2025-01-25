@@ -29,6 +29,7 @@ export default function BlockUploadImage({
   isSquare,
   validationText,
   tooltip,
+  accept,
 }) {
   const [imageTitle, setImageTitle] = useState(noImage);
 
@@ -86,38 +87,39 @@ export default function BlockUploadImage({
 
   return (
     <section className={styles.wrapper}>
-      <div className={styles.box__title}>
-        <h2 className={styles.title}>
-          <div className={styles.box__info}>
-            {title}
-            {tooltip && <IconQuestion squareSize={20} tooltip={tooltip} />}
-          </div>
-        </h2>
+      <h2 className={styles.title}>
+        <div className={styles.box__info}>
+          {title}
+          {tooltip && <IconQuestion squareSize={20} tooltip={tooltip} />}
+        </div>
+      </h2>
+
+      <div className={styles.box__control}>
+        <InputFileIcon
+          name="uploadImage"
+          icon={{
+            width: 26,
+            height: 22,
+            src: '/images/icons/image-upload.svg',
+            alt: 'Upload image',
+          }}
+          accept={accept}
+          getChange={getPictures}
+          loading={isLoading}
+          disabled={imageTitle !== noImage}
+        />
+
         <span className={styles.validate}>{validationText}</span>
       </div>
-
-      <InputFileIcon
-        name="uploadImage"
-        icon={{
-          width: 26,
-          height: 22,
-          src: '/images/icons/image-upload.svg',
-          alt: 'Upload image',
-        }}
-        accept=".jpg, .jpeg, .png, .webp"
-        getChange={getPictures}
-        loading={isLoading}
-        disabled={imageTitle !== noImage}
-      />
 
       <div className={cx('relative', { square: isSquare })}>
         {/* в данном случае компонент Image не нужен */}
         <img
           src={posterUrl || imageTitle}
           alt="title image"
-          className={styles.img}
-          width={180}
-          height={120}
+          className={cx('img', { img__error: !!validationText })}
+          width={400}
+          height={300}
         />
 
         {poster && (

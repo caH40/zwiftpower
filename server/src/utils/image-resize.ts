@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 
-import { imageSizeMapping } from '../assets/image-sizes.js';
+import { imageSizeMappingOnlyWidth } from '../assets/image-sizes.js';
 
 // types
 import { TAvailableSizes } from '../types/model.interface.js';
@@ -12,7 +12,7 @@ import { TAvailableSizes } from '../types/model.interface.js';
  * @returns Новый объект File в формате WebP.
  */
 export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promise<File> {
-  if (!imageSizeMapping[sizeKey]) {
+  if (!imageSizeMappingOnlyWidth[sizeKey]) {
     // Если размер - "original", конвертируем оригинал без изменения размера
     const originalBuffer = Buffer.from(await file.arrayBuffer());
 
@@ -26,14 +26,14 @@ export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promi
   }
 
   // Получаем параметры изменения размера
-  const dimensions = imageSizeMapping[sizeKey];
-  const { width, height } = dimensions!;
+  const { width } = imageSizeMappingOnlyWidth[sizeKey];
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
   // Изменение размера и конвертация в WebP
   const resizedWebPBuffer = await sharp(buffer)
-    .resize(width, height, { fit: 'cover' }) // Изменение размера
+    .resize(width) // Изменение размера
+    // .resize(width, height, { fit: 'cover' }) // Изменение размера
     .webp({ quality: 80 }) // Конвертация в WebP с качеством 80
     .toBuffer();
 

@@ -1,5 +1,5 @@
 import { fileTypes } from '../../../assets/files.js';
-import { imageSizeMapping } from '../../../assets/image-sizes.js';
+import { imageSizeMappingOnlyWidth } from '../../../assets/image-sizes.js';
 import { generateFileName } from '../../../utils/file-name.js';
 import { convertToWebP } from '../../../utils/image-resize.js';
 import { Cloud } from '../../cloud.js';
@@ -49,7 +49,7 @@ export async function saveFileToCloud({
   };
 
   if (needOptimizedImages) {
-    const tasks = (Object.keys(imageSizeMapping) as TAvailableSizes[]).map((sizeKey) =>
+    const tasks = (Object.keys(imageSizeMappingOnlyWidth) as TAvailableSizes[]).map((sizeKey) =>
       saveFile(file, sizeKey)
     );
     await Promise.all(tasks);

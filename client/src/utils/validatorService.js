@@ -37,20 +37,16 @@ export function validatePassword(register) {
 export function validateTelegram({ property, register }) {
   return {
     ...register(property, {
-      // Регулярное выражение для проверки
+      // Регулярное выражение для проверки URL группы Telegram
       pattern: {
-        value: /^[a-z0-9_]{5,32}$/i,
-        message: 'Разрешены только (a-z), (0-9) и (_)',
-      },
-      // Проверка минимальной длины
-      minLength: {
-        value: 5,
-        message: 'Необходимо минимум 5 символов',
+        value: /^https:\/\/t\.me\/[a-zA-Z0-9_]{5,32}$/,
+        message:
+          'URL должен начинаться с "https://t.me/" и содержать от 5 до 32 символов (буквы, цифры, _).',
       },
       // Проверка максимальной длины
       maxLength: {
-        value: 32,
-        message: 'Не более 32 символа',
+        value: 255,
+        message: 'Длина URL не должна превышать 255 символов.',
       },
     }),
   };
@@ -60,7 +56,7 @@ export function validateWebsite({ property, register }) {
   return {
     ...register(property, {
       pattern: {
-        value: /^(https?:\/\/)?([a-z0-9]+\.)+[a-z]{2,6}(\/[\w#?&%=.,;]*)?$/i,
+        value: /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[\w#?&%=.,;]*)?$/i,
         message: 'Введите правильный URL (например, https://example.com)',
       },
       minLength: { value: 5, message: 'Необходимо минимум 5 символов' },

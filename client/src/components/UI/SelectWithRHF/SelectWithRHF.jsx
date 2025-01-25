@@ -11,6 +11,7 @@ function SelectWithRHF({
   options,
   validationText,
   closeEmptyOption,
+  loading,
   ...props
 }) {
   return (
@@ -25,7 +26,7 @@ function SelectWithRHF({
         {validationText ? <span className={styles.wrong}>{validationText}</span> : undefined}
       </div>
 
-      <select className={styles.select} {...register} {...props}>
+      <select className={styles.select} {...register} {...props} disabled={loading}>
         {!closeEmptyOption && <option className={styles.option} value=""></option>}
 
         {options.map((element) => (

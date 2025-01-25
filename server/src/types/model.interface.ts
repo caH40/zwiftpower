@@ -564,7 +564,7 @@ export type TOrganizer = {
   description?: string; // описание Организатора;
   clubMain?: string; // id клуба организатора в Zwift.
   telegram?: TTelegram;
-  website?: string; // Ссылка на сайт организатора.
+  website?: string; // Url на сайт организатора.
   contact?: {
     email?: string;
     phone?: string;
@@ -575,8 +575,8 @@ export type TOrganizer = {
   updatedAt: string;
 };
 export type TTelegram = {
-  group?: string; // Только id.
-  channel?: string; // Только id.
+  group?: string; // Url на группу в Телегам.
+  channel?: string; // Url на канал в Телегам.
 };
 export type TSocialLinks = {
   vk?: string;

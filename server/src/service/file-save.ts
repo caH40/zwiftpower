@@ -4,7 +4,7 @@ import { generateFileName } from '../utils/file-name.js';
 
 // types
 import { TSaveFileToCloud } from '../types/types.interface.js';
-import { imageSizeMapping } from '../assets/image-sizes.js';
+import { imageSizeMappingOnlyWidth } from '../assets/image-sizes.js';
 import { convertToWebP } from '../utils/image-resize.js';
 import { TAvailableSizes } from '../types/model.interface.js';
 
@@ -40,25 +40,27 @@ export async function saveFileToCloud({
     const timeStump = Date.now();
 
     // Создание массива промисов для выполнения задач.
-    const tasks = (Object.keys(imageSizeMapping) as TAvailableSizes[]).map(async (sizeKey) => {
-      // Создание оптимизированной версии изображения.
-      const fileOptimized = await convertToWebP(file, sizeKey);
+    const tasks = (Object.keys(imageSizeMappingOnlyWidth) as TAvailableSizes[]).map(
+      async (sizeKey) => {
+        // Создание оптимизированной версии изображения.
+        const fileOptimized = await convertToWebP(file, sizeKey);
 
-      // Создание уникального имени благодаря timestamp с добавлением расширения файла.
-      const fileName = generateFileName({ file: fileOptimized, suffix, timeStump, sizeKey });
+        // Создание уникального имени благодаря timestamp с добавлением расширения файла.
+        const fileName = generateFileName({ file: fileOptimized, suffix, timeStump, sizeKey });
 
-      // Сохранение имён файлов в массив.
-      fileNames.push(fileName);
+        // Сохранение имён файлов в массив.
+        fileNames.push(fileName);
 
-      // Сохранение файла в облаке.
-      const { data } = await cloud.postFile({ file: fileOptimized, fileName });
+        // Сохранение файла в облаке.
+        const { data } = await cloud.postFile({ file: fileOptimized, fileName });
 
-      if (!data) {
-        throw new Error('Не получены данные для Url файла!');
+        if (!data) {
+          throw new Error('Не получены данные для Url файла!');
+        }
+
+        return data; // Можно сохранить или использовать возвращенные данные.
       }
-
-      return data; // Можно сохранить или использовать возвращенные данные.
-    });
+    );
 
     // Выполнение всех задач одновременно.
     await Promise.all(tasks);

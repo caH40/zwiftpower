@@ -8,7 +8,16 @@ import styles from './InputAuth.module.css';
 
 const cx = cn.bind(styles);
 
-function InputAuth({ label, register, input, validationText, link, addCls = ' ', ...props }) {
+function InputAuth({
+  label,
+  register,
+  input,
+  validationText,
+  link,
+  addCls = ' ',
+  loading,
+  ...props
+}) {
   return (
     <div className={cn(styles.wrapper, cns(styles, addCls))}>
       <div className={styles.box__text}>
@@ -32,6 +41,7 @@ function InputAuth({ label, register, input, validationText, link, addCls = ' ',
         {...input}
         className={cx('input', { error: validationText?.length > 0 })}
         {...props}
+        disabled={loading}
       />
     </div>
   );

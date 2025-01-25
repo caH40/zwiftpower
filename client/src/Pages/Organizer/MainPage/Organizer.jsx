@@ -18,7 +18,7 @@ export default function Organizer() {
   useTitle('Управление Организатором');
   const dispatch = useDispatch();
 
-  const { organizer, clubs } = useSelector((state) => state.organizerModerator);
+  const { organizer, clubs, status } = useSelector((state) => state.organizerModerator);
 
   useEffect(() => {
     return () => dispatch(resetOrganizerDataModerator());
@@ -27,7 +27,7 @@ export default function Organizer() {
   return (
     <section className={styles.wrapper}>
       {organizer?.organizerId && !!clubs?.length ? (
-        <FormOrganizerMain organizer={organizer} clubs={clubs} />
+        <FormOrganizerMain organizer={organizer} clubs={clubs} loading={status === 'loading'} />
       ) : (
         <p>Нета данных organizer или clubs</p>
       )}

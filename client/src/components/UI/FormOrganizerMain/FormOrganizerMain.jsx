@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
+import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
+import { serializeOrganizerData } from '../../../utils/serialization/organizer-data';
+import { fetchPutOrganizersMainData } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
+import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
 import InputSimple from '../Input/InputSimple';
 import InputAuth from '../InputAuth/InputAuth';
-import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
-import { serializeOrganizerData } from '../../../utils/serialization/organizer-data';
-import { fetchPutOrganizersMainData } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 
 import styles from './FormOrganizerMain.module.css';
 
@@ -34,6 +36,7 @@ export default function FormOrganizerMain({
     socialLinks,
   },
   clubs = [],
+  loading,
 }) {
   // Ссылка на лого Организатора.
   const [logoSrcState, setLogoSrcState] = useState(logoUrls.original);
@@ -68,17 +71,14 @@ export default function FormOrganizerMain({
 
     const serializedOrganizerData = serializeOrganizerData({ ...formData, organizerId });
 
-    dispatch(fetchPutOrganizersMainData(serializedOrganizerData));
-
-    // console.log(formData);
-    // dispatch(sendNotification({ notificationsTypes, text, title, subject })).then((data) => {
-    //   if (data.meta.requestStatus === 'fulfilled') {
-    //     dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
-    //     reset(); // Очистка полей формы.
-    //   } else {
-    //     return; // Ошибка обрабатывается в sendNotification
-    //   }
-    // });
+    dispatch(fetchPutOrganizersMainData(serializedOrganizerData)).then((data) => {
+      if (data.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
+        reset(); // Очистка полей формы.
+      } else {
+        return; // Ошибка обрабатывается в sendNotification
+      }
+    });
   };
 
   return (
@@ -89,6 +89,7 @@ export default function FormOrganizerMain({
           <CheckboxRFH
             register={register('isPublished')}
             id={'isPublished-FormOrganizerMain'}
+            loading={loading}
           />
         </div>
 
@@ -102,6 +103,7 @@ export default function FormOrganizerMain({
           validationText={errors.telegram?.group?.message || ''}
           input={{ id: 'telegram.group-FormOrganizerMain', type: 'text' }}
           placeholder="Например: group_zwift_cycling"
+          loading={loading}
         />
 
         <InputAuth
@@ -110,6 +112,7 @@ export default function FormOrganizerMain({
           validationText={errors.telegram?.channel?.message || ''}
           input={{ id: 'telegram.channel-FormOrganizerMain', type: 'text' }}
           placeholder="Например: channel_zwift_cycling"
+          loading={loading}
         />
 
         <InputAuth
@@ -118,6 +121,7 @@ export default function FormOrganizerMain({
           validationText={errors.website?.message || ''}
           input={{ id: 'website-FormOrganizerMain', type: 'text' }}
           placeholder="https://example.com"
+          loading={loading}
         />
 
         <SelectWithRHF
@@ -126,6 +130,7 @@ export default function FormOrganizerMain({
           validationText={errors.clubMain?.message || ''}
           id={'clubMain-FormOrganizerMain'}
           options={clubs.map((club) => ({ id: club.id, value: club.id, name: club.name }))}
+          loading={loading}
         />
 
         {/* Блок загрузки Главного изображения (обложки) */}
@@ -133,13 +138,39 @@ export default function FormOrganizerMain({
           name="logoFile"
           control={control}
           defaultValue={null}
+          rules={{
+            validate: {
+              fileSize: (value) => {
+                if (!value) {
+                  return true;
+                }
+                const maxSizeInKBytes = 100; // 100 КB
+                return convertToKBytes(value.size) <= maxSizeInKBytes
+                  ? true
+                  : `Размер файла (${convertToKBytes(value.size)} Кб) превышает 100 Кб.`;
+              },
+              fileType: (value) => {
+                if (!value) {
+                  return true;
+                }
+
+                return value &&
+                  ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'].includes(
+                    value.type
+                  )
+                  ? true
+                  : 'Разрешены только JPEG, PNG, WEBP, SVG';
+              },
+            },
+          }}
           render={({ field }) => (
             <BlockUploadImage
-              title={'Загрузка лого Организатора'}
+              title={'Лого (не более 100Кб)'}
               poster={field.value}
               setPoster={field.onChange}
               posterUrl={logoSrcState}
               setPosterUrl={setLogoSrcState}
+              accept={'.jpg, .jpeg, .png, .webp, .svg'}
               validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
             />
           )}
@@ -150,13 +181,36 @@ export default function FormOrganizerMain({
           name="posterFile"
           control={control}
           defaultValue={null}
+          rules={{
+            validate: {
+              fileSize: (value) => {
+                if (!value) {
+                  return true;
+                }
+                const maxSizeInMBytes = 5; // 5 MB
+                return convertToMBytes(value.size) <= maxSizeInMBytes
+                  ? true
+                  : `Размер файла (${convertToMBytes(value.size)} Мб) превышает 5 MB.`;
+              },
+              fileType: (value) => {
+                if (!value) {
+                  return true;
+                }
+
+                return value && ['image/jpeg', 'image/png', 'image/webp'].includes(value.type)
+                  ? true
+                  : 'Разрешены только JPEG, PNG, WEBP';
+              },
+            },
+          }}
           render={({ field }) => (
             <BlockUploadImage
-              title={'Загрузка постера для страницы Организатора'}
+              title={'Постер для страницы Организатора (не более 5Мб)'}
               poster={field.value}
               setPoster={field.onChange}
               posterUrl={posterSrcState}
               setPosterUrl={setPosterSrcState}
+              accept={'.jpg, .jpeg, .png, .webp'}
               validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
             />
           )}
@@ -168,6 +222,7 @@ export default function FormOrganizerMain({
             register={register('description')}
             label={'Описание'}
             validationText={errors.subject ? errors.subject.message : ''}
+            loading={loading}
           />
         </div>
       </div>
