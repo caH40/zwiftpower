@@ -14,7 +14,7 @@ import { TOrganizerPublicDto } from '../../types/types.interface.js';
 export async function getOrganizersPublicService(): Promise<
   TResponseService<TOrganizerPublicDto[]>
 > {
-  const organizersDB = await Organizer.find({ isActive: true }).lean<
+  const organizersDB = await Organizer.find({ isPublished: true }).lean<
     (TOrganizer & { _id: Types.ObjectId })[]
   >();
 

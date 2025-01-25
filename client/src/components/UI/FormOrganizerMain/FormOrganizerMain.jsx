@@ -5,7 +5,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
 import { serializeOrganizerData } from '../../../utils/serialization/organizer-data';
-import { fetchPutOrganizersMainData } from '../../../redux/features/api/organizer/fetchOrganizerModerator';
+import {
+  fetchGetOrganizerModerator,
+  fetchPutOrganizersMainData,
+} from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
@@ -73,6 +76,7 @@ export default function FormOrganizerMain({
 
     dispatch(fetchPutOrganizersMainData(serializedOrganizerData)).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
+        dispatch(fetchGetOrganizerModerator({ organizerId }));
         dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
         reset(); // Очистка полей формы.
       } else {
