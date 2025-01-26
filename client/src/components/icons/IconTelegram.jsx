@@ -4,7 +4,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconTelegram({ tooltip, squareSize = 24 }) {
+function IconTelegram({ tooltip, squareSize = 24, color = '#FF7C00' }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
@@ -18,7 +18,7 @@ function IconTelegram({ tooltip, squareSize = 24 }) {
           <g clipPath="url(#clip0_796_12)">
             <path
               d="M20.4 0H3.6C1.61177 0 0 1.61177 0 3.6V20.4C0 22.3882 1.61177 24 3.6 24H20.4C22.3882 24 24 22.3882 24 20.4V3.6C24 1.61177 22.3882 0 20.4 0Z"
-              fill="#FF7C00"
+              fill={color}
             />
             <path
               d="M9.32812 18.9375C8.8125 18.9375 8.85938 18.75 8.71875 18.2812L7.21875 13.3594L18.7031 6.60938"

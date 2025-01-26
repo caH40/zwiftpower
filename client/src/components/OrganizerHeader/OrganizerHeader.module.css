@@ -1,0 +1,148 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.poster {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  border-radius: 10px;
+  z-index: 1;
+}
+.poster__img {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  filter: brightness(0.3);
+}
+.content {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  padding: 20px;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 11;
+}
+.content__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.mission__box {
+  width: 100%;
+  border: 2px solid var(--color-blue-main);
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  flex: 0 0 auto;
+}
+.mission {
+  margin: 10px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-text-main);
+}
+.description {
+  position: relative;
+  top: -20px;
+  background-color: var(--color-bg-minor);
+  border-radius: 10px;
+  border: 1px solid var(--color-border-minor);
+  padding: 0 14px; /* Изначально padding сверху/снизу 0 для скрытия */
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  z-index: 0;
+}
+.description.entering,
+.description.entered {
+  height: auto; /* Позволяет задавать динамическую высоту */
+  padding: 34px 14px 14px;
+  opacity: 1;
+}
+.description.exiting,
+.description.exited {
+  height: 0;
+  padding: 0 14px;
+  opacity: 0;
+}
+.mission__inDescription {
+  margin-bottom: 16px;
+}
+.description__control {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 15;
+}
+.title__box {
+  display: flex;
+  gap: 10px 18px;
+  align-items: end;
+  max-width: 900px;
+}
+.logo {
+  height: 60px;
+  border-radius: 10px;
+  background-color: var(--color-text-main);
+  padding: 5px;
+}
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text-main);
+}
+.buttons__block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.nav.entering {
+  height: 0;
+  overflow: hidden;
+  transition: ease-in-out 0.2s;
+}
+.nav.entered {
+  height: auto;
+}
+/* ====================================================================== */
+@media (max-width: 1000px) {
+  .title__box {
+    top: 28px;
+    max-width: 600px;
+  }
+}
+@media (max-width: 600px) {
+  .content {
+    padding: 14px;
+  }
+  .title__box {
+    max-width: 450px;
+    left: 14px;
+    gap: 10px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .description__control {
+    top: 14px;
+    right: 14px;
+  }
+  .description {
+    padding: 40px 14px 14px 14px;
+  }
+}
+@media (max-width: 400px) {
+  .title__box {
+    max-width: 600px;
+  }
+}

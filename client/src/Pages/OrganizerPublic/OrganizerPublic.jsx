@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
-import { AdaptiveImage } from '../../components/AdaptiveImage/AdaptiveImage';
+import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
-import JSONBlock from '../../components/JSONBlock/JSONBlock';
+import AdMyPage from '../../components/AdMyPage/AdMyPage';
 
 import styles from './Organizer.module.css';
 
@@ -23,13 +23,13 @@ const adNumbers = [adOverFooter, adUnderHeader];
  * Страница Организатора заездов.
  */
 function OrganizerPublic() {
-  const { isScreenLg: isDesktop } = useResize();
+  const { isScreenLg: isDesktop, isScreenXl: xl } = useResize();
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
   const { organizer } = useSelector((state) => state.organizersPublic);
 
-  useTitle(`Организатор заездов ${organizer?.name || ''}`);
+  useTitle(`Организатор ${organizer?.name || ''}`);
 
   const dispatch = useDispatch();
 
@@ -44,16 +44,21 @@ function OrganizerPublic() {
   return (
     <>
       <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.posterSrc} />
+
       <div className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
-        ) : null}
+        {!organizer?._id ? <OrganizerHeader organizer={organizer} /> : <div></div>}
 
-        {organizer && (
-          <AdaptiveImage sources={organizer.posterUrls} className={styles.poster} />
+        {/* Боковая панель. */}
+        {xl && (
+          <aside className={styles.aside}>
+            <AdMyPage
+              href="/race/series/catchup/2024"
+              title="Догонялки (Catchup)"
+              subtitle="сезон 2024-2025"
+              imageSrc="/images/open_graph/5.jpg"
+            />
+          </aside>
         )}
-
-        <JSONBlock json={organizer} />
       </div>
 
       {isDesktop ? (

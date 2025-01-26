@@ -46,7 +46,11 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         style={{ backgroundImage: `url(${event.imageUrl})` }}
       >
         <div className={styles.box__open}>
-          <OpenBoxArrow getClick={openDetailed} isOpened={isOpened} />
+          <OpenBoxArrow
+            getClick={openDetailed}
+            isOpened={isOpened}
+            tooltip={'Открыть подробное описание заезда'}
+          />
         </div>
 
         {/* показывать только для страницы результатов */}

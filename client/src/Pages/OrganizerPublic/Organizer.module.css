@@ -1,6 +1,14 @@
 .wrapper {
-  min-height: calc(100vh - 60px);
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 25px;
+  letter-spacing: 0.08rem;
 }
-.poster {
-  width: 100%;
+/* ====================================================================== */
+@media (max-width: 1200px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
 }

@@ -106,10 +106,10 @@ export function organizerPublicDto({
     ...(telegram && {
       telegram: {
         ...(telegram.group && {
-          group: `https://t.me/${telegram.group}`,
+          group: telegram.group,
         }),
         ...(telegram.channel && {
-          channel: `https://t.me/${telegram.channel}`,
+          channel: telegram.channel,
         }),
       },
     }),
