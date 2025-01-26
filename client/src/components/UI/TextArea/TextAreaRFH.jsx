@@ -1,3 +1,4 @@
+import TextareaAutosize from 'react-textarea-autosize';
 import cn from 'classnames/bind';
 
 import styles from './TextArea.module.css';
@@ -14,10 +15,11 @@ export default function TextAreaRFH({ register, label, id, validationText, loadi
         <div className={styles.box__info}>{label}</div>
         <span className={styles.error}>{validationText}</span>
       </label>
-      <textarea
+      <TextareaAutosize
         {...register}
         className={cx('textarea', { error__textarea: validationText })}
         disabled={loading}
+        minRows={5} // Минимальное количество строк
       />
     </>
   );

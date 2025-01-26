@@ -5,7 +5,7 @@
 
   background-clip: padding-box;
   font-family: 'Roboto';
-  font-weight: 700;
+  font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
   border: 1px solid var(--color-border-minor);
@@ -28,6 +28,9 @@
   padding: 0;
   margin: 0;
   color: var(--color-text-minor);
+}
+.label::after {
+  content: ':';
 }
 .select:disabled {
   background-color: var(--color-bg-minor);

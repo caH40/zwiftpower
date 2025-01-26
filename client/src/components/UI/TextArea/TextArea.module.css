@@ -4,7 +4,7 @@
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.75rem;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--color-text-dark);
   background-color: var(--color-bg);
   background-clip: padding-box;
@@ -17,6 +17,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+.label .box__info::after {
+  content: ':';
 }
 .textarea:focus {
   outline: none;
