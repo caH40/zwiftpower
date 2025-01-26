@@ -1,0 +1,6 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+}
+.poster {
+  width: 100%;
+}

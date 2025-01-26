@@ -12,7 +12,7 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
 
-import styles from './Organizers.module.css';
+import styles from './Organizer.module.css';
 
 // Рекламные блоки на странице.
 const adOverFooter = 8;
@@ -49,7 +49,9 @@ function OrganizerPublic() {
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
 
-        {organizer && <AdaptiveImage sources={organizer.posterUrls} />}
+        {organizer && (
+          <AdaptiveImage sources={organizer.posterUrls} className={styles.poster} />
+        )}
 
         <JSONBlock json={organizer} />
       </div>
