@@ -57,6 +57,7 @@ const organizerSchema = new Schema<TOrganizer & Document>(
     urlSlug: { type: String },
     logoFileInfo: { type: FileMetadataSchema },
     posterFileInfo: { type: FileMetadataSchema },
+    mission: { type: String },
     description: { type: String },
     clubMain: { type: String },
     telegram: { type: TelegramSchema },

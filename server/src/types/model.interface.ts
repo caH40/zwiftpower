@@ -561,6 +561,7 @@ export type TOrganizer = {
   urlSlug: string;
   logoFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений лого.
   posterFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений постера.
+  mission?: string; // Цель Организатора;
   description?: string; // описание Организатора;
   clubMain?: string; // id клуба организатора в Zwift.
   telegram?: TTelegram;

@@ -31,6 +31,7 @@ export default function FormOrganizerMain({
     shortName,
     logoUrls,
     posterUrls,
+    mission,
     description,
     clubMain,
     telegram,
@@ -60,6 +61,7 @@ export default function FormOrganizerMain({
     values: {
       isPublished,
       description,
+      mission,
       clubMain,
       telegram,
       website,
@@ -222,10 +224,20 @@ export default function FormOrganizerMain({
 
         <div className={styles.wrapper__textarea}>
           <TextAreaRFH
+            id={'mission-FormOrganizerMain'}
+            register={register('mission')}
+            label={'Цель организатора'}
+            validationText={errors.mission ? errors.mission.message : ''}
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.wrapper__textarea}>
+          <TextAreaRFH
             id={'description-FormOrganizerMain'}
             register={register('description')}
             label={'Описание'}
-            validationText={errors.subject ? errors.subject.message : ''}
+            validationText={errors.description ? errors.description.message : ''}
             loading={loading}
           />
         </div>

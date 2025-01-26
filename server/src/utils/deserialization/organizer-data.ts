@@ -23,54 +23,60 @@ export const OrganizerDataZSchema = z
 
     name: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Название организатора.'),
 
     organizerId: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .describe('_id организатора.'),
 
     shortName: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Краткое название организатора.'),
 
     description: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Описание организатора.'),
 
+    mission: z
+      .string()
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
+      .optional()
+      .describe('Цель организатора.'),
+
     clubMain: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Основной клуб организатора.'),
 
     telegram: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Информация о Telegram-аккаунтах.'),
 
     website: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Ссылка на веб-сайт организатора.'),
 
     country: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Код страны организатора.'),
 
     socialLinks: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
       .describe('Ссылки на социальные сети организатора.'),
   })

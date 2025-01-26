@@ -105,6 +105,7 @@ export async function putOrganizerMainService({
   logoFile,
   posterFile,
   description,
+  mission,
   clubMain,
   telegram,
   website,
@@ -132,6 +133,7 @@ export async function putOrganizerMainService({
   const updateFields: Partial<typeof organizerDB> = {
     ...(logoFileInfo && { logoFileInfo }),
     ...(posterFileInfo && { posterFileInfo }),
+    ...(mission && { mission }),
     ...(description && { description }),
     ...(clubMain && { clubMain }),
     ...(telegram && { telegram }),
