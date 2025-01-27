@@ -58,10 +58,10 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = await getProfileResultsMeta(url);
   } else if (url.includes('/streams')) {
     tags = getStreamsMeta(url);
-  } else if (url.includes('/organizers')) {
-    tags = getOrganizersPublicMeta(url);
   } else if (url.includes('/organizers/')) {
     tags = getOrganizerPublicMeta(url);
+  } else if (url.includes('/organizers')) {
+    tags = getOrganizersPublicMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }
