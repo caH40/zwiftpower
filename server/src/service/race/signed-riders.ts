@@ -23,9 +23,11 @@ export async function putSignedRidersService({
     // Токен доступа Организатора заездов, которому принадлежит клуб clubId.
     const token = await getAccessTokenOrganizer({ clubId, importanceToken: 'main' });
 
-    const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+    const eventDB = await ZwiftEvent.findOne({
       id: eventId,
-    }).populate('eventSubgroups');
+    })
+      .populate('eventSubgroups')
+      .lean<EventWithSubgroup>();
 
     if (!eventDB) {
       throw new Error(`Не найден Event ${eventId} в БД`);
@@ -99,9 +101,11 @@ export async function getSignedRiders({
     // Токен доступа Организатора заездов, которому принадлежит клуб clubId.
     const token = await getAccessTokenOrganizer({ clubId, importanceToken: 'main' });
 
-    const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+    const eventDB = await ZwiftEvent.findOne({
       id: eventId,
-    }).populate('eventSubgroups');
+    })
+      .populate('eventSubgroups')
+      .lean<EventWithSubgroup>();
 
     if (!eventDB) {
       throw new Error(`Не найден Event ${eventId} в БД`);

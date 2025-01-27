@@ -552,11 +552,11 @@ export type TClubZwift = {
  * Организатора заезда, у организатора может быть несколько клубов
  */
 export type TOrganizer = {
+  _id?: Types.ObjectId;
   isPublished: boolean; // Флаг активности организатора, отображать или нет его в списке.
   creator: Types.ObjectId; // модераторы клуба;
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
-  label: string; // Лейбл короткое название;
   shortName: string; // Короткое название;
   urlSlug: string;
   logoFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений лого.

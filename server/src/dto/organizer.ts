@@ -70,7 +70,6 @@ export function organizerPublicDto({
   const {
     _id,
     name,
-    label,
     shortName,
     urlSlug,
     clubMain,
@@ -90,7 +89,6 @@ export function organizerPublicDto({
   return {
     id: String(_id),
     name,
-    label,
     shortName,
     urlSlug,
     ...(clubMain && {

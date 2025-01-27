@@ -26,7 +26,7 @@ export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promi
   }
 
   // Получаем параметры изменения размера
-  const { width } = imageSizeMappingOnlyWidth[sizeKey];
+  const width = imageSizeMappingOnlyWidth[sizeKey]?.width;
 
   const buffer = Buffer.from(await file.arrayBuffer());
 

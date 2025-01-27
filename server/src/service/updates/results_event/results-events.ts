@@ -14,9 +14,11 @@ import { EventWithSubgroup } from '../../../types/types.interface.js';
 export async function updateResults() {
   try {
     // hasResults:true - прекращение обновлять результаты
-    const eventsDB: EventWithSubgroup[] = await ZwiftEvent.find({
+    const eventsDB = await ZwiftEvent.find({
       $and: [{ started: true }, { hasResults: false }],
-    }).populate('eventSubgroups');
+    })
+      .populate('eventSubgroups')
+      .lean<EventWithSubgroup[]>();
 
     const timeForUpdateResults = millisecondsIn2Hours;
     const delayBeforeUpdating = millisecondsIn30Minutes;

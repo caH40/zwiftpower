@@ -12,9 +12,9 @@ import { addRacingScores } from '../preparation/racingscore.js';
  * Получение результатов райдеров в Эвенте из БД
  */
 export async function getResultsService(eventId: number) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId })
+  const eventDB = await ZwiftEvent.findOne({ id: eventId })
     .populate('eventSubgroups')
-    .lean();
+    .lean<EventWithSubgroup>();
 
   if (!eventDB) {
     throw new Error(`Заезд id=${eventId} не найден на zwiftpower.ru`);

@@ -51,10 +51,12 @@ export async function getUserPowerService(zwiftId: string) {
 
   const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
 
-  const resultsDB: ResultWithEvent[] = await ZwiftResult.find(
+  const resultsDB = await ZwiftResult.find(
     { profileId: zwiftId },
     { cpBestEfforts: true, zwiftEventId: true }
-  ).populate('zwiftEventId');
+  )
+    .populate('zwiftEventId')
+    .lean<ResultWithEvent[]>();
 
   const powerFromEvents = resultsDB.map((result) => ({
     _id: result._id,

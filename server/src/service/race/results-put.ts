@@ -10,9 +10,9 @@ import { getTokenForEvent } from '../zwift/token.js';
  * Ручное обновление результатов Эвента по запросу модератора
  */
 export async function putResultsService(eventId: number, userId: string) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId })
+  const eventDB = await ZwiftEvent.findOne({ id: eventId })
     .populate('eventSubgroups')
-    .lean();
+    .lean<EventWithSubgroup>();
 
   if (!eventDB) {
     throw new Error(`Не найден Эвент ${eventId} для удаления из БД`);
