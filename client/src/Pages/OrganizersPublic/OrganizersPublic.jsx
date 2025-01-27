@@ -13,8 +13,8 @@ import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 import styles from './OrganizersPublic.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 8;
-const adUnderHeader = 3;
+const adOverFooter = 22;
+const adUnderHeader = 23;
 const adNumbers = [adOverFooter, adUnderHeader];
 
 /**

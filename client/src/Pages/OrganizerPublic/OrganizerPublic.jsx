@@ -15,9 +15,8 @@ import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import styles from './Organizer.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 8;
-const adUnderHeader = 3;
-const adNumbers = [adOverFooter, adUnderHeader];
+const adOverFooter = 22;
+const adNumbers = [adOverFooter];
 
 /**
  * Страница Организатора заездов.
@@ -46,7 +45,11 @@ function OrganizerPublic() {
       <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.posterSrc} />
 
       <div className={styles.wrapper}>
-        {!organizer?._id ? <OrganizerHeader organizer={organizer} /> : <div></div>}
+        {organizer?.posterUrls?.original ? (
+          <OrganizerHeader organizer={organizer} />
+        ) : (
+          <div></div>
+        )}
 
         {/* Боковая панель. */}
         {xl && (
@@ -61,11 +64,7 @@ function OrganizerPublic() {
         )}
       </div>
 
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )}
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }
