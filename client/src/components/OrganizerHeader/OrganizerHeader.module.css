@@ -88,6 +88,8 @@
   max-width: 900px;
 }
 .logo {
+  width: auto;
+  max-width: 120px;
   height: 60px;
   border-radius: 10px;
   background-color: var(--color-text-main);

@@ -12,7 +12,7 @@ export default function ButtonUrl({ href, name, Icon, isZwiftCompanionLink = fal
   const handleClick = (e) => {
     if (isZwiftCompanionLink) {
       e.preventDefault(); // Отменяем стандартное поведение ссылки
-      window.location.href = href; // Переходим по deeplink
+      window.open(href, 'join_zwift_event'); // Открываем deeplink в новом окне
     }
   };
 
