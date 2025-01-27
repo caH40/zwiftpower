@@ -9,6 +9,8 @@ import { MetaTags } from '../types/types.interface.js';
 import { millisecondsInWeekDays } from '../assets/date.js';
 import { Rider } from '../Model/Rider.js';
 import { Organizer } from '../Model/Organizer.js';
+import { TFileMetadataForCloud } from '../types/model.interface.js';
+import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -201,12 +203,14 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
         posterSrc: true,
         _id: false,
       }
-    ).lean<{ name: string; posterUrls?: Record<string, string> }>();
+    ).lean<{ name: string; posterFileInfo?: TFileMetadataForCloud }>();
 
     // если не найден Организатор, или Организатор закрыл страницу для просмотра.
     if (!organizerDB) {
       return getMetaOtherPages(url);
     }
+
+    const posterUrls = createUrlsToFileCloud(organizerDB.posterFileInfo);
 
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
     const descriptionRaw = `${organizerDB.name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
@@ -218,8 +222,8 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
 
     const canonical = serverWoWWW + url;
     const image =
-      organizerDB.posterUrls?.medium ||
-      organizerDB.posterUrls?.original ||
+      posterUrls?.medium ||
+      posterUrls?.original ||
       'https://zwiftpower.ru/images/open_graph/organizers.webp';
     const recommendationsTag = 'organizer';
 
