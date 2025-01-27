@@ -60,7 +60,12 @@ export default function OrganizerHeader({ organizer }) {
 
           <div className={styles.content__bottom}>
             <div className={styles.buttons__block}>
-              <ButtonUrl name={'Клуб в Zwift'} Icon={IconZwift} href={organizer.clubMain} />
+              <ButtonUrl
+                name={'Клуб в Zwift'}
+                Icon={IconZwift}
+                href={organizer.clubMain}
+                isZwiftCompanionLink={true}
+              />
 
               {/* Кнопка на переход в группу телеграм */}
               {organizer.telegram?.group && (
