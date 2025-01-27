@@ -200,7 +200,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
       { urlSlug, isPublished: true },
       {
         name: true,
-        posterSrc: true,
+        posterFileInfo: true,
         _id: false,
       }
     ).lean<{ name: string; posterFileInfo?: TFileMetadataForCloud }>();
