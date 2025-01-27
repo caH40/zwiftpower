@@ -1,34 +1,43 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
+import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
-import JSONBlock from '../../components/JSONBlock/JSONBlock';
+import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
+import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 
-import styles from './Organizers.module.css';
+import styles from './Organizer.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 8;
-const adUnderHeader = 3;
-const adNumbers = [adOverFooter, adUnderHeader];
+const adOverFooter = 22;
+const adNumbers = [adOverFooter];
 
 /**
  * Страница Организатора заездов.
  */
 function OrganizerPublic() {
-  const { isScreenLg: isDesktop } = useResize();
+  const { eventsSchedule, status: statusFetchEvents } = useSelector(
+    (state) => state.fetchEvents
+  );
+
+  const { isScreenXl: xl } = useResize();
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
   const { organizer } = useSelector((state) => state.organizersPublic);
 
-  useTitle(`Организатор заездов ${organizer?.name || ''}`);
+  useTitle(`Организатор ${organizer?.name || ''}`);
+
+  const navigate = useNavigate();
+  const toLink = (id) => navigate(`/race/schedule/${id}`);
 
   const dispatch = useDispatch();
 
@@ -39,23 +48,55 @@ function OrganizerPublic() {
     return () => dispatch(resetOrganizerPublic());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchEvents({ started: false, organizerId: organizer?.id }));
+
+    return () => dispatch(resetEventsPreview());
+  }, [dispatch, organizer]);
+
   useAd(adNumbers);
   return (
     <>
-      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.backgroundImage} />
-      <div className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
-        ) : null}
+      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.posterSrc} />
 
-        <JSONBlock json={organizer} />
+      <div className={styles.wrapper}>
+        {organizer?.posterUrls?.original ? (
+          // Основная секция страницы
+          <section className={styles.main}>
+            {/* Блок-шапка с данными Организатора */}
+            <OrganizerHeader organizer={organizer} />
+
+            {/* Предстоящие заезды, проводимые Организатором */}
+            {!!eventsSchedule.length &&
+              statusFetchEvents === 'resolved' &&
+              eventsSchedule.map((eventPreview) => {
+                return (
+                  <CardRacePreview
+                    event={eventPreview}
+                    getClick={toLink}
+                    key={eventPreview.id}
+                  />
+                );
+              })}
+          </section>
+        ) : (
+          <div></div>
+        )}
+
+        {/* Боковая панель. */}
+        {xl && (
+          <aside className={styles.aside}>
+            <AdMyPage
+              href="/race/series/catchup/2024"
+              title="Догонялки (Catchup)"
+              subtitle="сезон 2024-2025"
+              imageSrc="/images/open_graph/5.jpg"
+            />
+          </aside>
+        )}
       </div>
 
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )}
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

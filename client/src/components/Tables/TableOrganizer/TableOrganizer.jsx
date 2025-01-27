@@ -19,7 +19,7 @@ function TableOrganizer({ organizers = [], deleteOrganizer }) {
           <tr className={styles.hover} key={organizer._id}>
             <td>{index + 1}</td>
             <td>{organizer.name}</td>
-            <td>{organizer.label}</td>
+            <td>{organizer.shortName}</td>
             <td>{organizer.creator?.username || 'Ошибка, нет creator!'}</td>
 
             <td>

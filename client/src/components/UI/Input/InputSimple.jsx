@@ -14,7 +14,7 @@ export default function InputSimple({
   ...props
 }) {
   return (
-    <>
+    <div>
       <label className={styles.label} htmlFor={id}>
         <span className={styles.label__text}>
           {label} {description && <IconQuestion squareSize={16} tooltip={description} />}
@@ -25,12 +25,12 @@ export default function InputSimple({
       <input
         className={styles.input}
         type={type}
-        value={value}
+        value={value || ''} // Не должно быть undefined или null.
         onChange={(e) => setValue(e.target.value)}
         disabled={disabled}
         id={id}
         {...props}
       />
-    </>
+    </div>
   );
 }

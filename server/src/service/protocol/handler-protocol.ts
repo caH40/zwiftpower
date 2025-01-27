@@ -25,9 +25,11 @@ export async function handlerProtocol({
   typeRaceCustom,
 }: HandlerProtocolArg) {
   // получение данных Эвента из БД
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+  const eventDB = await ZwiftEvent.findOne({
     _id: eventId,
-  }).populate('eventSubgroups');
+  })
+    .populate('eventSubgroups')
+    .lean<EventWithSubgroup>();
 
   if (!eventDB || !eventDB._id) {
     throw new Error(`Не найден Event с eventId: ${eventId}`);

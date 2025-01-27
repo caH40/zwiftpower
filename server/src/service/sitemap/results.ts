@@ -6,10 +6,10 @@ import { handleAndLogError } from '../../errors/error.js';
  */
 export async function getUrlsResultsDescription() {
   try {
-    const eventDB: { id: number; updated: number }[] = await ZwiftEvent.find(
+    const eventDB = await ZwiftEvent.find(
       { started: true },
       { id: true, updated: true, _id: false }
-    ).lean();
+    ).lean<{ id: number; updated: number }[]>();
 
     const urlsResults = eventDB.map((event) => {
       const lastModification = new Date(event.updated).toISOString();

@@ -3,7 +3,7 @@ import { getRequest } from '../zwift/api/request-get.js';
 // types
 import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
 import { Club } from '../../Model/Club.js';
-import { ClubSchema } from '../../types/model.interface.js';
+import { ClubSchema, TClubZwift } from '../../types/model.interface.js';
 import { User } from '../../Model/User.js';
 
 /**
@@ -53,7 +53,7 @@ export const postClubService = async (club: ClubZwift, organizerId: string) => {
  * Сервис удаления клуба из БД
  */
 export const deleteClubService = async (clubId: string) => {
-  const clubDB = await Club.findOneAndDelete({ id: clubId });
+  const clubDB = await Club.findOneAndDelete({ id: clubId }).lean<TClubZwift>();
 
   if (!clubDB) {
     throw new Error(`Клуб с id:${clubId} не найден в БД!`);

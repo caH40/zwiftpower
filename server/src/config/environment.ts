@@ -46,3 +46,11 @@ export const aesSecretKey: string = parsed.AES_SECRET_KEY;
 
 // id приложения в VK для авторизации.
 export const clientVkID: string = parsed.VK_CLIENT_ID;
+
+// Данные из переменных окружения для Cloud VK  aws-sdk
+export const accessKeyId: string = parsed.VK_AWS_CLOUD_ACCESS_ID;
+export const secretAccessKey: string = parsed.VK_AWS_CLOUD_SECRET_ID;
+export const region: string = parsed.VK_AWS_REGION;
+export const endpoint: string = parsed.VK_AWS_ENDPOINT;
+export const bucketName: string = parsed.VK_AWS_BUCKET_NAME;
+export const endpointDomain: string = parsed.VK_AWS_ENDPOINT_DOMAIN;

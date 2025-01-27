@@ -10,9 +10,9 @@ import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.inte
  * Получение результатов Эвента для скачивания
  */
 export async function getZwiftEventResultsService(eventId: string) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({ id: eventId }).populate(
-    'eventSubgroups'
-  );
+  const eventDB = await ZwiftEvent.findOne({ id: eventId })
+    .populate('eventSubgroups')
+    .lean<EventWithSubgroup>();
 
   if (!eventDB) {
     throw new Error(`Не найден Event ${eventId}`);

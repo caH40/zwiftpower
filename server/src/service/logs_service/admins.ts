@@ -14,9 +14,10 @@ export async function getLogsAdminsService({
   docsOnPage = 20,
   search,
 }: GetLogsAdmins) {
-  const logsDB: LogsAdminUsername[] = await LogsAdmin.find()
+  const logsDB = await LogsAdmin.find()
     .sort({ date: -1 })
-    .populate({ path: 'userId', select: 'username' });
+    .populate({ path: 'userId', select: 'username' })
+    .lean<LogsAdminUsername[]>();
 
   // фильтрация найденных логов по ключевому слову search
   const logsFiltered = filterLogs(logsDB, search);

@@ -14,7 +14,9 @@ import {
   getOrganizersForModerator,
   postClubsZwift,
   putOrganizerBotZwift,
+  putOrganizerMain,
 } from '../controllers/organizer.js';
+import { fileMiddleware } from '../middleware/file.js';
 
 export const routerOrganizer = Router();
 
@@ -34,3 +36,12 @@ routerOrganizer.put('/clubs/moderators', authOrganizer, addClubModerator);
 routerOrganizer.delete('/clubs/moderators', authOrganizer, deleteClubModerator);
 routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);
 routerOrganizer.get('/organizers-for-moderator/:userModeratorId', getOrganizersForModerator);
+routerOrganizer.put(
+  '/main',
+  authOrganizer,
+  fileMiddleware([
+    { name: 'logoFile', maxCount: 1 },
+    { name: 'posterFile', maxCount: 1 },
+  ]),
+  putOrganizerMain
+);

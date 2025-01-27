@@ -30,5 +30,5 @@ export const getCurrentEvents = async (
       eventStart,
     },
     { _id: true }
-  ).lean();
+  ).lean<Types.ObjectId[]>();
 };

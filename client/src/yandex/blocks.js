@@ -100,4 +100,15 @@ export const adBlocks = [
     description: 'РВ-21, Streams',
     type: 'widget',
   },
+  {
+    id: 22,
+    label: 'C-A-5165832-22',
+    description: 'РВ-22, Organizers',
+    type: 'widget',
+  },
+  {
+    id: 23,
+    label: 'R-A-5165832-23',
+    description: 'Баннер, Organizers',
+  },
 ];

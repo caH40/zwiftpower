@@ -45,7 +45,9 @@ export async function getDevelopmentService(quantityPosts: number) {
 //
 export async function deleteDevelopmentService(id: string) {
   try {
-    const informationDev = await InfoDevelopment.findOneAndDelete({ _id: id });
+    const informationDev = await InfoDevelopment.findOneAndDelete({
+      _id: id,
+    }).lean<InfoDevelopmentSchema>();
     if (!informationDev) {
       throw new Error('Релиз не найден в БД');
     }

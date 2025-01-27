@@ -798,3 +798,18 @@ export type TOrganizerPublicDto = Omit<
   TOrganizer,
   'isPublished' | 'creator' | 'botZwift' | 'contact' | 'createdAt' | 'updatedAt' | 'clubMain'
 > & { id: string; clubMain?: string };
+
+/**
+ * Сохранение файла в облаке.
+ */
+export type TSaveFileToCloud = {
+  file: File;
+  type: 'image' | 'GPX' | 'pdf';
+  suffix: string;
+  needOptimizedImages?: boolean;
+};
+
+/**
+ * Url файлов изображений logo, poster для сущности Организатор.
+ */
+export type TOrganizerImageUrls = { logoSrc: string[] | null; posterSrc: string[] | null };

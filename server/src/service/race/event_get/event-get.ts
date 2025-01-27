@@ -14,11 +14,11 @@ import { SignedRidersSchema } from '../../../types/model.interface.js';
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
  */
 export async function getEventService(eventId: string) {
-  const eventDataDB: EventWithSignedRiders | null = await ZwiftEvent.findOne({
+  const eventDataDB = await ZwiftEvent.findOne({
     id: eventId,
   })
     .populate('eventSubgroups')
-    .lean();
+    .lean<EventWithSignedRiders>();
 
   if (!eventDataDB) {
     throw new Error(`Заезд id=${eventId} не найден на zwiftpower.ru`);

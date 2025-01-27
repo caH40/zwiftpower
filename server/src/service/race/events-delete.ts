@@ -10,9 +10,11 @@ import { loggingAdmin } from '../../logger/logger-admin.js';
  * Удаление Event в БД
  */
 export async function deleteEventService(eventId: number) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+  const eventDB = await ZwiftEvent.findOne({
     id: eventId,
-  }).populate('eventSubgroups');
+  })
+    .populate('eventSubgroups')
+    .lean<EventWithSubgroup>();
 
   if (!eventDB) {
     throw new Error(`Не найден Эвент ${eventId} для удаления из БД`);
@@ -44,9 +46,11 @@ export async function deleteEventService(eventId: number) {
  * Удаления Эвента и зарегистрированных райдеров, результатов райдеров в БД
  */
 export async function deleteEventAndResultsService(eventId: number, userId: string) {
-  const eventDB: EventWithSubgroup | null = await ZwiftEvent.findOne({
+  const eventDB = await ZwiftEvent.findOne({
     id: eventId,
-  }).populate('eventSubgroups');
+  })
+    .populate('eventSubgroups')
+    .lean<EventWithSubgroup>();
 
   if (!eventDB) {
     throw new Error(`Не найден Эвент ${eventId} для удаления из БД`);

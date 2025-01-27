@@ -19,10 +19,10 @@ export const getRidersInEventsService = async (period: number) => {
   }[];
 
   // получение Эвентов
-  const eventsDB: EventData = await ZwiftEvent.find(
+  const eventsDB = await ZwiftEvent.find(
     { started: true },
     { id: true, eventStart: true, organizer: true, typeRaceCustom: true, _id: false }
-  ).lean();
+  ).lean<EventData>();
 
   // фильтрация Эвентов за запрашиваемый период period
   const eventIds = eventsDB

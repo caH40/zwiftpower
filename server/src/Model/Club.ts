@@ -5,7 +5,7 @@ import { TClubZwift } from '../types/model.interface.js';
 /**
  * Схема и модель для клуба из Звифт
  */
-const clubSchema = new Schema<TClubZwift>(
+const clubSchema = new Schema<TClubZwift & Document>(
   {
     id: { type: String, unique: true, required: true },
     images: {

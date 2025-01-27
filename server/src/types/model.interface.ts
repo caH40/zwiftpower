@@ -552,36 +552,49 @@ export type TClubZwift = {
  * Организатора заезда, у организатора может быть несколько клубов
  */
 export type TOrganizer = {
+  _id?: Types.ObjectId;
   isPublished: boolean; // Флаг активности организатора, отображать или нет его в списке.
   creator: Types.ObjectId; // модераторы клуба;
   botZwift: TOrganizerBotZwift; // Бот, модерирующий в клубе Звифта.
   name: string; // название организатора;
-  label: string; // Лейбл короткое название;
+  shortName: string; // Короткое название;
   urlSlug: string;
-  logoSrc?: string; // Логотип (url);
-  backgroundImage?: string; // URL фоновой картинки
+  logoFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений лого.
+  posterFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений постера.
+  mission?: string; // Цель Организатора;
   description?: string; // описание Организатора;
-  clubMain?: Types.ObjectId; // Ссылка на основной клуб организатора в Zwift.
-  telegram?: {
-    group?: string; // Только id.
-    channel?: string; // Только id.
-  };
-  website?: string; // Ссылка на сайт организатора.
+  clubMain?: string; // id клуба организатора в Zwift.
+  telegram?: TTelegram;
+  website?: string; // Url на сайт организатора.
   contact?: {
     email?: string;
     phone?: string;
   };
   country?: string; // Страна организатора. RU, BY, KZ и т.д.
-  socialLinks?: {
-    vk?: string;
-    facebook?: string;
-    twitter?: string;
-    instagram?: string;
-    youtube?: string;
-  };
+  socialLinks?: TSocialLinks;
   createdAt: string;
   updatedAt: string;
 };
+export type TTelegram = {
+  group?: string; // Url на группу в Телегам.
+  channel?: string; // Url на канал в Телегам.
+};
+export type TSocialLinks = {
+  vk?: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+  youtube?: string;
+};
+export type TFileMetadataForCloud = {
+  baseName: string; // Базовое имя файла без .
+  originalExtension: string; // Исходное расширение файла (например, jpg, png).
+  optimizedExtension: string; // Расширение для оптимизированных файлов (например, webp).
+  availableSizes: TAvailableSizes[];
+};
+// Названия для размеров изображений.
+export type TAvailableSizes = 'original' | 'large' | 'medium' | 'small' | 'xLarge';
+
 // !!! Оптимизировать, использовать везде TOrganizer
 export type OrganizerSchema = TOrganizer & Document;
 /**

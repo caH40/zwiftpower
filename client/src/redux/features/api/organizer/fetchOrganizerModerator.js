@@ -109,3 +109,26 @@ export const fetchGetOrganizersForModerator = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Обновление данных организатора (описание, изображения и т.д.).
+ */
+export const fetchPutOrganizersMainData = createAsyncThunk(
+  'organizersMainData/put',
+  async (dataFromForm, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/main`,
+        method: 'put',
+        data: dataFromForm,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

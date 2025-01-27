@@ -13,8 +13,8 @@ import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 import styles from './OrganizersPublic.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 8;
-const adUnderHeader = 3;
+const adOverFooter = 22;
+const adUnderHeader = 23;
 const adNumbers = [adOverFooter, adUnderHeader];
 
 /**
@@ -51,8 +51,9 @@ function OrganizersPublic() {
             {organizers.map((organizer) => (
               <CardOrganizer
                 name={organizer.name}
-                logoSrc={organizer.logoSrc}
-                backgroundSrc={organizer.backgroundImage}
+                urlSlug={organizer.urlSlug}
+                logoUrls={organizer.logoUrls}
+                posterUrls={organizer.posterUrls}
                 key={organizer.id}
               />
             ))}
@@ -60,11 +61,7 @@ function OrganizersPublic() {
         )}
       </div>
 
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )}
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

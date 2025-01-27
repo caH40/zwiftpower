@@ -1,7 +1,10 @@
 import slugify from 'slugify';
 
 import { Organizer } from '../../Model/Organizer.js';
-import { OrganizerSchema } from '../../types/model.interface.js';
+
+// types
+import { OrganizerSchema, TOrganizer } from '../../types/model.interface.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Сервис получения всех Организаторов заезда
@@ -13,7 +16,11 @@ export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
   if (organizersDB.length) {
     for (const organizer of organizersDB) {
       if (!organizer.creator) {
-        throw new Error(`Не найден создатель (User) Организатора: "${organizer.name}" в БД!`);
+        handleAndLogError(
+          new Error(
+            `Не найден создатель (User) Организатора: "${organizer.name}" в БД!. Модуль getOrganizersService`
+          )
+        );
       }
     }
   }
@@ -26,25 +33,28 @@ export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
  */
 export const postOrganizersService = async (
   name: string,
-  label: string,
+  shortName: string,
   creatorId: string
 ): Promise<{ message: string }> => {
   // Создание уникального названия для url.
   const urlSlug = slugify(name, { lower: true, strict: true });
 
   // Проверка на дубли.
-  const [organizerCheckName, organizerCheckLabel, organizerCheckUrlSlug] = await Promise.all([
-    Organizer.findOne({ name: name.toLowerCase() }).lean(),
-    Organizer.findOne({ label: label.toLowerCase() }).lean(),
-    Organizer.findOne({ urlSlug }).lean(),
-  ]);
+  const [organizerCheckName, organizerCheckShortName, organizerCheckUrlSlug] =
+    await Promise.all([
+      Organizer.findOne({ name: name.toLowerCase() }).lean(),
+      Organizer.findOne({ shortName }).collation({ locale: 'en', strength: 2 }).lean(),
+      Organizer.findOne({ urlSlug }).lean(),
+    ]);
 
   if (organizerCheckName) {
     throw new Error(`Название: "${name}" уже используется у другого организатора!`);
   }
 
-  if (organizerCheckLabel) {
-    throw new Error(`Лейбл: "${label}" уже используется у другого организатора!`);
+  if (organizerCheckShortName) {
+    throw new Error(
+      `Короткое название: "${shortName}" уже используется у другого организатора!`
+    );
   }
 
   if (organizerCheckUrlSlug) {
@@ -55,7 +65,7 @@ export const postOrganizersService = async (
 
   const response = await Organizer.create({
     name,
-    label,
+    shortName,
     creator: creatorId,
     urlSlug,
   });
@@ -64,12 +74,12 @@ export const postOrganizersService = async (
 };
 
 /**
- * Сервис удаления Организатора заезда.
+ * Сервис удаления Организатора заездов.
  */
 export const deleteOrganizersService = async (
   organizerId: string
 ): Promise<{ message: string }> => {
-  const organizerDB = await Organizer.findOneAndDelete({ _id: organizerId });
+  const organizerDB = await Organizer.findOneAndDelete({ _id: organizerId }).lean<TOrganizer>();
 
   if (!organizerDB) {
     throw new Error(`Организатор ${organizerDB} не найден в БД`);

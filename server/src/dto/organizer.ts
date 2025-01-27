@@ -5,6 +5,7 @@ import { ObjectId, Types } from 'mongoose';
 import { TOrganizer, TZwiftToken } from '../types/model.interface.js';
 import { TZwiftJwtToken } from '../types/http.interface.js';
 import { TOrganizerPublicDto, TZwiftTokenDto } from '../types/types.interface.js';
+import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
  * Декодирование токена.
@@ -69,11 +70,12 @@ export function organizerPublicDto({
   const {
     _id,
     name,
-    label,
+    shortName,
     urlSlug,
     clubMain,
-    logoSrc,
-    backgroundImage,
+    logoFileInfo,
+    posterFileInfo,
+    mission,
     description,
     website,
     country,
@@ -81,16 +83,20 @@ export function organizerPublicDto({
     telegram,
   } = organizerFromDB;
 
+  const logoUrls = createUrlsToFileCloud(logoFileInfo);
+  const posterUrls = createUrlsToFileCloud(posterFileInfo);
+
   return {
     id: String(_id),
     name,
-    label,
+    shortName,
     urlSlug,
     ...(clubMain && {
       clubMain: `https://www.zwift.com/eu/clubs/${clubMain}/join`,
     }),
-    ...(logoSrc && { logoSrc }),
-    ...(backgroundImage && { backgroundImage }),
+    ...(logoUrls && { logoUrls }),
+    ...(posterUrls && { posterUrls }),
+    ...(mission && { mission }),
     ...(description && { description }),
     ...(website && { website }),
     ...(country && { country }),
@@ -98,10 +104,10 @@ export function organizerPublicDto({
     ...(telegram && {
       telegram: {
         ...(telegram.group && {
-          group: `https://t.me/${telegram.group}`,
+          group: telegram.group,
         }),
         ...(telegram.channel && {
-          channel: `https://t.me/${telegram.channel}`,
+          channel: telegram.channel,
         }),
       },
     }),

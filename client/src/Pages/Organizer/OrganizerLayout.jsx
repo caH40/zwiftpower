@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetOrganizerModerator } from '../../redux/features/api/organizer/fetchOrganizerModerator';
+import { resetOrganizerDataModerator } from '../../redux/features/api/organizer/organizerModeratorSlice';
 import IconUsers from '../../components/icons/IconUsers';
 import NavAdmin from '../../components/UI/NavAdmin/NavAdmin';
 
@@ -30,6 +31,8 @@ export default function OrganizerLayout({ organizerId }) {
   // Запрос данных организатора organizerId
   useEffect(() => {
     dispatch(fetchGetOrganizerModerator({ organizerId }));
+
+    return () => dispatch(resetOrganizerDataModerator());
   }, []);
 
   return (

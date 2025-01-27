@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
+
 import styles from './CardOrganizer.module.css';
 
 /**
@@ -14,20 +16,19 @@ import styles from './CardOrganizer.module.css';
  *
  * @returns {JSX.Element} Карточка организатора
  */
-export default function CardOrganizer({ name, logoSrc, backgroundSrc }) {
+export default function CardOrganizer({ name, urlSlug, logoUrls, posterUrls }) {
   return (
-    <Link to={name?.toLowerCase()} className={styles.card}>
+    <Link to={urlSlug?.toLowerCase()} className={styles.card}>
       <div
         className={styles.background}
-        style={{ backgroundImage: `url(${backgroundSrc})` }}
+        // Для фонового изображения карточки достаточно small размера.
+        style={{ backgroundImage: `url(${posterUrls?.small || posterUrls?.original})` }}
       ></div>
       <div className={styles.overlay}></div>
       <div className={styles.content}>
         {/* <img src={logoSrc} alt={name} className={styles.logo} /> */}
-        {logoSrc ? (
-          <img src={logoSrc} alt={name} className={styles.logo} />
-        ) : (
-          <div className={styles.logo} />
+        {logoUrls?.original && (
+          <AdaptiveImage sources={logoUrls} alt={name} className={styles.logo} />
         )}
         <h2 className={styles.name}>{name}</h2>
       </div>

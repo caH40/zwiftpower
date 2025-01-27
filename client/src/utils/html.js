@@ -4,6 +4,9 @@
 export const createHtml = {
   // форматирование текса описания
   description: function (text) {
+    if (!text) {
+      return '';
+    }
     const htmlWithLink = this.replaceWithUrl(text);
     return this.replaceWithBr(htmlWithLink);
   },

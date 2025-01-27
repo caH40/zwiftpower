@@ -6,7 +6,7 @@ import { decrypt, encrypt } from '../utils/aesUtils.js';
 /**
  * Схема для Zwift token бота-модератора клуба в Звифт.
  */
-const zwiftTokenSchema = new Schema<TZwiftToken>(
+const zwiftTokenSchema = new Schema<TZwiftToken & Document>(
   {
     organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' },
     token: { type: String, required: true },

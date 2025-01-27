@@ -14,9 +14,9 @@ import { EventWithSubgroup } from '../../../types/types.interface.js';
 
 import { Club } from '../../../Model/Club.js';
 
-interface ClubWithOrganizer extends Omit<ClubSchema, 'organizer'> {
+type ClubWithOrganizer = Omit<ClubSchema, 'organizer'> & {
   organizer: OrganizerSchema;
-}
+};
 
 /**
  * Добавление эвента в БД zp.ru
@@ -28,16 +28,18 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   await checkUnique(eventParams);
 
   // добавление названия клуба  в котором был создал заезд и организатора в объект event
-  const clubDB = (await Club.findOne({
+  const clubDB = await Club.findOne({
     id: clubId,
-  }).populate('organizer')) as ClubWithOrganizer;
+  })
+    .populate('organizer')
+    .lean<ClubWithOrganizer>();
 
   if (!clubDB) {
     throw new Error(`Не найден клуб "${clubId}" в БД сайта`);
   }
 
   eventParams.clubName = clubDB.name;
-  eventParams.organizer = clubDB.organizer.label;
+  eventParams.organizer = clubDB.organizer.shortName;
   eventParams.organizerId = clubDB.organizer._id;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);

@@ -8,14 +8,16 @@ import { getAlert } from '../alertMessageSlice';
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',
-  async function ({ target, started, page, docsOnPage, search }, thunkAPI) {
+  async function ({ target, started, page, docsOnPage, search, organizerId }, thunkAPI) {
     try {
       const targetCurrent = target ? `&target=${target}` : '';
       const pageStr = page ? `&page=${page}` : '';
       const docsOnPageStr = docsOnPage ? `&docsOnPage=${docsOnPage}` : '';
       const searchStr = search ? `&search=${search}` : '';
+      const organizerIdStr = organizerId ? `&organizerId=${organizerId}` : '';
 
-      const query = `started=${started}${targetCurrent}${pageStr}${docsOnPageStr}${searchStr}`;
+      const query = `started=${started}${targetCurrent}${pageStr}${docsOnPageStr}${searchStr}${organizerIdStr}`;
+
       const response = await axios({
         url: `${serverExpress}/api/race/events?${query}`,
         method: 'get',

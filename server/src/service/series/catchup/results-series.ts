@@ -48,5 +48,5 @@ export async function getResultsSeriesRaw(
       populate: [{ path: 'eventSubgroups', select: ['eventSubgroupStart', 'subgroupLabel'] }],
     })
 
-    .lean();
+    .lean<ResultWithEventAndSubgroup[]>();
 }
