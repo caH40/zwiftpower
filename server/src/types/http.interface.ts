@@ -16,6 +16,7 @@ export interface GetEvents {
   page?: number;
   docsOnPage?: number;
   search?: string;
+  organizerId?: string;
 }
 //
 // данные из body

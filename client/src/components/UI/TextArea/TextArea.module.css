@@ -38,6 +38,6 @@
   font-size: 12px;
   color: var(--error);
 }
-.error__textarea {
+.textarea.error__textarea {
   outline: 2px solid var(--error);
 }

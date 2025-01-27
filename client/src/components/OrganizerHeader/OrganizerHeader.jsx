@@ -89,7 +89,12 @@ export default function OrganizerHeader({ organizer }) {
             {/* Цель организатора */}
             {organizer.mission && isScreenMd && (
               <div className={styles.mission__box}>
-                <span className={styles.mission}>{organizer.mission}</span>
+                <span
+                  className={styles.mission}
+                  dangerouslySetInnerHTML={{
+                    __html: createHtml.description(organizer.mission),
+                  }}
+                />
               </div>
             )}
           </div>

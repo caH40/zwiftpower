@@ -225,7 +225,12 @@ export default function FormOrganizerMain({
         <div className={styles.wrapper__textarea}>
           <TextAreaRFH
             id={'mission-FormOrganizerMain'}
-            register={register('mission')}
+            register={register('mission', {
+              maxLength: {
+                value: 300,
+                message: 'Длина текста не более 300 символов.',
+              },
+            })}
             label={'Цель организатора'}
             validationText={errors.mission ? errors.mission.message : ''}
             loading={loading}

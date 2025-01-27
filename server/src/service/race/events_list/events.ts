@@ -16,13 +16,22 @@ export async function getEventsService({
   page = 1,
   docsOnPage = 20,
   search,
+  organizerId,
 }: GetEvents) {
   const isStarted = started === 'true' ? true : false;
 
-  const eventsDB: EventWithSubgroupAndSeries[] = await ZwiftEvent.find({ started: isStarted })
+  const query = {
+    started: isStarted,
+    ...(organizerId && { organizerId }),
+  };
+
+  const eventsDB = await ZwiftEvent.find(query)
     .populate('eventSubgroups')
     .populate('seriesId')
-    .lean();
+    .lean<EventWithSubgroupAndSeries[]>();
+
+  // console.log(eventsDB[0]);
+  // console.log(eventsDB.length);
 
   // фильтрация по имени
   const eventsFiltered = getEventsFiltered(eventsDB, search);

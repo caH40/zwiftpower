@@ -90,8 +90,14 @@ export function getToday(data) {
   return dataConverted.replace(onlyDate, 'Сегодня');
 }
 
-// замена даты на слово 'Завтра' или 'Сегодня'
+/**
+ * Если событие стартует сегодня или завтра, то возвращается соответствующее слово, иначе дата.
+ */
 export function getTodayTomorrow(data) {
+  if (!data) {
+    return 'нет даты...';
+  }
+
   const dataNow = getTimerLocal(data, 'DDMMYY');
 
   const onlyDateToday = getTimerLocal(Date.now(), 'DDMMYY');
@@ -99,7 +105,7 @@ export function getTodayTomorrow(data) {
   const millisecondsInDay = 24 * 60 * 60 * 1000;
   const onlyDateTomorrow = getTimerLocal(Date.now() + millisecondsInDay, 'DDMMYY');
 
-  let dateStr = 'Нет даты...';
+  let dateStr = getTimerLocal(data, 'DDMMYY');
 
   if (dataNow === onlyDateToday) dateStr = 'Сегодня';
   if (dataNow === onlyDateTomorrow) dateStr = 'Завтра';

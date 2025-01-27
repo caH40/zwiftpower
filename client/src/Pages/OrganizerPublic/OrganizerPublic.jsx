@@ -24,9 +24,10 @@ const adNumbers = [adOverFooter];
  * Страница Организатора заездов.
  */
 function OrganizerPublic() {
-  const { eventsPreview, status: statusFetchEvents } = useSelector(
+  const { eventsSchedule, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
+
   const { isScreenXl: xl } = useResize();
   const { urlSlug } = useParams();
 
@@ -48,10 +49,10 @@ function OrganizerPublic() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchEvents({ started: false, target: 'preview' }));
+    dispatch(fetchEvents({ started: false, organizerId: organizer?.id }));
 
     return () => dispatch(resetEventsPreview());
-  }, [dispatch]);
+  }, [dispatch, organizer]);
 
   useAd(adNumbers);
   return (
@@ -60,12 +61,23 @@ function OrganizerPublic() {
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
+          // Основная секция страницы
           <section className={styles.main}>
+            {/* Блок-шапка с данными Организатора */}
             <OrganizerHeader organizer={organizer} />
 
-            {!!eventsPreview.length && statusFetchEvents === 'resolved' && (
-              <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
-            )}
+            {/* Предстоящие заезды, проводимые Организатором */}
+            {!!eventsSchedule.length &&
+              statusFetchEvents === 'resolved' &&
+              eventsSchedule.map((eventPreview) => {
+                return (
+                  <CardRacePreview
+                    event={eventPreview}
+                    getClick={toLink}
+                    key={eventPreview.id}
+                  />
+                );
+              })}
           </section>
         ) : (
           <div></div>
