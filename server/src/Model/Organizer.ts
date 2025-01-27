@@ -53,7 +53,6 @@ const organizerSchema = new Schema<TOrganizer & Document>(
     botZwift: { type: BotZwiftSchema },
     name: { type: String, unique: true, required: true },
     shortName: { type: String },
-    label: { type: String },
     urlSlug: { type: String },
     logoFileInfo: { type: FileMetadataSchema },
     posterFileInfo: { type: FileMetadataSchema },

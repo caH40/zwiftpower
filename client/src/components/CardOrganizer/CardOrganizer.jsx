@@ -16,9 +16,9 @@ import styles from './CardOrganizer.module.css';
  *
  * @returns {JSX.Element} Карточка организатора
  */
-export default function CardOrganizer({ name, logoUrls, posterUrls }) {
+export default function CardOrganizer({ name, urlSlug, logoUrls, posterUrls }) {
   return (
-    <Link to={name?.toLowerCase()} className={styles.card}>
+    <Link to={urlSlug?.toLowerCase()} className={styles.card}>
       <div
         className={styles.background}
         // Для фонового изображения карточки достаточно small размера.
@@ -27,10 +27,8 @@ export default function CardOrganizer({ name, logoUrls, posterUrls }) {
       <div className={styles.overlay}></div>
       <div className={styles.content}>
         {/* <img src={logoSrc} alt={name} className={styles.logo} /> */}
-        {logoUrls ? (
+        {logoUrls?.original && (
           <AdaptiveImage sources={logoUrls} alt={name} className={styles.logo} />
-        ) : (
-          <div className={styles.logo} />
         )}
         <h2 className={styles.name}>{name}</h2>
       </div>

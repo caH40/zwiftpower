@@ -51,6 +51,7 @@ function OrganizersPublic() {
             {organizers.map((organizer) => (
               <CardOrganizer
                 name={organizer.name}
+                urlSlug={organizer.urlSlug}
                 logoUrls={organizer.logoUrls}
                 posterUrls={organizer.posterUrls}
                 key={organizer.id}
@@ -60,11 +61,7 @@ function OrganizersPublic() {
         )}
       </div>
 
-      {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )}
+      <AdContainer number={adOverFooter} maxWidth={1105} />
     </>
   );
 }

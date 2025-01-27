@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
@@ -11,6 +11,8 @@ import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
+import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 
 import styles from './Organizer.module.css';
 
@@ -22,13 +24,19 @@ const adNumbers = [adOverFooter];
  * Страница Организатора заездов.
  */
 function OrganizerPublic() {
-  const { isScreenLg: isDesktop, isScreenXl: xl } = useResize();
+  const { eventsPreview, status: statusFetchEvents } = useSelector(
+    (state) => state.fetchEvents
+  );
+  const { isScreenXl: xl } = useResize();
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
   const { organizer } = useSelector((state) => state.organizersPublic);
 
   useTitle(`Организатор ${organizer?.name || ''}`);
+
+  const navigate = useNavigate();
+  const toLink = (id) => navigate(`/race/schedule/${id}`);
 
   const dispatch = useDispatch();
 
@@ -39,6 +47,12 @@ function OrganizerPublic() {
     return () => dispatch(resetOrganizerPublic());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchEvents({ started: false, target: 'preview' }));
+
+    return () => dispatch(resetEventsPreview());
+  }, [dispatch]);
+
   useAd(adNumbers);
   return (
     <>
@@ -46,7 +60,13 @@ function OrganizerPublic() {
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
-          <OrganizerHeader organizer={organizer} />
+          <section className={styles.main}>
+            <OrganizerHeader organizer={organizer} />
+
+            {!!eventsPreview.length && statusFetchEvents === 'resolved' && (
+              <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
+            )}
+          </section>
         ) : (
           <div></div>
         )}

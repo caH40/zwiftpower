@@ -15,7 +15,7 @@
   height: 300px;
   object-fit: cover;
   border-radius: 10px;
-  filter: brightness(0.3);
+  filter: brightness(0.4);
 }
 .content {
   position: relative;

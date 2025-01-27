@@ -20,7 +20,6 @@ const cx = cn.bind(styles);
  */
 export default function OrganizerHeader({ organizer }) {
   const [isOpenDescription, setIsOpenDescription] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
   const { isScreenMd } = useResize();
   return (
@@ -45,14 +44,17 @@ export default function OrganizerHeader({ organizer }) {
         {/* Блок с контентом */}
         <div className={styles.content}>
           {/* Блок с лого и названием Организатора */}
+
           <div className={styles.title__box}>
-            <img
-              src={organizer.logoUrls?.original}
-              alt={`Логотип Организатора ${organizer.name}`}
-              className={styles.logo}
-              width={60}
-              height={60}
-            />
+            {organizer.logoUrls?.original && (
+              <img
+                src={organizer.logoUrls?.original}
+                alt={`Логотип Организатора ${organizer.name}`}
+                className={styles.logo}
+                width={60}
+                height={60}
+              />
+            )}
             <h3 className={styles.title}>{organizer.name}</h3>
           </div>
 

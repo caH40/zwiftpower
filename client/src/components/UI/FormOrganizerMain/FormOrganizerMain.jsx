@@ -43,10 +43,10 @@ export default function FormOrganizerMain({
   loading,
 }) {
   // Ссылка на лого Организатора.
-  const [logoSrcState, setLogoSrcState] = useState(logoUrls.original);
+  const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
 
   // Ссылка на постер Организатора.
-  const [posterSrcState, setPosterSrcState] = useState(posterUrls.small);
+  const [posterSrcState, setPosterSrcState] = useState(posterUrls?.small);
 
   const dispatch = useDispatch();
 
@@ -91,7 +91,7 @@ export default function FormOrganizerMain({
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wrapper__fields}>
         <div className={styles.box__checkbox}>
-          <span>Отображать страницы Организатора</span>
+          <span>Отображать страницы Организатора:</span>
           <CheckboxRFH
             register={register('isPublished')}
             id={'isPublished-FormOrganizerMain'}
