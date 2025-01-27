@@ -25,6 +25,7 @@ export default function OrganizerHeader({ organizer }) {
   return (
     <section className={styles.wrapper}>
       <div className={styles.poster}>
+        <div className={styles.poster__placeholder}></div>
         <AdaptiveImage
           sources={organizer.posterUrls}
           className={styles.poster__img}

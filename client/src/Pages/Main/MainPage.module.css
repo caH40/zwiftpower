@@ -22,6 +22,9 @@
 }
 .wrapper__preview {
   flex: 1 1 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .wrapper__info {
   flex: 1 1 300px;
