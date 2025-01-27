@@ -57,7 +57,11 @@ function OrganizerPublic() {
   useAd(adNumbers);
   return (
     <>
-      <HelmetOrganizerPublic name={organizer.name} imageSrc={organizer.posterSrc} />
+      <HelmetOrganizerPublic
+        urlSlug={organizer.urlSlug}
+        name={organizer.name}
+        imageSrc={organizer.posterUrls?.medium}
+      />
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (

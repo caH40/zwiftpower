@@ -219,6 +219,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
     const canonical = serverWoWWW + url;
     const image =
       organizerDB.posterUrls?.medium ||
+      organizerDB.posterUrls?.original ||
       'https://zwiftpower.ru/images/open_graph/organizers.webp';
     const recommendationsTag = 'organizer';
 

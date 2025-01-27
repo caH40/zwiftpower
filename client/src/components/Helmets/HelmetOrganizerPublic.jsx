@@ -5,9 +5,9 @@ import { serverFront } from '../../config/environment';
 /**
  * Формирование Мета тегов для страницы "Организатор заездов"
  */
-export const HelmetOrganizerPublic = ({ name, imageSrc }) => {
+export const HelmetOrganizerPublic = ({ urlSlug, name, imageSrc }) => {
   const title = `${name} – Гонки и серии заездов Zwift 🚴`;
-  const canonical = `${serverFront}/organizers`;
+  const canonical = `${serverFront}/organizers/${urlSlug}`;
   const description = `${name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
   const image = imageSrc;
   const recommendationsTag = 'organizer';

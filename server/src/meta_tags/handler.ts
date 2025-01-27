@@ -60,7 +60,7 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getStreamsMeta(url);
   } else if (url.includes('/organizers')) {
     tags = getOrganizersPublicMeta(url);
-  } else if (url.includes('/organizer/')) {
+  } else if (url.includes('/organizers/')) {
     tags = getOrganizerPublicMeta(url);
   } else {
     tags = getMetaOtherPages(url);
