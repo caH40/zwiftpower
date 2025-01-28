@@ -11,7 +11,7 @@ import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/
 import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
-import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
+import { fetchEvents, resetEventsSchedule } from '../../redux/features/api/eventsSlice';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 
 import styles from './Organizer.module.css';
@@ -49,9 +49,14 @@ function OrganizerPublic() {
   }, []);
 
   useEffect(() => {
+    // Запрашивать Эвенты только конкретного организатора.
+    if (!organizer?.id) {
+      return undefined;
+    }
+
     dispatch(fetchEvents({ started: false, organizerId: organizer?.id }));
 
-    return () => dispatch(resetEventsPreview());
+    return () => dispatch(resetEventsSchedule());
   }, [dispatch, organizer]);
 
   useAd(adNumbers);

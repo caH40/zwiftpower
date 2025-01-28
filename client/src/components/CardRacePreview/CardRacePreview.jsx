@@ -12,8 +12,13 @@ import { getEventType } from '../../utils/event';
 
 import styles from './CardRacePreview.module.css';
 
+/**
+ * Карточка Эвента.
+ */
 function CardRacePreview({ event, getClick }) {
   const { isScreenSm: sm } = useResize();
+
+  const logoSrc = event?.logoFileInfo?.original;
   return (
     <div className={styles.wrapper} onClick={() => getClick(event.id)}>
       <h3 className={styles.title__date}>{getTodayTomorrow(event.eventStart)}</h3>
@@ -29,6 +34,7 @@ function CardRacePreview({ event, getClick }) {
                 <TimeToStart time={event.eventStart} />
               </p>
             </div>
+
             <dl className={styles.list}>
               <div className={styles.box__term}>
                 <dt className={styles.term}>Правила</dt>
@@ -44,10 +50,13 @@ function CardRacePreview({ event, getClick }) {
                       <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
                     </dd>
                   </div>
-                  <div className={styles.box__term}>
-                    <dt className={styles.term}>Организатор</dt>
-                    <dd className={styles.term__description}>{event.organizer}</dd>
-                  </div>
+
+                  {!logoSrc && (
+                    <div className={styles.box__term}>
+                      <dt className={styles.term}>Организатор</dt>
+                      <dd className={styles.term__description}>{event.organizer}</dd>
+                    </div>
+                  )}
                 </>
               )}
             </dl>
@@ -55,6 +64,17 @@ function CardRacePreview({ event, getClick }) {
           <div className={styles.box__img}>
             <img className={styles.poster} src={event.imageUrl} alt="poster" />
             <span className={styles.title__img}>{getEventType(event.eventType)}</span>
+
+            {/* Логотип организатора */}
+            {!!logoSrc && (
+              <img
+                className={styles.logo__img}
+                src={logoSrc}
+                alt="Лого Организатора"
+                width={35}
+                height={35}
+              />
+            )}
           </div>
         </div>
         <div className={styles.card__bottom}>

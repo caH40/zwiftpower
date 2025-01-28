@@ -7,6 +7,7 @@ import {
   SignedRidersSchema,
   TClubZwift,
   TDeviceInfo,
+  TFileMetadataForCloud,
   TLocationInfo,
   TMetrics,
   TOrganizer,
@@ -134,9 +135,10 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
 /**
  * Данные Event с подгруппами и параметрами Series
  */
-export interface EventWithSubgroupAndSeries extends Omit<EventWithSubgroup, 'seriesId'> {
+export type EventWithSubgroupAndSeries = Omit<EventWithSubgroup, 'seriesId'> & {
   seriesId: SeriesSchema;
-}
+  organizerId: { logoFileInfo?: TFileMetadataForCloud; _id: Types.ObjectId };
+};
 /**
  * Логи по запросам админов(модераторов)
  */

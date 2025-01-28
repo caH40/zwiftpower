@@ -28,12 +28,10 @@ export async function getEventsService({
   const eventsDB = await ZwiftEvent.find(query)
     .populate('eventSubgroups')
     .populate('seriesId')
+    .populate({ path: 'organizerId', select: ['logoFileInfo', '_id'] })
     .lean<EventWithSubgroupAndSeries[]>();
 
-  // console.log(eventsDB[0]);
-  // console.log(eventsDB.length);
-
-  // фильтрация по имени
+  // Фильтрация по имени
   const eventsFiltered = getEventsFiltered(eventsDB, search);
 
   // сортировка групп по убыванию
