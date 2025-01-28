@@ -55,8 +55,6 @@ export const createDescription = (eventParams) => {
   // Создаёт описание настроек всех подгрупп
   let strGroups = '';
   if (eventParams.eventSubgroups) {
-    console.log(eventParams.eventSubgroups[0]);
-
     for (const subgroup of eventParams.eventSubgroups) {
       // объект с описанием дистанции, кругов, продолжительности, набора высоты
       const distanceDesc = distanceObject(subgroup);
