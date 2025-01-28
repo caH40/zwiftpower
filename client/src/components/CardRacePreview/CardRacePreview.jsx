@@ -19,6 +19,13 @@ function CardRacePreview({ event, getClick }) {
   const { isScreenSm: sm } = useResize();
 
   const logoSrc = event?.logoFileInfo?.original;
+
+  // Для отображения параметров заезда берутся данные из первой группы в массиве групп Эвента.
+  // Поэтому если в других группах будет другой маршрут, то это можно увидеть в открывающемся блоке описания Эвента.
+  // eslint-disable-next-line prefer-destructuring
+  const { mapId, routeId, durationInSeconds, distanceInMeters, laps, distanceSummary } =
+    event.eventSubgroups[0] || [];
+
   return (
     <div className={styles.wrapper} onClick={() => getClick(event.id)}>
       <h3 className={styles.title__date}>{getTodayTomorrow(event.eventStart)}</h3>
@@ -77,8 +84,19 @@ function CardRacePreview({ event, getClick }) {
             )}
           </div>
         </div>
+
+        {/* Подвал карточки */}
         <div className={styles.card__bottom}>
-          <ParamsEvent event={event} />
+          <ParamsEvent
+            mapId={event.mapId}
+            routeId={routeId}
+            durationInSeconds={durationInSeconds}
+            distanceInMeters={distanceInMeters}
+            laps={laps}
+            distanceSummary={distanceSummary}
+          />
+
+          {/* Отображение категорий */}
           <div className={styles.box__categories}>
             <CategoriesBox event={event} />
           </div>
