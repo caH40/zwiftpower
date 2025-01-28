@@ -55,6 +55,8 @@ export const createDescription = (eventParams) => {
   // Создаёт описание настроек всех подгрупп
   let strGroups = '';
   if (eventParams.eventSubgroups) {
+    console.log(eventParams.eventSubgroups[0]);
+
     for (const subgroup of eventParams.eventSubgroups) {
       // объект с описанием дистанции, кругов, продолжительности, набора высоты
       const distanceDesc = distanceObject(subgroup);
@@ -91,12 +93,17 @@ export const createDescription = (eventParams) => {
         ? `Стартовый карман: <b>${subgroup.startLocation}</b>\n`
         : '';
 
+      const descriptionStr = subgroup.description
+        ? `Описание: <b>${subgroup.description}</b>\n`
+        : '';
+      const name = subgroup.name ? `Заголовок: <b>${subgroup.name}</b>\n` : '';
+
       strGroups += `
 Группа: <b>${subgroup.subgroupLabel}</b>
 Старт: <b>${getTimerLocal(subgroup.eventSubgroupStart, 'DDMMYYHms')}</b>
 Карта: <b>${map(subgroup.mapId)}</b>
 Маршрут: <b>${routeName(subgroup.routeId)}</b>
-${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadInDistance}${leadInElevation}${jerseyStr}`;
+${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadInDistance}${leadInElevation}${jerseyStr}${name}${descriptionStr}`;
     }
   }
 
