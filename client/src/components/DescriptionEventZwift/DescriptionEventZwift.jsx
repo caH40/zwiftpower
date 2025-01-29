@@ -39,6 +39,12 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
 
   const gaps = gapStart(event);
 
+  // Для отображения параметров заезда берутся данные из первой группы в массиве групп Эвента.
+  // Поэтому если в других группах будет другой маршрут, то это можно увидеть в открывающемся блоке описания Эвента.
+  // eslint-disable-next-line prefer-destructuring
+  const { mapId, routeId, durationInSeconds, distanceInMeters, laps, distanceSummary } =
+    event.eventSubgroups[0] || [];
+
   return (
     <section className={styles.wrapper}>
       <div
@@ -94,8 +100,16 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           )}
         </div>
 
+        {/* Подвал карточки */}
         <div className={styles.box__params}>
-          <ParamsEvent event={event} />
+          <ParamsEvent
+            mapId={mapId}
+            routeId={routeId}
+            durationInSeconds={durationInSeconds}
+            distanceInMeters={distanceInMeters}
+            laps={laps}
+            distanceSummary={distanceSummary}
+          />
         </div>
       </div>
 

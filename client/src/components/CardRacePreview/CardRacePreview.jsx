@@ -88,7 +88,7 @@ function CardRacePreview({ event, getClick }) {
         {/* Подвал карточки */}
         <div className={styles.card__bottom}>
           <ParamsEvent
-            mapId={event.mapId}
+            mapId={mapId}
             routeId={routeId}
             durationInSeconds={durationInSeconds}
             distanceInMeters={distanceInMeters}
