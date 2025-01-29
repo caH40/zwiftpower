@@ -4,12 +4,13 @@ import cn from 'classnames/bind';
 
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
 import { createHtml } from '../../utils/html';
+import { useResize } from '../../hook/use-resize';
 import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import ButtonUrl from '../UI/ButtonUrl/ButtonUrl';
 import IconTelegram from '../icons/IconTelegram';
 import IconWebsite from '../icons/IconWebsite';
 import IconZwift from '../icons/IconZwift';
-import { useResize } from '../../hook/use-resize';
+import IconVk from '../icons/IconVk';
 
 import styles from './OrganizerHeader.module.css';
 
@@ -18,7 +19,19 @@ const cx = cn.bind(styles);
 /**
  * Блок-шапка Организатора с описанием и ссылками на внешние ресурсы.
  */
-export default function OrganizerHeader({ organizer }) {
+export default function OrganizerHeader({
+  organizer: {
+    posterUrls,
+    logoUrls,
+    name,
+    clubMain,
+    telegram,
+    website,
+    socialLinks,
+    mission,
+    description,
+  },
+}) {
   const [isOpenDescription, setIsOpenDescription] = useState(false);
 
   const { isScreenMd } = useResize();
@@ -26,11 +39,7 @@ export default function OrganizerHeader({ organizer }) {
     <section className={styles.wrapper}>
       <div className={styles.poster}>
         <div className={styles.poster__placeholder}></div>
-        <AdaptiveImage
-          sources={organizer.posterUrls}
-          className={styles.poster__img}
-          height={300}
-        />
+        <AdaptiveImage sources={posterUrls} className={styles.poster__img} height={300} />
 
         {/* Кнопка открытия/закрытия описания */}
         <div className={styles.description__control}>
@@ -47,16 +56,16 @@ export default function OrganizerHeader({ organizer }) {
           {/* Блок с лого и названием Организатора */}
 
           <div className={styles.title__box}>
-            {organizer.logoUrls?.original && (
+            {logoUrls?.original && (
               <img
-                src={organizer.logoUrls?.original}
-                alt={`Логотип Организатора ${organizer.name}`}
+                src={logoUrls?.original}
+                alt={`Логотип Организатора ${name}`}
                 className={styles.logo}
                 width={60}
                 height={60}
               />
             )}
-            <h3 className={styles.title}>{organizer.name}</h3>
+            <h3 className={styles.title}>{name}</h3>
           </div>
 
           <div className={styles.content__bottom}>
@@ -64,41 +73,36 @@ export default function OrganizerHeader({ organizer }) {
               <ButtonUrl
                 name={'Клуб в Zwift'}
                 Icon={IconZwift}
-                href={organizer.clubMain}
+                href={clubMain}
                 isZwiftCompanionLink={true}
               />
 
               {/* Кнопка на переход в группу телеграм */}
-              {organizer.telegram?.group && (
-                <ButtonUrl
-                  name={'Группа'}
-                  Icon={IconTelegram}
-                  href={organizer.telegram.group}
-                />
+              {telegram?.group && (
+                <ButtonUrl name={'Группа'} Icon={IconTelegram} href={telegram.group} />
               )}
 
               {/* Кнопка на переход в канал телеграм */}
-              {organizer.telegram?.channel && (
-                <ButtonUrl
-                  name={'Канал'}
-                  Icon={IconTelegram}
-                  href={organizer.telegram?.channel}
-                />
+              {telegram?.channel && (
+                <ButtonUrl name={'Канал'} Icon={IconTelegram} href={telegram?.channel} />
               )}
 
               {/* Кнопка на переход на вебсайт */}
-              {organizer.website && (
-                <ButtonUrl name={'Вебсайт'} Icon={IconWebsite} href={organizer.website} />
+              {website && <ButtonUrl name={'Вебсайт'} Icon={IconWebsite} href={website} />}
+
+              {/* Кнопка на переход на вебсайт */}
+              {socialLinks?.vk && (
+                <ButtonUrl name={'ВКонтакте'} Icon={IconVk} href={socialLinks.vk} />
               )}
             </div>
 
             {/* Цель организатора */}
-            {organizer.mission && isScreenMd && (
+            {mission && isScreenMd && (
               <div className={styles.mission__box}>
                 <span
                   className={styles.mission}
                   dangerouslySetInnerHTML={{
-                    __html: createHtml.description(organizer.mission),
+                    __html: createHtml.description(mission),
                   }}
                 />
               </div>
@@ -108,18 +112,16 @@ export default function OrganizerHeader({ organizer }) {
       </div>
 
       {/* Открывающийся блок с описанием организатора */}
-      {organizer.mission && (
+      {mission && (
         <Transition in={isOpenDescription} timeout={100}>
           {(state) => (
             <div className={cx('description', state)}>
               {/* Цель организатора отображается при разрешении Б 768px */}
-              {!isScreenMd && (
-                <div className={styles.mission__inDescription}>{organizer.mission}</div>
-              )}
+              {!isScreenMd && <div className={styles.mission__inDescription}>{mission}</div>}
 
               <div
                 dangerouslySetInnerHTML={{
-                  __html: createHtml.description(organizer.description),
+                  __html: createHtml.description(description),
                 }}
               />
             </div>
