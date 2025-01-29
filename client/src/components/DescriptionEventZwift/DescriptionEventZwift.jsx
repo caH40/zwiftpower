@@ -25,7 +25,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   const { moderator } = useSelector((state) => state.checkAuth.value.user);
 
   // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
-  const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
+  const isAllowedModerate = moderator?.clubs.includes(event?.microserviceExternalResourceId);
 
   const navigate = useNavigate();
 
@@ -43,13 +43,13 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   // Поэтому если в других группах будет другой маршрут, то это можно увидеть в открывающемся блоке описания Эвента.
   // eslint-disable-next-line prefer-destructuring
   const { mapId, routeId, durationInSeconds, distanceInMeters, laps, distanceSummary } =
-    event.eventSubgroups[0] || [];
+    event?.eventSubgroups?.[0] || [];
 
   return (
     <section className={styles.wrapper}>
       <div
         className={cn(styles.block__main, { [styles.block__mainClosed]: !isOpened })}
-        style={{ backgroundImage: `url(${event.imageUrl})` }}
+        style={{ backgroundImage: `url(${event?.imageUrl})` }}
       >
         <div className={styles.box__open}>
           <OpenBoxArrow
@@ -72,9 +72,9 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         >
           <div className={styles.box__left}>
             <div className={styles.box__title}>
-              <h2 className={styles.title}>{event.name}</h2>
+              <h2 className={styles.title}>{event?.name}</h2>
               {forSchedule && isAllowedModerate && (
-                <Link to={`/zwift/event/edit/${event.id}`}>
+                <Link to={`/zwift/event/edit/${event?.id}`}>
                   <IconEdit
                     tooltip={'Редактирование параметров заезда в Звифте'}
                     squareSize={20}
@@ -84,7 +84,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
             </div>
             <PrivateEvent event={event} />
             <h3 className={styles.subtitle}>
-              {getTimerLocal(event.eventStart, 'DDMMYYHm', true)}
+              {getTimerLocal(event?.eventStart, 'DDMMYYHm', true)}
             </h3>
           </div>
 
@@ -115,23 +115,23 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
 
       {isOpened && (
         <div className={styles.block__text}>
-          <RouteProfileAndMap routeId={event.eventSubgroups[0].routeId} />
+          <RouteProfileAndMap routeId={event?.eventSubgroups[0].routeId} />
           <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
           <hr className={styles.hr} />
           <p
             className={styles.paragraph}
-            dangerouslySetInnerHTML={{ __html: createHtml.description(event.description) }}
+            dangerouslySetInnerHTML={{ __html: createHtml.description(event?.description) }}
           ></p>
 
           {/* Описание Строгой категоризации */}
-          {event.accessExpressionObj && (
+          {event?.accessExpressionObj && (
             <>
               <hr className={styles.hr} />
               <p
                 className={styles.paragraph}
                 dangerouslySetInnerHTML={{
                   __html: createHtml.description(
-                    event.accessExpressionObj.description ||
+                    event?.accessExpressionObj.description ||
                       'Нет описания распределения по категориям'
                   ),
                 }}
