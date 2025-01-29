@@ -10,41 +10,53 @@ import {
 /**
  *  Схема Организатора заезда, у организатора может быть несколько клубов
  */
-const BotZwiftSchema = new Schema<TOrganizerBotZwift>({
-  token: { type: String },
-  email: { type: String },
-  password: { type: String },
-});
-const TelegramSchema = new Schema<TTelegram>({
-  group: { type: String },
-  channel: { type: String },
-});
-const SocialLinksSchema = new Schema<TSocialLinks>({
-  vk: { type: String },
-  facebook: { type: String },
-  twitter: { type: String },
-  instagram: { type: String },
-  youtube: { type: String },
-});
-const FileMetadataSchema = new Schema<TFileMetadataForCloud>({
-  baseName: {
-    type: String,
-    trim: true,
+const BotZwiftSchema = new Schema<TOrganizerBotZwift>(
+  {
+    token: { type: String },
+    email: { type: String },
+    password: { type: String },
   },
-  originalExtension: {
-    type: String,
-    trim: true,
+  { _id: false }
+);
+const TelegramSchema = new Schema<TTelegram>(
+  {
+    group: { type: String },
+    channel: { type: String },
   },
-  optimizedExtension: {
-    type: String,
-    trim: true,
+  { _id: false }
+);
+const SocialLinksSchema = new Schema<TSocialLinks>(
+  {
+    vk: { type: String },
+    facebook: { type: String },
+    twitter: { type: String },
+    instagram: { type: String },
+    youtube: { type: String },
   },
-  availableSizes: {
-    type: [String],
-    enum: ['original', 'large', 'medium', 'small', 'xLarge'],
-    default: ['original'],
+  { _id: false }
+);
+const FileMetadataSchema = new Schema<TFileMetadataForCloud>(
+  {
+    baseName: {
+      type: String,
+      trim: true,
+    },
+    originalExtension: {
+      type: String,
+      trim: true,
+    },
+    optimizedExtension: {
+      type: String,
+      trim: true,
+    },
+    availableSizes: {
+      type: [String],
+      enum: ['original', 'large', 'medium', 'small', 'xLarge'],
+      default: ['original'],
+    },
   },
-});
+  { _id: false }
+);
 
 const organizerSchema = new Schema<TOrganizer & Document>(
   {

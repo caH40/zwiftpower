@@ -64,3 +64,19 @@ export function validateWebsite({ property, register }) {
     }),
   };
 }
+
+/**
+ * Проверяет вводимые данные для url ВКонтакте.
+ */
+export function validateVk({ property, register }) {
+  return {
+    ...register(property, {
+      pattern: {
+        value: /^(https?:\/\/)?(www\.)?vk\.com\/[a-zA-Z0-9_]{1,}[a-zA-Z0-9_\-.]*$/i,
+        message: 'Введите правильный URL ВКонтакте (например, https://vk.com/example)',
+      },
+      minLength: { value: 5, message: 'Необходимо минимум 5 символов' },
+      maxLength: { value: 100, message: 'Не более 100 символов' },
+    }),
+  };
+}

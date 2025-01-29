@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
+import { validateTelegram, validateVk, validateWebsite } from '../../../utils/validatorService';
 import { serializeOrganizerData } from '../../../utils/serialization/organizer-data';
 import {
   fetchGetOrganizerModerator,
@@ -127,6 +127,15 @@ export default function FormOrganizerMain({
           validationText={errors.website?.message || ''}
           input={{ id: 'website-FormOrganizerMain', type: 'text' }}
           placeholder="https://example.com"
+          loading={loading}
+        />
+
+        <InputAuth
+          label={'Страница в VK'}
+          register={validateVk({ property: 'socialLinks.vk', register })}
+          validationText={errors.socialLinks?.vk?.message || ''}
+          input={{ id: 'socialLinks.vk-FormOrganizerMain', type: 'text' }}
+          placeholder="https://vk.com/example"
           loading={loading}
         />
 
