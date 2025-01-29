@@ -55,7 +55,7 @@ select {
   --color-text-main: #ffffff;
   --color-text-dark: #000000;
 
-  --color-blue-main: #0f4fa8;
+  --color-blue-main: rgba(15, 79, 168);
   --color-blue-2: #284c7e;
   --color-blue-3: #05316d;
   --color-blue-4: #4380d3;
@@ -98,4 +98,6 @@ select {
   --catWA: #9422ae;
   --catWB: #9422ae;
   --catT: var(--color-blue-3);
+
+  --focus-within: color-mix(in srgb, var(--color-blue-main), transparent 70%);
 }

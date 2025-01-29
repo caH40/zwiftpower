@@ -1,7 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import cn from 'classnames/bind';
 
-import styles from './InputFile.module.css';
+import styles from './InputFileIcon.module.css';
 
 const cx = cn.bind(styles);
 
@@ -17,12 +17,24 @@ export default function InputFileIcon({
   loading,
   disabled,
 }) {
+  const [isFocused, setIsFocused] = useState(false);
   const refInput = useRef(null);
+  const refImg = useRef(null);
+
   const getClick = () => {
     if (refInput.current) {
       refInput.current.click();
     }
   };
+
+  const handleKeyDown = (event) => {
+    event.preventDefault(); // Отменяет стандартное поведение. Space (пробел) по умолчанию активирует
+    // кнопку и скроллит страницу, если фокус находится на div, span, img или button
+    if (event.key === 'Enter' || event.key === ' ') {
+      getClick();
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <input
@@ -34,6 +46,9 @@ export default function InputFileIcon({
         onChange={getChange}
         name={name}
         disabled={disabled || loading}
+        onFocus={() => setIsFocused(true)} // При фокусе на input добавляем класс
+        onBlur={() => setIsFocused(false)} // При потере фокуса убираем класс
+        // tabIndex="-1" // Не фокусируется на элементе при табуляции.
       />
       <img
         src={icon.src}
@@ -41,7 +56,15 @@ export default function InputFileIcon({
         height={icon.height}
         alt={icon.alt}
         onClick={getClick}
-        className={cx('btn__icon', { icon__disabled: disabled || loading })}
+        ref={refImg}
+        onKeyDown={handleKeyDown}
+        className={cx('btn__icon', {
+          icon__disabled: disabled || loading,
+          focus: isFocused,
+        })}
+        // tabIndex={0} // Делает элемент фокусируемым
+        role="button" // Семантически обозначает кнопку
+        aria-disabled={disabled || loading} // Для доступности
       />
     </div>
   );

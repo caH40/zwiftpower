@@ -99,137 +99,155 @@ export default function FormOrganizerMain({
           />
         </div>
 
-        <InputSimple disabled={true} value={name} label={'Название'} />
+        <div className={styles.wrapper__input}>
+          <InputSimple disabled={true} value={name} label={'Название'} />
+        </div>
 
-        <InputSimple disabled={true} value={shortName} label={'Сокращённое название'} />
+        <div className={styles.wrapper__input}>
+          <InputSimple disabled={true} value={shortName} label={'Сокращённое название'} />
+        </div>
 
-        <InputAuth
-          label={'Группа в телеграмм'}
-          register={validateTelegram({ property: 'telegram.group', register })}
-          validationText={errors.telegram?.group?.message || ''}
-          input={{ id: 'telegram.group-FormOrganizerMain', type: 'text' }}
-          placeholder="Например: group_zwift_cycling"
-          loading={loading}
-        />
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Группа в телеграмм'}
+            register={validateTelegram({ property: 'telegram.group', register })}
+            validationText={errors.telegram?.group?.message || ''}
+            input={{ id: 'telegram.group-FormOrganizerMain', type: 'text' }}
+            placeholder="Например: group_zwift_cycling"
+            loading={loading}
+          />
+        </div>
 
-        <InputAuth
-          label={'Канал в телеграмм'}
-          register={validateTelegram({ property: 'telegram.channel', register })}
-          validationText={errors.telegram?.channel?.message || ''}
-          input={{ id: 'telegram.channel-FormOrganizerMain', type: 'text' }}
-          placeholder="Например: channel_zwift_cycling"
-          loading={loading}
-        />
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Канал в телеграмм'}
+            register={validateTelegram({ property: 'telegram.channel', register })}
+            validationText={errors.telegram?.channel?.message || ''}
+            input={{ id: 'telegram.channel-FormOrganizerMain', type: 'text' }}
+            placeholder="Например: channel_zwift_cycling"
+            loading={loading}
+          />
+        </div>
 
-        <InputAuth
-          label={'Сайт'}
-          register={validateWebsite({ property: 'website', register })}
-          validationText={errors.website?.message || ''}
-          input={{ id: 'website-FormOrganizerMain', type: 'text' }}
-          placeholder="https://example.com"
-          loading={loading}
-        />
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Сайт'}
+            register={validateWebsite({ property: 'website', register })}
+            validationText={errors.website?.message || ''}
+            input={{ id: 'website-FormOrganizerMain', type: 'text' }}
+            placeholder="https://example.com"
+            loading={loading}
+          />
+        </div>
 
-        <InputAuth
-          label={'Страница в VK'}
-          register={validateVk({ property: 'socialLinks.vk', register })}
-          validationText={errors.socialLinks?.vk?.message || ''}
-          input={{ id: 'socialLinks.vk-FormOrganizerMain', type: 'text' }}
-          placeholder="https://vk.com/example"
-          loading={loading}
-        />
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Страница в VK'}
+            register={validateVk({ property: 'socialLinks.vk', register })}
+            validationText={errors.socialLinks?.vk?.message || ''}
+            input={{ id: 'socialLinks.vk-FormOrganizerMain', type: 'text' }}
+            placeholder="https://vk.com/example"
+            loading={loading}
+          />
+        </div>
 
-        <SelectWithRHF
-          label={'Основной клуб в Zwift'}
-          register={register('clubMain')}
-          validationText={errors.clubMain?.message || ''}
-          id={'clubMain-FormOrganizerMain'}
-          options={clubs.map((club) => ({ id: club.id, value: club.id, name: club.name }))}
-          loading={loading}
-        />
-
-        {/* Блок загрузки Главного изображения (обложки) */}
-        <Controller
-          name="logoFile"
-          control={control}
-          defaultValue={null}
-          rules={{
-            validate: {
-              fileSize: (value) => {
-                if (!value) {
-                  return true;
-                }
-                const maxSizeInKBytes = 100; // 100 КB
-                return convertToKBytes(value.size) <= maxSizeInKBytes
-                  ? true
-                  : `Размер файла (${convertToKBytes(value.size)} Кб) превышает 100 Кб.`;
-              },
-              fileType: (value) => {
-                if (!value) {
-                  return true;
-                }
-
-                return value &&
-                  ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'].includes(
-                    value.type
-                  )
-                  ? true
-                  : 'Разрешены только JPEG, PNG, WEBP, SVG';
-              },
-            },
-          }}
-          render={({ field }) => (
-            <BlockUploadImage
-              title={'Лого (не более 100Кб)'}
-              poster={field.value}
-              setPoster={field.onChange}
-              posterUrl={logoSrcState}
-              setPosterUrl={setLogoSrcState}
-              accept={'.jpg, .jpeg, .png, .webp, .svg'}
-              validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
-            />
-          )}
-        />
+        <div className={styles.wrapper__input}>
+          <SelectWithRHF
+            label={'Основной клуб в Zwift'}
+            register={register('clubMain')}
+            validationText={errors.clubMain?.message || ''}
+            id={'clubMain-FormOrganizerMain'}
+            options={clubs.map((club) => ({ id: club.id, value: club.id, name: club.name }))}
+            loading={loading}
+          />
+        </div>
 
         {/* Блок загрузки Главного изображения (обложки) */}
-        <Controller
-          name="posterFile"
-          control={control}
-          defaultValue={null}
-          rules={{
-            validate: {
-              fileSize: (value) => {
-                if (!value) {
-                  return true;
-                }
-                const maxSizeInMBytes = 5; // 5 MB
-                return convertToMBytes(value.size) <= maxSizeInMBytes
-                  ? true
-                  : `Размер файла (${convertToMBytes(value.size)} Мб) превышает 5 MB.`;
-              },
-              fileType: (value) => {
-                if (!value) {
-                  return true;
-                }
+        <div className={styles.wrapper__file}>
+          <Controller
+            name="logoFile"
+            control={control}
+            defaultValue={null}
+            rules={{
+              validate: {
+                fileSize: (value) => {
+                  if (!value) {
+                    return true;
+                  }
+                  const maxSizeInKBytes = 100; // 100 КB
+                  return convertToKBytes(value.size) <= maxSizeInKBytes
+                    ? true
+                    : `Размер файла (${convertToKBytes(value.size)} Кб) превышает 100 Кб.`;
+                },
+                fileType: (value) => {
+                  if (!value) {
+                    return true;
+                  }
 
-                return value && ['image/jpeg', 'image/png', 'image/webp'].includes(value.type)
-                  ? true
-                  : 'Разрешены только JPEG, PNG, WEBP';
+                  return value &&
+                    ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'].includes(
+                      value.type
+                    )
+                    ? true
+                    : 'Разрешены только JPEG, PNG, WEBP, SVG';
+                },
               },
-            },
-          }}
-          render={({ field }) => (
-            <BlockUploadImage
-              title={'Постер для страницы Организатора (не более 5Мб)'}
-              poster={field.value}
-              setPoster={field.onChange}
-              posterUrl={posterSrcState}
-              setPosterUrl={setPosterSrcState}
-              accept={'.jpg, .jpeg, .png, .webp'}
-              validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
-            />
-          )}
-        />
+            }}
+            render={({ field }) => (
+              <BlockUploadImage
+                title={'Лого (не более 100Кб)'}
+                poster={field.value}
+                setPoster={field.onChange}
+                posterUrl={logoSrcState}
+                setPosterUrl={setLogoSrcState}
+                accept={'.jpg, .jpeg, .png, .webp, .svg'}
+                validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
+              />
+            )}
+          />
+        </div>
+
+        {/* Блок загрузки Главного изображения (обложки) */}
+        <div className={styles.wrapper__file}>
+          <Controller
+            name="posterFile"
+            control={control}
+            defaultValue={null}
+            rules={{
+              validate: {
+                fileSize: (value) => {
+                  if (!value) {
+                    return true;
+                  }
+                  const maxSizeInMBytes = 5; // 5 MB
+                  return convertToMBytes(value.size) <= maxSizeInMBytes
+                    ? true
+                    : `Размер файла (${convertToMBytes(value.size)} Мб) превышает 5 MB.`;
+                },
+                fileType: (value) => {
+                  if (!value) {
+                    return true;
+                  }
+
+                  return value && ['image/jpeg', 'image/png', 'image/webp'].includes(value.type)
+                    ? true
+                    : 'Разрешены только JPEG, PNG, WEBP';
+                },
+              },
+            }}
+            render={({ field }) => (
+              <BlockUploadImage
+                title={'Постер для страницы Организатора (не более 5Мб)'}
+                poster={field.value}
+                setPoster={field.onChange}
+                posterUrl={posterSrcState}
+                setPosterUrl={setPosterSrcState}
+                accept={'.jpg, .jpeg, .png, .webp'}
+                validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+              />
+            )}
+          />
+        </div>
 
         <div className={styles.wrapper__textarea}>
           <TextAreaRFH
