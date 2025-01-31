@@ -1,7 +1,7 @@
 .wrapper__select {
-  position: relative; /* Для позиционирования иконки */
-  display: inline-block; /* Чтобы обёртка занимала только необходимую ширину */
-  width: 100%; /* Или нужная тебе ширина */
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 .select {
@@ -15,9 +15,9 @@
   line-height: 1.5;
   border: 1px solid var(--color-border-minor);
   border-radius: 0.4rem;
-  padding: 0.375rem 2.5rem 0.375rem 0.75rem; /* Отступ справа для иконки */
+  padding: 0.375rem 2rem 0.375rem 0.75rem; /* Отступ справа для иконки */
   cursor: pointer;
-  letter-spacing: 0.04em;
+  /* letter-spacing: 0.04em; */
   user-select: none;
   background-color: var(--color-text-main);
   text-decoration: none;
@@ -37,16 +37,13 @@
   color: var(--color-text-minor); /* Цвет иконки */
   font-size: 12px; /* Размер иконки */
 }
-
 .select:focus {
   outline: none;
   box-shadow: 0 0 2px 2px var(--color-blue-4);
 }
-
 .select:disabled {
   background-color: var(--color-bg-minor);
 }
-
 .option {
   font-size: inherit;
   font-weight: inherit;
