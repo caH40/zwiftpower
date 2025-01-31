@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
@@ -28,6 +28,7 @@ function OrganizerPublic() {
   const { eventsSchedule, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
+  const { pathname } = useLocation();
 
   const { isScreenXl: xl } = useResize();
   const { urlSlug } = useParams();
@@ -60,14 +61,18 @@ function OrganizerPublic() {
     return () => dispatch(resetEventsSchedule());
   }, [dispatch, organizer]);
 
+  const isIndexPage = pathname === `/organizers/${urlSlug}`;
+
   useAd(adNumbers);
   return (
     <>
-      <HelmetOrganizerPublic
-        urlSlug={organizer.urlSlug}
-        name={organizer.name}
-        imageSrc={organizer.posterUrls?.medium}
-      />
+      {isIndexPage ? (
+        <HelmetOrganizerPublic
+          urlSlug={organizer.urlSlug}
+          name={organizer.name}
+          imageSrc={organizer.posterUrls?.medium}
+        />
+      ) : null}
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
@@ -76,11 +81,15 @@ function OrganizerPublic() {
             {/* Блок-шапка с данными Организатора */}
             <OrganizerHeader organizer={organizer} />
 
-            {/* Кнопки навигации по страницам организатора
-            <NavBarOrganizerPublic urlSlug={organizer.urlSlug} /> */}
+            {/* Кнопки навигации по страницам организатора */}
+            <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
 
+            <Outlet />
+
+            {/* Блок для индексной страницы */}
             {/* Предстоящие заезды, проводимые Организатором */}
-            {!!eventsSchedule.length &&
+            {isIndexPage &&
+              !!eventsSchedule.length &&
               statusFetchEvents === 'resolved' &&
               eventsSchedule.map((eventPreview) => {
                 return (

@@ -32,6 +32,7 @@ function NavBarOrganizerPublic({ urlSlug, addCls }) {
             className={({ isActive }) => getStyle(isActive, index)}
             to={`/organizers/${urlSlug}${buttonLink.page}`}
             key={buttonLink.id}
+            end={true}
           >
             {buttonLink.name}
           </NavLink>
