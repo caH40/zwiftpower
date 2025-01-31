@@ -69,22 +69,24 @@
   background-color: var(--color-bg-minor);
   border-radius: 10px;
   border: 1px solid var(--color-border-minor);
-  padding: 0 14px; /* Изначально padding сверху/снизу 0 для скрытия */
-  height: 0;
-  opacity: 0;
+  padding: 0 14px;
+  display: grid;
+  grid-template-rows: 0fr; /* Начальное состояние */
+  transition: grid-template-rows 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
   overflow: hidden;
-  transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
   z-index: 0;
+}
+.mission__content {
+  min-height: 0;
 }
 .description.entering,
 .description.entered {
-  height: auto; /* Позволяет задавать динамическую высоту */
+  grid-template-rows: 1fr;
   padding: 34px 14px 14px;
   opacity: 1;
 }
-.description.exiting,
 .description.exited {
-  height: 0;
+  grid-template-rows: 0fr;
   padding: 0 14px;
   opacity: 0;
 }

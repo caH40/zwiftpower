@@ -120,6 +120,7 @@ export default function OrganizerHeader({
               {!isScreenMd && <div className={styles.mission__inDescription}>{mission}</div>}
 
               <div
+                className={styles.mission__content}
                 dangerouslySetInnerHTML={{
                   __html: createHtml.description(description),
                 }}
