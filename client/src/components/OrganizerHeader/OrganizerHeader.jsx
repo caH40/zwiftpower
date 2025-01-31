@@ -117,14 +117,15 @@ export default function OrganizerHeader({
           {(state) => (
             <div className={cx('description', state)}>
               {/* Цель организатора отображается при разрешении Б 768px */}
-              {!isScreenMd && <div className={styles.mission__inDescription}>{mission}</div>}
+              <div className={styles.mission__content}>
+                {!isScreenMd && <div className={styles.mission__inDescription}>{mission}</div>}
 
-              <div
-                className={styles.mission__content}
-                dangerouslySetInnerHTML={{
-                  __html: createHtml.description(description),
-                }}
-              />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: createHtml.description(description),
+                  }}
+                />
+              </div>
             </div>
           )}
         </Transition>

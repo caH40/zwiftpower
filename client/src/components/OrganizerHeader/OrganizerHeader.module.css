@@ -47,7 +47,7 @@
 .content__bottom {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 .mission__box {
   width: 100%;
@@ -122,7 +122,7 @@
 .buttons__block {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: flex-end;
   align-items: center;
 }

@@ -13,8 +13,9 @@ import useTitle from '../../hook/useTitle';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { fetchEvents, resetEventsSchedule } from '../../redux/features/api/eventsSlice';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
+import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 
-import styles from './Organizer.module.css';
+import styles from './OrganizerPublic.module.css';
 
 // Рекламные блоки на странице.
 const adOverFooter = 22;
@@ -74,6 +75,9 @@ function OrganizerPublic() {
           <section className={styles.main}>
             {/* Блок-шапка с данными Организатора */}
             <OrganizerHeader organizer={organizer} />
+
+            {/* Кнопки навигации по страницам организатора
+            <NavBarOrganizerPublic urlSlug={organizer.urlSlug} /> */}
 
             {/* Предстоящие заезды, проводимые Организатором */}
             {!!eventsSchedule.length &&
