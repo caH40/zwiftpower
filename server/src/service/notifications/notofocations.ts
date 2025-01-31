@@ -53,7 +53,28 @@ export async function postNotificationService({
 
   await Promise.allSettled(sendAllEmails);
 
-  // console.log(response);
-
   return { data: null, message: 'Оповещение отправлено пользователям на email!' };
+}
+
+/**
+ * Формирует письмо для предварительного просмотра.
+ */
+export async function createNotificationLetterService({
+  text,
+  title,
+  notificationsTypes,
+}: Params): Promise<TResponseService<string>> {
+  // Создание массива из включенных типов имен оповещений.
+  const tags = Object.entries(notificationsTypes)
+    .filter(([, isEnabled]) => isEnabled) // Оставляем только включенные уведомления.
+    .map(([key]) => key);
+
+  const letter = createNotificationLetter({
+    text,
+    title,
+    tags,
+    zwiftId: 7777777, // 7777777 - для примера
+  });
+
+  return { data: letter, message: 'Оповещение отправлено пользователям на email!' };
 }

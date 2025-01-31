@@ -31,15 +31,18 @@ export async function mailService({
       html: letter,
     };
 
-    // Отправка письма
+    // Отправка письма.
     const result = await transporter.sendMail(mailOptions);
 
-    // Проверка статуса отправки
+    // Проверка статуса отправки.
     if (result.accepted.length > 0) {
+      // Письмо успешно принято SMTP-сервером.
       return true;
     } else {
-      handleAndLogError(new Error(result.response));
-      return false;
+      // Письмо не было принято SMTP-сервером.
+      const errorMessage = result.response || 'Неизвестная ошибка при отправке письма';
+      handleAndLogError(new Error(errorMessage)); // Логируем ошибку.
+      return false; // Возвращаем false, чтобы указать на ошибку.
     }
   } catch (error) {
     handleAndLogError(error);

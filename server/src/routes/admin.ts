@@ -18,9 +18,10 @@ import {
   updateFairRideBan,
   getFairRideBan,
 } from '../controllers/admin.js';
-import { postNotification } from '../controllers/notification.js';
+import { createNotificationLetter, postNotification } from '../controllers/notification.js';
 
 export const routerAdmin = Router();
+// routerAdmin.get('*', (req, res) => console.log(req.path));
 
 routerAdmin.get('/users', authAdmin, getUsers);
 routerAdmin.get('/clubs', authModerator, getClubs);
@@ -32,9 +33,10 @@ routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);
 routerAdmin.get('/organizers', authAdmin, getOrganizers);
 routerAdmin.post('/organizers', authAdmin, postOrganizers);
 routerAdmin.delete('/organizers', authAdmin, deleteOrganizers);
-routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.put('/fitfile', authAdmin, putActivityInFitFile);
 routerAdmin.get('/fitfile/:zwiftId', authAdmin, getActivityInFitFile);
 routerAdmin.put('/riders/power-curve', authAdmin, updateFitFileAndPowerCurve);
 routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
 routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);
+routerAdmin.post('/notification', authAdmin, postNotification);
+routerAdmin.get('/notification/letter-preview', authAdmin, createNotificationLetter);

@@ -206,3 +206,13 @@ export interface TPutOrganizerMain {
   country?: string;
   socialLinks?: TSocialLinks;
 }
+
+/**
+ *
+ */
+export type TQueryParamsNotifications = {
+  text?: string;
+  notificationsTypes?: string; // или string[], если ожидается массив
+  subject?: string;
+  title?: string;
+};

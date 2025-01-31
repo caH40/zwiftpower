@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.preview {
+  border: 1px solid var(--color-blue-main);
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}

@@ -3,8 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { getTranslation } from '../../../utils/translation';
-import { sendNotification } from '../../../redux/features/api/notifications/sendNotification';
+import {
+  getNotificationLetterPreview,
+  sendNotification,
+} from '../../../redux/features/api/notifications/sendNotification';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { createHtml } from '../../../utils/html';
+import { resetNotification } from '../../../redux/features/api/notifications/notificationSlice';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
@@ -20,7 +25,7 @@ const notificationsTypesInit = {
 /**
  * Форма создания и отправки оповещения на email пользователей.
  */
-export default function FormNotification() {
+export default function FormNotification({ loading }) {
   const [errorCheckboxes, setErrorCheckboxes] = useState('');
   const dispatch = useDispatch();
 
@@ -29,6 +34,7 @@ export default function FormNotification() {
     handleSubmit,
     reset,
     watch,
+    getValues,
     formState: { errors },
   } = useForm({
     mode: 'all',
@@ -46,6 +52,16 @@ export default function FormNotification() {
     }
   }, [JSON.stringify(watch('notificationsTypes'))]);
 
+  // Отправка запроса на получение письма для проверки содержания перед отправкой.
+  const handleRefreshPreview = () => {
+    const { notificationsTypes, subject, title, text } = getValues();
+    const textFormatted = createHtml.description(text);
+    dispatch(
+      getNotificationLetterPreview({ notificationsTypes, subject, title, text: textFormatted })
+    );
+  };
+
+  // Обработчик отправки данных на сервер.
   const onSubmit = ({ notificationsTypes, subject, title, text }) => {
     // Проверка, что выбран хотя бы один тип оповещения.
     if (
@@ -59,8 +75,13 @@ export default function FormNotification() {
       return;
     }
 
-    dispatch(sendNotification({ notificationsTypes, text, title, subject })).then((data) => {
+    const textFormatted = createHtml.description(text);
+
+    dispatch(
+      sendNotification({ notificationsTypes, text: textFormatted, title, subject })
+    ).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
+        dispatch(resetNotification());
         dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
         reset(); // Очистка полей формы.
       } else {
@@ -84,6 +105,7 @@ export default function FormNotification() {
               <CheckboxRFH
                 register={register(`notificationsTypes.${key}`)}
                 id={`notificationsTypes.${key}-FormNotification`}
+                loading={loading}
               />
             </li>
           ))}
@@ -92,28 +114,46 @@ export default function FormNotification() {
       </div>
 
       <div className={styles.wrapper__textarea}>
-        <TextAreaRFH
-          id={'subject-FormNotification'}
-          register={register('subject', { required: 'Обязательное поле' })}
-          label={'Тема письма'}
-          validationText={errors.subject ? errors.subject.message : ''}
-        />
-        <TextAreaRFH
-          id={'title-FormNotification'}
-          register={register('title', { required: 'Обязательное поле' })}
-          label={'Заголовок сообщения'}
-          validationText={errors.title ? errors.title.message : ''}
-        />
-        <TextAreaRFH
-          id={'text-FormNotification'}
-          register={register('text', { required: 'Обязательное поле' })}
-          label={'Текст сообщения'}
-          validationText={errors.text ? errors.text.message : ''}
-        />
+        <div className={styles.wrapper__field}>
+          <TextAreaRFH
+            id={'subject-FormNotification'}
+            register={register('subject', { required: 'Обязательное поле' })}
+            label={'Тема письма'}
+            validationText={errors.subject ? errors.subject.message : ''}
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.wrapper__field}>
+          <TextAreaRFH
+            id={'title-FormNotification'}
+            register={register('title', { required: 'Обязательное поле' })}
+            label={'Заголовок сообщения'}
+            validationText={errors.title ? errors.title.message : ''}
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.wrapper__field}>
+          <TextAreaRFH
+            id={'text-FormNotification'}
+            register={register('text', { required: 'Обязательное поле' })}
+            label={'Текст сообщения'}
+            validationText={errors.text ? errors.text.message : ''}
+            loading={loading}
+          />
+        </div>
       </div>
 
       <div className={styles.box__btn}>
-        <Button>Отправить</Button>
+        <Button
+          getClick={handleRefreshPreview}
+          disabled={Object.keys(errors).length > 0 || loading}
+        >
+          Проверить
+        </Button>
+
+        <Button disabled={Object.keys(errors).length > 0 || loading}>Отправить</Button>
       </div>
     </form>
   );

@@ -19,7 +19,7 @@ export default function TextAreaRFH({ register, label, id, validationText, loadi
         {...register}
         className={cx('textarea', { error__textarea: validationText })}
         disabled={loading}
-        minRows={5} // Минимальное количество строк
+        minRows={3} // Минимальное количество строк
       />
     </>
   );

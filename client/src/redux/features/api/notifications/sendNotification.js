@@ -25,3 +25,31 @@ export const sendNotification = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Запрос на письма-оповещения для предварительного просмотра и контроля содержимого.
+ */
+export const getNotificationLetterPreview = createAsyncThunk(
+  'users/getNotificationLetterPreview',
+  async function ({ text, notificationsTypes, subject, title }, thunkAPI) {
+    try {
+      const params = new URLSearchParams({
+        text,
+        notificationsTypes: JSON.stringify(notificationsTypes),
+        subject,
+        title,
+      });
+
+      const response = await myAxios({
+        url: `${serverExpress}/api/admin/notification/letter-preview?${params.toString()}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

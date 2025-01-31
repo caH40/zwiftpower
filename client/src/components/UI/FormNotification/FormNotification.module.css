@@ -2,6 +2,9 @@
   max-width: 400px;
   margin-bottom: 1.5rem;
 }
+.wrapper__textarea {
+  margin-bottom: 1rem;
+}
 .title {
   margin-bottom: 0.8rem;
   text-decoration: underline;
@@ -18,9 +21,21 @@
 .item + .item {
   margin-top: 0.2rem;
 }
+.wrapper__field {
+  padding: 10px 10px 17px;
+  border-radius: 15px;
+  transition: all 0.2s ease;
+}
+.wrapper__field:focus-within {
+  background-color: var(--focus-within);
+}
+
 .box__btn {
-  width: 100%;
-  text-align: right;
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 .error {
   font-weight: 400;

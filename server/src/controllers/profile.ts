@@ -237,18 +237,33 @@ export async function putUsername(req: Request, res: Response) {
 }
 
 /**
- * Проверяет, что объект соответствует типу TNotifications.
+ * Проверяет, что объект соответствует типу TNotifications и хотя бы один чекбокс включен.
  * @param notifications - Объект для проверки.
- * @returns {boolean} - Возвращает true, если объект соответствует типу TNotifications.
+ * @returns {boolean} - Возвращает true, если объект соответствует типу TNotifications и хотя бы один чекбокс включен.
  */
 export function isValidNotifications(notifications: unknown): notifications is TNotifications {
-  return (
-    typeof notifications === 'object' &&
-    notifications !== null &&
-    typeof (notifications as TNotifications).development === 'boolean' &&
-    typeof (notifications as TNotifications).events === 'boolean' &&
-    typeof (notifications as TNotifications).news === 'boolean'
-  );
+  // Проверяем, что notifications является объектом и не равен null
+  if (typeof notifications !== 'object' || notifications === null) {
+    return false;
+  }
+
+  // Приводим notifications к типу TNotifications
+  const typedNotifications = notifications as TNotifications;
+
+  // Проверяем, что все свойства существуют и имеют тип boolean
+  const hasValidProperties =
+    typeof typedNotifications.development === 'boolean' &&
+    typeof typedNotifications.events === 'boolean' &&
+    typeof typedNotifications.news === 'boolean';
+
+  // Проверяем, что хотя бы одно из свойств равно true
+  const hasAtLeastOneChecked =
+    typedNotifications.development === true ||
+    typedNotifications.events === true ||
+    typedNotifications.news === true;
+
+  // Возвращаем true только если обе проверки пройдены
+  return hasValidProperties && hasAtLeastOneChecked;
 }
 
 /**
