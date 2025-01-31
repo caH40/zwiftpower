@@ -18,6 +18,7 @@
   flex: 1 1 100%;
 }
 .box__filter {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 15px;
 }

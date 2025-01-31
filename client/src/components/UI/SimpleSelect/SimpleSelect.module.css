@@ -1,8 +1,13 @@
+.wrapper__select {
+  position: relative; /* Для позиционирования иконки */
+  display: inline-block; /* Чтобы обёртка занимала только необходимую ширину */
+  width: 100%; /* Или нужная тебе ширина */
+}
+
 .select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
   background-clip: padding-box;
   font-family: 'Roboto';
   font-weight: 400;
@@ -10,7 +15,7 @@
   line-height: 1.5;
   border: 1px solid var(--color-border-minor);
   border-radius: 0.4rem;
-  padding: 0.375rem 0.75rem;
+  padding: 0.375rem 2.5rem 0.375rem 0.75rem; /* Отступ справа для иконки */
   cursor: pointer;
   letter-spacing: 0.04em;
   user-select: none;
@@ -20,34 +25,48 @@
   min-width: 160px;
   width: 100%;
 }
+
+/* Кастомная иконка */
+.wrapper__select::after {
+  content: '▼'; /* Unicode-символ стрелки */
+  position: absolute;
+  right: 0.75rem; /* Отступ справа */
+  top: 50%;
+  transform: translateY(-50%); /* Центрирование по вертикали */
+  pointer-events: none; /* Чтобы иконка не перехватывала клики */
+  color: var(--color-text-minor); /* Цвет иконки */
+  font-size: 12px; /* Размер иконки */
+}
+
 .select:focus {
   outline: none;
   box-shadow: 0 0 2px 2px var(--color-blue-4);
 }
-.label {
-  padding: 0;
-  margin: 0;
-  color: var(--color-text-minor);
-}
-.label::after {
-  content: ':';
-}
+
 .select:disabled {
   background-color: var(--color-bg-minor);
 }
+
 .option {
   font-size: inherit;
   font-weight: inherit;
   color: inherit;
   background: var(--color-bg-minor);
 }
+
 .label__bold {
   font-size: 14px;
   font-weight: 700;
 }
+
 @media screen and (max-width: 992px) {
   .select {
-    padding: 0.2em 0.6em;
+    padding: 0.2em 2em 0.2em 0.6em; /* Уменьшаем отступы */
     letter-spacing: inherit;
+  }
+
+  .wrapper__select::after {
+    right: 0.5rem; /* Уменьшаем отступ для иконки */
+    font-size: 10px; /* Уменьшаем размер иконки */
   }
 }

@@ -226,13 +226,15 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
       <div className={styles.spacer__block}>
         <h3 className={styles.title__param}>Выбор строгой категоризации:</h3>
         <div className={styles.groups__enforcement}>
-          <SimpleSelectFunction
-            reducer={selectCategoryEnforcement}
-            options={optionsCategoryEnforcementCurrent}
-            value={eventMainParams.accessExpressionObj?.name}
-            defaultValue={eventMainParams.accessExpressionObj?.name}
-            closeEmptyOption={true}
-          />
+          <div className={styles.box__select}>
+            <SimpleSelectFunction
+              reducer={selectCategoryEnforcement}
+              options={optionsCategoryEnforcementCurrent}
+              value={eventMainParams.accessExpressionObj?.name}
+              defaultValue={eventMainParams.accessExpressionObj?.name}
+              closeEmptyOption={true}
+            />
+          </div>
 
           {/* Отображение настроек строгой категоризации*/}
           {eventMainParams.categoryEnforcement ? (

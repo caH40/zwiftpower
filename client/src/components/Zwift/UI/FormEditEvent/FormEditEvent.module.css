@@ -27,7 +27,11 @@
 .box__inputs {
   flex: 0 1 450px;
 }
-
+.box__select {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
 .box__checkbox {
   flex: 0 1 450px;
 }

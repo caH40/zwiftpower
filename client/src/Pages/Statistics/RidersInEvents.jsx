@@ -51,7 +51,11 @@ function RidersInEvents() {
       <HelmetStatisticsMain />
 
       <h2 className={cx('title')}>Количество участников</h2>
-      <NavBarRidersInEvent form={form} setForm={setForm} />
+
+      {/* Выбор сезона */}
+      <div className={styles.box__filter}>
+        <NavBarRidersInEvent form={form} setForm={setForm} />
+      </div>
 
       {/* скелетон для загрузки */}
       <SkeletonRidersDiagrams status={statusRidersInEventsFetch} quantityCharts={4} />

@@ -49,3 +49,8 @@
   padding: 0px;
   opacity: 0;
 }
+.box__filter {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}

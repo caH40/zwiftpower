@@ -25,6 +25,7 @@ function FormAdditionalParamsEvent({ form, setForm, sendForm, series }) {
         property={'seriesId'}
         options={series}
       />
+
       <div className={styles.right}>
         <Button getClick={sendForm}>Добавить</Button>
       </div>
