@@ -35,6 +35,7 @@ export default function OrganizerHeader({
   const [isOpenDescription, setIsOpenDescription] = useState(false);
 
   const { isScreenMd } = useResize();
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.poster}>
@@ -54,7 +55,6 @@ export default function OrganizerHeader({
         {/* Блок с контентом */}
         <div className={styles.content}>
           {/* Блок с лого и названием Организатора */}
-
           <div className={styles.title__box}>
             {logoUrls?.original && (
               <img
@@ -96,16 +96,9 @@ export default function OrganizerHeader({
               )}
             </div>
 
-            {/* Цель организатора */}
-            {mission && isScreenMd && (
-              <div className={styles.mission__box}>
-                <span
-                  className={styles.mission}
-                  dangerouslySetInnerHTML={{
-                    __html: createHtml.description(mission),
-                  }}
-                />
-              </div>
+            {/* Цель организатора. Для SEO всегда присутствует в DOM но визуально скрыт от пользователя */}
+            {mission && (
+              <DescriptionAndMissionForSEO mission={mission} description={description} />
             )}
           </div>
         </div>
@@ -118,7 +111,14 @@ export default function OrganizerHeader({
             <div className={cx('description', state)}>
               {/* Цель организатора отображается при разрешении Б 768px */}
               <div className={styles.mission__content}>
-                {!isScreenMd && <div className={styles.mission__inDescription}>{mission}</div>}
+                {!isScreenMd && (
+                  <div
+                    className={styles.mission__inDescription}
+                    dangerouslySetInnerHTML={{
+                      __html: createHtml.description(mission),
+                    }}
+                  />
+                )}
 
                 <div
                   dangerouslySetInnerHTML={{
@@ -131,5 +131,30 @@ export default function OrganizerHeader({
         </Transition>
       )}
     </section>
+  );
+}
+
+/**
+ * Блок с описанием Организатора для SEO, визуально крыт от пользователя.
+ */
+function DescriptionAndMissionForSEO({ description, mission }) {
+  return (
+    <div className={styles.visuallyHidden} aria-hidden={false}>
+      {description && (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: createHtml.description(description),
+          }}
+        />
+      )}
+
+      {mission && (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: createHtml.description(mission),
+          }}
+        />
+      )}
+    </div>
   );
 }
