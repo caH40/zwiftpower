@@ -5,12 +5,12 @@
   grid-template-rows: auto auto;
   align-items: start;
   gap: 25px;
-  letter-spacing: 0.08rem;
 }
 .main {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 /* ====================================================================== */
 @media (max-width: 1200px) {

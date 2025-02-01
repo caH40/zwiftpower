@@ -1,7 +1,7 @@
 import styles from './OrganizerPublic.module.css';
 
 /**
- * Страница Организатора заездов.
+ * Страница.
  */
 function OrganizerPublicResults() {
   return <div>OrganizerPublicResults</div>;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
@@ -13,7 +13,7 @@ import useTitle from '../../hook/useTitle';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { fetchEvents, resetEventsSchedule } from '../../redux/features/api/eventsSlice';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
-import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
+// import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 
 import styles from './OrganizerPublic.module.css';
 
@@ -82,9 +82,9 @@ function OrganizerPublic() {
             <OrganizerHeader organizer={organizer} />
 
             {/* Кнопки навигации по страницам организатора */}
-            <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
+            {/* <NavBarOrganizerPublic urlSlug={organizer.urlSlug} /> */}
 
-            <Outlet />
+            {/* <Outlet /> */}
 
             {/* Блок для индексной страницы */}
             {/* Предстоящие заезды, проводимые Организатором */}
