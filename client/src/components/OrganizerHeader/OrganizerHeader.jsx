@@ -95,11 +95,6 @@ export default function OrganizerHeader({
                 <ButtonUrl name={'ВКонтакте'} Icon={IconVk} href={socialLinks.vk} />
               )}
             </div>
-
-            {/* Цель организатора. Для SEO всегда присутствует в DOM но визуально скрыт от пользователя */}
-            {mission && (
-              <DescriptionAndMissionForSEO mission={mission} description={description} />
-            )}
           </div>
         </div>
       </div>
@@ -131,30 +126,5 @@ export default function OrganizerHeader({
         </Transition>
       )}
     </section>
-  );
-}
-
-/**
- * Блок с описанием Организатора для SEO, визуально крыт от пользователя.
- */
-function DescriptionAndMissionForSEO({ description, mission }) {
-  return (
-    <div className={styles.visuallyHidden} aria-hidden={false}>
-      {description && (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: createHtml.description(description),
-          }}
-        />
-      )}
-
-      {mission && (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: createHtml.description(mission),
-          }}
-        />
-      )}
-    </div>
   );
 }
