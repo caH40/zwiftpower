@@ -46,6 +46,13 @@ function LogErrorDescription() {
               </>
             )}
 
+            {log.responseData && (
+              <>
+                <dt>Ответ стороннего API</dt>
+                <dd className={styles.group}>{log.responseData}</dd>
+              </>
+            )}
+
             {log.stack && (
               <>
                 <dt>Стэк</dt>
@@ -63,16 +70,17 @@ function LogErrorDescription() {
               <>
                 <dt>Config</dt>
                 <dd>
-                  {' '}
                   <JSONBlock json={log.config} />
                 </dd>
               </>
             )}
 
-            {log.responseData && (
+            {log.config?.data && (
               <>
-                <dt>Ответ стороннего API</dt>
-                <dd className={styles.group}>{log.responseData}</dd>
+                <dt>Data from Axios config</dt>
+                <dd>
+                  <JSONBlock json={JSON.parse(log.config.data)} />
+                </dd>
               </>
             )}
           </dl>
