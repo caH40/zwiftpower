@@ -30,11 +30,12 @@ export function prepareData({
   // Тестовые настройки.
 
   // Обработка данных в tags.
-  const tagsFromCheckbox = [...checkboxTags]
+  const tagsCheckedFromCheckbox = [...checkboxTags]
     .filter((tag) => tag.checked)
     .map((tag) => tag.value);
+
   const tagsDefault = ['ranked', 'showplacements'];
-  const tags = [...eventMainParams.tags, ...tagsFromCheckbox, ...tagsDefault];
+  const tags = [...tagsCheckedFromCheckbox, ...tagsDefault];
   const tagsFiltered = tags.filter((tag) => !tag.includes('timestamp'));
   const timestamp = `timestamp=${Date.now()}`;
 
