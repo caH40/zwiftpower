@@ -8,9 +8,9 @@ export const accessExpressionsDefault = {
   value: `(powerCurves.category == 0 && subgroup.label == 1) || 
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
 (powerCurves.category == 5 && subgroup.label == 5)`,
-  description: `Группа A: zMAP (W/kg): ≥ 5.1 и zFTP (W/kg): ≥ 4.2 и zFTP (watts): ≥ 250W;
-                Группа B: zMAP (W/kg): ≥ 4.1 и zFTP (W/kg): 3.36 - 4.19 и zFTP (watts): ≥ 200W;
-                Группа C: zMAP (W/kg): ≥ 3.2 и zFTP (W/kg): 2.63 - 3.35 и zFTP (watts): ≥ 150W;
+  description: `Группа A: (zMAP (W/kg): ≥ 5.1 или zFTP (W/kg): ≥ 4.2) и zFTP (watts): ≥ 250W;
+                Группа B: (zMAP (W/kg): ≥ 4.1 или zFTP (W/kg): 3.36 - 4.19) и zFTP (watts): ≥ 200W;
+                Группа C: (zMAP (W/kg): ≥ 3.2 или zFTP (W/kg): 2.63 - 3.35) и zFTP (watts): ≥ 150W;
                 Группа D: zMAP (W/kg): < 3.2 и zFTP (W/kg): < 2.63;
                 Группа E: zMAP: n/a, FTP: n/a;`,
   paceValues: {
