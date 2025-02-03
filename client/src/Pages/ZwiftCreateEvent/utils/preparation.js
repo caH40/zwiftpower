@@ -59,6 +59,6 @@ export function prepareData({
       ...event,
       eventSubgroups,
     },
-    eventTemplateId: 101,
+    eventTemplateId: 100,
   };
 }
