@@ -15,6 +15,7 @@ import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
+import AccessExpression from '../AccessExpression/AccessExpression';
 import { createHtml } from '../../utils/html';
 import { createDescription } from '../../Pages/ZwiftEditEvent/utils/description';
 
@@ -127,15 +128,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           {event?.accessExpressionObj && (
             <>
               <hr className={styles.hr} />
-              <p
-                className={styles.paragraph}
-                dangerouslySetInnerHTML={{
-                  __html: createHtml.description(
-                    event?.accessExpressionObj.description ||
-                      'Нет описания распределения по категориям'
-                  ),
-                }}
-              ></p>
+              <AccessExpression description={event?.accessExpressionObj?.description} />
             </>
           )}
 

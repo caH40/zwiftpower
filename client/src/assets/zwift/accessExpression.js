@@ -8,11 +8,20 @@ export const accessExpressionsDefault = {
   value: `(powerCurves.category == 0 && subgroup.label == 1) || 
 (powerCurves.category != 5 && powerCurves.category >= subgroup.label) ||
 (powerCurves.category == 5 && subgroup.label == 5)`,
-  description: `Группа A: (zMAP (W/kg): ≥ 5.1 или zFTP (W/kg): ≥ 4.2) и zFTP (watts): ≥ 250W;
-                Группа B: (zMAP (W/kg): ≥ 4.1 или zFTP (W/kg): 3.36 - 4.19) и zFTP (watts): ≥ 200W;
-                Группа C: (zMAP (W/kg): ≥ 3.2 или zFTP (W/kg): 2.63 - 3.35) и zFTP (watts): ≥ 150W;
-                Группа D: zMAP (W/kg): < 3.2 или zFTP (W/kg): < 2.63;
-                Группа E: zMAP: n/a, FTP: n/a;`,
+  description: JSON.stringify({
+    table: {
+      th: ['Группа', 'zMAP, w/kg', 'zFTP, w/kg', 'zFTP, watt'],
+      tds: [
+        ['A', '≥ 5.1', '≥ 4.2', '≥ 250'],
+        ['B', '≥ 4.1', '3.36 - 4.19', '≥ 200'],
+        ['C', '≥ 3.2', '2.63 - 3.35', '≥ 150'],
+        ['D', '< 3.2', '< 2.63', ''],
+        ['E', 'n/a', 'n/a', 'n/a'],
+      ],
+      description:
+        'Вы можете выбрать самую низкую группу темпа, основываясь на наибольшем значении ваших zMAP (Вт/кг) или zFTP (Вт/кг), если ваш zFTP (Вт) соответствует этой или более высокой группе. Если zFTP (Вт) попадает в более низкую группу, вы можете выбрать и её.',
+    },
+  }),
   paceValues: {
     1: { from: 4, to: 6 },
     2: { from: 3.2, to: 3.99 },
