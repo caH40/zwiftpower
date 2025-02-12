@@ -13,6 +13,7 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
+import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
 
 import styles from './MainPage.module.css';
 
@@ -74,9 +75,12 @@ function MainPage() {
               imageSrc="/images/open_graph/5.jpg"
             />
 
-            {isDesktop && <AdContainer number={9} />}
+            {isDesktop && <GoprotectWidget />}
+
+            {/* {isDesktop && <AdContainer number={9} />} */}
 
             <MainInfo />
+
             <MainInfoDev isModerator={isModerator} />
           </div>
         </aside>
