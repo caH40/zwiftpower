@@ -39,7 +39,7 @@ export const accessExpressionsDefaultAndAPlus = {
   name: 'defaultAndAPlus',
   label: 'По категориям. Добавлена А+.',
   value: `(subgroup.label == 1 && (powerCurves.zFTPwkg < 4.6 || powerCurves.zFTP < 290)) || 
-(powerCurves.category != 5 && powerCurves.category >= subgroup.label) || 
+(powerCurves.category != 1 && powerCurves.category >= subgroup.label) || 
 subgroup.label == 5`,
   description: JSON.stringify({
     table: {
