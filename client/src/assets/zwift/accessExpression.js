@@ -31,6 +31,40 @@ export const accessExpressionsDefault = {
   },
   categoryEnforcement: true,
 };
+/**
+ * Стандартные значения строгой категоризации с разделением А на А и А+ по zp.com.
+ */
+export const accessExpressionsDefaultAndAPlus = {
+  id: 7,
+  name: 'defaultAndAPlus',
+  label: 'По категориям. Добавлена А+.',
+  value: `(subgroup.label == 1 && (powerCurves.zFTPwkg < 4.6 || powerCurves.zFTP < 290)) || 
+(powerCurves.category != 5 && powerCurves.category >= subgroup.label) || 
+subgroup.label == 5`,
+  description: JSON.stringify({
+    table: {
+      th: ['Группа', 'zMAP, w/kg', 'zFTP, w/kg', 'zFTP, watt'],
+      tds: [
+        ['A+', 'n/a', '≥ 4.6', '≥ 290'],
+        ['A', '≥ 5.1', '4.2 - 4.59', '≥ 250'],
+        ['B', '≥ 4.1', '3.36 - 4.19', '≥ 200'],
+        ['C', '≥ 3.2', '2.63 - 3.35', '≥ 150'],
+        ['D', '< 3.2', '< 2.63', ''],
+        ['E', 'n/a', 'n/a', 'n/a'],
+      ],
+      description:
+        'Вы можете выбрать самую низкую группу темпа, основываясь на наибольшем значении ваших zMAP (Вт/кг) или zFTP (Вт/кг), если ваш zFTP (Вт) соответствует этой или более высокой группе. Если zFTP (Вт) попадает в более низкую группу, вы можете выбрать и её.',
+    },
+  }),
+  paceValues: {
+    1: { from: 4.2, to: 4.59 },
+    2: { from: 3.36, to: 4.19 },
+    3: { from: 2.63, to: 3.35 },
+    4: { from: 1, to: 2.62 },
+    5: { from: 4.6, to: 6 },
+  },
+  categoryEnforcement: true,
+};
 
 /**
  * Регистрация закрыта.
@@ -76,6 +110,7 @@ export const accessExpressionsDisabled = {
 export const accessExpressions = [
   accessExpressionsDisabled,
   accessExpressionsDefault,
+  accessExpressionsDefaultAndAPlus,
   {
     id: 2,
     name: 'racingScoreDefault',
