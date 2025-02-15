@@ -3,17 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
-import useTitle from '../../hook/useTitle';
+import { millisecondsIn90Days } from '../../assets/dates';
 import { useResize } from '../../hook/use-resize';
+import { useAd } from '../../hook/useAd';
+import { lsPrefixStreams } from '../../constants/localstorage';
+import { HelmetMain } from '../../components/Helmets/HelmetMain';
+import useBannerVisibility from '../../hook/useBannerVisibility';
+import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
-import { useAd } from '../../hook/useAd';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
-import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
+import BannerInformation from '../../components/BannerInformation/BannerInformation';
 
 import styles from './MainPage.module.css';
 
@@ -22,17 +26,28 @@ const inSideBar = 9;
 const adOverFooter = 16;
 const adNumbers = [inSideBar, adOverFooter];
 
+const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
+
 function MainPage() {
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-  const { role } = useSelector((state) => state.checkAuth.value.user);
+  const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Хук установки заголовка h1 для страницы.
   useTitle('Ближайшие заезды Zwift');
 
-  const navigate = useNavigate();
+  // Хук логики отображения информационного баннера.
+  const isVisibleBanner = useBannerVisibility({
+    storageKey: storageKeyBanner,
+    intervalMs: millisecondsIn90Days,
+    hidden: !!organizer,
+  });
+
   const toLink = (id) => navigate(`/race/schedule/${id}`);
 
   useEffect(() => {
@@ -48,14 +63,32 @@ function MainPage() {
       <div className={styles.wrapper}>
         <HelmetMain />
         <section className={styles.wrapper__preview}>
+          {/* Информационный (рекламный по сайту) баннер */}
+          <BannerInformation
+            initState={isVisibleBanner}
+            storageKey={storageKeyBanner}
+            marginBottom={14}
+          >
+            Вы организуете заезды в Zwift? Хотите, чтобы они отображались на нашем сайте? Пишите
+            на{' '}
+            <a className="link-dark" href="mailto:support@zwiftpower.ru">
+              E-mail
+            </a>{' '}
+            или в{' '}
+            <a
+              className="link-dark"
+              href="https://t.me/Aleksandr_BV"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Telegram
+            </a>
+          </BannerInformation>
           <SkeletonCardRacePreview status={statusFetchEvents} />
-
           {!!eventsPreview.length && statusFetchEvents === 'resolved' && (
             <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
           )}
-
           {!isDesktop && <AdContainer number={9} marginBottom={15} />}
-
           {!!eventsPreview.length &&
             statusFetchEvents === 'resolved' &&
             eventsPreview

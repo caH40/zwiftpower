@@ -70,6 +70,10 @@ pre {
   text-decoration: none;
   color: var(--color-blue-4);
 }
+.link-dark {
+  text-decoration: none;
+  color: var(--color-yellow-4);
+}
 .link:hover {
   text-decoration: underline;
 }
