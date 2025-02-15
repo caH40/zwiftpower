@@ -95,18 +95,24 @@ export default function OrganizerHeader({
                 <ButtonUrl name={'ВКонтакте'} Icon={IconVk} href={socialLinks.vk} />
               )}
             </div>
+
+            {mission && isScreenMd && (
+              <div className={styles.mission__box}>
+                <p className={styles.mission}>{mission}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Открывающийся блок с описанием организатора */}
-      {mission && (
+      {description && (
         <Transition in={isOpenDescription} timeout={100}>
           {(state) => (
             <div className={cx('description', state)}>
               {/* Цель организатора отображается при разрешении Б 768px */}
               <div className={styles.mission__content}>
-                {!isScreenMd && (
+                {mission && !isScreenMd && (
                   <div
                     className={styles.mission__inDescription}
                     dangerouslySetInnerHTML={{
