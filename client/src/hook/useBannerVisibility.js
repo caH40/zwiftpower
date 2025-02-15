@@ -1,23 +1,31 @@
 /**
  * Хук для управления видимостью баннера на основе данных в локальном хранилище.
+ * Отображение происходит, если пользователь первый раз на странице с баннером, или
+ * прошло время intervalMs после последнего просмотра и закрытия пользователем баннера.
  * @param {object} props - Пропсы.
  * @param {string} props.storageKey — Ключ для хранения данных в localStorage.
  * @param {number} props.intervalMs — Временной промежуток в мс, через который баннер будет отображаться снова.
- * @returns {boolean} Возвращает булево значение видимости баннера.
+ * @param {boolean} [props.hidden] — Не отображать по другим причинам, выполнено определенное условие для баннера.
+ * @returns {boolean} Возвращает булево значение видимости баннера: true - баннер нужно показать, false - не нужно.
  */
-const useBannerVisibility = ({ storageKey, intervalMs }) => {
-  const dateClosedFromLC = localStorage.getItem(storageKey);
-  const dateClosed = new Date(dateClosedFromLC).getTime();
+const useBannerVisibility = ({ storageKey, intervalMs, hidden }) => {
+  // Если по умолчании не отображать банер, то возвращение false.
+  if (hidden) {
+    return false;
+  }
 
-  // Проверка на валидность даты/
-  if (!dateClosedFromLC || isNaN(dateClosed)) {
+  const storedDateClosed = localStorage.getItem(storageKey);
+  const dateClosed = new Date(storedDateClosed).getTime();
+
+  // Проверка на валидность даты.
+  if (!storedDateClosed || isNaN(dateClosed)) {
     return true;
   }
 
   // Проверка, прошло ли достаточно времени для повторного отображения баннера.
-  const needVisible = Date.now() - dateClosed > intervalMs;
+  const shouldShowBannerByTime = Date.now() - dateClosed > intervalMs;
 
-  return needVisible;
+  return shouldShowBannerByTime;
 };
 
 export default useBannerVisibility;
