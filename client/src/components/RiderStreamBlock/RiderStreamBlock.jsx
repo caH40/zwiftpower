@@ -52,7 +52,13 @@ export default function RiderStreamBlock({ rider }) {
 
         <div className={styles.box__item}>
           <dt className={styles.list__title}>Racing Score:</dt>
-          <dd className={styles.value}>{Math.trunc(rider.racingScore)}</dd>
+          <dd className={styles.value}>
+            {rider.racingScore ? (
+              Math.trunc(rider.racingScore)
+            ) : (
+              <CategoryOnlyBox label={rider.racingScore} squareSize={20} />
+            )}
+          </dd>
         </div>
       </dl>
     </div>

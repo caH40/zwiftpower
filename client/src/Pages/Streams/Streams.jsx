@@ -61,7 +61,7 @@ export default function Streams() {
           storageKey={storageKeyBanner}
           marginBottom={14}
         >
-          Для отображения вашего канала с трансляциями добавьте название Twitch-канала в
+          Хотите, чтобы ваши трансляции были на сайте? Укажите ваш Twitch или YouTube канал в
           настройках профиля!
         </BannerInformation>
 
