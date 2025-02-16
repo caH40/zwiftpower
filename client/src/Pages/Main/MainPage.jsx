@@ -95,15 +95,11 @@ function MainPage() {
           {/* Скелетон загрузки */}
           <SkeletonCardRacePreview status={statusFetchEvents} />
 
-          {shouldRenderCard && (
-            <>
-              {renderCards(eventsPreview, 0, 2)}
+          {shouldRenderCard && renderCards(eventsPreview, 0, 2)}
 
-              {!isDesktop && <AdContainer number={9} maxHeight={300} />}
+          {!isDesktop && <AdContainer number={9} maxHeight={400} />}
 
-              {renderCards(eventsPreview, 2)}
-            </>
-          )}
+          {shouldRenderCard && renderCards(eventsPreview, 2)}
         </section>
 
         <aside className={styles.wrapper__info}>
@@ -117,8 +113,6 @@ function MainPage() {
             />
 
             {isDesktop && <GoprotectWidget />}
-
-            {/* {isDesktop && <AdContainer number={9} />} */}
 
             <MainInfo />
 
