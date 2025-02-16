@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useAd } from '../../hook/useAd';
+import { shuffleArray } from '../../utils/shuffle';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizersPublic } from '../../components/Helmets/HelmetOrganizersPublic';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
@@ -27,6 +28,11 @@ function OrganizersPublic() {
   // Данные организаторов из хранилища редакс.
   const { organizers } = useSelector((state) => state.organizersPublic);
 
+  // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Организаторов.
+  const shuffledOrganizers = useMemo(() => {
+    return shuffleArray(organizers);
+  }, [organizers]);
+
   const dispatch = useDispatch();
 
   // Запрос на получение списка организаторов.
@@ -46,9 +52,9 @@ function OrganizersPublic() {
           <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
         ) : null}
 
-        {!!organizers?.length && (
+        {!!shuffledOrganizers?.length && (
           <section className={styles.cards}>
-            {organizers.map((organizer) => (
+            {shuffledOrganizers.map((organizer) => (
               <CardOrganizer
                 name={organizer.name}
                 urlSlug={organizer.urlSlug}
