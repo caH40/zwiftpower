@@ -38,14 +38,14 @@ export const accessExpressionsDefaultAndAPlus = {
   id: 7,
   name: 'defaultAndAPlus',
   label: 'По категориям. Добавлена А+.',
-  value: `(subgroup.label == 1 && (powerCurves.zFTPwkg < 4.6 || powerCurves.zFTP < 290)) || 
+  value: `(subgroup.label == 1 && (powerCurves.zFTPwkg < 4.8 || powerCurves.zFTP < 300)) || 
 (powerCurves.category != 1 && powerCurves.category >= subgroup.label) || 
 subgroup.label == 5`,
   description: JSON.stringify({
     table: {
       th: ['Группа', 'zMAP, w/kg', 'zFTP, w/kg', 'zFTP, watt'],
       tds: [
-        ['A+', 'n/a', '≥ 4.6', '≥ 290'],
+        ['A+', 'n/a', '≥ 4.8', '≥ 300'],
         ['A', '≥ 5.1', '4.2 - 4.59', '≥ 250'],
         ['B', '≥ 4.1', '3.36 - 4.19', '≥ 200'],
         ['C', '≥ 3.2', '2.63 - 3.35', '≥ 150'],
@@ -61,7 +61,7 @@ subgroup.label == 5`,
     2: { from: 3.36, to: 4.19 },
     3: { from: 2.63, to: 3.35 },
     4: { from: 1, to: 2.62 },
-    5: { from: 4.6, to: 6 },
+    5: { from: 4.8, to: 6 },
   },
   categoryEnforcement: true,
 };
