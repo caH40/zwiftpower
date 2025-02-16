@@ -58,6 +58,13 @@ function MainPage() {
 
   useAd(adNumbers);
 
+  const shouldRenderCard = !!eventsPreview.length && statusFetchEvents === 'resolved';
+
+  const renderCards = (events, startIndex, endIndex) =>
+    events
+      .slice(startIndex, endIndex)
+      .map((event) => <CardRacePreview event={event} key={event.id} getClick={toLink} />);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -84,18 +91,19 @@ function MainPage() {
               Telegram
             </a>
           </BannerInformation>
+
+          {/* Скелетон загрузки */}
           <SkeletonCardRacePreview status={statusFetchEvents} />
-          {!!eventsPreview.length && statusFetchEvents === 'resolved' && (
-            <CardRacePreview event={eventsPreview[0]} getClick={toLink} />
+
+          {shouldRenderCard && (
+            <>
+              {renderCards(eventsPreview, 0, 2)}
+
+              {!isDesktop && <AdContainer number={9} maxHeight={300} />}
+
+              {renderCards(eventsPreview, 2)}
+            </>
           )}
-          {!isDesktop && <AdContainer number={9} marginBottom={15} />}
-          {!!eventsPreview.length &&
-            statusFetchEvents === 'resolved' &&
-            eventsPreview
-              .slice(1)
-              .map((event) => (
-                <CardRacePreview event={event} key={event.id} getClick={toLink} />
-              ))}
         </section>
 
         <aside className={styles.wrapper__info}>
