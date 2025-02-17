@@ -4,6 +4,9 @@ import { records } from '../../../assets/constants';
 
 import styles from './FilterBoxForTable.module.css';
 
+/**
+ * Блок с полем для ввода строки поиска (фильтрации) документов в таблицы и выбора количества документов на странице.
+ */
 function FilterBoxForTable({
   docsOnPage,
   setDocsOnPage,
@@ -11,6 +14,7 @@ function FilterBoxForTable({
   setSearch,
   placeholder,
   setPage,
+  hasClearButton,
 }) {
   return (
     <div className={styles.block}>
@@ -19,6 +23,7 @@ function FilterBoxForTable({
         setSearch={setSearch}
         placeholder={placeholder}
         setPage={setPage}
+        hasClearButton={hasClearButton}
       />
       <PaginationSelect
         docsOnPage={docsOnPage}

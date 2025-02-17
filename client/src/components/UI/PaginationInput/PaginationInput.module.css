@@ -1,12 +1,14 @@
+.wrapper {
+  position: relative;
+}
 .input {
-  padding: 5px 10px;
+  padding: 5px 27px 5px 10px;
   min-width: 0;
   flex: 0 0 180px;
   max-height: 35px;
   border: solid 1px black;
   border-radius: 3px;
   text-align: left;
-
   color: #000;
   background-color: transparent;
   font-family: 'Montserrat', sans-serif;
@@ -23,7 +25,12 @@
   font-weight: 400;
   color: var(--color-text-minor);
 }
-
+.box__icon {
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 3px;
+}
 /* ====================================================================== */
 @media screen and (max-width: 992px) {
   .input {

@@ -89,6 +89,7 @@ function ResultsListPage() {
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         <div className={styles.align__right}>
+          {/* Блок фильтров для таблицы */}
           <FilterBoxForTable
             search={search}
             setSearch={setSearch}
@@ -96,6 +97,7 @@ function ResultsListPage() {
             setDocsOnPage={setDocsOnPage}
             placeholder={'поиск по названию'}
             setPage={setPage}
+            hasClearButton={true}
           />
         </div>
 
