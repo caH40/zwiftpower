@@ -28,7 +28,7 @@ export async function getEventsService({
   const eventsDB = await ZwiftEvent.find(query)
     .populate('eventSubgroups')
     .populate('seriesId')
-    .populate({ path: 'organizerId', select: ['logoFileInfo', '_id'] })
+    .populate({ path: 'organizerId', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
     .lean<EventWithSubgroupAndSeries[]>();
 
   // Фильтрация по имени

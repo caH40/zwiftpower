@@ -95,7 +95,7 @@ function ResultsListPage() {
             setSearch={setSearch}
             docsOnPage={docsOnPage}
             setDocsOnPage={setDocsOnPage}
-            placeholder={'поиск по названию'}
+            placeholder={'поиск'}
             setPage={setPage}
             hasClearButton={true}
           />

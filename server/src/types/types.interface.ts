@@ -137,7 +137,12 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
  */
 export type EventWithSubgroupAndSeries = Omit<EventWithSubgroup, 'seriesId'> & {
   seriesId: SeriesSchema;
-  organizerId: { logoFileInfo?: TFileMetadataForCloud; _id: Types.ObjectId };
+  organizerId: {
+    logoFileInfo?: TFileMetadataForCloud;
+    _id: Types.ObjectId;
+    name: string;
+    shortName: string;
+  };
 };
 /**
  * Логи по запросам админов(модераторов)
