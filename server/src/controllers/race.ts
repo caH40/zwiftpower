@@ -8,7 +8,7 @@ import { getEventsService } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { getResultsSeriesService } from '../service/series/index.js';
 import { checkModeratorClub } from '../service/moderator-club.js';
 
@@ -16,6 +16,7 @@ import { checkModeratorClub } from '../service/moderator-club.js';
 import { GetEvents, PostEvent } from '../types/http.interface.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
 import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
+import { getNextWeekRacesService } from '../service/race/events_list/next-week.js';
 
 /**
  * Получение Event (описание) и зарегистрировавшихся райдеров
@@ -187,5 +188,20 @@ export async function getResultsSeries(req: Request, res: Response) {
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
+  }
+}
+
+/**
+ * Контроллер получения данных Эвентов с параметрами в расписании для рассылки информационного письма пользователям сайта.
+ */
+export async function getNextWeekRaces(req: Request, res: Response) {
+  try {
+    // Вызов сервиса.
+    const response = await getNextWeekRacesService();
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }

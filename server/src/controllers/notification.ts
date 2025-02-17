@@ -56,7 +56,7 @@ export async function createNotificationLetter(req: Request, res: Response) {
       notificationsTypes: notificationsTypesClient,
       subject,
       title,
-    }: TQueryParamsNotifications = req.query;
+    }: TQueryParamsNotifications = req.body;
 
     const notificationsTypes =
       typeof notificationsTypesClient === 'string' && JSON.parse(notificationsTypesClient);

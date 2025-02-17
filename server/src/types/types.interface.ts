@@ -815,3 +815,31 @@ export type TSaveFileToCloud = {
  * Url файлов изображений logo, poster для сущности Организатор.
  */
 export type TOrganizerImageUrls = { logoSrc: string[] | null; posterSrc: string[] | null };
+
+/**
+ * Данные по всем маршрутом в Звифте.
+ */
+export type TRoute = {
+  id: number;
+  name: string;
+  world: string;
+  [key: string]: unknown; // Разрешает любые другие свойства
+};
+
+/**
+ * Описание структуры данных, возвращаемых сервисом.
+ */
+export type TNextWeekRace = {
+  distanceInMeters: number;
+  distanceSummary: { distanceInKilometers: number; elevationGainInMeters: number };
+  durationInSeconds: number;
+  eventStart: string;
+  eventType?: string;
+  eventVisibility?: string;
+  joinClubUrl: string;
+  laps: number;
+  organizerName: string;
+  registrationUrl: string;
+  routeName?: string;
+  worldName?: string;
+};

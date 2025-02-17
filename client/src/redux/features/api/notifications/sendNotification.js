@@ -33,16 +33,15 @@ export const getNotificationLetterPreview = createAsyncThunk(
   'users/getNotificationLetterPreview',
   async function ({ text, notificationsTypes, subject, title }, thunkAPI) {
     try {
-      const params = new URLSearchParams({
-        text,
-        notificationsTypes: JSON.stringify(notificationsTypes),
-        subject,
-        title,
-      });
-
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/notification/letter-preview?${params.toString()}`,
-        method: 'get',
+        url: `${serverExpress}/api/admin/notification/letter-preview`,
+        method: 'post',
+        data: {
+          text,
+          notificationsTypes: JSON.stringify(notificationsTypes),
+          subject,
+          title,
+        },
       });
 
       return response.data;

@@ -11,6 +11,7 @@ import {
   getResults,
   getSeries,
   getResultsSeries,
+  getNextWeekRaces,
 } from '../controllers/race.js';
 import { putResult } from '../controllers/result.js';
 
@@ -26,3 +27,4 @@ routerRace.get('/results/:eventId', getResults);
 routerRace.get('/series', getSeries);
 routerRace.get('/series/results/:type/:season', getResultsSeries);
 routerRace.put('/result', authModeratorClub, putResult);
+routerRace.get('/events-notification', getNextWeekRaces);

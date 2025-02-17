@@ -4,12 +4,13 @@ type TypeTimeFormat = 'HM' | 'HmS' | 'DDMMYYHm' | 'DDMMYY' | undefined;
 export function getTimerLocal(
   date: number | string,
   timeFormat: TypeTimeFormat,
-  long?: string
+  long?: { weekday?: boolean; month?: boolean }
 ): string {
-  const dateForFormat = new Date(date);
   if (!date || date === 0) {
     return 'Дата отсутствует...';
   }
+
+  const dateForFormat = new Date(date);
 
   const formatterHourAndMinutes = new Intl.DateTimeFormat('ru', {
     hour: '2-digit',
@@ -24,7 +25,7 @@ export function getTimerLocal(
     year: '2-digit',
     month: '2-digit',
     day: '2-digit',
-    weekday: long ? 'long' : undefined,
+    weekday: long?.weekday ? 'long' : undefined,
   });
   const formatterDDMMYYYY = new Intl.DateTimeFormat('ru', {
     year: 'numeric',
@@ -33,11 +34,11 @@ export function getTimerLocal(
   });
   const formatterDDMMYYHm = new Intl.DateTimeFormat('ru', {
     year: '2-digit',
-    month: long ? 'long' : '2-digit',
+    month: '2-digit',
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
-    weekday: long ? 'long' : undefined,
+    weekday: long?.weekday ? 'long' : undefined,
   });
 
   switch (timeFormat) {

@@ -39,4 +39,4 @@ routerAdmin.put('/riders/power-curve', authAdmin, updateFitFileAndPowerCurve);
 routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
 routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);
 routerAdmin.post('/notification', authAdmin, postNotification);
-routerAdmin.get('/notification/letter-preview', authAdmin, createNotificationLetter);
+routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLetter);
