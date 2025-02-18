@@ -24,13 +24,15 @@ const adOverFooter = 7;
 const adUnderHeader = 11;
 const adNumbers = [adUnderHeader, adOverFooter];
 
+const storageNameForRecords = 'recordsOnPageResults';
+
 function ResultsListPage() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const { isScreenLg: isDesktop } = useResize();
 
-  const initialDocsOnPage = localStorage.getItem('recordsOnPageResults') || 20;
+  const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
   const {
@@ -42,8 +44,9 @@ function ResultsListPage() {
   useTitle('Результаты заездов Zwift');
   const dispatch = useDispatch();
 
+  // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
-    localStorage.setItem('recordsOnPageResults', docsOnPage);
+    localStorage.setItem(storageNameForRecords, docsOnPage);
     dispatch(fetchEvents({ started: true, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
 

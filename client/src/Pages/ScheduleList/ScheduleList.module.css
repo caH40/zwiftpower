@@ -12,6 +12,9 @@
 .wrapper__wide {
   overflow-x: auto;
 }
+.align__right {
+  margin-bottom: 10px;
+}
 /* ====================================================================== */
 @media (max-width: 992px) {
   .wrapper {

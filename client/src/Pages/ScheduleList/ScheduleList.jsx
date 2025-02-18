@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useResize } from '../../hook/use-resize';
-import useTitle from '../../hook/useTitle';
-import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
-import Pagination from '../../components/UI/Pagination/Pagination';
 import { useAd } from '../../hook/useAd';
-import AdContainer from '../../components/AdContainer/AdContainer';
 import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
+import useTitle from '../../hook/useTitle';
+import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
+import Pagination from '../../components/UI/Pagination/Pagination';
+import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 
 import styles from './ScheduleList.module.css';
 
@@ -23,8 +24,15 @@ const adOverFooter = 5;
 const adUnderHeader = 10;
 const adNumbers = [adUnderHeader, adOverFooter];
 
+const storageNameForRecords = 'recordsOnPageScheduleList';
+
 function ScheduleList() {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+
+  const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
+  const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
+
   const [trigger, setTrigger] = useState(false);
   const {
     eventsSchedule,
@@ -35,9 +43,15 @@ function ScheduleList() {
   useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
 
+  // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
-    dispatch(fetchEvents({ started: false, page, docsOnPage: 20 }));
-  }, [dispatch, trigger, page]);
+    localStorage.setItem(storageNameForRecords, docsOnPage);
+    dispatch(fetchEvents({ started: false, page, docsOnPage, search }));
+  }, [dispatch, trigger, page, docsOnPage, search]);
+
+  // useEffect(() => {
+  //   dispatch(fetchEvents({ started: false, page, docsOnPage: 20 }));
+  // }, [dispatch, trigger, page]);
 
   useEffect(() => {
     dispatch(createScheduleMenus(eventsSchedule));
@@ -75,6 +89,19 @@ function ScheduleList() {
       <HelmetSchedule />
       <section className={styles.wrapper}>
         {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
+
+        <div className={styles.align__right}>
+          {/* Блок фильтров для таблицы */}
+          <FilterBoxForTable
+            search={search}
+            setSearch={setSearch}
+            docsOnPage={docsOnPage}
+            setDocsOnPage={setDocsOnPage}
+            placeholder={'поиск'}
+            setPage={setPage}
+            hasClearButton={true}
+          />
+        </div>
 
         {/* Скелетон загрузки для Таблицы */}
         <SkeletonTable status={statusFetchEvents} rows={10} height={30} />
