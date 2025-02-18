@@ -15,15 +15,17 @@ function FilterBoxForTable({
   placeholder,
   setPage,
   hasClearButton,
+  localStorageKey,
 }) {
   return (
     <div className={styles.block}>
       <PaginationInput
-        search={search}
-        setSearch={setSearch}
+        searchQuery={search}
+        setSearchQuery={setSearch}
         placeholder={placeholder}
         setPage={setPage}
-        hasClearButton={hasClearButton}
+        showClearButton={hasClearButton}
+        localStorageKey={localStorageKey}
       />
       <PaginationSelect
         docsOnPage={docsOnPage}

@@ -25,11 +25,15 @@ const adUnderHeader = 11;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 const storageNameForRecords = 'recordsOnPageResults';
+const storageNameForFilter = 'filterOnPageScheduleList';
 
 function ResultsListPage() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
+
+  const initialFilterTable = localStorage.getItem(storageNameForFilter) || '';
+  const [search, setSearch] = useState(initialFilterTable);
+
   const { isScreenLg: isDesktop } = useResize();
 
   const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
@@ -47,6 +51,7 @@ function ResultsListPage() {
   // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
     localStorage.setItem(storageNameForRecords, docsOnPage);
+    localStorage.setItem(storageNameForFilter, search);
     dispatch(fetchEvents({ started: true, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
 
@@ -101,6 +106,7 @@ function ResultsListPage() {
             placeholder={'поиск'}
             setPage={setPage}
             hasClearButton={true}
+            localStorageKey={storageNameForFilter}
           />
         </div>
 

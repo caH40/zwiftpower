@@ -25,12 +25,16 @@ const adUnderHeader = 10;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 const storageNameForRecords = 'recordsOnPageScheduleList';
+const storageNameForFilter = 'filterOnPageScheduleList';
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
+
+  const initialFilterTable = localStorage.getItem(storageNameForFilter) || '';
+  const [search, setSearch] = useState(initialFilterTable);
 
   const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
+
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
   const [trigger, setTrigger] = useState(false);
@@ -46,12 +50,9 @@ function ScheduleList() {
   // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
     localStorage.setItem(storageNameForRecords, docsOnPage);
+    localStorage.setItem(storageNameForFilter, search);
     dispatch(fetchEvents({ started: false, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
-
-  // useEffect(() => {
-  //   dispatch(fetchEvents({ started: false, page, docsOnPage: 20 }));
-  // }, [dispatch, trigger, page]);
 
   useEffect(() => {
     dispatch(createScheduleMenus(eventsSchedule));
@@ -100,6 +101,7 @@ function ScheduleList() {
             placeholder={'поиск'}
             setPage={setPage}
             hasClearButton={true}
+            localStorageKey={storageNameForFilter}
           />
         </div>
 
