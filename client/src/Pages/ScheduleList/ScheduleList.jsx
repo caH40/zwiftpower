@@ -14,6 +14,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
+import { lsPrefixScheduleList } from '../../constants/localstorage';
 
 import styles from './ScheduleList.module.css';
 
@@ -24,16 +25,16 @@ const adOverFooter = 5;
 const adUnderHeader = 10;
 const adNumbers = [adUnderHeader, adOverFooter];
 
-const storageNameForRecords = 'recordsOnPageScheduleList';
-const storageNameForFilter = 'filterOnPageScheduleList';
+const localStorageFilterKey = `${lsPrefixScheduleList}filter`;
+const localStoragePageSizeKey = `${lsPrefixScheduleList}pageSize`;
 
 function ScheduleList() {
   const [page, setPage] = useState(1);
 
-  const initialFilterTable = localStorage.getItem(storageNameForFilter) || '';
+  const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
   const [search, setSearch] = useState(initialFilterTable);
 
-  const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
+  const initialDocsOnPage = localStorage.getItem(localStoragePageSizeKey) || 20;
 
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
@@ -49,8 +50,10 @@ function ScheduleList() {
 
   // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
-    localStorage.setItem(storageNameForRecords, docsOnPage);
-    localStorage.setItem(storageNameForFilter, search);
+    // Сохранение данных в локальном хранилище.
+    localStorage.setItem(localStoragePageSizeKey, docsOnPage);
+    localStorage.setItem(localStorageFilterKey, search);
+
     dispatch(fetchEvents({ started: false, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
 
@@ -101,7 +104,7 @@ function ScheduleList() {
             placeholder={'поиск'}
             setPage={setPage}
             hasClearButton={true}
-            localStorageKey={storageNameForFilter}
+            localStorageFilterKey={localStorageFilterKey}
           />
         </div>
 

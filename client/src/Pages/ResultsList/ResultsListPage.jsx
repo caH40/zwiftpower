@@ -15,6 +15,7 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { useAd } from '../../hook/useAd';
 import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
+import { lsPrefixResultList } from '../../constants/localstorage';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './ResultsList.module.css';
@@ -24,19 +25,19 @@ const adOverFooter = 7;
 const adUnderHeader = 11;
 const adNumbers = [adUnderHeader, adOverFooter];
 
-const storageNameForRecords = 'recordsOnPageResults';
-const storageNameForFilter = 'filterOnPageScheduleList';
+const localStorageFilterKey = `${lsPrefixResultList}filter`;
+const localStoragePageSizeKey = `${lsPrefixResultList}pageSize`;
 
 function ResultsListPage() {
   const [trigger, setTrigger] = useState(false);
   const [page, setPage] = useState(1);
 
-  const initialFilterTable = localStorage.getItem(storageNameForFilter) || '';
+  const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
   const [search, setSearch] = useState(initialFilterTable);
 
   const { isScreenLg: isDesktop } = useResize();
 
-  const initialDocsOnPage = localStorage.getItem(storageNameForRecords) || 20;
+  const initialDocsOnPage = localStorage.getItem(localStoragePageSizeKey) || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
 
   const {
@@ -50,8 +51,10 @@ function ResultsListPage() {
 
   // Запрос данных при изменении какого либо параметра.
   useEffect(() => {
-    localStorage.setItem(storageNameForRecords, docsOnPage);
-    localStorage.setItem(storageNameForFilter, search);
+    // Сохранение данных в локальном хранилище.
+    localStorage.setItem(localStoragePageSizeKey, docsOnPage);
+    localStorage.setItem(localStorageFilterKey, search);
+
     dispatch(fetchEvents({ started: true, page, docsOnPage, search }));
   }, [dispatch, trigger, page, docsOnPage, search]);
 
@@ -106,7 +109,7 @@ function ResultsListPage() {
             placeholder={'поиск'}
             setPage={setPage}
             hasClearButton={true}
-            localStorageKey={storageNameForFilter}
+            localStorageFilterKey={localStorageFilterKey}
           />
         </div>
 

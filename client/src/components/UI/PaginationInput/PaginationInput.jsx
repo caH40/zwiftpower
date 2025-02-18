@@ -19,14 +19,14 @@ function PaginationInput({
   placeholder,
   setPage,
   showClearButton,
-  localStorageKey,
+  localStorageFilterKey,
 }) {
   // Очищает поле поиска и, если задан ключ, сбрасывает значение в localStorage.
   const handleClearSearch = () => {
     setSearchQuery('');
 
-    if (localStorageKey) {
-      localStorage.setItem(localStorageKey, '');
+    if (localStorageFilterKey) {
+      localStorage.setItem(localStorageFilterKey, '');
     }
   };
 
