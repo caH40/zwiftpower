@@ -17,6 +17,7 @@ import {
 import TableClubs from '../../../components/Tables/TableClubs/TableClubs';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { fetchUsersZwiftpowerForModerator } from '../../../redux/features/api/user_zwiftpower/fetchUsersZwiftpower';
+import { fetchUpdateZwiftClub } from '../../../redux/features/api/zwift_club/fetchZwiftClub';
 import FindUserNew from '../../../components/UI/FindUser/FindUserNew';
 import useTitle from '../../../hook/useTitle';
 import FormRequest from '../../../components/Zwift/UI/FormRequest/FormRequest';
@@ -108,6 +109,16 @@ export default function OrganizerClubs({ organizerId }) {
     });
   };
 
+  // Обновление данных клуба.
+  const updateClub = (clubId) => {
+    dispatch(fetchUpdateZwiftClub(clubId)).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getAlert({ message: res.payload.message, type: 'success', isOpened: true }));
+        dispatch(fetchGetClubsZwiftModerator({ organizerId }));
+      }
+    });
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
@@ -116,6 +127,7 @@ export default function OrganizerClubs({ organizerId }) {
           deleteClub={deleteClub}
           addModerator={addModerator}
           deleteModerator={deleteModerator}
+          updateClub={updateClub}
         />
       </div>
 

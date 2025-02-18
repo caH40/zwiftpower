@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AxiosError } from 'axios';
 
-import { handleAndLogError } from '../errors/error.js';
+import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { getUsersForModeratorService, getUsersService } from '../service/admin/users.js';
 import {
   addClubModeratorService,
@@ -10,6 +10,7 @@ import {
   getClubService,
   getClubsService,
   postClubService,
+  updateClubService,
 } from '../service/admin/club.js';
 
 // types
@@ -149,6 +150,25 @@ export const deleteClub = async (req: Request, res: Response) => {
     } else if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     }
+  }
+};
+
+/**
+ * Удаления клуба из БД
+ */
+export const updateClub = async (req: Request, res: Response) => {
+  try {
+    const { clubId }: { clubId: string } = req.body;
+
+    if (!clubId) {
+      throw new Error('Не получен clubId с клиента!');
+    }
+
+    const clubDeleted: { message: string } = await updateClubService(clubId);
+
+    res.status(200).json(clubDeleted);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 };
 

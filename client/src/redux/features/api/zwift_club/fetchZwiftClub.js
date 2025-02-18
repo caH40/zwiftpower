@@ -106,3 +106,30 @@ export const fetchDeleteZwiftClub = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Запрос на обновление данных клуба из Zwift API и сохранение обновленных данных в БД.
+ */
+export const fetchUpdateZwiftClub = createAsyncThunk(
+  'clubs/putZwiftClub',
+  async function (clubId, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/admin/clubs`,
+        method: 'put',
+        data: { clubId },
+      });
+
+      thunkAPI.dispatch(
+        getAlert({ message: response.data.message, type: 'success', isOpened: true })
+      );
+      thunkAPI.dispatch(fetchGetZwiftClubs());
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

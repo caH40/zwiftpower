@@ -17,6 +17,7 @@ import {
   updateFitFileAndPowerCurve,
   updateFairRideBan,
   getFairRideBan,
+  updateClub,
 } from '../controllers/admin.js';
 import { createNotificationLetter, postNotification } from '../controllers/notification.js';
 
@@ -28,6 +29,7 @@ routerAdmin.get('/clubs', authModerator, getClubs);
 routerAdmin.get('/clubs/:id', authAdmin, getClub);
 routerAdmin.post('/clubs', authAdmin, postClub);
 routerAdmin.delete('/clubs', authAdmin, deleteClub);
+routerAdmin.put('/clubs', authModerator, updateClub);
 routerAdmin.put('/clubs/moderators', authAdmin, addClubModerator);
 routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);
 routerAdmin.get('/organizers', authAdmin, getOrganizers);

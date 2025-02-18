@@ -2,6 +2,7 @@ import classnames from 'classnames/bind';
 
 import IconDelete from '../../icons/IconDelete';
 import IconAdd from '../../icons/IconAdd';
+import IconRefresh from '../../icons/IconRefresh';
 
 import styles from '../Table.module.css';
 
@@ -9,7 +10,10 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
+/**
+ * Таблица с добавленными клубами Организаторами заездов. Добавление/удаление модераторов в клуб.
+ */
+function TableClubs({ clubs, deleteClub, addModerator, deleteModerator, updateClub }) {
   return (
     <table className={cx('table')}>
       <caption className={styles.caption}>
@@ -68,6 +72,16 @@ function TableClubs({ clubs, deleteClub, addModerator, deleteModerator }) {
                   <IconDelete
                     tooltip="Удаление клуба"
                     getClick={() => deleteClub(club.id, club.name)}
+                    squareSize={20}
+                  />
+                </div>
+              </td>
+
+              <td>
+                <div className={cx('centerBlock')}>
+                  <IconRefresh
+                    tooltip="Обновление данных клуба"
+                    getClick={() => updateClub(club.id)}
                     squareSize={20}
                   />
                 </div>

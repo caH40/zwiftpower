@@ -5,6 +5,7 @@ import { ClubZwift } from '../../types/zwiftAPI/clubFromZwift.interface.js';
 import { Club } from '../../Model/Club.js';
 import { ClubSchema, TClubZwift } from '../../types/model.interface.js';
 import { User } from '../../Model/User.js';
+import { Types } from 'mongoose';
 
 /**
  * Сервис получение клубов из БД
@@ -127,5 +128,39 @@ export const deleteClubModeratorService = async (clubId: string, userId: string)
 
   return {
     message: `Пользователь "${userDB.username}" был удален из модераторов клуба "${clubDB.name}"`,
+  };
+};
+
+/**
+ * Сервис обновление данных клуба из Zwift API и сохранение обновленных данных в БД.
+ */
+export const updateClubService = async (clubId: string) => {
+  const club = await getClubService(clubId);
+
+  if (!club) {
+    throw new Error(`Не найден клуб с id:${clubId} в Zwift API`);
+  }
+
+  const images = {
+    icon: club.images.find((image) => image.type === 'ICON')?.imageUrl,
+    event: club.images.find((image) => image.type === 'EVENT')?.imageUrl,
+    club_large: club.images.find((image) => image.type === 'CLUB_LARGE')?.imageUrl,
+  };
+
+  const clubDB = await Club.findOneAndUpdate(
+    { id: clubId },
+    { $set: { ...club, images } },
+    { new: true, projection: { name: true } }
+  ).lean<{
+    _id: Types.ObjectId;
+    name: string;
+  }>();
+
+  if (!clubDB) {
+    throw new Error(`Не найден клуб с id:${clubId}`);
+  }
+
+  return {
+    message: `Обновлены данные клуба "${clubDB.name}"`,
   };
 };

@@ -8,4 +8,5 @@ export const clubColumns = [
   { name: 'Модераторы', id: 6 },
   { name: 'Добавление модератора', id: 7 },
   { name: 'Удаление клуба', id: 8 },
+  { name: 'Обновить', id: 9 },
 ];

@@ -8,6 +8,7 @@ import {
   fetchGetZwiftClub,
   fetchGetZwiftClubs,
   fetchPostZwiftClub,
+  fetchUpdateZwiftClub,
 } from '../../redux/features/api/zwift_club/fetchZwiftClub';
 import { resetClub, setClubId } from '../../redux/features/api/zwift_club/zwiftClubSlice';
 import TableClubs from '../../components/Tables/TableClubs/TableClubs';
@@ -91,6 +92,11 @@ function ZwiftClubs() {
     dispatch(fetchDeleteClubModerator({ clubId, userId }));
   };
 
+  // Обновление данных клуба.
+  const updateClub = (clubId) => {
+    dispatch(fetchUpdateZwiftClub(clubId));
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__wide}>
@@ -99,6 +105,7 @@ function ZwiftClubs() {
           deleteClub={deleteClub}
           addModerator={addModerator}
           deleteModerator={deleteModerator}
+          updateClub={updateClub}
         />
       </div>
 

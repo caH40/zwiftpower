@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchDeleteZwiftClub, fetchGetZwiftClub, fetchGetZwiftClubs } from './fetchZwiftClub';
+import {
+  fetchDeleteZwiftClub,
+  fetchGetZwiftClub,
+  fetchGetZwiftClubs,
+  fetchUpdateZwiftClub,
+} from './fetchZwiftClub';
 
 const initialState = {
   id: 0,
@@ -63,6 +68,22 @@ const zwiftClubSlice = createSlice({
     builder.addCase(fetchDeleteZwiftClub.pending, (state) => {
       state.error = null;
       state.status = 'loading';
+    });
+
+    // ========================== обновление данных Клуба из Zwift API в БД ==========================
+    builder.addCase(fetchUpdateZwiftClub.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchUpdateZwiftClub.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchUpdateZwiftClub.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
     });
   },
 });
