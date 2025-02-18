@@ -79,6 +79,9 @@ tbody .current {
   vertical-align: middle;
   max-width: 435px;
 }
+.table td .td__name {
+  white-space: normal;
+}
 
 .onlyContent {
   width: 1%;
@@ -234,6 +237,8 @@ tbody .current {
 }
 .big {
   font-size: 1.15em;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .small {
   font-size: 0.65em;

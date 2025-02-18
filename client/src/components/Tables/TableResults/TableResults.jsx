@@ -47,7 +47,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
             <tr className={cx('hover')} key={event._id}>
               <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
               <TdSeries seriesName={event.seriesId?.name} />
-              <td className={cx('td__nowrap')}>
+              <td className={cx('td__name')}>
                 <Link className={cx('link')} to={String(event.id)}>
                   <span className={cx('big')}>{event.name}</span>
                 </Link>

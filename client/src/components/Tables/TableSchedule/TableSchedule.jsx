@@ -50,23 +50,31 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
             <tr className={cx('hover')} key={event._id}>
               <td className={cx('td__nowrap')}>{getToday(event.eventStart)}</td>
               <TdSeries seriesName={event.seriesId?.name} />
-              <td className={cx('td__nowrap')}>
+
+              <td className={cx('td__name')}>
                 <Link className={cx('link')} to={String(event.id)}>
                   <span className={cx('big')}>{event.name}</span>
                 </Link>
               </td>
+
               <td className={cx('td__nowrap')}>{event.organizer}</td>
+
               <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+
               <td>
                 <CategoriesBox event={event} addCls={'nowrap'} />
               </td>
+
               <td>
                 <RulesBox event={event} squareSize={16} addCls={'nowrap'} />
               </td>
+
               <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+
               <td className={cx('td__nowrap')}>
                 {routeName(event.eventSubgroups[0]?.routeId)}
               </td>
+
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
               {TdDistance(
                 event.eventSubgroups[0].durationInSeconds,
