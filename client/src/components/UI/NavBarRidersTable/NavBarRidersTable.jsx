@@ -15,6 +15,8 @@ function NavBarRidersTable({
   search,
   setSearch,
   placeholder,
+  setSearchQuery,
+  localStorageFilterKey,
 }) {
   const categories = ['All', 'A', 'B', 'C', 'D', 'E'];
   return (
@@ -24,10 +26,12 @@ function NavBarRidersTable({
       <FilterGender />
 
       <PaginationInput
-        search={search}
-        setSearch={setSearch}
+        searchQuery={search}
+        setSearchQuery={setSearch}
         placeholder={placeholder}
         setPage={setPage}
+        showClearButton={true}
+        localStorageFilterKey={localStorageFilterKey}
       />
 
       {!hideDocsOnPage && (

@@ -14,7 +14,7 @@ function FilterBoxForTable({
   setSearch,
   placeholder,
   setPage,
-  hasClearButton,
+  showClearButton,
   localStorageFilterKey,
 }) {
   return (
@@ -24,7 +24,7 @@ function FilterBoxForTable({
         setSearchQuery={setSearch}
         placeholder={placeholder}
         setPage={setPage}
-        showClearButton={hasClearButton}
+        showClearButton={showClearButton}
         localStorageFilterKey={localStorageFilterKey}
       />
       <PaginationSelect

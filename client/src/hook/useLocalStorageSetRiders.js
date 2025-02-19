@@ -6,6 +6,7 @@ import { lsPrefixRiders } from '../constants/localstorage';
  * Установка данных в Локальное хранилище для страницы Райдеры.
  */
 export const useLocalStorageSetRiders = ({
+  search,
   docsOnPage,
   activeSorting,
   category,
@@ -16,10 +17,12 @@ export const useLocalStorageSetRiders = ({
     if (isMounting.current) {
       return;
     }
+
+    localStorage.setItem(`${lsPrefixRiders}filter`, String(search));
     localStorage.setItem(`${lsPrefixRiders}columnName`, String(activeSorting.columnName));
     localStorage.setItem(`${lsPrefixRiders}isRasing`, String(activeSorting.isRasing));
     localStorage.setItem(`${lsPrefixRiders}category`, category);
     localStorage.setItem(`${lsPrefixRiders}male`, String(male));
-    localStorage.setItem('recordsOnPageRiders', docsOnPage);
-  }, [docsOnPage, activeSorting, category, male]);
+    localStorage.setItem(`${lsPrefixRiders}pageSize`, docsOnPage);
+  }, [docsOnPage, activeSorting, category, male, search]);
 };

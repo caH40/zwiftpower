@@ -108,7 +108,7 @@ function ResultsListPage() {
             setDocsOnPage={setDocsOnPage}
             placeholder={'поиск'}
             setPage={setPage}
-            hasClearButton={true}
+            showClearButton={true}
             localStorageFilterKey={localStorageFilterKey}
           />
         </div>

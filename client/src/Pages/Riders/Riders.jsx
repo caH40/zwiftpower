@@ -16,6 +16,7 @@ import { useInitialRidersSettings } from '../../hook/useInitialRidersSettings';
 import { useLocalStorageSetRiders } from '../../hook/useLocalStorageSetRiders';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { resetFilterGender } from '../../redux/features/filterGenderSlice';
+import { lsPrefixRiders } from '../../constants/localstorage';
 
 import styles from './Riders.module.css';
 
@@ -24,15 +25,22 @@ const adOverFooter = 4;
 const adUnderHeader = 17;
 const adNumbers = [adUnderHeader, adOverFooter];
 
+const localStorageFilterKey = `${lsPrefixRiders}filter`;
+const localStoragePageSizeKey = `${lsPrefixRiders}pageSize`;
+
 /**
  * Страница с таблицей райдеров, принимавших участие в заездах на сайте.
  * Сортировка таблицы происходит на сервере из-за большого количества документов.
  */
 function Riders() {
   const [page, setPage] = useState(1);
-  const initialDocsOnPage = localStorage.getItem('recordsOnPageRiders') || 20;
+
+  const initialDocsOnPage = localStorage.getItem(localStoragePageSizeKey) || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
-  const [search, setSearch] = useState('');
+
+  const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
+  const [search, setSearch] = useState(initialFilterTable);
+
   const { isScreenLg: isDesktop } = useResize();
   const { activeSorting } = useSelector((state) => state.sortTable);
   const { name: category } = useSelector((state) => state.filterCategory.value);
@@ -53,6 +61,7 @@ function Riders() {
 
   // Сохранение данных в Локальном хранилище.
   useLocalStorageSetRiders({
+    search,
     docsOnPage,
     activeSorting,
     category,
@@ -96,6 +105,7 @@ function Riders() {
             setDocsOnPage={setDocsOnPage}
             placeholder={'поиск'}
             setPage={setPage}
+            showClearButton={true}
           />
         </div>
         {/* Скелетон загрузки для Таблицы */}
