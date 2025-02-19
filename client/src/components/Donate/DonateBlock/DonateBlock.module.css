@@ -1,11 +1,17 @@
 .wrapper {
-  padding: 12px;
+  padding: 10px;
   background-color: var(--color-blue-main);
   border-radius: 10px;
   text-align: center;
 }
 .title {
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 22px;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }

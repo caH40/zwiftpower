@@ -18,7 +18,7 @@ import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 // import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
-import DonateYooMoney from '../../components/Donate/DonateYooMoney/DonateYooMoney';
+import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 
 import styles from './MainPage.module.css';
 
@@ -115,7 +115,7 @@ function MainPage() {
             />
 
             <div className={styles.spacer__donate}>
-              <DonateYooMoney />
+              <DonateBlock />
             </div>
 
             {/* {isDesktop && <GoprotectWidget />} */}

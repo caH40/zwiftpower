@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 256px;
+  background-color: #ea624a;
+  padding: 7px 20px 7px 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+.button {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 15px;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+}
+.wrapper:hover {
+  background-color: #c7533e;
+}
