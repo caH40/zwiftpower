@@ -1,12 +1,13 @@
 .wrapper {
-  padding: 10px;
+  position: relative;
+  padding: 14px 10px 10px;
   background-color: var(--color-blue-main);
   border-radius: 10px;
   text-align: center;
 }
 .title {
   color: white;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   font-size: 22px;
 }
 .buttons {
@@ -14,4 +15,9 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
+}
+.box__icon {
+  position: absolute;
+  top: 9px;
+  left: 9px;
 }

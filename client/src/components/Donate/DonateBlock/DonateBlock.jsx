@@ -1,3 +1,4 @@
+import IconZwift from '../../icons/IconZwift';
 import BoostyToButton from '../../UI/BoostyToButton/BoostyToButton';
 import YooMoneyButton from '../../UI/YooMoneyButton/YooMoneyButton';
 
@@ -12,6 +13,10 @@ import styles from './DonateBlock.module.css';
 export default function DonateBlock({ layoutStyle }) {
   return (
     <section className={styles.wrapper} aria-labelledby="donate-title" style={layoutStyle}>
+      <div className={styles.box__icon}>
+        <IconZwift squareSize={30} />
+      </div>
+
       <h3 id="donate-title" className={styles.title}>
         Поддержать проект
       </h3>
