@@ -16,8 +16,9 @@ import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
-import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
+// import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
+import DonateYooMoney from '../../components/Donate/DonateYooMoney/DonateYooMoney';
 
 import styles from './MainPage.module.css';
 
@@ -104,6 +105,7 @@ function MainPage() {
 
         <aside className={styles.wrapper__info}>
           <h2 className={styles.title__info}>Информационный блок</h2>
+
           <div className={styles.sidebar}>
             <AdMyPage
               href="/race/series/catchup/2024"
@@ -112,7 +114,11 @@ function MainPage() {
               imageSrc="/images/open_graph/5.jpg"
             />
 
-            {isDesktop && <GoprotectWidget />}
+            <div className={styles.spacer__donate}>
+              <DonateYooMoney />
+            </div>
+
+            {/* {isDesktop && <GoprotectWidget />} */}
 
             <MainInfo />
 

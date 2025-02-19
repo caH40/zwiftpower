@@ -39,9 +39,13 @@
 
 @media screen and (max-width: 576px) {
   .title__info {
-    padding-bottom: 5px;
+    display: none;
+  }
+  .spacer__donate {
+    order: -1;
   }
   .wrapper__preview {
     gap: 15px;
+    margin-bottom: 15px;
   }
 }

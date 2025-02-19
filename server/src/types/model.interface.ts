@@ -3,6 +3,7 @@ import mongoose, { Document, Types } from 'mongoose';
 import { PowerFitFiles, ProfileDataInResultWithId, TAuthService } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
+import { SCORING_ALGORITHMS } from '../assets/scoring-agorithm.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -158,7 +159,7 @@ export interface RiderSchema {
 }
 //
 //
-export interface SeriesSchema {
+export type SeriesSchema = {
   _id: Types.ObjectId;
   name: string;
   dateStart: number;
@@ -169,7 +170,7 @@ export interface SeriesSchema {
   hasGeneral: boolean;
   hasTeams: boolean;
   isFinished: boolean;
-}
+};
 //
 //
 export interface TeamSchema {
@@ -643,3 +644,34 @@ export type TRiderBanned = {
 const banCodes = bans.map((ban) => ban.code);
 // Создание типа для `code`:
 export type TBanCode = (typeof banCodes)[number];
+
+export type TSeries = {
+  _id?: Types.ObjectId; // Уникальный идентификатор серии
+  dateEnd?: Date; // Дата окончания серии
+  dateStart: Date; // Дата начала серии
+  description?: string; // Полное описание серии
+  hasGeneral: boolean; // Есть ли общий зачет в серии
+  hasTeams: boolean; // Подсчет командного зачета
+  isFinished: boolean; // Флаг завершения серии
+  logoFileInfo?: TFileMetadataForCloud; // Объект с URL логотипа (разные размеры)
+  mission?: string; // Цель или миссия серии
+  name: string; // Название серии заездов
+  organizer: Types.ObjectId; // Организатор серии (ссылка на объект в базе)
+  pointsCalculationDoc: Types.ObjectId; // Ссылка на документ с расчетом очков за места в протоколе
+  posterFileInfo?: TFileMetadataForCloud; // Объект с URL постера (разные размеры)
+  prizes?: string; // Описание призов (если есть)
+  rules?: string; // Описание правил серии (может быть ссылкой)
+  scoringAlgorithms: TScoringAlgorithm; // Алгоритмы построения таблиц результатов.
+  stages: TSeriesStage[]; // Список этапов с нумерацией
+  type: TSeriesType; // Тип серии
+  urlSlug: string; // Уникальный URL-идентификатор (например, для генерации ссылки "/series/my-series")
+};
+
+export type TScoringAlgorithm = (typeof SCORING_ALGORITHMS)[];
+
+export type TSeriesType = 'series' | 'tour'; // Тип соревнования: "series" (отдельные гонки) или "tour" (этапная гонка)
+
+export type TSeriesStage = {
+  raceId: Types.ObjectId; // Идентификатор гонки (этапа)
+  stageNumber: number; // Номер этапа в серии
+};

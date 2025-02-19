@@ -1,0 +1,10 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.iframe {
+  border: none;
+  background-color: transparent;
+}
