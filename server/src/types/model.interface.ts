@@ -3,7 +3,6 @@ import mongoose, { Document, Types } from 'mongoose';
 import { PowerFitFiles, ProfileDataInResultWithId, TAuthService } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
-import { SCORING_ALGORITHMS } from '../assets/scoring-agorithm.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -671,9 +670,14 @@ export type TSeries = {
 };
 
 /**
- * Тип, описывающий возможные алгоритмы начисления очков и формирования таблиц результатов.
+ * Тип, описывающий алгоритм начисления очков для серии или тура.
  */
-export type TScoringAlgorithm = (typeof SCORING_ALGORITHMS)[];
+export type TScoringAlgorithm = {
+  _id?: mongoose.Schema.Types.ObjectId; // Уникальный идентификатор алгоритма.
+  name: string; // Название алгоритма, например "Обычная серия".
+  description?: string; // Описание алгоритма начисления очков.
+  organizer: mongoose.Schema.Types.ObjectId; // Организатор, которому принадлежит алгоритм.
+};
 
 /**
  * Возможные типы серии соревнований.

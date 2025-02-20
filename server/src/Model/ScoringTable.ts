@@ -11,10 +11,13 @@ export interface IScoringTableDocument extends TScoringTable, Document {} // Р�
 /**
  * Схема записи в таблице начисления очков (для конкретного места).
  */
-const ScoringEntrySchema = new Schema<TScoringEntry>({
-  rank: { type: Number, required: true, min: 1 }, // Место в гонке.
-  points: { type: Number, required: true, min: 0 }, // Очки за место.
-});
+const ScoringEntrySchema = new Schema<TScoringEntry>(
+  {
+    rank: { type: Number, required: true, min: 1 }, // Место в гонке.
+    points: { type: Number, required: true, min: 0 }, // Очки за место.
+  },
+  { _id: false }
+);
 
 /**
  * Схема таблицы начисления очков для гонки или серии гонок.
