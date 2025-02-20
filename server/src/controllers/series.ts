@@ -1,40 +1,39 @@
 import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
-import { getNSeriesCurrentService, getNSeriesService } from '../service/series/series.js';
+import { SeriesService } from '../service/series/series.js';
 
-/**
- * Контроллер получения серий заездов.
- */
-export async function getNSeries(req: Request, res: Response) {
-  try {
-    // Вызов сервиса.
-    const response = await getNSeriesService();
+export class SeriesController {
+  seriesService: SeriesService;
 
-    // Возврат успешного ответа.
-    return res.status(200).json(response);
-  } catch (error) {
-    handleErrorInController(res, error);
+  constructor() {
+    this.seriesService = new SeriesService();
   }
-}
 
-/**
- * Контроллер получения серии заездов.
- */
-export async function getNSeriesCurrent(req: Request, res: Response) {
-  try {
-    const { urlSlug } = req.params;
+  /**
+   * Получает список всех серий заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public async getAll(req: Request, res: Response): Promise<Response | void> {
+    try {
+      // Вызов сервиса.
+      const response = await this.seriesService.getAll();
 
-    if (!urlSlug) {
-      throw new Error(`Не получен urlSlug! urlSlug:${urlSlug}`);
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
     }
-
-    // Вызов сервиса.
-    const response = await getNSeriesCurrentService({ urlSlug });
-
-    // Возврат успешного ответа.
-    return res.status(200).json(response);
-  } catch (error) {
-    handleErrorInController(res, error);
   }
+
+  // Получение запрашиваемой серии заездов.
+  public async get() {}
+
+  // Создание серии заездов.
+  public async post() {}
+
+  // Обновление данных серии заездов.
+  public async put() {}
 }
