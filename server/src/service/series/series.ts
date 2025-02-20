@@ -1,3 +1,5 @@
+import { SeriesDataFromClientForCreateFull } from '../../types/http.interface';
+
 export class SeriesService {
   constructor() {}
 
@@ -11,10 +13,10 @@ export class SeriesService {
     console.log('SeriesServiceGet', urlSlug); //eslint-disable-line
   }
 
-  // // Создание серии заездов.
-  // public async post({ urlSlug, data }: { urlSlug: string; data: unknown }) {
-  //   console.log('SeriesServicePost'); //eslint-disable-line
-  // }
+  // Создание серии заездов.
+  public async post({ ...data }: SeriesDataFromClientForCreateFull) {
+    console.log('SeriesServicePost', data); //eslint-disable-line
+  }
 
   // // Обновление данных серии заездов.
   // public async put({ urlSlug, data }: { urlSlug: string; data: unknown }) {

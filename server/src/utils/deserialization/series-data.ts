@@ -2,75 +2,98 @@ import { z } from 'zod';
 
 import { safeJsonParse } from './utils.js';
 
-// Основная схема для данных организатора.
-export const OrganizerDataZSchema = z
+// Основная схема для данных Серии.
+export const SeriesDataZSchema = z
   .object({
-    isPublished: z
+    hasGeneral: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
         message: 'isPublished должно быть строкой "true" или "false".',
       })
       .transform((val) => val === 'true') // Преобразуем строку в булево значение
-      .describe('Опубликован ли организатор.'),
+      .describe('Есть ли общий зачет в серии.'),
 
-    name: z
+    hasTeams: z
+      .string()
+      .refine((val) => val === 'true' || val === 'false', {
+        message: 'isPublished должно быть строкой "true" или "false".',
+      })
+      .transform((val) => val === 'true') // Преобразуем строку в булево значение
+      .describe('Подсчет командного зачета.'),
+
+    isFinished: z
+      .string()
+      .refine((val) => val === 'true' || val === 'false', {
+        message: 'isPublished должно быть строкой "true" или "false".',
+      })
+      .transform((val) => val === 'true') // Преобразуем строку в булево значение
+      .describe('Флаг завершения серии.'),
+
+    dateEnd: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Название организатора.'),
+      .describe('Дата окончания серии.'),
 
-    organizerId: z
-      .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
-      .describe('_id организатора.'),
-
-    shortName: z
+    dateStart: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Краткое название организатора.'),
+      .describe('Дата начала серии.'),
 
     description: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Описание организатора.'),
+      .describe('Полное описание серии.'),
 
     mission: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Цель организатора.'),
+      .describe('Цель или миссия серии.'),
 
-    clubMain: z
+    name: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Основной клуб организатора.'),
+      .describe('Название серии заездов.'),
 
-    telegram: z
+    scoringTable: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Информация о Telegram-аккаунтах.'),
+      .describe('_id документа с расчетом очков за места в протоколе.'),
 
-    website: z
+    prizes: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Ссылка на веб-сайт организатора.'),
+      .describe('Описание призов (если есть)'),
 
-    country: z
+    rules: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Код страны организатора.'),
+      .describe('Описание правил серии (может быть ссылкой).'),
 
-    socialLinks: z
+    scoringAlgorithmsId: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .optional()
-      .describe('Ссылки на социальные сети организатора.'),
+      .describe('_id алгоритма построения таблиц результатов.'),
+
+    stages: z
+      .string()
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
+      .optional()
+      .describe('Список этапов с нумерацией.'),
+
+    type: z
+      .string()
+      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
+      .optional()
+      .describe('Тип серии.'),
   })
   .refine(
     (data) => {
