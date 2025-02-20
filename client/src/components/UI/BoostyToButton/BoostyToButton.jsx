@@ -6,6 +6,9 @@ import styles from './BoostyToButton.module.css';
  * @component
  * @returns {JSX.Element} Компонент кнопки донатов на Boosty.
  */
+
+const urlDonateTargetZwiftPower20k =
+  'https://boosty.to/berezhnev-aleksander/single-payment/donation/682173/target';
 export default function BoostyToButton() {
   return (
     <div className={styles.wrapper} role="button">
@@ -18,7 +21,7 @@ export default function BoostyToButton() {
       />
 
       <a
-        href="https://boosty.to/berezhnev-aleksander/donate"
+        href={urlDonateTargetZwiftPower20k}
         target="_blank"
         className={styles.button}
         rel="noopener noreferrer"
