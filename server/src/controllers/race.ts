@@ -4,7 +4,10 @@ import { deleteEventAndResultsService } from '../service/race/events-delete.js';
 import { postEventService } from '../service/race/event_post/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
 import { getEventService } from '../service/race/event_get/event-get.js';
-import { getEventsService } from '../service/race/events_list/events.js';
+import {
+  getEventsForSeriesService,
+  getEventsService,
+} from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
 import { getSeriesService } from '../service/race/series.js';
@@ -17,6 +20,7 @@ import { GetEvents, PostEvent } from '../types/http.interface.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
 import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
 import { getNextWeekRacesService } from '../service/race/events_list/next-week.js';
+import { SeriesController } from './series.js';
 
 /**
  * Получение Event (описание) и зарегистрировавшихся райдеров
@@ -198,6 +202,27 @@ export async function getNextWeekRaces(req: Request, res: Response) {
   try {
     // Вызов сервиса.
     const response = await getNextWeekRacesService();
+
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
+  }
+}
+
+/**
+ * Контроллер получения всех эвентов Организатора для добавления в серию заездов.
+ */
+export async function getEventsForSeries(req: Request, res: Response) {
+  try {
+    const { userId } = req.params;
+
+    // Проверка, что запрос происходит от Организатора.
+    const seriesController = new SeriesController();
+    await seriesController.checkOrganizer(userId);
+
+    // Вызов сервиса.
+    const response = await getEventsForSeriesService({ organizerId: userId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

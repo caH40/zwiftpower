@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { authOrganizer } from '../middleware/authRole.js';
 import { SeriesController } from '../controllers/series.js';
 import { fileMiddleware } from '../middleware/file.js';
+import { getEventsForSeries } from '../controllers/race.js';
 
 export const routerSeries = Router();
 
@@ -19,3 +20,4 @@ routerSeries.post(
   ]),
   seriesController.post
 );
+routerSeries.get('/events', authOrganizer, getEventsForSeries);

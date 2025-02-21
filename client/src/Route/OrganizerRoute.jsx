@@ -27,10 +27,8 @@ export function OrganizerRoute(organizerId) {
           <Route path="clubs" element={<OrganizerClubs organizerId={organizerId} />} />
           <Route path="bots" element={<OrganizerBots organizerId={organizerId} />} />
 
-          <Route
-            path="series"
-            element={<OrganizerSeriesLayout organizerId={organizerId}></OrganizerSeriesLayout>}
-          >
+          {/* Управление Сериями заездов */}
+          <Route path="series" element={<OrganizerSeriesLayout />}>
             <Route path="list" element={<OrganizerSeriesList organizerId={organizerId} />} />
             <Route
               path="create"

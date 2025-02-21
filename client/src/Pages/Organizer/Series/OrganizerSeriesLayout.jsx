@@ -19,7 +19,7 @@ const items = [
  * @param {Object} props - Пропсы.
  * @param {string} props.organizerId - _id организатора в БД.
  */
-export default function OrganizerSeriesLayout({ organizerId }) {
+export default function OrganizerSeriesLayout() {
   useTitle('Серии заездов');
 
   return (

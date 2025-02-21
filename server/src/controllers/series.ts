@@ -85,7 +85,7 @@ export class SeriesController {
   /**
    * Проверка, что запрос происходит от Организатора.
    */
-  private async checkOrganizer(userId: string): Promise<void> {
+  public async checkOrganizer(userId: string): Promise<void> {
     // Проверка, что запрос происходит от Организатора.
     const organizerDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean<{
       _id: Types.ObjectId;
