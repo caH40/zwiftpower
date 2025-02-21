@@ -5,6 +5,7 @@ const OrganizerLayer = lazy(() => import('../Pages/Organizer/OrganizerLayout'));
 const Organizer = lazy(() => import('../Pages/Organizer/MainPage/Organizer'));
 const OrganizerClubs = lazy(() => import('../Pages/Organizer/Clubs/OrganizerClubs'));
 const OrganizerBots = lazy(() => import('../Pages/Organizer/Bots/OrganizerBots'));
+const OrganizerSeries = lazy(() => import('../Pages/Organizer/Series/OrganizerSeries'));
 
 export function OrganizerRoute(organizerId) {
   return (
@@ -14,6 +15,7 @@ export function OrganizerRoute(organizerId) {
           <Route path="main" element={<Organizer organizerId={organizerId} />} />
           <Route path="clubs" element={<OrganizerClubs organizerId={organizerId} />} />
           <Route path="bots" element={<OrganizerBots organizerId={organizerId} />} />
+          <Route path="series" element={<OrganizerSeries organizerId={organizerId} />} />
         </Route>
       )}
     </>

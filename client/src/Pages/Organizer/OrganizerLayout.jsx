@@ -6,6 +6,7 @@ import { fetchGetOrganizerModerator } from '../../redux/features/api/organizer/f
 import { resetOrganizerDataModerator } from '../../redux/features/api/organizer/organizerModeratorSlice';
 import IconUsers from '../../components/icons/IconUsers';
 import NavAdmin from '../../components/UI/NavAdmin/NavAdmin';
+import IconCupRank from '../../components/icons/IconCupRank';
 
 import styles from './OrganizerLayout.module.css';
 
@@ -13,6 +14,7 @@ const items = [
   { to: '/organizer/main', title: 'Главная', icon: IconUsers },
   { to: '/organizer/clubs', title: 'Клубы', icon: IconUsers },
   { to: '/organizer/bots', title: 'Бот', icon: IconUsers },
+  { to: '/organizer/series', title: 'Серии заездов', icon: IconCupRank },
 ];
 
 /**
