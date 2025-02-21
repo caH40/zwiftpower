@@ -28,7 +28,7 @@ const items = [
  */
 export default function OrganizerLayout({ organizerId }) {
   const dispatch = useDispatch();
-  const { organizer } = useSelector((state) => state.organizerModerator);
+  // const { organizer } = useSelector((state) => state.organizerModerator);
 
   // Запрос данных организатора organizerId
   useEffect(() => {
@@ -39,9 +39,9 @@ export default function OrganizerLayout({ organizerId }) {
 
   return (
     <section className={styles.wrapper}>
-      <NavAdmin items={items} />
+      {/* <h2 className={styles.title}>{organizer.name}</h2> */}
 
-      <h2 className={styles.title}>Организатор: {organizer.name}</h2>
+      <NavAdmin items={items} />
 
       <Outlet />
     </section>
