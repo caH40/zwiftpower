@@ -229,7 +229,7 @@ export type SeriesDataFromClientForCreate = Omit<
  * Данные после десериализации для создания Серии, которые пришли с клиента в формате FormData.
  */
 export type SeriesDataFromClientForCreateFull = SeriesDataFromClientForCreate & {
-  organizerId: string;
+  organizerId: Types.ObjectId;
   logoFile?: Express.Multer.File;
   posterFile?: Express.Multer.File;
 };

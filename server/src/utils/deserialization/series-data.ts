@@ -8,38 +8,45 @@ export const SeriesDataZSchema = z
     hasGeneral: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
-        message: 'isPublished должно быть строкой "true" или "false".',
+        message: 'hasGeneral должно быть строкой "true" или "false".',
       })
-      .transform((val) => val === 'true') // Преобразуем строку в булево значение
+      .transform((val) => val === 'true') // Преобразуем строку в булево значение.
+      .optional()
       .describe('Есть ли общий зачет в серии.'),
 
     hasTeams: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
-        message: 'isPublished должно быть строкой "true" или "false".',
+        message: 'hasTeams должно быть строкой "true" или "false".',
       })
-      .transform((val) => val === 'true') // Преобразуем строку в булево значение
+      .transform((val) => val === 'true') // Преобразуем строку в булево значение.
+      .optional()
       .describe('Подсчет командного зачета.'),
 
     isFinished: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
-        message: 'isPublished должно быть строкой "true" или "false".',
+        message: 'isFinished должно быть строкой "true" или "false".',
       })
-      .transform((val) => val === 'true') // Преобразуем строку в булево значение
-      .describe('Флаг завершения серии.'),
-
-    dateEnd: z
-      .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
+      .transform((val) => val === 'true') // Преобразуем строку в булево значение.
       .optional()
-      .describe('Дата окончания серии.'),
+      .describe('Флаг завершения серии.'),
 
     dateStart: z
       .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
-      .optional()
-      .describe('Дата начала серии.'),
+      .refine((val) => !isNaN(Date.parse(val)), {
+        message: 'dateStart должно быть валидной датой в формате ISO 8601.',
+      })
+      .transform((val) => new Date(val)) // Преобразуем строку в объект Date.
+      .describe('Дата старта Серии заездов.'),
+
+    dateEnd: z
+      .string()
+      .refine((val) => !isNaN(Date.parse(val)), {
+        message: 'dateStart должно быть валидной датой в формате ISO 8601.',
+      })
+      .transform((val) => new Date(val)) // Преобразуем строку в объект Date.
+      .describe('Дата завершения Серии заездов.'),
 
     description: z
       .string()
@@ -56,7 +63,6 @@ export const SeriesDataZSchema = z
     name: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
-      .optional()
       .describe('Название серии заездов.'),
 
     scoringTable: z
@@ -92,7 +98,6 @@ export const SeriesDataZSchema = z
     type: z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
-      .optional()
       .describe('Тип серии.'),
   })
   .refine(

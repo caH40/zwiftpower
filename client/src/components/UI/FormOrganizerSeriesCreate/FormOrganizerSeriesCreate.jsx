@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { getDateTimeStart } from '../../../utils/date-local';
+import { fetchPostSeriesOrganizer } from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import {
   fetchGetOrganizerModerator,
@@ -14,7 +16,6 @@ import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
-import { getDateTimeStart } from '../../../utils/date-local';
 import StagesInSeries from '../../StagesInSeries/StagesInSeries';
 
 import styles from './FormOrganizerSeriesCreate.module.css';
@@ -29,7 +30,20 @@ export default function FormOrganizerSeriesCreate({
   isCreating,
   organizerId,
   eventsForSeries,
-  series: { dateStart, dateEnd, name, logoUrls, posterUrls, mission, description, stages },
+  series: {
+    dateStart,
+    dateEnd,
+    name,
+    logoUrls,
+    posterUrls,
+    mission,
+    description,
+    stages,
+    hasGeneral,
+    hasTeams,
+    isFinished,
+    type,
+  },
   loading,
 }) {
   // Ссылка на лого Организатора.
@@ -52,6 +66,7 @@ export default function FormOrganizerSeriesCreate({
     reset,
     control,
     getValues,
+    watch,
     formState: { errors },
   } = useForm({
     mode: 'all',
@@ -61,6 +76,10 @@ export default function FormOrganizerSeriesCreate({
       name,
       description,
       mission,
+      hasGeneral,
+      hasTeams,
+      isFinished,
+      type,
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
@@ -68,16 +87,15 @@ export default function FormOrganizerSeriesCreate({
   const onSubmit = async (formData) => {
     // Необходима сериализация данных перед передачей на сервер, так как передаются данные типа File (изображения).
 
-    const serializedOrganizerData = serializeOrganizerSeriesCreate({
+    const serializedSeriesData = serializeOrganizerSeriesCreate({
       ...formData,
-      organizerId,
+      stages: stagesAdded,
     });
 
-    dispatch(fetchPutOrganizersMainData(serializedOrganizerData)).then((data) => {
+    dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).then((data) => {
       if (data.meta.requestStatus === 'fulfilled') {
-        dispatch(fetchGetOrganizerModerator({ organizerId }));
         dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
-        reset(); // Очистка полей формы.
+        // reset(); // Очистка полей формы.
       } else {
         return; // Ошибка обрабатывается в sendNotification
       }

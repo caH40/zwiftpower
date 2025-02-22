@@ -9,7 +9,7 @@ import {
   TSeriesStage,
   TSeriesType,
 } from '../types/model.interface';
-import { FileMetadataSchema } from './FileMetadataSchema';
+import { FileMetadataSchema } from './FileMetadataSchema.js';
 
 export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   scoringAlgorithms: TScoringAlgorithm;
@@ -18,10 +18,10 @@ export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
 
 const SeriesStageSchema = new Schema<TSeriesStage>({
   event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
-  stageNumber: { type: Number, required: true },
+  order: { type: Number },
 });
 
-const SeriesSchema = new Schema<ISeriesDocument>({
+const NSeriesSchema = new Schema<ISeriesDocument>({
   dateEnd: { type: Date, required: true },
   dateStart: { type: Date, required: true },
   description: { type: String },
@@ -42,4 +42,4 @@ const SeriesSchema = new Schema<ISeriesDocument>({
   urlSlug: { type: String, required: true, unique: true },
 });
 
-export const SeriesModel = model<ISeriesDocument>('Series', SeriesSchema);
+export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);

@@ -46,13 +46,13 @@ export class SeriesController {
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.
    */
-  public async post(req: Request, res: Response): Promise<Response | void> {
+  public post = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       // id авторизованного пользователя, который делает запрос.
       const { userId } = req.params;
 
       // Проверка, что запрос происходит от Организатора.
-      await this.checkOrganizer(userId);
+      const organizerId = await this.checkOrganizer(userId);
 
       // Получение файлов изображений, если они есть.
       const files = req.files as { [fieldname: string]: Express.Multer.File[] };
@@ -67,7 +67,7 @@ export class SeriesController {
       // Вызов сервиса.
       const response = await this.seriesService.post({
         ...deserializedSeriesData,
-        organizerId: userId,
+        organizerId,
         logoFile,
         posterFile,
       });
@@ -77,7 +77,7 @@ export class SeriesController {
     } catch (error) {
       handleErrorInController(res, error);
     }
-  }
+  };
 
   // Обновление данных серии заездов.
   public async put() {}
