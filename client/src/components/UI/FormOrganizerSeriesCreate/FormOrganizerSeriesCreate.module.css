@@ -1,8 +1,5 @@
 .wrapper__fields {
-  /* display: flex;
-  flex-direction: column;
-  gap: 20px; */
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 .title {
   margin-bottom: 0.8rem;
@@ -43,4 +40,11 @@
 .wrapper__textarea:focus-within,
 .wrapper__file:focus-within {
   background-color: var(--focus-within);
+}
+
+.wrapper__stages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 1rem;
 }

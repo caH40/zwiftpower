@@ -12,11 +12,10 @@ import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
-import InputSimple from '../Input/InputSimple';
 import InputAuth from '../InputAuth/InputAuth';
-import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 import { getDateTimeStart } from '../../../utils/date-local';
+import StagesInSeries from '../../StagesInSeries/StagesInSeries';
 
 import styles from './FormOrganizerSeriesCreate.module.css';
 
@@ -29,7 +28,7 @@ const dateNow = getDateTimeStart(new Date().toISOString()).date;
 export default function FormOrganizerSeriesCreate({
   isCreating,
   organizerId,
-  eventsForSeries: events,
+  eventsForSeries,
   series: { dateStart, dateEnd, name, logoUrls, posterUrls, mission, description, stages },
   loading,
 }) {
@@ -37,7 +36,10 @@ export default function FormOrganizerSeriesCreate({
   const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
 
   // Эвенты для добавления в Серию заездов.
-  const [eventsForSeries, setEventsForSeries] = useState(events);
+  const [events, setEvents] = useState(eventsForSeries);
+
+  // Эвенты добавленные в Серию заездов.
+  const [stagesAdded, setStagesAdded] = useState(stages);
 
   // Ссылка на постер Организатора.
   const [posterSrcState, setPosterSrcState] = useState(posterUrls?.small);
@@ -59,7 +61,6 @@ export default function FormOrganizerSeriesCreate({
       name,
       description,
       mission,
-      stages,
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
@@ -81,6 +82,18 @@ export default function FormOrganizerSeriesCreate({
         return; // Ошибка обрабатывается в sendNotification
       }
     });
+  };
+
+  // Удаление Эвента(этапа) из серии.
+  const deleteStage = (currentStage) => {
+    setStagesAdded((prev) => prev.filter((elm) => elm._id !== currentStage._id));
+    setEvents((prev) => [...prev, currentStage]);
+  };
+
+  // Добавление Эвента(этапа) в серию.
+  const addStage = (currentStage) => {
+    setStagesAdded((prev) => [...prev, currentStage]);
+    setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
   };
 
   return (
@@ -274,6 +287,12 @@ export default function FormOrganizerSeriesCreate({
             loading={loading}
           />
         </div>
+      </div>
+
+      <div className={styles.wrapper__stages}>
+        <StagesInSeries stages={stagesAdded} action="delete" handleAction={deleteStage} />
+
+        <StagesInSeries stages={events} action="add" handleAction={addStage} />
       </div>
 
       <div className={styles.box__btn}>

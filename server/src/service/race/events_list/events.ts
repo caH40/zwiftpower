@@ -98,7 +98,7 @@ export async function getEventsForSeriesService({
 }): Promise<TResponseService<TEventsForSeriesDto[]>> {
   // Получение Эвентов, которые не включены в Серии.
   const eventsDB = await ZwiftEvent.find(
-    { organizerId, seriesId: null },
+    { organizerId },
     {
       name: true,
       eventStart: true,
