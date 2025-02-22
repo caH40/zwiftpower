@@ -119,7 +119,7 @@ export default function FormOrganizerSeriesCreate({
       <div className={styles.wrapper__fields}>
         <div className={styles.wrapper__input}>
           <InputAuth
-            label={'Название'}
+            label={'Название (добавляйте год для уникальности)'}
             register={register('name', {
               required: 'Обязательное поле',
               minLength: { value: 6, message: 'Больше 5ти символов' },

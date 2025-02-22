@@ -15,17 +15,19 @@ export async function uploadFileToCloudHandler({
   imageFile,
   baseNameOld,
   needOptimizedImages,
+  entitySuffix, // FIXME: добавить параметр entitySuffix в Организаторе где вызывается функция uploadFileToCloudHandler.
 }: {
   entity: 'poster' | 'logo';
   shortName: string;
   imageFile: Express.Multer.File;
   baseNameOld?: string;
   needOptimizedImages: boolean;
+  entitySuffix?: string;
 }): Promise<string[]> {
   // Экземпляр класса Облака.
   const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
 
-  const suffixImage = `organizers-${shortName}-${entity}-`;
+  const suffixImage = `${entitySuffix}-${shortName}-${entity}-`;
 
   const uploadedFileNames = await saveFileToCloud({
     file: convertMulterFileToWebFile({ file: imageFile }),
