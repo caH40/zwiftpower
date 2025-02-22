@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchEvents, resetEventsSchedule } from '../../../../redux/features/api/eventsSlice';
+import {
+  fetchEventsForSeries,
+  resetEventsForSeries,
+} from '../../../../redux/features/api/eventsSlice';
 import FormOrganizerSeriesCreate from '../../../../components/UI/FormOrganizerSeriesCreate/FormOrganizerSeriesCreate';
 
 import styles from './OrganizerSeriesCreate.module.css';
@@ -18,18 +21,16 @@ const initialData = {
  * Страница создания Серии заездов.
  */
 export default function OrganizerSeriesCreate({ organizerId }) {
-  const { eventsSchedule, status: statusFetchEvents } = useSelector(
+  const { eventsForSeries, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-
-  console.log(eventsSchedule);
 
   const dispatch = useDispatch();
   // Запрос на получение Эвентов Организатора.
   useEffect(() => {
-    dispatch(fetchEvents({ started: false, organizerId }));
+    dispatch(fetchEventsForSeries());
 
-    return () => dispatch(resetEventsSchedule());
+    return () => dispatch(resetEventsForSeries());
   }, [dispatch, organizerId]);
   return (
     <section className={styles.wrapper}>
@@ -37,6 +38,8 @@ export default function OrganizerSeriesCreate({ organizerId }) {
         isCreating={true}
         organizerId={organizerId}
         series={initialData}
+        eventsForSeries={eventsForSeries}
+        loading={statusFetchEvents === 'loading'}
       />
     </section>
   );

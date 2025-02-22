@@ -85,7 +85,7 @@ export class SeriesController {
   /**
    * Проверка, что запрос происходит от Организатора.
    */
-  public async checkOrganizer(userId: string): Promise<void> {
+  public async checkOrganizer(userId: string): Promise<Types.ObjectId> {
     // Проверка, что запрос происходит от Организатора.
     const organizerDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean<{
       _id: Types.ObjectId;
@@ -94,5 +94,7 @@ export class SeriesController {
     if (!organizerDB) {
       throw new Error('Вы не являетесь организатором заездов!');
     }
+
+    return organizerDB._id;
   }
 }

@@ -219,10 +219,10 @@ export async function getEventsForSeries(req: Request, res: Response) {
 
     // Проверка, что запрос происходит от Организатора.
     const seriesController = new SeriesController();
-    await seriesController.checkOrganizer(userId);
+    const organizerId = await seriesController.checkOrganizer(userId);
 
     // Вызов сервиса.
-    const response = await getEventsForSeriesService({ organizerId: userId });
+    const response = await getEventsForSeriesService({ organizerId });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

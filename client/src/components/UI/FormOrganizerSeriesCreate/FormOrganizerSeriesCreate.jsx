@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { validateTelegram, validateVk, validateWebsite } from '../../../utils/validatorService';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import {
   fetchGetOrganizerModerator,
@@ -30,11 +29,15 @@ const dateNow = getDateTimeStart(new Date().toISOString()).date;
 export default function FormOrganizerSeriesCreate({
   isCreating,
   organizerId,
+  eventsForSeries: events,
   series: { dateStart, dateEnd, name, logoUrls, posterUrls, mission, description, stages },
   loading,
 }) {
   // Ссылка на лого Организатора.
   const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
+
+  // Эвенты для добавления в Серию заездов.
+  const [eventsForSeries, setEventsForSeries] = useState(events);
 
   // Ссылка на постер Организатора.
   const [posterSrcState, setPosterSrcState] = useState(posterUrls?.small);
@@ -56,6 +59,7 @@ export default function FormOrganizerSeriesCreate({
       name,
       description,
       mission,
+      stages,
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
