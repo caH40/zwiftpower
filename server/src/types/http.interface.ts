@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
-import { TAccessExpressionObj, TSocialLinks, TTelegram } from './model.interface.js';
+import { TAccessExpressionObj, TSeries, TSocialLinks, TTelegram } from './model.interface.js';
 
 // данные из query параметров url
 export interface GetLogsAdmins {
@@ -215,4 +215,21 @@ export type TQueryParamsNotifications = {
   notificationsTypes?: string; // или string[], если ожидается массив
   subject?: string;
   title?: string;
+};
+
+/**
+ * Данные после десериализации для создания Серии, которые пришли с клиента в формате FormData.
+ */
+export type SeriesDataFromClientForCreate = Omit<
+  TSeries,
+  '_id' | 'urlSlug' | 'scoringAlgorithms' | 'logoFileInfo' | 'scoringAlgorithms' | 'stages'
+> & { scoringAlgorithmsId: string; stages: { event: string; order: number }[] };
+
+/**
+ * Данные после десериализации для создания Серии, которые пришли с клиента в формате FormData.
+ */
+export type SeriesDataFromClientForCreateFull = SeriesDataFromClientForCreate & {
+  organizerId: Types.ObjectId;
+  logoFile?: Express.Multer.File;
+  posterFile?: Express.Multer.File;
 };

@@ -1,14 +1,6 @@
 import { z } from 'zod';
 
-// Функция для безопасного парсинга JSON с проверкой на undefined
-const safeJsonParse = (val: string | undefined) => {
-  if (val === undefined) return undefined;
-  try {
-    return JSON.parse(val);
-  } catch {
-    return val; // Если ошибка, возвращаем как есть
-  }
-};
+import { safeJsonParse } from './utils.js';
 
 // Основная схема для данных организатора.
 export const OrganizerDataZSchema = z

@@ -124,6 +124,7 @@ export async function putOrganizerMainService({
     baseNamePosterOld: organizerDB.posterFileInfo?.baseName,
     logoFile,
     posterFile,
+    entitySuffix: 'organizers',
   });
 
   const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);

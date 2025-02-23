@@ -1,6 +1,9 @@
 import mongoose, { Document, Schema, model } from 'mongoose';
+
+import { FileMetadataSchema } from './FileMetadataSchema.js';
+
+// types
 import {
-  TFileMetadataForCloud,
   TOrganizer,
   TOrganizerBotZwift,
   TSocialLinks,
@@ -32,28 +35,6 @@ const SocialLinksSchema = new Schema<TSocialLinks>(
     twitter: { type: String },
     instagram: { type: String },
     youtube: { type: String },
-  },
-  { _id: false }
-);
-const FileMetadataSchema = new Schema<TFileMetadataForCloud>(
-  {
-    baseName: {
-      type: String,
-      trim: true,
-    },
-    originalExtension: {
-      type: String,
-      trim: true,
-    },
-    optimizedExtension: {
-      type: String,
-      trim: true,
-    },
-    availableSizes: {
-      type: [String],
-      enum: ['original', 'large', 'medium', 'small', 'xLarge'],
-      default: ['original'],
-    },
   },
   { _id: false }
 );

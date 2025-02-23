@@ -43,7 +43,7 @@ function OrganizerPublic() {
 
   const dispatch = useDispatch();
 
-  // Запрос на получение списка организаторов.
+  // Запрос на получение организатора с urlSlug.
   useEffect(() => {
     dispatch(fetchOrganizerPublic({ urlSlug }));
 

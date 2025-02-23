@@ -3,8 +3,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { myAxios } from '../../../api/axios';
 import { serverExpress } from '../../../config/environment';
-import { getAlert } from '../alertMessageSlice';
+
+import { handlerErrorAsyncThunk } from './utils/handler-error';
 
 export const fetchEvents = createAsyncThunk(
   'eventsGet/fetchEvents',
@@ -29,9 +31,26 @@ export const fetchEvents = createAsyncThunk(
         target: target,
       };
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue({ message });
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);
+
+/**
+ * Запрос на получение Эвентов Организатора для добавления в Серии заездов.
+ */
+export const fetchEventsForSeries = createAsyncThunk(
+  'eventsGet/fetchEventsForSeries',
+  async function (_, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/events`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -43,6 +62,7 @@ const eventsSlice = createSlice({
     eventsSchedule: [],
     eventsResults: [],
     quantityPages: 0,
+    eventsForSeries: [],
 
     status: null,
     error: null,
@@ -58,6 +78,9 @@ const eventsSlice = createSlice({
     resetEventsResults: (state) => {
       state.eventsResults = [];
       state.quantityPages = 0;
+    },
+    resetEventsForSeries: (state) => {
+      state.eventsForSeries = [];
     },
   },
   extraReducers: (builder) => {
@@ -83,10 +106,31 @@ const eventsSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ======================= Эвенты для добавления в Серии =======================
+    builder.addCase(fetchEventsForSeries.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+    builder.addCase(fetchEventsForSeries.fulfilled, (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+
+      state.eventsForSeries = action.payload.data;
+    });
+    builder.addCase(fetchEventsForSeries.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetEventData, resetEventsPreview, resetEventsSchedule, resetEventsResults } =
-  eventsSlice.actions;
+export const {
+  resetEventData,
+  resetEventsPreview,
+  resetEventsSchedule,
+  resetEventsResults,
+  resetEventsForSeries,
+} = eventsSlice.actions;
 
 export default eventsSlice.reducer;

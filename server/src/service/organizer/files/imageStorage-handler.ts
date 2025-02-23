@@ -10,12 +10,14 @@ export async function imageStorageHandler({
   baseNamePosterOld,
   logoFile,
   posterFile,
+  entitySuffix,
 }: {
   shortName: string; // Короткое название Организатора в нижнем регистре.
   baseNameLogoOld?: string; // Базовое название файла изображениям в облаке.
   baseNamePosterOld?: string; // Базовое название файла изображениям в облаке.
   logoFile?: Express.Multer.File;
   posterFile?: Express.Multer.File;
+  entitySuffix: string;
 }): Promise<{
   uploadedFileNamesLogo: string[] | null;
   uploadedFileNamesPoster: string[] | null;
@@ -35,6 +37,7 @@ export async function imageStorageHandler({
       imageFile: logoFile,
       baseNameOld: baseNameLogoOld,
       needOptimizedImages: false,
+      entitySuffix,
     });
   }
 
@@ -47,6 +50,7 @@ export async function imageStorageHandler({
       imageFile: posterFile,
       baseNameOld: baseNamePosterOld,
       needOptimizedImages: true,
+      entitySuffix,
     });
   }
 

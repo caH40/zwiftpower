@@ -21,3 +21,12 @@ export type NextWeekRacesResponseDB = {
     laps: number;
   }[];
 };
+
+/**
+ * Данные по Эвентам организатора для добавления/удаления в Серию.
+ */
+export type TEventsForSeriesResponseDB = {
+  _id: Types.ObjectId;
+  name: string;
+  eventStart: string;
+};

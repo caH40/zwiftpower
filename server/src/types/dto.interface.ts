@@ -1,5 +1,6 @@
 // types
 import { TOrganizer } from './model.interface';
+import { TEventsForSeriesResponseDB } from './mongodb-response.types';
 import { EventWithSubgroup } from './types.interface';
 
 /**
@@ -31,3 +32,8 @@ export type TEventWithSubgroupDto = Omit<EventWithSubgroup, 'organizerId'> & {
   logoFileInfo?: Record<string, string>;
   [key: string]: unknown;
 };
+
+/**
+ * DTO данных по Эвентам организатора для добавления/удаления в Серию.
+ */
+export type TEventsForSeriesDto = Omit<TEventsForSeriesResponseDB, '_id'> & { _id: string };

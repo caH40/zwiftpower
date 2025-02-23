@@ -25,6 +25,7 @@
 }
 .button:disabled {
   background-color: var(--color-text-minor);
+  cursor: not-allowed;
 }
 .button:disabled:hover {
   background-color: var(--color-text-minor);

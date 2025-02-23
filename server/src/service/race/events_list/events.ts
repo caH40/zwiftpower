@@ -3,9 +3,12 @@ import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { getEventsFiltered } from './events-filter.js';
 
 // types
-import { GetEvents } from '../../../types/http.interface.js';
+import { GetEvents, TResponseService } from '../../../types/http.interface.js';
 import { EventWithSubgroupAndSeries } from '../../../types/types.interface.js';
-import { eventsListDto } from '../../../dto/eventsList.interface.js';
+import { eventsForSeriesDto, eventsListDto } from '../../../dto/eventsList.dto.js';
+import { TEventsForSeriesResponseDB } from '../../../types/mongodb-response.types.js';
+import { TEventsForSeriesDto } from '../../../types/dto.interface.js';
+import { Types } from 'mongoose';
 
 /**
  * получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
@@ -83,4 +86,32 @@ export async function getEventsService({
     quantityPages,
     message: 'Получены все заезды',
   });
+}
+
+/**
+ * Получение всех эвентов Организатора для добавления в серию заездов.
+ */
+export async function getEventsForSeriesService({
+  organizerId,
+}: {
+  organizerId?: Types.ObjectId;
+}): Promise<TResponseService<TEventsForSeriesDto[]>> {
+  // Получение Эвентов, которые не включены в Серии.
+  const eventsDB = await ZwiftEvent.find(
+    { organizerId },
+    {
+      name: true,
+      eventStart: true,
+    }
+  ).lean<TEventsForSeriesResponseDB[]>();
+
+  // Сортировка, сначала те Эвенты, которые стартуют раньше
+  eventsDB.sort((a, b) => {
+    return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
+  });
+
+  return {
+    data: eventsForSeriesDto(eventsDB),
+    message: 'Эвента организатора для добавления в Серии заездов.',
+  };
 }

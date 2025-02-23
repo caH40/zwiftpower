@@ -1,8 +1,9 @@
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
-import { TEventWithSubgroupDto } from '../types/dto.interface.js';
+import { TEventsForSeriesDto, TEventWithSubgroupDto } from '../types/dto.interface.js';
 import { EventsListDtoArg } from '../types/types.interface.js';
+import { TEventsForSeriesResponseDB } from '../types/mongodb-response.types.js';
 
 /**
  *  Массив Events для страниц расписания, анонса или результатов
@@ -22,3 +23,15 @@ export const eventsListDto = ({ events, quantityPages, message }: EventsListDtoA
 
   return { events: eventsForFetch, quantityPages, message };
 };
+
+/**
+ * DTO данных по Эвентам организатора для добавления/удаления в Серию.
+ */
+export function eventsForSeriesDto(
+  events: TEventsForSeriesResponseDB[]
+): TEventsForSeriesDto[] {
+  return events.map((event) => ({
+    ...event,
+    _id: String(event._id),
+  }));
+}
