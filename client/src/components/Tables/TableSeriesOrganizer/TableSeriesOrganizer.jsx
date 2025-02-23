@@ -36,6 +36,7 @@ function TableSeriesOrganizer({ series, organizerId }) {
                 <TdImage url={elm.logoUrls?.original} width={60} height={60} />
               </td>
               <td>{elm.name}</td>
+              <td>{elm.stages.length}</td>
               <td>{getTimerLocal(elm.dateStart, 'DDMMYY')}</td>
               <td>{getTimerLocal(elm.dateEnd, 'DDMMYY')}</td>
               <td>{elm.type}</td>

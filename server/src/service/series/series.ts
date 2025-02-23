@@ -218,6 +218,7 @@ export class SeriesService {
     dateStart: true,
     isFinished: true,
     logoFileInfo: true,
+    stages: true,
     name: true,
     posterFileInfo: true,
     urlSlug: true,

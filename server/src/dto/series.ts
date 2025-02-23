@@ -13,10 +13,16 @@ export function organizerSeriesAllDto(
     const dateStart = elm.dateStart.toISOString();
     const dateEnd = elm.dateEnd.toISOString();
 
+    const stages = elm.stages.map((stage) => ({
+      _id: String(stage._id),
+      event: String(stage.event),
+      order: stage.order,
+    }));
+
     // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
     const logoUrls = createUrlsToFileCloud(elm.logoFileInfo);
     const posterUrls = createUrlsToFileCloud(elm.posterFileInfo);
 
-    return { ...elm, _id, dateStart, dateEnd, logoUrls, posterUrls };
+    return { ...elm, stages, _id, dateStart, dateEnd, logoUrls, posterUrls };
   });
 }

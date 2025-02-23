@@ -41,6 +41,7 @@ export type TOrganizerSeriesAllResponseDB = Pick<
   | 'dateEnd'
   | 'dateStart'
   | 'isFinished'
+  | 'stages'
   | 'logoFileInfo'
   | 'name'
   | 'posterFileInfo'

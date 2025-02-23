@@ -14,7 +14,7 @@ const items = [
   { to: '/organizer/main', title: 'Главная', icon: IconUsers },
   { to: '/organizer/clubs', title: 'Клубы', icon: IconUsers },
   { to: '/organizer/bots', title: 'Бот', icon: IconUsers },
-  { to: '/organizer/series', title: 'Серии заездов', icon: IconCupRank },
+  { to: '/organizer/series/list', title: 'Серии заездов', icon: IconCupRank },
 ];
 
 /**

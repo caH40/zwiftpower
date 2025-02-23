@@ -46,9 +46,14 @@ export type TEventsForSeriesDto = Omit<TEventsForSeriesResponseDB, '_id'> & { _i
  */
 export type TOrganizerSeriesAllDto = Omit<
   TOrganizerSeriesAllResponseDB,
-  '_id' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls'
+  '_id' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls' | 'stages'
 > & {
   _id: string;
+  stages: {
+    _id: string;
+    event: string;
+    order: number;
+  }[];
   dateStart: string;
   dateEnd: string;
   logoUrls: Record<string, string> | undefined;
