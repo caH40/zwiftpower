@@ -90,6 +90,10 @@ export async function getEventsService({
 
 /**
  * Получение всех эвентов Организатора для добавления в серию заездов.
+ *
+ * @param {Object} params - Параметры запроса.
+ * @param {Types.ObjectId} params.organizerId - Идентификатор организатора.
+ * @returns {Promise<TResponseService<TEventsForSeriesDto[]>>} Объект с данными о доступных эвентах.
  */
 export async function getEventsForSeriesService({
   organizerId,
@@ -98,14 +102,11 @@ export async function getEventsForSeriesService({
 }): Promise<TResponseService<TEventsForSeriesDto[]>> {
   // Получение Эвентов, которые не включены в Серии.
   const eventsDB = await ZwiftEvent.find(
-    { organizerId },
-    {
-      name: true,
-      eventStart: true,
-    }
+    { organizerId, $or: [{ seriesId: null }, { seriesId: { $exists: false } }] },
+    { name: true, eventStart: true }
   ).lean<TEventsForSeriesResponseDB[]>();
 
-  // Сортировка, сначала те Эвенты, которые стартуют раньше
+  // Сортировка, сначала те Эвенты, которые стартуют раньше.
   eventsDB.sort((a, b) => {
     return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
   });

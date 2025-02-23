@@ -41,16 +41,38 @@ export class SeriesService {
   }
 
   /**
-   * Сервис удаления Серии заездов.
+   * Удаляет серию заездов и отвязывает связанные эвенты (этапы серии).
+   *
+   * @param {Object} params - Параметры удаления.
+   * @param {string} params.seriesId - Идентификатор удаляемой серии.
+   * @returns {Promise<TResponseService<null>>} Объект с сообщением о результате операции.
+   * @throws {Error} Если серия с указанным ID не найдена.
    */
   public delete = async ({
     seriesId,
   }: {
     seriesId: string;
   }): Promise<TResponseService<null>> => {
-    console.log('SeriesServiceDelete', seriesId); //eslint-disable-line
+    // Поиск и удаление серии с получением только name
+    const seriesDB = await NSeriesModel.findOneAndDelete(
+      { _id: seriesId },
+      { name: true }
+    ).lean();
 
-    return { data: null, message: `Удалена серия с названием ${seriesId}` };
+    if (!seriesDB) {
+      throw new Error(`Не найдена серия с id: "${seriesId}" для удаления!`);
+    }
+
+    // Удаление привязки серии (_id) в эвентах (этапах серии)
+    const eventsUpdated = await ZwiftEvent.updateMany(
+      { seriesId },
+      { $unset: { seriesId: '' } }
+    );
+
+    return {
+      data: null,
+      message: `Удалена серия с названием "${seriesDB.name}". Отвязаны эвенты (этапы) от удаленной серии в количестве: ${eventsUpdated.modifiedCount}`,
+    };
   };
 
   // Создание серии заездов.

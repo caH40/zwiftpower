@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { fetchGetSeriesOrganizer } from '../../../../redux/features/api/series/fetchSeries';
 import TableSeriesOrganizer from '../../../../components/Tables/TableSeriesOrganizer/TableSeriesOrganizer';
@@ -22,7 +22,7 @@ export default function OrganizerSeriesList({ organizerId }) {
 
   return (
     <section className={styles.wrapper}>
-      {!!series?.length && <TableSeriesOrganizer series={series} />}
+      {!!series?.length && <TableSeriesOrganizer series={series} organizerId={organizerId} />}
     </section>
   );
 }
