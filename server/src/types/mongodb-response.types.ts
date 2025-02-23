@@ -3,6 +3,7 @@
  */
 
 import { Types } from 'mongoose';
+import { TSeries } from './model.interface';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;
@@ -30,3 +31,19 @@ export type TEventsForSeriesResponseDB = {
   name: string;
   eventStart: string;
 };
+
+/**
+ * Данные по Сериям для организатора.
+ */
+export type TOrganizerSeriesAllResponseDB = Pick<
+  TSeries,
+  | '_id'
+  | 'dateEnd'
+  | 'dateStart'
+  | 'isFinished'
+  | 'logoFileInfo'
+  | 'name'
+  | 'posterFileInfo'
+  | 'urlSlug'
+  | 'type'
+>;

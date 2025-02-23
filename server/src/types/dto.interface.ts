@@ -1,6 +1,9 @@
 // types
 import { TOrganizer } from './model.interface';
-import { TEventsForSeriesResponseDB } from './mongodb-response.types';
+import {
+  TEventsForSeriesResponseDB,
+  TOrganizerSeriesAllResponseDB,
+} from './mongodb-response.types';
 import { EventWithSubgroup } from './types.interface';
 
 /**
@@ -37,3 +40,17 @@ export type TEventWithSubgroupDto = Omit<EventWithSubgroup, 'organizerId'> & {
  * DTO данных по Эвентам организатора для добавления/удаления в Серию.
  */
 export type TEventsForSeriesDto = Omit<TEventsForSeriesResponseDB, '_id'> & { _id: string };
+
+/**
+ * DTO данных по Сериям для организатора.
+ */
+export type TOrganizerSeriesAllDto = Omit<
+  TOrganizerSeriesAllResponseDB,
+  '_id' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls'
+> & {
+  _id: string;
+  dateStart: string;
+  dateEnd: string;
+  logoUrls: Record<string, string> | undefined;
+  posterUrls: Record<string, string> | undefined;
+};

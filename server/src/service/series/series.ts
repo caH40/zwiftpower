@@ -9,16 +9,27 @@ import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js'
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { Types } from 'mongoose';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { TOrganizerSeriesAllResponseDB } from '../../types/mongodb-response.types.js';
+import { organizerSeriesAllDto } from '../../dto/series.js';
 
 export class SeriesService {
   constructor() {}
 
   // Получение всех серий заездов.
   public async getAll(organizerId: Types.ObjectId) {
-    const seriesDB = await NSeriesModel.find({ organizer: organizerId });
-    // console.log(seriesDB); //eslint-disable-line
+    const seriesDB = await NSeriesModel.find(
+      { organizer: organizerId },
+      SeriesService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
+    ).lean<TOrganizerSeriesAllResponseDB[]>();
 
-    return { data: seriesDB, message: 'Все Серии заездов, созданные организатором.' };
+    const seriesAfterDto = organizerSeriesAllDto(seriesDB);
+
+    // Сортировка, сначала более новые Серии.
+    seriesAfterDto.sort(
+      (a, b) => new Date(b.dateStart).getTime() - new Date(a.dateStart).getTime()
+    );
+
+    return { data: seriesAfterDto, message: 'Все Серии заездов, созданные организатором.' };
   }
 
   // Получение запрашиваемой серии заездов.
@@ -161,5 +172,17 @@ export class SeriesService {
     );
 
     await Promise.all(requests);
+  };
+
+  private static SERIES_ALL_FOR_ORGANIZER_PROJECTION = {
+    _id: true,
+    dateEnd: true,
+    dateStart: true,
+    isFinished: true,
+    logoFileInfo: true,
+    name: true,
+    posterFileInfo: true,
+    urlSlug: true,
+    type: true,
   };
 }

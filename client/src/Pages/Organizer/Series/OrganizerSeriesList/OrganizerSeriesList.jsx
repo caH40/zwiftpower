@@ -11,6 +11,8 @@ import styles from './OrganizerSeriesList.module.css';
 export default function OrganizerSeriesList({ organizerId }) {
   const { series } = useSelector((state) => state.seriesOrganizer);
 
+  console.log(series);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
