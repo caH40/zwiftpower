@@ -8,6 +8,7 @@ import { Organizer } from '../../Model/Organizer.js';
 import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js';
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { Types } from 'mongoose';
+import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 
 export class SeriesService {
   constructor() {}
@@ -85,7 +86,12 @@ export class SeriesService {
     };
 
     // Сохранение Серии в БД.
-    await NSeriesModel.create(query);
+    const response = await NSeriesModel.create(query);
+
+    await this.addSeriesIdToEvents({
+      eventIds: stages.map((stage) => stage.event),
+      seriesId: response._id,
+    });
 
     return { data: null, message: `Успешна создана Серия с названием "${name}"!` };
   }
@@ -138,5 +144,19 @@ export class SeriesService {
         `Существует Серия с таким названием "${name}" у текущего Организатора. Измените название для Серии на уникальное!`
       );
     }
+  };
+
+  private addSeriesIdToEvents = async ({
+    eventIds,
+    seriesId,
+  }: {
+    eventIds: string[];
+    seriesId: Types.ObjectId;
+  }): Promise<void> => {
+    const requests = eventIds.map((_id) =>
+      ZwiftEvent.findOneAndUpdate({ _id }, { $set: { seriesId } })
+    );
+
+    await Promise.all(requests);
   };
 }

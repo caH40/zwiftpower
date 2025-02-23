@@ -9,10 +9,11 @@ import FormOrganizerSeriesCreate from '../../../../components/UI/FormOrganizerSe
 
 import styles from './OrganizerSeriesCreate.module.css';
 
+// Установочные данны при создании серии.
 const initialData = {
   name: '',
-  hasGeneral: false,
-  hasTeams: false,
+  hasGeneral: true,
+  hasTeams: true,
   isFinished: false,
   logoUrls: null,
   posterUrls: null,
@@ -24,11 +25,13 @@ const initialData = {
     //   _id: '67b0cb7b26c9b687b7b0a334',
     //   eventStart: '2025-02-16T08:00:12.000+0000',
     //   name: 'ETALON team RACE',
+    //   order: 1,
     // },
     // {
     //   _id: '67b0cbca26c9b687b7b0a4b4',
     //   eventStart: '2025-02-16T09:00:00.000+0000',
     //   name: 'ETALON team RACE',
+    //   order: 2,
     // },
   ],
 };
@@ -50,7 +53,6 @@ export default function OrganizerSeriesCreate({ organizerId }) {
   }, [dispatch, organizerId]);
   return (
     <section className={styles.wrapper}>
-      {/* !!!!!!!!!!Добавить условие загрузки данных серии */}
       {statusFetchEvents === 'resolved' && (
         <FormOrganizerSeriesCreate
           isCreating={true}

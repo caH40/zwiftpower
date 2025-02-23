@@ -222,8 +222,8 @@ export type TQueryParamsNotifications = {
  */
 export type SeriesDataFromClientForCreate = Omit<
   TSeries,
-  '_id' | 'urlSlug' | 'scoringAlgorithms' | 'logoFileInfo' | 'scoringAlgorithms'
-> & { scoringAlgorithmsId: string };
+  '_id' | 'urlSlug' | 'scoringAlgorithms' | 'logoFileInfo' | 'scoringAlgorithms' | 'stages'
+> & { scoringAlgorithmsId: string; stages: { event: string; order: number }[] };
 
 /**
  * Данные после десериализации для создания Серии, которые пришли с клиента в формате FormData.

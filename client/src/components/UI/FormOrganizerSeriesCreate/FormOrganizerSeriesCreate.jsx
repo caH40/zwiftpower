@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
+import cn from 'classnames/bind';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { getDateTimeStart } from '../../../utils/date-local';
 import { fetchPostSeriesOrganizer } from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
-import {
-  fetchGetOrganizerModerator,
-  fetchPutOrganizersMainData,
-} from '../../../redux/features/api/organizer/fetchOrganizerModerator';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
@@ -19,6 +16,8 @@ import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 import StagesInSeries from '../../StagesInSeries/StagesInSeries';
 
 import styles from './FormOrganizerSeriesCreate.module.css';
+
+const cx = cn.bind(styles);
 
 // Сегодняшняя дата для инициализации в формате dd-mm-yyyy.
 const dateNow = getDateTimeStart(new Date().toISOString()).date;
@@ -46,6 +45,9 @@ export default function FormOrganizerSeriesCreate({
   },
   loading,
 }) {
+  // Статус загрузки текущей формы на сервер.
+  const [loadingForm, setLoadingForm] = useState(false);
+
   // Ссылка на лого Организатора.
   const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
 
@@ -84,22 +86,30 @@ export default function FormOrganizerSeriesCreate({
     defaultValues: { logoFile: null, posterFile: null },
   });
 
+  // Обработчик отправки формы на сервер.
   const onSubmit = async (formData) => {
-    // Необходима сериализация данных перед передачей на сервер, так как передаются данные типа File (изображения).
+    try {
+      setLoadingForm(true);
 
-    const serializedSeriesData = serializeOrganizerSeriesCreate({
-      ...formData,
-      stages: stagesAdded,
-    });
+      // Сериализация данных перед отправкой на сервер.
+      const serializedSeriesData = serializeOrganizerSeriesCreate({
+        ...formData,
+        stages: stagesAdded,
+      });
 
-    dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).then((data) => {
-      if (data.meta.requestStatus === 'fulfilled') {
-        dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
-        // reset(); // Очистка полей формы.
-      } else {
-        return; // Ошибка обрабатывается в sendNotification
-      }
-    });
+      const data = await dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).unwrap();
+
+      // Успешный результат.
+      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+
+      // Очистка полей формы
+      reset();
+      setStagesAdded([]);
+    } catch (error) {
+      console.log(error); // eslint-disable-line
+    } finally {
+      setLoadingForm(false);
+    }
   };
 
   // Удаление Эвента(этапа) из серии.
@@ -110,25 +120,60 @@ export default function FormOrganizerSeriesCreate({
 
   // Добавление Эвента(этапа) в серию.
   const addStage = (currentStage) => {
-    setStagesAdded((prev) => [...prev, currentStage]);
+    setStagesAdded((prev) => {
+      // Получение последнего номера Этапа для вычисления следующего номера.
+      const orders = prev.map((e) => (isNaN(e.order) ? 0 : e.order));
+      const lastOrder = Math.max(...orders, 0);
+
+      return [...prev, { ...currentStage, order: lastOrder + 1 }];
+    });
     setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
   };
 
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wrapper__fields}>
+        <div className={styles.box__checkbox}>
+          <span>Наличие команд</span>
+          <CheckboxRFH
+            register={register('hasTeams')}
+            id={'hasTeams-FormOrganizerSeriesCreate'}
+            loading={loading}
+            tooltip={'Расчет/отображение командного расчета'}
+          />
+        </div>
+
+        <div className={styles.box__checkbox}>
+          <span>Отображение итоговых таблиц</span>
+          <CheckboxRFH
+            register={register('hasGeneral')}
+            id={'hasGeneral-FormOrganizerSeriesCreate'}
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.box__checkbox}>
+          <span>Серия завершена</span>
+          <CheckboxRFH
+            register={register('isFinished')}
+            id={'isFinished-FormOrganizerSeriesCreate'}
+            loading={loading}
+            tooltip={'запрет на обновление итоговых таблиц'}
+          />
+        </div>
+
         <div className={styles.wrapper__input}>
           <InputAuth
             label={'Название (добавляйте год для уникальности)'}
             register={register('name', {
               required: 'Обязательное поле',
               minLength: { value: 6, message: 'Больше 5ти символов' },
-              maxLength: { value: 30, message: 'Не больше 30 символов' },
+              maxLength: { value: 50, message: 'Не больше 50 символов' },
             })}
             validationText={errors.name?.message || ''}
             input={{ id: 'name-FormOrganizerSeriesCreate', type: 'text' }}
             placeholder="Название всей серии заездов"
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
 
@@ -154,7 +199,7 @@ export default function FormOrganizerSeriesCreate({
             })}
             validationText={errors.dateStart?.message || ''}
             input={{ id: 'dateStart-FormOrganizerSeriesCreate', type: 'date' }}
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
 
@@ -180,7 +225,7 @@ export default function FormOrganizerSeriesCreate({
             })}
             validationText={errors.dateEnd?.message || ''}
             input={{ id: 'dateEnd-FormOrganizerSeriesCreate', type: 'date' }}
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
 
@@ -280,9 +325,9 @@ export default function FormOrganizerSeriesCreate({
                 message: 'Длина текста не более 300 символов.',
               },
             })}
-            label={'Короткое описание(цель, девиз, не более 200 символов)'}
+            label={'Короткое описание (цель, девиз, не более 200 символов)'}
             validationText={errors.mission?.message || ''}
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
 
@@ -292,7 +337,7 @@ export default function FormOrganizerSeriesCreate({
             register={register('description')}
             label={'Описание'}
             validationText={errors.description?.message || ''}
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
 
@@ -302,19 +347,19 @@ export default function FormOrganizerSeriesCreate({
             register={register('rules')}
             label={'Правила'}
             validationText={errors.rules?.message || ''}
-            loading={loading}
+            loading={loading || loadingForm}
           />
         </div>
       </div>
 
-      <div className={styles.wrapper__stages}>
+      <div className={cx('wrapper__stages', { inactive: loading || loadingForm })}>
         <StagesInSeries stages={stagesAdded} action="delete" handleAction={deleteStage} />
 
         <StagesInSeries stages={events} action="add" handleAction={addStage} />
       </div>
 
       <div className={styles.box__btn}>
-        <Button>Отправить</Button>
+        <Button disabled={loading || loadingForm}>Отправить</Button>
       </div>
     </form>
   );

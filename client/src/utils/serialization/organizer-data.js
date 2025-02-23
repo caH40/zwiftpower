@@ -23,8 +23,7 @@ export function serializeOrganizerSeriesCreate(data) {
   const formData = new FormData();
 
   if (data.stages && Array.isArray(data.stages)) {
-    // FIXME: Изменить ORDER на stage.order
-    data.stages = data.stages.map((stage) => ({ event: stage._id, order: 1 }));
+    data.stages = data.stages.map((stage) => ({ event: stage._id, order: stage.order }));
   }
 
   Object.entries(data)

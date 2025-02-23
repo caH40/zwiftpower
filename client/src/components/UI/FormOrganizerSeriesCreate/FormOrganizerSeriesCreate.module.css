@@ -41,10 +41,13 @@
 .wrapper__file:focus-within {
   background-color: var(--focus-within);
 }
-
 .wrapper__stages {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 1rem;
+}
+.inactive {
+  opacity: 0.5;
+  pointer-events: none;
 }
