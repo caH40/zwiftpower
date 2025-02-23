@@ -1,3 +1,23 @@
-export default function OrganizerSeriesList() {
-  return <div>OrganizerSeriesList</div>;
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { fetchGetSeriesOrganizer } from '../../../../redux/features/api/series/fetchSeries';
+
+import styles from './OrganizerSeriesList.module.css';
+
+/**
+ * Страница со всеми сериями заездов, созданных Организатором.
+ */
+export default function OrganizerSeriesList({ organizerId }) {
+  const { series } = useSelector((state) => state.seriesOrganizer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGetSeriesOrganizer({ organizerId }));
+  }, []);
+
+  // console.log(series);
+
+  return <section className={styles.wrapper}>OrganizerSeriesList</section>;
 }

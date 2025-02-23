@@ -97,6 +97,7 @@ export default function FormOrganizerSeriesCreate({
         stages: stagesAdded,
       });
 
+      // .unwrap() возвращает промис, для работы с async/await
       const data = await dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).unwrap();
 
       // Успешный результат.

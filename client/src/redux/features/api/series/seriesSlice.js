@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchPostSeriesOrganizer } from './fetchSeries';
+import { fetchGetSeriesOrganizer, fetchPostSeriesOrganizer } from './fetchSeries';
 
 const initialState = {
+  series: [],
   message: null,
   status: null,
   error: null,
@@ -14,10 +15,14 @@ const initialState = {
 const seriesOrganizerSlice = createSlice({
   name: 'seriesOrganizer',
   initialState,
-  reducers: {},
+  reducers: {
+    resetSeriesOrganizer: (state) => {
+      state.series = [];
+    },
+  },
 
   extraReducers: (builder) => {
-    // ============== получение данных о добавленных клубах у Организатора =================
+    // ============== создание Серии заездов =================
     builder.addCase(fetchPostSeriesOrganizer.pending, (state) => {
       state.error = null;
       state.status = 'loading';
@@ -34,8 +39,25 @@ const seriesOrganizerSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ============== получение данных о клубах =================
+    // ============== получение всех Серий заездов организатора =================
+    builder.addCase(fetchGetSeriesOrganizer.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetSeriesOrganizer.fulfilled, (state, action) => {
+      state.series = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetSeriesOrganizer.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
+
+export const { resetSeriesOrganizer } = seriesOrganizerSlice.actions;
 
 export default seriesOrganizerSlice.reducer;

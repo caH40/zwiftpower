@@ -5,6 +5,27 @@ import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 
 /**
+ * Все Серии заездов Организатора.
+ */
+export const fetchGetSeriesOrganizer = createAsyncThunk(
+  'seriesOrganizer/get',
+  async (_, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Создание Серии заездов Организатором.
  */
 export const fetchPostSeriesOrganizer = createAsyncThunk(
@@ -12,7 +33,7 @@ export const fetchPostSeriesOrganizer = createAsyncThunk(
   async (dataFromForm, thunkAPI) => {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/series`,
+        url: `${serverExpress}/api/organizer/series`,
         method: 'post',
         data: dataFromForm,
         headers: { 'Content-Type': 'multipart/form-data' },

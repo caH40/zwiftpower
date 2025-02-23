@@ -17,8 +17,12 @@ import {
   putOrganizerMain,
 } from '../controllers/organizer.js';
 import { fileMiddleware } from '../middleware/file.js';
+import { SeriesController } from '../controllers/series.js';
+import { getEventsForSeries } from '../controllers/race.js';
 
 export const routerOrganizer = Router();
+
+const seriesController = new SeriesController();
 
 routerOrganizer.put('/bots', authOrganizer, putOrganizerBotZwift);
 routerOrganizer.get('/bots', authOrganizer, getOrganizerBotZwift);
@@ -34,7 +38,6 @@ routerOrganizer.get('/clubs/zwift/:clubId', authOrganizer, getClubZwift);
 routerOrganizer.post('/clubs/', authOrganizer, postClubsZwift);
 routerOrganizer.put('/clubs/moderators', authOrganizer, addClubModerator);
 routerOrganizer.delete('/clubs/moderators', authOrganizer, deleteClubModerator);
-routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);
 routerOrganizer.get('/organizers-for-moderator/:userModeratorId', getOrganizersForModerator);
 routerOrganizer.put(
   '/main',
@@ -45,3 +48,18 @@ routerOrganizer.put(
   ]),
   putOrganizerMain
 );
+routerOrganizer.get('/series', authOrganizer, seriesController.getAll);
+routerOrganizer.get('/series/urlSlug', seriesController.get);
+routerOrganizer.post(
+  '/series',
+  authOrganizer,
+  fileMiddleware([
+    { name: 'logoFile', maxCount: 1 },
+    { name: 'posterFile', maxCount: 1 },
+  ]),
+  seriesController.post
+);
+routerOrganizer.get('/series/events', authOrganizer, getEventsForSeries);
+
+// Из-за жадного поиска динамический маршрут перенесён в конец модуля.
+routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);

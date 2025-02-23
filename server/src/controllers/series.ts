@@ -25,17 +25,23 @@ export class SeriesController {
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.
    */
-  public async getAll(req: Request, res: Response): Promise<Response | void> {
+  public getAll = async (req: Request, res: Response): Promise<Response | void> => {
     try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId } = req.params;
+
+      // Проверка, что запрос происходит от Организатора.
+      const organizerId = await this.checkOrganizer(userId);
+
       // Вызов сервиса.
-      const response = await this.seriesService.getAll();
+      const response = await this.seriesService.getAll(organizerId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
     } catch (error) {
       handleErrorInController(res, error);
     }
-  }
+  };
 
   // Получение запрашиваемой серии заездов.
   public async get() {}

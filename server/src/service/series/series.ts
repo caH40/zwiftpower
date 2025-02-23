@@ -14,8 +14,11 @@ export class SeriesService {
   constructor() {}
 
   // Получение всех серий заездов.
-  public async getAll() {
-    console.log('SeriesServiceGetAll'); //eslint-disable-line
+  public async getAll(organizerId: Types.ObjectId) {
+    const seriesDB = await NSeriesModel.find({ organizer: organizerId });
+    // console.log(seriesDB); //eslint-disable-line
+
+    return { data: seriesDB, message: 'Все Серии заездов, созданные организатором.' };
   }
 
   // Получение запрашиваемой серии заездов.

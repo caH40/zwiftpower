@@ -44,7 +44,7 @@ export const fetchEventsForSeries = createAsyncThunk(
   async function (_, thunkAPI) {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/series/events`,
+        url: `${serverExpress}/api/organizer/series/events`,
         method: 'get',
       });
 
