@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetSeriesOrganizer, fetchPostSeriesOrganizer } from './fetchSeries';
+import {
+  fetchDeleteSeriesOrganizer,
+  fetchGetSeriesOrganizer,
+  fetchPostSeriesOrganizer,
+} from './fetchSeries';
 
 const initialState = {
   series: [],
@@ -52,6 +56,22 @@ const seriesOrganizerSlice = createSlice({
     });
 
     builder.addCase(fetchGetSeriesOrganizer.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== получение всех Серий заездов организатора =================
+    builder.addCase(fetchDeleteSeriesOrganizer.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchDeleteSeriesOrganizer.fulfilled, (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchDeleteSeriesOrganizer.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

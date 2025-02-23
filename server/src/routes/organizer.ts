@@ -49,6 +49,7 @@ routerOrganizer.put(
   putOrganizerMain
 );
 routerOrganizer.get('/series', authOrganizer, seriesController.getAll);
+routerOrganizer.delete('/series', authOrganizer, seriesController.delete);
 routerOrganizer.get('/series/urlSlug', seriesController.get);
 routerOrganizer.post(
   '/series',

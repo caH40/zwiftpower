@@ -11,12 +11,15 @@ import { Types } from 'mongoose';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { TOrganizerSeriesAllResponseDB } from '../../types/mongodb-response.types.js';
 import { organizerSeriesAllDto } from '../../dto/series.js';
+import { TOrganizerSeriesAllDto } from '../../types/dto.interface.js';
 
 export class SeriesService {
   constructor() {}
 
   // Получение всех серий заездов.
-  public async getAll(organizerId: Types.ObjectId) {
+  public async getAll(
+    organizerId: Types.ObjectId
+  ): Promise<TResponseService<TOrganizerSeriesAllDto[]>> {
     const seriesDB = await NSeriesModel.find(
       { organizer: organizerId },
       SeriesService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
@@ -36,6 +39,19 @@ export class SeriesService {
   public async get({ urlSlug }: { urlSlug: string }) {
     console.log('SeriesServiceGet', urlSlug); //eslint-disable-line
   }
+
+  /**
+   * Сервис удаления Серии заездов.
+   */
+  public delete = async ({
+    seriesId,
+  }: {
+    seriesId: string;
+  }): Promise<TResponseService<null>> => {
+    console.log('SeriesServiceDelete', seriesId); //eslint-disable-line
+
+    return { data: null, message: `Удалена серия с названием ${seriesId}` };
+  };
 
   // Создание серии заездов.
   public async post({

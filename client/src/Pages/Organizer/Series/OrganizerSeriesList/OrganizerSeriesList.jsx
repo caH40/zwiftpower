@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { fetchGetSeriesOrganizer } from '../../../../redux/features/api/series/fetchSeries';
+import TableSeriesOrganizer from '../../../../components/Tables/TableSeriesOrganizer/TableSeriesOrganizer';
 
 import styles from './OrganizerSeriesList.module.css';
 
@@ -11,8 +12,6 @@ import styles from './OrganizerSeriesList.module.css';
 export default function OrganizerSeriesList({ organizerId }) {
   const { series } = useSelector((state) => state.seriesOrganizer);
 
-  console.log(series);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,5 +20,9 @@ export default function OrganizerSeriesList({ organizerId }) {
 
   // console.log(series);
 
-  return <section className={styles.wrapper}>OrganizerSeriesList</section>;
+  return (
+    <section className={styles.wrapper}>
+      {!!series?.length && <TableSeriesOrganizer series={series} />}
+    </section>
+  );
 }

@@ -17,6 +17,9 @@ const OrganizerSeriesCreate = lazy(() =>
 const OrganizerSeriesEdit = lazy(() =>
   import('../Pages/Organizer/Series/OrganizerSeriesEdit/OrganizerSeriesEdit')
 );
+const OrganizerSeriesCurrentEdit = lazy(() =>
+  import('../Pages/Organizer/Series/OrganizerSeriesEdit/OrganizerSeriesCurrentEdit')
+);
 
 export function OrganizerRoute(organizerId) {
   return (
@@ -35,6 +38,7 @@ export function OrganizerRoute(organizerId) {
               element={<OrganizerSeriesCreate organizerId={organizerId} />}
             />
             <Route path="edit" element={<OrganizerSeriesEdit organizerId={organizerId} />} />
+            <Route path="edit/:seriesId" element={<OrganizerSeriesCurrentEdit />} />
           </Route>
         </Route>
       )}

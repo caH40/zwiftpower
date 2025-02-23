@@ -86,7 +86,37 @@ export class SeriesController {
   };
 
   // Обновление данных серии заездов.
-  public async put() {}
+  // public put = async (req: Request, res: Response): Promise<Response | void> => {};
+
+  /**
+   * Удаление серии заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public delete = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId } = req.params;
+
+      // Проверка, что запрос происходит от Организатора.
+      await this.checkOrganizer(userId);
+
+      const { seriesId } = req.body;
+
+      if (!seriesId) {
+        throw new Error('Не получен seriesId для удалении Серии заездов!');
+      }
+
+      // Вызов сервиса.
+      const response = await this.seriesService.delete({ seriesId });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 
   /**
    * Проверка, что запрос происходит от Организатора.

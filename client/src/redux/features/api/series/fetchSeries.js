@@ -47,3 +47,25 @@ export const fetchPostSeriesOrganizer = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Удаление Серии заездов Организатором.
+ */
+export const fetchDeleteSeriesOrganizer = createAsyncThunk(
+  'seriesOrganizer/delete',
+  async ({ seriesId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series`,
+        method: 'delete',
+        data: { seriesId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

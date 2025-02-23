@@ -1,0 +1,13 @@
+.img {
+  object-fit: cover;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--color-bg-minor);
+}
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: var(--color-yellow-5);
+}
