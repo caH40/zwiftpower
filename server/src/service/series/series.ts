@@ -9,9 +9,12 @@ import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js'
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { Types } from 'mongoose';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { TOrganizerSeriesAllResponseDB } from '../../types/mongodb-response.types.js';
-import { organizerSeriesAllDto } from '../../dto/series.js';
-import { TOrganizerSeriesAllDto } from '../../types/dto.interface.js';
+import {
+  TOrganizerSeriesAllResponseDB,
+  TOrganizerSeriesOneResponseDB,
+} from '../../types/mongodb-response.types.js';
+import { organizerSeriesAllDto, organizerSeriesOneDto } from '../../dto/series.js';
+import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
 
 export class SeriesService {
   constructor() {}
@@ -23,7 +26,9 @@ export class SeriesService {
     const seriesDB = await NSeriesModel.find(
       { organizer: organizerId },
       SeriesService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
-    ).lean<TOrganizerSeriesAllResponseDB[]>();
+    )
+      .populate({ path: 'stages.event', select: ['name', 'eventStart'] })
+      .lean<TOrganizerSeriesAllResponseDB[]>();
 
     const seriesAfterDto = organizerSeriesAllDto(seriesDB);
 
@@ -35,9 +40,35 @@ export class SeriesService {
     return { data: seriesAfterDto, message: 'Все Серии заездов, созданные организатором.' };
   }
 
-  // Получение запрашиваемой серии заездов.
-  public async get({ urlSlug }: { urlSlug: string }) {
-    console.log('SeriesServiceGet', urlSlug); //eslint-disable-line
+  /**
+   * Получение запрашиваемой серии заездов.
+   */
+  public async get({
+    seriesId,
+    organizerId,
+  }: {
+    seriesId: string;
+    organizerId: Types.ObjectId;
+  }): Promise<TResponseService<TOrganizerSeriesOneDto>> {
+    const seriesDB = await NSeriesModel.findOne({
+      _id: seriesId,
+      organizer: organizerId,
+    })
+      .populate({ path: 'stages.event', select: ['name', 'eventStart'] })
+      .lean<TOrganizerSeriesOneResponseDB>();
+
+    if (!seriesDB) {
+      throw new Error(
+        `Не найдена запрашиваемая серия с _id: "${seriesId}", Организатором с _id: "${organizerId}"`
+      );
+    }
+
+    const seriesOneAfterDto = organizerSeriesOneDto(seriesDB);
+
+    return {
+      data: seriesOneAfterDto,
+      message: 'Данные запрашиваемой Серии заездов для редактирования.',
+    };
   }
 
   /**
@@ -168,7 +199,7 @@ export class SeriesService {
     ).lean<{ shortName: string }>();
 
     if (!organizerDB) {
-      throw new Error(`Организатор с ID ${organizerId} не найден.`);
+      throw new Error(`Организатор с _id: "${organizerId}" не найден.`);
     }
 
     return { shortName: organizerDB.shortName };

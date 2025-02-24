@@ -16,10 +16,13 @@ export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   type: TSeriesType;
 }
 
-const SeriesStageSchema = new Schema<TSeriesStage>({
-  event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
-  order: { type: Number },
-});
+const SeriesStageSchema = new Schema<TSeriesStage>(
+  {
+    event: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
+    order: { type: Number },
+  },
+  { _id: false }
+);
 
 const NSeriesSchema = new Schema<ISeriesDocument>({
   dateEnd: { type: Date, required: true },

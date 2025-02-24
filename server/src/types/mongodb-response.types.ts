@@ -41,10 +41,26 @@ export type TOrganizerSeriesAllResponseDB = Pick<
   | 'dateEnd'
   | 'dateStart'
   | 'isFinished'
-  | 'stages'
   | 'logoFileInfo'
   | 'name'
   | 'posterFileInfo'
   | 'urlSlug'
   | 'type'
->;
+> & { stages: TStage[] };
+
+// Этап полученный при использовании populate.
+type TStage = {
+  event: {
+    _id: Types.ObjectId;
+    eventStart: string;
+    name: string;
+  };
+  order: number;
+};
+
+/**
+ * Данные Серии заездов для Организатора для редактирования.
+ */
+export type TOrganizerSeriesOneResponseDB = Omit<TSeries, 'stages'> & {
+  stages: TStage[];
+};

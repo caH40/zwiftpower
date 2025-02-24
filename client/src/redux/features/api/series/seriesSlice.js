@@ -2,12 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   fetchDeleteSeriesOrganizer,
+  fetchGetOneSeriesOrganizer,
   fetchGetSeriesOrganizer,
   fetchPostSeriesOrganizer,
+  fetchPutSeriesOrganizer,
 } from './fetchSeries';
 
 const initialState = {
   series: [],
+  seriesOne: null,
   message: null,
   status: null,
   error: null,
@@ -22,6 +25,9 @@ const seriesOrganizerSlice = createSlice({
   reducers: {
     resetSeriesOrganizer: (state) => {
       state.series = [];
+    },
+    resetSeriesOneOrganizer: (state) => {
+      state.seriesOne = null;
     },
   },
 
@@ -66,7 +72,7 @@ const seriesOrganizerSlice = createSlice({
       state.status = 'loading';
     });
 
-    builder.addCase(fetchDeleteSeriesOrganizer.fulfilled, (state, action) => {
+    builder.addCase(fetchDeleteSeriesOrganizer.fulfilled, (state) => {
       state.error = null;
       state.status = 'resolved';
     });
@@ -75,9 +81,42 @@ const seriesOrganizerSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== изменение данных Серии заездов =================
+    builder.addCase(fetchPutSeriesOrganizer.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchPutSeriesOrganizer.fulfilled, (state) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchPutSeriesOrganizer.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== получение Серии заездов организатора =================
+    builder.addCase(fetchGetOneSeriesOrganizer.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetOneSeriesOrganizer.fulfilled, (state, action) => {
+      state.seriesOne = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetOneSeriesOrganizer.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetSeriesOrganizer } = seriesOrganizerSlice.actions;
+export const { resetSeriesOrganizer, resetSeriesOneOrganizer } = seriesOrganizerSlice.actions;
 
 export default seriesOrganizerSlice.reducer;

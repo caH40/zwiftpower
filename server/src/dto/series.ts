@@ -1,5 +1,8 @@
-import { TOrganizerSeriesAllDto } from '../types/dto.interface.js';
-import { TOrganizerSeriesAllResponseDB } from '../types/mongodb-response.types.js';
+import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../types/dto.interface.js';
+import {
+  TOrganizerSeriesAllResponseDB,
+  TOrganizerSeriesOneResponseDB,
+} from '../types/mongodb-response.types.js';
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
@@ -14,8 +17,9 @@ export function organizerSeriesAllDto(
     const dateEnd = elm.dateEnd.toISOString();
 
     const stages = elm.stages.map((stage) => ({
-      _id: String(stage._id),
-      event: String(stage.event),
+      eventStart: stage.event.eventStart,
+      _id: String(stage.event._id),
+      name: stage.event.name,
       order: stage.order,
     }));
 
@@ -25,4 +29,29 @@ export function organizerSeriesAllDto(
 
     return { ...elm, stages, _id, dateStart, dateEnd, logoUrls, posterUrls };
   });
+}
+
+/**
+ * DTO получения серии заездов для редактирования организатором.
+ */
+export function organizerSeriesOneDto(
+  series: TOrganizerSeriesOneResponseDB
+): TOrganizerSeriesOneDto {
+  const _id = String(series._id);
+  const dateStart = series.dateStart.toISOString().split('T')[0];
+  const dateEnd = series.dateEnd.toISOString().split('T')[0];
+
+  const stages = series.stages.map((stage) => ({
+    eventStart: stage.event.eventStart,
+    _id: String(stage.event._id),
+    name: stage.event.name,
+    order: stage.order,
+  }));
+  const description = series.description;
+
+  // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
+  const logoUrls = createUrlsToFileCloud(series.logoFileInfo);
+  const posterUrls = createUrlsToFileCloud(series.posterFileInfo);
+
+  return { ...series, description, _id, dateStart, dateEnd, stages, logoUrls, posterUrls };
 }

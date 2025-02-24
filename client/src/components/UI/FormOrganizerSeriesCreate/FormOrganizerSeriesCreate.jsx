@@ -27,9 +27,8 @@ const dateNow = getDateTimeStart(new Date().toISOString()).date;
  */
 export default function FormOrganizerSeriesCreate({
   isCreating,
-  organizerId,
   eventsForSeries,
-  series: {
+  seriesOne: {
     dateStart,
     dateEnd,
     name,
@@ -48,16 +47,16 @@ export default function FormOrganizerSeriesCreate({
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
 
-  // Ссылка на лого Организатора.
-  const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
-
   // Эвенты для добавления в Серию заездов.
   const [events, setEvents] = useState(eventsForSeries);
 
   // Эвенты добавленные в Серию заездов.
   const [stagesAdded, setStagesAdded] = useState(stages);
 
-  // Ссылка на постер Организатора.
+  // Ссылка на лого Организатора. Используется в форме редактирования, для отображения изображения с сервера.
+  const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
+
+  // Ссылка на постер Организатора. Используется в форме редактирования, для отображения изображения с сервера.
   const [posterSrcState, setPosterSrcState] = useState(posterUrls?.small);
 
   const dispatch = useDispatch();
@@ -90,22 +89,23 @@ export default function FormOrganizerSeriesCreate({
   const onSubmit = async (formData) => {
     try {
       setLoadingForm(true);
+      console.log(stagesAdded);
 
       // Сериализация данных перед отправкой на сервер.
-      const serializedSeriesData = serializeOrganizerSeriesCreate({
-        ...formData,
-        stages: stagesAdded,
-      });
+      // const serializedSeriesData = serializeOrganizerSeriesCreate({
+      //   ...formData,
+      //   stages: stagesAdded,
+      // });
 
-      // .unwrap() возвращает промис, для работы с async/await
-      const data = await dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).unwrap();
+      // // .unwrap() возвращает промис, для работы с async/await
+      // const data = await dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).unwrap();
 
-      // Успешный результат.
-      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+      // // Успешный результат.
+      // dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
 
-      // Очистка полей формы
-      reset();
-      setStagesAdded([]);
+      // // Очистка полей формы
+      // reset();
+      // setStagesAdded([]);
     } catch (error) {
       console.log(error); // eslint-disable-line
     } finally {

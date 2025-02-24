@@ -50,7 +50,6 @@ routerOrganizer.put(
 );
 routerOrganizer.get('/series', authOrganizer, seriesController.getAll);
 routerOrganizer.delete('/series', authOrganizer, seriesController.delete);
-routerOrganizer.get('/series/urlSlug', seriesController.get);
 routerOrganizer.post(
   '/series',
   authOrganizer,
@@ -63,4 +62,5 @@ routerOrganizer.post(
 routerOrganizer.get('/series/events', authOrganizer, getEventsForSeries);
 
 // Из-за жадного поиска динамический маршрут перенесён в конец модуля.
+routerOrganizer.get('/series/:seriesId', authOrganizer, seriesController.get);
 routerOrganizer.get('/:organizerId', authOrganizer, getClubZwiftModerator);

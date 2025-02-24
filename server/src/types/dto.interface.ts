@@ -1,5 +1,5 @@
 // types
-import { TOrganizer } from './model.interface';
+import { TOrganizer, TSeries } from './model.interface';
 import {
   TEventsForSeriesResponseDB,
   TOrganizerSeriesAllResponseDB,
@@ -49,11 +49,30 @@ export type TOrganizerSeriesAllDto = Omit<
   '_id' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls' | 'stages'
 > & {
   _id: string;
-  stages: {
-    _id: string;
-    event: string;
-    order: number;
-  }[];
+  stages: TStageClient[];
+  dateStart: string;
+  dateEnd: string;
+  logoUrls: Record<string, string> | undefined;
+  posterUrls: Record<string, string> | undefined;
+};
+
+// Данные Этапа для клиента.
+type TStageClient = {
+  _id: string;
+  eventStart: string;
+  name: string;
+  order: number;
+};
+
+/**
+ * DTO данных по Сериям для организатора.
+ */
+export type TOrganizerSeriesOneDto = Omit<
+  TSeries,
+  '_id' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls' | 'stages'
+> & {
+  _id: string;
+  stages: TStageClient[];
   dateStart: string;
   dateEnd: string;
   logoUrls: Record<string, string> | undefined;

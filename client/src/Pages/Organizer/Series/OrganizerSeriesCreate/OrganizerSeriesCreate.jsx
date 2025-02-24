@@ -39,7 +39,7 @@ const initialData = {
 /**
  * Страница создания Серии заездов.
  */
-export default function OrganizerSeriesCreate({ organizerId }) {
+export default function OrganizerSeriesCreate() {
   const { eventsForSeries, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
@@ -50,14 +50,13 @@ export default function OrganizerSeriesCreate({ organizerId }) {
     dispatch(fetchEventsForSeries());
 
     return () => dispatch(resetEventsForSeries());
-  }, [dispatch, organizerId]);
+  }, [dispatch]);
   return (
     <section className={styles.wrapper}>
       {statusFetchEvents === 'resolved' && (
         <FormOrganizerSeriesCreate
           isCreating={true}
-          organizerId={organizerId}
-          series={initialData}
+          seriesOne={initialData}
           eventsForSeries={eventsForSeries}
           loading={statusFetchEvents === 'loading'}
         />

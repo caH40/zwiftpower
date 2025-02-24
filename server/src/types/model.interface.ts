@@ -688,7 +688,6 @@ export type TSeriesType = 'series' | 'tour' | 'catchUp' | 'criterium';
  * Этап серии соревнований.
  */
 export type TSeriesStage = {
-  _id: Types.ObjectId;
   event: mongoose.Schema.Types.ObjectId; // Ссылка на документ заезда (этапа).
   order: number; // Номер этапа в серии.
 };

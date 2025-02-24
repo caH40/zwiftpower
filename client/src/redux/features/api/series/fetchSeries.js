@@ -26,6 +26,50 @@ export const fetchGetSeriesOrganizer = createAsyncThunk(
 );
 
 /**
+ * Все Серии заездов Организатора.
+ */
+export const fetchGetOneSeriesOrganizer = createAsyncThunk(
+  'seriesOneOrganizer/get',
+  async ({ seriesId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series/${seriesId}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
+ * Изменение данных Серии заездов Организатора.
+ */
+export const fetchPutSeriesOrganizer = createAsyncThunk(
+  'seriesOrganizer/put',
+  async (dataFromForm, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series`,
+        method: 'put',
+        data: dataFromForm,
+        headers: { 'Content-type': 'multipart/form-data' },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Создание Серии заездов Организатором.
  */
 export const fetchPostSeriesOrganizer = createAsyncThunk(

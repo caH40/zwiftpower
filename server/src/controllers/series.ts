@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 import { handleErrorInController } from '../errors/error.js';
 import { SeriesService } from '../service/series/series.js';
@@ -43,8 +43,29 @@ export class SeriesController {
     }
   };
 
-  // Получение запрашиваемой серии заездов.
-  public async get() {}
+  /**
+   * Получение запрашиваемой серии заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public get = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId, seriesId } = req.params;
+
+      // Проверка, что запрос происходит от Организатора.
+      const organizerId = await this.checkOrganizer(userId);
+
+      // Вызов сервиса.
+      const response = await this.seriesService.get({ seriesId, organizerId });
+
+      // Возврат успешного ответа
+      res.status(201).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 
   /**
    * Создание серии заездов.
@@ -122,6 +143,10 @@ export class SeriesController {
    * Проверка, что запрос происходит от Организатора.
    */
   public async checkOrganizer(userId: string): Promise<Types.ObjectId> {
+    // Проверка, что userId является валидным ObjectId.
+    if (!mongoose.isValidObjectId(userId)) {
+      throw new Error(`userId: "${userId}" НЕ является валидным ObjectId`);
+    }
     // Проверка, что запрос происходит от Организатора.
     const organizerDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean<{
       _id: Types.ObjectId;
