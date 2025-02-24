@@ -8,6 +8,7 @@ import { SeriesDataZSchema } from '../utils/deserialization/series-data.js';
 
 // types
 import { SeriesDataFromClientForCreate } from '../types/http.interface.js';
+import { NSeriesModel } from '../Model/NSeries.js';
 
 /**
  * Контроллер работы с сущностью "Серия заездов".
@@ -44,7 +45,7 @@ export class SeriesController {
   };
 
   /**
-   * Получение запрашиваемой серии заездов.
+   * Контроллер получения запрашиваемой серии заездов.
    * @param {Request} req - Запрос Express.
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.
@@ -68,7 +69,7 @@ export class SeriesController {
   };
 
   /**
-   * Создание серии заездов.
+   * Контроллер создания серии заездов.
    * @param {Request} req - Запрос Express.
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.
@@ -106,8 +107,47 @@ export class SeriesController {
     }
   };
 
-  // Обновление данных серии заездов.
-  // public put = async (req: Request, res: Response): Promise<Response | void> => {};
+  /**
+   * Контроллер обновления данных серии заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public put = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId } = req.params;
+
+      // Проверка, что запрос происходит от Организатора.
+      const organizerId = await this.checkOrganizer(userId);
+
+      // Получение файлов изображений, если они есть.
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const logoFile = files?.logoFile?.[0];
+      const posterFile = files?.posterFile?.[0];
+
+      // Десериализация данных из тела запроса.
+      const deserializedSeriesData = SeriesDataZSchema.parse(
+        req.body
+      ) as SeriesDataFromClientForCreate;
+
+      // Проверка, что изменяемая Серия заездов принадлежит Организатору, редактировавшего данную Серию.
+      await this.checkEditedSeries(deserializedSeriesData.seriesId, organizerId);
+
+      // Вызов сервиса.
+      const response = await this.seriesService.put({
+        ...deserializedSeriesData,
+        organizerId,
+        logoFile,
+        posterFile,
+      });
+
+      // Возврат успешного ответа
+      res.status(201).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 
   /**
    * Удаление серии заездов.
@@ -157,5 +197,34 @@ export class SeriesController {
     }
 
     return organizerDB._id;
+  }
+
+  /**
+   * Проверка, что изменяемая Серия заездов принадлежит Организатору, редактировавшего данную Серию.
+   */
+  public async checkEditedSeries(
+    seriesId: string | undefined,
+    organizerId: Types.ObjectId
+  ): Promise<void> {
+    if (!seriesId) {
+      throw new Error('Не получен seriesId');
+    }
+    // Проверка, что seriesId является валидным ObjectId.
+    if (!mongoose.isValidObjectId(seriesId)) {
+      throw new Error(`seriesId: "${seriesId}" НЕ является валидным ObjectId`);
+    }
+    // Проверка, что запрос происходит от Организатора.
+    const seriesDB = await NSeriesModel.findOne(
+      { _id: seriesId, organizer: organizerId },
+      { _id: true }
+    ).lean<{
+      _id: Types.ObjectId;
+    }>();
+
+    if (!seriesDB) {
+      throw new Error(
+        `У вас нет прав для изменения данной Серии с _id: "${seriesId}". Так как вы не являетесь Организатором данной Серии!`
+      );
+    }
   }
 }

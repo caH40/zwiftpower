@@ -33,7 +33,12 @@ function TableSeriesOrganizer({ series, organizerId }) {
                 <TdImage url={elm.posterUrls?.small} width={100} height={65} />
               </td>
               <td>
-                <TdImage url={elm.logoUrls?.original} width={60} height={60} />
+                <TdImage
+                  url={elm.logoUrls?.original}
+                  width={60}
+                  height={60}
+                  style={{ objectFit: 'fill' }}
+                />
               </td>
               <td>{elm.name}</td>
               <td>{elm.stages.length}</td>

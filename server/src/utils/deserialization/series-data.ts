@@ -99,6 +99,12 @@ export const SeriesDataZSchema = z
       .string()
       .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
       .describe('Тип серии.'),
+
+    seriesId: z
+      .string()
+      .transform(safeJsonParse)
+      .optional()
+      .describe('_id редактируемой серии, если данные из формы редактирования.'),
   })
   .refine(
     (data) => {

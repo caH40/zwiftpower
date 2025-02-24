@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -16,22 +16,26 @@ import styles from './OrganizerSeriesCurrentEdit.module.css';
  */
 export default function OrganizerSeriesCurrentEdit() {
   const { seriesId } = useParams();
+  const [trigger, setTrigger] = useState(false);
+  // Данные редактируемой серии.
   const { seriesOne, status: statusFetchSeriesOne } = useSelector(
     (state) => state.seriesOrganizer
   );
+
+  // Эвенты, которые можно добавить в Серю как этапы.
   const { eventsForSeries, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-  console.log(seriesOne);
 
   const dispatch = useDispatch();
+
   // Запрос на получение Эвентов Организатора.
   useEffect(() => {
     dispatch(fetchEventsForSeries());
     dispatch(fetchGetOneSeriesOrganizer({ seriesId }));
 
     return () => dispatch(resetEventsForSeries());
-  }, [dispatch, seriesId]);
+  }, [dispatch, seriesId, trigger]);
 
   // Успешный ответ от всех запросов данных.
   const isAllDataResolved =
@@ -45,6 +49,7 @@ export default function OrganizerSeriesCurrentEdit() {
           seriesOne={seriesOne}
           eventsForSeries={eventsForSeries}
           loading={statusFetchEvents === 'loading'}
+          setTrigger={setTrigger}
         />
       )}
     </section>

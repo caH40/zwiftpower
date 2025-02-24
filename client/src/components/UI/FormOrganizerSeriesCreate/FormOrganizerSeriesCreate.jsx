@@ -5,7 +5,10 @@ import cn from 'classnames/bind';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { getDateTimeStart } from '../../../utils/date-local';
-import { fetchPostSeriesOrganizer } from '../../../redux/features/api/series/fetchSeries';
+import {
+  fetchPostSeriesOrganizer,
+  fetchPutSeriesOrganizer,
+} from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
@@ -41,8 +44,10 @@ export default function FormOrganizerSeriesCreate({
     hasTeams,
     isFinished,
     type,
+    _id: seriesId,
   },
   loading,
+  setTrigger,
 }) {
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
@@ -89,23 +94,33 @@ export default function FormOrganizerSeriesCreate({
   const onSubmit = async (formData) => {
     try {
       setLoadingForm(true);
-      console.log(stagesAdded);
+      // console.log(stagesAdded);
 
       // Сериализация данных перед отправкой на сервер.
-      // const serializedSeriesData = serializeOrganizerSeriesCreate({
-      //   ...formData,
-      //   stages: stagesAdded,
-      // });
+      const serializedSeriesData = serializeOrganizerSeriesCreate({
+        ...formData,
+        stages: stagesAdded,
+        ...(!isCreating && { seriesId }),
+      });
 
-      // // .unwrap() возвращает промис, для работы с async/await
-      // const data = await dispatch(fetchPostSeriesOrganizer(serializedSeriesData)).unwrap();
+      const fetchHandler = isCreating ? fetchPostSeriesOrganizer : fetchPutSeriesOrganizer;
 
-      // // Успешный результат.
-      // dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+      // .unwrap() возвращает промис, для работы с async/await
+      const data = await dispatch(fetchHandler(serializedSeriesData)).unwrap();
 
-      // // Очистка полей формы
-      // reset();
-      // setStagesAdded([]);
+      // Успешный результат.
+      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+
+      if (isCreating) {
+        // Очистка полей формы
+        reset();
+        setStagesAdded([]);
+        setLogoSrcState(null);
+        setPosterSrcState(null);
+      } else {
+        // Триггер запускает запрос на получение обновлённых данных.
+        setTrigger((prev) => !prev);
+      }
     } catch (error) {
       console.log(error); // eslint-disable-line
     } finally {
@@ -116,18 +131,30 @@ export default function FormOrganizerSeriesCreate({
   // Удаление Эвента(этапа) из серии.
   const deleteStage = (currentStage) => {
     setStagesAdded((prev) => prev.filter((elm) => elm._id !== currentStage._id));
-    setEvents((prev) => [...prev, currentStage]);
+    setEvents((prev) => {
+      // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
+      if (prev.some((elm) => elm._id === currentStage._id)) {
+        return prev;
+      }
+      return [...prev, currentStage];
+    });
   };
 
   // Добавление Эвента(этапа) в серию.
   const addStage = (currentStage) => {
     setStagesAdded((prev) => {
+      // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
+      if (prev.some((elm) => elm._id === currentStage._id)) {
+        return prev;
+      }
+
       // Получение последнего номера Этапа для вычисления следующего номера.
       const orders = prev.map((e) => (isNaN(e.order) ? 0 : e.order));
       const lastOrder = Math.max(...orders, 0);
 
       return [...prev, { ...currentStage, order: lastOrder + 1 }];
     });
+
     setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
   };
 

@@ -59,6 +59,15 @@ routerOrganizer.post(
   ]),
   seriesController.post
 );
+routerOrganizer.put(
+  '/series',
+  authOrganizer,
+  fileMiddleware([
+    { name: 'logoFile', maxCount: 1 },
+    { name: 'posterFile', maxCount: 1 },
+  ]),
+  seriesController.put
+);
 routerOrganizer.get('/series/events', authOrganizer, getEventsForSeries);
 
 // Из-за жадного поиска динамический маршрут перенесён в конец модуля.

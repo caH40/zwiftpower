@@ -21,7 +21,6 @@ export default function TdImage({ url, width = 50, height = 35, layoutStyle, ...
           height={height}
           {...props}
           className={styles.img}
-          style={{ width, height }}
           alt={props.alt || 'Изображение'}
         />
       ) : (

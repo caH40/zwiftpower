@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { fetchGetSeriesOrganizer } from '../../../../redux/features/api/series/fetchSeries';
 import TableSeriesOrganizer from '../../../../components/Tables/TableSeriesOrganizer/TableSeriesOrganizer';
@@ -17,8 +17,6 @@ export default function OrganizerSeriesList({ organizerId }) {
   useEffect(() => {
     dispatch(fetchGetSeriesOrganizer({ organizerId }));
   }, []);
-
-  // console.log(series);
 
   return (
     <section className={styles.wrapper}>
