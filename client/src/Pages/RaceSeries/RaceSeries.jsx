@@ -8,6 +8,9 @@ import { fetchSeries } from '../../redux/features/api/seriesSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
 import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
+import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
+import CardSeries from '../../components/CardSeries/CardSeries';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './RaceSeries.module.css';
@@ -19,6 +22,10 @@ const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceSeries() {
   const { series, status: statusFetchSeries } = useSelector((state) => state.fetchSeries);
+
+  const { seriesPublic, status: statusFetchSeriesOne } = useSelector(
+    (state) => state.seriesPublicReducers
+  );
   useTitle('Серии и Туры заездов');
   const { isScreenLg: isDesktop } = useResize();
 
@@ -26,6 +33,9 @@ function RaceSeries() {
 
   useEffect(() => {
     dispatch(fetchSeries());
+    dispatch(fetchGetSeries());
+
+    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   useAd(adNumbers);
@@ -40,6 +50,17 @@ function RaceSeries() {
         <SkeletonTable status={statusFetchSeries} rows={1} />
 
         {!!series.length && statusFetchSeries === 'resolved' && <TableSeries series={series} />}
+
+        {/* Карточки серий */}
+        {!!seriesPublic.length &&
+          seriesPublic.map((elm) => (
+            <CardSeries
+              key={elm._id}
+              name={elm.name}
+              urlSlug={elm.urlSlug}
+              posterUrls={elm.posterUrls}
+            />
+          ))}
       </section>
 
       {isDesktop ? (

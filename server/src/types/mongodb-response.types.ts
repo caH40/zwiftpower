@@ -64,3 +64,19 @@ type TStage = {
 export type TOrganizerSeriesOneResponseDB = Omit<TSeries, 'stages'> & {
   stages: TStage[];
 };
+
+/**
+ * Данные по Сериям для пользователей.
+ */
+export type TSeriesAllPublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> & {
+  organizer: { _id: Types.ObjectId; name: string; shortName: string };
+  stages: {
+    event: {
+      _id: Types.ObjectId;
+      id: number;
+      eventStart: string;
+      name: string;
+    };
+    order: number;
+  }[];
+};

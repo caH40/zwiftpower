@@ -9,7 +9,7 @@ import {
 } from './fetchSeries';
 
 const initialState = {
-  series: [],
+  series: [], // Серии для Организаторов.
   seriesOne: null,
   message: null,
   status: null,

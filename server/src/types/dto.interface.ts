@@ -3,6 +3,7 @@ import { TOrganizer, TSeries } from './model.interface';
 import {
   TEventsForSeriesResponseDB,
   TOrganizerSeriesAllResponseDB,
+  TSeriesAllPublicResponseDB,
 } from './mongodb-response.types';
 import { EventWithSubgroup } from './types.interface';
 
@@ -73,6 +74,34 @@ export type TOrganizerSeriesOneDto = Omit<
 > & {
   _id: string;
   stages: TStageClient[];
+  dateStart: string;
+  dateEnd: string;
+  logoUrls: Record<string, string> | undefined;
+  posterUrls: Record<string, string> | undefined;
+};
+
+/**
+ * DTO данных по Сериям для организатора.
+ */
+export type TSeriesAllPublicDto = Omit<
+  TSeriesAllPublicResponseDB,
+  | '_id'
+  | 'dateStart'
+  | 'dateEnd'
+  | 'logoUrls'
+  | 'posterUrls'
+  | 'stages'
+  | 'scoringTable'
+  | 'scoringAlgorithms'
+> & {
+  _id: string;
+  stages: {
+    _id: string;
+    id: number;
+    eventStart: string;
+    name: string;
+    order: number;
+  }[];
   dateStart: string;
   dateEnd: string;
   logoUrls: Record<string, string> | undefined;

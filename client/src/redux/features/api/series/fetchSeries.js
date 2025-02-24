@@ -26,7 +26,7 @@ export const fetchGetSeriesOrganizer = createAsyncThunk(
 );
 
 /**
- * Все Серии заездов Организатора.
+ * Серия заездов Организатора.
  */
 export const fetchGetOneSeriesOrganizer = createAsyncThunk(
   'seriesOneOrganizer/get',
@@ -113,3 +113,21 @@ export const fetchDeleteSeriesOrganizer = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Все Серии заездов.
+ */
+export const fetchGetSeries = createAsyncThunk('nSeries/get', async (_, thunkAPI) => {
+  try {
+    const response = await myAxios({
+      url: `${serverExpress}/api/series`,
+      method: 'get',
+    });
+
+    return response.data;
+  } catch (error) {
+    const message = error.response.data.message || error.message;
+    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+    return thunkAPI.rejectWithValue(message);
+  }
+});

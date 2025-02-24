@@ -47,7 +47,7 @@ import { logsReducers } from './logs';
 import { streamsReducers } from './streams';
 import { organizerReducers } from './organizer';
 import { organizersPublicReducers } from './organizers-public';
-import { seriesOrganizerReducers } from './series';
+import { seriesOrganizerReducers, seriesPublicReducers } from './series';
 
 export default configureStore({
   reducer: {
@@ -96,6 +96,7 @@ export default configureStore({
     ...organizerReducers,
     ...organizersPublicReducers,
     ...seriesOrganizerReducers,
+    ...seriesPublicReducers,
   },
 });
 
