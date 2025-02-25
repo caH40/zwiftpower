@@ -13,7 +13,7 @@ import useTitle from '../../hook/useTitle';
 import AdMyPage from '../../components/AdMyPage/AdMyPage';
 import { fetchEvents, resetEventsSchedule } from '../../redux/features/api/eventsSlice';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
-// import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
+import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 
 import styles from './OrganizerPublic.module.css';
 
