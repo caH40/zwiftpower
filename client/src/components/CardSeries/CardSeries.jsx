@@ -14,7 +14,7 @@ import styles from './CardSeries.module.css';
  */
 export default function CardSeries({ name, urlSlug, posterUrls }) {
   return (
-    <Link to={urlSlug?.toLowerCase()} className={styles.card}>
+    <Link to={`/series/${urlSlug?.toLowerCase()}`} className={styles.card}>
       <div
         className={styles.background}
         // Для фонового изображения карточки достаточно small размера.
