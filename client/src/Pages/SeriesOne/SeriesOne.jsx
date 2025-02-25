@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { fetchGetSeriesOne } from '../../redux/features/api/series/fetchSeries';
+import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
 import useTitle from '../../hook/useTitle';
 
 import styles from './SeriesOne.module.css';
@@ -23,5 +24,17 @@ export default function SeriesOne() {
   useEffect(() => {
     dispatch(fetchGetSeriesOne({ urlSlug }));
   }, []);
-  return <section className={styles.wrapper}>{urlSlug}</section>;
+  return (
+    statusPublicOne === 'resolved' &&
+    statusPublicOne && (
+      <section className={styles.wrapper}>
+        <SeriesOneHeader
+          posterUrls={seriesPublicOne.posterUrls}
+          logoUrls={seriesPublicOne.logoUrls}
+          name={seriesPublicOne.name}
+          mission={seriesPublicOne.mission}
+        />
+      </section>
+    )
+  );
 }

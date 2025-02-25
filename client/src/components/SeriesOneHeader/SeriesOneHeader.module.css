@@ -25,10 +25,12 @@
   filter: brightness(0.5);
   transition: opacity 0.5s ease; /* Плавное появление изображения */
 }
+
 /* Пока изображение загружается, оно прозрачное */
 .poster__img[src=''] {
   opacity: 0;
 }
+
 /* Когда изображение загружено, оно становится видимым */
 .poster__img:not([src='']) {
   opacity: 1;
@@ -44,11 +46,6 @@
   justify-content: space-between;
   z-index: 11;
 }
-.content__bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 .mission__box {
   width: 100%;
   border: 2px solid var(--color-blue-main);
@@ -63,87 +60,13 @@
   font-style: italic;
   color: var(--color-text-main);
 }
-.description {
-  position: relative;
-  top: -20px;
-  background-color: var(--color-bg-minor);
-  border-radius: 10px;
-  border: 1px solid var(--color-border-minor);
-  padding: 0 14px;
-  display: grid;
-  grid-template-rows: 0fr; /* Начальное состояние */
-  transition: grid-template-rows 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
-  overflow: hidden;
-  z-index: 0;
-}
-.mission__content {
-  min-height: 0;
-}
-.description.entering,
-.description.entered {
-  grid-template-rows: 1fr;
-  padding: 34px 14px 14px;
-  opacity: 1;
-}
-.description.exited {
-  grid-template-rows: 0fr;
-  padding: 0 14px;
-  opacity: 0;
-}
-.mission__inDescription {
-  margin-bottom: 16px;
-}
-.description__control {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 15;
-}
-.title__box {
-  display: flex;
-  gap: 10px 18px;
-  align-items: end;
-  max-width: 900px;
-}
-.logo {
-  width: auto;
-  max-width: 120px;
-  height: 60px;
-  border-radius: 10px;
-  background-color: var(--color-text-main);
-  padding: 5px;
-}
 .title {
   font-size: 40px;
   font-weight: 700;
   line-height: 1;
   color: var(--color-text-main);
 }
-.buttons__block {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-  align-items: center;
-}
-.nav.entering {
-  height: 0;
-  overflow: hidden;
-  transition: ease-in-out 0.2s;
-}
-.nav.entered {
-  height: auto;
-}
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
+
 /* ====================================================================== */
 @media (max-width: 1000px) {
   .title__box {
@@ -151,29 +74,32 @@
     max-width: 600px;
   }
 }
+
 @media (max-width: 600px) {
   .content {
+    height: 250px;
     padding: 14px;
   }
+
+  .poster {
+    min-height: 250px;
+  }
+
   .title__box {
     max-width: 450px;
     left: 14px;
     gap: 10px;
   }
+
   .title {
     font-size: 30px;
   }
-  .description__control {
-    top: 14px;
-    right: 14px;
-  }
-  .description {
-    padding: 40px 14px 14px 14px;
-  }
+
   .mission__box {
     padding: 5px;
   }
 }
+
 @media (max-width: 400px) {
   .title__box {
     max-width: 600px;
