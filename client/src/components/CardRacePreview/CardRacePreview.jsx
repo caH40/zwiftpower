@@ -1,4 +1,4 @@
-import React from 'react';
+import cn from 'classnames/bind';
 
 import CategoriesBox from '../CategoriesBox/CategoriesBox';
 import ParamsEvent from '../ParamsEvent/ParamsEvent';
@@ -71,6 +71,13 @@ function CardRacePreview({ event, getClick }) {
           <div className={styles.box__img}>
             <img className={styles.poster} src={event.imageUrl} alt="poster" />
             <span className={styles.title__img}>{getEventType(event.eventType)}</span>
+
+            {/* Отображение номера этапа Серии заездов (если эвент в серии) */}
+            {event.order && (
+              <span className={cn(styles.title__img, styles.subtitle__img)}>
+                Этап {event.order}
+              </span>
+            )}
 
             {/* Логотип организатора */}
             {!!logoSrc && (

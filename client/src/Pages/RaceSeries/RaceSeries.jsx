@@ -51,16 +51,18 @@ function RaceSeries() {
 
         {!!series.length && statusFetchSeries === 'resolved' && <TableSeries series={series} />}
 
-        {/* Карточки серий */}
-        {!!seriesPublic?.length &&
-          seriesPublic.map((elm) => (
-            <CardSeries
-              key={elm._id}
-              name={elm.name}
-              urlSlug={elm.urlSlug}
-              posterUrls={elm.posterUrls}
-            />
-          ))}
+        <section className={styles.wrapper__cards}>
+          {/* Карточки серий */}
+          {!!seriesPublic?.length &&
+            seriesPublic.map((elm) => (
+              <CardSeries
+                key={elm._id}
+                name={elm.name}
+                urlSlug={elm.urlSlug}
+                posterUrls={elm.posterUrls}
+              />
+            ))}
+        </section>
       </section>
 
       {isDesktop ? (

@@ -97,6 +97,12 @@ export type TSeriesOnePublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> &
       id: number;
       eventStart: string;
       name: string;
+      imageUrl: string;
+      typeRaceCustom: string;
+      eventType: string;
+      rulesSet: string[];
+      tags: string[];
+      started: boolean;
       eventSubgroups: ZwiftEventSubgroupSchema[];
     };
     order: number;

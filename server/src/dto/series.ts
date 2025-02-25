@@ -96,11 +96,14 @@ export function seriesAllPublicDto(
 export function seriesOnePublicDto(series: TSeriesOnePublicResponseDB): TSeriesOnePublicDto {
   const _id = String(series._id);
 
+  // Лого Организатора заездов.
+  const logoFileInfoOrganizer = createUrlsToFileCloud(series.organizer.logoFileInfo);
+
   const organizer = {
     _id: String(series.organizer._id),
     name: series.organizer.name,
     shortName: series.organizer.shortName,
-    logoFileInfo: createUrlsToFileCloud(series.organizer.logoFileInfo),
+    logoFileInfo: logoFileInfoOrganizer,
   };
 
   const stages = series.stages.map((stage) => ({
@@ -108,7 +111,15 @@ export function seriesOnePublicDto(series: TSeriesOnePublicResponseDB): TSeriesO
     id: stage.event.id,
     _id: String(stage.event._id),
     name: stage.event.name,
+    imageUrl: stage.event.imageUrl,
+    typeRaceCustom: stage.event.typeRaceCustom,
+    eventType: stage.event.eventType,
+    rulesSet: stage.event.rulesSet,
+    started: stage.event.started,
+    tags: stage.event.tags,
+    logoFileInfo: logoFileInfoOrganizer,
     order: stage.order,
+
     eventSubgroups: stage.event.eventSubgroups, // FIXME: по подгруппам нет выборки только нужных данных!
   }));
 

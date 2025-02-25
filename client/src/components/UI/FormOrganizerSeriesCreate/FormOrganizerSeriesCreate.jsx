@@ -386,7 +386,7 @@ export default function FormOrganizerSeriesCreate({
           <TextAreaRFH
             id={'prizes-FormOrganizerSeriesCreate'}
             register={register('prizes')}
-            label={'Правила'}
+            label={'Призы'}
             validationText={errors.prizes?.message || ''}
             loading={loading || loadingForm}
           />

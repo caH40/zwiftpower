@@ -17,7 +17,6 @@ export default function SeriesOneLayout() {
   const { seriesPublicOne, status: statusPublicOne } = useSelector(
     (state) => state.seriesPublic
   );
-  console.log(seriesPublicOne);
 
   useTitle(seriesPublicOne?.name || 'Серия заездов');
   const dispatch = useDispatch();

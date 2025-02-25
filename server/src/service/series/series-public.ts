@@ -39,10 +39,20 @@ export class SeriesPublicService {
    */
   public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
     const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
-      // .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
       .populate({
         path: 'stages.event',
-        select: ['name', 'id', 'eventStart'],
+        select: [
+          'name',
+          'id',
+          'eventStart',
+          'imageUrl',
+          'typeRaceCustom',
+          'eventType',
+          'rulesSet',
+          'tags',
+          'started',
+        ],
         populate: 'eventSubgroups',
       })
       .lean<TSeriesOnePublicResponseDB>();
@@ -50,13 +60,21 @@ export class SeriesPublicService {
     if (!seriesOneDB) {
       throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
     }
+    const stagesFilteredAndSorted = seriesOneDB.stages
+      .filter((stage) => !stage.event.started)
+      .sort(
+        (a, b) =>
+          new Date(a.event.eventStart).getTime() - new Date(b.event.eventStart).getTime()
+      );
+
+    seriesOneDB.stages = stagesFilteredAndSorted;
 
     const seriesAfterDto = seriesOnePublicDto(seriesOneDB);
 
-    // Сортировка, сначала более новые Серии.
-    // seriesAfterDto.sort(
-    //   (a, b) => new Date(b.dateStart).getTime() - new Date(a.dateStart).getTime()
-    // );
+    // Сортировка Этапов, сначала более новые Серии.
+    seriesAfterDto.stages.sort(
+      (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+    );
 
     return { data: seriesAfterDto, message: 'Запрашиваемая Серия заездов.' };
   }

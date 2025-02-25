@@ -47,7 +47,7 @@ function TableSeriesOrganizer({ series, organizerId }) {
               <td>{elm.type}</td>
               <td>{elm.isFinished ? 'Да' : 'Нет'}</td>
               <td>
-                <Link className={styles.link} to={`/series/${elm.urlSlug}`}>
+                <Link className={styles.link} to={`/series/${elm.urlSlug}/schedule`}>
                   page
                 </Link>
               </td>

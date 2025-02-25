@@ -128,6 +128,13 @@ export type TSeriesOnePublicDto = Omit<
     id: number;
     eventStart: string;
     name: string;
+    imageUrl: string;
+    typeRaceCustom: string;
+    eventType: string;
+    rulesSet: string[];
+    tags: string[];
+    started: boolean;
+    logoFileInfo: Record<string, string> | undefined;
     order: number;
     eventSubgroups: ZwiftEventSubgroupSchema[];
   }[];

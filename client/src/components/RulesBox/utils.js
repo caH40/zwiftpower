@@ -5,7 +5,7 @@
  * @returns {boolean} есть или нет
  */
 export const enabledRule = (event, rule) => {
-  return event.rulesSet.includes(rule);
+  return event.rulesSet?.includes(rule);
 };
 
 /**
@@ -19,5 +19,5 @@ export const enabledRuleInTag = (event, tag) => {
   if (isFound) {
     return true;
   }
-  return event.tags.includes(tag);
+  return event.tags?.includes(tag);
 };
