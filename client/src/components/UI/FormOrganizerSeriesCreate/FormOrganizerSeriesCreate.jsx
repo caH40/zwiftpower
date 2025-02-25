@@ -38,6 +38,8 @@ export default function FormOrganizerSeriesCreate({
     logoUrls,
     posterUrls,
     mission,
+    rules,
+    prizes,
     description,
     stages,
     hasGeneral,
@@ -72,7 +74,6 @@ export default function FormOrganizerSeriesCreate({
     reset,
     control,
     getValues,
-    watch,
     formState: { errors },
   } = useForm({
     mode: 'all',
@@ -82,6 +83,8 @@ export default function FormOrganizerSeriesCreate({
       name,
       description,
       mission,
+      rules,
+      prizes,
       hasGeneral,
       hasTeams,
       isFinished,
@@ -192,7 +195,7 @@ export default function FormOrganizerSeriesCreate({
 
         <div className={styles.wrapper__input}>
           <InputAuth
-            label={'Название (добавляйте год для уникальности)'}
+            label={'Название (добавляйте год для уникальности)*'}
             register={register('name', {
               required: 'Обязательное поле',
               minLength: { value: 6, message: 'Больше 5ти символов' },
@@ -208,7 +211,7 @@ export default function FormOrganizerSeriesCreate({
         {/* Поле для даты старта серии */}
         <div className={styles.wrapper__input}>
           <InputAuth
-            label={'Дата старта Серии'}
+            label={'Дата старта Серии*'}
             register={register('dateStart', {
               required: 'Обязательное поле',
               validate: (value) => {
@@ -234,7 +237,7 @@ export default function FormOrganizerSeriesCreate({
         {/* Поле для даты завершения серии */}
         <div className={styles.wrapper__input}>
           <InputAuth
-            label="Дата завершения Серии"
+            label="Дата завершения Серии*"
             register={register('dateEnd', {
               required: 'Обязательное поле',
               validate: (value) => {
@@ -332,7 +335,7 @@ export default function FormOrganizerSeriesCreate({
             }}
             render={({ field }) => (
               <BlockUploadImage
-                title={'Постер для страницы Серии (не более 5Мб)'}
+                title={'Постер для страницы Серии (не более 5Мб)*'}
                 poster={field.value}
                 setPoster={field.onChange}
                 posterUrl={posterSrcState}
@@ -375,6 +378,16 @@ export default function FormOrganizerSeriesCreate({
             register={register('rules')}
             label={'Правила'}
             validationText={errors.rules?.message || ''}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__textarea}>
+          <TextAreaRFH
+            id={'prizes-FormOrganizerSeriesCreate'}
+            register={register('prizes')}
+            label={'Правила'}
+            validationText={errors.prizes?.message || ''}
             loading={loading || loadingForm}
           />
         </div>
