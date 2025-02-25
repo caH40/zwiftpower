@@ -7,12 +7,12 @@ import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
 import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSeriesPublic';
 import useTitle from '../../hook/useTitle';
 
-import styles from './SeriesOne.module.css';
+import styles from './SeriesOneLayout.module.css';
 
 /**
  * Страница Серии заездов. Описание, итоговые таблицы.
  */
-export default function SeriesOne() {
+export default function SeriesOneLayout() {
   const { urlSlug } = useParams();
   const { seriesPublicOne, status: statusPublicOne } = useSelector(
     (state) => state.seriesPublic
@@ -26,23 +26,22 @@ export default function SeriesOne() {
     dispatch(fetchGetSeriesOne({ urlSlug }));
   }, []);
   return (
-    statusPublicOne === 'resolved' &&
-    statusPublicOne && (
-      <section className={styles.wrapper}>
+    <section className={styles.wrapper}>
+      {statusPublicOne === 'resolved' && statusPublicOne && (
         <SeriesOneHeader
-          posterUrls={seriesPublicOne.posterUrls}
-          logoUrls={seriesPublicOne.logoUrls}
-          name={seriesPublicOne.name}
-          mission={seriesPublicOne.mission}
+          posterUrls={seriesPublicOne?.posterUrls}
+          logoUrls={seriesPublicOne?.logoUrls}
+          name={seriesPublicOne?.name}
+          mission={seriesPublicOne?.mission}
         />
+      )}
 
-        {/* Кнопки навигации по страницам Серии заездов */}
-        <div className={styles.box__navbar}>
-          <NavBarSeriesPublic urlSlug={seriesPublicOne.urlSlug} />
-        </div>
+      {/* Кнопки навигации по страницам Серии заездов */}
+      <div className={styles.box__navbar}>
+        <NavBarSeriesPublic urlSlug={seriesPublicOne?.urlSlug} />
+      </div>
 
-        <Outlet />
-      </section>
-    )
+      <Outlet />
+    </section>
   );
 }

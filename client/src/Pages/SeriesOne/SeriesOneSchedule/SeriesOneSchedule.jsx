@@ -2,15 +2,15 @@ import { useSelector } from 'react-redux';
 
 import useTitle from '../../../hook/useTitle';
 
-import styles from './SeriesOneResults.module.css';
+import styles from './SeriesOneSchedule.module.css';
 /**
- * Страница с результатами генеральных зачетов Серии заездов.
+ * Страница с расписанием этапов Серии заездов.
  */
-export default function SeriesOneResults() {
+export default function SeriesOneSchedule() {
   const { seriesPublicOne, status: statusPublicOne } = useSelector(
     (state) => state.seriesPublic
   );
 
-  useTitle(`Результаты ${seriesPublicOne?.name}` || 'Серия заездов');
+  useTitle(`Этапы ${seriesPublicOne?.name}` || 'Серия заездов');
   return seriesPublicOne && <div className={styles.wrapper}>В разработке...</div>;
 }
