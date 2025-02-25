@@ -15,9 +15,9 @@ export default function SeriesOne() {
   const { seriesPublicOne, status: statusPublicOne } = useSelector(
     (state) => state.seriesPublic
   );
-  console.log({ seriesPublicOne });
+  console.log(seriesPublicOne);
 
-  useTitle('Серия заездов ......');
+  useTitle(seriesPublicOne?.name || 'Серия заездов');
   const dispatch = useDispatch();
 
   useEffect(() => {

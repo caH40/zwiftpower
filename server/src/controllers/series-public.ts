@@ -33,4 +33,27 @@ export class SeriesPublicController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Получает данные запрашиваемой urlSlug Серии заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public get = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const { urlSlug } = req.params;
+
+      if (!urlSlug || urlSlug === 'undefined') {
+        res.status(404);
+      }
+      // Вызов сервиса.
+      const response = await this.seriesPublicService.get(urlSlug);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

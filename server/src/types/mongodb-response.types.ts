@@ -3,7 +3,7 @@
  */
 
 import { Types } from 'mongoose';
-import { TSeries } from './model.interface';
+import { TFileMetadataForCloud, TSeries, ZwiftEventSubgroupSchema } from './model.interface';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;
@@ -76,6 +76,28 @@ export type TSeriesAllPublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> &
       id: number;
       eventStart: string;
       name: string;
+    };
+    order: number;
+  }[];
+};
+
+/**
+ * Данные по Серии для пользователей.
+ */
+export type TSeriesOnePublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> & {
+  organizer: {
+    _id: Types.ObjectId;
+    name: string;
+    shortName: string;
+    logoFileInfo: TFileMetadataForCloud;
+  };
+  stages: {
+    event: {
+      _id: Types.ObjectId;
+      id: number;
+      eventStart: string;
+      name: string;
+      eventSubgroups: ZwiftEventSubgroupSchema[];
     };
     order: number;
   }[];

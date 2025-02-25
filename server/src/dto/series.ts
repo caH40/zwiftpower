@@ -2,10 +2,12 @@ import {
   TOrganizerSeriesAllDto,
   TOrganizerSeriesOneDto,
   TSeriesAllPublicDto,
+  TSeriesOnePublicDto,
 } from '../types/dto.interface.js';
 import {
   TOrganizerSeriesAllResponseDB,
   TOrganizerSeriesOneResponseDB,
+  TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
 } from '../types/mongodb-response.types.js';
 import { createUrlsToFileCloud } from '../utils/url.js';
@@ -86,4 +88,36 @@ export function seriesAllPublicDto(
 
     return { ...elm, stages, _id, dateStart, dateEnd, logoUrls, posterUrls };
   });
+}
+
+/**
+ * DTO получения данных запрашиваемой Серии для публичного доступа пользователей сайта.
+ */
+export function seriesOnePublicDto(series: TSeriesOnePublicResponseDB): TSeriesOnePublicDto {
+  const _id = String(series._id);
+
+  const organizer = {
+    _id: String(series.organizer._id),
+    name: series.organizer.name,
+    shortName: series.organizer.shortName,
+    logoFileInfo: createUrlsToFileCloud(series.organizer.logoFileInfo),
+  };
+
+  const stages = series.stages.map((stage) => ({
+    eventStart: stage.event.eventStart,
+    id: stage.event.id,
+    _id: String(stage.event._id),
+    name: stage.event.name,
+    order: stage.order,
+    eventSubgroups: stage.event.eventSubgroups, // FIXME: по подгруппам нет выборки только нужных данных!
+  }));
+
+  const dateStart = series.dateStart.toISOString();
+  const dateEnd = series.dateEnd.toISOString();
+
+  // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
+  const logoUrls = createUrlsToFileCloud(series.logoFileInfo);
+  const posterUrls = createUrlsToFileCloud(series.posterFileInfo);
+
+  return { ...series, organizer, stages, _id, dateStart, dateEnd, logoUrls, posterUrls };
 }

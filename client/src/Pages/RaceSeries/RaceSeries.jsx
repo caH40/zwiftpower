@@ -24,7 +24,7 @@ function RaceSeries() {
   const { series, status: statusFetchSeries } = useSelector((state) => state.fetchSeries);
 
   const { seriesPublic, status: statusFetchSeriesOne } = useSelector(
-    (state) => state.seriesPublicReducers
+    (state) => state.seriesPublic
   );
   useTitle('Серии и Туры заездов');
   const { isScreenLg: isDesktop } = useResize();
@@ -52,7 +52,7 @@ function RaceSeries() {
         {!!series.length && statusFetchSeries === 'resolved' && <TableSeries series={series} />}
 
         {/* Карточки серий */}
-        {!!seriesPublic.length &&
+        {!!seriesPublic?.length &&
           seriesPublic.map((elm) => (
             <CardSeries
               key={elm._id}

@@ -1,9 +1,10 @@
 // types
-import { TOrganizer, TSeries } from './model.interface';
+import { TOrganizer, TSeries, ZwiftEventSubgroupSchema } from './model.interface';
 import {
   TEventsForSeriesResponseDB,
   TOrganizerSeriesAllResponseDB,
   TSeriesAllPublicResponseDB,
+  TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { EventWithSubgroup } from './types.interface';
 
@@ -101,6 +102,34 @@ export type TSeriesAllPublicDto = Omit<
     eventStart: string;
     name: string;
     order: number;
+  }[];
+  dateStart: string;
+  dateEnd: string;
+  logoUrls: Record<string, string> | undefined;
+  posterUrls: Record<string, string> | undefined;
+};
+
+/**
+ * DTO данных запрашиваемой Серии заездов для публичного доступа.
+ */
+export type TSeriesOnePublicDto = Omit<
+  TSeriesOnePublicResponseDB,
+  '_id' | 'organizer' | 'stages' | 'dateStart' | 'dateEnd' | 'logoUrls' | 'posterUrls'
+> & {
+  _id: string;
+  organizer: {
+    _id: string;
+    name: string;
+    shortName: string;
+    logoFileInfo: Record<string, string> | undefined;
+  };
+  stages: {
+    _id: string;
+    id: number;
+    eventStart: string;
+    name: string;
+    order: number;
+    eventSubgroups: ZwiftEventSubgroupSchema[];
   }[];
   dateStart: string;
   dateEnd: string;
