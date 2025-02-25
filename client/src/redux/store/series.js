@@ -6,5 +6,5 @@ export const seriesOrganizerReducers = {
 };
 
 export const seriesPublicReducers = {
-  seriesPublicReducers: seriesPublicSlice,
+  seriesPublic: seriesPublicSlice,
 };

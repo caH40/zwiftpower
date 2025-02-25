@@ -4,6 +4,7 @@ import {
   fetchDeleteSeriesOrganizer,
   fetchGetOneSeriesOrganizer,
   fetchGetSeries,
+  fetchGetSeriesOne,
   fetchGetSeriesOrganizer,
   fetchPostSeriesOrganizer,
   fetchPutSeriesOrganizer,
@@ -27,6 +28,9 @@ const seriesPublicSlice = createSlice({
     resetSeriesPublicAll: (state) => {
       state.seriesPublic = [];
     },
+    resetSeriesPublicOne: (state) => {
+      state.seriesPublicOne = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -46,9 +50,26 @@ const seriesPublicSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== получение всех Серий заездов =================
+    builder.addCase(fetchGetSeriesOne.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetSeriesOne.fulfilled, (state, action) => {
+      state.seriesPublicOne = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetSeriesOne.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetSeriesPublicAll } = seriesPublicSlice.actions;
+export const { resetSeriesPublicAll, resetSeriesPublicOne } = seriesPublicSlice.actions;
 
 export default seriesPublicSlice.reducer;

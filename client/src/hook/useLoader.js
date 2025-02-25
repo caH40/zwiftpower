@@ -44,6 +44,8 @@ const useLoader = () => {
   );
   const { status: statusOrganizerModerator } = useSelector((state) => state.organizerModerator);
   const { status: statusNotification } = useSelector((state) => state.notification);
+  const { status: statusSeriesPublic } = useSelector((state) => state.seriesPublic);
+  const { status: statusSeriesOrganizer } = useSelector((state) => state.seriesOrganizer);
 
   if (
     statusEvents === 'loading' ||
@@ -73,7 +75,9 @@ const useLoader = () => {
     statusFetchRiders === 'loading' ||
     statusUsersEnabledStreams === 'loading' ||
     statusOrganizerModerator === 'loading' ||
-    statusNotification === 'loading'
+    statusNotification === 'loading' ||
+    statusSeriesPublic === 'loading' ||
+    statusSeriesOrganizer === 'loading'
   ) {
     return { isLoading: true };
   }
