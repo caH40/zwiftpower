@@ -11,6 +11,8 @@ import { Rider } from '../Model/Rider.js';
 import { Organizer } from '../Model/Organizer.js';
 import { TFileMetadataForCloud } from '../types/model.interface.js';
 import { createUrlsToFileCloud } from '../utils/url.js';
+import { NSeriesModel } from '../Model/NSeries.js';
+import { TSeriesForMetaTagsResponseDB } from '../types/mongodb-response.types.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -192,7 +194,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
     const parts = url.split('/');
     const urlSlug = parts.at(-1);
 
-    if (!urlSlug) {
+    if (typeof urlSlug !== 'string') {
       return getMetaOtherPages(url);
     }
 
@@ -226,6 +228,130 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
       posterUrls?.original ||
       'https://zwiftpower.ru/images/open_graph/organizers.webp';
     const recommendationsTag = 'organizer';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы "Расписание этапов Серии заездов"
+ */
+export const getSeriesScheduleMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    // Парсинг url.
+    const parts = url.split('/');
+    const urlSlug = parts.at(-2);
+
+    if (typeof urlSlug !== 'string') {
+      return getMetaOtherPages(url);
+    }
+
+    const seriesDB = await NSeriesModel.findOne(
+      { urlSlug },
+      {
+        name: true,
+        dateStart: true,
+        dateEnd: true,
+        organizer: true,
+        mission: true,
+        posterFileInfo: true,
+        _id: false,
+      }
+    )
+      .populate({ path: 'organizer', select: ['name'] })
+      .lean<TSeriesForMetaTagsResponseDB>();
+
+    // Если не найдена Серия заездов.
+    if (!seriesDB) {
+      return getMetaOtherPages(url);
+    }
+
+    const posterUrls = createUrlsToFileCloud(seriesDB.posterFileInfo);
+
+    const dateStart = getTimerLocal(seriesDB.dateStart.toISOString(), 'DDMMYY');
+    const dateEnd = getTimerLocal(seriesDB.dateEnd.toISOString(), 'DDMMYY');
+    const organizerName = seriesDB.organizer.name;
+
+    // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
+    const descriptionRaw = seriesDB.mission
+      ? `${seriesDB.mission} Следите за результатами!`
+      : `Следите за этапами "${seriesDB.name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Присоединяйтесь к соревнованиям и следите за результатами!`;
+    const titleRaw = `Расписание этапов: ${seriesDB.name} с ${dateStart} по ${dateEnd}, проводимых в Звифте. Организатор: ${organizerName}`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const canonical = serverWoWWW + url;
+    const image =
+      posterUrls?.medium ||
+      posterUrls?.original ||
+      'https://zwiftpower.ru/images/open_graph/series.webp';
+    const recommendationsTag = 'series';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы "Регламент Серии заездов"
+ */
+export const getSeriesRegulationsMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    // Парсинг url.
+    const parts = url.split('/');
+    const urlSlug = parts.at(-2);
+
+    if (typeof urlSlug !== 'string') {
+      return getMetaOtherPages(url);
+    }
+
+    const seriesDB = await NSeriesModel.findOne(
+      { urlSlug },
+      {
+        name: true,
+        dateStart: true,
+        dateEnd: true,
+        organizer: true,
+        mission: true,
+        posterFileInfo: true,
+        _id: false,
+      }
+    )
+      .populate({ path: 'organizer', select: ['name'] })
+      .lean<TSeriesForMetaTagsResponseDB>();
+
+    // Если не найдена Серия заездов.
+    if (!seriesDB) {
+      return getMetaOtherPages(url);
+    }
+
+    const posterUrls = createUrlsToFileCloud(seriesDB.posterFileInfo);
+
+    const dateStart = getTimerLocal(seriesDB.dateStart.toISOString(), 'DDMMYY');
+    const dateEnd = getTimerLocal(seriesDB.dateEnd.toISOString(), 'DDMMYY');
+    const organizerName = seriesDB.organizer.name;
+
+    // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
+    const descriptionRaw = seriesDB.mission
+      ? `${seriesDB.mission} Узнайте правила, призы и другую важную информацию!`
+      : `Ознакомьтесь с регламентом "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Узнайте правила, призы и другую важную информацию!`;
+    const titleRaw = `Регламент: ${seriesDB.name} с ${dateStart} по ${dateEnd}, проводимых в Звифте. Организатор: ${organizerName}`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const canonical = serverWoWWW + url;
+    const image =
+      posterUrls?.medium ||
+      posterUrls?.original ||
+      'https://zwiftpower.ru/images/open_graph/series.webp';
+    const recommendationsTag = 'series';
 
     return { title, canonical, description, image, recommendationsTag };
   } catch (error) {

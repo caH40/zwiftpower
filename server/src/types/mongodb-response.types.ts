@@ -108,3 +108,11 @@ export type TSeriesOnePublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> &
     order: number;
   }[];
 };
+
+/**
+ * Данные по Серии для формирования мета-тэгов.
+ */
+export type TSeriesForMetaTagsResponseDB = Pick<
+  TSeries,
+  'name' | 'dateStart' | 'dateEnd' | 'mission' | 'posterFileInfo'
+> & { organizer: { name: string } };

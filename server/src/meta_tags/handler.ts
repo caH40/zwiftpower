@@ -3,6 +3,8 @@ import {
   getOrganizerPublicMeta,
   getProfileResultsMeta,
   getRaceResultsMeta,
+  getSeriesRegulationsMeta,
+  getSeriesScheduleMeta,
   getSignedRidersMeta,
 } from './tags-async.js';
 import {
@@ -62,6 +64,10 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getOrganizerPublicMeta(url);
   } else if (url.includes('/organizers')) {
     tags = getOrganizersPublicMeta(url);
+  } else if (url.match(/^\/series\/([^/]+)\/(schedule)$/)) {
+    tags = getSeriesScheduleMeta(url);
+  } else if (url.match(/^\/series\/([^/]+)\/(regulations)$/)) {
+    tags = getSeriesRegulationsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

@@ -19,9 +19,9 @@ export const HelmetSeriesRegulations = ({
   const title = `Регламент: ${name} с ${dateStart} по ${dateEnd}, проводимых в Звифте. Организатор: ${organizer}`;
 
   // Формирование описания
-  const descriptionCurrent =
-    `${description} Узнайте правила, призы и другую важную информацию!` ||
-    `Ознакомьтесь с регламентом "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizer}. Узнайте правила, призы и другую важную информацию!`;
+  const descriptionCurrent = description
+    ? `${description} Узнайте правила, призы и другую важную информацию!`
+    : `Ознакомьтесь с регламентом "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizer}. Узнайте правила, призы и другую важную информацию!`;
 
   // Канонический URL
   const canonical = `${serverFront}/series/${urlSlug}/regulations`;

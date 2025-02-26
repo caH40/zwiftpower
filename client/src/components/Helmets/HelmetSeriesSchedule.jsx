@@ -17,9 +17,9 @@ export const HelmetSeriesSchedule = ({
 }) => {
   const title = `Расписание этапов: ${name} с ${dateStart} по ${dateEnd}, проводимых в Звифте. Организатор: ${organizer}`;
   const canonical = `${serverFront}/series/${urlSlug}/schedule`;
-  const descriptionCurrent =
-    `${description} Следите за результатами!` ||
-    `Следите за этапами "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizer}. Присоединяйтесь к соревнованиям и следите за результатами!`;
+  const descriptionCurrent = description
+    ? `${description} Следите за результатами!`
+    : `Следите за этапами "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizer}. Присоединяйтесь к соревнованиям и следите за результатами!`;
   const image = imageSrc;
   const recommendationsTag = 'organizer';
 
