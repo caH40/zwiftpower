@@ -13,7 +13,8 @@ import styles from './SeriesOneRegulations.module.css';
 export default function SeriesOneRegulations() {
   const { seriesPublicOne } = useSelector((state) => state.seriesPublic);
 
-  useTitle(`Регламент ${seriesPublicOne?.name}` || 'Серия заездов');
+  useTitle(seriesPublicOne?.name && `Регламент ${seriesPublicOne?.name}`);
+
   return (
     seriesPublicOne && (
       <>

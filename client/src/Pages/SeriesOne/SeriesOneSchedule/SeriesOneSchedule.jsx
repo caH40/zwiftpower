@@ -17,7 +17,7 @@ export default function SeriesOneSchedule() {
   );
   const navigate = useNavigate();
 
-  useTitle(`Этапы ${seriesPublicOne?.name}` || 'Серия заездов');
+  useTitle(seriesPublicOne?.name && `Этапы ${seriesPublicOne?.name}`);
 
   const toLink = (id) => navigate(`/race/schedule/${id}`);
 

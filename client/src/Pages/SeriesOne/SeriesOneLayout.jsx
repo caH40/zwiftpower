@@ -5,7 +5,6 @@ import { Outlet, useParams } from 'react-router-dom';
 import { fetchGetSeriesOne } from '../../redux/features/api/series/fetchSeries';
 import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
 import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSeriesPublic';
-import useTitle from '../../hook/useTitle';
 
 import styles from './SeriesOneLayout.module.css';
 
@@ -18,7 +17,6 @@ export default function SeriesOneLayout() {
     (state) => state.seriesPublic
   );
 
-  useTitle(seriesPublicOne?.name || 'Серия заездов');
   const dispatch = useDispatch();
 
   useEffect(() => {
