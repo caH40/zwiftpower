@@ -7,6 +7,7 @@ import { getUrlsResultsDescription } from './results.js';
 import { getUrlsProfileResults } from './profile-results.js';
 import { urlsStatic } from './static.js';
 import { getUrlsOrganizerPublic } from './organizer.js';
+import { getUrlsSeriesPages } from './series.js';
 
 const __dirname = path.resolve();
 
@@ -25,6 +26,8 @@ export async function createSitemap() {
       getUrlsResultsDescription(),
       getUrlsProfileResults(),
       getUrlsOrganizerPublic(),
+      getUrlsSeriesPages('regulations'),
+      getUrlsSeriesPages('schedule'),
     ]);
 
     const data = `<?xml version="1.0" encoding="UTF-8"?>
