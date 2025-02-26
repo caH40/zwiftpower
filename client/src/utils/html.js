@@ -18,6 +18,9 @@ export const createHtml = {
 
   // замена url на Тэг <a> с соответствующим url
   replaceWithUrl: function (text) {
-    return text.replace(/((http|https):\/\/[^\s]+)/g, '<a  class="link" href="$1">$1</a>');
+    return text.replace(
+      /((http|https):\/\/[^\s]+)/g,
+      '<a class="link" target="_blank" rel="noreferrer" href="$1">$1</a>'
+    );
   },
 };
