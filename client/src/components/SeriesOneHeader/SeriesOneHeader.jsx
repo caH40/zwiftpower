@@ -10,7 +10,13 @@ export default function SeriesOneHeader({ posterUrls, name, mission }) {
     <section className={styles.wrapper}>
       <div className={styles.poster}>
         <div className={styles.poster__placeholder}></div>
-        <AdaptiveImage sources={posterUrls} className={styles.poster__img} height={300} />
+        <AdaptiveImage
+          sources={posterUrls}
+          className={styles.poster__img}
+          height={300}
+          width={1920}
+          alt="Постер Серии"
+        />
 
         {/* Блок с контентом */}
         <div className={styles.content}>

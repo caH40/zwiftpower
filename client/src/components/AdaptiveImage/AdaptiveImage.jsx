@@ -4,10 +4,9 @@
  *
  * @param {Object} props - Свойства компонента.
  * @param {Object} [props.sources] - Объект с ссылками на разные размеры изображения (может быть undefined).
- * @param {string} props.alt - Описание изображения для доступности.
  * @param {string} [props.className] - Дополнительный CSS-класс.
  */
-export function AdaptiveImage({ sources, alt, ...propsImg }) {
+export function AdaptiveImage({ sources, height, width, ...propsImg }) {
   // Проверка наличия sources
   if (!sources) {
     return <img {...propsImg} />;
@@ -30,7 +29,7 @@ export function AdaptiveImage({ sources, alt, ...propsImg }) {
       {sources?.small && <source srcSet={sources.small} media="(max-width: 767px)" />}
 
       {/* Фолбек для случаев, если <picture> не поддерживается */}
-      <img src={sources?.original} {...propsImg} />
+      <img src={sources?.original} {...propsImg} height={height} width={width} />
     </picture>
   );
 }
