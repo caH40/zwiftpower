@@ -33,9 +33,11 @@ export async function getResultsSeriesCatchup(seasonCurrent: string) {
     throw new Error('Серия не найдена');
   }
 
+  // Костыль. Для формирования списка эвентов только Организатора KOMON
+  const organizer = 'KOM-on';
   // получение _id всех Эвентов выбранного сезона,
   // при totalCatchup=null получение всех эвентов
-  const currentEvents = await getCurrentEvents(type, totalCatchup);
+  const currentEvents = await getCurrentEvents(type, organizer, totalCatchup);
 
   // получение результатов райдеров всех currentEvents Эвентов
   const resultsRaw = await getResultsSeriesRaw(currentEvents);

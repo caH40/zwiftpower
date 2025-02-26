@@ -8,9 +8,11 @@ import { TotalCatchupSchema } from '../../../types/model.interface.js';
  * Получение данных по Эвентам Серии за выбранный сезон
  * @param type - тип Эвента typeRaceCustom
  * @param seriesData - данные по Серии заездов (дата старта, окончания)
+ * @param organizer - Короткое название организатора.
  */
 export const getCurrentEvents = async (
   type: string,
+  organizer: string,
   seriesData?: TotalCatchupSchema | null
 ): Promise<Types.ObjectId[]> => {
   // получение всех эвентов типа type
@@ -28,6 +30,7 @@ export const getCurrentEvents = async (
     {
       typeRaceCustom: type,
       eventStart,
+      organizer,
     },
     { _id: true }
   ).lean<Types.ObjectId[]>();
