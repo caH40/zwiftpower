@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import useTitle from '../../../hook/useTitle';
@@ -14,9 +15,12 @@ export default function SeriesOneSchedule() {
   const { seriesPublicOne, status: statusPublicOne } = useSelector(
     (state) => state.seriesPublic
   );
+  const navigate = useNavigate();
 
   useTitle(`Этапы ${seriesPublicOne?.name}` || 'Серия заездов');
-  // console.log(seriesPublicOne?.stages);
+
+  const toLink = (id) => navigate(`/race/schedule/${id}`);
+
   return (
     seriesPublicOne && (
       <>
@@ -34,7 +38,9 @@ export default function SeriesOneSchedule() {
           {!!seriesPublicOne?.stages?.length &&
             statusPublicOne === 'resolved' &&
             seriesPublicOne.stages.map((eventPreview) => {
-              return <CardRacePreview event={eventPreview} key={eventPreview.id} />;
+              return (
+                <CardRacePreview event={eventPreview} key={eventPreview.id} getClick={toLink} />
+              );
             })}
         </div>
       </>
