@@ -709,3 +709,18 @@ export type TScoringEntry = {
   rank: number; // Место, занятое в гонке (1 — победитель, 2 — второе место и т. д.).
   points: number; // Количество начисляемых очков за это место.
 };
+
+/**
+ * Конфиг (название) для финишного протокола. Сама логика формирования финишного протокола будет
+ * захардкожена для каждого конфига (name).
+ * У организатора в списке выбора конфига будут отображаться два стандартных и его конфиги.
+ */
+export type TFinishProtocolConfig = {
+  _id?: Types.ObjectId;
+  organizerId: Types.ObjectId;
+  name: string;
+  description: string;
+  isDefault: boolean; // При true отображается у всех организаторов.
+  createdAt: Date;
+  updatedAt: Date;
+};
