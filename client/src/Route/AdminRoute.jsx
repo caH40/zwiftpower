@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
+// import AdminFinishProtocol from '../Pages/AdminOthers/AdminFinishProtocol/AdminFinishProtocol';
 
 const AdminOrganizer = lazy(() => import('../Pages/AdminOrganizer/AdminOrganizer'));
 const Admin = lazy(() => import('../Pages/Admin/Admin'));
@@ -27,6 +28,10 @@ const RiderModerationLayout = lazy(() =>
 );
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
+const AdminOthersLayout = lazy(() => import('../Pages/AdminOthers/AdminOthersLayout'));
+const AdminFinishProtocol = lazy(() =>
+  import('../Pages/AdminOthers/AdminFinishProtocol/AdminFinishProtocol')
+);
 
 export function AdminRoute(isAdmin) {
   return (
@@ -53,6 +58,10 @@ export function AdminRoute(isAdmin) {
           <Route path="logs/errors/:id" element={<LogErrorDescription />} />
           <Route path="clubs" element={<ZwiftClubs />} />
           <Route path="notifications" element={<AdminNotifications />} />
+
+          <Route path="others" element={<AdminOthersLayout />}>
+            <Route path="finish-protocol" element={<AdminFinishProtocol />} />
+          </Route>
         </Route>
       )}
       <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
