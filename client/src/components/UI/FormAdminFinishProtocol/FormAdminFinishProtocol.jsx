@@ -48,8 +48,6 @@ export default function FormAdminFinishProtocol({
   // Обработчик отправки формы на сервер.
   const onSubmit = async (formData) => {
     try {
-      console.log(formData);
-      // return;
       setLoadingForm(true);
 
       const fetchHandler = isCreating ? fetchFinishProtocol : () => {};
@@ -62,7 +60,7 @@ export default function FormAdminFinishProtocol({
 
       if (isCreating) {
         // Очистка полей формы
-        // reset();
+        reset();
       } else {
         // Триггер запускает запрос на получение обновлённых данных.
         setTrigger((prev) => !prev);

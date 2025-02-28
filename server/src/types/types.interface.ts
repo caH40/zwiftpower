@@ -848,3 +848,15 @@ export type TNextWeekRace = {
   routeName?: string;
   worldName?: string;
 };
+
+/**
+ * Входные параметры для метода post класса FinishProtocol.
+ */
+export type TFinishProtocolParamsPost = {
+  organizer: string;
+  name: string;
+  displayName: string;
+  description: string;
+  isDefault: boolean;
+};
+export type TFinishProtocolParamsPut = TFinishProtocolParamsPost & { protocolId: string };

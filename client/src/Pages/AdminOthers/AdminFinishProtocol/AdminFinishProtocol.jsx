@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchOrganizersPublic } from '../../../redux/features/api/organizer_public/fetchOrganizersPublic';
@@ -23,6 +23,8 @@ const initialProtocol = {
  * Страница редактирования пакета конфигурации финишного протокола.
  */
 export default function AdminFinishProtocol() {
+  // триггер повторного запроса данных измененного финишного протокола.
+  const [trigger, setTrigger] = useState(false);
   useTitle('Финишный протокол');
   // Данные организаторов из хранилища редакс.
   const { organizers } = useSelector((state) => state.organizersPublic);
@@ -35,7 +37,7 @@ export default function AdminFinishProtocol() {
     dispatch(fetchOrganizersPublic());
 
     return () => dispatch(resetOrganizersPublic());
-  }, []);
+  }, [trigger]);
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>Редактирование пакетов конфигурации финишного протокола</h2>
@@ -49,6 +51,7 @@ export default function AdminFinishProtocol() {
         }))}
         loading={stateFinishProtocol === 'loading'}
         isCreating={true}
+        setTrigger={setTrigger}
       />
       {/* )} */}
     </section>
