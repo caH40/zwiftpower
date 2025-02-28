@@ -43,7 +43,7 @@ export class FinishProtocolController {
   };
 
   /**
-   * Обрабатывает PUT-запрос для создания конфигурации финишного протокола.
+   * Обрабатывает PUT-запрос для обновления конфигурации финишного протокола.
    * @param {Request} req - Запрос Express.
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с результатом операции.
@@ -65,6 +65,24 @@ export class FinishProtocolController {
         description,
         isDefault,
       });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Обрабатывает get-запрос для получение всех конфигураций финишных протоколов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с результатом операции.
+   */
+  public getAll = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // Вызов сервиса.
+      const response = await this.finishProtocol.getAll();
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

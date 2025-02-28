@@ -1,6 +1,11 @@
+import { finishProtocolConfigsDto } from '../../dto/finish-protocol.js';
 import { FinishProtocolConfigModel } from '../../Model/FinishProtocolConfig.js';
 import { Organizer } from '../../Model/Organizer.js';
+
+// types
+import { TFinishProtocolConfigDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { TFinishProtocolConfig } from '../../types/model.interface.js';
 import {
   TFinishProtocolParamsPost,
   TFinishProtocolParamsPut,
@@ -11,6 +16,20 @@ import {
  */
 export class FinishProtocol {
   constructor() {}
+
+  /**
+   * Получение всех конфигурации.
+   */
+  public getAll = async (): Promise<TResponseService<TFinishProtocolConfigDto[]>> => {
+    const configsFPDB = await FinishProtocolConfigModel.find().lean<TFinishProtocolConfig[]>();
+
+    const configsFPAfterDto = finishProtocolConfigsDto(configsFPDB);
+
+    return {
+      data: configsFPAfterDto,
+      message: 'Все конфигурации финишных протоколов.',
+    };
+  };
 
   /**
    * Создание конфигурации.

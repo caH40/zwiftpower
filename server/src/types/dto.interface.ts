@@ -1,5 +1,10 @@
 // types
-import { TOrganizer, TSeries, ZwiftEventSubgroupSchema } from './model.interface';
+import {
+  TFinishProtocolConfig,
+  TOrganizer,
+  TSeries,
+  ZwiftEventSubgroupSchema,
+} from './model.interface';
 import {
   TEventsForSeriesResponseDB,
   TOrganizerSeriesAllResponseDB,
@@ -142,4 +147,17 @@ export type TSeriesOnePublicDto = Omit<
   dateEnd: string;
   logoUrls: Record<string, string> | undefined;
   posterUrls: Record<string, string> | undefined;
+};
+
+/**
+ * DTO данных конфигурации финишного протокола.
+ */
+export type TFinishProtocolConfigDto = Omit<
+  TFinishProtocolConfig,
+  '_id' | 'organizer' | 'createdAt' | 'updatedAt'
+> & {
+  _id: string;
+  organizer: string;
+  createdAt: string;
+  updatedAt: string;
 };
