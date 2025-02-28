@@ -14,7 +14,7 @@ import { TFinishProtocolConfigResponseDB } from '../../types/mongodb-response.ty
 /**
  * Класс работы с именами (объектами) конфигураций финишного протокола.
  */
-export class FinishProtocol {
+export class FinishProtocolService {
   constructor() {}
 
   /**
@@ -94,13 +94,38 @@ export class FinishProtocol {
 
     if (!finishProtocol) {
       throw new Error(
-        `Не найден обновляемая конфигурация финишного протокола с _id: "${configFPId}"`
+        `Не найдена обновляемая конфигурация финишного протокола с _id: "${configFPId}"`
       );
     }
 
     return {
       data: null,
       message: `Обновлены данные конфигурации финишного протокола с названием: "${name}" для организатора "${organizerName}"`,
+    };
+  };
+
+  /**
+   * Удаление конфигурации.
+   */
+  public delete = async (configFPId: string): Promise<TResponseService<null>> => {
+    const finishProtocol = await FinishProtocolConfigModel.findOneAndDelete(
+      {
+        _id: configFPId,
+      },
+      { _id: false, name: true }
+    )
+      .populate({ path: 'organizer', select: ['name', '-_id'] })
+      .lean<{ name: string; organizer: { name: string } }>();
+
+    if (!finishProtocol) {
+      throw new Error(
+        `Не найдена удаляемая конфигурация финишного протокола с _id: "${configFPId}"`
+      );
+    }
+
+    return {
+      data: null,
+      message: `Удалена конфигурация финишного протокола с названием: "${finishProtocol.name}" организатора "${finishProtocol.organizer.name}"`,
     };
   };
 

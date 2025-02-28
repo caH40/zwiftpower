@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrganizersPublic } from '../../../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../../../redux/features/api/organizer_public/organizersPublicSlice';
 import FormAdminFinishProtocol from '../../../../components/UI/FormAdminFinishProtocol/FormAdminFinishProtocol';
+import useTitle from '../../../../hook/useTitle';
 
 const initialProtocol = {
   _id: null,
@@ -20,6 +21,8 @@ const initialProtocol = {
  * Страница создания пакета конфигурации финишного протокола.
  */
 export default function AdminConfigFPCreate() {
+  useTitle('Создание финишного протокола');
+
   // Данные организаторов из хранилища редакс.
   const { organizers } = useSelector((state) => state.organizersPublic);
   const { state: stateFinishProtocol } = useSelector((state) => state.finishProtocol);
@@ -36,8 +39,6 @@ export default function AdminConfigFPCreate() {
   }, []);
   return (
     <section>
-      <h3>Создание</h3>
-
       {/* Форма создания/редактирования конфигураций финишных протоколов */}
       {!!organizers?.length && (
         <FormAdminFinishProtocol

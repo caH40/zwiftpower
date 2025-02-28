@@ -48,3 +48,4 @@ routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLe
 routerAdmin.get('/finish-protocols', authAdmin, finishProtocolController.getAll);
 routerAdmin.post('/finish-protocols', authAdmin, finishProtocolController.post);
 routerAdmin.put('/finish-protocols', authAdmin, finishProtocolController.put);
+routerAdmin.delete('/finish-protocols/:configFP', authAdmin, finishProtocolController.delete);

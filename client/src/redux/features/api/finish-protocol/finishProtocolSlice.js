@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  fetchDeleteFinishProtocol,
   fetchGetAllFinishProtocol,
   fetchPostFinishProtocol,
   fetchPutFinishProtocol,
@@ -73,6 +74,23 @@ const finishProtocolSlice = createSlice({
     });
 
     builder.addCase(fetchPutFinishProtocol.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== Обновление данных конфигурации финишного протокола. =================
+    builder.addCase(fetchDeleteFinishProtocol.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchDeleteFinishProtocol.fulfilled, (state, action) => {
+      state.message = action.payload.message;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchDeleteFinishProtocol.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

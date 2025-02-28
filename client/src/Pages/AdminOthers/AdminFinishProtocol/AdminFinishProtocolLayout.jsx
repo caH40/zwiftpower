@@ -26,8 +26,6 @@ export default function AdminFinishProtocolLayout() {
     <section className={styles.wrapper}>
       <NavAdmin items={items} />
 
-      <h2 className={styles.title}>Работа с конфигурациями финишных протоколов</h2>
-
       <Outlet />
     </section>
   );

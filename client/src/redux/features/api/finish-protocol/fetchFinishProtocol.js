@@ -68,3 +68,24 @@ export const fetchGetAllFinishProtocol = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Удаление конфигурации финишного протокола.
+ */
+export const fetchDeleteFinishProtocol = createAsyncThunk(
+  'configFinishProtocols/delete',
+  async ({ configFPId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/admin//finish-protocols/${configFPId}`,
+        method: 'delete',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
