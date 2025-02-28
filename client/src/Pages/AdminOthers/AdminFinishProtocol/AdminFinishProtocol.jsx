@@ -41,19 +41,19 @@ export default function AdminFinishProtocol() {
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>Редактирование пакетов конфигурации финишного протокола</h2>
-      {/* {!!organizers?.length && ( */}
-      <FormAdminFinishProtocol
-        protocol={initialProtocol}
-        organizers={organizers.map((org) => ({
-          id: org.id,
-          value: org.id,
-          name: org.name,
-        }))}
-        loading={stateFinishProtocol === 'loading'}
-        isCreating={true}
-        setTrigger={setTrigger}
-      />
-      {/* )} */}
+      {!!organizers?.length && (
+        <FormAdminFinishProtocol
+          protocol={initialProtocol}
+          organizers={organizers.map((org) => ({
+            id: org.id,
+            value: org.id,
+            name: org.name,
+          }))}
+          loading={stateFinishProtocol === 'loading'}
+          isCreating={true}
+          setTrigger={setTrigger}
+        />
+      )}
     </section>
   );
 }

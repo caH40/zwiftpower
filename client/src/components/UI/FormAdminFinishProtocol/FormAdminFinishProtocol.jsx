@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { fetchFinishProtocol } from '../../../redux/features/api/finish-protocol/fetchFinishProtocol';
+import { fetchPostFinishProtocol } from '../../../redux/features/api/finish-protocol/fetchFinishProtocol';
+import { fetchPutFinishProtocol } from '../../../redux/features/api/finish-protocol/fetchFinishProtocol';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
@@ -50,7 +51,7 @@ export default function FormAdminFinishProtocol({
     try {
       setLoadingForm(true);
 
-      const fetchHandler = isCreating ? fetchFinishProtocol : () => {};
+      const fetchHandler = isCreating ? fetchPostFinishProtocol : fetchPutFinishProtocol;
 
       // .unwrap() возвращает промис, для работы с async/await
       const data = await dispatch(fetchHandler(formData)).unwrap();
