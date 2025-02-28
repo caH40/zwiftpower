@@ -1,6 +1,5 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
-// import AdminFinishProtocol from '../Pages/AdminOthers/AdminFinishProtocol/AdminFinishProtocol';
 
 const AdminOrganizer = lazy(() => import('../Pages/AdminOrganizer/AdminOrganizer'));
 const Admin = lazy(() => import('../Pages/Admin/Admin'));
@@ -28,9 +27,16 @@ const RiderModerationLayout = lazy(() =>
 );
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
 const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
+
 const AdminOthersLayout = lazy(() => import('../Pages/AdminOthers/AdminOthersLayout'));
-const AdminFinishProtocol = lazy(() =>
-  import('../Pages/AdminOthers/AdminFinishProtocol/AdminFinishProtocol')
+const AdminFinishProtocolLayout = lazy(() =>
+  import('../Pages/AdminOthers/AdminFinishProtocol/AdminFinishProtocolLayout')
+);
+const AdminConfigFPCreate = lazy(() =>
+  import('../Pages/AdminOthers/AdminFinishProtocol/Create/AdminFinishProtocolCreate')
+);
+const AdminConfigFPEdit = lazy(() =>
+  import('../Pages/AdminOthers/AdminFinishProtocol/Edit/AdminFinishProtocolEdit')
 );
 
 export function AdminRoute(isAdmin) {
@@ -60,7 +66,10 @@ export function AdminRoute(isAdmin) {
           <Route path="notifications" element={<AdminNotifications />} />
 
           <Route path="others" element={<AdminOthersLayout />}>
-            <Route path="finish-protocol" element={<AdminFinishProtocol />} />
+            <Route path="finish-protocol" element={<AdminFinishProtocolLayout />}>
+              <Route path="create" element={<AdminConfigFPCreate />} />
+              <Route path="edit" element={<AdminConfigFPEdit />} />
+            </Route>
           </Route>
         </Route>
       )}

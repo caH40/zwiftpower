@@ -7,7 +7,7 @@ import {
 } from './fetchFinishProtocol';
 
 const initialState = {
-  protocols: [],
+  configsFP: [],
   message: null,
   status: null,
   error: null,
@@ -17,11 +17,11 @@ const initialState = {
  * Слайс для работы конфигами для финишных протоколов.
  */
 const finishProtocolSlice = createSlice({
-  name: 'finishProtocol',
+  name: 'configFinishProtocol',
   initialState,
   reducers: {
-    resetFinishProtocols: (state) => {
-      state.protocol = [];
+    resetConfigsFP: (state) => {
+      state.configsFP = [];
     },
   },
 
@@ -33,7 +33,7 @@ const finishProtocolSlice = createSlice({
     });
 
     builder.addCase(fetchGetAllFinishProtocol.fulfilled, (state, action) => {
-      state.protocols = action.payload.data;
+      state.configsFP = action.payload.data;
       state.error = null;
       state.status = 'resolved';
     });
@@ -79,6 +79,6 @@ const finishProtocolSlice = createSlice({
   },
 });
 
-export const { resetFinishProtocol } = finishProtocolSlice.actions;
+export const { resetConfigsFP } = finishProtocolSlice.actions;
 
 export default finishProtocolSlice.reducer;

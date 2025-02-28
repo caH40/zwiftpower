@@ -1,23 +1,24 @@
 // types
 import { TFinishProtocolConfigDto } from '../types/dto.interface';
-import { TFinishProtocolConfig } from '../types/model.interface';
+import { TFinishProtocolConfigResponseDB } from '../types/mongodb-response.types';
 
 /**
  * DTO данных конфигурации финишного протокола.
  */
 export function finishProtocolConfigDto(
-  configFP: TFinishProtocolConfig
+  configFP: TFinishProtocolConfigResponseDB
 ): TFinishProtocolConfigDto {
   const _id = String(configFP._id);
-  const organizer = String(configFP.organizer);
+  const organizer = String(configFP.organizer._id);
+  const organizerName = configFP.organizer.name;
   const createdAt = configFP.createdAt.toISOString();
   const updatedAt = configFP.updatedAt.toISOString();
 
-  return { ...configFP, _id, organizer, createdAt, updatedAt };
+  return { ...configFP, _id, organizer, createdAt, updatedAt, organizerName };
 }
 
 export function finishProtocolConfigsDto(
-  configsFP: TFinishProtocolConfig[]
+  configsFP: TFinishProtocolConfigResponseDB[]
 ): TFinishProtocolConfigDto[] {
   return configsFP.map((config) => finishProtocolConfigDto(config));
 }

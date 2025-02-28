@@ -10,6 +10,7 @@ import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
+import { getTimerLocal } from '../../../utils/date-local';
 
 import styles from './FormAdminFinishProtocol.module.css';
 
@@ -18,7 +19,7 @@ import styles from './FormAdminFinishProtocol.module.css';
  */
 export default function FormAdminFinishProtocol({
   isCreating,
-  protocol: { _id, organizer, name, displayName, description, isDefault, createdAt, updatedAt },
+  configFP: { _id, organizer, name, displayName, description, isDefault, createdAt, updatedAt },
   loading,
   setTrigger,
   organizers,
@@ -40,8 +41,8 @@ export default function FormAdminFinishProtocol({
       displayName,
       description,
       isDefault,
-      createdAt,
-      updatedAt,
+      createdAt: getTimerLocal(createdAt, 'DDMMYYHm'),
+      updatedAt: getTimerLocal(updatedAt, 'DDMMYYHm'),
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
@@ -50,11 +51,13 @@ export default function FormAdminFinishProtocol({
   const onSubmit = async (formData) => {
     try {
       setLoadingForm(true);
+      const configFPId = formData._id;
+      delete formData._id;
 
       const fetchHandler = isCreating ? fetchPostFinishProtocol : fetchPutFinishProtocol;
 
       // .unwrap() возвращает промис, для работы с async/await
-      const data = await dispatch(fetchHandler(formData)).unwrap();
+      const data = await dispatch(fetchHandler({ ...formData, configFPId })).unwrap();
 
       // Успешный результат.
       dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));

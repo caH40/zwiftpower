@@ -3,7 +3,12 @@
  */
 
 import { Types } from 'mongoose';
-import { TFileMetadataForCloud, TSeries, ZwiftEventSubgroupSchema } from './model.interface';
+import {
+  TFileMetadataForCloud,
+  TFinishProtocolConfig,
+  TSeries,
+  ZwiftEventSubgroupSchema,
+} from './model.interface';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;
@@ -116,3 +121,10 @@ export type TSeriesForMetaTagsResponseDB = Pick<
   TSeries,
   'name' | 'dateStart' | 'dateEnd' | 'mission' | 'posterFileInfo'
 > & { organizer: { name: string } };
+
+/**
+ * Данные по Конфигурации финишных протоколов для формирования списка.
+ */
+export type TFinishProtocolConfigResponseDB = Omit<TFinishProtocolConfig, 'organizer'> & {
+  organizer: { name: string; _id: Types.ObjectId };
+};

@@ -5,11 +5,11 @@ import { Organizer } from '../../Model/Organizer.js';
 // types
 import { TFinishProtocolConfigDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { TFinishProtocolConfig } from '../../types/model.interface.js';
 import {
   TFinishProtocolParamsPost,
   TFinishProtocolParamsPut,
 } from '../../types/types.interface.js';
+import { TFinishProtocolConfigResponseDB } from '../../types/mongodb-response.types.js';
 
 /**
  * Класс работы с именами (объектами) конфигураций финишного протокола.
@@ -21,9 +21,15 @@ export class FinishProtocol {
    * Получение всех конфигурации.
    */
   public getAll = async (): Promise<TResponseService<TFinishProtocolConfigDto[]>> => {
-    const configsFPDB = await FinishProtocolConfigModel.find().lean<TFinishProtocolConfig[]>();
+    const configsFPDB = await FinishProtocolConfigModel.find()
+      .populate({ path: 'organizer', select: ['name'] })
+      .lean<TFinishProtocolConfigResponseDB[]>();
 
-    const configsFPAfterDto = finishProtocolConfigsDto(configsFPDB);
+    const collator = new Intl.Collator('en', { sensitivity: 'base' });
+
+    const configsFPAfterDto = finishProtocolConfigsDto(configsFPDB).sort((a, b) =>
+      collator.compare(a.organizerName, b.organizerName)
+    );
 
     return {
       data: configsFPAfterDto,
@@ -65,7 +71,7 @@ export class FinishProtocol {
    * Обновление конфигурации.
    */
   public put = async ({
-    protocolId,
+    configFPId,
     organizer,
     name,
     displayName,
@@ -75,11 +81,8 @@ export class FinishProtocol {
     // Проверка на существование Организатора с _id: organizer.
     const { organizerName } = await this.checkExistenceOrganizer(organizer);
 
-    // Проверка на дублирование пары Организатор-Название конфига.
-    await this.checkDuplicateName({ organizer, name });
-
     const finishProtocol = await FinishProtocolConfigModel.findOneAndUpdate(
-      { _id: protocolId },
+      { _id: configFPId },
       {
         organizer,
         name,
@@ -91,13 +94,13 @@ export class FinishProtocol {
 
     if (!finishProtocol) {
       throw new Error(
-        `Не найден обновляемая конфигурация финишного протокола с _id: "${protocolId}"`
+        `Не найден обновляемая конфигурация финишного протокола с _id: "${configFPId}"`
       );
     }
 
     return {
       data: null,
-      message: `Создано имя (объект) конфигурации финишного протокола для организатора "${organizerName}"`,
+      message: `Обновлены данные конфигурации финишного протокола с названием: "${name}" для организатора "${organizerName}"`,
     };
   };
 

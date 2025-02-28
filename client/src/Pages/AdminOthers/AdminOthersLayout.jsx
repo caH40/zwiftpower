@@ -7,7 +7,11 @@ import IconRaceType from '../../components/icons/IconRaceType';
  * Лейаут для небольших страниц администратора для конфигурации разных сущностей.
  */
 const items = [
-  { to: '/admin/others/finish-protocol', title: 'Финишный протокол', icon: IconRaceType },
+  {
+    to: '/admin/others/finish-protocol/edit',
+    title: 'Конфигурация финишных протоколов',
+    icon: IconRaceType,
+  },
 ];
 
 export default function AdminOthersLayout() {

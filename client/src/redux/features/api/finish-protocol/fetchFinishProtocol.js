@@ -8,13 +8,13 @@ import { serverExpress } from '../../../../config/environment';
  * Создание названия конфигурации финишного протокола.
  */
 export const fetchPostFinishProtocol = createAsyncThunk(
-  'finishProtocol/post',
-  async (protocol, thunkAPI) => {
+  'configFinishProtocol/post',
+  async (configFP, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/admin/finish-protocols`,
         method: 'post',
-        data: protocol,
+        data: configFP,
       });
 
       return response.data;
@@ -30,13 +30,13 @@ export const fetchPostFinishProtocol = createAsyncThunk(
  * Обновление данных конфигурации финишного протокола.
  */
 export const fetchPutFinishProtocol = createAsyncThunk(
-  'finishProtocol/put',
-  async (protocol, thunkAPI) => {
+  'configFinishProtocol/put',
+  async (configFP, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/admin/finish-protocols`,
         method: 'put',
-        data: protocol,
+        data: configFP,
       });
 
       return response.data;
@@ -52,7 +52,7 @@ export const fetchPutFinishProtocol = createAsyncThunk(
  * Получение данных всех конфигураций финишных протоколов.
  */
 export const fetchGetAllFinishProtocol = createAsyncThunk(
-  'finishProtocols/get',
+  'configFinishProtocols/get',
   async (_, thunkAPI) => {
     try {
       const response = await myAxios({

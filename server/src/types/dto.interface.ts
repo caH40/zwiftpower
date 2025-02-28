@@ -160,4 +160,5 @@ export type TFinishProtocolConfigDto = Omit<
   organizer: string;
   createdAt: string;
   updatedAt: string;
+  organizerName: string;
 };

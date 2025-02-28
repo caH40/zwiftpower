@@ -54,11 +54,11 @@ export class FinishProtocolController {
       this.validateBodyParamsMethodPut(req.body);
 
       // Извлечение параметров из тела запроса.
-      const { protocolId, organizer, name, description, isDefault, displayName } = req.body;
+      const { configFPId, organizer, name, description, isDefault, displayName } = req.body;
 
       // Вызов сервиса.
       const response = await this.finishProtocol.put({
-        protocolId,
+        configFPId,
         organizer,
         name,
         displayName,
@@ -142,19 +142,19 @@ export class FinishProtocolController {
    * @throws Если параметры отсутствуют или невалидны.
    */
   private validateBodyParamsMethodPut(body: {
-    protocolId: string;
+    configFPId: string;
     organizer: string;
     name: string;
     displayName: string;
     description: string;
     isDefault: boolean;
   }): void {
-    const { protocolId, ...protocolFromBody } = body;
+    const { configFPId, ...protocolFromBody } = body;
 
     this.validateBodyParamsMethodPost(protocolFromBody);
 
     // Проверка наличия обязательных параметров.
-    if (!protocolId || typeof protocolId !== 'string') {
+    if (!configFPId || typeof configFPId !== 'string') {
       throw new Error('Параметр organizer отсутствует или не является строкой');
     }
   }

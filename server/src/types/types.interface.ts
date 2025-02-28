@@ -859,4 +859,4 @@ export type TFinishProtocolParamsPost = {
   description: string;
   isDefault: boolean;
 };
-export type TFinishProtocolParamsPut = TFinishProtocolParamsPost & { protocolId: string };
+export type TFinishProtocolParamsPut = TFinishProtocolParamsPost & { configFPId: string };
