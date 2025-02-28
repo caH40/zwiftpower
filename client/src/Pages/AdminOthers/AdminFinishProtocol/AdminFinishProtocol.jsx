@@ -12,6 +12,7 @@ const initialProtocol = {
   _id: null,
   organizer: '1d4few434re',
   name: '',
+  displayName: '',
   description: '',
   isDefault: false,
   createdAt: '',

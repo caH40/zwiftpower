@@ -1,5 +1,5 @@
 import mongoose, { Schema, Types, model, Document } from 'mongoose';
-import { TFinishProtocolConfig } from '../types/model.interface';
+import { TFinishProtocolConfig } from '../types/model.interface.js';
 
 export interface IFinishProtocolConfigDocument
   extends Omit<TFinishProtocolConfig, '_id'>,
@@ -13,9 +13,10 @@ export interface IFinishProtocolConfigDocument
  */
 const FinishProtocolConfigSchema = new Schema<IFinishProtocolConfigDocument>(
   {
-    organizerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Organizer' },
-    name: { type: String, required: true },
-    description: { type: String, required: true },
+    organizer: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Organizer' },
+    name: { type: String, required: true, trim: true },
+    displayName: { type: String, trim: true },
+    description: { type: String, required: true, trim: true },
     isDefault: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false }

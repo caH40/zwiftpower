@@ -9,12 +9,12 @@ import { serverExpress } from '../../../../config/environment';
  */
 export const fetchFinishProtocol = createAsyncThunk(
   'finishProtocol/post',
-  async ({ protocol, isCreating }, thunkAPI) => {
+  async (protocol, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/admin/finish-protocols`,
         method: 'post',
-        data: { protocol, isCreating },
+        data: protocol,
       });
 
       return response.data;

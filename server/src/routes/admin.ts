@@ -20,6 +20,9 @@ import {
   updateClub,
 } from '../controllers/admin.js';
 import { createNotificationLetter, postNotification } from '../controllers/notification.js';
+import { FinishProtocolController } from '../controllers/finish-protocol.js';
+
+const finishProtocolController = new FinishProtocolController();
 
 export const routerAdmin = Router();
 // routerAdmin.get('*', (req, res) => console.log(req.path));
@@ -42,3 +45,4 @@ routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
 routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);
 routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLetter);
+routerAdmin.post('/finish-protocols', authAdmin, finishProtocolController.post);

@@ -717,8 +717,9 @@ export type TScoringEntry = {
  */
 export type TFinishProtocolConfig = {
   _id?: Types.ObjectId;
-  organizerId: Types.ObjectId;
+  organizer: Types.ObjectId;
   name: string;
+  displayName: string; // Название, отображаемое в select на клиенте.
   description: string;
   isDefault: boolean; // При true отображается у всех организаторов.
   createdAt: Date;

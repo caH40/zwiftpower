@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import cn from 'classnames/bind';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { fetchFinishProtocol } from '../../../redux/features/api/finish-protocol/fetchFinishProtocol';
@@ -18,7 +17,7 @@ import styles from './FormAdminFinishProtocol.module.css';
  */
 export default function FormAdminFinishProtocol({
   isCreating,
-  protocol: { _id, organizer, name, description, isDefault, createdAt, updatedAt },
+  protocol: { _id, organizer, name, displayName, description, isDefault, createdAt, updatedAt },
   loading,
   setTrigger,
   organizers,
@@ -37,6 +36,7 @@ export default function FormAdminFinishProtocol({
       _id,
       organizer,
       name,
+      displayName,
       description,
       isDefault,
       createdAt,
@@ -55,7 +55,7 @@ export default function FormAdminFinishProtocol({
       const fetchHandler = isCreating ? fetchFinishProtocol : () => {};
 
       // .unwrap() возвращает промис, для работы с async/await
-      const data = await dispatch(fetchHandler({ ...formData, isCreating })).unwrap();
+      const data = await dispatch(fetchHandler(formData)).unwrap();
 
       // Успешный результат.
       dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
@@ -126,12 +126,31 @@ export default function FormAdminFinishProtocol({
             label={'Название конфигурации (должно быть уникальным у Организатора)'}
             register={register('name', {
               required: 'Обязательное поле',
-              minLength: { value: 6, message: 'Больше 5ти символов' },
-              maxLength: { value: 50, message: 'Не больше 50 символов' },
+              minLength: { value: 4, message: 'Больше 4 символов' },
+              maxLength: { value: 20, message: 'Не больше 20 символов' },
+              pattern: {
+                value: /^[a-zA-Z0-9_-]+$/,
+                message: 'Допустимы только символы a-z, A-Z, 0-9, _, -',
+              },
             })}
             validationText={errors.name?.message || ''}
             input={{ id: 'name-FormOrganizerSeriesCreate', type: 'text' }}
-            placeholder="Название всей серии заездов"
+            placeholder="Идентификатор конфигурации"
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Отображаемое имя конфигурации (в select)'}
+            register={register('displayName', {
+              required: 'Обязательное поле',
+              minLength: { value: 4, message: 'Больше 4 символов' },
+              maxLength: { value: 40, message: 'Не больше 40 символов' },
+            })}
+            validationText={errors.displayName?.message || ''}
+            input={{ id: 'displayName-FormOrganizerSeriesCreate', type: 'text' }}
+            placeholder="Отображаемое имя"
             loading={loading || loadingForm}
           />
         </div>
