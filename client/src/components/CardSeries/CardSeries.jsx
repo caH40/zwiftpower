@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { getTimerLocal } from '../../utils/date-local';
+
 import styles from './CardSeries.module.css';
 
 /**
@@ -12,7 +14,7 @@ import styles from './CardSeries.module.css';
  *
  * @returns {JSX.Element} Карточка организатора
  */
-export default function CardSeries({ name, urlSlug, posterUrls }) {
+export default function CardSeries({ name, urlSlug, posterUrls, dateStart, dateEnd }) {
   return (
     <Link to={`/series/${urlSlug?.toLowerCase()}/schedule`} className={styles.card}>
       <div
@@ -23,6 +25,9 @@ export default function CardSeries({ name, urlSlug, posterUrls }) {
       <div className={styles.overlay}></div>
       <div className={styles.content}>
         <h2 className={styles.name}>{name}</h2>
+        <div className={styles.dates}>
+          {`${getTimerLocal(dateStart)} - ${getTimerLocal(dateEnd)}`}
+        </div>
       </div>
     </Link>
   );

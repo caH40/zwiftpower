@@ -60,6 +60,8 @@ function RaceSeries() {
                 name={elm.name}
                 urlSlug={elm.urlSlug}
                 posterUrls={elm.posterUrls}
+                dateStart={elm.dateStart}
+                dateEnd={elm.dateEnd}
               />
             ))}
         </section>
