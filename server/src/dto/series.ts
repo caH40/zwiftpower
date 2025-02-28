@@ -48,18 +48,14 @@ export function organizerSeriesOneDto(
   const dateStart = series.dateStart.toISOString().split('T')[0];
   const dateEnd = series.dateEnd.toISOString().split('T')[0];
 
-  const stages = series.stages.map((stage) => {
-    if (!stage?.event) {
-      throw new Error('Не найден этап серии в БД по _id');
-    }
-
-    return {
+  const stages = series.stages
+    .filter((elm) => elm.event)
+    .map((stage) => ({
       eventStart: stage.event.eventStart,
       _id: String(stage.event._id),
       name: stage.event.name,
       order: stage.order,
-    };
-  });
+    }));
   const description = series.description;
 
   // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
@@ -80,19 +76,15 @@ export function seriesAllPublicDto(
     const dateStart = elm.dateStart.toISOString();
     const dateEnd = elm.dateEnd.toISOString();
 
-    const stages = elm.stages.map((stage) => {
-      if (!stage?.event) {
-        throw new Error('Не найден этап серии в БД по _id');
-      }
-
-      return {
+    const stages = elm.stages
+      .filter((elm) => elm.event)
+      .map((stage) => ({
         eventStart: stage.event.eventStart,
         id: stage.event.id,
         _id: String(stage.event._id),
         name: stage.event.name,
         order: stage.order,
-      };
-    });
+      }));
 
     // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
     const logoUrls = createUrlsToFileCloud(elm.logoFileInfo);

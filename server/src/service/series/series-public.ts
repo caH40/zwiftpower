@@ -61,7 +61,7 @@ export class SeriesPublicService {
       throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
     }
     const stagesFilteredAndSorted = seriesOneDB.stages
-      .filter((stage) => !stage.event.started)
+      .filter((stage) => stage.event && !stage.event.started)
       .sort(
         (a, b) =>
           new Date(a.event.eventStart).getTime() - new Date(b.event.eventStart).getTime()
