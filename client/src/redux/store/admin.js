@@ -6,6 +6,7 @@ import zwiftClubSlice from '../features/api/zwift_club/zwiftClubSlice';
 import fitfilesSlice from '../features/api/fitfiles/fitfilesSlice';
 import riderBanSlice from '../features/api/rider-ban/riderBanSlice';
 import notificationSlice from '../features/api/notifications/notificationSlice';
+import finishProtocolSlice from '../features/api/finish-protocol/finishProtocolSlice';
 
 /**
  * reducers доступные админам/модераторам
@@ -19,4 +20,5 @@ export const adminReducers = {
   fitfiles: fitfilesSlice,
   riderBan: riderBanSlice,
   notification: notificationSlice,
+  finishProtocol: finishProtocolSlice,
 };
