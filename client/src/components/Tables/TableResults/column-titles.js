@@ -3,7 +3,7 @@ export const resultsColumnsFull = [
   { name: '', id: 1 },
   { name: 'Название', id: 2 },
   { name: 'Организатор', id: 3 },
-  { name: 'Формат заезда', id: 4 },
+  // { name: 'Формат заезда', id: 4 },
   { name: 'Финиш', id: 5 },
   { name: 'Карта', id: 6 },
   { name: 'Маршрут', id: 7 },

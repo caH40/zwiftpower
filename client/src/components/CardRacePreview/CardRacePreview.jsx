@@ -5,7 +5,7 @@ import ParamsEvent from '../ParamsEvent/ParamsEvent';
 import RulesBox from '../RulesBox/RulesBox';
 import TimeToStart from '../TimeToStart/TimeToStart';
 import { getTodayTomorrow } from '../../utils/date-local';
-import TdRaceType from '../Tables/Td/TdRaceType';
+// import TdRaceType from '../Tables/Td/TdRaceType';
 import PrivateEvent from '../PrivateEvent/PrivateEvent';
 import { useResize } from '../../hook/use-resize';
 import { getEventType } from '../../utils/event';
@@ -51,12 +51,12 @@ function CardRacePreview({ event, getClick }) {
               </div>
               {sm && (
                 <>
-                  <div className={styles.box__term}>
+                  {/* <div className={styles.box__term}>
                     <dt className={styles.term}>Формат</dt>
                     <dd className={styles.term__description}>
                       <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
                     </dd>
-                  </div>
+                  </div> */}
 
                   {!logoSrc && (
                     <div className={styles.box__term}>

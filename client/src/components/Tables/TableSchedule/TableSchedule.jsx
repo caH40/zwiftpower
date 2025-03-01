@@ -9,7 +9,7 @@ import { getToday } from '../../../utils/date-local';
 import { getDuration, getLaps, map, routeName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
-import TdRaceType from '../Td/TdRaceType';
+// import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 import RulesBox from '../../RulesBox/RulesBox';
@@ -59,7 +59,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
 
               <td className={cx('td__nowrap')}>{event.organizer}</td>
 
-              <TdRaceType typeRaceCustom={event.typeRaceCustom} />
+              {/* <TdRaceType typeRaceCustom={event.typeRaceCustom} /> */}
 
               <td>
                 <CategoriesBox event={event} addCls={'nowrap'} />
