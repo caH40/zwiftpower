@@ -11,16 +11,12 @@ import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
 import JSONBlock from '../../components/JSONBlock/JSONBlock';
-import {
-  fetchZwiftEventParams,
-  fetchZwiftEventParamsForModerator,
-} from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
+import { fetchZwiftEventParamsForModerator } from '../../redux/features/api/zwift_event_params/fetchZwiftEventParams';
 import {
   resetParams,
   setCategoryEnforcement,
-  setPattern,
 } from '../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
-// import FormPattern from '../../components/Zwift/UI/FormEditEvent/FormPattern';
+import { useConfigsFPOptions } from '../../hook/useConfigsFPOptions';
 import {
   resetEventIdCreated,
   setEventId,
@@ -43,10 +39,14 @@ function ZwiftEditEvent() {
 
   useTitle('Редактирование заезда в Zwift');
   const eventParams = useSelector((state) => state.eventParams);
+  // console.log(eventParams?.eventMainParams?.organizerId);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+
+  // Получение массива options для select выбора конфигурации финишного протокола.
+  const configsFinishProtocol = useConfigsFPOptions(eventParams?.eventMainParams?.organizerId);
 
   useEffect(() => {
     if (id) {
@@ -88,24 +88,6 @@ function ZwiftEditEvent() {
     return false;
   };
 
-  // const activatePattern = (pattern) => {
-  //   try {
-  //     dispatch(setPattern(pattern));
-  //     if (pattern === '' || pattern === 'Сброс настроек') {
-  //       return;
-  //     }
-  //     dispatch(
-  //       getAlert({
-  //         message: `Установлен пакет настроек "${pattern}"`,
-  //         type: 'success',
-  //         isOpened: true,
-  //       })
-  //     );
-  //   } catch (error) {
-  //     dispatch(getAlert({ message: error.message, type: 'error', isOpened: true }));
-  //   }
-  // };
-
   const selectCategoryEnforcement = (categoryEnforcementName) => {
     dispatch(setCategoryEnforcement(categoryEnforcementName));
   };
@@ -122,14 +104,12 @@ function ZwiftEditEvent() {
       </div>
       {eventParams?.eventMainParams.worldId ? (
         <>
-          {/* Выбор сохраненных настроек для Эвентов */}
-          {/* <div className={styles.group}>
-            <FormPattern activatePattern={activatePattern} />
-          </div> */}
-
           {/* Форма для установки настроек Эвента */}
           <div className={styles.group}>
-            <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
+            <FormEditEvent
+              selectCategoryEnforcement={selectCategoryEnforcement}
+              configsFinishProtocol={configsFinishProtocol}
+            />
           </div>
 
           {/* Формы для установки настроек в группах Эвента */}

@@ -14,14 +14,21 @@ import { TFinishProtocolConfigResponseDB } from '../../types/mongodb-response.ty
 /**
  * Класс работы с именами (объектами) конфигураций финишного протокола.
  */
-export class FinishProtocolService {
+export class ConfigFinishProtocolService {
   constructor() {}
 
   /**
    * Получение всех конфигурации.
    */
-  public getAll = async (): Promise<TResponseService<TFinishProtocolConfigDto[]>> => {
-    const configsFPDB = await FinishProtocolConfigModel.find()
+  public getAll = async (
+    organizer?: string
+  ): Promise<TResponseService<TFinishProtocolConfigDto[]>> => {
+    // Если organizer передан, то возвращаются документы, созданные organizer и дефолтные.
+    // Если organizer не передан, то возвращаются все документы.
+    const querySearch = {
+      ...(organizer && { $or: [{ organizer }, { isDefault: true }] }),
+    };
+    const configsFPDB = await FinishProtocolConfigModel.find(querySearch)
       .populate({ path: 'organizer', select: ['name'] })
       .lean<TFinishProtocolConfigResponseDB[]>();
 

@@ -45,7 +45,7 @@ routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
 routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);
 routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLetter);
-routerAdmin.get('/finish-protocols', authAdmin, finishProtocolController.getAll);
+routerAdmin.get('/finish-protocols/:organizerId?', authAdmin, finishProtocolController.getAll);
 routerAdmin.post('/finish-protocols', authAdmin, finishProtocolController.post);
 routerAdmin.put('/finish-protocols', authAdmin, finishProtocolController.put);
 routerAdmin.delete('/finish-protocols/:configFP', authAdmin, finishProtocolController.delete);

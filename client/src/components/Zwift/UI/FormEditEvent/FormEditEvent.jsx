@@ -17,7 +17,7 @@ import {
 import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
 import { labelsSubgroups } from '../../../../assets/subgroups';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
-import { optionsCategoryEnforcement, optionsRaceTypes } from '../../../../assets/options';
+import { optionsCategoryEnforcement } from '../../../../assets/options';
 import SimpleSelectFunction from '../../../UI/SimpleSelect/SimpleSelectFunction';
 
 import styles from './FormEditEvent.module.css';
@@ -26,7 +26,7 @@ import styles from './FormEditEvent.module.css';
  * Форма изменения настроек для Эвента
  * @param {{isCreating:boolean }} isCreating это форма для создание нового эвента?
  */
-function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
+function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishProtocol }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
 
@@ -185,16 +185,16 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
 
           {!isCreating && (
             <BoxParameter
-              title={'Тип заезда для формирования финишного протокола'}
+              title={'Конфигурация финишного протокола'}
               pen={true}
               inputParams={{
                 property: 'typeRaceCustom',
                 type: 'select',
-                options: optionsRaceTypes,
+                options: configsFinishProtocol,
               }}
               description="Настройка сохраняется в БД и не передается в API Zwift"
             >
-              {getNameSelected(optionsRaceTypes, eventMainParams.typeRaceCustom)}
+              {getNameSelected(configsFinishProtocol, eventMainParams.typeRaceCustom)}
             </BoxParameter>
           )}
         </div>

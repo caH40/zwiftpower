@@ -53,10 +53,15 @@ export const fetchPutFinishProtocol = createAsyncThunk(
  */
 export const fetchGetAllFinishProtocol = createAsyncThunk(
   'configFinishProtocols/get',
-  async (_, thunkAPI) => {
+  async (organizerId, thunkAPI) => {
     try {
+      const url = new URL('/api/admin/finish-protocols', serverExpress);
+      if (organizerId) {
+        url.pathname += `/${organizerId}`;
+      }
+
       const response = await myAxios({
-        url: `${serverExpress}/api/admin/finish-protocols`,
+        url: url.toString(),
         method: 'get',
       });
 

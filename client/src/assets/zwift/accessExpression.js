@@ -189,4 +189,19 @@ export const accessExpressions = [
     categoryEnforcement: true,
   },
   accessExpressionsRegClosed,
+  {
+    id: 100,
+    name: 'disabledVTR',
+    label: 'Выключена. VTR',
+    value: 'disabled',
+    description: 'Выключена. Отображение для VTR',
+    paceValues: {
+      1: { from: 4.2, to: 6 },
+      2: { from: 3.2, to: 4.19 },
+      3: { from: 1, to: 3.19 },
+      4: { from: 3.16, to: 6 },
+      5: { from: 1, to: 3.15 },
+    },
+    categoryEnforcement: false,
+  },
 ];
