@@ -8,7 +8,6 @@ import {
   getSignedRidersMeta,
 } from './tags-async.js';
 import {
-  getCatchupMeta,
   getFTPMeta,
   getFaqMeta,
   getHomeMeta,
@@ -36,8 +35,6 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getScheduleListMeta(url);
   } else if (url === '/race/results') {
     tags = getResultListMeta(url);
-  } else if (url === '/race/series') {
-    tags = getSeriesMeta(url);
   } else if (url === '/race/statistics/main') {
     tags = getStatisticsMeta(url);
   } else if (url.includes('/race/statistics/leaders/')) {
@@ -46,8 +43,6 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getFTPMeta(url);
   } else if (url === '/race/statistics/riders-racing-score') {
     tags = getRacingScoreMeta(url);
-  } else if (url.includes('/race/series/catchup/')) {
-    tags = getCatchupMeta(url);
   } else if (url.includes('/faq')) {
     tags = getFaqMeta(url);
   } else if (url.includes('/riders')) {
@@ -68,6 +63,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getSeriesScheduleMeta(url);
   } else if (url.match(/^\/series\/([^/]+)\/(regulations)$/)) {
     tags = getSeriesRegulationsMeta(url);
+  } else if (url === '/race/series') {
+    tags = getSeriesMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

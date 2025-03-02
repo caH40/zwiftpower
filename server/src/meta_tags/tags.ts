@@ -47,7 +47,7 @@ export const getResultListMeta = (url: string): MetaTags => {
  * Формирование Мета тегов для страницы "Серии и Туры заездов"
  */
 export const getSeriesMeta = (url: string): MetaTags => {
-  const title = 'Серии и Туры заездов российского сообществом в Zwift (Звифт)';
+  const title = 'Серии заездов и Туры заездов российского сообществом в Zwift (Звифт)';
   const canonical = serverWoWWW + url;
   const description =
     'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
@@ -112,20 +112,6 @@ export const getRacingScoreMeta = (url: string): MetaTags => {
     'Диаграммы распределения райдеров по Racing Score (Рейтинговые очки). Диаграммы распределения райдеров по категориям (базовые настройки Звифта).';
   const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
   const recommendationsTag = 'ftp';
-
-  return { title, canonical, description, image, recommendationsTag };
-};
-
-/**
- * Формирование Мета тегов для страницы "Догонялки (CatchUp)"
- */
-export const getCatchupMeta = (url: string): MetaTags => {
-  const season = url.replace('/race/series/catchup/', '');
-  const title = `Серия заездов Догонялки (CatchUp). Сезон ${season}`;
-  const canonical = serverWoWWW + url;
-  const description = `Серия заездов Догонялки (CatchUp), проводимых командой KOM-on. Общий зачет за сезон ${season}. Список всех победителей заездов за сезон ${season}.`;
-  const image = 'https://zwiftpower.ru/images/open_graph/2.jpg';
-  const recommendationsTag = 'catchup';
 
   return { title, canonical, description, image, recommendationsTag };
 };

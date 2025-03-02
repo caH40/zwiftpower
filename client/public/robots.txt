@@ -8,5 +8,7 @@ Disallow: /admin/ # запрещает ссылки из панели админ
 Disallow: /logs/ # запрещает ссылки из панели администратора
 Disallow: /profile/
 Disallow: /organizer/
+Disallow: /race/series/
+
 Allow: /profile/*/results$
 Sitemap: https://zwiftpower.ru/sitemap.xml # указывает роботу на файл Sitemap для сайта
