@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
-import { fetchSeries } from '../../redux/features/api/seriesSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
 import { HelmetSeries } from '../../components/Helmets/HelmetSeries';
@@ -26,7 +25,6 @@ function RaceSeries() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchSeries());
     dispatch(fetchGetSeries());
 
     return () => dispatch(resetSeriesPublicAll());

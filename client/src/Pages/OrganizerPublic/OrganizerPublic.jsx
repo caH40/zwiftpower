@@ -109,7 +109,7 @@ function OrganizerPublic() {
         {xl && (
           <aside className={styles.aside}>
             <AdMyPage
-              href="/race/series/catchup/2024"
+              href="/series"
               title="Догонялки (Catchup)"
               subtitle="сезон 2024-2025"
               imageSrc="/images/open_graph/5.jpg"

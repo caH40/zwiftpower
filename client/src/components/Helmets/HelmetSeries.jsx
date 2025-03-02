@@ -7,7 +7,7 @@ import { serverFront } from '../../config/environment';
  */
 export const HelmetSeries = () => {
   const title = 'Серии и Туры заездов российского сообществом в Zwift (Звифт)';
-  const canonical = `${serverFront}/race/series`;
+  const canonical = `${serverFront}/series`;
   const description =
     'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
   const image = 'https://zwiftpower.ru/images/main.jpg';

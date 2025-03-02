@@ -9,8 +9,6 @@ import {
   putResults,
   deleteEventAndResults,
   getResults,
-  getSeries,
-  getResultsSeries,
   getNextWeekRaces,
 } from '../controllers/race.js';
 import { putResult } from '../controllers/result.js';
@@ -24,7 +22,5 @@ routerRace.put('/events', authModeratorClub, putEvent); // ручное обно
 routerRace.delete('/events', authModeratorClub, deleteEventAndResults); // ручное удаление Эвента и результатов
 routerRace.put('/results', authModeratorClub, putResults); // ручное обновление результатов
 routerRace.get('/results/:eventId', getResults);
-routerRace.get('/series', getSeries);
-routerRace.get('/series/results/:type/:season', getResultsSeries);
 routerRace.put('/result', authModeratorClub, putResult);
 routerRace.get('/events-notification', getNextWeekRaces);

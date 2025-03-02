@@ -20,8 +20,6 @@ import popupTableResultsListSlice from '../features/popupTableResultsListSlice';
 import userProfileSlice from '../features/api/userProfileSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
-import seriesSlice from '../features/api/seriesSlice';
-import resultsSeriesSlice from '../features/api/resultsSeriesSlice';
 import popupFormSlice from '../features/popupFormSlice';
 // удаление информации о релизе из БД
 import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
@@ -75,8 +73,6 @@ export default configureStore({
     getPopupInput: popupInputSlice,
     popupForm: popupFormSlice,
     downloadResults: downloadResultsSlice,
-    fetchSeries: seriesSlice,
-    fetchResultsSeries: resultsSeriesSlice,
     popupInfoDevDelete: popupInfoDevDeleteSlice,
     popupInfoDevGet: popupInfoDevGetSlice,
     popupInfoDevPost: popupInfoDevPostSlice,
@@ -99,5 +95,3 @@ export default configureStore({
     ...seriesPublicReducers,
   },
 });
-
-// test

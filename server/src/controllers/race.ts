@@ -10,9 +10,7 @@ import {
 } from '../service/race/events_list/events.js';
 import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
-import { getSeriesService } from '../service/race/series.js';
 import { handleAndLogError, handleErrorInController } from '../errors/error.js';
-import { getResultsSeriesService } from '../service/series/index.js';
 import { checkModeratorClub } from '../service/moderator-club.js';
 
 // types
@@ -155,38 +153,6 @@ export async function getResults(req: Request, res: Response) {
     const { eventId } = req.params;
     const eventResults = await getResultsService(+eventId);
     res.status(200).json(eventResults);
-  } catch (error) {
-    handleAndLogError(error);
-    if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
-}
-
-/**
- * Получение данных Серии
- */
-export async function getSeries(req: Request, res: Response) {
-  try {
-    const series = await getSeriesService();
-    res.status(200).json(series);
-  } catch (error) {
-    handleAndLogError(error);
-    if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
-}
-
-/**
- *
- */
-export async function getResultsSeries(req: Request, res: Response) {
-  try {
-    const { type, season } = req.params;
-    const results = await getResultsSeriesService(type, season);
-
-    res.status(200).json(results);
   } catch (error) {
     handleAndLogError(error);
     if (error instanceof Error) {

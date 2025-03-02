@@ -14,8 +14,8 @@ const useLoader = () => {
   const { status: statusLeadersInIntervals } = useSelector(
     (state) => state.leadersInIntervalsFetch
   );
-  const { status: statusResultsSeries } = useSelector((state) => state.fetchResultsSeries);
-  const { status: statusSeries } = useSelector((state) => state.fetchSeries);
+  // const { status: statusResultsSeries } = useSelector((state) => state.fetchResultsSeries);
+  // const { status: statusSeries } = useSelector((state) => state.fetchSeries);
   const { status: statusUserResults } = useSelector((state) => state.fetchUserResults);
   const { status: statusUserPowerCurve } = useSelector((state) => state.fetchUserPowerCurve);
   const { status: statusRiderMetrics } = useSelector((state) => state.riderMetrics);
@@ -57,8 +57,6 @@ const useLoader = () => {
     statusDownloadResults === 'loading' ||
     statusRidersInEventsFetch === 'loading' ||
     statusLeadersInIntervals === 'loading' ||
-    statusResultsSeries === 'loading' ||
-    statusSeries === 'loading' ||
     statusUserResults === 'loading' ||
     statusUserPowerCurve === 'loading' ||
     statusRiderMetrics === 'loading' ||

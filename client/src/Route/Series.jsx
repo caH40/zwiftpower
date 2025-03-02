@@ -16,7 +16,7 @@ const SeriesOneRegulations = lazy(() =>
 export function SeriesRoute() {
   return (
     <>
-      <Route path="/race/series" element={<RaceSeries />} />
+      <Route path="/series" element={<RaceSeries />} />
       <Route path="/series/:urlSlug" element={<SeriesOneLayout />}>
         <Route path="/series/:urlSlug/schedule" element={<SeriesOneSchedule />} />
         <Route path="/series/:urlSlug/results" element={<SeriesOneResults />} />
