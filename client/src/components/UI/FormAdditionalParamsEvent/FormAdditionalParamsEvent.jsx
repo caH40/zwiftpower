@@ -8,7 +8,7 @@ function FormAdditionalParamsEvent({ form, setForm, sendForm, series, configsFin
   return (
     <form className={styles.form} name="requestData">
       <SimpleSelectArray
-        name={'Тип гонки'}
+        name={'Конфигурация финишного протокола'}
         state={form}
         setState={setForm}
         property={'typeRaceCustom'}

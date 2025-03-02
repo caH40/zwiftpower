@@ -1,14 +1,10 @@
 // types
-import { TotalCatchupSchema } from '../../../types/model.interface.js';
 import { ResultSeries, ResultSummaryCatchup } from '../../../types/types.interface.js';
 
 /**
  * Получение сводной информации о победах за сезон
  */
-export function getResultSummary(
-  results: ResultSeries[],
-  totalCatchup: TotalCatchupSchema | null
-): ResultSummaryCatchup[] {
+export function getResultSummary(results: ResultSeries[]): ResultSummaryCatchup[] {
   let winsA = 0;
   let winsB = 0;
   let winsC = 0;
@@ -40,38 +36,6 @@ export function getResultSummary(
       }
       default: {
         break;
-      }
-    }
-  }
-
-  // Если есть результаты добавленные в ручную, то рассчитываются данные победы.
-  if (totalCatchup?.manual) {
-    // подсчет побед в заездах, добавленных вручную
-    for (const result of totalCatchup.manual) {
-      switch (result.winnerCategory) {
-        case 'A': {
-          winsA++;
-          break;
-        }
-        case 'B': {
-          winsB++;
-          break;
-        }
-        case 'C': {
-          winsC++;
-          break;
-        }
-        case 'D': {
-          winsD++;
-          break;
-        }
-        case 'E': {
-          winsE++;
-          break;
-        }
-        default: {
-          break;
-        }
       }
     }
   }

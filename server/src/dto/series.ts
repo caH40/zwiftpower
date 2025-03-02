@@ -97,7 +97,10 @@ export function seriesAllPublicDto(
 /**
  * DTO получения данных запрашиваемой Серии для публичного доступа пользователей сайта.
  */
-export function seriesOnePublicDto(series: TSeriesOnePublicResponseDB): TSeriesOnePublicDto {
+export function seriesOnePublicDto(
+  series: TSeriesOnePublicResponseDB,
+  seriesResults: unknown
+): TSeriesOnePublicDto {
   const _id = String(series._id);
 
   // Лого Организатора заездов.
@@ -134,5 +137,15 @@ export function seriesOnePublicDto(series: TSeriesOnePublicResponseDB): TSeriesO
   const logoUrls = createUrlsToFileCloud(series.logoFileInfo);
   const posterUrls = createUrlsToFileCloud(series.posterFileInfo);
 
-  return { ...series, organizer, stages, _id, dateStart, dateEnd, logoUrls, posterUrls };
+  return {
+    ...series,
+    organizer,
+    stages,
+    _id,
+    dateStart,
+    dateEnd,
+    logoUrls,
+    posterUrls,
+    seriesResults,
+  };
 }

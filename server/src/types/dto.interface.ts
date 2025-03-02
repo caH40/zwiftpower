@@ -147,6 +147,7 @@ export type TSeriesOnePublicDto = Omit<
   dateEnd: string;
   logoUrls: Record<string, string> | undefined;
   posterUrls: Record<string, string> | undefined;
+  seriesResults: unknown;
 };
 
 /**

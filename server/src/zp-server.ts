@@ -23,6 +23,7 @@ import { getCache } from './middleware/cache.js';
 import { createSitemap } from './service/sitemap/generate-sitemap.js';
 import { routerOrganizerPublic } from './routes/organizer-public.js';
 import { routerSeries } from './routes/series.js';
+// import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -71,7 +72,10 @@ app.get('*', async (req, res) => {
 const start = async () => {
   try {
     app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
-
+    // await handleCatchUpSeries({
+    //   season: { start: '2024-09-01T00:00:00Z', end: '2025-08-31T23:59:59Z' },
+    //   seriesId:'67c3fe20ab16b915b277d3d9',
+    // });
     // Первоначальная инициализация, чтобы сразу был после build.
     await createSitemap();
   } catch (error) {
