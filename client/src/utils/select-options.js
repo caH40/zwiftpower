@@ -12,21 +12,8 @@ export class SelectOption {
   configsFinishProtocol = (configsFP) => {
     return configsFP.map((config) => ({
       id: config._id,
-      value: config.name,
-      label: config.name,
+      name: config.name,
       translate: config.displayName,
     }));
   };
-
-  // /**
-  //  * Формирует список опций для организаторов.
-  //  * @param {Array<Object>} organizers - Массив объектов организаторов.
-  //  * @returns {Array<Object>} - Массив объектов для опций тэга select.
-  //  */
-  // organizers = (organizers) => {
-  //   return organizers.map((organizer) => ({
-  //     value: organizer.id,
-  //     label: organizer.name,
-  //   }));
-  // };
 }

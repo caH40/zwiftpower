@@ -25,6 +25,7 @@ import {
   setOrganizersForModerator,
 } from '../../redux/features/api/organizer/organizerModeratorSlice';
 import IconQuestion from '../../components/icons/IconQuestion';
+import { useConfigsFPOptions } from '../../hook/useConfigsFPOptions';
 
 import styles from './ZwiftAddEvent.module.css';
 
@@ -45,6 +46,9 @@ function ZwiftAddEvent() {
   const { series } = useSelector((state) => state.fetchActualSeries);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Получение массива options для select выбора конфигурации финишного протокола.
+  const configsFinishProtocol = useConfigsFPOptions(organizerId);
 
   // Сброс данных после размонтирования компонента.
   useEffect(() => {
@@ -137,6 +141,7 @@ function ZwiftAddEvent() {
             setForm={setAdditionalParams}
             series={series}
             sendForm={addEvent}
+            configsFinishProtocol={configsFinishProtocol}
           />
         </>
       ) : (

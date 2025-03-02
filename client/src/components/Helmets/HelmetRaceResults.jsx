@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 
 import { serverFront } from '../../config/environment';
 import { getTimerLocal } from '../../utils/date-local';
-import { raceTypes } from '../../assets/zwift/race-type';
 import { millisecondsInWeekDays } from '../../assets/dates';
 
 /**
@@ -18,15 +17,12 @@ export const HelmetRaceResults = ({
 }) => {
   // подготовка данных
   const eventStartLocal = getTimerLocal(eventStart, 'DDMMYY');
-  const type = raceTypes.find((race) => race.value === typeRaceCustom)?.name;
 
   const titleRaw = `Результаты заезда '${name}'`;
   // запрещены двойные кавычки в мета тегах
   const title = titleRaw.replace(/"/g, '');
   const canonical = `${serverFront}/race/results/${eventId}`;
-  const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт). Тип заезда '${
-    type ? type : 'Классический без групп'
-  }'.`;
+  const descriptionRaw = `Результаты заезда '${name}' от ${eventStartLocal}, организованного командой '${organizer}' в виртуальном мире Zwift (Звифт).`;
   // запрещены двойные кавычки в мета тегах
   const description = descriptionRaw.replace(/"/g, '');
   // показывать результаты, которые не старше недели

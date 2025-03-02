@@ -8,6 +8,7 @@ import {
 } from '../../types/mongodb-response.types.js';
 import { TSeriesAllPublicDto, TSeriesOnePublicDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { getResultsSeriesCatchup } from './catchup/index.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -69,7 +70,30 @@ export class SeriesPublicService {
 
     seriesOneDB.stages = stagesFilteredAndSorted;
 
-    const seriesAfterDto = seriesOnePublicDto(seriesOneDB);
+    let seriesResults = {};
+
+    switch (seriesOneDB.type) {
+      case 'catchUp':
+        seriesResults = await getResultsSeriesCatchup(seriesOneDB._id);
+        break;
+
+      case 'series':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'tour':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'criterium':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      default:
+        throw new Error(`Не опознан тип seriesType: ${seriesOneDB.type}`);
+    }
+
+    const seriesAfterDto = seriesOnePublicDto(seriesOneDB, seriesResults);
 
     // Сортировка Этапов, сначала более новые Серии.
     seriesAfterDto.stages.sort(

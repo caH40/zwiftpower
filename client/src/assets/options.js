@@ -1,7 +1,6 @@
 // options for selects
 
 import { accessExpressions } from './zwift/accessExpression';
-import { raceTypes } from './zwift/race-type';
 
 /**
  * Сезоны для CatchUp
@@ -20,21 +19,6 @@ export const optionsPeriodsRidersInEvent = [
   { id: 0, name: 'Год' },
   { id: 1, name: '3 месяца' },
   { id: 2, name: '30 дней' },
-];
-
-/**
- * Названия паттернов настроек для Эвентов
- */
-export const optionsRaceTypes = raceTypes.map((option) => ({
-  id: option.id,
-  label: option.name,
-  name: option.value,
-  translate: option.name,
-}));
-
-export const optionsEventPattern = [
-  ...optionsRaceTypes,
-  // { id: 100, name: 'Сброс настроек', label: 'Сброс настроек' },
 ];
 
 /**

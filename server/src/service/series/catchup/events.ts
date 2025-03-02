@@ -1,37 +1,13 @@
-import { Types } from 'mongoose';
-import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
+import mongoose, { Types } from 'mongoose';
 
-// types
-import { TotalCatchupSchema } from '../../../types/model.interface.js';
+import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 
 /**
  * Получение данных по Эвентам Серии за выбранный сезон
  * @param type - тип Эвента typeRaceCustom
- * @param seriesData - данные по Серии заездов (дата старта, окончания)
- * @param organizer - Короткое название организатора.
  */
 export const getCurrentEvents = async (
-  type: string,
-  organizer: string,
-  seriesData?: TotalCatchupSchema | null
+  seriesId: mongoose.Schema.Types.ObjectId
 ): Promise<Types.ObjectId[]> => {
-  // получение всех эвентов типа type
-  // если нет seriesData значит необходимы все результаты
-
-  const eventStart = seriesData
-    ? {
-        $gte: new Date(seriesData.start).toISOString(),
-        $lt: new Date(seriesData.end).toISOString(),
-      }
-    : /./;
-
-  // получение всех эвентов типа type за определенный сезон
-  return await ZwiftEvent.find(
-    {
-      typeRaceCustom: type,
-      eventStart,
-      organizer,
-    },
-    { _id: true }
-  ).lean<Types.ObjectId[]>();
+  return await ZwiftEvent.find({ seriesId }, { _id: true }).lean<Types.ObjectId[]>();
 };

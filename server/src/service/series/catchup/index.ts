@@ -1,43 +1,24 @@
-import { TotalCatchup } from '../../../Model/TotalCatchup.js';
-import { seasonsSeries } from '../../../assets/constants.js';
+import mongoose from 'mongoose';
+
 import { resultsSeriesDto } from '../../../dto/resultsSeries.dto.js';
 import { getCurrentEvents } from './events.js';
 import { getResults } from './results-list.js';
 import { getResultsSeriesRaw } from './results-series.js';
 import { getResultSummary } from './summary.js';
-
-// types
-import { TotalCatchupSchema } from '../../../types/model.interface.js';
 import { addStartGaps } from './utils.js';
 import { getLeaderboardCatchup } from './leaderboard.js';
 
-const type = 'catchUp';
-
 /**
- * Все победители Эвентов 'Догонялок' и сводные результаты за выбранный сезон seasonCurrent
- * @param seasonCurrent - сезон для запроса данных вида 'Сезон 2022-2023'
+ * Все победители Эвентов 'Догонялок' и сводные результаты
+ * @param seriesId - _id серии заездов.
  */
-export async function getResultsSeriesCatchup(seasonCurrent: string) {
-  // Определяем, нужно ли запрашивать данные только для текущего сезона.
-  const isSpecificSeason = seasonCurrent !== 'all';
-
-  // Получение данных о серии Догонялки для указанного сезона.
-  const totalCatchup = isSpecificSeason
-    ? await TotalCatchup.findOne({
-        type,
-        season: seasonsSeries[seasonCurrent],
-      }).lean<TotalCatchupSchema>()
-    : null;
-
-  if (isSpecificSeason && !totalCatchup) {
-    throw new Error('Серия не найдена');
+export async function getResultsSeriesCatchup(seriesId?: mongoose.Schema.Types.ObjectId) {
+  if (!seriesId) {
+    throw new Error('Не получен seriesId для догонялок!');
   }
 
-  // Костыль. Для формирования списка эвентов только Организатора KOMON
-  const organizer = 'KOM-on';
   // получение _id всех Эвентов выбранного сезона,
-  // при totalCatchup=null получение всех эвентов
-  const currentEvents = await getCurrentEvents(type, organizer, totalCatchup);
+  const currentEvents = await getCurrentEvents(seriesId);
 
   // получение результатов райдеров всех currentEvents Эвентов
   const resultsRaw = await getResultsSeriesRaw(currentEvents);
@@ -48,11 +29,11 @@ export async function getResultsSeriesCatchup(seasonCurrent: string) {
   // формирование массива результатов с необходимыми данными для запроса
   const results = getResults(resultsRawWithGaps);
 
-  // Получение сводной информации за сезон (только для конкретных сезонов).
-  const leaderboardCatchup = isSpecificSeason ? getLeaderboardCatchup(results) : null;
+  // Получение сводной информации за сезон.
+  const leaderboardCatchup = getLeaderboardCatchup(results);
 
-  // Получение сводной информации за сезон (только для конкретных сезонов).
-  const resultsSummary = isSpecificSeason ? getResultSummary(results, totalCatchup) : undefined;
+  // Получение сводной информации за сезон.
+  const resultsSummary = getResultSummary(results);
 
   return resultsSeriesDto({ results, resultsSummary, leaderboardCatchup });
 }

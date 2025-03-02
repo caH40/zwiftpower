@@ -194,6 +194,8 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
               }}
               description="Настройка сохраняется в БД и не передается в API Zwift"
             >
+              {/* Если отображается идентификатор вместо displayName, значит в  */}
+              {/* массиве configsFinishProtocol нет элемента с таким идентификатором  */}
               {getNameSelected(configsFinishProtocol, eventMainParams.typeRaceCustom)}
             </BoxParameter>
           )}
