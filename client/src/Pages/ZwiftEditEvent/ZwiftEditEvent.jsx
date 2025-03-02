@@ -39,7 +39,6 @@ function ZwiftEditEvent() {
 
   useTitle('Редактирование заезда в Zwift');
   const eventParams = useSelector((state) => state.eventParams);
-  // console.log(eventParams?.eventMainParams?.organizerId);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

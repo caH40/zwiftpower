@@ -1,4 +1,4 @@
-import TypeRaceBox from '../TypeRaceBox/TypeRaceBox';
+// import TypeRaceBox from '../TypeRaceBox/TypeRaceBox';
 import RulesBox from '../RulesBox/RulesBox';
 import { getEventType } from '../../utils/event';
 
@@ -10,12 +10,12 @@ function RaceBoxDescription({ event }) {
       {/* <h3 className={styles.title}>Параметры заезда</h3> */}
 
       <dl className={styles.list}>
-        <div className={styles.box__term}>
+        {/* <div className={styles.box__term}>
           <dt className={styles.term}>ФОРМАТ:</dt>
           <dd className={styles.description}>
             <TypeRaceBox event={event} />
           </dd>
-        </div>
+        </div> */}
         <div className={styles.box__term}>
           <dt className={styles.term}>ПРАВИЛА:</dt>
           <dd className={styles.description}>

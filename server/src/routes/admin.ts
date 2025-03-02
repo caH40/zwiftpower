@@ -25,7 +25,7 @@ import { FinishProtocolController } from '../controllers/finish-protocol.js';
 const finishProtocolController = new FinishProtocolController();
 
 export const routerAdmin = Router();
-// routerAdmin.get('*', (req, res) => console.log(req.path));
+// routerAdmin.get('*', (req, res) => console.log(req.path)); // Для контроля всех запросов.
 
 routerAdmin.get('/users', authAdmin, getUsers);
 routerAdmin.get('/clubs', authModerator, getClubs);
@@ -45,7 +45,11 @@ routerAdmin.put('/riders/ban', authAdmin, updateFairRideBan);
 routerAdmin.get('/riders/ban/:zwiftId', authAdmin, getFairRideBan);
 routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLetter);
-routerAdmin.get('/finish-protocols/:organizerId?', authAdmin, finishProtocolController.getAll);
+routerAdmin.get(
+  '/finish-protocols/:organizerId?',
+  authModerator,
+  finishProtocolController.getAll
+);
 routerAdmin.post('/finish-protocols', authAdmin, finishProtocolController.post);
 routerAdmin.put('/finish-protocols', authAdmin, finishProtocolController.put);
 routerAdmin.delete('/finish-protocols/:configFP', authAdmin, finishProtocolController.delete);
