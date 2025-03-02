@@ -1,6 +1,8 @@
-import React from 'react';
+import cn from 'classnames/bind';
 
 import styles from '../SimpleSelect/SimpleSelect.module.css';
+
+const cx = cn.bind(styles);
 
 /**
  * Select для использования библиотеки react-hook-form
@@ -27,7 +29,12 @@ function SelectWithRHF({
       </div>
 
       <div className={styles.wrapper__select}>
-        <select className={styles.select} {...register} {...props} disabled={loading}>
+        <select
+          className={cx('select', { error: validationText })}
+          {...register}
+          {...props}
+          disabled={loading}
+        >
           {!closeEmptyOption && <option className={styles.option} value=""></option>}
 
           {options.map((element) => (

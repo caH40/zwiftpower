@@ -30,3 +30,29 @@ export const optionsCategoryEnforcement = accessExpressions.map((option) => ({
   name: option.name,
   translate: option.label,
 }));
+
+/**
+ * Типы серий заездов с описанием.
+ */
+export const seriesTypes = [
+  {
+    id: 0,
+    value: 'series',
+    name: 'Серия заездов',
+  },
+  {
+    id: 1,
+    value: 'tour',
+    name: 'Тур',
+  },
+  {
+    id: 2,
+    value: 'catchUp',
+    name: 'Догонялки',
+  },
+  // {
+  //   id: 3,
+  //   value: 'criterium',
+  //   name: 'Критериум',
+  // },
+];

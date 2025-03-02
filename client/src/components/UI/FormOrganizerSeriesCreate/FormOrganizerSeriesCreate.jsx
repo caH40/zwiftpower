@@ -11,8 +11,10 @@ import {
 } from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
+import { seriesTypes } from '../../../assets/options';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
+import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
@@ -190,6 +192,19 @@ export default function FormOrganizerSeriesCreate({
             id={'isFinished-FormOrganizerSeriesCreate'}
             loading={loading}
             tooltip={'запрет на обновление итоговых таблиц'}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <SelectWithRHF
+            label={'Тип серии заездов*'}
+            register={register('type', {
+              required: 'Обязательное поле',
+            })}
+            validationText={errors.type?.message || ''}
+            id={'name-FormOrganizerSeriesCreate'}
+            options={seriesTypes}
+            loading={loading || loadingForm}
           />
         </div>
 

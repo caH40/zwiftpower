@@ -25,6 +25,21 @@
   min-width: 160px;
   width: 100%;
 }
+.select.error {
+  box-shadow: 0 0 2px 2px var(--error);
+  border-color: var(--error);
+}
+
+.box__text {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+.wrong {
+  font-size: 11px;
+  line-height: 12px;
+  color: var(--error);
+}
 
 /* Кастомная иконка */
 .wrapper__select::after {

@@ -20,20 +20,7 @@ const initialData = {
   type: 'tour',
   mission: '',
   description: '',
-  stages: [
-    // {
-    //   _id: '67b0cb7b26c9b687b7b0a334',
-    //   eventStart: '2025-02-16T08:00:12.000+0000',
-    //   name: 'ETALON team RACE',
-    //   order: 1,
-    // },
-    // {
-    //   _id: '67b0cbca26c9b687b7b0a4b4',
-    //   eventStart: '2025-02-16T09:00:00.000+0000',
-    //   name: 'ETALON team RACE',
-    //   order: 2,
-    // },
-  ],
+  stages: [],
 };
 
 /**

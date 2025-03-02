@@ -18,9 +18,7 @@ export default function OrganizerSeriesCurrentEdit() {
   const { seriesId } = useParams();
   const [trigger, setTrigger] = useState(false);
   // Данные редактируемой серии.
-  const { seriesOne, status: statusFetchSeriesOne } = useSelector(
-    (state) => state.seriesOrganizer
-  );
+  const { seriesOne } = useSelector((state) => state.seriesOrganizer);
 
   // Эвенты, которые можно добавить в Серю как этапы.
   const { eventsForSeries, status: statusFetchEvents } = useSelector(
@@ -37,13 +35,9 @@ export default function OrganizerSeriesCurrentEdit() {
     return () => dispatch(resetEventsForSeries());
   }, [dispatch, seriesId, trigger]);
 
-  // Успешный ответ от всех запросов данных.
-  const isAllDataResolved =
-    statusFetchEvents === 'resolved' && statusFetchSeriesOne === 'resolved' && seriesOne;
-
   return (
     <section className={styles.wrapper}>
-      {isAllDataResolved && (
+      {seriesOne?._id && (
         <FormOrganizerSeriesCreate
           isCreating={false}
           seriesOne={seriesOne}
