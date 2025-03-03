@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
-import cn from 'classnames/bind';
 
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { getDateTimeStart } from '../../../utils/date-local';
@@ -18,11 +17,8 @@ import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
-import StagesInSeries from '../../StagesInSeries/StagesInSeries';
 
 import styles from './FormOrganizerSeriesCreate.module.css';
-
-const cx = cn.bind(styles);
 
 // Сегодняшняя дата для инициализации в формате dd-mm-yyyy.
 const dateNow = getDateTimeStart(new Date().toISOString()).date;
@@ -32,7 +28,7 @@ const dateNow = getDateTimeStart(new Date().toISOString()).date;
  */
 export default function FormOrganizerSeriesCreate({
   isCreating,
-  eventsForSeries,
+
   seriesOne: {
     dateStart,
     dateEnd,
@@ -43,7 +39,6 @@ export default function FormOrganizerSeriesCreate({
     rules,
     prizes,
     description,
-    stages,
     hasGeneral,
     hasTeams,
     isFinished,
@@ -55,12 +50,6 @@ export default function FormOrganizerSeriesCreate({
 }) {
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
-
-  // Эвенты для добавления в Серию заездов.
-  const [events, setEvents] = useState(eventsForSeries);
-
-  // Эвенты добавленные в Серию заездов.
-  const [stagesAdded, setStagesAdded] = useState(stages);
 
   // Ссылка на лого Организатора. Используется в форме редактирования, для отображения изображения с сервера.
   const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
@@ -104,7 +93,6 @@ export default function FormOrganizerSeriesCreate({
       // Сериализация данных перед отправкой на сервер.
       const serializedSeriesData = serializeOrganizerSeriesCreate({
         ...formData,
-        stages: stagesAdded,
         ...(!isCreating && { seriesId }),
       });
 
@@ -119,7 +107,6 @@ export default function FormOrganizerSeriesCreate({
       if (isCreating) {
         // Очистка полей формы
         reset();
-        setStagesAdded([]);
         setLogoSrcState(null);
         setPosterSrcState(null);
       } else {
@@ -133,35 +120,35 @@ export default function FormOrganizerSeriesCreate({
     }
   };
 
-  // Удаление Эвента(этапа) из серии.
-  const deleteStage = (currentStage) => {
-    setStagesAdded((prev) => prev.filter((elm) => elm._id !== currentStage._id));
-    setEvents((prev) => {
-      // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
-      if (prev.some((elm) => elm._id === currentStage._id)) {
-        return prev;
-      }
-      return [...prev, currentStage];
-    });
-  };
+  // // Удаление Эвента(этапа) из серии.
+  // const deleteStage = (currentStage) => {
+  //   setStagesAdded((prev) => prev.filter((elm) => elm._id !== currentStage._id));
+  //   setEvents((prev) => {
+  //     // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
+  //     if (prev.some((elm) => elm._id === currentStage._id)) {
+  //       return prev;
+  //     }
+  //     return [...prev, currentStage];
+  //   });
+  // };
 
-  // Добавление Эвента(этапа) в серию.
-  const addStage = (currentStage) => {
-    setStagesAdded((prev) => {
-      // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
-      if (prev.some((elm) => elm._id === currentStage._id)) {
-        return prev;
-      }
+  // // Добавление Эвента(этапа) в серию.
+  // const addStage = (currentStage) => {
+  //   setStagesAdded((prev) => {
+  //     // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
+  //     if (prev.some((elm) => elm._id === currentStage._id)) {
+  //       return prev;
+  //     }
 
-      // Получение последнего номера Этапа для вычисления следующего номера.
-      const orders = prev.map((e) => (isNaN(e.order) ? 0 : e.order));
-      const lastOrder = Math.max(...orders, 0);
+  //     // Получение последнего номера Этапа для вычисления следующего номера.
+  //     const orders = prev.map((e) => (isNaN(e.order) ? 0 : e.order));
+  //     const lastOrder = Math.max(...orders, 0);
 
-      return [...prev, { ...currentStage, order: lastOrder + 1 }];
-    });
+  //     return [...prev, { ...currentStage, order: lastOrder + 1 }];
+  //   });
 
-    setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
-  };
+  //   setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
+  // };
 
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
@@ -406,12 +393,6 @@ export default function FormOrganizerSeriesCreate({
             loading={loading || loadingForm}
           />
         </div>
-      </div>
-
-      <div className={cx('wrapper__stages', { inactive: loading || loadingForm })}>
-        <StagesInSeries stages={stagesAdded} action="delete" handleAction={deleteStage} />
-
-        <StagesInSeries stages={events} action="add" handleAction={addStage} />
       </div>
 
       <div className={styles.box__btn}>

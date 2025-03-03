@@ -10,6 +10,7 @@ import FormOrganizerSeriesCreate from '../../../../components/UI/FormOrganizerSe
 import { fetchGetOneSeriesOrganizer } from '../../../../redux/features/api/series/fetchSeries';
 import MenuOrganizerSeries from '../../../../components/UI/Filters/MenuOrganizerSeries/MenuOrganizerSeries';
 import { resetCurrentMenuItem } from '../../../../redux/features/menuOrganizerSeriesSlice';
+import StagesSeriesEdit from '../../../../components/StagesSeriesEdit/StagesSeriesEdit';
 
 import styles from './OrganizerSeriesCurrentEdit.module.css';
 
@@ -24,9 +25,7 @@ export default function OrganizerSeriesCurrentEdit() {
   const { seriesOne } = useSelector((state) => state.seriesOrganizer);
 
   // Эвенты, которые можно добавить в Серю как этапы.
-  const { eventsForSeries, status: statusFetchEvents } = useSelector(
-    (state) => state.fetchEvents
-  );
+  const { eventsForSeries } = useSelector((state) => state.fetchEvents);
 
   const dispatch = useDispatch();
 
@@ -52,13 +51,12 @@ export default function OrganizerSeriesCurrentEdit() {
           <FormOrganizerSeriesCreate
             isCreating={false}
             seriesOne={seriesOne}
-            eventsForSeries={eventsForSeries}
-            loading={statusFetchEvents === 'loading'}
+            // loading={statusFetchEvents === 'loading'}
             setTrigger={setTrigger}
           />
         )
       ) : (
-        <section className={styles.stages}>stages</section>
+        <StagesSeriesEdit />
       )}
     </section>
   );

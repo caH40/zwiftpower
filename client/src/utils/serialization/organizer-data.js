@@ -22,9 +22,9 @@ export function serializeOrganizerData(data) {
 export function serializeOrganizerSeriesCreate(data) {
   const formData = new FormData();
 
-  if (data.stages && Array.isArray(data.stages)) {
-    data.stages = data.stages.map((stage) => ({ event: stage._id, order: stage.order }));
-  }
+  // if (data.stages && Array.isArray(data.stages)) {
+  //   data.stages = data.stages.map((stage) => ({ event: stage._id, order: stage.order }));
+  // }
 
   Object.entries(data)
     .filter(([_, value]) => value !== undefined && value !== null)

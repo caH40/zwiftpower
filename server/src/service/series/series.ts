@@ -133,7 +133,6 @@ export class SeriesService {
     name,
     rules,
     prizes,
-    stages,
     type,
     organizerId,
     logoFile,
@@ -169,7 +168,6 @@ export class SeriesService {
       ...(prizes && { prizes }),
       name,
       ...(rules && { rules }),
-      stages,
       type,
       organizerId,
       ...(logoFileInfo && { logoFileInfo }),
@@ -177,12 +175,7 @@ export class SeriesService {
     };
 
     // Сохранение Серии в БД.
-    const response = await NSeriesModel.create(query);
-
-    await this.addSeriesIdToEvents({
-      eventIds: stages.map((stage) => stage.event),
-      seriesId: response._id,
-    });
+    await NSeriesModel.create(query);
 
     return { data: null, message: `Успешна создана Серия с названием "${name}"!` };
   }
@@ -201,7 +194,6 @@ export class SeriesService {
     name,
     prizes,
     rules,
-    stages,
     type,
     organizerId,
     logoFile,
@@ -217,9 +209,6 @@ export class SeriesService {
     if (!seriesDB) {
       throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
     }
-
-    // _id Эвентов (этапов), которые были до применения изменений.
-    const eventIdsOld = seriesDB.stages.map((stage) => String(stage.event));
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
     const { logoFileInfo, posterFileInfo } = await this.saveImages({
@@ -244,7 +233,6 @@ export class SeriesService {
       ...(prizes && { prizes }),
       name,
       ...(rules && { rules }),
-      stages,
       type,
       organizerId,
       ...(logoFileInfo && { logoFileInfo }),
@@ -255,12 +243,6 @@ export class SeriesService {
 
     // Сохранение Серии в БД.
     await seriesDB.save();
-
-    await this.editSeriesIdInEvents({
-      eventIdsNew: stages.map((stage) => stage.event),
-      eventIdsOld,
-      seriesId: seriesDB._id,
-    });
 
     return { data: null, message: `Обновлены данные Серии "${name}"!` };
   }

@@ -225,7 +225,7 @@ export type SeriesDataFromClientForCreate = Omit<
   '_id' | 'urlSlug' | 'scoringAlgorithms' | 'logoFileInfo' | 'scoringAlgorithms' | 'stages'
 > & {
   scoringAlgorithmsId: string;
-  stages: { event: string; order: number }[];
+  // stages: { event: string; order: number }[];
   seriesId?: string;
 };
 

@@ -89,11 +89,11 @@ export const SeriesDataZSchema = z
       .optional()
       .describe('_id алгоритма построения таблиц результатов.'),
 
-    stages: z
-      .string()
-      .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
-      .optional()
-      .describe('Список этапов с нумерацией.'),
+    // stages: z
+    //   .string()
+    //   .transform(safeJsonParse) // Преобразуем строку в объект, если это JSON.
+    //   .optional()
+    //   .describe('Список этапов с нумерацией.'),
 
     type: z
       .string()

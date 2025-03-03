@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   fetchEventsForSeries,
@@ -27,10 +27,6 @@ const initialData = {
  * Страница создания Серии заездов.
  */
 export default function OrganizerSeriesCreate() {
-  const { eventsForSeries, status: statusFetchEvents } = useSelector(
-    (state) => state.fetchEvents
-  );
-
   const dispatch = useDispatch();
   // Запрос на получение Эвентов Организатора.
   useEffect(() => {
@@ -40,14 +36,7 @@ export default function OrganizerSeriesCreate() {
   }, [dispatch]);
   return (
     <section className={styles.wrapper}>
-      {statusFetchEvents === 'resolved' && (
-        <FormOrganizerSeriesCreate
-          isCreating={true}
-          seriesOne={initialData}
-          eventsForSeries={eventsForSeries}
-          loading={statusFetchEvents === 'loading'}
-        />
-      )}
+      <FormOrganizerSeriesCreate isCreating={true} seriesOne={initialData} />
     </section>
   );
 }
