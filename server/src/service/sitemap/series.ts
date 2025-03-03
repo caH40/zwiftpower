@@ -4,11 +4,11 @@ import { handleAndLogError } from '../../errors/error.js';
 /**
  * Генерирует URL-адреса для страниц Серии заездов (регламент или расписание) для sitemap.xml.
  *
- * @param {('regulations' | 'schedule')} pageType - Тип страницы, для которой создаются ссылки.
+ * @param {('regulations' | 'schedule' | 'results')} pageType - Тип страницы, для которой создаются ссылки.
  * @returns {Promise<string>} - Строка сгенерированных URL в формате XML или пустая строка в случае ошибки.
  */
 export async function getUrlsSeriesPages(
-  pageType: 'regulations' | 'schedule'
+  pageType: 'regulations' | 'schedule' | 'results'
 ): Promise<string | null> {
   try {
     const seriesDB = await NSeriesModel.find({}, { urlSlug: 1, _id: 0 }).lean<

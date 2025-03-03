@@ -16,6 +16,8 @@ const CatchUpComponent = lazy(() =>
 const CriteriumComponent = lazy(() =>
   import('../../../components/SeriesResults/CriteriumComponent/CriteriumComponent')
 );
+import { HelmetSeriesResults } from '../../../components/Helmets/HelmetSeriesResults';
+import { getTimerLocal } from '../../../utils/date-local';
 
 import styles from './SeriesOneResults.module.css';
 
@@ -38,12 +40,24 @@ export default function SeriesOneResults() {
   };
 
   return (
-    <div className={styles.wrapper}>
-      {/* Используем Suspense для отложенной загрузки компонентов. */}
-      <Suspense>
-        {seriesPublicOne?.type &&
-          componentsMap[seriesPublicOne.type]({ series: seriesPublicOne })}
-      </Suspense>
-    </div>
+    seriesPublicOne && (
+      <div className={styles.wrapper}>
+        <HelmetSeriesResults
+          urlSlug={seriesPublicOne.urlSlug}
+          name={seriesPublicOne.name}
+          imageSrc={seriesPublicOne.posterUrls?.medium}
+          dateStart={getTimerLocal(seriesPublicOne.dateStart, 'DDMMYY')}
+          dateEnd={getTimerLocal(seriesPublicOne.dateEnd, 'DDMMYY')}
+          organizer={seriesPublicOne.organizer.name}
+          description={seriesPublicOne.mission}
+        />
+
+        {/* Используем Suspense для отложенной загрузки компонентов. */}
+        <Suspense>
+          {seriesPublicOne?.type &&
+            componentsMap[seriesPublicOne.type]({ series: seriesPublicOne })}
+        </Suspense>
+      </div>
+    )
   );
 }

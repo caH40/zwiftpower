@@ -240,39 +240,9 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
  */
 export const getSeriesScheduleMeta = async (url: string): Promise<MetaTags> => {
   try {
-    // Парсинг url.
-    const parts = url.split('/');
-    const urlSlug = parts.at(-2);
-
-    if (typeof urlSlug !== 'string') {
-      return getMetaOtherPages(url);
-    }
-
-    const seriesDB = await NSeriesModel.findOne(
-      { urlSlug },
-      {
-        name: true,
-        dateStart: true,
-        dateEnd: true,
-        organizer: true,
-        mission: true,
-        posterFileInfo: true,
-        _id: false,
-      }
-    )
-      .populate({ path: 'organizer', select: ['name'] })
-      .lean<TSeriesForMetaTagsResponseDB>();
-
-    // Если не найдена Серия заездов.
-    if (!seriesDB) {
-      return getMetaOtherPages(url);
-    }
-
-    const posterUrls = createUrlsToFileCloud(seriesDB.posterFileInfo);
-
-    const dateStart = getTimerLocal(seriesDB.dateStart.toISOString(), 'DDMMYY');
-    const dateEnd = getTimerLocal(seriesDB.dateEnd.toISOString(), 'DDMMYY');
-    const organizerName = seriesDB.organizer.name;
+    const { seriesDB, posterUrls, dateStart, dateEnd, organizerName } = await handleSeriesData(
+      url
+    );
 
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
     const descriptionRaw = seriesDB.mission
@@ -302,39 +272,9 @@ export const getSeriesScheduleMeta = async (url: string): Promise<MetaTags> => {
  */
 export const getSeriesRegulationsMeta = async (url: string): Promise<MetaTags> => {
   try {
-    // Парсинг url.
-    const parts = url.split('/');
-    const urlSlug = parts.at(-2);
-
-    if (typeof urlSlug !== 'string') {
-      return getMetaOtherPages(url);
-    }
-
-    const seriesDB = await NSeriesModel.findOne(
-      { urlSlug },
-      {
-        name: true,
-        dateStart: true,
-        dateEnd: true,
-        organizer: true,
-        mission: true,
-        posterFileInfo: true,
-        _id: false,
-      }
-    )
-      .populate({ path: 'organizer', select: ['name'] })
-      .lean<TSeriesForMetaTagsResponseDB>();
-
-    // Если не найдена Серия заездов.
-    if (!seriesDB) {
-      return getMetaOtherPages(url);
-    }
-
-    const posterUrls = createUrlsToFileCloud(seriesDB.posterFileInfo);
-
-    const dateStart = getTimerLocal(seriesDB.dateStart.toISOString(), 'DDMMYY');
-    const dateEnd = getTimerLocal(seriesDB.dateEnd.toISOString(), 'DDMMYY');
-    const organizerName = seriesDB.organizer.name;
+    const { seriesDB, posterUrls, dateStart, dateEnd, organizerName } = await handleSeriesData(
+      url
+    );
 
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
     const descriptionRaw = seriesDB.mission
@@ -358,3 +298,72 @@ export const getSeriesRegulationsMeta = async (url: string): Promise<MetaTags> =
     return getMetaOtherPages(url);
   }
 };
+
+/**
+ * Формирование Мета тегов для страницы "Результаты Серии заездов"
+ */
+export const getSeriesResultsMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    const { seriesDB, posterUrls, dateStart, dateEnd, organizerName } = await handleSeriesData(
+      url
+    );
+
+    // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
+    const descriptionRaw = seriesDB.mission
+      ? `${seriesDB.mission} Итоговые таблицы серии`
+      : `Следите за итоговыми результатами "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Присоединяйтесь к соревнованиям!`;
+    const titleRaw = `Результаты и генеральные зачеты: ${seriesDB.name} с ${dateStart} по ${dateEnd}, Звифт. Организатор: ${organizerName}`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const canonical = serverWoWWW + url;
+    const image =
+      posterUrls?.medium ||
+      posterUrls?.original ||
+      'https://zwiftpower.ru/images/open_graph/series.webp';
+    const recommendationsTag = 'series';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+async function handleSeriesData(url: string) {
+  const parts = url.split('/');
+  const urlSlug = parts.at(-2);
+
+  if (typeof urlSlug !== 'string') {
+    throw new Error('Нет url');
+  }
+
+  const seriesDB = await NSeriesModel.findOne(
+    { urlSlug },
+    {
+      name: true,
+      dateStart: true,
+      dateEnd: true,
+      organizer: true,
+      mission: true,
+      posterFileInfo: true,
+      _id: false,
+    }
+  )
+    .populate({ path: 'organizer', select: ['name'] })
+    .lean<TSeriesForMetaTagsResponseDB>();
+
+  // Если не найдена Серия заездов.
+  if (!seriesDB) {
+    throw new Error('Нет url');
+  }
+
+  const posterUrls = createUrlsToFileCloud(seriesDB.posterFileInfo);
+
+  const dateStart = getTimerLocal(seriesDB.dateStart.toISOString(), 'DDMMYY');
+  const dateEnd = getTimerLocal(seriesDB.dateEnd.toISOString(), 'DDMMYY');
+  const organizerName = seriesDB.organizer.name;
+
+  return { seriesDB, posterUrls, dateStart, dateEnd, organizerName };
+}

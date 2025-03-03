@@ -2,7 +2,7 @@ import { Organizer } from '../../Model/Organizer.js';
 import { handleAndLogError } from '../../errors/error.js';
 
 /**
- * Создание url для страницы профайла райдера с Racing Score.
+ * Создание url для страниц Организатора.
  */
 export async function getUrlsOrganizerPublic(): Promise<string | null> {
   try {
@@ -14,13 +14,17 @@ export async function getUrlsOrganizerPublic(): Promise<string | null> {
       }
     ).lean<{ urlSlug: string }[]>();
 
-    const urlsResults = organizersDB.map(({ urlSlug }) => {
-      return `
+    const urlsResults = organizersDB.flatMap(({ urlSlug }) => {
+      const innerPages = ['schedule', 'results'];
+
+      return innerPages.map((innerPage) => {
+        return `
 <url>
-  <loc>https://zwiftpower.ru/organizers/${urlSlug}</loc>
+  <loc>https://zwiftpower.ru/organizers/${urlSlug}/${innerPage}</loc>
   <priority>0.5</priority>
-  <changefreq>monthly</changefreq>
+  <changefreq>weekly</changefreq>
 </url>`;
+      });
     });
 
     return urlsResults.join('');
