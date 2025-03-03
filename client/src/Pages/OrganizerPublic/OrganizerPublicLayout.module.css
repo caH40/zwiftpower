@@ -7,8 +7,12 @@
   gap: 25px;
 }
 .spacer__header {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
+.box__navbar {
+  margin: 10px 0 15px;
+}
+
 /* ====================================================================== */
 @media (max-width: 1200px) {
   .wrapper {

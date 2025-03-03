@@ -74,7 +74,7 @@ const start = async () => {
     app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
     // await handleCatchUpSeries({
     //   season: { start: '2024-09-01T00:00:00Z', end: '2025-08-31T23:59:59Z' },
-    //   seriesId:'67c3fe20ab16b915b277d3d9',
+    //   seriesId: '67c58f6629efba9ae533b602',
     // });
     // Первоначальная инициализация, чтобы сразу был после build.
     await createSitemap();

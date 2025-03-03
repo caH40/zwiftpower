@@ -56,7 +56,10 @@ export default function OrganizerPublicLayout() {
             </div>
 
             {/* Кнопки навигации по страницам организатора */}
-            <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
+
+            <div className={styles.box__navbar}>
+              <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
+            </div>
 
             <Outlet />
           </section>
