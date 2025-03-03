@@ -21,6 +21,7 @@ import userProfileSlice from '../features/api/userProfileSlice';
 import popupInputSlice from '../features/popupInputSlice';
 import downloadResultsSlice from '../features/api/downloadResultsSlice';
 import popupFormSlice from '../features/popupFormSlice';
+import menuOrganizerSeriesSlice from '../features/menuOrganizerSeriesSlice';
 // удаление информации о релизе из БД
 import popupInfoDevDeleteSlice from '../features/api/popupInfoDevDeleteSlice';
 // получение всех релизов из БД
@@ -84,6 +85,7 @@ export default configureStore({
     filterIntervalsForLeader: filterIntervalsForLeaderSlice,
     filterRaceResultsPage: filterRaceResultsPageSlice,
     riders: ridersSlice,
+    menuOrganizerSeries: menuOrganizerSeriesSlice,
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,
