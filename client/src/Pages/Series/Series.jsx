@@ -10,14 +10,14 @@ import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import CardSeries from '../../components/CardSeries/CardSeries';
 
-import styles from './RaceSeries.module.css';
+import styles from './Series.module.css';
 
 // рекламные блоки на странице
 const adOverFooter = 5;
 const adUnderHeader = 3;
 const adNumbers = [adUnderHeader, adOverFooter];
 
-function RaceSeries() {
+export default function Series() {
   const { seriesPublic } = useSelector((state) => state.seriesPublic);
   useTitle('Серии и Туры заездов');
   const { isScreenLg: isDesktop } = useResize();
@@ -62,5 +62,3 @@ function RaceSeries() {
     </>
   );
 }
-
-export default RaceSeries;

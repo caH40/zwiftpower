@@ -115,25 +115,33 @@ export const fetchDeleteSeriesOrganizer = createAsyncThunk(
 );
 
 /**
- * Все Серии заездов для публичных запросов.
+ * Список Серий заездов для публичных запросов.
  */
-export const fetchGetSeries = createAsyncThunk('nSeries/get', async (_, thunkAPI) => {
-  try {
-    const response = await myAxios({
-      url: `${serverExpress}/api/series`,
-      method: 'get',
-    });
+export const fetchGetSeries = createAsyncThunk(
+  'nSeries/get',
+  async (organizerSlug, thunkAPI) => {
+    try {
+      const url = new URL('/api/series/organizers', serverExpress);
+      if (organizerSlug) {
+        url.pathname += `/${organizerSlug}`;
+      }
 
-    return response.data;
-  } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+      const response = await myAxios({
+        url: url.toString(),
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 /**
- * Серия заездов для публичных запросов.
+ * Данные по серии заездов для публичных запросов.
  */
 export const fetchGetSeriesOne = createAsyncThunk(
   'nSeriesOne/get',

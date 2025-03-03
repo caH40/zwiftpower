@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
-const RaceSeries = lazy(() => import('../Pages/RaceSeries/RaceSeries'));
+const Series = lazy(() => import('../Pages/Series/Series'));
 const SeriesOneLayout = lazy(() => import('../Pages/SeriesOne/SeriesOneLayout'));
 const SeriesOneResults = lazy(() =>
   import('../Pages/SeriesOne/SeriesOneResults/SeriesOneResults')
@@ -16,7 +16,7 @@ const SeriesOneRegulations = lazy(() =>
 export function SeriesRoute() {
   return (
     <>
-      <Route path="/series" element={<RaceSeries />} />
+      <Route path="/series" element={<Series />} />
       <Route path="/series/:urlSlug" element={<SeriesOneLayout />}>
         <Route path="/series/:urlSlug/schedule" element={<SeriesOneSchedule />} />
         <Route path="/series/:urlSlug/results" element={<SeriesOneResults />} />

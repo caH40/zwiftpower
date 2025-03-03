@@ -9,6 +9,7 @@ import {
 import { TSeriesAllPublicDto, TSeriesOnePublicDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
+import { Organizer } from '../../Model/Organizer.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -19,8 +20,19 @@ export class SeriesPublicService {
   /**
    * Сервис получение всех Серий заездов.
    */
-  public async getAll(): Promise<TResponseService<TSeriesAllPublicDto[]>> {
-    const seriesDB = await NSeriesModel.find()
+  public async getAll(
+    organizerSlug?: string
+  ): Promise<TResponseService<TSeriesAllPublicDto[]>> {
+    // Получение _id организатора если есть запрос по organizerSlug, для последующего поиска Series
+    const organizer = organizerSlug
+      ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean()
+      : null;
+
+    // Формирование строки поиска.
+    const searchQuery = { ...(organizer && { organizer }) };
+
+    // Получение всех Серий заезда, или только Серий заездов организатора, если есть organizerSlug.
+    const seriesDB = await NSeriesModel.find(searchQuery)
       .populate({ path: 'organizer', select: ['name', 'shortName'] })
       .populate({ path: 'stages.event', select: ['name', 'id', 'eventStart'] })
       .lean<TSeriesAllPublicResponseDB[]>();

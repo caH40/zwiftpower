@@ -24,8 +24,10 @@ export class SeriesPublicController {
    */
   public getAll = async (req: Request, res: Response): Promise<Response | void> => {
     try {
+      // Если передан organizerSlug, значит запрос только по сериям запрашиваемого организатора.
+      const organizerSlug = req.params.organizerSlug;
       // Вызов сервиса.
-      const response = await this.seriesPublicService.getAll();
+      const response = await this.seriesPublicService.getAll(organizerSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

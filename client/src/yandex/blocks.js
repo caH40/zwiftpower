@@ -15,7 +15,7 @@ export const adBlocks = [
   {
     id: 3,
     label: 'R-A-5165832-3',
-    description: 'Баннер, UH, RaceSeries, Catchup',
+    description: 'Баннер, UH, Series, Catchup',
   },
   {
     id: 4,
@@ -26,7 +26,7 @@ export const adBlocks = [
   {
     id: 5,
     label: 'C-A-5165832-5',
-    description: 'РВ, ScheduleList, RaceSeries',
+    description: 'РВ, ScheduleList, Series',
     type: 'widget',
   },
   {

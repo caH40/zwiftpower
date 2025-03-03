@@ -18,7 +18,7 @@ import styles from './CardOrganizer.module.css';
  */
 export default function CardOrganizer({ name, urlSlug, logoUrls, posterUrls }) {
   return (
-    <Link to={urlSlug?.toLowerCase()} className={styles.card}>
+    <Link to={`${urlSlug?.toLowerCase()}/schedule`} className={styles.card}>
       <div
         className={styles.background}
         // Для фонового изображения карточки достаточно small размера.

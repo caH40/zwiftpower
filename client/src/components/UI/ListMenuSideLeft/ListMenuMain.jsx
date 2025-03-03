@@ -18,7 +18,7 @@ const iconItems = [
   { id: 1, to: '/race/schedule', icon: IconSchedule, label: 'Расписание' },
   { id: 2, to: '/race/results', icon: IconResults, label: 'Результаты' },
   { id: 3, to: '/organizers', icon: IconOrganizerPublic, label: 'Организаторы' },
-  { id: 4, to: '/series', icon: IconWorld, label: 'Серии гонок' },
+  { id: 4, to: '/series', icon: IconWorld, label: 'Серии заездов' },
   { id: 5, to: '/race/statistics/main', icon: IconDiagram, label: 'Статистика' },
   { id: 6, to: '/riders', icon: IconRider2, label: 'Райдеры' },
   { id: 7, to: '/profile', icon: IconProfile, label: 'Профиль' },

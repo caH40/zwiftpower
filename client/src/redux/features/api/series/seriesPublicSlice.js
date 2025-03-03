@@ -1,14 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  fetchDeleteSeriesOrganizer,
-  fetchGetOneSeriesOrganizer,
-  fetchGetSeries,
-  fetchGetSeriesOne,
-  fetchGetSeriesOrganizer,
-  fetchPostSeriesOrganizer,
-  fetchPutSeriesOrganizer,
-} from './fetchSeries';
+import { fetchGetSeries, fetchGetSeriesOne } from './fetchSeries';
 
 const initialState = {
   seriesPublic: [], // Серии для пользователей.

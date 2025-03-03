@@ -8,5 +8,5 @@ const seriesPublicController = new SeriesPublicController();
  */
 export const routerSeries = Router();
 
-routerSeries.get('/', seriesPublicController.getAll);
+routerSeries.get('/organizers/:organizerSlug?', seriesPublicController.getAll);
 routerSeries.get('/:urlSlug', seriesPublicController.get);
