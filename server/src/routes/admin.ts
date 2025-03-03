@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authAdmin, authModerator } from '../middleware/authRole.js';
+import { authAdmin, authModerator, authOrganizer } from '../middleware/authRole.js';
 import {
   getClubs,
   getClub,
@@ -28,11 +28,11 @@ export const routerAdmin = Router();
 // routerAdmin.get('*', (req, res) => console.log(req.path)); // Для контроля всех запросов.
 
 routerAdmin.get('/users', authAdmin, getUsers);
-routerAdmin.get('/clubs', authModerator, getClubs);
+routerAdmin.get('/clubs', authOrganizer, getClubs);
 routerAdmin.get('/clubs/:id', authAdmin, getClub);
 routerAdmin.post('/clubs', authAdmin, postClub);
 routerAdmin.delete('/clubs', authAdmin, deleteClub);
-routerAdmin.put('/clubs', authModerator, updateClub);
+routerAdmin.put('/clubs', authOrganizer, updateClub);
 routerAdmin.put('/clubs/moderators', authAdmin, addClubModerator);
 routerAdmin.delete('/clubs/moderators', authAdmin, deleteClubModerator);
 routerAdmin.get('/organizers', authAdmin, getOrganizers);

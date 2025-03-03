@@ -19,9 +19,12 @@ export async function authModeratorClub(req: Request, res: Response, next: () =>
     if (!isValidAccessToken)
       return res.status(401).json({ message: 'Неактуальный accessToken' });
 
-    // Если не модератор клуба или не админ, то отказ в доступе.
-    if (!isModeratorClub && isValidAccessToken.role !== 'admin')
+    const isOrganizer = !!isValidAccessToken.organizer;
+
+    // Если не модератор клуба, или не админ, иле не организатор то отказ в доступе.
+    if (!(isModeratorClub || isValidAccessToken.role === 'admin' || isOrganizer)) {
       return res.status(403).json({ message: 'Отказано в доступе' });
+    }
 
     req.params.userId = isValidAccessToken.id;
 
