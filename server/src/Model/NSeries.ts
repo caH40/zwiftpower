@@ -19,7 +19,9 @@ export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
 const SeriesStageSchema = new Schema<TSeriesStage>(
   {
     event: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
-    order: { type: Number },
+    order: { type: Number, default: 0 },
+    label: { type: String },
+    includeResults: { type: Boolean, default: true },
   },
   { _id: false }
 );
