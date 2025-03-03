@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authAdmin, authModerator, authOrganizer } from '../middleware/authRole.js';
+import { authAdmin, authModeratorClub, authOrganizer } from '../middleware/authRole.js';
 import {
   getClubs,
   getClub,
@@ -47,7 +47,7 @@ routerAdmin.post('/notification', authAdmin, postNotification);
 routerAdmin.post('/notification/letter-preview', authAdmin, createNotificationLetter);
 routerAdmin.get(
   '/finish-protocols/:organizerId?',
-  authModerator,
+  authModeratorClub,
   finishProtocolController.getAll
 );
 routerAdmin.post('/finish-protocols', authAdmin, finishProtocolController.post);
