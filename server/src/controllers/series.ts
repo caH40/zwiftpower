@@ -7,7 +7,10 @@ import { Organizer } from '../Model/Organizer.js';
 import { SeriesDataZSchema } from '../utils/deserialization/series-data.js';
 
 // types
-import { SeriesDataFromClientForCreate } from '../types/http.interface.js';
+import {
+  SeriesDataFromClientForCreate,
+  SeriesStagesFromClientForPatch,
+} from '../types/http.interface.js';
 import { NSeriesModel } from '../Model/NSeries.js';
 
 /**
@@ -180,6 +183,38 @@ export class SeriesController {
   };
 
   /**
+   * Добавление/удаление этапа Серии.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public patchStages = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId } = req.params;
+
+      // Валидация данных из тела запроса.
+      this.validateBodyParamsMethodPatchStages(req.body);
+
+      const { seriesId, stage, action } = req.body;
+
+      // Проверка, что запрос происходит от Организатора.
+      const organizerId = await this.checkOrganizer(userId);
+
+      // Проверка, что запрос происходит от Организатора.
+      await this.checkEditedSeries(seriesId, organizerId);
+
+      // Вызов сервиса.
+      const response = await this.seriesService.patchStages({ seriesId, stage, action });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
    * Проверка, что запрос происходит от Организатора.
    */
   public async checkOrganizer(userId: string): Promise<Types.ObjectId> {
@@ -225,6 +260,56 @@ export class SeriesController {
       throw new Error(
         `У вас нет прав для изменения данной Серии с _id: "${seriesId}". Так как вы не являетесь Организатором данной Серии!`
       );
+    }
+  }
+
+  /**
+   * Приватный метод для проверки параметров из тела запроса в методе patchStages.
+   */
+  private validateBodyParamsMethodPatchStages({
+    seriesId,
+    stage,
+    action,
+  }: SeriesStagesFromClientForPatch): void {
+    // Проверка seriesId
+    if (!seriesId || typeof seriesId !== 'string') {
+      throw new Error('Параметр seriesId отсутствует или не является строкой');
+    }
+
+    // Проверка action
+    if (!['add', 'delete'].includes(action)) {
+      throw new Error('Параметр action отсутствует или значение не равно add или delete');
+    }
+
+    // Проверка stage
+    if (!stage || typeof stage !== 'object') {
+      throw new Error('Параметр stage отсутствует или имеет неверный формат');
+    }
+
+    // Проверка stage.event (должен быть ObjectId в строковом виде)
+    if (
+      !stage.event ||
+      typeof stage.event !== 'string' ||
+      !/^[0-9a-fA-F]{24}$/.test(stage.event)
+    ) {
+      throw new Error('Параметр stage.event отсутствует или не является корректным ObjectId');
+    }
+
+    // Проверка stage.order (число >= 0)
+    if (typeof stage.order !== 'number' || stage.order < 0) {
+      throw new Error(
+        'Параметр stage.order отсутствует или не является числом больше или равным 0'
+      );
+    }
+
+    // Проверка stage.label (если передан, то должен быть строкой)
+    if (stage.label !== undefined && typeof stage.label !== 'string') {
+      throw new Error('Параметр stage.label должен быть строкой, если указан');
+    }
+
+    // Проверка stage.includeResults (boolean)
+    if (typeof stage.includeResults !== 'boolean') {
+      throw new Error('Параметр stage.includeResults отсутствует или не является boolean');
     }
   }
 }

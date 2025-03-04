@@ -12,7 +12,7 @@ import styles from './StageSeriesCard.module.css';
  * @param {String} props.startEvent - Дата старта Эвента.
  * @param {RegisterOptions} props.register - Метод библиотеки react-hook-form.
  * @param {FieldErrors} props.errors - Метод библиотеки react-hook-form.
- * @param {any} props.handleClick - Обработчик нажатия иконки.
+ * @param {any} props.handleDelete - Обработчик нажатия иконки.
  * @param {Boolean} props.loading - Дата старта Эвента.
  */
 export default function StageSeriesCard({
@@ -20,19 +20,20 @@ export default function StageSeriesCard({
   propertyOrder,
   propertyStageName,
   propertyIncludeResults,
-  startEvent,
+  eventStart,
   register,
   errors,
-  handleClick,
+  handleDelete,
   loading,
+  stageId,
 }) {
   return (
     <section className={styles.wrapper}>
       <div className={styles.box__icon}>
-        <IconDelete getClick={handleClick} />
+        <IconDelete getClick={() => handleDelete(stageId, 'delete')} />
       </div>
       <h3 className={styles.title}>{name}</h3>
-      <h3 className={styles.subtitle}>{getTimerLocal(startEvent, 'DDMMYYHm')}</h3>
+      <h3 className={styles.subtitle}>{getTimerLocal(eventStart, 'DDMMYYHm')}</h3>
 
       <div className={styles.box__field}>
         <InputAuth

@@ -1,6 +1,12 @@
 import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
-import { TAccessExpressionObj, TSeries, TSocialLinks, TTelegram } from './model.interface.js';
+import {
+  TAccessExpressionObj,
+  TSeries,
+  TSeriesStage,
+  TSocialLinks,
+  TTelegram,
+} from './model.interface.js';
 
 // данные из query параметров url
 export interface GetLogsAdmins {
@@ -236,4 +242,15 @@ export type SeriesDataFromClientForCreateFull = SeriesDataFromClientForCreate & 
   organizerId: Types.ObjectId;
   logoFile?: Express.Multer.File;
   posterFile?: Express.Multer.File;
+};
+
+/**
+ * Тип данных, принимаемый методом patchStages.
+ */
+export type SeriesStagesFromClientForPatch = {
+  seriesId: string;
+  action: 'delete' | 'add';
+  stage: Omit<TSeriesStage, 'event'> & {
+    event: string;
+  };
 };

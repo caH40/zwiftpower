@@ -7,7 +7,6 @@ import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js'
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { organizerSeriesAllDto, organizerSeriesOneDto } from '../../dto/series.js';
-import { compareArrays } from '../../utils/deserialization/array-compare.js';
 
 // types
 import {
@@ -15,13 +14,15 @@ import {
   TOrganizerSeriesOneResponseDB,
 } from '../../types/mongodb-response.types.js';
 import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
-import { TFileMetadataForCloud } from '../../types/model.interface.js';
+import { TFileMetadataForCloud, TSeriesStage } from '../../types/model.interface.js';
 import {
   SeriesDataFromClientForCreateFull,
+  SeriesStagesFromClientForPatch,
   TResponseService,
 } from '../../types/http.interface';
 import { handleAndLogError } from '../../errors/error.js';
 import { Cloud } from '../cloud.js';
+import { TParamsSeriesServiceAddStage } from '../../types/types.interface.js';
 
 export class SeriesService {
   constructor() {}
@@ -248,6 +249,106 @@ export class SeriesService {
   }
 
   /**
+   * Добавление/удаление этапа Серии.
+   */
+  public async patchStages({
+    seriesId,
+    stage,
+    action,
+  }: SeriesStagesFromClientForPatch): Promise<TResponseService<null>> {
+    const seriesDB = await NSeriesModel.findOne(
+      { _id: seriesId },
+      { stages: true, name: true, _id: false }
+    ).lean<{ stages: TSeriesStage[]; name: string }>();
+
+    // Если серия не найдена, выбрасываем ошибку.
+    if (!seriesDB) {
+      throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
+    }
+
+    if (action === 'add') {
+      await this.addStage({ stage, stages: seriesDB.stages, seriesId });
+    } else if (action === 'delete') {
+      // Удаление Этапа из массива stages.
+      await this.deleteStage({ stageId: stage.event, seriesId });
+    } else {
+      throw new Error('action имеет значение отличное от add или delete!');
+    }
+
+    // Возвращаем успешный ответ.
+    return {
+      data: null,
+      message: `${action === 'add' ? 'Добавлен этап в Серию' : 'Удалён этап из Серии'} "${
+        seriesDB.name
+      }"!`,
+    };
+  }
+
+  /**
+   * Приватный метод добавления (без дублирования по eventId) этапа в Серию заездов.
+   */
+  private addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {
+    const stagesUpdated = [...stages.filter((elm) => String(elm.event) !== stage.event), stage];
+
+    // Сохранение обновленного массива этапов stages. Не производится проверка найденного документа
+    // так как проверялось на верхнем уровне.
+    await NSeriesModel.findOneAndUpdate(
+      { _id: seriesId },
+      { stages: stagesUpdated },
+      { projection: { _id: true } }
+    ).lean<{ _id: Types.ObjectId }>();
+
+    // Привязка Эвента к текущей Серии seriesId.
+    const eventDB = await ZwiftEvent.findOneAndUpdate(
+      { _id: stage.event },
+      { $set: { seriesId: seriesId } },
+      { projection: { _id: true } }
+    ).lean<{ _id: Types.ObjectId }>();
+
+    // Если Эвент не найден, то выбрасываем ошибку.
+    if (!eventDB) {
+      throw new Error(
+        `Не найден привязываемый Эвент к Серии с _id:${stage.event}. Но Эвент был добавлен к Серии!`
+      );
+    }
+  };
+
+  /**
+   * Приватный метод удаления этапа из Серию заездов.
+   */
+  private deleteStage = async ({
+    stageId,
+    seriesId,
+  }: {
+    stageId: string;
+    seriesId: string;
+  }) => {
+    // Удаление этапа из массива stages.
+    await NSeriesModel.findOneAndUpdate(
+      { _id: seriesId },
+      { $pull: { stages: { event: stageId } } },
+      {
+        projection: { _id: true, name: true },
+        new: true,
+      }
+    ).lean<{ _id: Types.ObjectId; name: string }>();
+
+    // Отвязываем Эвент от текущей Серии seriesId.
+    const eventDB = await ZwiftEvent.findOneAndUpdate(
+      { _id: stageId },
+      { $set: { seriesId: null } },
+      { projection: { _id: true } }
+    ).lean<{ _id: Types.ObjectId }>();
+
+    // Если Эвент не найден, то выбрасываем ошибку.
+    if (!eventDB) {
+      throw new Error(
+        `Не найден отвязываемый от Серии Эвент _id:${stageId}. Но сам Эвент был удалён из Серии!`
+      );
+    }
+  };
+
+  /**
    * Проверяет существование Организатора по его _id и возвращает некоторые данные.
    * @param organizerId - ID организатора.
    * @returns Объект с полем shortName.
@@ -289,64 +390,6 @@ export class SeriesService {
       throw new Error(
         `Существует Серия с таким названием "${name}" у текущего Организатора. Измените название для Серии на уникальное!`
       );
-    }
-  };
-
-  /**
-   * Привязка Эвентов к Серии.
-   */
-  private addSeriesIdToEvents = async ({
-    eventIds,
-    seriesId,
-  }: {
-    eventIds: string[];
-    seriesId: Types.ObjectId;
-  }): Promise<void> => {
-    const requests = eventIds.map((_id) =>
-      ZwiftEvent.findOneAndUpdate({ _id }, { $set: { seriesId } })
-    );
-
-    await Promise.all(requests);
-  };
-
-  /**
-   * Отвязка Эвентов от Серии.
-   */
-  private removeSeriesIdFromEvents = async ({
-    eventIds,
-  }: {
-    eventIds: string[];
-  }): Promise<void> => {
-    const requests = eventIds.map((_id) =>
-      ZwiftEvent.findOneAndUpdate({ _id }, { $unset: { seriesId: '' } })
-    );
-
-    await Promise.all(requests);
-  };
-
-  /**
-   * При изменении массива Stages (этапов) в серии после редактирования, производит изменение
-   * в соответствующих Эвентах: привязка новых Эвентов к Серии, отвязка удалённых Эвентов от Серии.
-   */
-  private editSeriesIdInEvents = async ({
-    eventIdsNew,
-    eventIdsOld,
-    seriesId,
-  }: {
-    eventIdsNew: string[]; // _id Эвентов, поступивших из формы с клиента после редактирования Серии.
-    eventIdsOld: string[]; // _id Эвентов, которые были в Stages до редактирования Серии.
-    seriesId: Types.ObjectId;
-  }): Promise<void> => {
-    const { added, removed } = compareArrays({ oldArray: eventIdsOld, newArray: eventIdsNew });
-
-    // Если есть новые добавленные Эвенты в Серию, то привязываем эти Эвенты к Серии.
-    if (added.length > 0) {
-      await this.addSeriesIdToEvents({ eventIds: added, seriesId });
-    }
-
-    // Если есть удаленные Эвенты из Серию, то отвязываем эти Эвенты от Серии.
-    if (removed.length > 0) {
-      await this.removeSeriesIdFromEvents({ eventIds: removed });
     }
   };
 

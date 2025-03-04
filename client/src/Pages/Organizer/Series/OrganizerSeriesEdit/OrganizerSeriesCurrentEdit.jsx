@@ -33,7 +33,7 @@ export default function OrganizerSeriesCurrentEdit() {
 
     return () => {
       dispatch(resetEventsForSeries());
-      dispatch(resetCurrentMenuItem());
+      // dispatch(resetCurrentMenuItem());
     };
   }, [dispatch, seriesId, trigger]);
 
@@ -53,7 +53,11 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        <StagesSeriesEdit setTrigger={setTrigger} />
+        <StagesSeriesEdit
+          setTrigger={setTrigger}
+          stages={seriesOne.stages}
+          seriesId={seriesOne._id}
+        />
       )}
     </section>
   );

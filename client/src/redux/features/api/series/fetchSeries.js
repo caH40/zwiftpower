@@ -166,12 +166,12 @@ export const fetchGetSeriesOne = createAsyncThunk(
  */
 export const fetchUpdateSeriesStages = createAsyncThunk(
   'seriesOneStagesOrganizer/patch',
-  async ({ stage, action }, thunkAPI) => {
+  async ({ stage, action, seriesId }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/organizer/series/stages`,
         method: 'patch',
-        data: { stage, action },
+        data: { stage, action, seriesId },
       });
 
       return response.data;
