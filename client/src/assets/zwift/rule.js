@@ -34,3 +34,7 @@ export const rules = [
   { id: 7, value: 'TEST_BIT_10', label: 'TEST_BIT_10', translate: 'Резиновая лента' },
   // { id: 8, value: 'LADIES_ONLY', label: 'LADIES_ONLY', translate: 'LADIES_ONLY' },
 ];
+// "NO_TT_BIKES",
+//                 "ENFORCE_HRM",
+//                 "NO_POWERUPS",
+//                 "SHOW_RACE_RESULTS"

@@ -47,7 +47,11 @@ export function prepareData({
   event.tags = tagsFiltered;
   for (const subGroup of eventSubgroups) {
     subGroup.tags = tagsFiltered;
-    subGroup.rulesSet = rulesSet;
+    subGroup.rulesSet = [...rulesSet];
+    // Добавляем 'LADIES_ONLY' только для subGroup с label === 4 или label === 5
+    // if (subGroup.label === 5 || subGroup.label === 4) {
+    //   subGroup.rulesSet.push('LADIES_ONLY');
+    // }
     changeTime(subGroup);
     subGroup.rulesId = null;
     subGroup.accessValidationResult = true;

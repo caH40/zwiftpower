@@ -16,6 +16,6 @@
 /* ====================================================================== */
 @media (max-width: 1200px) {
   .wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
 }
