@@ -24,8 +24,6 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
 
   const dispatch = useDispatch();
 
-  console.log(stages);
-
   const {
     control,
     register,

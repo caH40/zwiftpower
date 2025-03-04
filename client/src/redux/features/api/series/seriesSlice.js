@@ -123,7 +123,7 @@ const seriesOrganizerSlice = createSlice({
     });
 
     builder.addCase(fetchUpdateSeriesStages.fulfilled, (state, action) => {
-      state.seriesOne = action.payload.message;
+      state.message = action.payload.message;
       state.error = null;
       state.status = 'resolved';
     });

@@ -57,7 +57,7 @@ export default function StageSeriesCard({
       </div>
 
       <div className={styles.box__checkbox}>
-        <span>Учитывать результаты заезда в генеральном зачёте</span>
+        <span>Учитывать результаты заезда в генеральном зачёте:</span>
         <CheckboxRFH
           register={register(propertyIncludeResults)}
           id={`${propertyIncludeResults}-StageSeriesCard`}

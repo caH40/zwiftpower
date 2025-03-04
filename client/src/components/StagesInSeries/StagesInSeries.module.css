@@ -1,10 +1,8 @@
 .title {
-  font-size: 1em;
-  margin-bottom: 5px;
+  font-size: 22px;
 }
 .wrapper__stages {
-  padding: 0.1rem 0.75rem;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--color-text-dark);
   background-color: var(--color-bg);
@@ -13,13 +11,17 @@
 }
 .stage {
   display: grid;
-  grid-template-columns: 100px 1fr 35px auto;
+  grid-template-columns: 120px 1fr 35px auto;
   align-items: center;
   gap: 10px;
-  padding: 5px 0;
+  padding: 10px;
   border-bottom: 1px solid var(--color-border-minor);
 }
+.stage:first-child {
+  background-color: var(--color-yellow-5-transparent);
+}
 .column__name {
+  font-size: 16px;
   font-weight: 500;
 }
 .stage:last-child {
