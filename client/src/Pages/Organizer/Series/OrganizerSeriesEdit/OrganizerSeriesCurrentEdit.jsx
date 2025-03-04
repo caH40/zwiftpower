@@ -24,9 +24,6 @@ export default function OrganizerSeriesCurrentEdit() {
   // Данные редактируемой серии.
   const { seriesOne } = useSelector((state) => state.seriesOrganizer);
 
-  // Эвенты, которые можно добавить в Серю как этапы.
-  const { eventsForSeries } = useSelector((state) => state.fetchEvents);
-
   const dispatch = useDispatch();
 
   // Запрос на получение Эвентов Организатора.
