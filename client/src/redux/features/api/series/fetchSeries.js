@@ -182,3 +182,25 @@ export const fetchUpdateSeriesStages = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Изменение настроек этапа в Серии заездов.
+ */
+export const fetchUpdateSeriesStage = createAsyncThunk(
+  'seriesOneStageOrganizer/patch',
+  async ({ stage, seriesId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series/stage`,
+        method: 'patch',
+        data: { stage, seriesId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

@@ -4,7 +4,10 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import cn from 'classnames/bind';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { fetchUpdateSeriesStages } from '../../redux/features/api/series/fetchSeries';
+import {
+  fetchUpdateSeriesStage,
+  fetchUpdateSeriesStages,
+} from '../../redux/features/api/series/fetchSeries';
 import StagesInSeries from '../StagesInSeries/StagesInSeries';
 import StageSeriesCard from '../UI/StageSeriesCard/StageSeriesCard';
 
@@ -40,8 +43,10 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
   });
 
   const onSubmit = (data) => {
+    // eslint-disable-next-line no-console
     console.log('Отправленные данные:', data);
   };
+  // dispatch(fetchUpdateSeriesStage({ stage, seriesId }));
 
   // Обработчик нажатия на иконку добавления Эвента в Этапы Серии заездов.
   const handleClickForStage = async (eventId, action) => {

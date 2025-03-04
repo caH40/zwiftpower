@@ -11,6 +11,7 @@ import { fetchGetOneSeriesOrganizer } from '../../../../redux/features/api/serie
 import MenuOrganizerSeries from '../../../../components/UI/Filters/MenuOrganizerSeries/MenuOrganizerSeries';
 import { resetCurrentMenuItem } from '../../../../redux/features/menuOrganizerSeriesSlice';
 import StagesSeriesEdit from '../../../../components/StagesSeriesEdit/StagesSeriesEdit';
+import UnderConstruction from '../../../../components/UnderConstruction/UnderConstruction';
 
 import styles from './OrganizerSeriesCurrentEdit.module.css';
 
@@ -53,11 +54,12 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        <StagesSeriesEdit
-          setTrigger={setTrigger}
-          stages={seriesOne.stages}
-          seriesId={seriesOne._id}
-        />
+        <UnderConstruction />
+        // <StagesSeriesEdit
+        //   setTrigger={setTrigger}
+        //   stages={seriesOne.stages}
+        //   seriesId={seriesOne._id}
+        // />
       )}
     </section>
   );

@@ -285,6 +285,31 @@ export class SeriesService {
   }
 
   /**
+   * Изменение настроек этапа в Серии заездов.
+   */
+  public async patchStage({
+    seriesId,
+    stage,
+  }: Omit<SeriesStagesFromClientForPatch, 'action'>): Promise<TResponseService<null>> {
+    const seriesDB = await NSeriesModel.findOneAndUpdate(
+      { _id: seriesId, 'stages.event': stage.event },
+      { $set: { 'stages.$': stage } },
+      { projection: { name: true }, new: true }
+    ).lean();
+
+    // Если серия не найдена, выбрасываем ошибку.
+    if (!seriesDB) {
+      throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
+    }
+
+    // Возвращаем успешный ответ.
+    return {
+      data: null,
+      message: `Изменены параметры Этапа с eventId: "${stage.event}" в Серии с _id: "${seriesId}" и названием: "${seriesDB.name}"`,
+    };
+  }
+
+  /**
    * Приватный метод добавления (без дублирования по eventId) этапа в Серию заездов.
    */
   private addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {

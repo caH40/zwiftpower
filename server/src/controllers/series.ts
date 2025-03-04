@@ -215,6 +215,38 @@ export class SeriesController {
   };
 
   /**
+   * Изменение настроек этапа в Серии заездов.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public patchStage = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const { userId } = req.params;
+
+      // Валидация данных из тела запроса.
+      this.validateBodyParamsMethodPatchStage(req.body);
+
+      const { seriesId, stage } = req.body;
+
+      // Проверка, что запрос происходит от Организатора.
+      const organizerId = await this.checkOrganizer(userId);
+
+      // Проверка, что запрос происходит от Организатора.
+      await this.checkEditedSeries(seriesId, organizerId);
+
+      // Вызов сервиса.
+      const response = await this.seriesService.patchStage({ seriesId, stage });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
    * Проверка, что запрос происходит от Организатора.
    */
   public async checkOrganizer(userId: string): Promise<Types.ObjectId> {
@@ -264,21 +296,15 @@ export class SeriesController {
   }
 
   /**
-   * Приватный метод для проверки параметров из тела запроса в методе patchStages.
+   * Приватный метод для проверки параметров из тела запроса в методе patchStage.
    */
-  private validateBodyParamsMethodPatchStages({
+  private validateBodyParamsMethodPatchStage({
     seriesId,
     stage,
-    action,
-  }: SeriesStagesFromClientForPatch): void {
+  }: Omit<SeriesStagesFromClientForPatch, 'action'>): void {
     // Проверка seriesId
     if (!seriesId || typeof seriesId !== 'string') {
       throw new Error('Параметр seriesId отсутствует или не является строкой');
-    }
-
-    // Проверка action
-    if (!['add', 'delete'].includes(action)) {
-      throw new Error('Параметр action отсутствует или значение не равно add или delete');
     }
 
     // Проверка stage
@@ -310,6 +336,22 @@ export class SeriesController {
     // Проверка stage.includeResults (boolean)
     if (typeof stage.includeResults !== 'boolean') {
       throw new Error('Параметр stage.includeResults отсутствует или не является boolean');
+    }
+  }
+
+  /**
+   * Приватный метод для проверки параметров из тела запроса в методе patchStages.
+   */
+  private validateBodyParamsMethodPatchStages({
+    seriesId,
+    stage,
+    action,
+  }: SeriesStagesFromClientForPatch): void {
+    this.validateBodyParamsMethodPatchStage({ seriesId, stage });
+
+    // Проверка action
+    if (!['add', 'delete'].includes(action)) {
+      throw new Error('Параметр action отсутствует или значение не равно add или delete');
     }
   }
 }
