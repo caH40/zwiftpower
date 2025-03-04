@@ -11,6 +11,7 @@ import { fetchGetOneSeriesOrganizer } from '../../../../redux/features/api/serie
 import MenuOrganizerSeries from '../../../../components/UI/Filters/MenuOrganizerSeries/MenuOrganizerSeries';
 import { resetCurrentMenuItem } from '../../../../redux/features/menuOrganizerSeriesSlice';
 import StagesSeriesEdit from '../../../../components/StagesSeriesEdit/StagesSeriesEdit';
+import UnderConstruction from '../../../../components/UnderConstruction/UnderConstruction';
 
 import styles from './OrganizerSeriesCurrentEdit.module.css';
 
@@ -24,9 +25,6 @@ export default function OrganizerSeriesCurrentEdit() {
   // Данные редактируемой серии.
   const { seriesOne } = useSelector((state) => state.seriesOrganizer);
 
-  // Эвенты, которые можно добавить в Серю как этапы.
-  const { eventsForSeries } = useSelector((state) => state.fetchEvents);
-
   const dispatch = useDispatch();
 
   // Запрос на получение Эвентов Организатора.
@@ -36,7 +34,7 @@ export default function OrganizerSeriesCurrentEdit() {
 
     return () => {
       dispatch(resetEventsForSeries());
-      dispatch(resetCurrentMenuItem());
+      // dispatch(resetCurrentMenuItem());
     };
   }, [dispatch, seriesId, trigger]);
 
@@ -56,7 +54,12 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        <StagesSeriesEdit />
+        <UnderConstruction />
+        // <StagesSeriesEdit
+        //   setTrigger={setTrigger}
+        //   stages={seriesOne.stages}
+        //   seriesId={seriesOne._id}
+        // />
       )}
     </section>
   );

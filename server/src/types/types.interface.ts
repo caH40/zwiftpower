@@ -11,6 +11,7 @@ import {
   TLocationInfo,
   TMetrics,
   TOrganizer,
+  TSeriesStage,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -860,3 +861,14 @@ export type TFinishProtocolParamsPost = {
   isDefault: boolean;
 };
 export type TFinishProtocolParamsPut = TFinishProtocolParamsPost & { configFPId: string };
+
+/**
+ * Тип данных параметров приватного метода SeriesService.addStage.
+ */
+export type TParamsSeriesServiceAddStage = {
+  seriesId: string;
+  stages: TSeriesStage[];
+  stage: Omit<TSeriesStage, 'event'> & {
+    event: string;
+  };
+};

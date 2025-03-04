@@ -55,7 +55,7 @@ export default function StagesInSeries({ stages, action, handleAction, loading }
               // </div>
             }
             <div className={styles.control}>
-              <IconComponent squareSize={18} getClick={() => handleAction(stage)} />
+              <IconComponent squareSize={18} getClick={() => handleAction(stage._id, 'add')} />
             </div>
           </div>
         ))}

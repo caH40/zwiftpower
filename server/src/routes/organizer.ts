@@ -69,6 +69,8 @@ routerOrganizer.put(
   seriesController.put
 );
 routerOrganizer.get('/series/events', authOrganizer, getEventsForSeries);
+routerOrganizer.patch('/series/stage', authOrganizer, seriesController.patchStage);
+routerOrganizer.patch('/series/stages', authOrganizer, seriesController.patchStages);
 
 // Из-за жадного поиска динамический маршрут перенесён в конец модуля.
 routerOrganizer.get('/series/:seriesId', authOrganizer, seriesController.get);
