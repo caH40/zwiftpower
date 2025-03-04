@@ -4,9 +4,10 @@ import cn from 'classnames/bind';
 import StageSeriesCard from '../UI/StageSeriesCard/StageSeriesCard';
 
 import styles from './StagesSeriesEdit.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import StagesInSeries from '../StagesInSeries/StagesInSeries';
 import { useState } from 'react';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 const cx = cn.bind(styles);
 
@@ -33,11 +34,15 @@ const defaultValues = [
 
 /**
  * Компонент добавления/удаления и редактирования этапов в Серии заездов.
+ * @param {Object} props - Пропсы компонента.
+ * @param {Boolean} props.setTrigger - Триггер повторного для запроса (обновления) данных для формы и списка Эвентов.
  */
-export default function StagesSeriesEdit() {
+export default function StagesSeriesEdit({ setTrigger }) {
   const [loading, setLoading] = useState(false);
   // Эвенты, которые можно добавить в Серю как этапы.
   const { eventsForSeries } = useSelector((state) => state.fetchEvents);
+
+  const dispatch = useDispatch();
 
   const {
     control,
@@ -58,6 +63,19 @@ export default function StagesSeriesEdit() {
     console.log('Отправленные данные:', data);
   };
 
+  // Обработчик нажатия на иконку добавления Эвента в Этапы Серии заездов.
+  const handleAddEvent = async (eventId) => {
+    try {
+      const res = await dispatch().unwrap();
+
+      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
+
+      setTrigger((prev) => !prev);
+    } catch (error) {
+      console.log(error); // eslint-disable-line
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -76,14 +94,19 @@ export default function StagesSeriesEdit() {
           />
         ))}
 
-        <button type="button" onClick={() => append({ order: 0, includeResults: false })}>
+        {/* <button type="button" onClick={() => append({ order: 0, includeResults: false })}>
           Добавить этап
         </button>
-        <button type="submit">Сохранить</button>
+        <button type="submit">Сохранить</button> */}
       </form>
 
-      <div className={cx('wrapper__stages', { inactive: loading })}>
-        <StagesInSeries stages={eventsForSeries} action="add" />
+      <div className={cx('wrapper__stages')}>
+        <StagesInSeries
+          stages={eventsForSeries}
+          action="add"
+          loading={loading}
+          handleAction={handleAddEvent}
+        />
       </div>
     </div>
   );

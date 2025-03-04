@@ -53,7 +53,7 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        <StagesSeriesEdit />
+        <StagesSeriesEdit setTrigger={setTrigger} />
       )}
     </section>
   );

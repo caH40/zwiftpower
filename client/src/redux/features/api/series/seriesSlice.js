@@ -6,6 +6,7 @@ import {
   fetchGetSeriesOrganizer,
   fetchPostSeriesOrganizer,
   fetchPutSeriesOrganizer,
+  fetchUpdateSeriesStages,
 } from './fetchSeries';
 
 const initialState = {
@@ -111,6 +112,23 @@ const seriesOrganizerSlice = createSlice({
     });
 
     builder.addCase(fetchGetOneSeriesOrganizer.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== добавление/удаление Этапа в Серию заездов =================
+    builder.addCase(fetchUpdateSeriesStages.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchUpdateSeriesStages.fulfilled, (state, action) => {
+      state.seriesOne = action.payload.message;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchUpdateSeriesStages.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

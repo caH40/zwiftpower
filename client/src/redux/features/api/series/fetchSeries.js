@@ -160,3 +160,25 @@ export const fetchGetSeriesOne = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Добавление/удаление Этапа в Серию заездов.
+ */
+export const fetchUpdateSeriesStages = createAsyncThunk(
+  'seriesOneStagesOrganizer/patch',
+  async ({ stage, action }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/organizer/series/stages`,
+        method: 'patch',
+        data: { stage, action },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
