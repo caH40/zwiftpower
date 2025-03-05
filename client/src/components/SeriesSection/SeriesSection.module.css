@@ -1,0 +1,9 @@
+.wrapper__cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.wrapper__cards {
+  margin-bottom: 20px;
+}

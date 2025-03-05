@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { fetchGetSeries } from '../../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../../redux/features/api/series/seriesPublicSlice';
 import useTitle from '../../../hook/useTitle';
-import CardSeries from '../../../components/CardSeries/CardSeries';
+import SeriesSection from '../../../components/SeriesSection/SeriesSection';
 
 import styles from './OrganizerSeries.module.css';
 
@@ -28,19 +28,10 @@ export default function OrganizerSeries() {
     return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
   return (
-    <section className={styles.wrapper__cards}>
-      {/* Карточки серий */}
-      {!!seriesPublic?.length &&
-        seriesPublic.map((elm) => (
-          <CardSeries
-            key={elm._id}
-            name={elm.name}
-            urlSlug={elm.urlSlug}
-            posterUrls={elm.posterUrls}
-            dateStart={elm.dateStart}
-            dateEnd={elm.dateEnd}
-          />
-        ))}
+    <section className={styles.wrapper_}>
+      <SeriesSection title="Текущие серии" series={seriesPublic?.ongoing || []} />
+      <SeriesSection title="Анонсированные серии" series={seriesPublic?.upcoming || []} />
+      <SeriesSection title="Завершенные серии" series={seriesPublic?.completed || []} />
     </section>
   );
 }

@@ -6,7 +6,11 @@ import {
   TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
 } from '../../types/mongodb-response.types.js';
-import { TSeriesAllPublicDto, TSeriesOnePublicDto } from '../../types/dto.interface.js';
+import {
+  TGroupedSeriesForClient,
+  TSeriesAllPublicDto,
+  TSeriesOnePublicDto,
+} from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
 import { Organizer } from '../../Model/Organizer.js';
@@ -22,7 +26,7 @@ export class SeriesPublicService {
    */
   public async getAll(
     organizerSlug?: string
-  ): Promise<TResponseService<TSeriesAllPublicDto[]>> {
+  ): Promise<TResponseService<TGroupedSeriesForClient>> {
     // Получение _id организатора если есть запрос по organizerSlug, для последующего поиска Series
     const organizer = organizerSlug
       ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean()
@@ -39,12 +43,10 @@ export class SeriesPublicService {
 
     const seriesAfterDto = seriesAllPublicDto(seriesDB);
 
-    // Сортировка, сначала более новые Серии.
-    seriesAfterDto.sort(
-      (a, b) => new Date(b.dateStart).getTime() - new Date(a.dateStart).getTime()
-    );
+    // Группировка карточек по статусам и сортировка внутри каждой группы.
+    const groupedSeries = this.groupByStatus(seriesAfterDto);
 
-    return { data: seriesAfterDto, message: 'Серии заездов.' };
+    return { data: groupedSeries, message: 'Серии заездов.' };
   }
 
   /**
@@ -113,5 +115,48 @@ export class SeriesPublicService {
     );
 
     return { data: seriesAfterDto, message: 'Запрашиваемая Серия заездов.' };
+  }
+
+  /**
+   * Группировка событий по их статусу и сортировка внутри каждой группы.
+   * @param series - Все события.
+   * @returns - Группировка по статусам.
+   */
+  private groupByStatus(series: TSeriesAllPublicDto[]) {
+    const now = Date.now();
+
+    // Объявляем тип для группировки
+    const grouped: TGroupedSeriesForClient = {
+      upcoming: [],
+      ongoing: [],
+      completed: [],
+    };
+
+    // Группируем и сразу сортируем в каждой группе.
+    series.forEach((card) => {
+      const startDate = new Date(card.dateStart).getTime();
+      const endDate = new Date(card.dateEnd).getTime();
+
+      if (now < startDate) {
+        grouped.upcoming.push(card); // Событие еще не началось.
+      } else if (now >= startDate && now <= endDate) {
+        grouped.ongoing.push(card); // Событие проходит сейчас.
+      } else {
+        grouped.completed.push(card); // Событие завершилось.
+      }
+    });
+
+    // Сортируем каждую группу по дате начала.
+    grouped.upcoming.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
+    grouped.ongoing.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
+    grouped.completed.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
+
+    return grouped;
   }
 }

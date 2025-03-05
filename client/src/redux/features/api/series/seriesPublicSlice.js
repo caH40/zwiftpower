@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchGetSeries, fetchGetSeriesOne } from './fetchSeries';
 
 const initialState = {
-  seriesPublic: [], // Серии для пользователей.
+  seriesPublic: null, // Серии для пользователей.
   seriesPublicOne: null,
   message: null,
   status: null,
@@ -18,7 +18,7 @@ const seriesPublicSlice = createSlice({
   initialState,
   reducers: {
     resetSeriesPublicAll: (state) => {
-      state.seriesPublic = [];
+      state.seriesPublic = null;
     },
     resetSeriesPublicOne: (state) => {
       state.seriesPublicOne = null;

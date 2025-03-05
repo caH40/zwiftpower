@@ -114,6 +114,13 @@ export type TSeriesAllPublicDto = Omit<
   posterUrls: Record<string, string> | undefined;
 };
 
+// Объявляем тип для группы
+export type TGroupedSeriesForClient = {
+  upcoming: TSeriesAllPublicDto[];
+  ongoing: TSeriesAllPublicDto[];
+  completed: TSeriesAllPublicDto[];
+};
+
 /**
  * DTO данных запрашиваемой Серии заездов для публичного доступа.
  */
