@@ -1,10 +1,8 @@
-import { getTimerLocal } from '../../../utils/date-local';
-import IconConnection from '../../icons/IconConnection';
-import IconDelete from '../../icons/IconDelete';
-import IconEdit from '../../icons/IconEdit';
-import CheckboxRFH from '../Checkbox/CheckboxRFH';
-import CheckboxSimple from '../Checkbox/CheckboxSimple';
-import InputAuth from '../InputAuth/InputAuth';
+import { getTimerLocal } from '../../utils/date-local';
+import IconConnection from '../icons/IconConnection';
+import IconEdit from '../icons/IconEdit';
+import IconDelete from '../icons/IconDelete';
+import CheckboxSimple from '../UI/Checkbox/CheckboxSimple';
 
 import styles from './StageSeriesCard.module.css';
 
@@ -18,19 +16,31 @@ import styles from './StageSeriesCard.module.css';
  * @param {any} props.handleEdit - Обработчик нажатия иконки редактирования.
  * @param {any} props.handleDelete - Обработчик нажатия иконки удаления.
  * @param {Boolean} props.connected - Указывает о наличии такого же номера этапа у других этапов (0 не учитывается)
+ * @param {Boolean} props.seriesId - _id Серии заездов.
  * @param {Boolean} props.loading - Дата старта Эвента.
  */
-export default function StageSeriesCardView({
+export default function StageSeriesCard({
   name,
   order,
   stageLabel,
   includeResults,
   eventStart,
+  handleEdit,
   handleDelete,
   loading,
   stageId,
+  seriesId,
   connected,
 }) {
+  const stage = {
+    name,
+    eventStart,
+    order,
+    includeResults,
+    stageId,
+    label: stageLabel,
+    seriesId,
+  };
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__top}>
@@ -51,7 +61,7 @@ export default function StageSeriesCardView({
 
       {stageLabel && (
         <div className={styles.box__checkbox}>
-          <span>Название Этапа</span>
+          <span>Название Этапа:</span>
           <div className={styles.stage__label}>{stageLabel}</div>
         </div>
       )}
@@ -64,14 +74,14 @@ export default function StageSeriesCardView({
           {connected && (
             <IconConnection
               tooltip={'Номер этапа совпадает с номером у другого этапа'}
-              squareSize={35}
+              squareSize={45}
             />
           )}
         </div>
       </div>
 
       <div className={styles.box__icon}>
-        <IconEdit getClick={() => handleDelete(stageId, 'delete')} squareSize={18} />
+        <IconEdit getClick={() => handleEdit(stage)} squareSize={18} />
         <IconDelete getClick={() => handleDelete(stageId, 'delete')} squareSize={18} />
       </div>
     </section>

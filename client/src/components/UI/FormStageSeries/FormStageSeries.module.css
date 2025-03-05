@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 14px 0px 14px 14px;
+  padding: 14px;
   background-color: var(--color-yellow-5-transparent);
   border-radius: 10px;
   border: 1px solid var(--color-border-minor);
@@ -34,7 +34,7 @@
 }
 .box__checkbox {
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 1rem;
   justify-content: start;
   max-width: 400px;
@@ -61,4 +61,8 @@
 }
 .box__field {
   margin-bottom: 12px;
+}
+.spacer__btn {
+  text-align: right;
+  margin-top: 20px;
 }

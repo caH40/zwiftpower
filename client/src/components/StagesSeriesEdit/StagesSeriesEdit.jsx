@@ -1,16 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, useFieldArray } from 'react-hook-form';
 import cn from 'classnames/bind';
 
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import {
-  fetchUpdateSeriesStage,
-  fetchUpdateSeriesStages,
-} from '../../redux/features/api/series/fetchSeries';
+import { fetchUpdateSeriesStages } from '../../redux/features/api/series/fetchSeries';
+import { getDuplicates } from '../../utils/duplicates';
 import StagesInSeries from '../StagesInSeries/StagesInSeries';
-import StageSeriesCard from '../UI/StageSeriesCard/StageSeriesCard';
-import StageSeriesCardView from '../UI/StageSeriesCard/StageSeriesCardView';
+import FormStageSeries from '../UI/FormStageSeries/FormStageSeries';
+import StageSeriesCard from '../StageSeriesCard/StageSeriesCard';
 
 import styles from './StagesSeriesEdit.module.css';
 
@@ -23,31 +20,31 @@ const cx = cn.bind(styles);
  */
 export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
   const [loading, setLoading] = useState(false);
+  const [stageForEdit, setStageForEdit] = useState();
+
+  // Повторяющиеся номера (order) этапов в Серии (0 не учитывается).
+  const [duplicateStageNumber, setDuplicateStageNumber] = useState([]);
+
   // Эвенты, которые можно добавить в Серю как этапы.
   const { eventsForSeries } = useSelector((state) => state.fetchEvents);
 
+  const formRef = useRef(null);
+
   const dispatch = useDispatch();
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    values: { stages: stages || [] },
-  });
+  // Поиск номеров этапов, которые встречаются у двух и более этапов.
+  useEffect(() => {
+    if (!stages?.length) {
+      return;
+    }
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'stages',
-  });
+    const duplicates = getDuplicates({
+      elements: stages.map((elm) => elm.order),
+      exception: 0,
+    });
 
-  const onSubmit = (data) => {
-    // eslint-disable-next-line no-console
-    console.log('Отправленные данные:', data);
-  };
-  // dispatch(fetchUpdateSeriesStage({ stage, seriesId }));
+    setDuplicateStageNumber([...duplicates]);
+  }, [stages]);
 
   // Обработчик нажатия на иконку добавления Эвента в Этапы Серии заездов.
   const handleClickForStage = async (eventId, action) => {
@@ -69,56 +66,51 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
   };
 
   // Обработчик нажатия на иконку редактирования параметров Этапа Серии заездов.
-  const handleClickEditStage = async (eventId, action) => {
-    console.log('edit', eventId);
+  const handleClickEditStage = async (stage) => {
+    setStageForEdit(stage);
+
+    await new Promise((resolve) => setTimeout(resolve, 0)); // Дождаться рендера формы
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (
     <div className={styles.wrapper}>
       {stages.map((stage) => (
-        <StageSeriesCardView
+        //  Карточка Этапа для контроля параметров.
+        <StageSeriesCard
           key={stage._id}
           handleDelete={handleClickForStage}
           handleEdit={handleClickEditStage}
           name={stage.name}
           order={stage.order}
-          stageName={stage.name}
+          stageLabel={stage.label}
           includeResults={stage.includeResults}
           eventStart={stage.eventStart}
-          connected={true}
+          seriesId={seriesId}
+          stageId={stage._id}
+          connected={duplicateStageNumber.includes(stage.order)}
         />
       ))}
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        {/* {fields.map((stage, index) => (
-          <StageSeriesCard
-            key={stage._id}
-            name={stage.name}
-            eventStart={stage.eventStart}
-            propertyOrder={`stages.${index}.order`}
-            propertyStageName={`stages.${index}.label`}
-            propertyIncludeResults={`stages.${index}.includeResults`}
-            register={register}
-            errors={errors}
-            handleSubmit={handleSubmit}
-            seriesId={seriesId}
-            loading={false}
-            stageId={stage._id}
-          />
-        ))} */}
+      {/* Форма изменения параметров Этапа */}
+      {stageForEdit?.seriesId && (
+        <FormStageSeries
+          stage={stageForEdit}
+          setStageForEdit={setStageForEdit}
+          loading={loading}
+          setTrigger={setTrigger}
+          ref={formRef}
+        />
+      )}
 
-        {/* <button type="button" onClick={() => append({ order: 0, includeResults: false })}>
-          Добавить этап
-        </button>
-        <button type="submit">Сохранить</button> */}
-      </form>
-
+      {/* Таблица со список Эвентов для возможного добавления как этапов в Серию */}
       <div className={cx('stages')}>
         <StagesInSeries
           stages={eventsForSeries}
           action="add"
           loading={loading}
           handleAction={handleClickForStage}
+          setStageForEdit={setStageForEdit}
         />
       </div>
     </div>

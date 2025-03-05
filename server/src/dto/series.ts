@@ -55,6 +55,8 @@ export function organizerSeriesOneDto(
       _id: String(stage.event._id),
       name: stage.event.name,
       order: stage.order,
+      label: stage.label,
+      includeResults: stage.includeResults,
     }));
   const description = series.description;
 
