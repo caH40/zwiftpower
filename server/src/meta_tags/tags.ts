@@ -51,7 +51,7 @@ export const getSeriesMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/series.webp';
   const recommendationsTag = 'series';
 
   return { title, canonical, description, image, recommendationsTag };

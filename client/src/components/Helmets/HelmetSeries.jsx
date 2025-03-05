@@ -10,7 +10,7 @@ export const HelmetSeries = () => {
   const canonical = `${serverFront}/series`;
   const description =
     'Серии и Туры заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/series.webp';
   const recommendationsTag = 'series';
 
   return (

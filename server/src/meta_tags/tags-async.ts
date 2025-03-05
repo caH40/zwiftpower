@@ -279,7 +279,7 @@ export const getSeriesRegulationsMeta = async (url: string): Promise<MetaTags> =
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
     const descriptionRaw = seriesDB.mission
       ? `${seriesDB.mission} Узнайте правила, призы и другую важную информацию!`
-      : `Ознакомьтесь с регламентом "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Узнайте правила, призы и другую важную информацию!`;
+      : `Ознакомьтесь с регламентом "${seriesDB.name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Узнайте правила, призы и другую важную информацию!`;
     const titleRaw = `Регламент: ${seriesDB.name} с ${dateStart} по ${dateEnd}, проводимых в Звифте. Организатор: ${organizerName}`;
 
     // Запрещены двойные кавычки в мета тегах.
@@ -311,7 +311,7 @@ export const getSeriesResultsMeta = async (url: string): Promise<MetaTags> => {
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
     const descriptionRaw = seriesDB.mission
       ? `${seriesDB.mission} Итоговые таблицы серии`
-      : `Следите за итоговыми результатами "${name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Присоединяйтесь к соревнованиям!`;
+      : `Следите за итоговыми результатами "${seriesDB.name}" (${dateStart}-${dateEnd}). Организатор: ${organizerName}. Присоединяйтесь к соревнованиям!`;
     const titleRaw = `Результаты и генеральные зачеты: ${seriesDB.name} с ${dateStart} по ${dateEnd}, Звифт. Организатор: ${organizerName}`;
 
     // Запрещены двойные кавычки в мета тегах.
