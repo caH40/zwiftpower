@@ -66,7 +66,7 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getSeriesRegulationsMeta(url);
   } else if (url.match(/^\/series\/([^/]+)\/(results)$/)) {
     tags = getSeriesResultsMeta(url);
-  } else if (url === '/race/series') {
+  } else if (url === '/series') {
     tags = getSeriesMeta(url);
   } else {
     tags = getMetaOtherPages(url);
