@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 
 import { HelmetSeriesRegulations } from '../../../components/Helmets/HelmetSeriesRegulations';
-import useTitle from '../../../hook/useTitle';
 import { createHtml } from '../../../utils/html';
 import { getTimerLocal } from '../../../utils/date-local';
+import useTitle from '../../../hook/useTitle';
+import TitleWithUnderline from '../../../components/TitleWithUnderline/TitleWithUnderline';
 
 import styles from './SeriesOneRegulations.module.css';
 
@@ -31,7 +32,9 @@ export default function SeriesOneRegulations() {
         <div className={styles.wrapper}>
           {seriesPublicOne.description && (
             <section className={styles.content}>
-              <h3 className={styles.title}>Описание</h3>
+              <TitleWithUnderline tag="h3" size="xl">
+                Описание
+              </TitleWithUnderline>
               <p
                 className={styles.paragraph}
                 dangerouslySetInnerHTML={{
@@ -43,7 +46,9 @@ export default function SeriesOneRegulations() {
 
           {seriesPublicOne.prizes && (
             <section className={styles.content}>
-              <h3 className={styles.title}>Призы</h3>
+              <TitleWithUnderline tag="h3" size="xl">
+                Призы
+              </TitleWithUnderline>
               <p
                 className={styles.paragraph}
                 dangerouslySetInnerHTML={{
@@ -55,7 +60,9 @@ export default function SeriesOneRegulations() {
 
           {seriesPublicOne.rules && (
             <section className={styles.content}>
-              <h3 className={styles.title}>Правила</h3>
+              <TitleWithUnderline tag="h3" size="xl">
+                Правила
+              </TitleWithUnderline>
               <p
                 className={styles.paragraph}
                 dangerouslySetInnerHTML={{

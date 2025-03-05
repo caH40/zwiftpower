@@ -1,22 +1,6 @@
 .content {
   margin-bottom: 20px;
 }
-.title {
-  font-weight: 700;
-  font-size: 26px;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
-  position: relative;
-}
-.title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(to right, var(--color-yellow-5), var(--color-blue-main));
-}
 .paragraph {
   font-size: 16px;
   line-height: 1.8;
@@ -44,10 +28,6 @@
 }
 /* ====================================================================== */
 @media (max-width: 769px) {
-  .title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
   .paragraph {
     padding: 10px;
     font-size: 15px;
