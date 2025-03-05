@@ -54,12 +54,12 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        <UnderConstruction />
-        // <StagesSeriesEdit
-        //   setTrigger={setTrigger}
-        //   stages={seriesOne.stages}
-        //   seriesId={seriesOne._id}
-        // />
+        // <UnderConstruction />
+        <StagesSeriesEdit
+          setTrigger={setTrigger}
+          stages={seriesOne.stages}
+          seriesId={seriesOne._id}
+        />
       )}
     </section>
   );

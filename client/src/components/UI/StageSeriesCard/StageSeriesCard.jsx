@@ -23,15 +23,12 @@ export default function StageSeriesCard({
   eventStart,
   register,
   errors,
-  handleDelete,
+  handleSubmit,
   loading,
   stageId,
 }) {
   return (
     <section className={styles.wrapper}>
-      <div className={styles.box__icon}>
-        <IconDelete getClick={() => handleDelete(stageId, 'delete')} />
-      </div>
       <h3 className={styles.title}>{name}</h3>
       <h3 className={styles.subtitle}>{getTimerLocal(eventStart, 'DDMMYYHm')}</h3>
 

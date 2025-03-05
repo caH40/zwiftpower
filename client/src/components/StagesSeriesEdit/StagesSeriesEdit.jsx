@@ -10,6 +10,7 @@ import {
 } from '../../redux/features/api/series/fetchSeries';
 import StagesInSeries from '../StagesInSeries/StagesInSeries';
 import StageSeriesCard from '../UI/StageSeriesCard/StageSeriesCard';
+import StageSeriesCardView from '../UI/StageSeriesCard/StageSeriesCardView';
 
 import styles from './StagesSeriesEdit.module.css';
 
@@ -67,10 +68,29 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
     }
   };
 
+  // Обработчик нажатия на иконку редактирования параметров Этапа Серии заездов.
+  const handleClickEditStage = async (eventId, action) => {
+    console.log('edit', eventId);
+  };
+
   return (
     <div className={styles.wrapper}>
+      {stages.map((stage) => (
+        <StageSeriesCardView
+          key={stage._id}
+          handleDelete={handleClickForStage}
+          handleEdit={handleClickEditStage}
+          name={stage.name}
+          order={stage.order}
+          stageName={stage.name}
+          includeResults={stage.includeResults}
+          eventStart={stage.eventStart}
+          connected={true}
+        />
+      ))}
+
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        {fields.map((stage, index) => (
+        {/* {fields.map((stage, index) => (
           <StageSeriesCard
             key={stage._id}
             name={stage.name}
@@ -80,12 +100,12 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
             propertyIncludeResults={`stages.${index}.includeResults`}
             register={register}
             errors={errors}
-            handleDelete={handleClickForStage}
+            handleSubmit={handleSubmit}
             seriesId={seriesId}
             loading={false}
             stageId={stage._id}
           />
-        ))}
+        ))} */}
 
         {/* <button type="button" onClick={() => append({ order: 0, includeResults: false })}>
           Добавить этап
