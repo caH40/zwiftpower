@@ -13,6 +13,7 @@ import IconTTLock from '../components/icons/IconTTLock';
 import IconTTT from '../components/icons/IconTTT';
 import IconViewEvent from '../components/icons/IconViewEvent';
 import IconViewGroup from '../components/icons/IconViewGroup';
+import IconViewWorld from '../components/icons/IconViewWorld';
 
 export const iconsDescriptions = [
   {
@@ -35,38 +36,39 @@ export const iconsDescriptions = [
   { id: 3, icon: IconPowerUp, description: 'Отключены в заезде PowerUp' },
   { id: 4, icon: IconViewEvent, description: 'Видны все участники заезда' },
   { id: 5, icon: IconViewGroup, description: 'Видны только участники группы' },
-  { id: 6, icon: IconSteeringDisabled, description: 'Отключено рулевое управление' },
-  { id: 7, icon: IconTT, description: 'Драфтинг отключен' },
+  { id: 6, icon: IconViewWorld, description: 'Видны все райдеры на данной карте' },
+  { id: 7, icon: IconSteeringDisabled, description: 'Отключено рулевое управление' },
+  { id: 8, icon: IconTT, description: 'Драфтинг отключен' },
   {
-    id: 8,
+    id: 9,
     icon: IconTTLock,
     description: 'Запрет выбора велосипедов для раздельного старта (TT)',
   },
   {
-    id: 9,
+    id: 10,
     icon: IconPowerMeter,
     description:
       'Обязательное наличие станка с измерителем мощности (запрет использования станков с z-power)',
   },
   {
-    id: 10,
+    id: 11,
     icon: IconHeartMonitor,
     description: 'Обязательное наличия монитора сердечного ритма',
   },
-  { id: 11, icon: IconDD, description: 'Двойной драфтинг' },
+  { id: 12, icon: IconDD, description: 'Двойной драфтинг' },
   {
-    id: 12,
+    id: 13,
     icon: IconRubberBanding,
     description:
       'Группа удерживается вместе невидимой резиновой лентой, так что райдеры с разным уровнем подготовки смогут ехать одной группой',
   },
   {
-    id: 13,
+    id: 14,
     icon: IconLateJoin,
     description:
       'Позднее подключение. Возможность подключиться к заезду в течении 30 минут после старта',
   },
-  { id: 14, icon: IconTTT, description: 'Включен драфт для ТТ велосипедов. Team Time Trial' },
+  { id: 15, icon: IconTTT, description: 'Включен драфт для ТТ велосипедов. Team Time Trial' },
 ];
 
 export const racesDescription = [

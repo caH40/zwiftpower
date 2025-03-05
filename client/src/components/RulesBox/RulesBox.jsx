@@ -15,6 +15,7 @@ import IconViewGroup from '../icons/IconViewGroup';
 import IconSteeringDisabled from '../icons/IconSteeringDisabled';
 import IconTTT from '../icons/IconTTT';
 import IconScoreBased from '../icons/IconScoreBased';
+import IconViewWorld from '../icons/IconViewWorld';
 
 import { enabledRule, enabledRuleInTag } from './utils';
 
@@ -55,6 +56,8 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         {event.cullingType === 'CULLING_SUBGROUP_ONLY' && (
           <IconViewGroup squareSize={squareSize} />
         )}
+
+        {event.cullingType === 'CULLING_EVERYBODY' && <IconViewWorld squareSize={squareSize} />}
 
         {enabledRuleInTag(event, 'steering_disabled') && (
           <IconSteeringDisabled squareSize={squareSize} />
