@@ -192,7 +192,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
   try {
     // Парсинг url.
     const parts = url.split('/');
-    const urlSlug = parts.at(-1);
+    const urlSlug = parts.at(-2);
 
     if (typeof urlSlug !== 'string') {
       return getMetaOtherPages(url);
