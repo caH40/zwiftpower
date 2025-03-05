@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames/bind';
 
@@ -47,7 +47,19 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
   }, [stages]);
 
   // Обработчик нажатия на иконку добавления Эвента в Этапы Серии заездов.
-  const handleClickForStage = async (eventId, action) => {
+  const handleClickForStage = async (eventId, action, eventName) => {
+    if (action === 'delete') {
+      const response = window.confirm(
+        `Вы действительно хотите удалить Этап: "${eventName}" из Серии заездов?`
+      );
+      if (!response) {
+        const message = `Отмена удаления Этапа:  "${eventName}"`;
+        dispatch(getAlert({ message, type: 'warning', isOpened: true }));
+
+        return;
+      }
+    }
+
     try {
       const stage = {
         event: eventId,
@@ -75,22 +87,25 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
 
   return (
     <div className={styles.wrapper}>
-      {stages.map((stage) => (
-        //  Карточка Этапа для контроля параметров.
-        <StageSeriesCard
-          key={stage._id}
-          handleDelete={handleClickForStage}
-          handleEdit={handleClickEditStage}
-          name={stage.name}
-          order={stage.order}
-          stageLabel={stage.label}
-          includeResults={stage.includeResults}
-          eventStart={stage.eventStart}
-          seriesId={seriesId}
-          stageId={stage._id}
-          connected={duplicateStageNumber.includes(stage.order)}
-        />
-      ))}
+      <h3 className={styles.title}>Этапы, добавленные в текущую серию</h3>
+      <div className={styles.wrapper__stages}>
+        {stages.map((stage) => (
+          //  Карточка Этапа для контроля параметров.
+          <StageSeriesCard
+            key={stage._id}
+            handleDelete={handleClickForStage}
+            handleEdit={handleClickEditStage}
+            name={stage.name}
+            order={stage.order}
+            stageLabel={stage.label}
+            includeResults={stage.includeResults}
+            eventStart={stage.eventStart}
+            seriesId={seriesId}
+            stageId={stage._id}
+            connected={duplicateStageNumber.includes(stage.order)}
+          />
+        ))}
+      </div>
 
       {/* Форма изменения параметров Этапа */}
       {stageForEdit?.seriesId && (

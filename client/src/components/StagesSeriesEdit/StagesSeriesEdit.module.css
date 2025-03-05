@@ -1,10 +1,22 @@
 .wrapper {
+  margin-top: 15px;
+}
+.wrapper__stages {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
-
+.title {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
 .stages {
   margin-top: 30px;
+}
+/* ====================================================================== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+  }
 }

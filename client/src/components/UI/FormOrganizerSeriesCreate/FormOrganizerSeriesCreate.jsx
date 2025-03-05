@@ -120,36 +120,6 @@ export default function FormOrganizerSeriesCreate({
     }
   };
 
-  // // Удаление Эвента(этапа) из серии.
-  // const deleteStage = (currentStage) => {
-  //   setStagesAdded((prev) => prev.filter((elm) => elm._id !== currentStage._id));
-  //   setEvents((prev) => {
-  //     // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
-  //     if (prev.some((elm) => elm._id === currentStage._id)) {
-  //       return prev;
-  //     }
-  //     return [...prev, currentStage];
-  //   });
-  // };
-
-  // // Добавление Эвента(этапа) в серию.
-  // const addStage = (currentStage) => {
-  //   setStagesAdded((prev) => {
-  //     // Проверяем, нет ли уже currentStage в events, что бы не дублировались.
-  //     if (prev.some((elm) => elm._id === currentStage._id)) {
-  //       return prev;
-  //     }
-
-  //     // Получение последнего номера Этапа для вычисления следующего номера.
-  //     const orders = prev.map((e) => (isNaN(e.order) ? 0 : e.order));
-  //     const lastOrder = Math.max(...orders, 0);
-
-  //     return [...prev, { ...currentStage, order: lastOrder + 1 }];
-  //   });
-
-  //   setEvents((prev) => prev.filter((elm) => elm._id !== currentStage._id));
-  // };
-
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wrapper__fields}>

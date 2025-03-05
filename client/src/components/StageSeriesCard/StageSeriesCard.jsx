@@ -82,7 +82,7 @@ export default function StageSeriesCard({
 
       <div className={styles.box__icon}>
         <IconEdit getClick={() => handleEdit(stage)} squareSize={18} />
-        <IconDelete getClick={() => handleDelete(stageId, 'delete')} squareSize={18} />
+        <IconDelete getClick={() => handleDelete(stageId, 'delete', name)} squareSize={18} />
       </div>
     </section>
   );

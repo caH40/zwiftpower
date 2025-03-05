@@ -1,5 +1,6 @@
 .title {
   font-size: 22px;
+  margin-bottom: 5px;
 }
 .wrapper__stages {
   font-size: 16px;
@@ -33,8 +34,8 @@
 
 /* ====================================================================== */
 @media (max-width: 768px) {
-  .wrapper__stages {
-    padding: 0.1rem 0.5rem;
+  .title {
+    font-size: 20px;
   }
   .stage {
     grid-template-columns: 65px 1fr 35px auto;

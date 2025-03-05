@@ -54,7 +54,6 @@ export default function OrganizerSeriesCurrentEdit() {
           />
         )
       ) : (
-        // <UnderConstruction />
         <StagesSeriesEdit
           setTrigger={setTrigger}
           stages={seriesOne.stages}
