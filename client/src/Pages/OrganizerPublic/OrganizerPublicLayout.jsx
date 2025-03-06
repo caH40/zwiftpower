@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
 import { useAd } from '../../hook/useAd';
-import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdContainer from '../../components/AdContainer/AdContainer';
-import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import AdSeries from '../../components/AdSeries/AdSeries';
+import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
+
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 
 import styles from './OrganizerPublicLayout.module.css';
@@ -70,11 +71,11 @@ export default function OrganizerPublicLayout() {
         {/* Боковая панель. */}
         {xl && (
           <aside className={styles.aside}>
-            <AdMyPage
-              href="/series"
-              title="Догонялки (Catchup)"
-              subtitle="сезон 2024-2025"
-              imageSrc="/images/open_graph/5.jpg"
+            {/* Рекламный блок Серии догонялок */}
+            <AdSeries
+              urlSlug={'kom-on-dogonyalki-po-sredam'}
+              isCard={true}
+              pageType="schedule"
             />
           </aside>
         )}

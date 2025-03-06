@@ -18,7 +18,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 import { resetRaceResultsPage } from '../../redux/features/filterRaceResultsPageSlice';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
-import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './RaceResults.module.css';
 
@@ -83,12 +83,7 @@ function RaceResults() {
 
         {eventData?.id && eventData.typeRaceCustom === 'catchUp' && (
           <div className={styles.wrapper__series}>
-            <AdMyPage
-              href="/race/series/catchup/2024"
-              title="Догонялки (Catchup)"
-              subtitle="сезон 2024-2025"
-              imageSrc="/images/open_graph/5.jpg"
-            />
+            <AdSeries urlSlug={'kom-on-dogonyalki-po-sredam'} pageType="results" />
           </div>
         )}
 

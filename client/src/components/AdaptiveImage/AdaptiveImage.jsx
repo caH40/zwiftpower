@@ -6,13 +6,23 @@
  * @param {Object} [props.sources] - Объект с ссылками на разные размеры изображения (может быть undefined).
  * @param {string} [props.className] - Дополнительный CSS-класс.
  */
-export function AdaptiveImage({ sources, height, width, ...propsImg }) {
+export function AdaptiveImage({ sources, isCard, height, width, ...propsImg }) {
   // Проверка наличия sources
   if (!sources) {
     return <img {...propsImg} />;
   }
 
-  return (
+  return isCard ? (
+    // Требуется изображение для карточки с минимальными размерами
+    <picture>
+      <img
+        src={sources.small || sources?.original}
+        {...propsImg}
+        height={height}
+        width={width}
+      />
+    </picture>
+  ) : (
     <picture>
       {/* Источник для изображений с размером для экранов 2K и выше */}
       {sources?.xLarge && <source srcSet={sources.xLarge} media="(min-width: 2000px)" />}

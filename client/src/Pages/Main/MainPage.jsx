@@ -14,7 +14,7 @@ import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
 import MainInfo from '../../components/MainInfo/MainInfo';
 import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import AdContainer from '../../components/AdContainer/AdContainer';
-import AdMyPage from '../../components/AdMyPage/AdMyPage';
+import AdSeries from '../../components/AdSeries/AdSeries';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 // import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
@@ -107,11 +107,11 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
-            <AdMyPage
-              href="/series"
-              title="Догонялки (Catchup)"
-              subtitle="сезон 2024-2025"
-              imageSrc="/images/open_graph/5.jpg"
+            {/* Рекламный блок Серии догонялок */}
+            <AdSeries
+              urlSlug={'kom-on-dogonyalki-po-sredam'}
+              isCard={true}
+              pageType="schedule"
             />
 
             <div className={styles.spacer__donate}>
