@@ -12,7 +12,7 @@ const accessExpressionObjSchema = new Schema(
 );
 
 const zwiftEventSchema = new Schema<ZwiftEventSchema>({
-  seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Series', default: null },
+  seriesId: { type: mongoose.Schema.Types.ObjectId, ref: 'NSeries', default: null },
   typeRaceCustom: { type: String, default: null },
   accessExpressionObj: { type: accessExpressionObjSchema, default: null },
   id: { type: Number, unique: true, required: true },

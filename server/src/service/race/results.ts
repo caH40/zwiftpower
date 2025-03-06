@@ -14,6 +14,7 @@ import { addRacingScores } from '../preparation/racingscore.js';
 export async function getResultsService(eventId: number) {
   const eventDB = await ZwiftEvent.findOne({ id: eventId })
     .populate('eventSubgroups')
+    .populate({ path: 'seriesId', select: ['name', 'urlSlug'] })
     .lean<EventWithSubgroup>();
 
   if (!eventDB) {

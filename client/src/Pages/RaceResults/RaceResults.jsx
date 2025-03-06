@@ -81,9 +81,9 @@ function RaceResults() {
           <DescriptionEventZwift event={eventData} eventId={eventId} />
         )}
 
-        {eventData?.id && eventData.typeRaceCustom === 'catchUp' && (
+        {eventData?.seriesId?.urlSlug && (
           <div className={styles.wrapper__series}>
-            <AdSeries urlSlug={'kom-on-dogonyalki-po-sredam'} pageType="results" />
+            <AdSeries urlSlug={eventData.seriesId?.urlSlug} pageType="results" />
           </div>
         )}
 

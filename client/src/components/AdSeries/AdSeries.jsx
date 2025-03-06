@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { fetchGetSeriesOne } from '../../redux/features/api/series/fetchSeries';
 import { getTimerLocal } from '../../utils/date-local';
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
+import { resetSeriesPublicOne } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './AdSeries.module.css';
 
@@ -22,10 +23,16 @@ export default function AdSeries({ urlSlug, isCard, pageType = 'schedule' }) {
 
   useEffect(() => {
     dispatch(fetchGetSeriesOne({ urlSlug }));
+
+    return () => dispatch(resetSeriesPublicOne());
   }, [dispatch, urlSlug]);
 
   return (
-    <Link to={`/series/${urlSlug?.toLowerCase()}/${pageType}`} className={styles.wrapper}>
+    <Link
+      to={`/series/${urlSlug?.toLowerCase()}/${pageType}`}
+      className={styles.wrapper}
+      height={220}
+    >
       {seriesPublicOne && (
         <div className={styles.wrapper__hover}>
           <AdaptiveImage
