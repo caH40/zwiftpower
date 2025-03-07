@@ -204,4 +204,22 @@ export const accessExpressions = [
     },
     categoryEnforcement: false,
   },
+  {
+    id: 101,
+    name: 'EDFemaleETR',
+    label: 'D,E женские. EtR',
+    value: `(powerCurves.category >= subgroup.label && powerCurves.category != 4 && powerCurves.category != 5) ||
+(subgroup.label <= 3 && (powerCurves.category == 4 || powerCurves.category == 5)) ||
+(subgroup.label == 4 && powerCurves.zFTPwkg <= 3.15) ||
+subgroup.label == 5`,
+    description: 'D,E женские, С,B,A стандартные для EtR',
+    paceValues: {
+      1: { from: 4.2, to: 4.59 },
+      2: { from: 3.36, to: 4.19 },
+      3: { from: 2.63, to: 3.35 },
+      4: { from: 3.16, to: 6 },
+      5: { from: 1, to: 3.15 },
+    },
+    categoryEnforcement: true,
+  },
 ];
