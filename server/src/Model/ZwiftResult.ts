@@ -20,7 +20,7 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
 
   eventSubgroupId: { type: Number, default: null },
   subgroupLabel: { type: String, default: null },
-  rank: { type: Number, default: null },
+  rank: { type: Number, default: 0 },
   rankEvent: { type: Number, default: null },
   eventId: { type: Number, default: null },
 

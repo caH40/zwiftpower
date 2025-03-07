@@ -759,6 +759,7 @@ export type TPointsStageResult = {
   finishPoints: number; // Очки за финишное место в гонке.
   pointsSprint?: TPointsSprint[]; // Очки за спринтерские участки.
   pointsMountain?: TPointsMountain[]; // Очки за горные участки.
+  bonus?: number; // Дополнительные очки за участие или активность.
 };
 
 // Тип для результата райдера в рамках серии.
@@ -771,7 +772,7 @@ export type TStageResult = {
   zwiftResultRaw: Types.ObjectId; // Ссылка на сырой результат из заезда.
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
-
+  rank: number; // Место в категории.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     label: 0 | 1 | 2 | 3 | 4 | 5;
@@ -779,8 +780,14 @@ export type TStageResult = {
   };
   category: TCategorySeries; // Категория райдера в текущем заезде Серии.
   points: TPointsStageResult;
-
-  bonusPoints?: number; // Дополнительные очки за участие или активность.
+  disqualification?: {
+    status: boolean; // Дисквалифицирован ли райдер.
+    reason: string; // Причина дисквалификации.
+  };
+  penalty?: {
+    reason: string; // Причина штрафа.
+    timeInMilliseconds: number; // Время штрафа.
+  }[];
   teamSquadAtRace?: Types.ObjectId; // Опционально: состав команды в рамках гонки.
   createdAt: Date;
   updatedAt: Date;

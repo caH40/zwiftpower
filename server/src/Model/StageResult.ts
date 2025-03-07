@@ -64,6 +64,7 @@ const pointsStageResultSchema = new Schema(
     finishPoints: { type: Number, required: true },
     pointsSprint: [pointsSprintSchema],
     pointsMountain: [pointsMountainSchema],
+    bonus: { type: Number },
   },
   { _id: false }
 );
@@ -97,7 +98,16 @@ const stageResultSchema = new Schema<IStageResult>(
       required: true,
     },
     points: { type: pointsStageResultSchema, required: true },
-    bonusPoints: { type: Number },
+    disqualification: {
+      status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
+      reason: { type: String, trim: true }, // Причина дисквалификации.
+    },
+    penalty: [
+      {
+        reason: { type: String, trim: true }, // Причина штрафа.
+        timeInMilliseconds: { type: Number }, // Время штрафа.
+      },
+    ],
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
   },
   { timestamps: true }
