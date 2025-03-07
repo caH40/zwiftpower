@@ -1,6 +1,11 @@
 import mongoose, { Document, Types } from 'mongoose';
 
-import { PowerFitFiles, ProfileDataInResultWithId, TAuthService } from './types.interface.js';
+import {
+  PowerFitFiles,
+  ProfileDataInResultWithId,
+  TAuthService,
+  TCategorySeries,
+} from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 
@@ -483,15 +488,18 @@ export interface ZwiftResultSchema {
   pointsStage: number;
   isUnderChecking: boolean;
   addedManually: boolean;
-  cpBestEfforts: {
-    watts: number;
-    wattsKg: number;
-    cpLabel: string;
-    duration: number;
-  }[];
+  cpBestEfforts: TCriticalPowerBestEfforts[];
 
   profileDataMain?: ProfileDataInResultWithId;
 }
+
+// CP на интервалах.
+export type TCriticalPowerBestEfforts = {
+  watts: number;
+  wattsKg: number;
+  cpLabel: string;
+  duration: number;
+};
 //
 //
 export interface SignedRidersSchema {
@@ -724,6 +732,56 @@ export type TFinishProtocolConfig = {
   displayName: string; // Название, отображаемое в select на клиенте.
   description: string;
   isDefault: boolean; // При true отображается у всех организаторов.
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// Общий тип для очковых зачётов.
+type TPointsResult = {
+  stageNumber: number; // Порядковый номер сегмента в заезде.
+  place: number; // Место райдера на сегменте.
+  points: number; // Количество начисленных очков.
+  multiplier: number; // Множитель очков, если он применяется. По умолчанию 1.
+  segment?: string; // Название сегмента (спринтерского или горного).
+};
+
+// Тип для спринтерского зачёта.
+export type TPointsSprint = TPointsResult & {
+  sprint: number; // Идентификатор спринтерского участка.
+};
+
+// Тип для горного зачёта.
+export type TPointsMountain = TPointsResult & {
+  mountain: number; // Идентификатор горного участка.
+};
+
+export type TPointsStageResult = {
+  finishPoints: number; // Очки за финишное место в гонке.
+  pointsSprint?: TPointsSprint[]; // Очки за спринтерские участки.
+  pointsMountain?: TPointsMountain[]; // Очки за горные участки.
+};
+
+// Тип для результата райдера в рамках серии.
+export type TStageResult = {
+  _id?: Types.ObjectId;
+  series: Types.ObjectId;
+  zwiftId: number; // Zwift ID райдера.
+  zwiftEvent: Types.ObjectId;
+  zwiftEventSubgroup: Types.ObjectId;
+  zwiftResultRaw: Types.ObjectId; // Ссылка на сырой результат из заезда.
+  profileData: ProfileDataInResult; // Данные райдера из заезда.
+  cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
+
+  activityData: {
+    durationInMilliseconds: number; // Финишный результат заезда.
+    label: 0 | 1 | 2 | 3 | 4 | 5;
+    subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
+  };
+  category: TCategorySeries; // Категория райдера в текущем заезде Серии.
+  points: TPointsStageResult;
+
+  bonusPoints?: number; // Дополнительные очки за участие или активность.
+  teamSquadAtRace?: Types.ObjectId; // Опционально: состав команды в рамках гонки.
   createdAt: Date;
   updatedAt: Date;
 };

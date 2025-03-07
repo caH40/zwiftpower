@@ -704,6 +704,18 @@ export type TResponseStreamDto = {
 };
 
 export type TCategory = 'A' | 'B' | 'C' | 'D' | 'E';
+export type TCategorySeries =
+  | 'APlus'
+  | 'A'
+  | 'BPlus'
+  | 'B'
+  | 'C'
+  | 'D'
+  | 'E'
+  | 'WA'
+  | 'WB'
+  | 'WC'
+  | 'WD';
 /**
  * Лидеры по победам в каждой группе в Догонялках.
  */
