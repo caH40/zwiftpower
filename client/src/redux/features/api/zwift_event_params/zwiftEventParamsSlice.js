@@ -27,7 +27,6 @@ const initialState = {
   eventSubgroup_3: undefined,
   eventSubgroup_4: undefined,
   eventSubgroup_5: undefined,
-  checkboxRules: [],
   checkboxTags: [],
   subgroupLabels: [],
   status: null,
@@ -38,12 +37,8 @@ const zwiftEventParamsSlice = createSlice({
   name: 'eventParams',
   initialState,
   reducers: {
-    // установка в checkboxRules начальных данных для создания Эвента
+    // установка в начальных данных для создания Эвента
     setInitialOtherParams(state, action) {
-      state.checkboxRules = rules.map((rule) => {
-        return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
-      });
-
       state.checkboxTags = tags;
 
       state.subgroupLabels = action.payload.subgroups.map((subgroup) => subgroup.subgroupLabel);
@@ -54,15 +49,62 @@ const zwiftEventParamsSlice = createSlice({
       state.eventMainParams.microserviceExternalResourceId = action.payload;
     },
 
-    // установка правил и сохранение в состояние checkboxRules
+    // установка правил и сохранение в состояние
     setEventRules(state, action) {
-      state.checkboxRules = state.checkboxRules.map((rule) => {
-        if (rule.value === action.payload.property) {
-          return { ...rule, checked: action.payload.checked };
-        } else {
-          return rule;
+      const { property, checked } = action.payload;
+
+      for (const i of [1, 2, 3, 4, 5]) {
+        const subgroupKey = 'eventSubgroup_' + i;
+        if (Object.prototype.hasOwnProperty.call(state, subgroupKey) && state[subgroupKey]) {
+          // state[subgroupKey].rulesSet = [...state[subgroupKey].rulesSet];
+
+          // Проверка, что rulesSet существует в state[subgroupKey].
+          if (!state[subgroupKey].rulesSet) {
+            state[subgroupKey].rulesSet = [];
+          }
+
+          // Добавление элемента.
+          if (checked) {
+            const rulesAsSet = new Set(state[subgroupKey].rulesSet);
+            rulesAsSet.add(property);
+            state[subgroupKey].rulesSet = Array.from(rulesAsSet);
+          } else {
+            state[subgroupKey].rulesSet = state[subgroupKey].rulesSet.filter(
+              (elm) => elm !== property
+            );
+          }
         }
-      });
+      }
+    },
+
+    // установка правил для конкретной группы.
+    setEventRulesForGroup(state, action) {
+      const {
+        property,
+        checked,
+        additions: { subgroupKey },
+      } = action.payload;
+
+      // Проверка, что subgroupKey существует в state.
+      if (!Object.prototype.hasOwnProperty.call(state, subgroupKey)) {
+        return;
+      }
+
+      // Проверка, что rulesSet существует в state[subgroupKey].
+      if (!state[subgroupKey].rulesSet) {
+        state[subgroupKey].rulesSet = [];
+      }
+
+      // Добавление элемента.
+      if (checked) {
+        const rulesAsSet = new Set(state[subgroupKey].rulesSet);
+        rulesAsSet.add(property);
+        state[subgroupKey].rulesSet = Array.from(rulesAsSet);
+      } else {
+        state[subgroupKey].rulesSet = state[subgroupKey].rulesSet.filter(
+          (elm) => elm !== property
+        );
+      }
     },
 
     // установка тэгов и сохранение в состояние checkboxTags
@@ -123,7 +165,6 @@ const zwiftEventParamsSlice = createSlice({
       state.eventSubgroup_5 = initialState.eventSubgroup_5;
 
       state.subgroupLabels = initialState.subgroupLabels;
-      state.checkboxRules = initialState.checkboxRules;
       state.checkboxTags = initialState.checkboxTags;
     },
 
@@ -231,6 +272,7 @@ export const {
   setInitialOtherParams,
   setClub,
   setCategoryEnforcement,
+  setEventRulesForGroup,
 } = zwiftEventParamsSlice.actions;
 
 export default zwiftEventParamsSlice.reducer;

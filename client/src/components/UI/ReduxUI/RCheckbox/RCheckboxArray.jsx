@@ -6,7 +6,7 @@ import MyTooltip from '../../../../HOC/MyTooltip';
 
 import styles from './RCheckbox.module.css';
 
-function RCheckboxArray({ reducer, label, value, property, tooltip, disabled }) {
+function RCheckboxArray({ reducer, label, value, property, tooltip, disabled, additions }) {
   const dispatch = useDispatch();
 
   return (
@@ -18,7 +18,7 @@ function RCheckboxArray({ reducer, label, value, property, tooltip, disabled }) 
         className={styles.input}
         checked={value}
         type="checkbox"
-        onChange={(e) => dispatch(reducer({ property, checked: e.target.checked }))}
+        onChange={(e) => dispatch(reducer({ property, checked: e.target.checked, additions }))}
         disabled={disabled}
       />
     </label>

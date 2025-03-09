@@ -5,10 +5,16 @@ import { jerseys } from '../../../../assets/zwift/raw/jerseys';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
 import { getTimerLocal } from '../../../../utils/date-local';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
-import { removeGroupFromEvent } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import {
+  removeGroupFromEvent,
+  setEventRulesForGroup,
+} from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
 import IconDelete from '../../../icons/IconDelete';
+import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
+import { rulesPerGroup } from '../../../../assets/zwift/rule';
 
 import styles from './FormEditEventGroup.module.css';
+
 import MapBlock from './MapBlock';
 
 const cx = classNames.bind(styles);
@@ -165,6 +171,17 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
                   );
                 })}
               </BoxParameter>
+
+              {rulesPerGroup.map((checkboxTag) => (
+                <RCheckboxArray
+                  reducer={setEventRulesForGroup}
+                  key={checkboxTag.id}
+                  label={checkboxTag.translate}
+                  value={subGroup.rulesSet?.includes(checkboxTag.value)}
+                  property={checkboxTag.value}
+                  additions={{ subgroupKey: `eventSubgroup_${groupNumber}` }}
+                />
+              ))}
             </div>
 
             <div className={cx('box__inputs')}>

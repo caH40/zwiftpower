@@ -30,10 +30,6 @@ function handleEventParamsFulfilled(state, action) {
 
     state.eventMainParams = action.payload;
 
-    state.checkboxRules = rules.map((rule) => {
-      return { ...rule, checked: action.payload.rulesSet.includes(rule.value) };
-    });
-
     // массив tags в настройках Эвента
     const tagsInEven = action.payload.tags;
     // массив tags в настройках "нулевой" подгруппы

@@ -72,10 +72,6 @@ export const setPatternReducer = (state, action) => {
 
   state.eventMainParams = eventPrepared;
 
-  state.checkboxRules = rules.map((rule) => {
-    return { ...rule, checked: eventPrepared.rulesSet.includes(rule.value) };
-  });
-
   state.checkboxTags = tags.map((tag) => {
     return { ...tag, checked: eventPrepared.tags.includes(tag.value) };
   });

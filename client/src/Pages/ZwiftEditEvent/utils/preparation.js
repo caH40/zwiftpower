@@ -10,7 +10,6 @@ export function prepareData({
   eventSubgroup_3,
   eventSubgroup_4,
   eventSubgroup_5,
-  checkboxRules,
   checkboxTags,
 }) {
   const event = { ...eventMainParams };
@@ -25,9 +24,9 @@ export function prepareData({
   ].filter((elm) => elm.label);
 
   event.rulesId = null;
-  const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
 
-  // Тестовые настройки.
+  // Правила из групп
+  // event.rulesSet = rulesSet;
 
   // Обработка данных в tags.
   const tagsCheckedFromCheckbox = [...checkboxTags]
@@ -41,13 +40,11 @@ export function prepareData({
 
   tagsFiltered.push(timestamp);
 
-  event.rulesSet = rulesSet;
-
   // изменение тэга времени
   event.tags = tagsFiltered;
   for (const subGroup of eventSubgroups) {
     subGroup.tags = tagsFiltered;
-    subGroup.rulesSet = [...rulesSet];
+    // subGroup.rulesSet = [...rulesSet];
     // Добавляем 'LADIES_ONLY' только для subGroup с label === 4 или label === 5
     // if (subGroup.label === 5 || subGroup.label === 4) {
     //   subGroup.rulesSet.push('LADIES_ONLY');

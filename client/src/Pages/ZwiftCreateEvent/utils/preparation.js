@@ -11,7 +11,7 @@ export function prepareData({
   eventSubgroup_3,
   eventSubgroup_4,
   eventSubgroup_5,
-  checkboxRules,
+
   checkboxTags,
 }) {
   const event = { ...eventMainParams };
@@ -24,11 +24,11 @@ export function prepareData({
     { ...eventSubgroup_5 },
   ].filter((elm) => elm.label);
 
-  const rulesSet = [...checkboxRules].filter((rule) => rule.checked).map((rule) => rule.value);
+  // event.rulesSet = rulesSet;
 
   // Установка значений в tags.
   const tagsRules = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
-  event.rulesSet = rulesSet;
+
   const timestamp = `timestamp=${Date.now()}`;
   // Стандартные по умолчанию настройки, изменяются в  ручную.
   const tagsDefault = ['ranked', 'showplacements'];

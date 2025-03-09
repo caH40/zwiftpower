@@ -9,11 +9,13 @@ import {
 } from '../../../../assets/select/event-edit';
 import RCheckboxArray from '../../../UI/ReduxUI/RCheckbox/RCheckboxArray';
 import { getTimerLocal } from '../../../../utils/date-local';
+import { rules } from '../../../../assets/zwift/rule';
 import {
   addGroupToEvent,
   setEventRules,
   setEventTags,
 } from '../../../../redux/features/api/zwift_event_params/zwiftEventParamsSlice';
+import { useRulesSet } from '../../../../hook/useRulesSet';
 import ButtonCategory from '../../../UI/ButtonCategory/ButtonCategory';
 import { labelsSubgroups } from '../../../../assets/subgroups';
 import { getAlert } from '../../../../redux/features/alertMessageSlice';
@@ -35,9 +37,10 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
     .map((label) => label.subgroupLabel)
     .filter((label) => !subgroupLabels.includes(label));
 
-  const { eventMainParams, checkboxRules, checkboxTags } = useSelector(
-    (state) => state.eventParams
-  );
+  const { eventMainParams, checkboxTags } = useSelector((state) => state.eventParams);
+
+  // Массив установленных правил rulesSet, которые являются общими для всех подгрупп события.
+  const rulesSetEnabled = useRulesSet();
 
   const addGroup = (subgroupLabel) => {
     dispatch(addGroupToEvent(subgroupLabel));
@@ -202,12 +205,12 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
         </div>
 
         <div className={styles.box__checkbox}>
-          {checkboxRules.map((checkboxRule) => (
+          {rules.map((checkboxRule) => (
             <RCheckboxArray
               reducer={setEventRules}
               key={checkboxRule.id}
               label={checkboxRule.translate}
-              value={checkboxRule.checked}
+              value={rulesSetEnabled.includes(checkboxRule.value)}
               property={checkboxRule.value}
             />
           ))}
