@@ -1,3 +1,5 @@
+import { getCommonRulesSet } from '../../../hook/useRulesSet';
+
 import { changeTime } from './time-start';
 
 /**
@@ -25,8 +27,8 @@ export function prepareData({
 
   event.rulesId = null;
 
-  // Правила из групп
-  // event.rulesSet = rulesSet;
+  // Установка в общие настройки эванта правил, которые установлены и являются общими для всех групп.
+  event.rulesSet = getCommonRulesSet(eventSubgroups);
 
   // Обработка данных в tags.
   const tagsCheckedFromCheckbox = [...checkboxTags]
@@ -41,9 +43,9 @@ export function prepareData({
   tagsFiltered.push(timestamp);
 
   // изменение тэга времени
-  event.tags = tagsFiltered;
+  event.tags = [...tagsFiltered];
   for (const subGroup of eventSubgroups) {
-    subGroup.tags = tagsFiltered;
+    subGroup.tags = [...tagsFiltered];
     // subGroup.rulesSet = [...rulesSet];
     // Добавляем 'LADIES_ONLY' только для subGroup с label === 4 или label === 5
     // if (subGroup.label === 5 || subGroup.label === 4) {

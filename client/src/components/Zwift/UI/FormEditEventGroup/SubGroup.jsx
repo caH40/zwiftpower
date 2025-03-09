@@ -172,16 +172,19 @@ function SubGroup({ subGroup, groupNumber, isCreating }) {
                 })}
               </BoxParameter>
 
-              {rulesPerGroup.map((checkboxTag) => (
-                <RCheckboxArray
-                  reducer={setEventRulesForGroup}
-                  key={checkboxTag.id}
-                  label={checkboxTag.translate}
-                  value={subGroup.rulesSet?.includes(checkboxTag.value)}
-                  property={checkboxTag.value}
-                  additions={{ subgroupKey: `eventSubgroup_${groupNumber}` }}
-                />
-              ))}
+              {/* Настройка устанавливается только при редактировании Эвента, а не при создании */}
+              {/* Установка правил отдельно для каждой группы */}
+              {!isCreating &&
+                rulesPerGroup.map((checkboxTag) => (
+                  <RCheckboxArray
+                    reducer={setEventRulesForGroup}
+                    key={checkboxTag.id}
+                    label={checkboxTag.translate}
+                    value={subGroup.rulesSet?.includes(checkboxTag.value) || false}
+                    property={checkboxTag.value}
+                    additions={{ subgroupKey: `eventSubgroup_${groupNumber}` }}
+                  />
+                ))}
             </div>
 
             <div className={cx('box__inputs')}>

@@ -108,7 +108,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
             {eventMainParams.description}
           </BoxParameter>
 
-          {/* скрывать блок если форма используется для создания Эвента */}
+          {/* Настройка устанавливается только при редактировании Эвента, а не при создании*/}
           {!isCreating && (
             <>
               <BoxParameter
@@ -186,6 +186,7 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
             </BoxParameter>
           )}
 
+          {/* Настройка устанавливается только при редактировании Эвента, а не при создании */}
           {!isCreating && (
             <BoxParameter
               title={'Конфигурация финишного протокола'}

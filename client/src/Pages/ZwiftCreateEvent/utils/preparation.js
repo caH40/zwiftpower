@@ -1,5 +1,6 @@
 import { optionsEventType } from '../../../assets/select/event-edit';
 import { accessExpressionsDefault } from '../../../assets/zwift/accessExpression';
+import { getCommonRulesSet } from '../../../hook/useRulesSet';
 
 /**
  * Дополнительные правила для Эвента и подгрупп
@@ -11,7 +12,6 @@ export function prepareData({
   eventSubgroup_3,
   eventSubgroup_4,
   eventSubgroup_5,
-
   checkboxTags,
 }) {
   const event = { ...eventMainParams };
@@ -24,7 +24,8 @@ export function prepareData({
     { ...eventSubgroup_5 },
   ].filter((elm) => elm.label);
 
-  // event.rulesSet = rulesSet;
+  // Установка в общие настройки эванта правил, которые установлены и являются общими для всех групп.
+  event.rulesSet = getCommonRulesSet(eventSubgroups);
 
   // Установка значений в tags.
   const tagsRules = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
@@ -35,18 +36,18 @@ export function prepareData({
   const tags = [...tagsRules, timestamp, ...tagsDefault];
 
   // Установка тэгов для общих настроек Эвента.
-  event.tags = tags;
+  event.tags = [...tags];
 
   // параметры для TIME TRIAL
   if (event.eventType === 'TIME_TRIAL') {
     eventSubgroups.forEach((subgroup) => {
       subgroup.timeTrialOptions = event.timeTrialOptions;
-      subgroup.tags = tags;
+      subgroup.tags = [...tags];
     });
   } else {
     delete event.timeTrialOptions;
     eventSubgroups.forEach((subgroup) => {
-      subgroup.tags = tags;
+      subgroup.tags = [...tags];
     });
   }
 
