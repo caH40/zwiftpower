@@ -1,11 +1,26 @@
 /**
- * Проверка наличия правила в Эвенте
+ * Проверка наличия правила в общих настройках Эвента
  * @param {*} event данные отображаемого Эвента
  * @param {*} rule правило, наличие которого проверяется в Эвенте
  * @returns {boolean} есть или нет
  */
 export const enabledRule = (event, rule) => {
   return event.rulesSet?.includes(rule);
+};
+
+/**
+ * Проверяет, установлено ли хотя бы в одной подгруппе правило rule.
+ * @param {*} event данные отображаемого Эвента
+ * @param {*} rule правило, наличие которого проверяется в Эвенте
+ * @returns {boolean} есть или нет
+ */
+export const enabledRuleInSubgroups = (event, rule) => {
+  for (const subgroup of event.eventSubgroups) {
+    if (subgroup?.rulesSet?.includes(rule)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 /**

@@ -1,11 +1,13 @@
 import CategoryBox from '../CategoryBox/CategoryBox';
 import JerseyBox from '../JerseyBox/JerseyBox';
 import GapBox from '../GapBox/GapBox';
+import IconWomenOnly from '../icons/IconWomenOnly';
 
 import styles from './CategoryBoxDescription.module.css';
 
 function CategoryBoxDescription({ subgroup, gaps }) {
   const groupLabel = subgroup.subgroupLabel;
+  const isWomenOnly = subgroup.rulesSet?.includes('LADIES_ONLY');
 
   return (
     <>
@@ -13,6 +15,7 @@ function CategoryBoxDescription({ subgroup, gaps }) {
         <div className={styles.box__term}>
           <dd className={styles.description}>
             <CategoryBox label={groupLabel} showLabel={true} circle={true} />
+            {isWomenOnly && <IconWomenOnly squareSize={22} />}
           </dd>
         </div>
 
@@ -33,7 +36,7 @@ function CategoryBoxDescription({ subgroup, gaps }) {
         </div>
 
         <div className={styles.box__term}>
-          <dt className={styles.term}>ДЖЕРСИ:</dt>
+          <dt className={styles.term}></dt>
           <dd className={styles.description}>
             <JerseyBox jerseyId={subgroup.jerseyHash} />
           </dd>

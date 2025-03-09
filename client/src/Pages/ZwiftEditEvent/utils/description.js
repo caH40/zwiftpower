@@ -56,6 +56,9 @@ export const createDescription = (eventParams) => {
   let strGroups = '';
   if (eventParams.eventSubgroups) {
     for (const subgroup of eventParams.eventSubgroups) {
+      // Является ли группа только для женщин.
+      const isWomenOnly = subgroup.rulesSet?.includes('LADIES_ONLY');
+
       // объект с описанием дистанции, кругов, продолжительности, набора высоты
       const distanceDesc = distanceObject(subgroup);
 
@@ -97,7 +100,7 @@ export const createDescription = (eventParams) => {
       const name = subgroup.name ? `Заголовок: <b>${subgroup.name}</b>\n` : '';
 
       strGroups += `
-Группа: <b>${subgroup.subgroupLabel}</b>
+Группа: <b>${subgroup.subgroupLabel}${isWomenOnly ? ' (только для женщин)' : ''}</b>
 Старт: <b>${getTimerLocal(subgroup.eventSubgroupStart, 'DDMMYYHms')}</b>
 Карта: <b>${map(subgroup.mapId)}</b>
 Маршрут: <b>${routeName(subgroup.routeId)}</b>

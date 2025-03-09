@@ -16,8 +16,9 @@ import IconSteeringDisabled from '../icons/IconSteeringDisabled';
 import IconTTT from '../icons/IconTTT';
 import IconScoreBased from '../icons/IconScoreBased';
 import IconViewWorld from '../icons/IconViewWorld';
+import IconWomenOnly from '../icons/IconWomenOnly';
 
-import { enabledRule, enabledRuleInTag } from './utils';
+import { enabledRule, enabledRuleInSubgroups, enabledRuleInTag } from './utils';
 
 import styles from './RulesBox.module.css';
 
@@ -41,6 +42,9 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         {enabledRule(event, 'NO_TT_BIKES') && <IconTTLock squareSize={squareSize} />}
         {enabledRule(event, 'ALLOWS_LATE_JOIN') && <IconLateJoin squareSize={squareSize} />}
         {enabledRule(event, 'TEST_BIT_10') && <IconRubberBanding squareSize={squareSize} />}
+        {enabledRuleInSubgroups(event, 'LADIES_ONLY') && (
+          <IconWomenOnly squareSize={squareSize} />
+        )}
 
         {event.categoryEnforcement &&
           (hasRacingScore ? (
