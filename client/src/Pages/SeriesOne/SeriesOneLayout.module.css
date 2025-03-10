@@ -1,3 +1,7 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+  margin-bottom: 15px;
+}
 .box__navbar {
   margin: 10px 0 15px;
 }

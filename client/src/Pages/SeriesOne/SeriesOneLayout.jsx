@@ -12,8 +12,8 @@ import { useAd } from '../../hook/useAd';
 import styles from './SeriesOneLayout.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 26;
-const adUnderHeader = 25;
+const adOverFooter = 25;
+const adUnderHeader = 26;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 /**
