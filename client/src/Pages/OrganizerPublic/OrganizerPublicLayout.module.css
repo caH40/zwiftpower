@@ -6,6 +6,10 @@
   align-items: start;
   gap: 25px;
 }
+.main {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
 .spacer__header {
   margin-bottom: 10px;
 }
