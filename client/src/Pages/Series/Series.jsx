@@ -13,8 +13,8 @@ import SeriesSection from '../../components/SeriesSection/SeriesSection';
 import styles from './Series.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 5;
-const adUnderHeader = 3;
+const adOverFooter = 26;
+const adUnderHeader = 25;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 export default function Series() {

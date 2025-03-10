@@ -8,8 +8,8 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import styles from './Statistics.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 8;
-const adUnderHeader = 14;
+const adOverFooter = 24;
+const adUnderHeader = 27;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 function Statistics() {

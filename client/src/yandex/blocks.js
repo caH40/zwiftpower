@@ -44,7 +44,7 @@ export const adBlocks = [
   {
     id: 8,
     label: 'C-A-5165832-8',
-    description: 'РВ, Statistics, Catchup, RaceResults',
+    description: 'РВ, RaceResults',
     type: 'widget',
   },
   {
@@ -75,7 +75,7 @@ export const adBlocks = [
   {
     id: 14,
     label: 'R-A-5165832-14',
-    description: 'Баннер UnderHead, Profile, Statistics',
+    description: 'Баннер UH, Profile',
   },
   {
     id: 15,
@@ -107,8 +107,30 @@ export const adBlocks = [
     type: 'widget',
   },
   {
+    id: 24,
+    label: 'C-A-5165832-24',
+    description: 'РВ-24, Statistics',
+    type: 'widget',
+  },
+  {
     id: 23,
     label: 'R-A-5165832-23',
     description: 'Баннер, Organizers',
+  },
+  {
+    id: 25,
+    label: 'C-A-5165832-25',
+    description: 'РВ-25, Series',
+    type: 'widget',
+  },
+  {
+    id: 26,
+    label: 'R-A-5165832-26',
+    description: 'Баннер-26, Series',
+  },
+  {
+    id: 27,
+    label: 'R-A-5165832-27',
+    description: 'Баннер-27 UH, Statistics',
   },
 ];

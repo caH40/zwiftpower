@@ -17,13 +17,14 @@ import styles from './OrganizerPublicLayout.module.css';
 
 // Рекламные блоки на странице.
 const adOverFooter = 22;
-const adNumbers = [adOverFooter];
+const adUnderHeader = 23;
+const adNumbers = [adOverFooter, adUnderHeader];
 
 /**
  * Страница Организатора заездов.
  */
 export default function OrganizerPublicLayout() {
-  const { isScreenXl: xl } = useResize();
+  const { isScreenXl: xl, isScreenLg: isDesktop } = useResize();
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
@@ -46,6 +47,7 @@ export default function OrganizerPublicLayout() {
         name={organizer.name}
         imageSrc={organizer.posterUrls?.medium}
       />
+      {isDesktop ? <AdContainer number={adUnderHeader} height={180} marginBottom={10} /> : null}
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
