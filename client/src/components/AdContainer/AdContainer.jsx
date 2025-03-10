@@ -18,7 +18,7 @@ function AdContainer({
 
   return adBlock ? (
     <div
-      className={styles.test}
+      className={styles.block}
       style={{ marginBottom, maxHeight, maxWidth, height }}
       id={`yandex_rtb_${adBlock}`}
     ></div>
