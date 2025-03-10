@@ -14,6 +14,7 @@ import { Types } from 'mongoose';
 
 // Запрос данных Эвента с сервера Zwift от модераторов клубов.
 // При clubId:undefined значит запрос на ZwiftAPI будет осуществляться по общему токену-доступа.
+// У организатора для всех клубов один и тот же токен от бота. То есть один бот добавляется во все клубы организатора.
 export async function getEventZwiftService({
   eventId,
   clubId,
@@ -30,8 +31,6 @@ export async function getEventZwiftService({
     tokenOrganizer = await getTokenForEvent({ organizerId });
   }
 
-  // console.log(tokenOrganizer);
-
   // Получение данных Эвента из ZwiftAPI.
   const urlEventData = `events/${eventId}?skip_cache=false`;
   const eventData: eventDataFromZwiftAPI | null = await getRequest({
@@ -40,7 +39,9 @@ export async function getEventZwiftService({
   });
 
   if (!eventData) {
-    throw new Error(`Не найден Эвент id:${eventId}`);
+    throw new Error(
+      `Не найден Эвент id:${eventId}, или Эвент создан в клубе другого Организатора!`
+    );
   }
 
   // получение typeRaceCustom
