@@ -27,7 +27,8 @@ const actualSeriesSlice = createSlice({
       state.error = null;
       state.status = 'resolved';
 
-      const seriesArray = action.payload.series;
+      const seriesArray = action.payload.data;
+      // Формирования структуры для select.
       const seriesForOptions = seriesArray.map((seriesOne, index) => ({
         id: index,
         value: seriesOne._id,

@@ -40,7 +40,7 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   organizer: string;
   typeRaceCustom: string;
   accessExpressionObj: TAccessExpressionObj;
-  seriesId: Types.ObjectId | null;
+  seriesId?: Types.ObjectId;
 }
 /**
  * данные получаемые с фронтэнда для изменения данных Event

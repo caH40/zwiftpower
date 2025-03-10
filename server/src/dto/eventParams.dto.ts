@@ -13,7 +13,7 @@ export const eventParamsDto = (event: PostEvent) => {
     updated: undefined,
     started: false,
     totalFinishedCount: 0,
-    // eventSubgroups:event.eventSubgroups.map(subgroup => (...subgroup,))
+    seriesId: event.seriesId || null,
   };
 
   return eventParams;

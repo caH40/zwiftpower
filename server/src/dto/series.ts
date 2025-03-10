@@ -23,12 +23,14 @@ export function organizerSeriesAllDto(
     const dateStart = elm.dateStart.toISOString();
     const dateEnd = elm.dateEnd.toISOString();
 
-    const stages = elm.stages.map((stage) => ({
-      eventStart: stage.event.eventStart,
-      _id: String(stage.event._id),
-      name: stage.event.name,
-      order: stage.order,
-    }));
+    const stages = elm.stages
+      .filter((stage) => stage.event)
+      .map((stage) => ({
+        eventStart: stage.event.eventStart,
+        _id: String(stage.event._id),
+        name: stage.event.name,
+        order: stage.order,
+      }));
 
     // Создание ссылки для всех доступных размеров файла на основе предоставленных метаданных.
     const logoUrls = createUrlsToFileCloud(elm.logoFileInfo);

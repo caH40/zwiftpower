@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import { getSeriesActual, getLogsAdmins } from '../controllers/controllers.js';
+import { getLogsAdmins } from '../controllers/controllers.js';
 
-import { authAdmin, authModeratorClub, authOrganizer } from '../middleware/authRole.js';
+import { authAdmin, authOrganizer } from '../middleware/authRole.js';
 import {
   getLogsErrors,
   getLogError,
@@ -15,7 +15,6 @@ import { getUsersForModerator } from '../controllers/admin.js';
 
 export const router = Router();
 
-router.get('/series/actual', authModeratorClub, getSeriesActual); // вроде рабочий
 router.get('/logs/admins', authAdmin, getLogsAdmins);
 router.get('/logs/errors', authAdmin, getLogsErrors);
 router.delete('/logs/errors', authAdmin, deleteLogError);

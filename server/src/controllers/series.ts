@@ -247,6 +247,29 @@ export class SeriesController {
   };
 
   /**
+   * Получение актуальных (не завершившихся) серий заездов организатора (organizerId).
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public getActual = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id организатора серии заездов.
+      const { organizerId } = req.params;
+
+      // Валидация данных из тела запроса.
+
+      // Вызов сервиса.
+      const response = await this.seriesService.getActual({ organizerId });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
    * Проверка, что запрос происходит от Организатора.
    */
   public async checkOrganizer(userId: string): Promise<Types.ObjectId> {

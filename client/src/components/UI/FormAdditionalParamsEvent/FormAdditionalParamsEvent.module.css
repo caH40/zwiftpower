@@ -1,13 +1,10 @@
 .form {
   margin-bottom: 10px;
-}
-.right {
-  margin-top: 20px;
-  text-align: right;
-}
-.box__checkbox {
   display: flex;
-  justify-content: flex-start;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right {
+  text-align: right;
 }

@@ -310,9 +310,32 @@ export class SeriesService {
   }
 
   /**
-   * Приватный метод добавления (без дублирования по eventId) этапа в Серию заездов.
+   * Получение актуальных (не завершившихся) серий заездов организатора (organizerId).
    */
-  private addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {
+  public async getActual({
+    organizerId,
+  }: {
+    organizerId: string;
+  }): Promise<TResponseService<{ name: string; _id: Types.ObjectId }[]>> {
+    const seriesDB = await NSeriesModel.find(
+      {
+        organizer: organizerId,
+        isFinished: false,
+      },
+      { name: true }
+    ).lean<{ name: string; _id: Types.ObjectId }[]>();
+
+    // Возвращаем успешный ответ.
+    return {
+      data: seriesDB,
+      message: 'Актуальные Серии',
+    };
+  }
+
+  /**
+   * Метод добавления (без дублирования по eventId) этапа в Серию заездов.
+   */
+  public addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {
     const stagesUpdated = [...stages.filter((elm) => String(elm.event) !== stage.event), stage];
 
     // Сохранение обновленного массива этапов stages. Не производится проверка найденного документа

@@ -6,10 +6,10 @@ import { serverExpress } from '../../../../config/environment';
 
 export const fetchActualSeries = createAsyncThunk(
   'race/actualSeries',
-  async function (_, thunkAPI) {
+  async function ({ organizerId }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/series/actual`,
+        url: `${serverExpress}/api/series/actual/${organizerId}`,
         method: 'get',
       });
 

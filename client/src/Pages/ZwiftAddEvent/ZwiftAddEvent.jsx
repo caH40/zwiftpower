@@ -78,8 +78,8 @@ function ZwiftAddEvent() {
       return;
     }
 
-    dispatch(fetchActualSeries());
-  }, [eventMainParams, dispatch]);
+    dispatch(fetchActualSeries({ organizerId }));
+  }, [eventMainParams, dispatch, organizerId]);
 
   // добавление Эвента в БД
   const addEvent = () => {
@@ -115,6 +115,7 @@ function ZwiftAddEvent() {
       ...eventMainParams,
       ...additionalParams,
       accessExpressionObj: accessExpressionObjFiltered,
+      seriesId: additionalParams.seriesId,
     };
 
     dispatch(fetchEventPost(eventForSend)).then((data) => {
@@ -135,7 +136,8 @@ function ZwiftAddEvent() {
       {/* Если получены данные добавляемого Эвента eventMainParams, то отображается форма добавления  */}
       {eventMainParams?.name ? (
         <>
-          <DescriptionEventZwift event={eventMainParams} />
+          <DescriptionEventZwift event={eventMainParams} forSchedule={true} />
+
           <FormAdditionalParamsEvent
             form={additionalParams}
             setForm={setAdditionalParams}

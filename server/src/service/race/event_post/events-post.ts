@@ -3,16 +3,18 @@ import { updateStartInfoEvent } from '../../updates/schedule/start-event.js';
 import { putSignedRidersService } from '../signed-riders.js';
 import { checkUnique } from './unique.js';
 import { saveEventToDB } from './save.js';
+import { Club } from '../../../Model/Club.js';
 
 // types
 import {
   ClubSchema,
   OrganizerSchema,
+  TSeriesStage,
   ZwiftEventSchema,
 } from '../../../types/model.interface.js';
 import { EventWithSubgroup } from '../../../types/types.interface.js';
-
-import { Club } from '../../../Model/Club.js';
+import { NSeriesModel } from '../../../Model/NSeries.js';
+import { SeriesService } from '../../series/series.js';
 
 type ClubWithOrganizer = Omit<ClubSchema, 'organizer'> & {
   organizer: OrganizerSchema;
@@ -43,6 +45,23 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   eventParams.organizerId = clubDB.organizer._id;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
+
+  // eventParams
+  if (eventParams.seriesId) {
+    const seriesDB = await NSeriesModel.findOne(
+      { _id: eventParams.seriesId },
+      { stages: true, name: true, _id: false }
+    ).lean<{ stages: TSeriesStage[]; name: string }>();
+
+    if (seriesDB) {
+      const seriesService = new SeriesService();
+      await seriesService.addStage({
+        stage: { event: String(eventSaved._id), order: 0, includeResults: true },
+        stages: seriesDB.stages,
+        seriesId: String(eventParams.seriesId),
+      });
+    }
+  }
 
   // Получение зарегистрированных райдров с ZwiftApi и сохранение в БД
   await putSignedRidersService({ eventId: eventSaved.id, clubId });

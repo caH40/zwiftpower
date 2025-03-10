@@ -73,7 +73,7 @@ export default function StageSeriesCard({
         <div className={styles.box__iconConnection}>
           {connected && (
             <IconConnection
-              tooltip={'Номер этапа совпадает с номером у другого этапа'}
+              tooltip={'Номер этапа совпадает с номером другого этапа'}
               squareSize={45}
             />
           )}
