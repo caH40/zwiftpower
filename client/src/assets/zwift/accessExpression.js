@@ -222,4 +222,47 @@ subgroup.label == 5`,
     },
     categoryEnforcement: true,
   },
+  {
+    id: 102,
+    name: 'AgeDefault',
+    label: 'Возрастные категории. Стандарт.',
+    value: `
+(subgroup.label == 5 && profile.age >= 60) ||
+(subgroup.label == 4 && profile.age >= 50) ||
+(subgroup.label == 3 && profile.age >= 40) ||
+(subgroup.label == 2 && profile.age >= 30) ||
+(subgroup.label == 1 && profile.age < 30)`,
+    paceValues: {
+      1: { from: 1, to: 6 },
+      2: { from: 1, to: 6 },
+      3: { from: 1, to: 6 },
+      4: { from: 1, to: 6 },
+      5: { from: 1, to: 6 },
+    },
+    description: JSON.stringify({
+      table: {
+        th: ['Группа', 'Возраст'],
+        tds: [
+          ['A', '< 30'],
+          ['B', '≥ 30'],
+          ['C', '≥ 40'],
+          ['D', '≥ 50'],
+          ['E', '≥ 60'],
+        ],
+        description: 'Деление на категории по возрасту:',
+      },
+    }),
+    table: {
+      th: ['Группа', 'Возраст'],
+      tds: [
+        ['A', '< 30'],
+        ['B', '≥ 30'],
+        ['C', '≥ 40'],
+        ['D', '≥ 50'],
+        ['E', '≥ 60'],
+      ],
+      description: '',
+    },
+    categoryEnforcement: true,
+  },
 ];
