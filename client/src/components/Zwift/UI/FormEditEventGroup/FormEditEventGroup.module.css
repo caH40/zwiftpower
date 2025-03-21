@@ -10,6 +10,27 @@
   justify-content: flex-start;
   margin-right: 10px;
 }
+.box__checkbox__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.box__checkbox__label {
+  flex: 0 1 420px;
+  min-width: 200px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+}
+.box__checkbox__label::after {
+  content: ':';
+}
+.wrong {
+  color: red;
+}
 .title {
   font-size: 16px;
   font-weight: bold;

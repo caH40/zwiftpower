@@ -9,15 +9,26 @@ import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import IconParamsDistance from '../../../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../../../icons/Params/IconParamsAscent';
 import MyTooltip from '../../../../HOC/MyTooltip';
+import CheckboxSimple from '../../../UI/Checkbox/CheckboxSimple';
+import IconQuestion from '../../../icons/IconQuestion';
 
 import styles from './FormEditEventGroup.module.css';
 
 const cx = cn.bind(styles);
 
+const eventPaddocksFull = Array.from({ length: 150 }, (_, i) => ({
+  id: i,
+  label: i,
+  name: i,
+  translate: i,
+}));
+
 /**
  * Блок выбора маршрута и количества кругов (дистанции, времени заезда) для создания заезда
  */
 function MapBlock({ subGroup, groupNumber, isCreating }) {
+  const [showPaddocksFull, setShowPaddocksFull] = useState(false);
+  const [isWrongPaddock, setIsWrongPaddock] = useState(false);
   const [isMount, setIsMount] = useState(true);
   const [descriptionId, setDescriptionId] = useState(0);
   const worldCurrent = worlds.find((world) => world.id === subGroup.mapId);
@@ -75,7 +86,12 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
     if (eventPaddocks?.[0]?.name) {
       dispatch(inputHandler({ startLocation: eventPaddocks[0]?.name, index: groupNumber }));
     }
-  }, [routeId]);
+  }, [routeId, showPaddocksFull]);
+
+  //
+  useEffect(() => {
+    setIsWrongPaddock(!eventPaddocks.some((elm) => +elm.id === +subGroup.startLocation));
+  }, [eventPaddocks, subGroup.startLocation]);
 
   const changeDescription = () => {
     setDescriptionId(descriptionId === 2 ? 0 : descriptionId + 1);
@@ -200,23 +216,50 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
           маршрут!
         </div>
       )}
+
       {!isCreating && eventPaddocks && (
-        <BoxParameter
-          title={'Номер "кармана" на старте'}
-          sample={true}
-          pen={true}
-          inputParams={{
-            label: 'Номер "кармана" на старте',
-            property: 'startLocation',
-            type: 'select',
-            typeValue: 'number',
-            subgroupIndex: groupNumber,
-            options: eventPaddocks,
-            closeEmptyOption: true,
-          }}
-        >
-          {subGroup.startLocation}
-        </BoxParameter>
+        <>
+          <BoxParameter
+            title={'Номер "кармана" на старте'}
+            sample={true}
+            pen={true}
+            inputParams={{
+              label: 'Номер "кармана" на старте',
+              property: 'startLocation',
+              type: 'select',
+              typeValue: 'number',
+              subgroupIndex: groupNumber,
+              options: showPaddocksFull ? eventPaddocksFull : eventPaddocks,
+              closeEmptyOption: true,
+            }}
+          >
+            <MyTooltip tooltip={isWrongPaddock && 'Выбран нестандартный стартовый карман!'}>
+              <span
+                className={cx({
+                  wrong: isWrongPaddock,
+                })}
+              >
+                {subGroup.startLocation}
+              </span>
+            </MyTooltip>
+          </BoxParameter>
+
+          <label className={styles.box__checkbox__inner}>
+            <div className={styles.box__checkbox__label}>
+              Нестандартные "карманы"
+              <IconQuestion
+                squareSize={16}
+                tooltip={
+                  'Внимание! Выбор нестандартных стартовых карманов для маршрута может привести к возникновению ошибок при следовании по маршруту. Рекомендуется использовать только в тестовых заездах!'
+                }
+              />
+            </div>
+            <CheckboxSimple
+              checked={showPaddocksFull}
+              handleCheckboxChange={() => setShowPaddocksFull((prev) => !prev)}
+            />
+          </label>
+        </>
       )}
     </>
   );
