@@ -39,7 +39,9 @@ function handleEventParamsFulfilled(state, action) {
     state.checkboxTags = tags.map((tag) => {
       return {
         ...tag,
-        checked: tagsInEven.includes(tag.value) || tagsInEventSubgroup.includes(tag.value),
+        checked:
+          tag.value.every((elm) => tagsInEven.includes(elm)) ||
+          tag.value.every((elm) => tagsInEventSubgroup.includes(elm)),
       };
     });
   }

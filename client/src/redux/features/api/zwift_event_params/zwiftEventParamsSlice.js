@@ -109,8 +109,10 @@ const zwiftEventParamsSlice = createSlice({
 
     // установка тэгов и сохранение в состояние checkboxTags
     setEventTags(state, action) {
+      const { property } = action.payload;
+
       state.checkboxTags = state.checkboxTags.map((tag) => {
-        if (tag.value === action.payload.property) {
+        if (String(tag.value) === String(action.payload.property)) {
           return { ...tag, checked: action.payload.checked };
         } else {
           return tag;

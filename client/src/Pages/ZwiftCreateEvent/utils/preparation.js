@@ -28,7 +28,7 @@ export function prepareData({
   event.rulesSet = getCommonRulesSet(eventSubgroups);
 
   // Установка значений в tags.
-  const tagsRules = [...checkboxTags].filter((tag) => tag.checked).map((tag) => tag.value);
+  const tagsRules = [...checkboxTags].filter((tag) => tag.checked).flatMap((tag) => tag.value);
 
   const timestamp = `timestamp=${Date.now()}`;
   // Стандартные по умолчанию настройки, изменяются в  ручную.

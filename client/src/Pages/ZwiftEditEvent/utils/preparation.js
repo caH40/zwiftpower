@@ -33,7 +33,7 @@ export function prepareData({
   // Обработка данных в tags.
   const tagsCheckedFromCheckbox = [...checkboxTags]
     .filter((tag) => tag.checked)
-    .map((tag) => tag.value);
+    .flatMap((tag) => tag.value);
 
   const tagsDefault = ['ranked', 'showplacements'];
   const tags = [...tagsCheckedFromCheckbox, ...tagsDefault];

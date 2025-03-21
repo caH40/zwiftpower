@@ -39,10 +39,7 @@ export const createDescription = (eventParams) => {
     .map((rule) => `- <b>${rules.find((elm) => elm.value === rule)?.translate || rule}</b>\n`)
     .join('');
 
-  const tagsSet = eventParams.eventSubgroups[0]?.tags
-    .filter((elm) => !elm.includes('timestamp'))
-    .map((tag) => `- <b>${tags.find((elm) => elm.value === tag)?.translate || tag}</b>\n`)
-    .join('');
+  const tagsSet = createTagsSet(eventParams.eventSubgroups[0]?.tags);
 
   const event = `${club}
   ${eventType}
@@ -110,3 +107,16 @@ ${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadIn
 
   return event + strGroups;
 };
+
+/**
+ * Создание строки правил на основании Tags.
+ */
+function createTagsSet(tagsFromEvent) {
+  if (!tagsFromEvent || !Array.isArray(tagsFromEvent)) {
+    return '';
+  }
+  return tags
+    .filter((tag) => tag.value.every((value) => tagsFromEvent.includes(value)))
+    .map((tag) => `- <b>${tag.label}</b>\n`)
+    .join('');
+}
