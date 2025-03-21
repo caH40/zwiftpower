@@ -1,3 +1,5 @@
+import { tags } from '../../assets/zwift/tags';
+
 /**
  * Проверка наличия правила в общих настройках Эвента
  * @param {*} event данные отображаемого Эвента
@@ -35,4 +37,25 @@ export const enabledRuleInTag = (event, tag) => {
     return true;
   }
   return event.tags?.includes(tag);
+};
+
+/**
+ * Проверка наличия тэгов для "Единые характеристики для всех велосипедов в Эвенте.
+ * !!! Функция сделана только для CommonBike с возможностью последующего расширения.
+ * @param {String[]} tagsFromEvent тэги (правила) Эвента (подгруппы).
+ * @param {string} label отображаемое название тэга.
+ * @returns {boolean} есть или нет
+ */
+export const enabledCommonBikeSpecsTag = (tagsFromEvent, label) => {
+  if (!tagsFromEvent || !Array.isArray(tagsFromEvent)) {
+    return false;
+  }
+
+  const valuesForCommonBike = tags.find((elm) => elm.label === label)?.value;
+
+  if (!valuesForCommonBike) {
+    return false;
+  }
+
+  return valuesForCommonBike.every((value) => tagsFromEvent.includes(value));
 };

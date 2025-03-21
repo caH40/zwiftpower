@@ -17,8 +17,14 @@ import IconTTT from '../icons/IconTTT';
 import IconScoreBased from '../icons/IconScoreBased';
 import IconViewWorld from '../icons/IconViewWorld';
 import IconWomenOnly from '../icons/IconWomenOnly';
+import IconCommonBike from '../icons/IconCommonBike';
 
-import { enabledRule, enabledRuleInSubgroups, enabledRuleInTag } from './utils';
+import {
+  enabledCommonBikeSpecsTag,
+  enabledRule,
+  enabledRuleInSubgroups,
+  enabledRuleInTag,
+} from './utils';
 
 import styles from './RulesBox.module.css';
 
@@ -68,6 +74,11 @@ function RulesBox({ event, squareSize = 24, addCls }) {
         )}
 
         {enabledRuleInTag(event, 'ttbikesdraft') && <IconTTT squareSize={squareSize} />}
+
+        {enabledCommonBikeSpecsTag(
+          event.eventSubgroups[0]?.tags,
+          'Единые характеристики для всех велосипедов'
+        ) && <IconCommonBike squareSize={squareSize} />}
       </>
     </div>
   );
