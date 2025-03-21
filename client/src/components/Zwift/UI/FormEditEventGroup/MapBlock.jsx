@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import cn from 'classnames/bind';
 
 import { worlds } from '../../../../assets/zwift/lib/esm/worlds';
 import { routes } from '../../../../assets/zwift/lib/esm/routes';
@@ -10,6 +11,8 @@ import IconParamsAscent from '../../../icons/Params/IconParamsAscent';
 import MyTooltip from '../../../../HOC/MyTooltip';
 
 import styles from './FormEditEventGroup.module.css';
+
+const cx = cn.bind(styles);
 
 /**
  * Блок выбора маршрута и количества кругов (дистанции, времени заезда) для создания заезда
@@ -86,7 +89,17 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
           src={routeCurrent.imageUrl}
           alt={`Карта маршрута ${routeCurrent.name}`}
         />
-        <h4 className={styles.img__title}>{routeName}</h4>
+        <h4 className={cx('img__title', 'img__name')}>{routeName}</h4>
+
+        {/* Блок отображения вида спорта для которого рассчитана карта */}
+        <div className={cx('img__sports')}>
+          {routeCurrent.sports?.map((elm) => (
+            <h4 className={styles.img__title} key={elm}>
+              {elm}
+            </h4>
+          ))}
+        </div>
+
         <div className={styles.gradient} />
         <MyTooltip tooltip={'Нажмите для изменения описания'} placement={'top'}>
           <div className={styles.img__description} onClick={changeDescription}>

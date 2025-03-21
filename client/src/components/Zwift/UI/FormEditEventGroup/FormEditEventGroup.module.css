@@ -98,15 +98,23 @@
   user-select: none;
 }
 .img__title {
-  position: absolute;
-  gap: 5px;
-  top: 7px;
-  right: 10px;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   letter-spacing: 0.1em;
   font-size: 17px;
   font-style: italic;
+}
+.img__name {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  z-index: 1;
+}
+.img__sports {
+  position: absolute;
+  gap: 10px;
+  bottom: 7px;
+  right: 10px;
   z-index: 1;
 }
 
