@@ -69,22 +69,29 @@ const pointsStageResultSchema = new Schema(
   { _id: false }
 );
 
+// Схема дисквалификации.
+const disqualificationSchema = new Schema(
+  {
+    status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
+    reason: { type: String, trim: true }, // Причина дисквалификации.
+  },
+  { _id: false }
+);
+
+// Схема штрафа.
+const penaltySchema = new Schema(
+  {
+    reason: { type: String, trim: true }, // Причина штрафа.
+    timeInMilliseconds: { type: Number }, // Время штрафа.
+  },
+  { _id: false }
+);
+
 // Основная схема результата этапа
 const stageResultSchema = new Schema<IStageResult>(
   {
     series: { type: mongoose.Schema.Types.ObjectId, ref: 'NSeries', required: true },
-    zwiftId: { type: Number, required: true },
-    zwiftEvent: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
-    zwiftEventSubgroup: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ZwiftEventSubgroup',
-      required: true,
-    },
-    zwiftResultRaw: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ZwiftResultRaw',
-      required: true,
-    },
+    profileId: { type: Number, required: true },
     profileData: { type: profileDataSchema, required: true },
     cpBestEfforts: [cpBestEffortsSchema],
     activityData: {
@@ -94,20 +101,11 @@ const stageResultSchema = new Schema<IStageResult>(
     },
     category: {
       type: String,
-      enum: ['APlus', 'A', 'BPlus', 'B', 'C', 'D', 'E', 'WA', 'WB', 'WC'],
-      required: true,
+      default: null,
     },
-    points: { type: pointsStageResultSchema, required: true },
-    disqualification: {
-      status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
-      reason: { type: String, trim: true }, // Причина дисквалификации.
-    },
-    penalty: [
-      {
-        reason: { type: String, trim: true }, // Причина штрафа.
-        timeInMilliseconds: { type: Number }, // Время штрафа.
-      },
-    ],
+    points: { type: pointsStageResultSchema, default: null },
+    disqualification: { type: disqualificationSchema, default: null },
+    penalty: { type: [penaltySchema], default: null },
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
   },
   { timestamps: true }
