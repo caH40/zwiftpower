@@ -766,6 +766,7 @@ export type TPointsStageResult = {
 export type TStageResult = {
   _id?: Types.ObjectId;
   series: Types.ObjectId;
+  order: number; // Номер этапа серии.
   eventId: number; // ID Эвента в Zwift.
   profileId: number; // Zwift ID райдера.
   profileData: ProfileDataInResult; // Данные райдера из заезда.

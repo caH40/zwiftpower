@@ -91,6 +91,7 @@ const penaltySchema = new Schema(
 const stageResultSchema = new Schema<IStageResult>(
   {
     series: { type: mongoose.Schema.Types.ObjectId, ref: 'NSeries', required: true },
+    order: { type: Number, required: true },
     profileId: { type: Number, required: true },
     profileData: { type: profileDataSchema, required: true },
     cpBestEfforts: [cpBestEffortsSchema],

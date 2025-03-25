@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 import {
   CriticalPower,
   LogsAdminSchema,
@@ -12,6 +12,7 @@ import {
   TMetrics,
   TOrganizer,
   TSeriesStage,
+  TStageResult,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -883,4 +884,20 @@ export type TParamsSeriesServiceAddStage = {
   stage: Omit<TSeriesStage, 'event'> & {
     event: string;
   };
+};
+
+/**
+ * Тип данных параметров метода HandlerSeries.getProtocolsStageFromZwift.
+ */
+export type TGetProtocolsStageFromZwiftParams = {
+  stageOrder: number;
+  stages: Schema.Types.ObjectId[];
+};
+
+/**
+ * Тип данных параметров метода HandlerSeries.setCategories.
+ */
+export type TSetCategoriesStageParams = {
+  stageOrder: number;
+  stageResults: TStageResult[];
 };

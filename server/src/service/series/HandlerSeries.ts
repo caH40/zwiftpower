@@ -1,5 +1,3 @@
-import { Schema } from 'mongoose';
-
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsFromZwift } from '../updates/results_event/resultsFromZwift.js';
@@ -12,6 +10,12 @@ import {
   TStageResult,
   ZwiftEventSubgroupSchema,
 } from '../../types/model.interface.js';
+import {
+  TCategorySeries,
+  TGetProtocolsStageFromZwiftParams,
+  TSetCategoriesStageParams,
+} from '../../types/types.interface.js';
+import { StageResultModel } from '../../Model/StageResult.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -32,11 +36,12 @@ export class HandlerSeries {
   }
 
   /**
-   * Получение финишных протоколов заездов Этапа серии из ZwiftAPI.
+   * Получение финишных протоколов заездов Этапа серии из ZwiftAPI и формирование структуры результатов для серии заездов.
    */
-  protected async getProtocolsStageFromZwift(
-    stages: Schema.Types.ObjectId[]
-  ): Promise<TStageResult[]> {
+  protected async getProtocolsStageFromZwift({
+    stages,
+    stageOrder,
+  }: TGetProtocolsStageFromZwiftParams): Promise<TStageResult[]> {
     // Запрос данных подгрупп заездов в этапе для последующего получения результатов подгрупп и объединения их в результаты заездов.
     const requestEventsWithSubgroups = stages.map(
       (eventId) =>
@@ -77,10 +82,9 @@ export class HandlerSeries {
 
       return {
         series: this.mongooseUtils.convertToObjectId(this.seriesId),
+        order: stageOrder,
         profileId: result.profileId,
         eventId: result.eventId,
-
-        // zwiftEventSubgroup: result.subgroupId,
         profileData: result.profileData,
         cpBestEfforts,
         rank: 0, // Инициализация, установка корректного места в протоколе на следующих этапах.
@@ -94,5 +98,88 @@ export class HandlerSeries {
     });
 
     return stageResults;
+  }
+
+  /**
+   * Установка категорий райдерам в финишном протоколе этапа серии заездов.
+   */
+  protected async setCategories({
+    stageResults,
+    stageOrder,
+  }: TSetCategoriesStageParams): Promise<TStageResult[]> {
+    // FIXME: в дальнейшем продумать более детально логику определения категорий, например на основе диапазонов категорий принятых в текущей серии заездов.
+
+    const seriesDB = await this.getSeriesData();
+
+    // Проверка, если этапы перед текущим stageOrder, то есть является ли stageOrder самым первым в серии заездов (нулевым или первым).
+    // FIXME: Присваивать категорию на основе той группы в которой выступал райдер.
+    // FIXME: Или указывать, что категория не определена. Выбор данных настроек можно вынести в определенный параметр Серии заездов.
+    if (stageOrder === Math.min(...seriesDB.stages.map(({ order }) => order))) {
+      return stageResults.map((stage) => {
+        stage.category = stage.activityData.subgroupLabel;
+        return stage;
+      });
+    }
+
+    // Если этап не первый в серии:
+    // Получить данные по категориям райдеров из прошлого заезда и присвоить соответствующую категорию в данном этапе.
+
+    // Результаты прошлого этапа.
+    const previousStagesResults = await StageResultModel.find(
+      {
+        seriesId: this.seriesId,
+        order: stageOrder - 1,
+      },
+      { _id: false, profileId: true, category: true }
+    ).lean<{ profileId: number; category: TCategorySeries | null }[]>();
+
+    // Создание коллекции Map для боле быстрого доступа к данным.
+    const previousStagesResultsMap = new Map(
+      previousStagesResults.map((res) => [res.profileId, res.category])
+    );
+
+    return stageResults.map((stage) => {
+      // Если райдер profileId не участвовал в предыдущем заезде, то категория берется на основании группы в которой участвовал райдер.
+      stage.category =
+        previousStagesResultsMap.get(stage.profileId) || stage.activityData.subgroupLabel;
+      return stage;
+    });
+  }
+
+  /**
+   * Сортировка результатов и установка ранкинга в результатах для каждой категории.
+   */
+  protected setCategoryRanks(stageResults: TStageResult[]): TStageResult[] {
+    if (!stageResults.length) return [];
+
+    const resultsSorted = stageResults.toSorted(
+      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
+    );
+
+    const categories: Record<TCategorySeries, number> = {
+      APlus: 1,
+      A: 1,
+      BPlus: 1,
+      B: 1,
+      C: 1,
+      D: 1,
+      E: 1,
+      WA: 1,
+      WB: 1,
+      WC: 1,
+      WD: 1,
+    };
+
+    return resultsSorted.map((result) => {
+      // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
+      if (!result.category || result.disqualification?.status) {
+        result.rank = 0;
+        return result;
+      }
+
+      result.rank = categories[result.category] ?? 0;
+      categories[result.category]++;
+      return result;
+    });
   }
 }

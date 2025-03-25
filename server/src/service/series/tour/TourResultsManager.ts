@@ -27,9 +27,21 @@ export class TourResultsManager extends HandlerSeries {
     }
 
     // Получение финишных протоколов заездов Этапа серии из ZwiftAPI.
-    const protocolsStageFromZwift = await this.getProtocolsStageFromZwift(stages);
+    const protocolsStageFromZwift = await this.getProtocolsStageFromZwift({
+      stages,
+      stageOrder,
+    });
 
-    console.log(protocolsStageFromZwift[0]);
+    // Установка категорий райдерам.
+    const resultsWithCategories = await this.setCategories({
+      stageResults: protocolsStageFromZwift,
+      stageOrder,
+    });
+
+    // Сортировка результатов и проставления ранкинга в каждой категории.
+    const resultsWithRank = this.setCategoryRanks(resultsWithCategories);
+
+    console.log(resultsWithRank[11]);
     return protocolsStageFromZwift;
   }
 }
