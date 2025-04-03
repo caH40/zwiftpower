@@ -1,3 +1,5 @@
+import { StageResultModel } from '../../../Model/StageResult.js';
+import { TResponseService } from '../../../types/http.interface.js';
 import { HandlerSeries } from '../HandlerSeries.js';
 
 /**
@@ -14,7 +16,7 @@ export class TourResultsManager extends HandlerSeries {
    *
    * @param {number} stageOrder - Номер этапа (order) в серии заездов.
    */
-  public async buildStageProtocol(stageOrder: number) {
+  public async buildStageProtocol(stageOrder: number): Promise<TResponseService<null>> {
     const { stages: stagesFromSeries } = await this.getSeriesData();
 
     // Создание массива заездов, если в этапе несколько заездов.
@@ -41,7 +43,14 @@ export class TourResultsManager extends HandlerSeries {
     // Сортировка результатов и проставления ранкинга в каждой категории.
     const resultsWithRank = this.setCategoryRanks(resultsWithCategories);
 
-    console.log(resultsWithRank[11]);
-    return protocolsStageFromZwift;
+    // Удаление всех старых результатов текущего этапа серии.
+    await this.deleteOutdatedStageResults(stageOrder);
+
+    // Сохранение результатов в БД.
+    const response = await StageResultModel.create(resultsWithRank);
+
+    console.log(`Создано ${response.length} результатов этапа №${stageOrder}`);
+
+    return { data: null, message: `Созданы результаты этапа №${stageOrder}` };
   }
 }

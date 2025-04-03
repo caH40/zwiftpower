@@ -16,6 +16,7 @@ import {
   TSetCategoriesStageParams,
 } from '../../types/types.interface.js';
 import { StageResultModel } from '../../Model/StageResult.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -181,5 +182,23 @@ export class HandlerSeries {
       categories[result.category]++;
       return result;
     });
+  }
+
+  /**
+   * Удаление всех старых результатов текущего этапа серии.
+   */
+  protected async deleteOutdatedStageResults(stageOrder: number): Promise<void> {
+    try {
+      const res = await StageResultModel.deleteMany({
+        series: this.seriesId,
+        order: stageOrder,
+      });
+
+      console.log(
+        `Удалено ${res.deletedCount} результатов Серии _id:${this.seriesId}, Этапа: №${stageOrder}`
+      );
+    } catch (error) {
+      handleAndLogError(error);
+    }
   }
 }
