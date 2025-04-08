@@ -59,7 +59,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
                 <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
               </td>
               <td>{map(event.eventSubgroups[0]?.mapId)}</td>
-              <td className={cx('td__nowrap')}>
+              <td className={cx('min__w_150')}>
                 {routeName(event.eventSubgroups[0]?.routeId)}
               </td>
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>

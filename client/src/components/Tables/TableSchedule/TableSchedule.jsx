@@ -71,7 +71,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
 
               <td>{map(event.eventSubgroups[0]?.mapId)}</td>
 
-              <td className={cx('td__nowrap')}>
+              <td className={cx('min__w_150')}>
                 {routeName(event.eventSubgroups[0]?.routeId)}
               </td>
 

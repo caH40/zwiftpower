@@ -96,6 +96,9 @@ tbody .current {
   display: block;
   min-width: 200px;
 }
+.min__w_150 {
+  min-width: 150px;
+}
 .td__name {
   min-width: 400px;
 }
