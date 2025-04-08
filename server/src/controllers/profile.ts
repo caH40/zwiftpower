@@ -241,29 +241,46 @@ export async function putUsername(req: Request, res: Response) {
  * @param notifications - Объект для проверки.
  * @returns {boolean} - Возвращает true, если объект соответствует типу TNotifications и хотя бы один чекбокс включен.
  */
-export function isValidNotifications(notifications: unknown): notifications is TNotifications {
-  // Проверяем, что notifications является объектом и не равен null
-  if (typeof notifications !== 'object' || notifications === null) {
+export function isValidNotifications(
+  notifications: unknown,
+  requireAtLeastOneChecked?: boolean
+): notifications is TNotifications {
+  // Проверка, что notifications — объект и не null
+  if (!isPlainObject(notifications)) {
     return false;
   }
 
-  // Приводим notifications к типу TNotifications
-  const typedNotifications = notifications as TNotifications;
+  const typedNotifications = notifications as Record<string, unknown>;
 
-  // Проверяем, что все свойства существуют и имеют тип boolean
+  // Проверка, что все обязательные поля есть и имеют тип boolean
   const hasValidProperties =
     typeof typedNotifications.development === 'boolean' &&
     typeof typedNotifications.events === 'boolean' &&
     typeof typedNotifications.news === 'boolean';
 
-  // Проверяем, что хотя бы одно из свойств равно true
-  const hasAtLeastOneChecked =
-    typedNotifications.development === true ||
-    typedNotifications.events === true ||
-    typedNotifications.news === true;
+  if (!hasValidProperties) {
+    return false;
+  }
 
-  // Возвращаем true только если обе проверки пройдены
-  return hasValidProperties && hasAtLeastOneChecked;
+  // Если требуется хотя бы один выбранный чекбокс, проверяем это
+  if (requireAtLeastOneChecked) {
+    const hasAtLeastOneChecked =
+      typedNotifications.development === true ||
+      typedNotifications.events === true ||
+      typedNotifications.news === true;
+
+    if (!hasAtLeastOneChecked) {
+      return false;
+    }
+  }
+
+  // Если все проверки пройдены — возвращаем true
+  return true;
+}
+
+// Вспомогательная функция для проверки, является ли значение простым объектом
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 /**

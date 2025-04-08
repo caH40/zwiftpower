@@ -15,7 +15,7 @@ export async function postNotification(req: Request, res: Response) {
   try {
     const { text, notificationsTypes, subject, title } = req.body;
 
-    if (!isValidNotifications(notificationsTypes)) {
+    if (!isValidNotifications(notificationsTypes, true)) {
       throw new Error(`Некорректные данные notificationsTypes`);
     }
 
