@@ -35,7 +35,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   };
 
   const modifyResultsEvent = () => {
-    navigate(`/admin/results/edit/${eventId}`);
+    navigate(`/results/edit/${eventId}`);
   };
 
   const gaps = gapStart(event);

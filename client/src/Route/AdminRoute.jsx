@@ -9,7 +9,7 @@ const LogErrorDescription = lazy(() =>
   import('../Pages/LogErrorDescription/LogErrorDescription')
 );
 const Bot = lazy(() => import('../Pages/Bot/Bot'));
-const EditResults = lazy(() => import('../Pages/EditResults/EditResults'));
+
 const Users = lazy(() => import('../Pages/Users/Users'));
 const UserModeration = lazy(() => import('../Pages/UserModeration/UserModeration'));
 const RiderModerationActivities = lazy(() =>
@@ -73,7 +73,6 @@ export function AdminRoute(isAdmin) {
           </Route>
         </Route>
       )}
-      <Route path="/admin/results/edit/:eventId" element={<EditResults />} />
     </>
   );
 }
