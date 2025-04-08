@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, Types, model } from 'mongoose';
-import { TStageResult } from '../types/model.interface';
+import { TCriticalPowerBestEfforts, TStageResult } from '../types/model.interface';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -9,23 +9,25 @@ export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
 // Схема профиля райдера
 const profileDataSchema = new Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    gender: { type: String, required: true },
-    weightInGrams: { type: Number, required: true },
-    heightInCentimeters: { type: Number, required: true },
+    firstName: { type: String },
+    lastName: { type: String },
+    gender: { type: String },
+    weightInGrams: { type: Number },
+    heightInCentimeters: { type: Number },
     imageSrc: { type: String, default: null },
-    countryAlpha3: { type: String, required: true },
-    age: { type: Number, required: true },
+    countryAlpha3: { type: String },
+    age: { type: Number },
   },
   { _id: false }
 );
 
 // Схема CP Best Efforts
-const cpBestEffortsSchema = new Schema(
+const cpBestEffortsSchema = new Schema<TCriticalPowerBestEfforts>(
   {
-    duration: { type: Number, required: true },
-    power: { type: Number, required: true },
+    watts: { type: Number },
+    wattsKg: { type: Number },
+    cpLabel: { type: String },
+    duration: { type: Number },
   },
   { _id: false }
 );
@@ -33,9 +35,9 @@ const cpBestEffortsSchema = new Schema(
 // Схема очков сегментов
 const pointsResultSchema = new Schema(
   {
-    stageNumber: { type: Number, required: true },
-    place: { type: Number, required: true },
-    points: { type: Number, required: true },
+    stageNumber: { type: Number },
+    place: { type: Number },
+    points: { type: Number },
     multiplier: { type: Number, default: 1 },
     segment: { type: String },
   },
@@ -46,14 +48,14 @@ const pointsResultSchema = new Schema(
 const pointsSprintSchema = new Schema(
   {
     ...pointsResultSchema.obj,
-    sprint: { type: Number, required: true },
+    sprint: { type: Number },
   },
   { _id: false }
 );
 const pointsMountainSchema = new Schema(
   {
     ...pointsResultSchema.obj,
-    mountain: { type: Number, required: true },
+    mountain: { type: Number },
   },
   { _id: false }
 );
@@ -61,10 +63,28 @@ const pointsMountainSchema = new Schema(
 // Схема очков за этап
 const pointsStageResultSchema = new Schema(
   {
-    finishPoints: { type: Number, required: true },
+    finishPoints: { type: Number },
     pointsSprint: [pointsSprintSchema],
     pointsMountain: [pointsMountainSchema],
     bonus: { type: Number },
+  },
+  { _id: false }
+);
+
+// Схема дисквалификации.
+const disqualificationSchema = new Schema(
+  {
+    status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
+    reason: { type: String, trim: true }, // Причина дисквалификации.
+  },
+  { _id: false }
+);
+
+// Схема штрафа.
+const penaltySchema = new Schema(
+  {
+    reason: { type: String, trim: true }, // Причина штрафа.
+    timeInMilliseconds: { type: Number }, // Время штрафа.
   },
   { _id: false }
 );
@@ -73,41 +93,22 @@ const pointsStageResultSchema = new Schema(
 const stageResultSchema = new Schema<IStageResult>(
   {
     series: { type: mongoose.Schema.Types.ObjectId, ref: 'NSeries', required: true },
-    zwiftId: { type: Number, required: true },
-    zwiftEvent: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
-    zwiftEventSubgroup: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ZwiftEventSubgroup',
-      required: true,
-    },
-    zwiftResultRaw: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ZwiftResultRaw',
-      required: true,
-    },
-    profileData: { type: profileDataSchema, required: true },
+    order: { type: Number, required: true },
+    profileId: { type: Number, required: true },
+    profileData: { type: profileDataSchema },
     cpBestEfforts: [cpBestEffortsSchema],
     activityData: {
-      durationInMilliseconds: { type: Number, required: true },
-      label: { type: Number, enum: [0, 1, 2, 3, 4, 5], required: true },
-      subgroupLabel: { type: String, enum: ['A', 'B', 'C', 'D', 'E'], required: true },
+      durationInMilliseconds: { type: Number },
+      label: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
+      subgroupLabel: { type: String, enum: ['A', 'B', 'C', 'D', 'E'] },
     },
     category: {
       type: String,
-      enum: ['APlus', 'A', 'BPlus', 'B', 'C', 'D', 'E', 'WA', 'WB', 'WC'],
-      required: true,
+      default: null,
     },
-    points: { type: pointsStageResultSchema, required: true },
-    disqualification: {
-      status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
-      reason: { type: String, trim: true }, // Причина дисквалификации.
-    },
-    penalty: [
-      {
-        reason: { type: String, trim: true }, // Причина штрафа.
-        timeInMilliseconds: { type: Number }, // Время штрафа.
-      },
-    ],
+    points: { type: pointsStageResultSchema, default: null },
+    disqualification: { type: disqualificationSchema, default: null },
+    penalty: { type: [penaltySchema], default: null },
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
   },
   { timestamps: true }

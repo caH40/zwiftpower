@@ -766,29 +766,30 @@ export type TPointsStageResult = {
 export type TStageResult = {
   _id?: Types.ObjectId;
   series: Types.ObjectId;
-  zwiftId: number; // Zwift ID райдера.
-  zwiftEvent: Types.ObjectId;
-  zwiftEventSubgroup: Types.ObjectId;
-  zwiftResultRaw: Types.ObjectId; // Ссылка на сырой результат из заезда.
+  order: number; // Номер этапа серии.
+  eventId: number; // ID Эвента в Zwift.
+  profileId: number; // Zwift ID райдера.
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
   rank: number; // Место в категории.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
-    label: 0 | 1 | 2 | 3 | 4 | 5;
+    // label: 0 | 1 | 2 | 3 | 4 | 5;
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
   };
-  category: TCategorySeries; // Категория райдера в текущем заезде Серии.
-  points: TPointsStageResult;
-  disqualification?: {
+  category: TCategorySeries | null; // Категория райдера в текущем заезде Серии.
+  points: TPointsStageResult | null;
+  disqualification: {
     status: boolean; // Дисквалифицирован ли райдер.
     reason: string; // Причина дисквалификации.
-  };
-  penalty?: {
-    reason: string; // Причина штрафа.
-    timeInMilliseconds: number; // Время штрафа.
-  }[];
-  teamSquadAtRace?: Types.ObjectId; // Опционально: состав команды в рамках гонки.
+  } | null;
+  penalty:
+    | {
+        reason: string; // Причина штрафа.
+        timeInMilliseconds: number; // Время штрафа.
+      }[]
+    | null;
+  teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках гонки.
   createdAt: Date;
   updatedAt: Date;
 };

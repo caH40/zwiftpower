@@ -1,20 +1,20 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { seriesPublicButtons } from '../../../assets/series-buttons';
+import { createSeriesResultsButtons } from '../../../assets/series-buttons';
 
-import styles from './NavBarSeriesPublic.module.css';
+import styles from './NavBarSeriesPublicResults.module.css';
 
-export default function NavBarSeriesPublic({ urlSlug, addCls }) {
-  const location = useLocation();
+/**
+ * Кнопки для навигации между результатами Этапов серии и итоговыми таблицами.
+ */
+export default function NavBarSeriesPublicResults({ urlSlug, addCls }) {
+  const buttons = createSeriesResultsButtons([1, 2, 3, 4, 5]);
 
-  const getStyle = (isActive, index, btn) => {
-    // Проверка для дочерних страниц, если название btn содержится в path дочерней страницы.
-    const isChildPage = location.pathname.includes(btn);
-
+  const getStyle = (isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили
-    const quantityBtn = seriesPublicButtons.length;
+    const quantityBtn = buttons.length;
 
     const positions = {
       [styles.button__left]: index === 0 && quantityBtn !== 1,
@@ -22,7 +22,7 @@ export default function NavBarSeriesPublic({ urlSlug, addCls }) {
       [styles.button__right]: index !== 0 && index + 1 === quantityBtn,
     };
 
-    if (isActive || isChildPage) {
+    if (isActive) {
       return cn(styles.button, styles.active, positions);
     } else {
       return cn(styles.button, positions);
@@ -32,10 +32,10 @@ export default function NavBarSeriesPublic({ urlSlug, addCls }) {
   return (
     <nav className={cn(styles.wrapper, cns(styles, addCls))}>
       <div className={styles.wrapper__buttons}>
-        {seriesPublicButtons.map((buttonLink, index) => (
+        {buttons.map((buttonLink, index) => (
           <NavLink
-            className={({ isActive }) => getStyle(isActive, index, buttonLink.page)}
-            to={`/series/${urlSlug}${buttonLink.page}`}
+            className={({ isActive }) => getStyle(isActive, index)}
+            to={`/series/${urlSlug}/results${buttonLink.page}`}
             key={buttonLink.id}
             end={true}
           >
