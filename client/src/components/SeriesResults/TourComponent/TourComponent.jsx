@@ -24,7 +24,10 @@ export default function TourComponent({ series }) {
     <div>
       {/* Кнопки навигации по страницам Серии заездов */}
       <div className={styles.box__navbar}>
-        <NavBarSeriesPublicResults urlSlug={series.urlSlug} />
+        <NavBarSeriesPublicResults
+          urlSlug={series.urlSlug}
+          orderedStages={series.orderedStages}
+        />
       </div>
 
       {isParentPath && <div>Итоговые таблицы серии</div>}

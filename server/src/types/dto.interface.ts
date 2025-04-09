@@ -155,6 +155,7 @@ export type TSeriesOnePublicDto = Omit<
   logoUrls: Record<string, string> | undefined;
   posterUrls: Record<string, string> | undefined;
   seriesResults: unknown;
+  orderedStages: number[]; // Отсортированный список номеров этапов.
 };
 
 /**

@@ -37,7 +37,7 @@ export class SeriesPublicController {
   };
 
   /**
-   * Получает данные запрашиваемой urlSlug Серии заездов.
+   * Получает данные Серии заездов по urlSlug.
    * @param {Request} req - Запрос Express.
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.

@@ -50,7 +50,9 @@ export class SeriesPublicService {
   }
 
   /**
-   * Сервис получение данных запрашиваемой Серий заездов.
+   * Сервис получение данных Серий заездов по urlSlug.
+   * FIXME: Может добавить options для сужения запроса,
+   * например получить только Регламент, Расписание и т.д...
    */
   public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
     const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
@@ -75,8 +77,10 @@ export class SeriesPublicService {
     if (!seriesOneDB) {
       throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
     }
+
+    // Фильтрация от этапов у которых нет id Эвента.
     const stagesFilteredAndSorted = seriesOneDB.stages
-      .filter((stage) => stage.event && !stage.event.started)
+      .filter((stage) => stage.event)
       .sort(
         (a, b) =>
           new Date(a.event.eventStart).getTime() - new Date(b.event.eventStart).getTime()

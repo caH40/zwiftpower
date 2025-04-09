@@ -9,8 +9,8 @@ import styles from './NavBarSeriesPublicResults.module.css';
 /**
  * Кнопки для навигации между результатами Этапов серии и итоговыми таблицами.
  */
-export default function NavBarSeriesPublicResults({ urlSlug, addCls }) {
-  const buttons = createSeriesResultsButtons([1, 2, 3, 4, 5]);
+export default function NavBarSeriesPublicResults({ urlSlug, orderedStages, addCls }) {
+  const buttons = createSeriesResultsButtons(orderedStages);
 
   const getStyle = (isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили

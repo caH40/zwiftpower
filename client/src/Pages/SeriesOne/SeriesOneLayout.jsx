@@ -17,7 +17,7 @@ const adUnderHeader = 26;
 const adNumbers = [adUnderHeader, adOverFooter];
 
 /**
- * Страница Серии заездов. Описание, итоговые таблицы.
+ * Макетная страница Серии заездов для вложенных страниц. Описание, итоговые таблицы.
  */
 export default function SeriesOneLayout() {
   const { urlSlug } = useParams();

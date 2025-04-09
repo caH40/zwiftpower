@@ -115,7 +115,7 @@ export const fetchDeleteSeriesOrganizer = createAsyncThunk(
 );
 
 /**
- * Список Серий заездов для публичных запросов.
+ * Список Серий заездов, созданных Организатором, для публичных запросов.
  */
 export const fetchGetSeries = createAsyncThunk(
   'nSeries/get',
@@ -142,10 +142,11 @@ export const fetchGetSeries = createAsyncThunk(
 
 /**
  * Данные по серии заездов для публичных запросов.
+ * options:
  */
 export const fetchGetSeriesOne = createAsyncThunk(
   'nSeriesOne/get',
-  async ({ urlSlug }, thunkAPI) => {
+  async ({ urlSlug, options }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/series/${urlSlug}`,

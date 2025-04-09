@@ -141,6 +141,8 @@ export function seriesOnePublicDto(
   const logoUrls = createUrlsToFileCloud(series.logoFileInfo);
   const posterUrls = createUrlsToFileCloud(series.posterFileInfo);
 
+  const orderedStages = stages.map((stage) => stage.order);
+
   return {
     ...series,
     organizer,
@@ -151,5 +153,6 @@ export function seriesOnePublicDto(
     logoUrls,
     posterUrls,
     seriesResults,
+    orderedStages,
   };
 }
