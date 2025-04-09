@@ -1,9 +1,11 @@
 import {
+  StageResultDto,
   TOrganizerSeriesAllDto,
   TOrganizerSeriesOneDto,
   TSeriesAllPublicDto,
   TSeriesOnePublicDto,
 } from '../types/dto.interface.js';
+import { TStageResult } from '../types/model.interface.js';
 import {
   TOrganizerSeriesAllResponseDB,
   TOrganizerSeriesOneResponseDB,
@@ -154,5 +156,19 @@ export function seriesOnePublicDto(
     posterUrls,
     seriesResults,
     orderedStages,
+  };
+}
+
+/**
+ * DTO получения результатов этапа серии.
+ */
+export function stageResultsDto(result: TStageResult): StageResultDto {
+  return {
+    ...result,
+    _id: String(result._id),
+    series: String(result.series),
+    teamSquadAtRace: result.teamSquadAtRace && String(result._id),
+    createdAt: result.createdAt.toISOString(),
+    updatedAt: result.createdAt.toISOString(),
   };
 }

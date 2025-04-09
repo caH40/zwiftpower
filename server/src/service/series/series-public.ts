@@ -1,5 +1,7 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { seriesAllPublicDto, seriesOnePublicDto } from '../../dto/series.js';
+import { TourResultsManager } from './tour/TourResultsManager.js';
+import { getResultsSeriesCatchup } from './catchup/index.js';
 
 // types
 import {
@@ -12,7 +14,6 @@ import {
   TSeriesOnePublicDto,
 } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { getResultsSeriesCatchup } from './catchup/index.js';
 import { Organizer } from '../../Model/Organizer.js';
 import { TSeries } from '../../types/model.interface.js';
 
@@ -132,19 +133,19 @@ export class SeriesPublicService {
   }: {
     urlSlug: string;
     stageOrder: number;
-  }): Promise<TResponseService<null>> {
+  }): Promise<TResponseService<unknown>> {
     const seriesOneDB = await NSeriesModel.findOne(
       { urlSlug, 'stages.order': stageOrder },
-      { type: true, _id: false }
+      { type: true }
     ).lean<Pick<TSeries, '_id' | 'type'>>();
 
-    if (!seriesOneDB) {
+    if (!seriesOneDB || !seriesOneDB._id) {
       throw new Error(
         `Не найдена Серия заездов с urlSlug: "${urlSlug}" и с order: "${stageOrder}"`
       );
     }
 
-    let seriesResults = {};
+    let seriesResults = {} as unknown;
 
     switch (seriesOneDB.type) {
       case 'catchUp':
@@ -155,9 +156,13 @@ export class SeriesPublicService {
         seriesResults = { message: 'В разработке...' };
         break;
 
-      case 'tour':
-        seriesResults = { message: 'В разработке...' };
+      case 'tour': {
+        const tourResultsManager = new TourResultsManager(String(seriesOneDB._id));
+
+        seriesResults = await tourResultsManager.getStageResults(stageOrder);
+
         break;
+      }
 
       case 'criterium':
         seriesResults = { message: 'В разработке...' };
@@ -167,9 +172,10 @@ export class SeriesPublicService {
         throw new Error(`Не опознан тип seriesType: ${seriesOneDB.type}`);
     }
 
-    console.log(seriesResults, seriesOneDB.type);
-
-    return { data: null, message: 'Запрашиваемая Серия заездов.' };
+    return {
+      data: seriesResults,
+      message: `Результаты этапа ${stageOrder} серии заездов ${urlSlug}`,
+    };
   }
 
   /**

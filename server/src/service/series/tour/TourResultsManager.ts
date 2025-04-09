@@ -1,5 +1,8 @@
+import { stageResultsDto } from '../../../dto/series.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
+import { StageResultDto } from '../../../types/dto.interface.js';
 import { TResponseService } from '../../../types/http.interface.js';
+import { TStageResult } from '../../../types/model.interface.js';
 import { HandlerSeries } from '../HandlerSeries.js';
 
 /**
@@ -8,7 +11,6 @@ import { HandlerSeries } from '../HandlerSeries.js';
 export class TourResultsManager extends HandlerSeries {
   constructor(public seriesId: string) {
     super(seriesId); // Вызов конструктора базового класса.
-    // this.handlerSeries = new HandlerSeries(seriesId);
   }
 
   /**
@@ -53,4 +55,18 @@ export class TourResultsManager extends HandlerSeries {
 
     return { data: null, message: `Созданы результаты этапа №${stageOrder}` };
   }
+
+  /**
+   * Результаты этапа серии заездов.
+   */
+  public getStageResults = async (stageOrder: number): Promise<StageResultDto[]> => {
+    const resultsDB = await StageResultModel.find({
+      series: this.seriesId,
+      order: stageOrder,
+    }).lean<TStageResult[]>();
+
+    const resultsAfterDto = resultsDB.map((result) => stageResultsDto(result));
+
+    return resultsAfterDto;
+  };
 }

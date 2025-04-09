@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import UnderConstruction from '../../UnderConstruction/UnderConstruction';
+import JSONBlock from '../../JSONBlock/JSONBlock';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 
 import styles from './StageResults.module.css';
@@ -12,6 +12,8 @@ import styles from './StageResults.module.css';
  */
 export default function StageResults() {
   const { urlSlug, stageOrder } = useParams();
+  const { stageResults } = useSelector((state) => state.seriesPublic);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function StageResults() {
 
   return (
     <div className={styles.wrapper}>
-      <UnderConstruction />
+      <JSONBlock json={stageResults} />
     </div>
   );
 }

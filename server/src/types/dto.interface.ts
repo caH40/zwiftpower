@@ -3,6 +3,7 @@ import {
   TFinishProtocolConfig,
   TOrganizer,
   TSeries,
+  TStageResult,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 import {
@@ -170,4 +171,18 @@ export type TFinishProtocolConfigDto = Omit<
   createdAt: string;
   updatedAt: string;
   organizerName: string;
+};
+
+/**
+ * DTO получения результатов этапа серии.
+ */
+export type StageResultDto = Omit<
+  TStageResult,
+  '_id' | 'series' | 'teamSquadAtRace' | 'createdAt' | 'updatedAt'
+> & {
+  _id: string;
+  series: string;
+  teamSquadAtRace: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
