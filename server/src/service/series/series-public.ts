@@ -14,6 +14,7 @@ import {
 import { TResponseService } from '../../types/http.interface.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
 import { Organizer } from '../../Model/Organizer.js';
+import { TSeries } from '../../types/model.interface.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -52,6 +53,7 @@ export class SeriesPublicService {
   /**
    * Сервис получение данных Серий заездов по urlSlug.
    * FIXME: Может добавить options для сужения запроса,
+   * FIXME: Передаются итоговые результаты серии, переместить в другой запрос?,
    * например получить только Регламент, Расписание и т.д...
    */
   public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
@@ -119,6 +121,55 @@ export class SeriesPublicService {
     );
 
     return { data: seriesAfterDto, message: 'Запрашиваемая Серия заездов.' };
+  }
+
+  /**
+   * Сервис получение результатов серии в зависимости от её типа.
+   */
+  public async getStageResults({
+    urlSlug,
+    stageOrder,
+  }: {
+    urlSlug: string;
+    stageOrder: number;
+  }): Promise<TResponseService<null>> {
+    const seriesOneDB = await NSeriesModel.findOne(
+      { urlSlug, 'stages.order': stageOrder },
+      { type: true, _id: false }
+    ).lean<Pick<TSeries, '_id' | 'type'>>();
+
+    if (!seriesOneDB) {
+      throw new Error(
+        `Не найдена Серия заездов с urlSlug: "${urlSlug}" и с order: "${stageOrder}"`
+      );
+    }
+
+    let seriesResults = {};
+
+    switch (seriesOneDB.type) {
+      case 'catchUp':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'series':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'tour':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'criterium':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      default:
+        throw new Error(`Не опознан тип seriesType: ${seriesOneDB.type}`);
+    }
+
+    console.log(seriesResults, seriesOneDB.type);
+
+    return { data: null, message: 'Запрашиваемая Серия заездов.' };
   }
 
   /**

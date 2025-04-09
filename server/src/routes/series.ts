@@ -13,6 +13,7 @@ const tourController = new TourController();
  */
 export const routerSeries = Router();
 
+routerSeries.get('/stage/results/:urlSlug/:stageOrder', seriesPublicController.getResults);
 routerSeries.put('/stage/results', tourController.updateResultsFromZwift);
 routerSeries.get('/organizers/:organizerSlug?', seriesPublicController.getAll);
 routerSeries.get('/actual/:organizerId', authModeratorClub, seriesController.getActual);

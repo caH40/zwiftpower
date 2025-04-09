@@ -22,7 +22,8 @@ import { getTimerLocal } from '../../../utils/date-local';
 import styles from './SeriesOneResults.module.css';
 
 /**
- * Страница с результатами генеральных зачетов серии заездов.
+ * Страница маршрутизации на соответствующую страницу с результатами генеральных зачетов серии
+ * заездов в зависимости от seriesPublicOne.type.
  */
 export default function SeriesOneResults() {
   // Получаем данные о текущей серии заездов из состояния Redux.

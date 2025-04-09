@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetSeries, fetchGetSeriesOne } from './fetchSeries';
+import { fetchGetSeries, fetchGetSeriesOne, fetchGetStageResults } from './fetchSeries';
 
 const initialState = {
   seriesPublic: null, // Серии для пользователей.
   seriesPublicOne: null,
+  stageResults: null,
   message: null,
   status: null,
   error: null,
@@ -22,6 +23,9 @@ const seriesPublicSlice = createSlice({
     },
     resetSeriesPublicOne: (state) => {
       state.seriesPublicOne = null;
+    },
+    resetStageResults: (state) => {
+      state.stageResults = null;
     },
   },
 
@@ -59,9 +63,27 @@ const seriesPublicSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== получение результатов этапа Серий заездов =================
+    builder.addCase(fetchGetStageResults.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetStageResults.fulfilled, (state, action) => {
+      state.stageResults = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetStageResults.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetSeriesPublicAll, resetSeriesPublicOne } = seriesPublicSlice.actions;
+export const { resetSeriesPublicAll, resetSeriesPublicOne, resetStageResults } =
+  seriesPublicSlice.actions;
 
 export default seriesPublicSlice.reducer;

@@ -58,4 +58,29 @@ export class SeriesPublicController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Получение результатов этапа серии заездов.
+   *
+   */
+  public getResults = async (req: Request, res: Response) => {
+    try {
+      const { urlSlug, stageOrder } = req.params;
+
+      if (!urlSlug || urlSlug === 'undefined' || !stageOrder || stageOrder === 'undefined') {
+        res.status(404);
+      }
+
+      // Вызов сервиса.
+      const response = await this.seriesPublicService.getStageResults({
+        urlSlug,
+        stageOrder: +stageOrder,
+      });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

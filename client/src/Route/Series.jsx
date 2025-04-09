@@ -22,7 +22,7 @@ export function SeriesRoute() {
       <Route path="/series/:urlSlug" element={<SeriesOneLayout />}>
         <Route path="/series/:urlSlug/schedule" element={<SeriesOneSchedule />} />
         <Route path="/series/:urlSlug/results" element={<SeriesOneResults />}>
-          <Route path="/series/:urlSlug/results/stage/:order" element={<StageResults />} />
+          <Route path="/series/:urlSlug/results/stage/:stageOrder" element={<StageResults />} />
         </Route>
 
         <Route path="/series/:urlSlug/regulations" element={<SeriesOneRegulations />} />
