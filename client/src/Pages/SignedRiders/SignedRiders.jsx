@@ -80,16 +80,24 @@ function SignedRiders() {
 
             <a
               className={styles.button__link}
-              href="#"
+              href={`zwift://event/${event.id}`}
               onClick={(e) => {
                 e.preventDefault();
-                window.open(
-                  `https://www.zwift.com/eu/events/view/${event.id}`,
-                  'join_zwift_event'
-                );
-                return false;
+
+                const timeout = setTimeout(() => {
+                  window.location.href = `https://www.zwift.com/eu/events/view/${event.id}`;
+                }, 1000); // 1 секунда на открытие приложения
+
+                // Попытка открыть приложение
+                window.location.href = `zwift://event/${event.id}`;
+
+                // Очистка таймера, если вдруг сработал deep link
+                window.addEventListener('blur', () => {
+                  clearTimeout(timeout);
+                });
               }}
               rel="noreferrer"
+              target="_blank"
             >
               <div>
                 <span className={styles.button__title}>Регистрация</span>
