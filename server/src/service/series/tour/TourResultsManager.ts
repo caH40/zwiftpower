@@ -49,9 +49,9 @@ export class TourResultsManager extends HandlerSeries {
     await this.deleteOutdatedStageResults(stageOrder);
 
     // Сохранение результатов в БД.
-    const response = await StageResultModel.create(resultsWithRank);
+    await StageResultModel.create(resultsWithRank);
 
-    console.log(`Создано ${response.length} результатов этапа №${stageOrder}`);
+    // console.log(`Создано ${response.length} результатов этапа №${stageOrder}`);
 
     return { data: null, message: `Созданы результаты этапа №${stageOrder}` };
   }

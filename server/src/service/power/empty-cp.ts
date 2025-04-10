@@ -4,10 +4,13 @@ import { intervals } from './intervals-cp.js';
 import { ResultEventAdditional } from '../../types/types.interface.js';
 
 /**
- * Формирования CP при отсутствии активности у райдера (запрет доступа к активности)
- * данные берется из результата Эвента - result.criticalP
+ * Формирует CP (Critical Power).
+ * (запрет доступа к активности). Данные берутся из результата Эвента - result.criticalP
+ * @param result - Результат райдера в заезде
+ * @param needRemoveEmpty - Необходимость очистки CP без данных по ваттам
+ * @returns Сформированный массив CP
  */
-export function getCPFromResult(result: ResultEventAdditional) {
+export function getCPFromResult(result: ResultEventAdditional, needRemoveEmpty?: boolean) {
   const cpBestEfforts = [];
 
   const criticalPower = new Map([
@@ -35,6 +38,10 @@ export function getCPFromResult(result: ResultEventAdditional) {
       cpLabel: `${interval} sec`,
       duration: interval,
     });
+  }
+
+  if (needRemoveEmpty) {
+    return cpBestEfforts.filter((cp) => cp.watts);
   }
 
   return cpBestEfforts;

@@ -75,7 +75,9 @@ export class HandlerSeries {
 
     // Формирования необходимой структуры результатов Этапа для Серии заездов.
     const stageResults = requestResults.map((result) => {
-      const cpBestEfforts = getCPFromResult(result);
+      // Формирование объекта Critical Power для разных интервалов.
+      const cpBestEfforts = getCPFromResult(result, true);
+
       const activityData = {
         durationInMilliseconds: result.activityData.durationInMilliseconds,
         subgroupLabel: result.subgroupLabel,
