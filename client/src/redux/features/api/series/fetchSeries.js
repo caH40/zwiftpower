@@ -146,12 +146,42 @@ export const fetchGetSeries = createAsyncThunk(
  */
 export const fetchGetSeriesOne = createAsyncThunk(
   'nSeriesOne/get',
-  async ({ urlSlug, options }, thunkAPI) => {
+  async ({ urlSlug }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/series/${urlSlug}`,
         method: 'get',
       });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
+ * Обновление результатов этапа серии заездов.
+ */
+export const fetchPutStageResults = createAsyncThunk(
+  'nSeriesOneResults/put',
+  async ({ seriesId, stageOrder }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stage/results/`,
+        method: 'put',
+        data: { stageOrder, seriesId },
+      });
+
+      thunkAPI.dispatch(
+        getAlert({
+          message: response.data.message,
+          type: 'success',
+          isOpened: true,
+        })
+      );
 
       return response.data;
     } catch (error) {
