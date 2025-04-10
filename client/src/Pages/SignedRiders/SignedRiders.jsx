@@ -78,7 +78,29 @@ function SignedRiders() {
           <>
             <DescriptionEventZwift event={event} forSchedule={true} />
 
-            <Link
+            <a
+              className={styles.button__link}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(
+                  `https://www.zwift.com/eu/events/view/${event.id}`,
+                  'join_zwift_event'
+                );
+                return false;
+              }}
+              rel="noreferrer"
+            >
+              <div>
+                <span className={styles.button__title}>Регистрация</span>
+                <span className={styles.button__additional}>
+                  {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' &&
+                    `(только для участников клуба ${event.clubName})`}
+                </span>
+              </div>
+            </a>
+
+            {/* <Link
               className={styles.button__link}
               to={`https://www.zwift.com/eu/events/view/${event.id}`}
               target="_blank"
@@ -91,7 +113,9 @@ function SignedRiders() {
                     `(только для участников клуба ${event.clubName})`}
                 </span>
               </div>
-            </Link>
+            </Link> */}
+
+            {/* javascript:window.open('https://zwift.com/events/view/4913266','join_zwift_event');return false */}
 
             <Link
               className={styles.button__link}
