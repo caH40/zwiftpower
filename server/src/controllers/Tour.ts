@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { TourResultsManager } from '../service/series/tour/TourResultsManager.js';
 import { handleErrorInController } from '../errors/error.js';
+import { UpdateStageResultsSchema } from '../utils/deserialization/tourController.js';
 
 export class TourController {
   constructor() {}
@@ -17,7 +18,8 @@ export class TourController {
     res: Response
   ): Promise<Response | void> => {
     try {
-      const { seriesId, stageOrder } = req.body;
+      // Десериализация и валидация входных данных.
+      const { seriesId, stageOrder } = UpdateStageResultsSchema.parse(req.body);
 
       const tourResultsManager = new TourResultsManager(seriesId);
 

@@ -790,6 +790,13 @@ export type TStageResult = {
       }[]
     | null;
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках гонки.
+  sensorData: {
+    avgWatts: number;
+    heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
+    pairedSteeringDevice?: boolean;
+    powerType?: string;
+    trainerDifficulty?: number;
+  };
   createdAt: Date;
   updatedAt: Date;
 };

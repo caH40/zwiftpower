@@ -51,5 +51,6 @@ export interface ResultEvent {
     heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
     pairedSteeringDevice?: boolean;
     powerType?: string;
+    trainerDifficulty?: number;
   };
 }

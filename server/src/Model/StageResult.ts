@@ -88,6 +88,17 @@ const penaltySchema = new Schema(
   },
   { _id: false }
 );
+// Схема штрафа.
+const sensorDataSchema = new Schema(
+  {
+    avgWatts: Number,
+    heartRateData: { avgHeartRate: Number, heartRateMonitor: Boolean },
+    pairedSteeringDevice: Boolean,
+    powerType: String,
+    trainerDifficulty: Number,
+  },
+  { _id: false }
+);
 
 // Основная схема результата этапа
 const stageResultSchema = new Schema<IStageResult>(
@@ -102,6 +113,7 @@ const stageResultSchema = new Schema<IStageResult>(
       label: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
       subgroupLabel: { type: String, enum: ['A', 'B', 'C', 'D', 'E'] },
     },
+    sensorData: sensorDataSchema,
     category: {
       type: String,
       default: null,

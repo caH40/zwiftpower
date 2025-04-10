@@ -87,6 +87,7 @@ export class HandlerSeries {
         profileId: result.profileId,
         eventId: result.eventId,
         profileData: result.profileData,
+        sensorData: result.sensorData,
         cpBestEfforts,
         rank: 0, // Инициализация, установка корректного места в протоколе на следующих этапах.
         activityData,
