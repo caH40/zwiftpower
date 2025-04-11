@@ -1,6 +1,11 @@
 .wrapper {
   position: relative;
-  overflow: hidden;
+}
+.box__edit {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 10;
 }
 .poster {
   position: relative;

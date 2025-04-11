@@ -5,6 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import { useResize } from '../../hook/use-resize';
 import {
   fetchGetSeriesOne,
+  fetchGetStageResults,
   fetchPutStageResults,
 } from '../../redux/features/api/series/fetchSeries';
 import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
@@ -26,10 +27,7 @@ const adNumbers = [adUnderHeader, adOverFooter];
 export default function SeriesOneLayout() {
   const { urlSlug } = useParams();
   const { isScreenLg: isDesktop } = useResize();
-  const { seriesPublicOne, status: statusPublicOne } = useSelector(
-    (state) => state.seriesPublic
-  );
-  // console.log(seriesPublicOne);
+  const { seriesPublicOne } = useSelector((state) => state.seriesPublic);
 
   const dispatch = useDispatch();
 
@@ -53,7 +51,10 @@ export default function SeriesOneLayout() {
       );
     }
 
-    dispatch(fetchPutStageResults({ seriesId, stageOrder }));
+    await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();
+
+    // После ответа fetchPutStageResults выполняется обновление результатов для соответствующего этапа.
+    dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
   };
 
   useAd(adNumbers);
@@ -62,25 +63,20 @@ export default function SeriesOneLayout() {
       {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
 
       <section className={styles.wrapper}>
-        {statusPublicOne === 'resolved' && statusPublicOne && (
+        {seriesPublicOne && (
           <SeriesOneHeader
-            posterUrls={seriesPublicOne?.posterUrls}
-            logoUrls={seriesPublicOne?.logoUrls}
-            name={seriesPublicOne?.name}
-            mission={seriesPublicOne?.mission}
+            posterUrls={seriesPublicOne.posterUrls}
+            logoUrls={seriesPublicOne.logoUrls}
+            seriesId={seriesPublicOne._id}
+            name={seriesPublicOne.name}
+            mission={seriesPublicOne.mission}
             updateStageResults={updateStageResults}
+            stages={seriesPublicOne.stages.map((stage) => ({ stageOrder: stage.order }))}
+            // не отображать иконку управления для не редактируемых серий
+            showEditIcon={!['catchUp'].includes(seriesPublicOne.type)}
+            organizerId={seriesPublicOne.organizer._id}
           />
         )}
-        {/* <button
-          onClick={() =>
-            updateStageResults({
-              seriesId: '67ee2f7a825687d344dcf8a9',
-              stageOrder: 3,
-            })
-          }
-        >
-          обновление этапа
-        </button> */}
 
         {/* Кнопки навигации по страницам Серии заездов */}
         <div className={styles.box__navbar}>

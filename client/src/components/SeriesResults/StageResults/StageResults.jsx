@@ -18,7 +18,7 @@ export default function StageResults() {
 
   useEffect(() => {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
-  }, [urlSlug, stageOrder]);
+  }, [urlSlug, stageOrder, dispatch]);
 
   return (
     <div className={styles.wrapper}>
