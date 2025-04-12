@@ -82,8 +82,8 @@ export default function SeriesOneLayout() {
             mission={seriesPublicOne.mission}
             updateStageResults={updateStageResults}
             stages={seriesPublicOne.stages.map((stage) => ({ stageOrder: stage.order }))}
-            // не отображать иконку управления для не редактируемых серий
-            showEditIcon={!['catchUp'].includes(seriesPublicOne.type)}
+            // FIXME: не отображать иконку управления для не редактируемых серий
+            showEditIcon={!['catchUp', 'series'].includes(seriesPublicOne.type)}
             organizerId={seriesPublicOne.organizer._id}
           />
         )}
