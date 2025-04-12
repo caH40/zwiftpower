@@ -4,13 +4,15 @@ import {
   TOrganizerSeriesOneDto,
   TSeriesAllPublicDto,
   TSeriesOnePublicDto,
+  TStagesPublicDto,
 } from '../types/dto.interface.js';
-import { TStageResult } from '../types/model.interface.js';
+import { TFileMetadataForCloud, TStageResult } from '../types/model.interface.js';
 import {
   TOrganizerSeriesAllResponseDB,
   TOrganizerSeriesOneResponseDB,
   TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
+  TStagesPublicResponseDB,
 } from '../types/mongodb-response.types.js';
 import { createUrlsToFileCloud } from '../utils/url.js';
 
@@ -157,6 +159,35 @@ export function seriesOnePublicDto(
     seriesResults,
     orderedStages,
   };
+}
+
+/**
+ * DTO получения данных этапов запрашиваемой Серии для публичного доступа пользователей сайта.
+ */
+export function stagesPublicDto(
+  filteredStages: TStagesPublicResponseDB['stages'],
+  logoFileInfo?: TFileMetadataForCloud
+): TStagesPublicDto[] {
+  // Лого Организатора заездов.
+  const logoFileInfoOrganizer = logoFileInfo && createUrlsToFileCloud(logoFileInfo);
+
+  const stages = filteredStages.map((stage) => ({
+    eventStart: stage.event.eventStart,
+    id: stage.event.id,
+    _id: String(stage.event._id),
+    name: stage.event.name,
+    imageUrl: stage.event.imageUrl,
+    typeRaceCustom: stage.event.typeRaceCustom,
+    eventType: stage.event.eventType,
+    rulesSet: stage.event.rulesSet,
+    started: stage.event.started,
+    tags: stage.event.tags,
+    logoFileInfo: logoFileInfoOrganizer,
+    order: stage.order,
+    eventSubgroups: stage.event.eventSubgroups, // FIXME: по подгруппам нет выборки только нужных данных!
+  }));
+
+  return stages;
 }
 
 /**

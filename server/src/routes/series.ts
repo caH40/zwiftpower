@@ -17,4 +17,6 @@ routerSeries.get('/stage/results/:urlSlug/:stageOrder', seriesPublicController.g
 routerSeries.put('/stage/results', tourController.updateResultsFromZwift);
 routerSeries.get('/organizers/:organizerSlug?', seriesPublicController.getAll);
 routerSeries.get('/actual/:organizerId', authModeratorClub, seriesController.getActual);
+routerSeries.get('/stages/:urlSlug/:status', seriesPublicController.getStages);
+
 routerSeries.get('/:urlSlug', seriesPublicController.get);

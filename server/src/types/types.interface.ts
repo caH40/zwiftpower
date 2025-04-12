@@ -21,6 +21,8 @@ import { ResultEvent } from './zwiftAPI/resultsFromZwift.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { PutResult } from './http.interface.js';
 import { EventSubgroupFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
+import { TStagesPublicResponseDB } from './mongodb-response.types.js';
+import { TStagesPublicDto } from './dto.interface.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -900,4 +902,29 @@ export type TGetProtocolsStageFromZwiftParams = {
 export type TSetCategoriesStageParams = {
   stageOrder: number;
   stageResults: TStageResult[];
+};
+
+/**
+ * Тип данных параметров метода SeriesPublicService.getStages
+ */
+export type TSeriesPublicServiceGetStagesParams = {
+  urlSlug: string;
+  status: TEventStatus;
+};
+
+export type TEventStatus = 'all' | 'upcoming' | 'finished' | 'ongoing';
+
+/**
+ * Тип данных параметров метода SeriesPublicService.filterStages
+ */
+export type TSeriesPublicServiceFilterStagesParams = {
+  stages: TStagesPublicResponseDB['stages'];
+  status: TEventStatus;
+};
+/**
+ * Тип данных параметров метода SeriesPublicService.sortStages
+ */
+export type TSeriesPublicServiceSortStagesParams = {
+  stages: TStagesPublicDto[];
+  status: TEventStatus;
 };

@@ -117,6 +117,31 @@ export type TSeriesOnePublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> &
 };
 
 /**
+ * Данные по Серии для пользователей.
+ */
+export type TStagesPublicResponseDB = {
+  stages: {
+    event: {
+      _id: Types.ObjectId;
+      id: number;
+      eventStart: string;
+      name: string;
+      imageUrl: string;
+      typeRaceCustom: string;
+      eventType: string;
+      rulesSet: string[];
+      tags: string[];
+      started: boolean;
+      eventSubgroups: ZwiftEventSubgroupSchema[];
+    };
+    order: number;
+  }[];
+  organizer: {
+    logoFileInfo?: TFileMetadataForCloud; // Объект с URL логотипа (разные размеры).
+  };
+};
+
+/**
  * Данные по Серии для формирования мета-тэгов.
  */
 export type TSeriesForMetaTagsResponseDB = Pick<

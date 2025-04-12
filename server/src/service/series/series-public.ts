@@ -1,5 +1,5 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
-import { seriesAllPublicDto, seriesOnePublicDto } from '../../dto/series.js';
+import { seriesAllPublicDto, seriesOnePublicDto, stagesPublicDto } from '../../dto/series.js';
 import { TourResultsManager } from './tour/TourResultsManager.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
 
@@ -7,15 +7,22 @@ import { getResultsSeriesCatchup } from './catchup/index.js';
 import {
   TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
+  TStagesPublicResponseDB,
 } from '../../types/mongodb-response.types.js';
 import {
   TGroupedSeriesForClient,
   TSeriesAllPublicDto,
   TSeriesOnePublicDto,
+  TStagesPublicDto,
 } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { Organizer } from '../../Model/Organizer.js';
 import { TSeries } from '../../types/model.interface.js';
+import {
+  TSeriesPublicServiceFilterStagesParams,
+  TSeriesPublicServiceGetStagesParams,
+  TSeriesPublicServiceSortStagesParams,
+} from '../../types/types.interface.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -183,6 +190,92 @@ export class SeriesPublicService {
       data: seriesResults,
       message: `Результаты этапа ${stageOrder} серии заездов ${urlSlug}`,
     };
+  }
+
+  /**
+   * Получение данных по этапам серии заездов.
+   */
+  getStages = async ({
+    urlSlug,
+    status,
+  }: TSeriesPublicServiceGetStagesParams): Promise<TResponseService<TStagesPublicDto[]>> => {
+    const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
+      .populate({
+        path: 'stages.event',
+        select: [
+          'name',
+          'id',
+          'eventStart',
+          'imageUrl',
+          'typeRaceCustom',
+          'eventType',
+          'rulesSet',
+          'tags',
+          'started',
+        ],
+        populate: 'eventSubgroups',
+      })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '-_id'] })
+      .lean<TStagesPublicResponseDB>();
+
+    if (!seriesOneDB) {
+      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
+    }
+
+    // Фильтрация этапов в зависимости от статуса с последующей сортировкой по дате старта.
+    const filteredStages = this.filterStages({ stages: seriesOneDB.stages, status });
+
+    const stagesAfterDto = stagesPublicDto(filteredStages, seriesOneDB.organizer.logoFileInfo);
+
+    // Сортировка этапов по дате старта в зависимости от status.
+    const sortedStages = this.sortStages({ stages: stagesAfterDto, status });
+
+    return { data: sortedStages, message: 'Данные по этапам серии заездов.' };
+  };
+
+  /**
+   * Фильтрация этапов в зависимости от статуса.
+   */
+  private filterStages({
+    stages,
+    status,
+  }: TSeriesPublicServiceFilterStagesParams): TStagesPublicResponseDB['stages'] {
+    switch (status) {
+      case 'finished':
+        return stages.filter((s) => s.event?.started === false);
+      case 'upcoming':
+        return stages.filter((s) => s.event?.started === true);
+      case 'all':
+      default:
+        return stages;
+    }
+  }
+
+  /**
+   * Сортировка этапов в зависимости от статуса.
+   * Для status === 'finished' по убыванию даты старта.
+   * Для status === 'upcoming' по возрастанию даты старта.
+   * FIXME: Может делать сортировку по номеру этапа? (order).
+   */
+  private sortStages({
+    stages,
+    status,
+  }: TSeriesPublicServiceSortStagesParams): TStagesPublicDto[] {
+    switch (status) {
+      case 'finished':
+        return stages.sort(
+          (a, b) => new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime()
+        );
+      case 'upcoming':
+        return stages.sort(
+          (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+        );
+      case 'all':
+      default:
+        return stages.sort(
+          (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+        );
+    }
   }
 
   /**
