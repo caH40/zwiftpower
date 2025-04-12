@@ -50,6 +50,7 @@ export default function SeriesOneLayout() {
             isOpened: true,
           })
         );
+        return;
       }
 
       await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();

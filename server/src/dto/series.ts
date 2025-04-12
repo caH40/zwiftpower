@@ -173,7 +173,7 @@ export function stagesPublicDto(
     tags: stage.event.tags,
     logoFileInfo: logoFileInfoOrganizer,
     order: stage.order,
-    eventSubgroups: stage.event.eventSubgroups, // FIXME: по подгруппам нет выборки только нужных данных!
+    eventSubgroups: stage.event.eventSubgroups,
   }));
 
   return stages;

@@ -21,11 +21,11 @@ export default function StageResults() {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
   }, [urlSlug, stageOrder, dispatch]);
 
-  console.log(stageResults);
+  // console.log(stageResults);
 
   return (
     <section className={styles.wrapper__wide}>
-      <TableStageResults />
+      {/* <TableStageResults /> */}
       <JSONBlock json={stageResults} />
     </section>
   );
