@@ -4,6 +4,7 @@ import {
   fetchGetSeries,
   fetchGetSeriesOne,
   fetchGetStageResults,
+  fetchGetStages,
   fetchPutStageResults,
 } from './fetchSeries';
 
@@ -11,6 +12,7 @@ const initialState = {
   seriesPublic: null, // Серии для пользователей.
   seriesPublicOne: null,
   stageResults: null,
+  stages: null,
   message: null,
   status: null,
   error: null,
@@ -31,6 +33,9 @@ const seriesPublicSlice = createSlice({
     },
     resetStageResults: (state) => {
       state.stageResults = null;
+    },
+    resetStages: (state) => {
+      state.stages = null;
     },
   },
 
@@ -101,10 +106,27 @@ const seriesPublicSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== получение результатов этапа Серий заездов =================
+    builder.addCase(fetchGetStages.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetStages.fulfilled, (state, action) => {
+      state.stages = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetStages.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetSeriesPublicAll, resetSeriesPublicOne, resetStageResults } =
+export const { resetSeriesPublicAll, resetSeriesPublicOne, resetStageResults, resetStages } =
   seriesPublicSlice.actions;
 
 export default seriesPublicSlice.reducer;

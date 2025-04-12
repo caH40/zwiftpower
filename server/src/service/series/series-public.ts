@@ -229,7 +229,7 @@ export class SeriesPublicService {
 
     // Сортировка этапов по дате старта в зависимости от status.
     const sortedStages = this.sortStages({ stages: stagesAfterDto, status });
-
+    // console.log(sortedStages);
     return { data: sortedStages, message: 'Данные по этапам серии заездов.' };
   };
 
@@ -242,9 +242,9 @@ export class SeriesPublicService {
   }: TSeriesPublicServiceFilterStagesParams): TStagesPublicResponseDB['stages'] {
     switch (status) {
       case 'finished':
-        return stages.filter((s) => s.event?.started === false);
-      case 'upcoming':
         return stages.filter((s) => s.event?.started === true);
+      case 'upcoming':
+        return stages.filter((s) => s.event?.started === false);
       case 'all':
       default:
         return stages;

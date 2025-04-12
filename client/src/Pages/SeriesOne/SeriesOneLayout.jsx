@@ -13,7 +13,6 @@ import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSer
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-import { getObjectSize } from '../../utils/bytes';
 
 import styles from './SeriesOneLayout.module.css';
 
@@ -29,10 +28,6 @@ export default function SeriesOneLayout() {
   const { urlSlug } = useParams();
   const { isScreenLg: isDesktop } = useResize();
   const { seriesPublicOne } = useSelector((state) => state.seriesPublic);
-
-  if (seriesPublicOne) {
-    console.log(getObjectSize(seriesPublicOne.stages));
-  }
 
   const dispatch = useDispatch();
 

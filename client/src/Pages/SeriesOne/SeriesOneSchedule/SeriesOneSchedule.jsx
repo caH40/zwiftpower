@@ -1,10 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../../hook/useTitle';
 import CardRacePreview from '../../../components/CardRacePreview/CardRacePreview';
 import { HelmetSeriesSchedule } from '../../../components/Helmets/HelmetSeriesSchedule';
 import { getTimerLocal } from '../../../utils/date-local';
+import { fetchGetStages } from '../../../redux/features/api/series/fetchSeries';
+import { resetStages } from '../../../redux/features/api/series/seriesPublicSlice';
+import { getObjectSize } from '../../../utils/bytes';
 
 import styles from './SeriesOneSchedule.module.css';
 
@@ -12,12 +16,23 @@ import styles from './SeriesOneSchedule.module.css';
  * Страница с расписанием этапов Серии заездов.
  */
 export default function SeriesOneSchedule() {
-  const { seriesPublicOne, status: statusPublicOne } = useSelector(
-    (state) => state.seriesPublic
-  );
+  const { seriesPublicOne, stages } = useSelector((state) => state.seriesPublic);
+  const { urlSlug } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useTitle(seriesPublicOne?.name && `Этапы ${seriesPublicOne?.name}`);
+
+  // Запрос данных по этапам в расписании (которые не стартовали);
+  useEffect(() => {
+    dispatch(fetchGetStages({ urlSlug, status: 'upcoming' }));
+
+    return () => dispatch(resetStages());
+  }, []);
+
+  if (stages) {
+    console.log(getObjectSize(stages));
+  }
 
   const toLink = (id) => navigate(`/race/schedule/${id}`);
 
@@ -35,9 +50,8 @@ export default function SeriesOneSchedule() {
         />
 
         <div className={styles.wrapper}>
-          {!!seriesPublicOne?.stages?.length &&
-            statusPublicOne === 'resolved' &&
-            seriesPublicOne.stages.map((eventPreview) => {
+          {!!stages?.length &&
+            stages.map((eventPreview) => {
               return (
                 <CardRacePreview event={eventPreview} key={eventPreview.id} getClick={toLink} />
               );

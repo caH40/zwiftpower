@@ -163,6 +163,27 @@ export const fetchGetSeriesOne = createAsyncThunk(
 );
 
 /**
+ * Данные по этапам серии заездов для публичных запросов.
+ */
+export const fetchGetStages = createAsyncThunk(
+  'stages/get',
+  async ({ urlSlug, status }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stages/${urlSlug}/${status}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Обновление результатов этапа серии заездов.
  */
 export const fetchPutStageResults = createAsyncThunk(

@@ -48,7 +48,7 @@ export class SeriesPublicController {
       const { urlSlug } = req.params;
 
       if (!urlSlug || urlSlug === 'undefined') {
-        res.status(404);
+        return res.status(404);
       }
       // Вызов сервиса.
       const response = await this.seriesPublicService.get(urlSlug);
@@ -69,12 +69,12 @@ export class SeriesPublicController {
   public getStages = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       const { urlSlug, status } = req.params as {
-        urlSlug: string;
-        status: TEventStatus;
+        urlSlug: string | undefined | 'undefined';
+        status: TEventStatus | undefined | 'undefined';
       };
 
-      if (!urlSlug || urlSlug === 'undefined' || !status) {
-        res.status(404);
+      if (!urlSlug || urlSlug === 'undefined' || !status || status === 'undefined') {
+        throw new Error('Не получены валидные данные по urlSlug или status');
       }
 
       // Вызов сервиса.
