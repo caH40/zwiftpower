@@ -83,7 +83,14 @@ export class SeriesPublicService {
 
     // Фильтрация от этапов у которых нет id Эвента.
     const stagesFilteredAndSorted = seriesOneDB.stages
-      .filter((stage) => stage.event)
+      .filter((stage) => {
+        // FIXME: Костыль для Догонялок, возвращаются только не начавшиеся этапы.
+        if (seriesOneDB.type === 'catchUp') {
+          return stage.event && stage.event.started === false;
+        } else {
+          return stage.event;
+        }
+      })
       .sort(
         (a, b) =>
           new Date(a.event.eventStart).getTime() - new Date(b.event.eventStart).getTime()

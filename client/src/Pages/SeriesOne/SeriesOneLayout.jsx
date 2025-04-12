@@ -13,6 +13,7 @@ import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSer
 import AdContainer from '../../components/AdContainer/AdContainer';
 import { useAd } from '../../hook/useAd';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { getObjectSize } from '../../utils/bytes';
 
 import styles from './SeriesOneLayout.module.css';
 
@@ -29,6 +30,10 @@ export default function SeriesOneLayout() {
   const { isScreenLg: isDesktop } = useResize();
   const { seriesPublicOne } = useSelector((state) => state.seriesPublic);
 
+  if (seriesPublicOne) {
+    console.log(getObjectSize(seriesPublicOne.stages));
+  }
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,24 +42,34 @@ export default function SeriesOneLayout() {
 
   // Функция обновления результатов этапа (order) серии заездов (seriesId).
   const updateStageResults = async ({ seriesId, stageOrder }) => {
-    const isConfirm = window.confirm(
-      `При обновлении результатов этапа №${stageOrder} сбросятся все изменения, внесённые в финишный протокол модераторами Серии. Вы действительно хотите обновить результаты этапа?`
-    );
+    try {
+      const isConfirm = window.confirm(
+        `При обновлении результатов этапа №${stageOrder} сбросятся все изменения, внесённые в финишный протокол модераторами Серии. Вы действительно хотите обновить результаты этапа?`
+      );
 
-    if (!isConfirm) {
+      if (!isConfirm) {
+        dispatch(
+          getAlert({
+            message: `Отменена операция обновления результатов этапа №${stageOrder}`,
+            type: 'warning',
+            isOpened: true,
+          })
+        );
+      }
+
+      await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();
+
+      // После ответа fetchPutStageResults выполняется обновление результатов для соответствующего этапа.
+      dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
+    } catch (error) {
       dispatch(
         getAlert({
-          message: `Отменена операция обновления результатов этапа №${stageOrder}`,
-          type: 'warning',
+          message: error,
+          type: 'error',
           isOpened: true,
         })
       );
     }
-
-    await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();
-
-    // После ответа fetchPutStageResults выполняется обновление результатов для соответствующего этапа.
-    dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
   };
 
   useAd(adNumbers);
