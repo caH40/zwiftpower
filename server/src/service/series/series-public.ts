@@ -69,18 +69,7 @@ export class SeriesPublicService {
       .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
       .populate({
         path: 'stages.event',
-        select: [
-          'name',
-          'id',
-          'eventStart',
-          'imageUrl',
-          'typeRaceCustom',
-          'eventType',
-          'rulesSet',
-          'tags',
-          'started',
-        ],
-        populate: 'eventSubgroups',
+        select: ['id'],
       })
       .lean<TSeriesOnePublicResponseDB>();
 
@@ -90,18 +79,8 @@ export class SeriesPublicService {
 
     // Фильтрация от этапов у которых нет id Эвента.
     const stagesFilteredAndSorted = seriesOneDB.stages
-      .filter((stage) => {
-        // FIXME: Костыль для Догонялок, возвращаются только не начавшиеся этапы.
-        if (seriesOneDB.type === 'catchUp') {
-          return stage.event && stage.event.started === false;
-        } else {
-          return stage.event;
-        }
-      })
-      .sort(
-        (a, b) =>
-          new Date(a.event.eventStart).getTime() - new Date(b.event.eventStart).getTime()
-      );
+      .filter((stage) => stage.event)
+      .sort((a, b) => a.order - b.order);
 
     seriesOneDB.stages = stagesFilteredAndSorted;
 
@@ -129,11 +108,6 @@ export class SeriesPublicService {
     }
 
     const seriesAfterDto = seriesOnePublicDto(seriesOneDB, seriesResults);
-
-    // Сортировка Этапов, сначала более новые Серии.
-    seriesAfterDto.stages.sort(
-      (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
-    );
 
     return { data: seriesAfterDto, message: 'Запрашиваемая Серия заездов.' };
   }

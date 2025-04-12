@@ -139,17 +139,7 @@ export type TSeriesOnePublicDto = Omit<
   stages: {
     _id: string;
     id: number;
-    eventStart: string;
-    name: string;
-    imageUrl: string;
-    typeRaceCustom: string;
-    eventType: string;
-    rulesSet: string[];
-    tags: string[];
-    started: boolean;
-    logoFileInfo: Record<string, string> | undefined;
     order: number;
-    eventSubgroups: ZwiftEventSubgroupSchema[];
   }[];
   dateStart: string;
   dateEnd: string;

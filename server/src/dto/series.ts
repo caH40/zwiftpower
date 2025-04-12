@@ -122,20 +122,9 @@ export function seriesOnePublicDto(
   };
 
   const stages = series.stages.map((stage) => ({
-    eventStart: stage.event.eventStart,
     id: stage.event.id,
     _id: String(stage.event._id),
-    name: stage.event.name,
-    imageUrl: stage.event.imageUrl,
-    typeRaceCustom: stage.event.typeRaceCustom,
-    eventType: stage.event.eventType,
-    rulesSet: stage.event.rulesSet,
-    started: stage.event.started,
-    tags: stage.event.tags,
-    logoFileInfo: logoFileInfoOrganizer,
     order: stage.order,
-
-    eventSubgroups: stage.event.eventSubgroups, // FIXME: по подгруппам нет выборки только нужных данных!
   }));
 
   const dateStart = series.dateStart.toISOString();
