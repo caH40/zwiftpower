@@ -165,7 +165,20 @@ export type TStagesPublicDto = {
   started: boolean;
   logoFileInfo: Record<string, string> | undefined;
   order: number;
-  eventSubgroups: ZwiftEventSubgroupSchema[];
+  eventSubgroups: Pick<
+    ZwiftEventSubgroupSchema,
+    | 'id'
+    | 'mapId'
+    | 'routeId'
+    | 'durationInSeconds'
+    | 'distanceInMeters'
+    | 'laps'
+    | 'distanceSummary'
+    | 'eventSubgroupStart'
+    | 'subgroupLabel'
+    | 'tags'
+    | 'totalEntrantCount'
+  >[];
 };
 
 /**

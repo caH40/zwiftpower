@@ -187,7 +187,22 @@ export class SeriesPublicService {
           'tags',
           'started',
         ],
-        populate: 'eventSubgroups',
+        populate: {
+          path: 'eventSubgroups',
+          select: [
+            'id',
+            'mapId',
+            'routeId',
+            'durationInSeconds',
+            'distanceInMeters',
+            'laps',
+            'distanceSummary',
+            'eventSubgroupStart',
+            'subgroupLabel',
+            'tags',
+            'totalEntrantCount',
+          ],
+        },
       })
       .populate({ path: 'organizer', select: ['logoFileInfo', '-_id'] })
       .lean<TStagesPublicResponseDB>();

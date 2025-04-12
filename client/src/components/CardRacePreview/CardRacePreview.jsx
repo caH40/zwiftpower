@@ -51,13 +51,6 @@ function CardRacePreview({ event, getClick }) {
               </div>
               {sm && (
                 <>
-                  {/* <div className={styles.box__term}>
-                    <dt className={styles.term}>Формат</dt>
-                    <dd className={styles.term__description}>
-                      <TdRaceType typeRaceCustom={event.typeRaceCustom} nameFull={true} />
-                    </dd>
-                  </div> */}
-
                   {!logoSrc && (
                     <div className={styles.box__term}>
                       <dt className={styles.term}>Организатор</dt>

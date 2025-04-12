@@ -8,7 +8,6 @@ import { HelmetSeriesSchedule } from '../../../components/Helmets/HelmetSeriesSc
 import { getTimerLocal } from '../../../utils/date-local';
 import { fetchGetStages } from '../../../redux/features/api/series/fetchSeries';
 import { resetStages } from '../../../redux/features/api/series/seriesPublicSlice';
-import { getObjectSize } from '../../../utils/bytes';
 
 import styles from './SeriesOneSchedule.module.css';
 
@@ -29,10 +28,6 @@ export default function SeriesOneSchedule() {
 
     return () => dispatch(resetStages());
   }, []);
-
-  if (stages) {
-    console.log(getObjectSize(stages));
-  }
 
   const toLink = (id) => navigate(`/race/schedule/${id}`);
 
