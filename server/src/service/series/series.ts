@@ -73,6 +73,9 @@ export class SeriesService {
 
     const seriesOneAfterDto = organizerSeriesOneDto(seriesDB);
 
+    // Сортировка этапов по возрастанию номера этапа (order).
+    seriesOneAfterDto.stages.sort((a, b) => a.order - b.order);
+
     return {
       data: seriesOneAfterDto,
       message: 'Данные запрашиваемой Серии заездов для редактирования.',

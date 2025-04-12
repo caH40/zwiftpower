@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import JSONBlock from '../../JSONBlock/JSONBlock';
+import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 
 import styles from './StageResults.module.css';
@@ -20,9 +21,12 @@ export default function StageResults() {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
   }, [urlSlug, stageOrder, dispatch]);
 
+  console.log(stageResults);
+
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper__wide}>
+      <TableStageResults />
       <JSONBlock json={stageResults} />
-    </div>
+    </section>
   );
 }
