@@ -1,5 +1,9 @@
 import mongoose, { Document, Schema, Types, model } from 'mongoose';
-import { TCriticalPowerBestEfforts, TStageResult } from '../types/model.interface';
+import {
+  TCriticalPowerBestEfforts,
+  TGapsInCategories,
+  TStageResult,
+} from '../types/model.interface';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -100,6 +104,25 @@ const sensorDataSchema = new Schema(
   { _id: false }
 );
 
+// Отрывы между участником результата и лидером, предыдущим в абсолюте и категориях.
+const GapsInCategoriesSchema = new Schema<TGapsInCategories>(
+  {
+    category: { type: { toLeader: Number, toPrev: Number }, default: null, _id: false },
+    absolute: { type: { toLeader: Number, toPrev: Number }, default: null, _id: false },
+    absoluteGenderMale: {
+      type: { toLeader: Number, toPrev: Number },
+      default: null,
+      _id: false,
+    },
+    absoluteGenderFemale: {
+      type: { toLeader: Number, toPrev: Number },
+      default: null,
+      _id: false,
+    },
+  },
+  { _id: false }
+);
+
 // Основная схема результата этапа
 const stageResultSchema = new Schema<IStageResult>(
   {
@@ -118,6 +141,7 @@ const stageResultSchema = new Schema<IStageResult>(
       type: String,
       default: null,
     },
+    gapsInCategories: GapsInCategoriesSchema,
     points: { type: pointsStageResultSchema, default: null },
     disqualification: { type: disqualificationSchema, default: null },
     penalty: { type: [penaltySchema], default: null },
