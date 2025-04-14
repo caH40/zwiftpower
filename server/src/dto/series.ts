@@ -183,11 +183,15 @@ export function stagesPublicDto(
  * DTO получения результатов этапа серии.
  */
 export function stageResultsDto(result: TStageResult): StageResultDto {
+  // Удельная мощность за весь заезд.
+  const wattsPerKg = result.sensorData.avgWatts / (result.profileData.weightInGrams / 1000);
+
   return {
     ...result,
     _id: String(result._id),
     series: String(result.series),
     teamSquadAtRace: result.teamSquadAtRace && String(result._id),
+    wattsPerKg,
     createdAt: result.createdAt.toISOString(),
     updatedAt: result.createdAt.toISOString(),
   };

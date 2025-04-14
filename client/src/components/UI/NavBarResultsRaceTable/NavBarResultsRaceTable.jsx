@@ -13,12 +13,18 @@ function NavBarResultsRace({
   setDocsOnPage,
   setPage,
   hideDocsOnPage,
+  hideFilterColumn,
+  categoriesButton,
 }) {
   return (
     <div className={styles.box}>
-      {hideCategory ? null : <FilterCategory results={results} />}
+      {hideCategory ? null : (
+        <FilterCategory results={results} categoriesFromFilters={categoriesButton} />
+      )}
       <FilterWatts />
-      <FilterColumn />
+
+      {!hideFilterColumn && <FilterColumn />}
+
       {!hideDocsOnPage && (
         <PaginationSelect
           docsOnPage={docsOnPage}

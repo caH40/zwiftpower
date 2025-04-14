@@ -17,6 +17,7 @@ import {
 } from '../../types/types.interface.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { Types } from 'mongoose';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -42,7 +43,10 @@ export class HandlerSeries {
   protected async getProtocolsStageFromZwift({
     stages,
     stageOrder,
-  }: TGetProtocolsStageFromZwiftParams): Promise<TStageResult[]> {
+  }: TGetProtocolsStageFromZwiftParams): Promise<{
+    stageResults: TStageResult[];
+    subgroupIdsInEvents: Types.ObjectId[];
+  }> {
     // Запрос данных подгрупп заездов в этапе для последующего получения результатов подгрупп и объединения их в результаты заездов.
     const requestEventsWithSubgroups = stages.map(
       (eventId) =>
@@ -70,6 +74,11 @@ export class HandlerSeries {
       }
     );
 
+    // _id всех подгрупп этапов в БД.
+    const subgroupIdsInEvents = eventsWithSubgroups
+      .map((subgroup) => subgroup._id)
+      .filter((_id): _id is Types.ObjectId => _id !== undefined);
+
     // Получение финишных протокола(протоколов) этапа серии с ZwiftAPI.
     const requestResults = await getResultsFromZwift(eventsWithSubgroups, null);
 
@@ -91,7 +100,10 @@ export class HandlerSeries {
         profileData: result.profileData,
         sensorData: result.sensorData,
         cpBestEfforts,
-        rank: 0, // Инициализация, установка корректного места в протоколе на следующих этапах.
+        rank: {
+          category: 0,
+          absolute: 0,
+        }, // Инициализация, установка корректного места в протоколе на следующих этапах.
         activityData,
         category: null,
         points: null,
@@ -101,7 +113,7 @@ export class HandlerSeries {
       } as TStageResult;
     });
 
-    return stageResults;
+    return { stageResults, subgroupIdsInEvents };
   }
 
   /**
@@ -160,7 +172,7 @@ export class HandlerSeries {
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
-    const categories: Record<TCategorySeries, number> = {
+    const categories: Record<TCategorySeries | 'absolute', number> = {
       APlus: 1,
       A: 1,
       BPlus: 1,
@@ -172,17 +184,23 @@ export class HandlerSeries {
       WB: 1,
       WC: 1,
       WD: 1,
+      absolute: 1,
     };
 
     return resultsSorted.map((result) => {
       // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
       if (!result.category || result.disqualification?.status) {
-        result.rank = 0;
+        result.rank.category = 0;
         return result;
       }
 
-      result.rank = categories[result.category] ?? 0;
+      // Присвоение финишного места в категории и увеличение соответствующего счетчика.
+      result.rank.category = categories[result.category] ?? 0;
       categories[result.category]++;
+
+      // Присвоение финишного места в абсолюте и увеличение соответствующего счетчика.
+      result.rank.absolute = categories['absolute'] ?? 0;
+      categories['absolute']++;
       return result;
     });
   }

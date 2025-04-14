@@ -3,32 +3,29 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { useShowIndex } from '../../../hook/useShowIndex';
-import { useSortResults } from '../../../hook/useSortResults';
+import { useSortStageResults } from '../../../hook/useSortResults';
 import { getAgeCategory } from '../../../utils/age';
-import { tdHeartRate, tdHeight, tdTime, tdWatts } from '../utils/td';
+import { tdHeartRate, tdHeight, tdTimeNew, tdWatts } from '../utils/td';
+import { useFinishTime } from '../../../hook/useFinishTime';
 import IconEdit from '../../icons/IconEdit';
-import useLeader from '../../../hook/useLeaders';
-import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
-import TdCpWatts from '../Td/TdCpWatts';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
-import TdSpeed from '../Td/TdSpeed';
-import NPandVIBox from '../../NPandVIBox/NPandVIBox';
+import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
 
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
 import { getCaption } from './utils';
+import { raceResultsColumnsCP } from './column-titles';
 
 const cx = classnames.bind(styles);
 
-function TableStageResults({ results, event, forDNF }) {
+function TableStageResults({ results }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isAdmin = ['admin'].includes(role);
   // показывать сквозную нумерацию в таблице
@@ -39,13 +36,11 @@ function TableStageResults({ results, event, forDNF }) {
 
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
-
-  const [getLeaders, getSweepers] = useLeader(event);
-
-  useShowIndex(setShowIndex, event.typeRaceCustom);
+  const filterCategory = useSelector((state) => state.filterCategory.value);
 
   // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
-  const resultSortedAndFiltered = useSortResults(results, event.typeRaceCustom);
+  const resultSortedAndFiltered = useSortStageResults(results, 'classicGroup');
+  const resultWithFinishTime = useFinishTime(resultSortedAndFiltered);
 
   return (
     <table className={cx('table')}>
@@ -53,7 +48,7 @@ function TableStageResults({ results, event, forDNF }) {
       <Thead columnsCP={columnsCP} showIndex={showIndex} isAdmin={isAdmin} />
 
       <tbody>
-        {resultSortedAndFiltered?.map((result, index) => {
+        {resultWithFinishTime?.map((result, index) => {
           const profile = result.profileData;
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;
@@ -65,82 +60,62 @@ function TableStageResults({ results, event, forDNF }) {
               key={result._id}
             >
               {showIndex && <td className={cx('centerTd')}>{index + 1}</td>}
-
               <td className={styles.centerTd}>
                 <TdRank
-                  value={result.rankEvent}
-                  isDsq={forDNF ? true : isDsq}
-                  dsqType={forDNF ? 'DNF' : dsqType}
+                  value={
+                    filterCategory.name === 'All' ? result.rank.absolute : result.rank.category
+                  }
+                  // isDsq={forDNF ? true : isDsq}
+                  // dsqType={forDNF ? 'DNF' : dsqType}
                   dsqDescription={dsqDescription}
                 />
               </td>
-
               <td>
-                <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
+                <CategoryBox showLabel={true} label={result.category} circle={true} />
               </td>
-
-              <TdRider
-                profile={profile}
-                profileId={result.profileId}
-                getLeaders={getLeaders}
-                getSweepers={getSweepers}
+              <TdRider profile={profile} profileId={result.profileId} />
+              <td>{tdTimeNew(result.finishTime)}</td>
+              <TdGap
+                gap={
+                  filterCategory.name === 'All'
+                    ? result.gapsInCategories.absolute?.toLeader
+                    : result.gapsInCategories.category?.toLeader
+                }
+                dsq={isDsq}
               />
-              <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
-              <TdGap gap={result.gap} dsq={isDsq} />
-              <TdGap gap={result.gapPrev} dsq={isDsq} />
-              <TdSpeed speed={result.speed} />
+              <TdGap
+                gap={
+                  filterCategory.name === 'All'
+                    ? result.gapsInCategories.absolute?.toPrev
+                    : result.gapsInCategories.category?.toPrev
+                }
+                dsq={isDsq}
+              />
+              <TdWattsPerKg valueAddition={result.wattsPerKg} />
+              <td>{tdWatts(result.sensorData.avgWatts)}</td>
 
-              <TdWattsPerKg valueAddition={result.wattsPerKg.addition} />
-
-              <td>{tdWatts(result.sensorData.avgWatts.addition)}</td>
-              <td>
-                <NPandVIBox
-                  variabilityIndex={result.variabilityIndex}
-                  normalizedPower={result.normalizedPower}
-                />
-              </td>
-
-              {columnsCP.map((column, indexColumnCP) => {
+              {/* Колонки с Critical POwer */}
+              {raceResultsColumnsCP.map((column, indexColumnCP) => {
                 const id = `TdCpWatts-${indexColumnCP}`;
 
-                if (column.isVisible) {
-                  return (
-                    <TdCpWatts
-                      cpBestEfforts={result.cpBestEfforts}
-                      interval={column.interval}
-                      key={column.id}
-                      id={id}
-                      onMouseEnter={() => setColumnActive(id)}
-                      onMouseLeave={() => setColumnActive(null)}
-                      hoverEnabled={columnActive === id}
-                    />
-                  );
-                }
-                return null;
+                return (
+                  <TdCpWattsNew
+                    cpBestEfforts={result.cpBestEfforts}
+                    interval={column.interval}
+                    key={column.id}
+                    id={id}
+                    onMouseEnter={() => setColumnActive(id)}
+                    onMouseLeave={() => setColumnActive(null)}
+                    hoverEnabled={columnActive === id}
+                  />
+                );
               })}
 
-              <td>
-                <CategoryRSBox
-                  racingScore={result.profileData.racingScore || 0}
-                  zwiftId={result.profileId}
-                />
-              </td>
-
-              {
-                <>
-                  <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-                  <TdWeight
-                    weight={profile.weightInGrams.addition}
-                    zwiftId={result.profileId}
-                  />
-                  <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
-                  <td>{getAgeCategory(profile.age)}</td>
-                  <TdDifferent
-                    isPairedSteeringDevice={result.sensorData.pairedSteeringDevice}
-                  />
-                </>
-              }
-
+              <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate)}</td>
+              <TdWeight weight={profile.weightInGrams} zwiftId={result.profileId} />
+              <td>{tdHeight(profile.heightInCentimeters)}</td>
+              <td>{getAgeCategory(profile.age)}</td>
+              <TdDifferent isPairedSteeringDevice={result.sensorData.pairedSteeringDevice} />
               {/* Модерация данных райдера */}
               {isAdmin && (
                 <td>

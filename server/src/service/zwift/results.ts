@@ -19,6 +19,10 @@ export async function getResults({ subgroupObj, subgroupLabel = 'E', token }: Ge
     });
     // добавление буквенного названия группы в каждый результат
 
+    if (!eventData) {
+      throw new Error('Ошибка получения результатов заезда с ZwiftAPI');
+    }
+
     for (const entry of eventData.entries) {
       entry.subgroupLabel = subgroupLabel;
       entry.subgroupId = subgroupObj.subgroup_id; // id документа из  БД

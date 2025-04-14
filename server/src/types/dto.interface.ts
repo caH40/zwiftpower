@@ -205,6 +205,7 @@ export type StageResultDto = Omit<
   _id: string;
   series: string;
   teamSquadAtRace: string | null;
+  wattsPerKg: number;
   createdAt: string;
   updatedAt: string;
 };

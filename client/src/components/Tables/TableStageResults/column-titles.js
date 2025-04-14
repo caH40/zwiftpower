@@ -5,22 +5,14 @@ export const raceResultsColumnsStartFull = [
   { name: 'Время', id: 4 },
   { name: 'Отставание от лидера', id: 5 },
   { name: 'Отставание от райдера впереди', id: 6 },
-  { name: 'Средняя скорость', id: 7 },
   { name: 'Удельная средняя мощность за гонку', id: 8 },
   { name: 'Средняя мощность за гонку', id: 9 },
-  { name: 'Нормализованная мощность', id: 10 },
 ];
 export const raceResultsColumnsCP = [
-  { name: '5с', id: 100 },
-  { name: '30с', id: 101 },
-  { name: '1м', id: 102 },
-  { name: '5м', id: 103 },
-  { name: '12м', id: 104 },
-  { name: '20м', id: 105 },
-  { name: '40м', id: 106 },
+  { name: '5м', id: 103, interval: 300 },
+  { name: '20м', id: 105, interval: 1200 },
 ];
 export const raceResultsColumnsEnd = [
-  { name: 'Рейтинговые очки', tooltip: 'Гоночные рейтинговые очки', id: 11 },
   { name: 'Пульс', id: 12 },
   { name: 'Вес', id: 13 },
   { name: 'Рост', id: 14 },

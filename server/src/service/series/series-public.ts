@@ -1,6 +1,5 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { seriesAllPublicDto, seriesOnePublicDto, stagesPublicDto } from '../../dto/series.js';
-import { TourResultsManager } from './tour/TourResultsManager.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
 
 // types
@@ -23,6 +22,7 @@ import {
   TSeriesPublicServiceGetStagesParams,
   TSeriesPublicServiceSortStagesParams,
 } from '../../types/types.interface.js';
+import { TourResults } from './tour/TourResults.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -145,9 +145,9 @@ export class SeriesPublicService {
         break;
 
       case 'tour': {
-        const tourResultsManager = new TourResultsManager(String(seriesOneDB._id));
+        const tourResults = new TourResults(String(seriesOneDB._id));
 
-        seriesResults = await tourResultsManager.getStageResults(stageOrder);
+        seriesResults = await tourResults.getStageResults(stageOrder);
 
         break;
       }

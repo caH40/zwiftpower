@@ -50,3 +50,32 @@ export const useSortResults = (results, typeRaceCustom) => {
 
   return resultSortedAndFiltered;
 };
+
+/**
+ * Фильтрация и сортировка таблицы результатов этапа серии заездов.
+ * @param {} results массив результатов райдеров в Эвенте
+ * @param {} setShowIndex установка отображения/скрытия столбца со сквозной нумерацией
+ * @returns
+ */
+export const useSortStageResults = (results) => {
+  const filterCategory = useSelector((state) => state.filterCategory.value);
+  const filterWatts = useSelector((state) => state.filterWatts.value);
+  const activeSorting = useSelector((state) => state.sortTable.activeSorting);
+
+  const resultSortedAndFiltered = useMemo(() => {
+    let filteredResults = [...results];
+
+    // фильтрация результатов по принадлежности к подгруппе (категории) райдера
+    if (filterCategory.name !== 'All') {
+      filteredResults = [...results].filter(
+        (result) => result.category === filterCategory.name
+      );
+    }
+
+    // const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
+
+    return filteredResults;
+  }, [filterCategory, filterWatts, activeSorting, results]);
+
+  return resultSortedAndFiltered;
+};

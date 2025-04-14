@@ -771,7 +771,11 @@ export type TStageResult = {
   profileId: number; // Zwift ID райдера.
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
-  rank: number; // Место в категории.
+  rank: {
+    category: number; // Место в категории.
+    absolute: number; // Место в абсолюте.
+  };
+
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     // label: 0 | 1 | 2 | 3 | 4 | 5;

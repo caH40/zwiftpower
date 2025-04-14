@@ -131,6 +131,10 @@ const stageResultSchema = new Schema<IStageResult>(
       type: String,
       default: null,
     },
+    rank: {
+      category: { type: Number, default: 0 },
+      absolute: { type: Number, default: 0 },
+    },
     gapsInCategories: GapsInCategoriesSchema,
     points: { type: pointsStageResultSchema, default: null },
     disqualification: { type: disqualificationSchema, default: null },

@@ -1,9 +1,8 @@
-import { stageResultsDto } from '../../../dto/series.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
-import { StageResultDto } from '../../../types/dto.interface.js';
 import { TResponseService } from '../../../types/http.interface.js';
 import { TStageResult } from '../../../types/model.interface.js';
 import { TCategorySeries } from '../../../types/types.interface.js';
+import { addAgeAndFlagNew } from '../../protocol/age-and-flag.js';
 import { HandlerSeries } from '../HandlerSeries.js';
 
 /**
@@ -32,20 +31,28 @@ export class TourResultsManager extends HandlerSeries {
     }
 
     // Получение финишных протоколов заездов Этапа серии из ZwiftAPI.
-    const protocolsStageFromZwift = await this.getProtocolsStageFromZwift({
-      stages,
-      stageOrder,
-    });
+    const { stageResults: protocolsStageFromZwift, subgroupIdsInEvents } =
+      await this.getProtocolsStageFromZwift({
+        stages,
+        stageOrder,
+      });
+
+    // Добавление флага и возраста из регистрационных данных райдеров в результаты этапа соответствующих райдеров. (Эти данные отсутствуют в финишном протоколе ZwiftAPI).
+    const resultsWithAgeAndFlag = await addAgeAndFlagNew(
+      subgroupIdsInEvents,
+      protocolsStageFromZwift
+    );
 
     // Установка категорий райдерам.
     const resultsWithCategories = await this.setCategories({
-      stageResults: protocolsStageFromZwift,
+      stageResults: resultsWithAgeAndFlag,
       stageOrder,
     });
 
     // Сортировка результатов и проставления ранкинга в каждой категории.
     const resultsWithRank = this.setCategoryRanks(resultsWithCategories);
 
+    // Установка финишных гэпов (разрывов между участниками).
     this.setGaps(resultsWithRank);
 
     // Удаление всех старых результатов текущего этапа серии.
@@ -62,21 +69,21 @@ export class TourResultsManager extends HandlerSeries {
   /**
    * Результаты этапа серии заездов.
    */
-  public getStageResults = async (stageOrder: number): Promise<StageResultDto[]> => {
-    const resultsDB = await StageResultModel.find({
-      series: this.seriesId,
-      order: stageOrder,
-    }).lean<TStageResult[]>();
+  // public getStageResults = async (stageOrder: number): Promise<StageResultDto[]> => {
+  //   const resultsDB = await StageResultModel.find({
+  //     series: this.seriesId,
+  //     order: stageOrder,
+  //   }).lean<TStageResult[]>();
 
-    const resultsAfterDto = resultsDB.map((result) => stageResultsDto(result));
+  //   const resultsAfterDto = resultsDB.map((result) => stageResultsDto(result));
 
-    return resultsAfterDto;
-  };
+  //   return resultsAfterDto;
+  // };
 
   /**
    * Рассчитывает и устанавливает временные гэпы между райдерами для различных категорий.
    *
-   * @param results Массив результатов заезда.
+   * @param results Массив отсортированных по времени результатов заезда.
    */
   setGaps = (results: TStageResult[]) => {
     const categoriesInResults = new Set<TCategorySeries | 'absolute'>(['absolute']);
@@ -94,6 +101,8 @@ export class TourResultsManager extends HandlerSeries {
     > = {};
 
     // Инициализация счетчиков лидеров и предыдущих участников для всех категорий.
+    // leader - индекс лидера в соответствующей категории или абсолюте.
+    // prev - индекс предыдущего результата в соответствующей категории или абсолюте.
     for (const key of categoriesInResults) {
       indexesInCategories[key] = { leader: null, prev: 0 };
     }
@@ -111,12 +120,14 @@ export class TourResultsManager extends HandlerSeries {
 
       // 1. Расчет гэпов для категорий.
       if (categoryInResult) {
+        // Данные, какие индексы в текущей категории (categoryInResult) у лидера и предыдущего участника.
         const categoryEntry = indexesInCategories[categoryInResult];
 
         // Явная проверка, что categoryEntry не undefined или null.
         if (categoryEntry) {
           const indexLeaderCategory = categoryEntry.leader;
 
+          // Если indexLeaderCategory === null, значит этот результат является лидеров в текущей категории (categoryInResult).
           if (indexLeaderCategory === null) {
             categoryEntry.leader = resultIndex;
             categoryEntry.prev = resultIndex;

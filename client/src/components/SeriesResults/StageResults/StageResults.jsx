@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import JSONBlock from '../../JSONBlock/JSONBlock';
 import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
+import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
+import { getCategoriesSortedNew } from '../../UI/Filters/FilterCategory/categoriesSort';
 
 import styles from './StageResults.module.css';
 
@@ -21,12 +23,24 @@ export default function StageResults() {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
   }, [urlSlug, stageOrder, dispatch]);
 
-  // console.log(stageResults);
-
   return (
     <section className={styles.wrapper__wide}>
-      {/* <TableStageResults /> */}
-      <JSONBlock json={stageResults} />
+      {stageResults && (
+        <>
+          <nav className={styles.block__nav}>
+            {/* Фильтры данных в таблице */}
+            <NavBarResultsRaceTable
+              results={stageResults}
+              hideDocsOnPage={true}
+              hideFilterColumn={true}
+              categoriesButton={getCategoriesSortedNew(stageResults)}
+            />
+          </nav>
+
+          <TableStageResults results={stageResults} />
+          <JSONBlock json={stageResults} />
+        </>
+      )}
     </section>
   );
 }

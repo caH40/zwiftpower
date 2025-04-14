@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -8,10 +7,10 @@ import { setFilterCategory } from '../../../../redux/features/filterCategorySlic
 import styles from './FilterCategory.module.css';
 import { getCategoriesSorted } from './categoriesSort';
 
-function FilterCategory({ results }) {
+function FilterCategory({ results, categoriesFromFilters }) {
   const categoryState = useSelector((state) => state.filterCategory.value);
 
-  const categories = getCategoriesSorted(results);
+  const categories = categoriesFromFilters || getCategoriesSorted(results);
   const quantityCategories = categories.length;
 
   return (

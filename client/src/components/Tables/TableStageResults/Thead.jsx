@@ -6,12 +6,13 @@ import ColumnName from '../Th/ColumnName';
 
 import styles from '../Table.module.css';
 
-import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
+import {
+  raceResultsColumns,
+  raceResultsColumnsCP,
+  raceResultsColumnsEnd,
+} from './column-titles';
 
-// Названия столбцов для которых подключаются стрелки сортировки (кроме столбцов CP)
-const columnsWithSorting = ['Время', 'Категория'];
-
-function Thead({ columnsCP, showIndex, isAdmin }) {
+function Thead({ showIndex, isAdmin }) {
   const dispatch = useDispatch();
 
   const setSortTable = (columnCPInterval) => {
@@ -27,41 +28,17 @@ function Thead({ columnsCP, showIndex, isAdmin }) {
           <th key={column.id}>
             <div className={styles.th__box}>
               <ColumnName columnName={column.name} />
-              {columnsWithSorting.includes(column.name) && (
-                <IconArrows
-                  columnName={column.name}
-                  getClick={setSortTable}
-                  squareSize={16}
-                  activeDate={{
-                    isActive: column.name === activeSorting.columnName,
-                    isRasing: activeSorting.isRasing,
-                  }}
-                />
-              )}
             </div>
           </th>
         ))}
-        {columnsCP.map((column) => {
-          if (column.isVisible) {
-            return (
-              <th key={column.id}>
-                <div className={styles.th__box}>
-                  <span>{column.name}</span>
-                  <IconArrows
-                    columnName={column.interval}
-                    getClick={setSortTable}
-                    squareSize={16}
-                    activeDate={{
-                      isActive: column.interval === activeSorting.columnName,
-                      isRasing: activeSorting.isRasing,
-                    }}
-                  />
-                </div>
-              </th>
-            );
-          }
-          return null;
-        })}
+
+        {raceResultsColumnsCP.map((column) => (
+          <th key={column.id}>
+            <div className={styles.th__box}>
+              <span>{column.name}</span>
+            </div>
+          </th>
+        ))}
         {raceResultsColumnsEnd.map((column) => (
           <th key={column.id}>
             <ColumnName columnName={column.name} />
