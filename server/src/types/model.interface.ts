@@ -777,7 +777,7 @@ export type TStageResult = {
     // label: 0 | 1 | 2 | 3 | 4 | 5;
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
   };
-  gapsInCategories: TGapsInCategories;
+  gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   category: TCategorySeries | null; // Категория райдера в текущем заезде Серии.
   points: TPointsStageResult | null;
   disqualification: {
@@ -808,7 +808,5 @@ export type TStageResult = {
 export type TGapsInCategories = {
   category: TGap | null;
   absolute: TGap | null;
-  absoluteGenderMale: TGap | null;
-  absoluteGenderFemale: TGap | null;
 };
 export type TGap = { toLeader: number | null; toPrev: number | null }; // null если райдер является лидером и никого нет впереди.

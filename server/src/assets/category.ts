@@ -1,3 +1,5 @@
+import { TCategorySeries } from '../types/types.interface';
+
 /**
  * Правила категорий по zwiftpower
  * данные это ftp = CP20*0.95 нижние границы
@@ -34,3 +36,18 @@ export const eventSubGroups = new Map([
   [4, 'D'],
   [5, 'E'],
 ]);
+
+// Все возможные категории по мощностным показателям.
+export const allCategories: TCategorySeries[] = [
+  'APlus',
+  'A',
+  'BPlus',
+  'B',
+  'C',
+  'D',
+  'E',
+  'WA',
+  'WB',
+  'WC',
+  'WD',
+];

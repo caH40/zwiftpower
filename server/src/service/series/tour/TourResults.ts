@@ -25,7 +25,7 @@ export class TourResults extends HandlerSeries {
 
     const sortedResults = this.sortAndFilterResultsGroups(resultsAfterDto);
 
-    return resultsAfterDto;
+    return sortedResults;
   };
 
   /**
@@ -47,27 +47,4 @@ export class TourResults extends HandlerSeries {
     // Возвращаем: сначала валидные, потом дисквалифицированные.
     return [...validResults, ...disqualifiedResults];
   };
-
-  /**
-   * Вычисление и добавление отставаний в результаты: gap-до лидера, gapPrev до райдера впереди
-   */
-  // gapValue = (
-  //   results: StageResultDto[],
-  //   typeGap: 'absolute' | 'category'
-  // ): StageResultDto[] => {
-  //   const lengthResult = results.length;
-
-  //   for (let i = 1; i < lengthResult; i++) {
-  //     results[i].gaps[typeGap].leader =
-  //       results[i].activityData.durationInMilliseconds -
-  //       results[0].activityData.durationInMilliseconds;
-
-  //     if (i !== lengthResult)
-  //       results[i].gaps[typeGap].prev =
-  //         results[i].activityData.durationInMilliseconds -
-  //         results[i - 1].activityData.durationInMilliseconds;
-  //   }
-
-  //   return results;
-  // };
 }
