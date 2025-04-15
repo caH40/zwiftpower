@@ -20,17 +20,12 @@ import TdWeight from '../Td/TdWeight';
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
-import { getCaption } from './utils';
+import { getSeriesCaption } from './utils';
 import { raceResultsColumnsCP } from './column-titles';
 
 const cx = classnames.bind(styles);
 
-function TableStageResults({ results }) {
-  const { role } = useSelector((state) => state.checkAuth.value.user);
-  const isAdmin = ['admin'].includes(role);
-  // показывать сквозную нумерацию в таблице
-  const [showIndex, setShowIndex] = useState(false);
-
+function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, stageStart }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
 
@@ -44,8 +39,10 @@ function TableStageResults({ results }) {
 
   return (
     <table className={cx('table')}>
-      <caption className={cx('caption', 'hidden')}>{getCaption(event)}</caption>
-      <Thead columnsCP={columnsCP} showIndex={showIndex} isAdmin={isAdmin} />
+      <caption className={cx('caption')}>
+        {getSeriesCaption({ stageName, stageOrder, stageStart })}
+      </caption>
+      <Thead columnsCP={columnsCP} isAdmin={isSeriesCreator} />
 
       <tbody>
         {resultWithFinishTime?.map((result, index) => {
@@ -59,7 +56,6 @@ function TableStageResults({ results }) {
               className={cx('hover', { current: zwiftId === result.profileId })}
               key={result._id}
             >
-              {showIndex && <td className={cx('centerTd')}>{index + 1}</td>}
               <td className={styles.centerTd}>
                 <TdRank
                   value={
@@ -116,8 +112,9 @@ function TableStageResults({ results }) {
               <td>{tdHeight(profile.heightInCentimeters)}</td>
               <td>{getAgeCategory(profile.age)}</td>
               <TdDifferent isPairedSteeringDevice={result.sensorData.pairedSteeringDevice} />
+
               {/* Модерация данных райдера */}
-              {isAdmin && (
+              {isSeriesCreator && (
                 <td>
                   <Link to={`/admin/riders/${result.profileId}/main`}>
                     <IconEdit squareSize={20} />

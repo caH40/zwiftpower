@@ -1,521 +1,312 @@
-import { Types } from 'mongoose';
-import slugify from 'slugify';
-
 import { NSeriesModel } from '../../Model/NSeries.js';
-import { Organizer } from '../../Model/Organizer.js';
-import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js';
-import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
-import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
-import { organizerSeriesAllDto, organizerSeriesOneDto } from '../../dto/series.js';
+import { seriesAllPublicDto, seriesOnePublicDto, stagesPublicDto } from '../../dto/series.js';
+import { getResultsSeriesCatchup } from './catchup/index.js';
 
 // types
 import {
-  TOrganizerSeriesAllResponseDB,
-  TOrganizerSeriesOneResponseDB,
+  TSeriesOnePublicResponseDB,
+  TSeriesAllPublicResponseDB,
+  TStagesPublicResponseDB,
 } from '../../types/mongodb-response.types.js';
-import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
-import { TFileMetadataForCloud, TSeriesStage } from '../../types/model.interface.js';
 import {
-  SeriesDataFromClientForCreateFull,
-  SeriesStagesFromClientForPatch,
-  TResponseService,
-} from '../../types/http.interface.js';
-import { handleAndLogError } from '../../errors/error.js';
-import { Cloud } from '../cloud.js';
-import { TParamsSeriesServiceAddStage } from '../../types/types.interface.js';
+  TGroupedSeriesForClient,
+  TSeriesAllPublicDto,
+  TSeriesOnePublicDto,
+  TStagesPublicDto,
+} from '../../types/dto.interface.js';
+import { TResponseService } from '../../types/http.interface.js';
+import { Organizer } from '../../Model/Organizer.js';
+import { TSeries } from '../../types/model.interface.js';
+import {
+  TPublicSeriesServiceFilterStagesParams,
+  TPublicSeriesServiceGetStagesParams,
+  TPublicSeriesServiceSortStagesParams,
+} from '../../types/types.interface.js';
+import { TourResults } from './tour/TourResults.js';
 
-export class SeriesService {
+/**
+ * Класс работы с Сериями заездов по запросам пользователей сайта.
+ */
+export class PublicSeriesService {
   constructor() {}
 
-  // Получение всех серий заездов.
+  /**
+   * Сервис получение всех Серий заездов.
+   */
   public async getAll(
-    organizerId: Types.ObjectId
-  ): Promise<TResponseService<TOrganizerSeriesAllDto[]>> {
-    const seriesDB = await NSeriesModel.find(
-      { organizer: organizerId },
-      SeriesService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
-    )
-      .populate({ path: 'stages.event', select: ['name', 'eventStart'] })
-      .lean<TOrganizerSeriesAllResponseDB[]>();
+    organizerSlug?: string
+  ): Promise<TResponseService<TGroupedSeriesForClient>> {
+    // Получение _id организатора если есть запрос по organizerSlug, для последующего поиска Series
+    const organizer = organizerSlug
+      ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean()
+      : null;
 
-    const seriesAfterDto = organizerSeriesAllDto(seriesDB);
+    // Формирование строки поиска.
+    const searchQuery = { ...(organizer && { organizer }) };
 
-    // Сортировка, сначала более новые Серии.
-    seriesAfterDto.sort(
-      (a, b) => new Date(b.dateStart).getTime() - new Date(a.dateStart).getTime()
-    );
+    // Получение всех Серий заезда, или только Серий заездов организатора, если есть organizerSlug.
+    const seriesDB = await NSeriesModel.find(searchQuery)
+      .populate({ path: 'organizer', select: ['name', 'shortName'] })
+      .populate({ path: 'stages.event', select: ['name', 'id', 'eventStart'] })
+      .lean<TSeriesAllPublicResponseDB[]>();
 
-    return { data: seriesAfterDto, message: 'Все Серии заездов, созданные организатором.' };
+    const seriesAfterDto = seriesAllPublicDto(seriesDB);
+
+    // Группировка карточек по статусам и сортировка внутри каждой группы.
+    const groupedSeries = this.groupByStatus(seriesAfterDto);
+
+    return { data: groupedSeries, message: 'Серии заездов.' };
   }
 
   /**
-   * Получение запрашиваемой серии заездов.
+   * Сервис получение данных Серий заездов по urlSlug.
+   * FIXME: Может добавить options для сужения запроса,
+   * FIXME: Передаются итоговые результаты серии, переместить в другой запрос?,
+   * например получить только Регламент, Расписание и т.д...
    */
-  public async get({
-    seriesId,
-    organizerId,
-  }: {
-    seriesId: string;
-    organizerId: Types.ObjectId;
-  }): Promise<TResponseService<TOrganizerSeriesOneDto>> {
-    const seriesDB = await NSeriesModel.findOne({
-      _id: seriesId,
-      organizer: organizerId,
-    })
-      .populate({ path: 'stages.event', select: ['name', 'eventStart'] })
-      .lean<TOrganizerSeriesOneResponseDB>();
+  public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
+    const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
+      .populate({
+        path: 'stages.event',
+        select: ['id', 'name', 'eventStart'],
+      })
+      .lean<TSeriesOnePublicResponseDB>();
 
-    if (!seriesDB) {
-      throw new Error(
-        `Не найдена запрашиваемая серия с _id: "${seriesId}", Организатором с _id: "${organizerId}"`
-      );
+    if (!seriesOneDB) {
+      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
     }
 
-    const seriesOneAfterDto = organizerSeriesOneDto(seriesDB);
+    // Фильтрация от этапов у которых нет id Эвента.
+    const stagesFilteredAndSorted = seriesOneDB.stages
+      .filter((stage) => stage.event)
+      .sort((a, b) => a.order - b.order);
 
-    // Сортировка этапов по возрастанию номера этапа (order).
-    seriesOneAfterDto.stages.sort((a, b) => a.order - b.order);
+    seriesOneDB.stages = stagesFilteredAndSorted;
 
-    return {
-      data: seriesOneAfterDto,
-      message: 'Данные запрашиваемой Серии заездов для редактирования.',
-    };
+    // Добавление итоговых таблиц результатов для разных типов серий.
+    let seriesResults = {};
+    switch (seriesOneDB.type) {
+      case 'catchUp':
+        seriesResults = await getResultsSeriesCatchup(seriesOneDB._id);
+        break;
+
+      case 'series':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'tour':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'criterium':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      default:
+        throw new Error(`Не опознан тип seriesType: ${seriesOneDB.type}`);
+    }
+
+    const seriesAfterDto = seriesOnePublicDto(seriesOneDB, seriesResults);
+
+    return { data: seriesAfterDto, message: 'Запрашиваемая Серия заездов.' };
   }
 
   /**
-   * Удаляет серию заездов и отвязывает связанные эвенты (этапы серии).
-   *
-   * @param {Object} params - Параметры удаления.
-   * @param {string} params.seriesId - Идентификатор удаляемой серии.
-   * @returns {Promise<TResponseService<null>>} Объект с сообщением о результате операции.
-   * @throws {Error} Если серия с указанным ID не найдена.
+   * Сервис получение результатов серии в зависимости от её типа.
    */
-  public delete = async ({
-    seriesId,
-  }: {
-    seriesId: string;
-  }): Promise<TResponseService<null>> => {
-    // Поиск и удаление серии с получением только name
-    const seriesDB = await NSeriesModel.findOneAndDelete(
-      { _id: seriesId },
-      { name: true, posterFileInfo: true, logoFileInfo: true }
-    ).lean();
-
-    if (!seriesDB) {
-      throw new Error(`Не найдена серия с id: "${seriesId}" для удаления!`);
-    }
-
-    // Удаление привязки серии (_id) в эвентах (этапах серии)
-    const eventsUpdated = await ZwiftEvent.updateMany(
-      { seriesId },
-      { $unset: { seriesId: '' } }
-    ).catch((e) => handleAndLogError(e));
-
-    // Удаление замещенных (старых) файлов изображений из облака.
-    const baseNames = [seriesDB.posterFileInfo?.baseName, seriesDB.logoFileInfo?.baseName];
-    await this.deleteImagesFromCloud(baseNames);
-
-    return {
-      data: null,
-      message: `Удалена серия с названием "${
-        seriesDB.name
-      }". Отвязаны эвенты (этапы) от удаленной серии в количестве: ${
-        eventsUpdated?.modifiedCount || 0
-      }`,
-    };
-  };
-
-  // Создание серии заездов.
-  public async post({
-    hasGeneral,
-    hasTeams,
-    isFinished,
-    dateStart,
-    dateEnd,
-    description,
-    mission,
-    name,
-    rules,
-    prizes,
-    type,
-    organizerId,
-    logoFile,
-    posterFile,
-  }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
-    const { shortName } = await this.checkOrganizer(organizerId);
-
-    // Создание уникального названия для url.
-    const urlSlug = slugify(`${shortName} -${name}`, { lower: true, strict: true });
-
-    // Проверка на уникальность названия Серии у данного Организатора.
-    await this.checkUrlSlug({ urlSlug, name });
-
-    // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await this.saveImages({
-      name,
-      shortName,
-      logoFile,
-      posterFile,
-    });
-
-    // // Итоговые данные для сохранения в БД.
-    const query = {
-      urlSlug,
-      organizer: organizerId,
-      hasGeneral,
-      hasTeams,
-      isFinished,
-      dateStart,
-      dateEnd,
-      ...(description && { description }),
-      ...(mission && { mission }),
-      ...(prizes && { prizes }),
-      name,
-      ...(rules && { rules }),
-      type,
-      organizerId,
-      ...(logoFileInfo && { logoFileInfo }),
-      ...(posterFileInfo && { posterFileInfo }),
-    };
-
-    // Сохранение Серии в БД.
-    await NSeriesModel.create(query);
-
-    return { data: null, message: `Успешна создана Серия с названием "${name}"!` };
-  }
-
-  /**
-   * Обновление данных Серии заездов.
-   */
-  public async put({
-    hasGeneral,
-    hasTeams,
-    isFinished,
-    dateStart,
-    dateEnd,
-    description,
-    mission,
-    name,
-    prizes,
-    rules,
-    type,
-    organizerId,
-    logoFile,
-    posterFile,
-    seriesId,
-  }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
-    const { shortName } = await this.checkOrganizer(organizerId);
-
-    // !!! При изменённом name после редактирования Серии urlSlug не изменяется и остается первоначальным.
-
-    const seriesDB = await NSeriesModel.findOne({ _id: seriesId });
-
-    if (!seriesDB) {
-      throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
-    }
-
-    // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await this.saveImages({
-      name,
-      shortName,
-      baseNameLogoOld: seriesDB.logoFileInfo?.baseName,
-      baseNamePosterOld: seriesDB.posterFileInfo?.baseName,
-      logoFile,
-      posterFile,
-    });
-
-    // Итоговые данные для сохранения в БД.
-    const updateFields = {
-      organizer: organizerId,
-      hasGeneral,
-      hasTeams,
-      isFinished,
-      dateStart,
-      dateEnd,
-      ...(description && { description }),
-      ...(mission && { mission }),
-      ...(prizes && { prizes }),
-      name,
-      ...(rules && { rules }),
-      type,
-      organizerId,
-      ...(logoFileInfo && { logoFileInfo }),
-      ...(posterFileInfo && { posterFileInfo }),
-    };
-
-    Object.assign(seriesDB, updateFields);
-
-    // Сохранение Серии в БД.
-    await seriesDB.save();
-
-    return { data: null, message: `Обновлены данные Серии "${name}"!` };
-  }
-
-  /**
-   * Добавление/удаление этапа Серии.
-   */
-  public async patchStages({
-    seriesId,
-    stage,
-    action,
-  }: SeriesStagesFromClientForPatch): Promise<TResponseService<null>> {
-    const seriesDB = await NSeriesModel.findOne(
-      { _id: seriesId },
-      { stages: true, name: true, _id: false }
-    ).lean<{ stages: TSeriesStage[]; name: string }>();
-
-    // Если серия не найдена, выбрасываем ошибку.
-    if (!seriesDB) {
-      throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
-    }
-
-    if (action === 'add') {
-      await this.addStage({ stage, stages: seriesDB.stages, seriesId });
-    } else if (action === 'delete') {
-      // Удаление Этапа из массива stages.
-      await this.deleteStage({ stageId: stage.event, seriesId });
-    } else {
-      throw new Error('action имеет значение отличное от add или delete!');
-    }
-
-    // Возвращаем успешный ответ.
-    return {
-      data: null,
-      message: `${action === 'add' ? 'Добавлен этап в Серию' : 'Удалён этап из Серии'} "${
-        seriesDB.name
-      }"!`,
-    };
-  }
-
-  /**
-   * Изменение настроек этапа в Серии заездов.
-   */
-  public async patchStage({
-    seriesId,
-    stage,
-  }: Omit<SeriesStagesFromClientForPatch, 'action'>): Promise<TResponseService<null>> {
-    const seriesDB = await NSeriesModel.findOneAndUpdate(
-      { _id: seriesId, 'stages.event': stage.event },
-      { $set: { 'stages.$': stage } },
-      { projection: { name: true }, new: true }
-    ).lean();
-
-    // Если серия не найдена, выбрасываем ошибку.
-    if (!seriesDB) {
-      throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
-    }
-
-    // Возвращаем успешный ответ.
-    return {
-      data: null,
-      message: `Изменены параметры Этапа с eventId: "${stage.event}" в Серии с _id: "${seriesId}" и названием: "${seriesDB.name}"`,
-    };
-  }
-
-  /**
-   * Получение актуальных (не завершившихся) серий заездов организатора (organizerId).
-   */
-  public async getActual({
-    organizerId,
-  }: {
-    organizerId: string;
-  }): Promise<TResponseService<{ name: string; _id: Types.ObjectId }[]>> {
-    const seriesDB = await NSeriesModel.find(
-      {
-        organizer: organizerId,
-        isFinished: false,
-      },
-      { name: true }
-    ).lean<{ name: string; _id: Types.ObjectId }[]>();
-
-    // Возвращаем успешный ответ.
-    return {
-      data: seriesDB,
-      message: 'Актуальные Серии',
-    };
-  }
-
-  /**
-   * Метод добавления (без дублирования по eventId) этапа в Серию заездов.
-   */
-  public addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {
-    const stagesUpdated = [...stages.filter((elm) => String(elm.event) !== stage.event), stage];
-
-    // Сохранение обновленного массива этапов stages. Не производится проверка найденного документа
-    // так как проверялось на верхнем уровне.
-    await NSeriesModel.findOneAndUpdate(
-      { _id: seriesId },
-      { stages: stagesUpdated },
-      { projection: { _id: true } }
-    ).lean<{ _id: Types.ObjectId }>();
-
-    // Привязка Эвента к текущей Серии seriesId.
-    const eventDB = await ZwiftEvent.findOneAndUpdate(
-      { _id: stage.event },
-      { $set: { seriesId: seriesId } },
-      { projection: { _id: true } }
-    ).lean<{ _id: Types.ObjectId }>();
-
-    // Если Эвент не найден, то выбрасываем ошибку.
-    if (!eventDB) {
-      throw new Error(
-        `Не найден привязываемый Эвент к Серии с _id:${stage.event}. Но Эвент был добавлен к Серии!`
-      );
-    }
-  };
-
-  /**
-   * Приватный метод удаления этапа из Серию заездов.
-   */
-  private deleteStage = async ({
-    stageId,
-    seriesId,
-  }: {
-    stageId: string;
-    seriesId: string;
-  }) => {
-    // Удаление этапа из массива stages.
-    await NSeriesModel.findOneAndUpdate(
-      { _id: seriesId },
-      { $pull: { stages: { event: stageId } } },
-      {
-        projection: { _id: true, name: true },
-        new: true,
-      }
-    ).lean<{ _id: Types.ObjectId; name: string }>();
-
-    // Отвязываем Эвент от текущей Серии seriesId.
-    const eventDB = await ZwiftEvent.findOneAndUpdate(
-      { _id: stageId },
-      { $set: { seriesId: null } },
-      { projection: { _id: true } }
-    ).lean<{ _id: Types.ObjectId }>();
-
-    // Если Эвент не найден, то выбрасываем ошибку.
-    if (!eventDB) {
-      throw new Error(
-        `Не найден отвязываемый от Серии Эвент _id:${stageId}. Но сам Эвент был удалён из Серии!`
-      );
-    }
-  };
-
-  /**
-   * Проверяет существование Организатора по его _id и возвращает некоторые данные.
-   * @param organizerId - ID организатора.
-   * @returns Объект с полем shortName.
-   * @throws Ошибку, если организатор не найден.
-   */
-  private checkOrganizer = async (
-    organizerId: string | Types.ObjectId
-  ): Promise<{ shortName: string }> => {
-    const organizerDB = await Organizer.findOne(
-      { _id: organizerId },
-      { shortName: true }
-    ).lean<{ shortName: string }>();
-
-    if (!organizerDB) {
-      throw new Error(`Организатор с _id: "${organizerId}" не найден.`);
-    }
-
-    return { shortName: organizerDB.shortName };
-  };
-
-  /**
-   * Проверка на уникальность urlSlug Серии у данного Организатора.
-   * @param urlSlug - Уникальный идентификатор серии.
-   * @param organizerId - ID организатора (если требуется проверка в рамках конкретного организатора).
-   * @throws Ошибку, если такой urlSlug уже существует.
-   */
-  private checkUrlSlug = async ({
+  public async getStageResults({
     urlSlug,
-    name,
+    stageOrder,
   }: {
     urlSlug: string;
-    name: string;
-  }): Promise<void> => {
-    const existingSeries = await NSeriesModel.findOne({ urlSlug, name }, { _id: true }).lean<{
-      _id: Types.ObjectId;
-    }>();
+    stageOrder: number;
+  }): Promise<TResponseService<unknown>> {
+    const seriesOneDB = await NSeriesModel.findOne(
+      { urlSlug, 'stages.order': stageOrder },
+      { type: true }
+    ).lean<Pick<TSeries, '_id' | 'type'>>();
 
-    if (existingSeries) {
+    if (!seriesOneDB || !seriesOneDB._id) {
       throw new Error(
-        `Существует Серия с таким названием "${name}" у текущего Организатора. Измените название для Серии на уникальное!`
+        `Не найдена Серия заездов с urlSlug: "${urlSlug}" и с order: "${stageOrder}"`
       );
     }
-  };
 
-  private static SERIES_ALL_FOR_ORGANIZER_PROJECTION = {
-    _id: true,
-    dateEnd: true,
-    dateStart: true,
-    isFinished: true,
-    logoFileInfo: true,
-    stages: true,
-    name: true,
-    posterFileInfo: true,
-    urlSlug: true,
-    type: true,
+    let seriesResults = {} as unknown;
+
+    switch (seriesOneDB.type) {
+      case 'catchUp':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'series':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      case 'tour': {
+        const tourResults = new TourResults(String(seriesOneDB._id));
+
+        seriesResults = await tourResults.getStageResults(stageOrder);
+
+        break;
+      }
+
+      case 'criterium':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
+      default:
+        throw new Error(`Не опознан тип seriesType: ${seriesOneDB.type}`);
+    }
+
+    return {
+      data: seriesResults,
+      message: `Результаты этапа ${stageOrder} серии заездов ${urlSlug}`,
+    };
+  }
+
+  /**
+   * Получение данных по этапам серии заездов.
+   */
+  getStages = async ({
+    urlSlug,
+    status,
+  }: TPublicSeriesServiceGetStagesParams): Promise<TResponseService<TStagesPublicDto[]>> => {
+    const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
+      .populate({
+        path: 'stages.event',
+        select: [
+          'name',
+          'id',
+          'eventStart',
+          'imageUrl',
+          'typeRaceCustom',
+          'eventType',
+          'rulesSet',
+          'tags',
+          'started',
+        ],
+        populate: {
+          path: 'eventSubgroups',
+          select: [
+            'id',
+            'mapId',
+            'routeId',
+            'durationInSeconds',
+            'distanceInMeters',
+            'laps',
+            'distanceSummary',
+            'eventSubgroupStart',
+            'subgroupLabel',
+            'tags',
+            'totalEntrantCount',
+          ],
+        },
+      })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '-_id'] })
+      .lean<TStagesPublicResponseDB>();
+
+    if (!seriesOneDB) {
+      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
+    }
+
+    // Фильтрация этапов в зависимости от статуса с последующей сортировкой по дате старта.
+    const filteredStages = this.filterStages({ stages: seriesOneDB.stages, status });
+
+    const stagesAfterDto = stagesPublicDto(filteredStages, seriesOneDB.organizer.logoFileInfo);
+
+    // Сортировка этапов по дате старта в зависимости от status.
+    const sortedStages = this.sortStages({ stages: stagesAfterDto, status });
+    // console.log(sortedStages);
+    return { data: sortedStages, message: 'Данные по этапам серии заездов.' };
   };
 
   /**
-   * Метод работы с файлами изображений. Создание название для файлов и сохранение их в Облаке.
+   * Фильтрация этапов в зависимости от статуса.
    */
-  private saveImages = async ({
-    name,
-    shortName,
-    baseNameLogoOld,
-    baseNamePosterOld,
-    logoFile,
-    posterFile,
-  }: {
-    name: string;
-    shortName: string;
-    baseNameLogoOld?: string; // Базовое название файла изображениям в облаке.
-    baseNamePosterOld?: string; // Базовое название файла изображениям в облаке.
-    logoFile: Express.Multer.File | undefined;
-    posterFile: Express.Multer.File | undefined;
-  }): Promise<{
-    logoFileInfo: TFileMetadataForCloud | null;
-    posterFileInfo: TFileMetadataForCloud | null;
-  }> => {
-    // Суффикс для названия файла в объектном хранилище в Облаке.
-    const entitySuffix = `series-${slugify(name, {
-      lower: true,
-      strict: true,
-    })}`;
+  private filterStages({
+    stages,
+    status,
+  }: TPublicSeriesServiceFilterStagesParams): TStagesPublicResponseDB['stages'] {
+    switch (status) {
+      case 'finished':
+        return stages.filter((s) => s.event?.started === true);
+      case 'upcoming':
+        return stages.filter((s) => s.event?.started === false);
+      case 'all':
+      default:
+        return stages;
+    }
+  }
 
-    // Создание название файла для изображения и сохранение файла в облачном хранилище Облака.
-    const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
-      shortName: shortName.toLowerCase(),
-      baseNameLogoOld,
-      baseNamePosterOld,
-      logoFile,
-      posterFile,
-      entitySuffix,
+  /**
+   * Сортировка этапов в зависимости от статуса.
+   * Для status === 'finished' по убыванию даты старта.
+   * Для status === 'upcoming' по возрастанию даты старта.
+   * FIXME: Может делать сортировку по номеру этапа? (order).
+   */
+  private sortStages({
+    stages,
+    status,
+  }: TPublicSeriesServiceSortStagesParams): TStagesPublicDto[] {
+    switch (status) {
+      case 'finished':
+        return stages.sort(
+          (a, b) => new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime()
+        );
+      case 'upcoming':
+        return stages.sort(
+          (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+        );
+      case 'all':
+      default:
+        return stages.sort(
+          (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()
+        );
+    }
+  }
+
+  /**
+   * Группировка событий по их статусу и сортировка внутри каждой группы.
+   * @param series - Все события.
+   * @returns - Группировка по статусам.
+   */
+  private groupByStatus(series: TSeriesAllPublicDto[]) {
+    const now = Date.now();
+
+    // Объявляем тип для группировки
+    const grouped: TGroupedSeriesForClient = {
+      upcoming: [],
+      ongoing: [],
+      completed: [],
+    };
+
+    // Группируем и сразу сортируем в каждой группе.
+    series.forEach((card) => {
+      const startDate = new Date(card.dateStart).getTime();
+      const endDate = new Date(card.dateEnd).getTime();
+
+      if (now < startDate) {
+        grouped.upcoming.push(card); // Событие еще не началось.
+      } else if (now >= startDate && now <= endDate) {
+        grouped.ongoing.push(card); // Событие проходит сейчас.
+      } else {
+        grouped.completed.push(card); // Событие завершилось.
+      }
     });
 
-    const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
-    const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);
+    // Сортируем каждую группу по дате начала.
+    grouped.upcoming.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
+    grouped.ongoing.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
+    grouped.completed.sort(
+      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+    );
 
-    return { logoFileInfo, posterFileInfo };
-  };
-
-  /**
-   * Удаление файлов из объектного хранилища при удалении Серии заездов.
-   */
-  private deleteImagesFromCloud = async (baseNames: (string | undefined)[]): Promise<void> => {
-    // Удаление замещенных (старых) файлов изображений из облака.
-    const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
-
-    for (const baseName of baseNames) {
-      if (!baseName) {
-        continue;
-      }
-      await cloud
-        .deleteFiles({
-          prefix: baseName,
-        })
-        .catch((e) => handleAndLogError(e));
-    }
-  };
+    return grouped;
+  }
 }

@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import JSONBlock from '../../JSONBlock/JSONBlock';
 import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
 import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
@@ -15,7 +14,19 @@ import styles from './StageResults.module.css';
  */
 export default function StageResults() {
   const { urlSlug, stageOrder } = useParams();
-  const { stageResults } = useSelector((state) => state.seriesPublic);
+  const { stageResults, seriesPublicOne } = useSelector((state) => state.seriesPublic);
+
+  // Может быть несколько этапов с одинаковым номером (order), но разными eventStart.
+  // Необходимо выбирать наименьший eventStart и stageName в этапах с одним номером (order).
+  const stageData = useMemo(() => {
+    if (!seriesPublicOne) {
+      return null;
+    }
+
+    return [...seriesPublicOne.stages]
+      .sort((a, b) => new Date(a.eventStart) - new Date(b.eventStart))
+      .find((stage) => stage.order === +stageOrder);
+  }, [seriesPublicOne, stageOrder]);
 
   const dispatch = useDispatch();
 
@@ -24,8 +35,8 @@ export default function StageResults() {
   }, [urlSlug, stageOrder, dispatch]);
 
   return (
-    <section className={styles.wrapper__wide}>
-      {stageResults && (
+    <section className={styles.wrapper}>
+      {stageResults && stageData && (
         <>
           <nav className={styles.block__nav}>
             {/* Фильтры данных в таблице */}
@@ -37,8 +48,14 @@ export default function StageResults() {
             />
           </nav>
 
-          <TableStageResults results={stageResults} />
-          <JSONBlock json={stageResults} />
+          <div className={styles.wrapper__wide}>
+            <TableStageResults
+              results={stageResults}
+              stageOrder={stageOrder}
+              stageName={stageData.name}
+              stageStart={stageData.eventStart}
+            />
+          </div>
         </>
       )}
     </section>

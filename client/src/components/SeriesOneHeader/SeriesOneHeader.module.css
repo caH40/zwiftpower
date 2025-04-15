@@ -70,6 +70,7 @@
   font-weight: 700;
   line-height: 1;
   color: var(--color-text-main);
+  padding-right: 30px;
 }
 
 /* ====================================================================== */
@@ -85,7 +86,10 @@
     height: 250px;
     padding: 14px;
   }
-
+  .box__edit {
+    top: 14px;
+    right: 14px;
+  }
   .poster {
     min-height: 250px;
   }

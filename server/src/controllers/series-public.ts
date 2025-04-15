@@ -4,17 +4,17 @@ import { handleErrorInController } from '../errors/error.js';
 
 // types
 
-import { SeriesPublicService } from '../service/series/series-public.js';
+import { PublicSeriesService } from '../service/series/PublicSeries.js';
 import { TEventStatus } from '../types/types.interface.js';
 
 /**
  * Контроллер работы с сущностью "Серия заездов"для публичных запросов.
  */
 export class SeriesPublicController {
-  seriesPublicService: SeriesPublicService;
+  publicSeriesService: PublicSeriesService;
 
   constructor() {
-    this.seriesPublicService = new SeriesPublicService();
+    this.publicSeriesService = new PublicSeriesService();
   }
 
   /**
@@ -28,7 +28,7 @@ export class SeriesPublicController {
       // Если передан organizerSlug, значит запрос только по сериям запрашиваемого организатора.
       const organizerSlug = req.params.organizerSlug;
       // Вызов сервиса.
-      const response = await this.seriesPublicService.getAll(organizerSlug);
+      const response = await this.publicSeriesService.getAll(organizerSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
@@ -51,7 +51,7 @@ export class SeriesPublicController {
         return res.status(404);
       }
       // Вызов сервиса.
-      const response = await this.seriesPublicService.get(urlSlug);
+      const response = await this.publicSeriesService.get(urlSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
@@ -78,7 +78,7 @@ export class SeriesPublicController {
       }
 
       // Вызов сервиса.
-      const response = await this.seriesPublicService.getStages({ urlSlug, status });
+      const response = await this.publicSeriesService.getStages({ urlSlug, status });
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
@@ -100,7 +100,7 @@ export class SeriesPublicController {
       }
 
       // Вызов сервиса.
-      const response = await this.seriesPublicService.getStageResults({
+      const response = await this.publicSeriesService.getStageResults({
         urlSlug,
         stageOrder: +stageOrder,
       });

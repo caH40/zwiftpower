@@ -905,9 +905,9 @@ export type TSetCategoriesStageParams = {
 };
 
 /**
- * Тип данных параметров метода SeriesPublicService.getStages
+ * Тип данных параметров метода PublicSeriesService.getStages
  */
-export type TSeriesPublicServiceGetStagesParams = {
+export type TPublicSeriesServiceGetStagesParams = {
   urlSlug: string;
   status: TEventStatus;
 };
@@ -915,16 +915,16 @@ export type TSeriesPublicServiceGetStagesParams = {
 export type TEventStatus = 'all' | 'upcoming' | 'finished' | 'ongoing';
 
 /**
- * Тип данных параметров метода SeriesPublicService.filterStages
+ * Тип данных параметров метода PublicSeriesService.filterStages
  */
-export type TSeriesPublicServiceFilterStagesParams = {
+export type TPublicSeriesServiceFilterStagesParams = {
   stages: TStagesPublicResponseDB['stages'];
   status: TEventStatus;
 };
 /**
- * Тип данных параметров метода SeriesPublicService.sortStages
+ * Тип данных параметров метода PublicSeriesService.sortStages
  */
-export type TSeriesPublicServiceSortStagesParams = {
+export type TPublicSeriesServiceSortStagesParams = {
   stages: TStagesPublicDto[];
   status: TEventStatus;
 };

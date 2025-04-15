@@ -140,6 +140,8 @@ export type TSeriesOnePublicDto = Omit<
     _id: string;
     id: number;
     order: number;
+    name?: string;
+    eventStart: string;
   }[];
   dateStart: string;
   dateEnd: string;

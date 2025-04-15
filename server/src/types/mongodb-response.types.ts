@@ -7,6 +7,7 @@ import {
   TFileMetadataForCloud,
   TFinishProtocolConfig,
   TSeries,
+  TSeriesStage,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 
@@ -98,13 +99,13 @@ export type TSeriesOnePublicResponseDB = Omit<TSeries, 'stages' | 'organizer'> &
     shortName: string;
     logoFileInfo: TFileMetadataForCloud;
   };
-  stages: {
+  stages: (Omit<TSeriesStage, 'event'> & {
     event: {
       _id: Types.ObjectId;
       id: number;
+      eventStart: string;
     };
-    order: number;
-  }[];
+  })[];
 };
 
 /**

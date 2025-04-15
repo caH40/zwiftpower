@@ -121,10 +121,14 @@ export function seriesOnePublicDto(
     logoFileInfo: logoFileInfoOrganizer,
   };
 
+  // Может быть несколько этапов с одинаковым номером (order), но разными eventStart.
+  // На клиенте необходимо выбирать наименьший eventStart в этапах с одним номером (order).
   const stages = series.stages.map((stage) => ({
     id: stage.event.id,
     _id: String(stage.event._id),
     order: stage.order,
+    name: stage.label,
+    eventStart: new Date(stage.event.eventStart).toISOString(),
   }));
 
   const dateStart = series.dateStart.toISOString();

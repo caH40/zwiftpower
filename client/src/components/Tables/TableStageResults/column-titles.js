@@ -1,4 +1,4 @@
-export const raceResultsColumnsStartFull = [
+export const raceResultsColumnsStart = [
   { name: 'Место', id: 1 },
   { name: 'Категория', id: 2 },
   { name: 'Райдер', id: 3 },
@@ -19,10 +19,3 @@ export const raceResultsColumnsEnd = [
   { name: 'Возраст', id: 15 },
   { name: 'Разное', id: 16 },
 ];
-
-export const raceResultsColumns = (setShowIndex) => {
-  if (setShowIndex) {
-    return [{ name: '#', id: 0 }, ...raceResultsColumnsStartFull];
-  }
-  return raceResultsColumnsStartFull;
-};
