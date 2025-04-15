@@ -771,11 +771,7 @@ export type TStageResult = {
   profileId: number; // Zwift ID райдера.
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
-  rank: {
-    category: number; // Место в категории.
-    absolute: number; // Место в абсолюте.
-  };
-
+  rank: TRank;
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     // label: 0 | 1 | 2 | 3 | 4 | 5;
@@ -784,17 +780,14 @@ export type TStageResult = {
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   category: TCategorySeries | null; // Категория райдера в текущем заезде Серии.
   points: TPointsStageResult | null;
-  disqualification: {
-    status: boolean; // Дисквалифицирован ли райдер.
-    reason: string; // Причина дисквалификации.
-  } | null;
+  disqualification: TDisqualification | null;
   penalty:
     | {
         reason: string; // Причина штрафа.
         timeInMilliseconds: number; // Время штрафа.
       }[]
     | null;
-  teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках гонки.
+  teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   sensorData: {
     avgWatts: number;
     heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
@@ -806,6 +799,16 @@ export type TStageResult = {
   updatedAt: Date;
 };
 
+type TRank = {
+  category: number; // Место в категории.
+  absolute: number; // Место в абсолюте.
+};
+
+export type TDisqualification = {
+  status: boolean; // Дисквалифицирован ли райдер.
+  reason: string; // Причина дисквалификации.
+};
+
 /**
  * Отрывы между участником результата и лидером, предыдущим в абсолюте и категориях.
  */
@@ -814,3 +817,28 @@ export type TGapsInCategories = {
   absolute: TGap | null;
 };
 export type TGap = { toLeader: number | null; toPrev: number | null }; // null если райдер является лидером и никого нет впереди.
+
+/**
+ * Тип, описывающий запись в генеральной классификации тура (Tour GC) для MongoDB.
+ * Хранит информацию о позиции райдера в серии заездов, общем времени, статусе дисквалификации
+ * и результатах по каждому этапу.
+ */
+export type TSeriesClassification = {
+  _id?: Types.ObjectId; // MongoDB ID (опционально, если документ ещё не создан).
+  seriesId: Types.ObjectId; // _id серии из БД.
+  rank: TRank; // Итоговое место в классификации.
+  profileId: number; // ZwiftId райдера.
+  finalCategory: TCategorySeries; // Категория, по которой райдер участвует в зачёте и рассчитывается rank.
+  totalFinishPoints: number; // Суммарные очки (для серии с подсчётом очков).
+  totalTimeInMilliseconds: number; // Общее время за все завершённые этапы (в миллисекундах).
+  stagesCompleted: number; // Количество завершённых этапов.
+  disqualification: TDisqualification | null; // Статус дисквалификации.
+  teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
+  stages: {
+    category: TCategorySeries; // Категория, в которой ехал райдер на этапе.
+    stageOrder: number; // Порядковый номер этапа в туре.
+    durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах).
+    finishPoints: number; // Заработанные финишные очки за этап.
+    includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
+  }[]; // Массив этапов, на которых участвовал райдер.
+};
