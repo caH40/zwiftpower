@@ -21,6 +21,7 @@ const SeriesStageSchema = new Schema<TSeriesStage>(
     event: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
     order: { type: Number, default: 0 },
     label: { type: String },
+    hasResults: { type: Boolean, default: false },
     includeResults: { type: Boolean, default: true },
   },
   { _id: false }

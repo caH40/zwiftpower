@@ -25,13 +25,12 @@ export class TourGeneralClassificationService {
 
   /**
    * Пересчет всех итоговых таблиц.
-   * Получить данные какие этапы существуют в Туре.
-   * Для каждого этапа получить результаты райдеров.
-   * Сформировать массив обязательных номеров этапов для генеральной квалификации.
-   *
-   * */
+   */
   public update = async (): Promise<TResponseService<null>> => {
-    const seriesDB = await NSeriesModel.findOne({ _id: this.seriesId }).lean<TSeries>();
+    const seriesDB = await NSeriesModel.findOne(
+      { _id: this.seriesId },
+      { _id: false, name: true, stages: true }
+    ).lean<Pick<TSeries, 'name' | 'stages'>>();
 
     if (!seriesDB) {
       throw new Error(`Серия с ID ${this.seriesId} не найдена.`);
@@ -39,7 +38,7 @@ export class TourGeneralClassificationService {
 
     // Список обязательных этапов для расчета генеральной классификации, отфильтрованный от дублей.
     const requiredStages = seriesDB.stages.reduce<number[]>((acc, cur) => {
-      if (cur.includeResults && !acc.includes(cur.order)) {
+      if (cur.includeResults && !acc.includes(cur.order) && cur.hasResults) {
         acc.push(cur.order);
       }
 

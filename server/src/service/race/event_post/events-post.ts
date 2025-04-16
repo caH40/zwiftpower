@@ -56,7 +56,12 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
     if (seriesDB) {
       const seriesService = new SeriesService();
       await seriesService.addStage({
-        stage: { event: String(eventSaved._id), order: 0, includeResults: true },
+        stage: {
+          event: String(eventSaved._id),
+          order: 0,
+          includeResults: true,
+          hasResults: false,
+        },
         stages: seriesDB.stages,
         seriesId: String(eventParams.seriesId),
       });

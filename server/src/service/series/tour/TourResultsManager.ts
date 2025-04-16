@@ -1,3 +1,4 @@
+import { NSeriesModel } from '../../../Model/NSeries.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
 import { TResponseService } from '../../../types/http.interface.js';
 import { TStageResult } from '../../../types/model.interface.js';
@@ -61,24 +62,19 @@ export class TourResultsManager extends HandlerSeries {
     // Сохранение результатов в БД.
     await StageResultModel.create(resultsWithRank);
 
-    // console.log(`Создано ${response.length} результатов этапа №${stageOrder}`);
+    // Изменение флага hasResults в данных этапа серии если имеется хоть один результат этапа.
+    await NSeriesModel.findOneAndUpdate(
+      { _id: this.seriesId, 'stages.order': stageOrder },
+      {
+        $set: {
+          'stages.$.hasResults': resultsWithRank.length > 0,
+        },
+      },
+      { new: true }
+    );
 
     return { data: null, message: `Созданы результаты этапа №${stageOrder}` };
   }
-
-  /**
-   * Результаты этапа серии заездов.
-   */
-  // public getStageResults = async (stageOrder: number): Promise<StageResultDto[]> => {
-  //   const resultsDB = await StageResultModel.find({
-  //     series: this.seriesId,
-  //     order: stageOrder,
-  //   }).lean<TStageResult[]>();
-
-  //   const resultsAfterDto = resultsDB.map((result) => stageResultsDto(result));
-
-  //   return resultsAfterDto;
-  // };
 
   /**
    * Рассчитывает и устанавливает временные гэпы между райдерами для различных категорий.
