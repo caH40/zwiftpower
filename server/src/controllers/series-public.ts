@@ -96,7 +96,7 @@ export class SeriesPublicController {
       const { urlSlug, stageOrder } = req.params;
 
       if (!urlSlug || urlSlug === 'undefined' || !stageOrder || stageOrder === 'undefined') {
-        res.status(404);
+        throw new Error('Не получены валидные данные по urlSlug или stageOrder');
       }
 
       // Вызов сервиса.
@@ -104,6 +104,27 @@ export class SeriesPublicController {
         urlSlug,
         stageOrder: +stageOrder,
       });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Получение генеральной классификации серии заездов.
+   */
+  public getGeneralClassification = async (req: Request, res: Response) => {
+    try {
+      const { urlSlug } = req.params;
+
+      if (!urlSlug || urlSlug === 'undefined') {
+        throw new Error('Не получены валидные данные по urlSlug');
+      }
+
+      // Вызов сервиса.
+      const response = await this.publicSeriesService.getGeneralClassification(urlSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

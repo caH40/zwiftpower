@@ -7,6 +7,7 @@ import {
   TFileMetadataForCloud,
   TFinishProtocolConfig,
   TSeries,
+  TSeriesClassification,
   TSeriesStage,
   TStageResult,
   ZwiftEventSubgroupSchema,
@@ -163,3 +164,10 @@ export type TStagesResultsForGC = Pick<
   | 'disqualification'
   | 'teamSquadAtRace'
 >;
+
+/**
+ * Генеральная классификация серии заездов.
+ */
+export type TGeneralClassificationDB = Omit<TSeriesClassification, 'seriesId'> & {
+  seriesId: Pick<TSeries, 'name'>;
+};

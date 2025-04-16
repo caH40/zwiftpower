@@ -13,6 +13,10 @@ const seriesResultsController = new SeriesResultsController();
  */
 export const routerSeries = Router();
 
+routerSeries.get(
+  '/general-classification/:urlSlug',
+  seriesPublicController.getGeneralClassification
+);
 routerSeries.get('/stage/results/:urlSlug/:stageOrder', seriesPublicController.getResults);
 routerSeries.put('/stage/results', seriesResultsController.updateResultsFromZwift);
 routerSeries.get('/organizers/:organizerSlug?', seriesPublicController.getAll);

@@ -1,28 +1,33 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { seriesAllPublicDto, seriesOnePublicDto, stagesPublicDto } from '../../dto/series.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
+import { TourResults } from './tour/TourResults.js';
+import { Organizer } from '../../Model/Organizer.js';
 
 // types
 import {
   TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
   TStagesPublicResponseDB,
+  TGeneralClassificationDB,
 } from '../../types/mongodb-response.types.js';
 import {
+  TGeneralClassificationDto,
   TGroupedSeriesForClient,
   TSeriesAllPublicDto,
   TSeriesOnePublicDto,
   TStagesPublicDto,
 } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { Organizer } from '../../Model/Organizer.js';
 import { TSeries } from '../../types/model.interface.js';
 import {
   TPublicSeriesServiceFilterStagesParams,
   TPublicSeriesServiceGetStagesParams,
   TPublicSeriesServiceSortStagesParams,
 } from '../../types/types.interface.js';
-import { TourResults } from './tour/TourResults.js';
+import { SeriesClassificationModel } from '../../Model/SeriesClassification.js';
+import { Types } from 'mongoose';
+import { generalClassificationDto } from '../../dto/resultsSeries.dto.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -61,8 +66,6 @@ export class PublicSeriesService {
   /**
    * Сервис получение данных Серий заездов по urlSlug.
    * FIXME: Может добавить options для сужения запроса,
-   * FIXME: Передаются итоговые результаты серии, переместить в другой запрос?,
-   * например получить только Регламент, Расписание и т.д...
    */
   public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
     const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
@@ -95,9 +98,12 @@ export class PublicSeriesService {
         seriesResults = { message: 'В разработке...' };
         break;
 
-      case 'tour':
-        seriesResults = { message: 'В разработке...' };
+      case 'tour': {
+        seriesResults = {
+          message: 'Генеральная классификация отправляется отдельным запросом.',
+        };
         break;
+      }
 
       case 'criterium':
         seriesResults = { message: 'В разработке...' };
@@ -165,6 +171,37 @@ export class PublicSeriesService {
       message: `Результаты этапа ${stageOrder} серии заездов ${urlSlug}`,
     };
   }
+
+  /**
+   * Получение всех итоговых таблиц.
+   */
+  public getGeneralClassification = async (
+    urlSlug: string
+  ): Promise<TResponseService<TGeneralClassificationDto>> => {
+    // Данные по Серии заездов.
+    const seriesOneDB = await NSeriesModel.findOne(
+      { urlSlug },
+      { _id: true, name: true }
+    ).lean<{
+      _id: Types.ObjectId;
+      name: string;
+    }>();
+
+    // Проверка, что данная серия существует в БД.
+    if (!seriesOneDB) {
+      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
+    }
+
+    // Получение генеральной классификации серии заездов.
+    const generalClassification = await SeriesClassificationModel.find({
+      seriesId: seriesOneDB._id,
+    }).lean<TGeneralClassificationDB>();
+
+    return {
+      data: generalClassificationDto(generalClassification),
+      message: `Генеральная классификация серии "${seriesOneDB.name}"`,
+    };
+  };
 
   /**
    * Получение данных по этапам серии заездов.

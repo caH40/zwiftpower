@@ -8,6 +8,7 @@ import {
 } from './model.interface';
 import {
   TEventsForSeriesResponseDB,
+  TGeneralClassificationDB,
   TOrganizerSeriesAllResponseDB,
   TSeriesAllPublicResponseDB,
   TSeriesOnePublicResponseDB,
@@ -210,4 +211,11 @@ export type StageResultDto = Omit<
   wattsPerKg: number;
   createdAt: string;
   updatedAt: string;
+};
+
+/**
+ * DTO получения результатов этапа серии.
+ */
+export type TGeneralClassificationDto = Omit<TGeneralClassificationDB, '_id'> & {
+  _id: string;
 };

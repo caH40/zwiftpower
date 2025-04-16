@@ -1,6 +1,8 @@
 // types
 import { ResultsSeriesDtoArg } from '../types/types.interface.js';
 import { ResultsSeriesFetch } from '../common/types/resultsSeries.interface.js';
+import { TGeneralClassificationDB } from '../types/mongodb-response.types.js';
+import { TGeneralClassificationDto } from '../types/dto.interface.js';
 
 export const resultsSeriesDto = ({
   results,
@@ -16,3 +18,12 @@ export const resultsSeriesDto = ({
   };
   return resultsSeries;
 };
+
+/**
+ * DTO для генеральной классификации серии заездов.
+ */
+export function generalClassificationDto(
+  gc: TGeneralClassificationDB
+): TGeneralClassificationDto {
+  return { ...gc, _id: String(gc._id) };
+}

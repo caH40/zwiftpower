@@ -52,7 +52,7 @@ seriesClassificationSchema.index({ seriesId: 1 }); // Индекс для series
 seriesClassificationSchema.index({ profileId: 1 }); // Индекс для profileId для ускорения поиска по райдеру.
 
 // Модель для работы с коллекцией TourGeneralClassification
-export const TourGeneralClassification = model<ISeriesClassification>(
+export const SeriesClassificationModel = model<ISeriesClassification>(
   'SeriesClassificationSchema',
   seriesClassificationSchema
 );

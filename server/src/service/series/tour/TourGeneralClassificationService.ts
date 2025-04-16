@@ -1,6 +1,6 @@
 import { categoriesForRankings } from '../../../assets/category.js';
 import { NSeriesModel } from '../../../Model/NSeries.js';
-import { TourGeneralClassification } from '../../../Model/SeriesClassification.js';
+import { SeriesClassificationModel } from '../../../Model/SeriesClassification.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
 import { TResponseService } from '../../../types/http.interface.js';
 
@@ -17,12 +17,6 @@ type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
  */
 export class TourGeneralClassificationService {
   constructor(public seriesId: string) {}
-
-  /**
-   * Получение всех итоговых таблиц.
-   */
-  public get = async () => {};
-
   /**
    * Пересчет всех итоговых таблиц.
    */
@@ -52,10 +46,10 @@ export class TourGeneralClassificationService {
     const gc = this.createGC(riderResults, requiredStages);
 
     // Удаление предыдущих данных по этой серии.
-    await TourGeneralClassification.deleteMany({ seriesId: this.seriesId });
+    await SeriesClassificationModel.deleteMany({ seriesId: this.seriesId });
 
     // Сохранение в БД.
-    await TourGeneralClassification.create(gc);
+    await SeriesClassificationModel.create(gc);
 
     return {
       data: null,
