@@ -13,3 +13,9 @@ export const UpdateStageResultsSchema = z.object({
     .positive('Порядок этапа должен быть положительным числом')
     .max(100, 'Порядок этапа не может превышать 100'),
 });
+
+export const UpdateSeriesGCSchema = z.object({
+  seriesId: z.string().refine((value) => mongooseUtils.checkValidObjectId(value), {
+    message: 'Некорректный ObjectId',
+  }), // Используем кастомную валидацию
+});

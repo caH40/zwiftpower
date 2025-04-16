@@ -11,6 +11,7 @@ import {
   TLocationInfo,
   TMetrics,
   TOrganizer,
+  TSeriesClassification,
   TSeriesStage,
   TStageResult,
   ZwiftEventSchema,
@@ -928,3 +929,8 @@ export type TPublicSeriesServiceSortStagesParams = {
   stages: TStagesPublicDto[];
   status: TEventStatus;
 };
+
+/**
+ * Тип генеральной классификации серии при её создании.
+ */
+export type TGCForSave = Omit<TSeriesClassification, 'seriesId'> & { seriesId: string };

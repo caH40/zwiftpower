@@ -51,3 +51,19 @@ export const allCategories: TCategorySeries[] = [
   'WC',
   'WD',
 ];
+
+// Объект для подсчета категорий в результатах заехда или серий.
+export const categoriesForRankings: Record<TCategorySeries | 'absolute', number> = {
+  APlus: 1,
+  A: 1,
+  BPlus: 1,
+  B: 1,
+  C: 1,
+  D: 1,
+  E: 1,
+  WA: 1,
+  WB: 1,
+  WC: 1,
+  WD: 1,
+  absolute: 1,
+};

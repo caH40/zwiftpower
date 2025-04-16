@@ -8,6 +8,7 @@ import {
   TFinishProtocolConfig,
   TSeries,
   TSeriesStage,
+  TStageResult,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 
@@ -147,3 +148,18 @@ export type TSeriesForMetaTagsResponseDB = Pick<
 export type TFinishProtocolConfigResponseDB = Omit<TFinishProtocolConfig, 'organizer'> & {
   organizer: { name: string; _id: Types.ObjectId };
 };
+
+/**
+ * Все результаты серии для создания генеральной классификации.
+ */
+export type TStagesResultsForGC = Pick<
+  TStageResult,
+  | 'order'
+  | 'profileId'
+  | 'activityData'
+  | 'category'
+  | 'rank'
+  | 'points'
+  | 'disqualification'
+  | 'teamSquadAtRace'
+>;

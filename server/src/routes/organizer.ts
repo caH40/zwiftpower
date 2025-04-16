@@ -20,9 +20,12 @@ import { fileMiddleware } from '../middleware/file.js';
 import { SeriesController } from '../controllers/series.js';
 import { getEventsForSeries } from '../controllers/race.js';
 
+import { SeriesResultsController } from '../controllers/SeriesResults.js';
+
 export const routerOrganizer = Router();
 
 const seriesController = new SeriesController();
+const seriesResultsController = new SeriesResultsController();
 
 routerOrganizer.put('/bots', authOrganizer, putOrganizerBotZwift);
 routerOrganizer.get('/bots', authOrganizer, getOrganizerBotZwift);
@@ -71,6 +74,12 @@ routerOrganizer.put(
 routerOrganizer.get('/series/events', authOrganizer, getEventsForSeries);
 routerOrganizer.patch('/series/stage', authOrganizer, seriesController.patchStage);
 routerOrganizer.patch('/series/stages', authOrganizer, seriesController.patchStages);
+
+// Маршруты для генеральных классификаций туров.
+routerOrganizer.post(
+  '/series/results/general-classification',
+  seriesResultsController.updateGC
+);
 
 // Из-за жадного поиска динамический маршрут перенесён в конец модуля.
 routerOrganizer.get('/series/:seriesId', authOrganizer, seriesController.get);

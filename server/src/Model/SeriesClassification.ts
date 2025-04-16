@@ -23,7 +23,7 @@ const stageSchema = new Schema(
     category: { type: String, required: true }, // Категория.
     stageOrder: { type: Number, required: true }, // Порядковый номер этапа.
     durationInMilliseconds: { type: Number, required: true }, // Время этапа.
-    includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
+    // includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
     finishPoints: { type: Number, default: 0 }, // Очки за этап (если есть).
   },
   { _id: false }
@@ -36,7 +36,7 @@ const seriesClassificationSchema = new Schema({
     category: { type: Number, default: 0 },
     absolute: { type: Number, default: 0 },
   }, // Итоговое место в генеральной классификации.
-  finalCategory: { type: String, required: true }, // Категория, по которой райдер участвует в зачёте и рассчитывается rank.
+  finalCategory: { type: String, default: null }, // Категория, по которой райдер участвует в зачёте и рассчитывается rank.
   profileId: { type: Number, required: true }, // ZwiftId райдера.
   totalFinishPoints: { type: Number, default: 0 }, // Суммарные очки за серию.
   totalTimeInMilliseconds: { type: Number, default: 0 }, // Общее время за все этапы.
