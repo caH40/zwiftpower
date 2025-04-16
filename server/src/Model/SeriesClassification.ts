@@ -2,6 +2,7 @@ import mongoose, { Schema, model, Types, Document } from 'mongoose';
 
 // types
 import { TSeriesClassification } from '../types/model.interface';
+import { profileDataSchema } from './StageResult.js';
 
 // Интерфейс для результата в генеральном зачете тура.
 export interface ISeriesClassification extends Omit<TSeriesClassification, '_id'>, Document {
@@ -25,6 +26,7 @@ const stageSchema = new Schema(
     durationInMilliseconds: { type: Number, required: true }, // Время этапа.
     // includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
     finishPoints: { type: Number, default: 0 }, // Очки за этап (если есть).
+    profileData: { type: profileDataSchema },
   },
   { _id: false }
 );

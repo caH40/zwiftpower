@@ -23,7 +23,7 @@ export const resultsSeriesDto = ({
  * DTO для генеральной классификации серии заездов.
  */
 export function generalClassificationDto(
-  gc: TGeneralClassificationDB
-): TGeneralClassificationDto {
-  return { ...gc, _id: String(gc._id) };
+  generalClassificationSeries: TGeneralClassificationDB[]
+): TGeneralClassificationDto[] {
+  return generalClassificationSeries.map((gc) => ({ ...gc, _id: String(gc._id) }));
 }

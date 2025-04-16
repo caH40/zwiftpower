@@ -21,6 +21,7 @@ export function SeriesRoute() {
       <Route path="/series" element={<Series />} />
       <Route path="/series/:urlSlug" element={<SeriesOneLayout />}>
         <Route path="/series/:urlSlug/schedule" element={<SeriesOneSchedule />} />
+
         <Route path="/series/:urlSlug/results" element={<SeriesOneResults />}>
           <Route path="/series/:urlSlug/results/stage/:stageOrder" element={<StageResults />} />
         </Route>

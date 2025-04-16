@@ -13,7 +13,7 @@ import { TCategorySeries, TGCForSave } from '../../../types/types.interface.js';
 type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
 
 /**
- * Класс работы с итоговыми результатами всего тура.
+ * Класс управления/создания генеральной классификации тура.
  */
 export class TourGeneralClassificationService {
   constructor(public seriesId: string) {}
@@ -68,6 +68,7 @@ export class TourGeneralClassificationService {
       {
         order: true,
         profileId: true,
+        profileData: true,
         activityData: true,
         category: true,
         rank: true,
@@ -132,6 +133,7 @@ export class TourGeneralClassificationService {
       // Список этапов, в которых участвовал райдер.
       const stages = results.map((stage) => ({
         category: stage.category,
+        profileData: stage.profileData,
         stageOrder: stage.order,
         durationInMilliseconds: stage.activityData.durationInMilliseconds,
         finishPoints: stage.points?.finishPoints || 0,

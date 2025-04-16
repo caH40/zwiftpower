@@ -277,3 +277,24 @@ export const fetchUpdateSeriesStage = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Изменение настроек этапа в Серии заездов.
+ */
+export const fetchGeneralClassification = createAsyncThunk(
+  'seriesGeneralClassification/get',
+  async ({ urlSlug }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/general-classification/${urlSlug}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

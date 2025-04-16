@@ -11,7 +11,7 @@ export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
 }
 
 // Схема профиля райдера
-const profileDataSchema = new Schema(
+export const profileDataSchema = new Schema(
   {
     firstName: { type: String },
     lastName: { type: String },

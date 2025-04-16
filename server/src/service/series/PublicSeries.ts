@@ -177,7 +177,7 @@ export class PublicSeriesService {
    */
   public getGeneralClassification = async (
     urlSlug: string
-  ): Promise<TResponseService<TGeneralClassificationDto>> => {
+  ): Promise<TResponseService<TGeneralClassificationDto[]>> => {
     // Данные по Серии заездов.
     const seriesOneDB = await NSeriesModel.findOne(
       { urlSlug },
@@ -195,10 +195,13 @@ export class PublicSeriesService {
     // Получение генеральной классификации серии заездов.
     const generalClassification = await SeriesClassificationModel.find({
       seriesId: seriesOneDB._id,
-    }).lean<TGeneralClassificationDB>();
+    }).lean<TGeneralClassificationDB[]>();
+
+    // Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
+    const sortedGC = this.sortClassifications(generalClassification);
 
     return {
-      data: generalClassificationDto(generalClassification),
+      data: generalClassificationDto(sortedGC),
       message: `Генеральная классификация серии "${seriesOneDB.name}"`,
     };
   };
@@ -346,4 +349,33 @@ export class PublicSeriesService {
 
     return grouped;
   }
+
+  /**
+   * Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
+   */
+  private sortClassifications = (
+    classifications: TGeneralClassificationDB[]
+  ): TGeneralClassificationDB[] => {
+    const { valid, dsq } = classifications.reduce<{
+      valid: TGeneralClassificationDB[];
+      dsq: TGeneralClassificationDB[];
+    }>(
+      (acc, cur) => {
+        // Сортировка этапов внутри результата по возрастанию номера этапа в серии заездов.
+        cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
+
+        if (cur.disqualification?.status) {
+          acc.dsq.push(cur);
+        } else {
+          acc.valid.push(cur);
+        }
+        return acc;
+      },
+      { valid: [], dsq: [] }
+    );
+
+    valid.sort((a, b) => a.totalTimeInMilliseconds - b.totalTimeInMilliseconds);
+
+    return [...valid, ...dsq];
+  };
 }

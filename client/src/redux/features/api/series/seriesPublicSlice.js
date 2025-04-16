@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  fetchGeneralClassification,
   fetchGetSeries,
   fetchGetSeriesOne,
   fetchGetStageResults,
@@ -12,6 +13,7 @@ const initialState = {
   seriesPublic: null, // Серии для пользователей.
   seriesPublicOne: null,
   stageResults: null,
+  generalClassification: null,
   stages: null,
   message: null,
   status: null,
@@ -36,6 +38,9 @@ const seriesPublicSlice = createSlice({
     },
     resetStages: (state) => {
       state.stages = null;
+    },
+    resetGeneralClassificationStages: (state) => {
+      state.generalClassification = null;
     },
   },
 
@@ -123,10 +128,32 @@ const seriesPublicSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== получение генеральной классификации Серий заездов =================
+    builder.addCase(fetchGeneralClassification.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGeneralClassification.fulfilled, (state, action) => {
+      state.generalClassification = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGeneralClassification.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetSeriesPublicAll, resetSeriesPublicOne, resetStageResults, resetStages } =
-  seriesPublicSlice.actions;
+export const {
+  resetSeriesPublicAll,
+  resetSeriesPublicOne,
+  resetStageResults,
+  resetStages,
+  resetGeneralClassificationStages,
+} = seriesPublicSlice.actions;
 
 export default seriesPublicSlice.reducer;

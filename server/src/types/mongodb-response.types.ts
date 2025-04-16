@@ -157,6 +157,7 @@ export type TStagesResultsForGC = Pick<
   TStageResult,
   | 'order'
   | 'profileId'
+  | 'profileData'
   | 'activityData'
   | 'category'
   | 'rank'
@@ -168,6 +169,4 @@ export type TStagesResultsForGC = Pick<
 /**
  * Генеральная классификация серии заездов.
  */
-export type TGeneralClassificationDB = Omit<TSeriesClassification, 'seriesId'> & {
-  seriesId: Pick<TSeries, 'name'>;
-};
+export type TGeneralClassificationDB = TSeriesClassification;
