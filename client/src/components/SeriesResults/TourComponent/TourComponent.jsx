@@ -5,6 +5,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { resetGeneralClassificationStages } from '../../../redux/features/api/series/seriesPublicSlice';
 import { fetchGeneralClassification } from '../../../redux/features/api/series/fetchSeries';
 import NavBarSeriesPublicResults from '../../UI/NavBarSeriesPublicResults/NavBarSeriesPublicResults';
+import JSONBlock from '../../JSONBlock/JSONBlock';
+import TableGCTour from '../../Tables/TableGCTour/TableGCTour';
 
 import styles from './TourComponent.module.css';
 
@@ -12,9 +14,9 @@ import styles from './TourComponent.module.css';
  * Компонент отображения результатов серии заездов типа Tour.
  */
 export default function TourComponent({ series }) {
-  const { generalClassification } = useSelector((state) => state.seriesPublic);
+  const { generalClassification, seriesPublicOne } = useSelector((state) => state.seriesPublic);
 
-  console.log(generalClassification);
+  // console.log(seriesPublicOne);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -41,8 +43,10 @@ export default function TourComponent({ series }) {
         />
       </div>
 
-      {isParentPath && <div>Итоговые таблицы серии</div>}
-
+      {isParentPath && seriesPublicOne && generalClassification && (
+        <TableGCTour results={generalClassification} stages={seriesPublicOne.orderedStages} />
+      )}
+      <JSONBlock json={generalClassification} />
       <Outlet />
     </div>
   );
