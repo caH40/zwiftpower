@@ -86,7 +86,7 @@ export class FinishGaps {
     index: number,
     leaderIndex: number,
     prevIndex: number,
-    getters: TGetters<T>
+    getters: TFinishGapsGetters<T>
   ): { toLeader: number; toPrev: number } => {
     const toLeader =
       getters.getDuration(results[index]) - getters.getDuration(results[leaderIndex]);

@@ -4,6 +4,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import { resetGeneralClassificationStages } from '../../../redux/features/api/series/seriesPublicSlice';
 import { fetchGeneralClassification } from '../../../redux/features/api/series/fetchSeries';
+import { getCategoriesSortedNew2 } from '../../UI/Filters/FilterCategory/categoriesSort';
+import NavBarGCTable from '../../UI/NavBarGCTable/NavBarGCTable';
 import NavBarSeriesPublicResults from '../../UI/NavBarSeriesPublicResults/NavBarSeriesPublicResults';
 import JSONBlock from '../../JSONBlock/JSONBlock';
 import TableGCTour from '../../Tables/TableGCTour/TableGCTour';
@@ -15,8 +17,6 @@ import styles from './TourComponent.module.css';
  */
 export default function TourComponent({ series }) {
   const { generalClassification, seriesPublicOne } = useSelector((state) => state.seriesPublic);
-
-  // console.log(seriesPublicOne);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -44,7 +44,19 @@ export default function TourComponent({ series }) {
       </div>
 
       {isParentPath && seriesPublicOne && generalClassification && (
-        <TableGCTour results={generalClassification} stages={seriesPublicOne.orderedStages} />
+        <>
+          <nav className={styles.block__nav}>
+            <NavBarGCTable
+              results={generalClassification}
+              categoriesButton={getCategoriesSortedNew2({
+                results: generalClassification,
+                needAbsolute: true,
+              })}
+            />
+          </nav>
+
+          <TableGCTour results={generalClassification} stages={seriesPublicOne.orderedStages} />
+        </>
       )}
 
       <Outlet />

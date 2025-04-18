@@ -4,6 +4,7 @@ import classnames from 'classnames/bind';
 
 import { tdTimeNew } from '../utils/td';
 import { secondesToTimeThousandths } from '../../../utils/date-convert';
+import { useFilterGC } from '../../../hook/useSortResults';
 import TdGap from '../Td/TdGap';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -26,13 +27,11 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
 
   // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
 
-  // const resultWithFinishTime = useFinishTime(results);
+  const filteredResult = useFilterGC(results);
 
   return (
     <table className={cx('table')}>
-      {/* <caption className={cx('caption')}>
-        {getSeriesCaption({ stageName, stageOrder, stageStart })}
-      </caption> */}
+      <caption className={cx('caption')}>Генеральная классификация</caption>
       <Thead
         stages={stages.map((s) => ({ stageOrder: s }))}
         columnsCP={columnsCP}
@@ -40,10 +39,16 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
       />
 
       <tbody>
-        {results?.slice(0, 5).map((result, index) => {
+        {filteredResult?.map((result, index) => {
           // const isDsq = result.isDisqualification;
           // const dsqType = result.disqualification;
           // const dsqDescription = result.disqualificationDescription;
+
+          // Объект с гэпами до лидера и до предыдущего райдера.
+          const gaps =
+            filterCategory.name === 'All'
+              ? result.gapsInCategories.absolute
+              : result.gapsInCategories.category;
 
           return (
             <tr
@@ -68,17 +73,24 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
               <TdRider profile={result.stages[0]?.profileData} profileId={result.profileId} />
               <td>{tdTimeNew(secondesToTimeThousandths(result.totalTimeInMilliseconds))}</td>
 
-              {/* <TdGap
+              <TdGap
+                gap={gaps?.toLeader}
+                // dsq={isDsq}
+              />
+
+              <TdGap
+                gap={gaps?.toPrev}
+                // dsq={isDsq}
+              />
+              {/* 
+              <TdGap
                 gap={
                   filterCategory.name === 'All'
                     ? result.gapsInCategories.absolute?.toPrev
                     : result.gapsInCategories.category?.toPrev
                 }
-                dsq={isDsq}
+                // dsq={isDsq}
               /> */}
-
-              <td></td>
-              <td></td>
 
               {result.stages.map((stage) => (
                 <td key={stage.stageOrder}>

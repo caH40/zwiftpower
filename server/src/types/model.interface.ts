@@ -835,6 +835,7 @@ export type TSeriesClassification = {
   stagesCompleted: number; // Количество завершённых этапов.
   disqualification: TDisqualification | null; // Статус дисквалификации.
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
+  gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   stages: {
     category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
     stageOrder: number; // Порядковый номер этапа в туре.

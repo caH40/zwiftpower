@@ -79,3 +79,29 @@ export const useSortStageResults = (results) => {
 
   return resultSortedAndFiltered;
 };
+
+/**
+ * Фильтрация и сортировка таблицы результатов этапа серии заездов.
+ * @param {} results массив результатов райдеров в Эвенте
+ * @returns
+ */
+export const useFilterGC = (results) => {
+  const filterCategory = useSelector((state) => state.filterCategory.value);
+
+  const resultSortedAndFiltered = useMemo(() => {
+    let filteredResults = [...results];
+
+    // фильтрация результатов по принадлежности к подгруппе (категории) райдера
+    if (filterCategory.name !== 'All') {
+      filteredResults = [...results].filter(
+        (result) => result.finalCategory === filterCategory.name
+      );
+    }
+
+    // const sortedAndFilteredResults = sortTable(filteredResults, activeSorting, filterWatts);
+
+    return filteredResults;
+  }, [filterCategory, results]);
+
+  return resultSortedAndFiltered;
+};

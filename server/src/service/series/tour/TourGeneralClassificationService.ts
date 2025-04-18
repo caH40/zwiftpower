@@ -8,6 +8,7 @@ import { TResponseService } from '../../../types/http.interface.js';
 import { TDisqualification, TSeries } from '../../../types/model.interface.js';
 import { TStagesResultsForGC } from '../../../types/mongodb-response.types.js';
 import { TCategorySeries, TGCForSave } from '../../../types/types.interface.js';
+import { FinishGaps } from '../../../utils/FinishGaps.js';
 
 // Тип: отображение riderId → список его результатов
 type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
@@ -44,6 +45,16 @@ export class TourGeneralClassificationService {
 
     // Создание генеральной классификации серии заездов.
     const gc = this.createGC(riderResults, requiredStages);
+
+    // Установка финишных гэпов (разрывов между участниками).
+    const finishGaps = new FinishGaps();
+    finishGaps.setGaps(gc, {
+      getDuration: (r) => r.totalTimeInMilliseconds,
+      getCategory: (r) => r.finalCategory,
+      setGaps: (r, gaps) => {
+        r.gapsInCategories = gaps;
+      },
+    });
 
     // Удаление предыдущих данных по этой серии.
     await SeriesClassificationModel.deleteMany({ seriesId: this.seriesId });
@@ -171,6 +182,10 @@ export class TourGeneralClassificationService {
         stagesCompleted,
         disqualification,
         teamSquadAtRace: null,
+        gapsInCategories: {
+          category: null,
+          absolute: null,
+        },
         stages,
       };
     });

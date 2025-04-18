@@ -2,7 +2,7 @@ import mongoose, { Schema, model, Types, Document } from 'mongoose';
 
 // types
 import { TSeriesClassification } from '../types/model.interface';
-import { profileDataSchema } from './StageResult.js';
+import { GapsInCategoriesSchema, profileDataSchema } from './StageResult.js';
 
 // Интерфейс для результата в генеральном зачете тура.
 export interface ISeriesClassification extends Omit<TSeriesClassification, '_id'>, Document {
@@ -44,6 +44,7 @@ const seriesClassificationSchema = new Schema({
   totalTimeInMilliseconds: { type: Number, default: 0 }, // Общее время за все этапы.
   stagesCompleted: { type: Number, default: 0 }, // Количество завершённых этапов.
   disqualification: { type: disqualificationSchema, required: false }, // Статус дисквалификации.
+  gapsInCategories: GapsInCategoriesSchema, // Отрывы между участником результата и лидером, предыдущим в категории и абсолюте.
   stages: { type: [stageSchema], default: [] }, // Массив этапов.
   teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null }, // Состав команды на этапе.
 });
