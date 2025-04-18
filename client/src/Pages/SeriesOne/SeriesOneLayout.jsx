@@ -71,7 +71,7 @@ export default function SeriesOneLayout() {
   useAd(adNumbers);
   return (
     <>
-      {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
+      {/* {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />} */}
 
       <section className={styles.wrapper}>
         {seriesPublicOne && (

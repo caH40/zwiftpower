@@ -8,6 +8,7 @@ import {
   TClubZwift,
   TDeviceInfo,
   TFileMetadataForCloud,
+  TGap,
   TLocationInfo,
   TMetrics,
   TOrganizer,
@@ -934,3 +935,13 @@ export type TPublicSeriesServiceSortStagesParams = {
  * Тип генеральной классификации серии при её создании.
  */
 export type TGCForSave = Omit<TSeriesClassification, 'seriesId'> & { seriesId: string };
+
+/**
+ * Тип адаптера для универсальной работы с разными типами результатов.
+ * Позволяет абстрагироваться от конкретной структуры данных.
+ */
+export type TFinishGapsGetters<T> = {
+  getDuration: (result: T) => number; // Функция получения продолжительности (в мс) из результата.
+  getCategory: (result: T) => TCategorySeries | null; // Функция получения категории результата.
+  setGaps: (result: T, gaps: { category: TGap | null; absolute: TGap | null }) => void; // Функция записи рассчитанных гэпов обратно в результат.
+};

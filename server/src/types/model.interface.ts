@@ -814,8 +814,8 @@ export type TDisqualification = {
  * Отрывы между участником результата и лидером, предыдущим в абсолюте и категориях.
  */
 export type TGapsInCategories = {
-  category: TGap | null;
-  absolute: TGap | null;
+  category: TGap | null; // null если был дисквалифицирован.
+  absolute: TGap | null; // null если был дисквалифицирован.
 };
 export type TGap = { toLeader: number | null; toPrev: number | null }; // null если райдер является лидером и никого нет впереди.
 

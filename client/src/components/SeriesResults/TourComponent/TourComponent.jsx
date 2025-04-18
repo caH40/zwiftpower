@@ -46,8 +46,9 @@ export default function TourComponent({ series }) {
       {isParentPath && seriesPublicOne && generalClassification && (
         <TableGCTour results={generalClassification} stages={seriesPublicOne.orderedStages} />
       )}
-      <JSONBlock json={generalClassification} />
+
       <Outlet />
+      <JSONBlock json={generalClassification} />
     </div>
   );
 }
