@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
 import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
-import { getCategoriesSortedNew } from '../../UI/Filters/FilterCategory/categoriesSort';
+import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
 
 import styles from './StageResults.module.css';
 
@@ -44,7 +44,11 @@ export default function StageResults() {
               results={stageResults}
               hideDocsOnPage={true}
               hideFilterColumn={true}
-              categoriesButton={getCategoriesSortedNew(stageResults)}
+              categoriesButton={getCategoriesSortedDry({
+                results: stageResults,
+                needAbsolute: true,
+                getCategory: (r) => r.category,
+              })}
             />
           </nav>
 

@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import { resetGeneralClassificationStages } from '../../../redux/features/api/series/seriesPublicSlice';
 import { fetchGeneralClassification } from '../../../redux/features/api/series/fetchSeries';
-import { getCategoriesSortedNew2 } from '../../UI/Filters/FilterCategory/categoriesSort';
+import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
 import NavBarGCTable from '../../UI/NavBarGCTable/NavBarGCTable';
 import NavBarSeriesPublicResults from '../../UI/NavBarSeriesPublicResults/NavBarSeriesPublicResults';
 import JSONBlock from '../../JSONBlock/JSONBlock';
@@ -48,8 +48,9 @@ export default function TourComponent({ series }) {
           <nav className={styles.block__nav}>
             <NavBarGCTable
               results={generalClassification}
-              categoriesButton={getCategoriesSortedNew2({
+              categoriesButton={getCategoriesSortedDry({
                 results: generalClassification,
+                getCategory: (r) => r.finalCategory,
                 needAbsolute: true,
               })}
             />
