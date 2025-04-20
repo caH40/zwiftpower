@@ -6,7 +6,7 @@ import {
   UpdateSeriesGCSchema,
   UpdateStageResultsSchema,
 } from '../utils/deserialization/seriesResultsController.js';
-import { TourGeneralClassificationService } from '../service/series/tour/TourGeneralClassificationService.js';
+import { TourGCManager } from '../service/series/tour/TourGCManager.js';
 import { TSeriesType } from '../types/model.interface.js';
 import { NSeriesModel } from '../Model/NSeries.js';
 
@@ -62,7 +62,7 @@ export class SeriesResultsController {
 
       let response = { data: null, message: 'Инициализация объекта responseService' };
       if (typeFromSeries.type === 'tour') {
-        const tourGCService = new TourGeneralClassificationService(seriesId);
+        const tourGCService = new TourGCManager(seriesId);
         // Вызов сервиса.
         response = await tourGCService.update();
       } else {

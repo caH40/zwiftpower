@@ -2,31 +2,26 @@ import mongoose, { Schema, model, Types, Document } from 'mongoose';
 
 // types
 import { TSeriesClassification } from '../types/model.interface';
-import { GapsInCategoriesSchema, profileDataSchema } from './StageResult.js';
+import {
+  disqualificationSchema,
+  GapsInCategoriesSchema,
+  profileDataSchema,
+} from './StageResult.js';
 
 // Интерфейс для результата в генеральном зачете тура.
 export interface ISeriesClassification extends Omit<TSeriesClassification, '_id'>, Document {
   _id: Types.ObjectId;
 }
 
-// Схема дисквалификации
-const disqualificationSchema = new Schema(
-  {
-    status: { type: Boolean, default: false }, // Статус дисквалификации.
-    reason: { type: String }, // Причина дисквалификации (опционально).
-  },
-  { _id: false }
-);
-
 // Схема этапа
 const stageSchema = new Schema(
   {
-    category: { type: String, required: true }, // Категория.
+    category: { type: String, default: null }, // Категория.
     stageOrder: { type: Number, required: true }, // Порядковый номер этапа.
-    durationInMilliseconds: { type: Number, required: true }, // Время этапа.
+    durationInMilliseconds: { type: Number, default: 0 }, // Время этапа.
     // includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
     finishPoints: { type: Number, default: 0 }, // Очки за этап (если есть).
-    profileData: { type: profileDataSchema },
+    profileData: { type: profileDataSchema, default: null },
   },
   { _id: false }
 );
@@ -43,7 +38,7 @@ const seriesClassificationSchema = new Schema({
   totalFinishPoints: { type: Number, default: 0 }, // Суммарные очки за серию.
   totalTimeInMilliseconds: { type: Number, default: 0 }, // Общее время за все этапы.
   stagesCompleted: { type: Number, default: 0 }, // Количество завершённых этапов.
-  disqualification: { type: disqualificationSchema, required: false }, // Статус дисквалификации.
+  disqualification: { type: disqualificationSchema }, // Статус дисквалификации.
   gapsInCategories: GapsInCategoriesSchema, // Отрывы между участником результата и лидером, предыдущим в категории и абсолюте.
   stages: { type: [stageSchema], default: [] }, // Массив этапов.
   teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null }, // Состав команды на этапе.

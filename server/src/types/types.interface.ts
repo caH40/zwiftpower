@@ -945,3 +945,11 @@ export type TFinishGapsGetters<T> = {
   getCategory: (result: T) => TCategorySeries | null; // Функция получения категории результата.
   setGaps: (result: T, gaps: { category: TGap | null; absolute: TGap | null }) => void; // Функция записи рассчитанных гэпов обратно в результат.
 };
+
+/**
+ * Тип для списока всех и обязательных этапов для расчета генеральной классификации.
+ */
+export type TAllStageOrders = {
+  requiredStageOrders: number[]; // Номера обязательных этапов для ГС.
+  allStageOrders: number[]; // Все номера этапов в Серии заездов.
+};

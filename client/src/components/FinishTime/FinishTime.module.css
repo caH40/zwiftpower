@@ -1,0 +1,13 @@
+.text__additional {
+  font-size: 10px;
+}
+.dq {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+  background: #6d6d6d;
+}

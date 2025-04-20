@@ -805,9 +805,23 @@ type TRank = {
   absolute: number; // Место в абсолюте.
 };
 
+/**
+ * Коды статусов дисквалификации / не-старт / не-финиш и т.п.
+ */
+export type TDisqualificationLabel =
+  | 'DSQ' // Disqualified (синоним) — дисквалифицирован (синоним).
+  | 'DNF' // Did Not Finish — не финишировал.
+  | 'DNS' // Did Not Start — не стартовал.
+  | 'OUT' // Out of Classification — вне зачёта / не выполнены условия.
+  | 'CUT' // Time Cut — превышен лимит времени.
+  | 'LAP' // Lapped — обогнан на круг / снят с гонки.
+  | 'NP' // No Placement / Not Placed — без места / не имеет итогового места.
+  | 'MRS'; // Missing Required Stage — не завершён обязательный этап серии.
+
 export type TDisqualification = {
-  status: boolean; // Дисквалифицирован ли райдер.
-  reason?: string; // Причина дисквалификации.
+  status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте
+  label?: TDisqualificationLabel; // Краткий код статуса (2–3 заглавные буквы).
+  reason?: string; // Подробное описание причины
 };
 
 /**
@@ -839,7 +853,7 @@ export type TSeriesClassification = {
   stages: {
     category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
     stageOrder: number; // Порядковый номер этапа в туре.
-    durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах).
+    durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах). 0 - райдер не финишировал на данном этапе.
     finishPoints: number; // Заработанные финишные очки за этап.
     // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
   }[]; // Массив этапов, на которых участвовал райдер.

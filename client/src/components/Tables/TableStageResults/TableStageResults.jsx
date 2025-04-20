@@ -5,7 +5,8 @@ import classnames from 'classnames/bind';
 
 import { useSortStageResults } from '../../../hook/useSortResults';
 import { getAgeCategory } from '../../../utils/age';
-import { tdHeartRate, tdHeight, tdTimeNew, tdWatts } from '../utils/td';
+import { tdHeartRate, tdHeight, tdWatts } from '../utils/td';
+import FinishTime from '../../FinishTime/FinishTime';
 import { useFinishTime } from '../../../hook/useFinishTime';
 import IconEdit from '../../icons/IconEdit';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -70,7 +71,9 @@ function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, st
                 <CategoryBox showLabel={true} label={result.category} circle={true} />
               </td>
               <TdRider profile={profile} profileId={result.profileId} />
-              <td>{tdTimeNew(result.finishTime)}</td>
+              <td>
+                <FinishTime time={result.finishTime} />
+              </td>
               <TdGap
                 gap={
                   filterCategory.name === 'All'

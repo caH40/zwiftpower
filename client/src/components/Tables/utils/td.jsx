@@ -42,27 +42,6 @@ export function tdTime(time) {
   );
 }
 
-export function tdTimeNew(time) {
-  if (time === 'DQ') {
-    return <div className={styles.dq}>DQ</div>;
-  }
-
-  if (time === 'DNF') {
-    return <div className={styles.dq}>DNF</div>;
-  }
-
-  return String(time).includes('.') ? (
-    <>
-      {time.split('.')[0]}
-      <span className={styles.text__additional} key={Date.now()}>
-        .{time.split('.')[1]}
-      </span>
-    </>
-  ) : (
-    time
-  );
-}
-
 export function highlightValueMax(value, dimension) {
   if (+value === 0 || value === '0max') return null;
   const data = String(value).includes('max') ? (

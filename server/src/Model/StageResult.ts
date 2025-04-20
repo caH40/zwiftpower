@@ -75,11 +75,12 @@ const pointsStageResultSchema = new Schema(
   { _id: false }
 );
 
-// Схема дисквалификации.
-const disqualificationSchema = new Schema(
+// Схема дисквалификации
+export const disqualificationSchema = new Schema(
   {
-    status: { type: Boolean, default: false }, // Дисквалифицирован ли райдер.
-    reason: { type: String, trim: true }, // Причина дисквалификации.
+    status: { type: Boolean, default: false }, // Статус дисквалификации.
+    reason: { type: String }, // Причина дисквалификации (опционально).
+    label: { type: String }, // Краткий код статуса (2–3 заглавные буквы).
   },
   { _id: false }
 );

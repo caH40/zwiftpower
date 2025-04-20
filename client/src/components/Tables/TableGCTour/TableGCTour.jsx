@@ -2,18 +2,17 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import { tdTimeNew } from '../utils/td';
 import { secondesToTimeThousandths } from '../../../utils/date-convert';
 import { useFilterGC } from '../../../hook/useSortResults';
 import TdGap from '../Td/TdGap';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
-import TdRank from '../Td/TdRank';
+import Rank from '../../Rank/Rank';
+import FinishTime from '../../FinishTime/FinishTime';
 
 import styles from '../Table.module.css';
 
 import Thead from './Thead';
-import { getSeriesCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
@@ -40,10 +39,6 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
 
       <tbody>
         {filteredResult?.map((result, index) => {
-          // const isDsq = result.isDisqualification;
-          // const dsqType = result.disqualification;
-          // const dsqDescription = result.disqualificationDescription;
-
           // Объект с гэпами до лидера и до предыдущего райдера.
           const gaps =
             filterCategory.name === 'All'
@@ -56,45 +51,34 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
               key={result._id}
             >
               <td className={styles.centerTd}>
-                <TdRank
+                <Rank
                   value={
                     filterCategory.name === 'All'
                       ? result.rank?.absolute
                       : result.rank?.category
                   }
-                  // isDsq={forDNF ? true : isDsq}
-                  // dsqType={forDNF ? 'DNF' : dsqType}
-                  // dsqDescription={dsqDescription}
+                  dsq={result.disqualification}
                 />
               </td>
               <td>
                 <CategoryBox showLabel={true} label={result.finalCategory} circle={true} />
               </td>
               <TdRider profile={result.stages[0]?.profileData} profileId={result.profileId} />
-              <td>{tdTimeNew(secondesToTimeThousandths(result.totalTimeInMilliseconds))}</td>
+              <td>
+                <FinishTime time={secondesToTimeThousandths(result.totalTimeInMilliseconds)} />
+              </td>
 
-              <TdGap
-                gap={gaps?.toLeader}
-                // dsq={isDsq}
-              />
+              <TdGap gap={gaps?.toLeader} dsq={result.disqualification?.status} />
 
-              <TdGap
-                gap={gaps?.toPrev}
-                // dsq={isDsq}
-              />
-              {/* 
-              <TdGap
-                gap={
-                  filterCategory.name === 'All'
-                    ? result.gapsInCategories.absolute?.toPrev
-                    : result.gapsInCategories.category?.toPrev
-                }
-                // dsq={isDsq}
-              /> */}
+              <TdGap gap={gaps?.toPrev} dsq={result.disqualification?.status} />
 
               {result.stages.map((stage) => (
                 <td key={stage.stageOrder}>
-                  {tdTimeNew(secondesToTimeThousandths(stage.durationInMilliseconds))}
+                  <FinishTime
+                    time={secondesToTimeThousandths(stage.durationInMilliseconds)}
+                    dsq={stage.disqualification}
+                    hideMs={true}
+                  />
                 </td>
               ))}
             </tr>

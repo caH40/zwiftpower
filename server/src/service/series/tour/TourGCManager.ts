@@ -5,9 +5,13 @@ import { StageResultModel } from '../../../Model/StageResult.js';
 import { TResponseService } from '../../../types/http.interface.js';
 
 // types
-import { TDisqualification, TSeries } from '../../../types/model.interface.js';
+import { TDisqualification, TSeries, TSeriesStage } from '../../../types/model.interface.js';
 import { TStagesResultsForGC } from '../../../types/mongodb-response.types.js';
-import { TCategorySeries, TGCForSave } from '../../../types/types.interface.js';
+import {
+  TAllStageOrders,
+  TCategorySeries,
+  TGCForSave,
+} from '../../../types/types.interface.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
 
 // Тип: отображение riderId → список его результатов
@@ -16,7 +20,7 @@ type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
 /**
  * Класс управления/создания генеральной классификации тура.
  */
-export class TourGeneralClassificationService {
+export class TourGCManager {
   constructor(public seriesId: string) {}
   /**
    * Пересчет всех итоговых таблиц.
@@ -32,19 +36,13 @@ export class TourGeneralClassificationService {
     }
 
     // Список обязательных этапов для расчета генеральной классификации, отфильтрованный от дублей.
-    const requiredStages = seriesDB.stages.reduce<number[]>((acc, cur) => {
-      if (cur.includeResults && !acc.includes(cur.order) && cur.hasResults) {
-        acc.push(cur.order);
-      }
-
-      return acc;
-    }, []);
+    const stageOrders = this.getStageOrders(seriesDB.stages);
 
     // Группировка результатов по райдерам.
     const riderResults = await this.createRidersResults();
 
     // Создание генеральной классификации серии заездов.
-    const gc = this.createGC(riderResults, requiredStages);
+    const gc = this.createGC(riderResults, stageOrders);
 
     // Установка финишных гэпов (разрывов между участниками).
     const finishGaps = new FinishGaps();
@@ -113,7 +111,7 @@ export class TourGeneralClassificationService {
    */
   private createGC = (
     ridersResults: TRidersResults,
-    requiredStages: number[]
+    stageOrders: TAllStageOrders
   ): TGCForSave[] => {
     // Преобразуем Map в массив и обрабатываем каждого райдера.
     const gc = [...ridersResults].map(([profileId, { results }]) => {
@@ -123,7 +121,7 @@ export class TourGeneralClassificationService {
       const disqualification: TDisqualification = { status: false };
 
       // Коллекция обязательных этапов, которые нужно пройти.
-      const skippedStages = new Set(requiredStages);
+      const skippedStages = new Set(stageOrders.requiredStageOrders);
 
       for (const result of results) {
         // Суммируем очки за финиш.
@@ -142,13 +140,36 @@ export class TourGeneralClassificationService {
       }
 
       // Список этапов, в которых участвовал райдер.
-      const stages = results.map((stage) => ({
-        category: stage.category,
-        profileData: stage.profileData,
-        stageOrder: stage.order,
-        durationInMilliseconds: stage.activityData.durationInMilliseconds,
-        finishPoints: stage.points?.finishPoints || 0,
-      }));
+      // const stages = results.map((stage) => ({
+      //   category: stage.category,
+      //   profileData: stage.profileData,
+      //   stageOrder: stage.order,
+      //   durationInMilliseconds: stage.activityData.durationInMilliseconds,
+      //   finishPoints: stage.points?.finishPoints || 0,
+      // }));
+
+      const stages = stageOrders.allStageOrders.map((stageOrder) => {
+        const stage = results.find((s) => s.order === stageOrder);
+
+        if (stage) {
+          return {
+            category: stage.category,
+            profileData: stage.profileData,
+            stageOrder: stage.order,
+            durationInMilliseconds: stage.activityData.durationInMilliseconds,
+            finishPoints: stage.points?.finishPoints || 0,
+          };
+        } else {
+          // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
+          return {
+            category: null,
+            profileData: null,
+            stageOrder: stageOrder,
+            durationInMilliseconds: 0,
+            finishPoints: 0,
+          };
+        }
+      });
 
       // Если остались обязательные этапы, в которых не участвовали — дисквалификация.
       if (skippedStages.size > 0) {
@@ -261,13 +282,49 @@ export class TourGeneralClassificationService {
     // Если этапов нет, возвращаем null.
     if (stages.length === 0) return null;
 
-    // Сохраняем категорию первого этапа как базовую для сравнения.
-    const firstCategory = stages[0].category;
+    // Сохраняем категорию первого завершенного этапа как базовую для сравнения.
+    const firstCategory = stages.find((stage) => stage.durationInMilliseconds !== 0)?.category;
+
+    // Нет ни одного результата на этапе Серии. FIXME: заранее фильтровать от райдеров, которые не проехали ни одного этапа. Для корректного отображения информации о дисквалификации. Проверка на firstCategory === null временная.
+    if (!firstCategory) {
+      return null;
+    }
 
     // Проверяем, что все этапы имеют ту же категорию.
-    const allSame = stages.every((stage) => stage.category === firstCategory);
+    const allSame = stages.every(
+      (stage) => stage.category === firstCategory || stage.category === null
+    );
 
     // Если все категории совпадают — возвращаем её, иначе null.
     return allSame ? firstCategory : null;
+  };
+
+  /**
+   * Получение всех и обязательных для ГК номеров этапов.
+   */
+  private getStageOrders = (stages: TSeriesStage[]): TAllStageOrders => {
+    // Список всех и обязательных этапов для расчета генеральной классификации, отфильтрованный от дублей.
+    const { requiredStageOrders, allStageOrders } = stages.reduce<TAllStageOrders>(
+      (acc, cur) => {
+        if (
+          cur.includeResults &&
+          !acc.requiredStageOrders.includes(cur.order) &&
+          cur.hasResults
+        ) {
+          acc.requiredStageOrders.push(cur.order);
+        }
+
+        if (!acc.allStageOrders.includes(cur.order)) {
+          acc.allStageOrders.push(cur.order);
+        }
+
+        return acc;
+      },
+      { requiredStageOrders: [], allStageOrders: [] }
+    );
+
+    allStageOrders.sort((a, b) => a - b);
+
+    return { requiredStageOrders, allStageOrders };
   };
 }
