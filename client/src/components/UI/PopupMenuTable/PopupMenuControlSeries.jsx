@@ -15,6 +15,7 @@ function PopupMenuControlSeries({
   seriesId,
   stages,
   updateStageResults,
+  updateGeneralClassification,
   setIsVisibleMenuControl,
 }) {
   const dispatch = useDispatch();
@@ -30,6 +31,15 @@ function PopupMenuControlSeries({
     });
   };
 
+  // Обработчик нажатия на кнопку обновления ГС.
+  const handleBtnUpdateGC = (e, seriesId) => {
+    e.stopPropagation();
+    setIsVisibleMenuControl(false);
+    updateGeneralClassification({
+      seriesId,
+    });
+  };
+
   return (
     <div className={styles.popup} onMouseLeave={() => setIsVisibleMenuControl(false)}>
       <ul className={styles.list}>
@@ -39,6 +49,11 @@ function PopupMenuControlSeries({
         >
           <IconModify squareSize={20} bgColor={'orange'} />
           <span className={styles.label}>Редактирование серии</span>
+        </li>
+
+        <li className={styles.item} onClick={(e) => handleBtnUpdateGC(e, seriesId)}>
+          <IconRefresh squareSize={20} bgColor={'orange'} />
+          <span className={styles.label}>Обновить ГС</span>
         </li>
 
         {stages.map(({ stageOrder }) => (

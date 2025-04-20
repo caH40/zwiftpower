@@ -36,7 +36,7 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
       />
 
       <tbody>
-        {filteredResult?.map((result, index) => {
+        {filteredResult?.map((result) => {
           // Объект с гэпами до лидера и до предыдущего райдера.
           const gaps =
             filterCategory.name === 'All'

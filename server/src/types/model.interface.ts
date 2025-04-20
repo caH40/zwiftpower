@@ -809,14 +809,16 @@ type TRank = {
  * Коды статусов дисквалификации / не-старт / не-финиш и т.п.
  */
 export type TDisqualificationLabel =
-  | 'DSQ' // Disqualified (синоним) — дисквалифицирован (синоним).
-  | 'DNF' // Did Not Finish — не финишировал.
-  | 'DNS' // Did Not Start — не стартовал.
-  | 'OUT' // Out of Classification — вне зачёта / не выполнены условия.
-  | 'CUT' // Time Cut — превышен лимит времени.
-  | 'LAP' // Lapped — обогнан на круг / снят с гонки.
-  | 'NP' // No Placement / Not Placed — без места / не имеет итогового места.
-  | 'MRS'; // Missing Required Stage — не завершён обязательный этап серии.
+  | 'DSQ' // Disqualified (Синоним) — Дисквалифицирован.
+  | 'DNF' // Did Not Finish — Не финишировал.
+  | 'DNS' // Did Not Start — Не стартовал.
+  | 'OUT' // Out of Classification — Вне зачёта / Не выполнены условия.
+  | 'CUT' // Time Cut — Превышен лимит времени.
+  | 'LAP' // Lapped — Обогнан на круг / Снят с гонки.
+  | 'NP' // No Placement / Not Placed — Без места / Не имеет итогового места.
+  | 'MRS' // Missing Required Stage — Не завершён обязательный этап серии.
+  | 'MC' // Mixed Categories — На этапах разные категории участия. Для зачёта необходимо проехать все обязательные этапы в одной категории.
+  | 'UNC'; // Undefined Category — Не определена категория в Серии.
 
 export type TDisqualification = {
   status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте

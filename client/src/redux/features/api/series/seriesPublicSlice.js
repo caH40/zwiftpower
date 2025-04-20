@@ -7,6 +7,7 @@ import {
   fetchGetStageResults,
   fetchGetStages,
   fetchPutStageResults,
+  fetchUpdateGeneralClassification,
 } from './fetchSeries';
 
 const initialState = {
@@ -142,6 +143,22 @@ const seriesPublicSlice = createSlice({
     });
 
     builder.addCase(fetchGeneralClassification.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== обновление генеральной классификации Серий заездов =================
+    builder.addCase(fetchUpdateGeneralClassification.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchUpdateGeneralClassification.fulfilled, (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchUpdateGeneralClassification.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

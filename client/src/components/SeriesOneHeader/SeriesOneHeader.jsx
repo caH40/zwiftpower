@@ -19,6 +19,8 @@ import styles from './SeriesOneHeader.module.css';
  * @param {Object.<string, string>} props.posterUrls - Объект с URL-адресами изображений разного размера.
  * @param {(params: {seriesId: string, stageOrder: number}) => Promise<void>} props.updateStageResults -
  *  Функция для обновления/создания результатов этапа серии.
+ * @param {(params: {seriesId: string,}) => Promise<void>} props.updateGeneralClassification -
+ *  Функция для обновления Генеральной классификации.
  * @returns {JSX.Element} Возвращает JSX-элемент шапки серии.
  */
 export default function SeriesOneHeader({
@@ -30,6 +32,7 @@ export default function SeriesOneHeader({
   updateStageResults,
   showEditIcon,
   organizerId,
+  updateGeneralClassification,
 }) {
   const [isVisibleMenuControl, setIsVisibleMenuControl] = useState(false);
   const { organizer, role } = useSelector((state) => state.checkAuth.value.user);
@@ -54,6 +57,7 @@ export default function SeriesOneHeader({
                 seriesId={seriesId}
                 stages={stages}
                 updateStageResults={updateStageResults}
+                updateGeneralClassification={updateGeneralClassification}
                 setIsVisibleMenuControl={setIsVisibleMenuControl}
               />
             )}
