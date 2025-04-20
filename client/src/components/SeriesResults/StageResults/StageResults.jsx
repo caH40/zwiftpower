@@ -6,6 +6,7 @@ import TableStageResults from '../../Tables/TableStageResults/TableStageResults'
 import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
+import { resetStageResults } from '../../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './StageResults.module.css';
 
@@ -32,7 +33,9 @@ export default function StageResults() {
 
   useEffect(() => {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
-  }, [urlSlug, stageOrder, dispatch]);
+
+    return () => dispatch(resetStageResults());
+  }, [urlSlug, stageOrder]);
 
   return (
     <section className={styles.wrapper}>

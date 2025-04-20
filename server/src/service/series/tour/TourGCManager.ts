@@ -1,4 +1,4 @@
-import { categoriesForRankings } from '../../../assets/category.js';
+import { categoriesForRankings as rankings } from '../../../assets/category.js';
 import { NSeriesModel } from '../../../Model/NSeries.js';
 import { SeriesClassificationModel } from '../../../Model/SeriesClassification.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
@@ -242,6 +242,8 @@ export class TourGCManager {
     const resultsSorted = results.toSorted(
       (a, b) => a.totalTimeInMilliseconds - b.totalTimeInMilliseconds
     );
+
+    const categoriesForRankings = { ...rankings };
 
     return resultsSorted.map((result) => {
       // Если по какой то причине не определена категория райдера не дисквалифицирован, показал результат, но нет категории.
