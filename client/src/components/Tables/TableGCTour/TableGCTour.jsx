@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 
 import { secondesToTimeThousandths } from '../../../utils/date-convert';
@@ -17,9 +18,6 @@ import Thead from './Thead';
 const cx = classnames.bind(styles);
 
 function TableGCTour({ results, isSeriesCreator, stages }) {
-  // id ячеек столбца на который наведен курсор мышки.
-  const [columnActive, setColumnActive] = useState(false);
-
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
   const filterCategory = useSelector((state) => state.filterCategory.value);
@@ -72,13 +70,21 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
 
               <TdGap gap={gaps?.toPrev} dsq={result.disqualification?.status} />
 
-              {result.stages.map((stage) => (
-                <td key={stage.stageOrder}>
-                  <FinishTime
-                    time={secondesToTimeThousandths(stage.durationInMilliseconds)}
-                    dsq={stage.disqualification}
-                    hideMs={true}
-                  />
+              {/* Столбцы с результатами этапов */}
+              {result.stages.map((stage, index) => (
+                <td
+                  key={stage.stageOrder}
+                  className={cx({
+                    'column--striped': index % 2 === 0,
+                  })}
+                >
+                  <Link className={styles.link} to={`stage/${stage.stageOrder}`}>
+                    <FinishTime
+                      time={secondesToTimeThousandths(stage.durationInMilliseconds)}
+                      dsq={stage.disqualification}
+                      hideMs={true}
+                    />
+                  </Link>
                 </td>
               ))}
             </tr>

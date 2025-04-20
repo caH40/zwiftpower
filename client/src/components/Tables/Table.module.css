@@ -51,6 +51,10 @@
   background: #ffda73;
   transition: all 0.3s;
 }
+.hover__cell {
+  background-color: var(--color-yellow-5-transparent);
+  transition: 0.3s;
+}
 .link {
   text-decoration: none;
   color: var(--color-blue-4);
@@ -59,7 +63,9 @@
 .link:hover {
   text-decoration: underline;
 }
-
+.column--striped {
+  background: rgba(69, 128, 211, 0.08);
+}
 tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
