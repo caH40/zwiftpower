@@ -210,14 +210,10 @@ export class HandlerSeries {
    */
   protected async deleteOutdatedStageResults(stageOrder: number): Promise<void> {
     try {
-      const res = await StageResultModel.deleteMany({
+      await StageResultModel.deleteMany({
         series: this.seriesId,
         order: stageOrder,
       });
-
-      console.log(
-        `Удалено ${res.deletedCount} результатов Серии _id:${this.seriesId}, Этапа: №${stageOrder}`
-      );
     } catch (error) {
       handleAndLogError(error);
     }

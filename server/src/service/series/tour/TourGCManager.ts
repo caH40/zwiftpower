@@ -108,6 +108,7 @@ export class TourGCManager {
 
   /**
    * Создаёт генеральную классификацию серии заездов.
+   * 1. Инициализация счетчиков.
    */
   private createGC = (
     ridersResults: TRidersResults,
@@ -115,6 +116,7 @@ export class TourGCManager {
   ): TGCForSave[] => {
     // Преобразуем Map в массив и обрабатываем каждого райдера.
     const gc = [...ridersResults].map(([profileId, { results }]) => {
+      // 1. Инициализация счетчиков.
       let totalFinishPoints = 0;
       let totalTimeInMilliseconds = 0;
       let stagesCompleted = 0;
@@ -123,6 +125,7 @@ export class TourGCManager {
       // Коллекция обязательных этапов, которые нужно пройти.
       const skippedStages = new Set(stageOrders.requiredStageOrders);
 
+      // Расчет данных totalFinishPoints, totalTimeInMilliseconds и определение пропущенных этапов: skippedStages.
       for (const result of results) {
         // Суммируем очки за финиш.
         totalFinishPoints += result.points?.finishPoints || 0;
@@ -139,36 +142,10 @@ export class TourGCManager {
         skippedStages.delete(result.order);
       }
 
-      // Список этапов, в которых участвовал райдер.
-      // const stages = results.map((stage) => ({
-      //   category: stage.category,
-      //   profileData: stage.profileData,
-      //   stageOrder: stage.order,
-      //   durationInMilliseconds: stage.activityData.durationInMilliseconds,
-      //   finishPoints: stage.points?.finishPoints || 0,
-      // }));
-
-      const stages = stageOrders.allStageOrders.map((stageOrder) => {
-        const stage = results.find((s) => s.order === stageOrder);
-
-        if (stage) {
-          return {
-            category: stage.category,
-            profileData: stage.profileData,
-            stageOrder: stage.order,
-            durationInMilliseconds: stage.activityData.durationInMilliseconds,
-            finishPoints: stage.points?.finishPoints || 0,
-          };
-        } else {
-          // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
-          return {
-            category: null,
-            profileData: null,
-            stageOrder: stageOrder,
-            durationInMilliseconds: 0,
-            finishPoints: 0,
-          };
-        }
+      // Создание списка этапов из серии заездов в которых участвовал райдер.
+      const stages = this.createStagesForRider({
+        allStageOrders: stageOrders.allStageOrders,
+        results,
       });
 
       // Если остались обязательные этапы, в которых не участвовали — дисквалификация.
@@ -178,6 +155,7 @@ export class TourGCManager {
         disqualification.reason = `Не завершены обязательные этапы: ${sortedSkipped.join(
           ', '
         )}.`;
+        disqualification.label = 'MRS';
       }
 
       // Определение категории. Категория во всех этапах должна быть одинаковой.
@@ -188,6 +166,7 @@ export class TourGCManager {
       if (!finalCategory && !disqualification.status) {
         disqualification.status = true;
         disqualification.reason = 'На этапах разные категории.';
+        disqualification.label = 'MC';
       } else if (disqualification.status) {
         // Если уже была дисквалификация по другой причине — не назначаем финальную категорию.
         finalCategory = null;
@@ -246,13 +225,16 @@ export class TourGCManager {
     const categoriesForRankings = { ...rankings };
 
     return resultsSorted.map((result) => {
-      // Если по какой то причине не определена категория райдера не дисквалифицирован, показал результат, но нет категории.
+      // Если по какой то причине не определена категория райдера, то есть показал результат, не дисквалифицирован, но нет категории.
       if (!result.finalCategory) {
         result.rank = null;
 
-        const reason = result.disqualification?.status
-          ? result.disqualification?.reason
-          : 'Не определена категория в Серии!';
+        let reason: undefined | string = undefined;
+
+        if (!result.disqualification?.status) {
+          reason = 'Не определена категория в Серии!';
+        }
+
         result.disqualification = { status: true, reason };
         return result;
       }
@@ -282,7 +264,9 @@ export class TourGCManager {
     }[]
   ): TCategorySeries | null => {
     // Если этапов нет, возвращаем null.
-    if (stages.length === 0) return null;
+    if (stages.length === 0) {
+      return null;
+    }
 
     // Сохраняем категорию первого завершенного этапа как базовую для сравнения.
     const firstCategory = stages.find((stage) => stage.durationInMilliseconds !== 0)?.category;
@@ -328,5 +312,42 @@ export class TourGCManager {
     allStageOrders.sort((a, b) => a - b);
 
     return { requiredStageOrders, allStageOrders };
+  };
+
+  /**
+   * Создание списка этапов с необходимыми данными, в которых участвовал райдер.
+   * @param {Object} param0 - Входящий параметр.
+   * @param {TStagesResultsForGC[]} param0.results - Результаты текущего райдера в серии заездов.
+   * @param {TStagesResultsForGC[]} param0.allStageOrders - Номера всех этапов в серии заездов.
+   */
+  private createStagesForRider = ({
+    allStageOrders,
+    results,
+  }: {
+    allStageOrders: number[];
+    results: TStagesResultsForGC[];
+  }) => {
+    return allStageOrders.map((stageOrder) => {
+      const stage = results.find((s) => s.order === stageOrder);
+
+      if (stage) {
+        return {
+          category: stage.category,
+          profileData: stage.profileData,
+          stageOrder: stage.order,
+          durationInMilliseconds: stage.activityData.durationInMilliseconds,
+          finishPoints: stage.points?.finishPoints || 0,
+        };
+      } else {
+        // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
+        return {
+          category: null,
+          profileData: null,
+          stageOrder: stageOrder,
+          durationInMilliseconds: 0,
+          finishPoints: 0,
+        };
+      }
+    });
   };
 }
