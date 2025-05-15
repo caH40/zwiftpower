@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { useResize } from '../../hook/use-resize';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import { useResize } from '../../hook/use-resize';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import { initialSorting } from '../../redux/features/sortTableSlice';
 import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
@@ -14,7 +14,7 @@ import {
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
-import { useAd } from '../../hook/useAd';
+// import { useAd } from '../../hook/useAd';
 import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
@@ -22,9 +22,9 @@ import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/Skelet
 import styles from './SignedRiders.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 6;
-const adUnderHeader = 12;
-const adNumbers = [adUnderHeader, adOverFooter];
+// const adOverFooter = 6;
+// const adUnderHeader = 12;
+// const adNumbers = [adUnderHeader, adOverFooter];
 
 /**
  * Страница с описанием Эвента и таблицей зарегистрированных райдеров.
@@ -34,7 +34,7 @@ function SignedRiders() {
     (state) => state.fetchEventPreview
   );
   const navigate = useNavigate();
-  const { isScreenLg: isDesktop } = useResize();
+  // const { isScreenLg: isDesktop } = useResize();
 
   const dispatch = useDispatch();
   useTitle('Зарегистрированные участники');
@@ -55,7 +55,7 @@ function SignedRiders() {
     }
   }, [event, navigate, eventId]);
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
 
   return (
     <>
@@ -69,8 +69,6 @@ function SignedRiders() {
       />
 
       <div className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-
         {/* Скелетон загрузки для Постера */}
         <SkeletonDescEvent status={statusFetchEventPreview} />
 
@@ -142,11 +140,11 @@ function SignedRiders() {
         )}
       </div>
 
-      {isDesktop ? (
+      {/* {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (
         <AdContainer number={adUnderHeader} />
-      )}
+      )} */}
     </>
   );
 }

@@ -6,12 +6,12 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
-import { useAd } from '../../hook/useAd';
+// import { useAd } from '../../hook/useAd';
 import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import Pagination from '../../components/UI/Pagination/Pagination';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { lsPrefixScheduleList } from '../../constants/localstorage';
@@ -21,9 +21,9 @@ import styles from './ScheduleList.module.css';
 const notFound = 'К сожалению, заезды не найдены ... ((';
 
 // рекламные блоки на странице
-const adOverFooter = 5;
-const adUnderHeader = 10;
-const adNumbers = [adUnderHeader, adOverFooter];
+// const adOverFooter = 5;
+// const adUnderHeader = 10;
+// const adNumbers = [adUnderHeader, adOverFooter];
 
 const localStorageFilterKey = `${lsPrefixScheduleList}filter`;
 const localStoragePageSizeKey = `${lsPrefixScheduleList}pageSize`;
@@ -86,14 +86,12 @@ function ScheduleList() {
     );
   };
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
 
   return (
     <>
       <HelmetSchedule />
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-
         <div className={styles.align__right}>
           {/* Блок фильтров для таблицы */}
           <FilterBoxForTable
@@ -128,11 +126,11 @@ function ScheduleList() {
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      {isDesktop ? (
+      {/* {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (
         <AdContainer number={adUnderHeader} />
-      )}
+      )} */}
     </>
   );
 }

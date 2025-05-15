@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { useAd } from '../../hook/useAd';
+// import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 
@@ -16,9 +16,9 @@ import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/Nav
 import styles from './OrganizerPublicLayout.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 22;
-const adUnderHeader = 23;
-const adNumbers = [adOverFooter, adUnderHeader];
+// const adOverFooter = 22;
+// const adUnderHeader = 23;
+// const adNumbers = [adOverFooter, adUnderHeader];
 
 /**
  * Страница Организатора заездов.
@@ -39,7 +39,7 @@ export default function OrganizerPublicLayout() {
     return () => dispatch(resetOrganizerPublic());
   }, []);
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
   return (
     <>
       <HelmetOrganizerPublic
@@ -47,7 +47,6 @@ export default function OrganizerPublicLayout() {
         name={organizer.name}
         imageSrc={organizer.posterUrls?.medium}
       />
-      {isDesktop ? <AdContainer number={adUnderHeader} height={180} marginBottom={10} /> : null}
 
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
@@ -83,7 +82,7 @@ export default function OrganizerPublicLayout() {
         )}
       </div>
 
-      <AdContainer number={adOverFooter} maxWidth={1105} />
+      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }

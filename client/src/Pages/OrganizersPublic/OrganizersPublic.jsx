@@ -1,22 +1,22 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAd } from '../../hook/useAd';
+// import { useAd } from '../../hook/useAd';
 import { shuffleArray } from '../../utils/shuffle';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizersPublic } from '../../components/Helmets/HelmetOrganizersPublic';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 
 import styles from './OrganizersPublic.module.css';
 
 // Рекламные блоки на странице.
-const adOverFooter = 22;
-const adUnderHeader = 23;
-const adNumbers = [adOverFooter, adUnderHeader];
+// const adOverFooter = 22;
+// const adUnderHeader = 23;
+// const adNumbers = [adOverFooter, adUnderHeader];
 
 /**
  * Страница Организаторов заездов.
@@ -43,15 +43,11 @@ function OrganizersPublic() {
   }, []);
 
   // Хук работы с рекламными блоками на странице.
-  useAd(adNumbers);
+  // useAd(adNumbers);
   return (
     <>
       <HelmetOrganizersPublic />
       <div className={styles.wrapper}>
-        {isDesktop ? (
-          <AdContainer number={adUnderHeader} height={180} marginBottom={10} />
-        ) : null}
-
         {!!shuffledOrganizers?.length && (
           <section className={styles.cards}>
             {shuffledOrganizers.map((organizer) => (
@@ -67,7 +63,7 @@ function OrganizersPublic() {
         )}
       </div>
 
-      <AdContainer number={adOverFooter} maxWidth={1105} />
+      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 
-import { useResize } from '../../hook/use-resize';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import { useResize } from '../../hook/use-resize';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
@@ -21,9 +21,9 @@ import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/Skelet
 import styles from './ResultsList.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 7;
-const adUnderHeader = 11;
-const adNumbers = [adUnderHeader, adOverFooter];
+// const adOverFooter = 7;
+// const adUnderHeader = 11;
+// const adNumbers = [adUnderHeader, adOverFooter];
 
 const localStorageFilterKey = `${lsPrefixResultList}filter`;
 const localStoragePageSizeKey = `${lsPrefixResultList}pageSize`;
@@ -35,7 +35,7 @@ function ResultsListPage() {
   const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
   const [search, setSearch] = useState(initialFilterTable);
 
-  const { isScreenLg: isDesktop } = useResize();
+  // const { isScreenLg: isDesktop } = useResize();
 
   const initialDocsOnPage = localStorage.getItem(localStoragePageSizeKey) || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
@@ -92,13 +92,12 @@ function ResultsListPage() {
     );
   };
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
 
   return (
     <>
       <HelmetResultsList />
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
         <div className={styles.align__right}>
           {/* Блок фильтров для таблицы */}
           <FilterBoxForTable
@@ -132,11 +131,11 @@ function ResultsListPage() {
           <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
       </section>
-      {isDesktop ? (
+      {/* {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (
         <AdContainer number={adUnderHeader} />
-      )}
+      )} */}
     </>
   );
 }

@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useResize } from '../../hook/use-resize';
-import { useAd } from '../../hook/useAd';
-import AdContainer from '../../components/AdContainer/AdContainer';
+// import { useResize } from '../../hook/use-resize';
+// import { useAd } from '../../hook/useAd';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
@@ -23,9 +23,9 @@ import AdSeries from '../../components/AdSeries/AdSeries';
 import styles from './RaceResults.module.css';
 
 // рекламные блоки на странице
-const adOverFooter = 8;
-const adUnderHeader = 13;
-const adNumbers = [adUnderHeader, adOverFooter];
+// const adOverFooter = 8;
+// const adUnderHeader = 13;
+// const adNumbers = [adUnderHeader, adOverFooter];
 
 function RaceResults() {
   const {
@@ -34,7 +34,7 @@ function RaceResults() {
     status: statusFetchResults,
   } = useSelector((state) => state.fetchEventResult);
   const { column: pageCurrent } = useSelector((state) => state.filterRaceResultsPage.value);
-  const { isScreenLg: isDesktop } = useResize();
+  // const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Результаты заезда');
 
@@ -58,7 +58,7 @@ function RaceResults() {
     }
   }, [eventData]);
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
 
   return (
     <>
@@ -72,8 +72,6 @@ function RaceResults() {
       />
 
       <section className={styles.wrapper}>
-        {isDesktop && <AdContainer number={adUnderHeader} height={180} marginBottom={10} />}
-
         {/* Скелетон загрузки для Постера */}
         <SkeletonDescEvent status={statusFetchResults} />
 
@@ -133,11 +131,11 @@ function RaceResults() {
           </>
         )}
       </section>
-      {isDesktop ? (
+      {/* {isDesktop ? (
         <AdContainer number={adOverFooter} maxWidth={1105} />
       ) : (
         <AdContainer number={adUnderHeader} />
-      )}
+      )} */}
     </>
   );
 }

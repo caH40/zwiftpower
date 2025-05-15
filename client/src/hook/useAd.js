@@ -8,13 +8,15 @@ import { isDevelopmentMode } from '../config/environment';
  * @param {number[]} numbers номера блоков присвоенных РСЯ (../yandex/blocks)
  */
 export const useAd = (numbers) => {
-  useEffect(() => {
-    if (isDevelopmentMode) {
-      return;
-    }
+  return;
+  // FIXME:  Отключена реклама яндекса
+  // useEffect(() => {
+  //   if (isDevelopmentMode) {
+  //     return;
+  //   }
 
-    for (const number of numbers) {
-      adBlockRecommendation(number);
-    }
-  }, []);
+  //   for (const number of numbers) {
+  //     adBlockRecommendation(number);
+  //   }
+  // }, []);
 };

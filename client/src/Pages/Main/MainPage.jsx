@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import { millisecondsIn90Days } from '../../assets/dates';
 import { useResize } from '../../hook/use-resize';
-import { useAd } from '../../hook/useAd';
+// import { useAd } from '../../hook/useAd';
 import { lsPrefixStreams } from '../../constants/localstorage';
 import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import useBannerVisibility from '../../hook/useBannerVisibility';
@@ -23,9 +23,9 @@ import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 import styles from './MainPage.module.css';
 
 // рекламные блоки на странице
-const inSideBar = 9;
-const adOverFooter = 16;
-const adNumbers = [inSideBar, adOverFooter];
+// const inSideBar = 9;
+// const adOverFooter = 16;
+// const adNumbers = [inSideBar, adOverFooter];
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
@@ -57,7 +57,7 @@ function MainPage() {
     return () => dispatch(resetEventsPreview());
   }, [dispatch]);
 
-  useAd(adNumbers);
+  // useAd(adNumbers);
 
   const shouldRenderCard = !!eventsPreview.length && statusFetchEvents === 'resolved';
 
@@ -127,7 +127,7 @@ function MainPage() {
         </aside>
       </div>
 
-      <AdContainer number={adOverFooter} maxWidth={1105} />
+      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }
