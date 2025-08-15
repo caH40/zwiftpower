@@ -36,6 +36,7 @@ function ProfileSetting() {
       <div className={styles.spacer}>
         <NavBarProfileSettings zwiftId={zwiftIdPage} />
       </div>
+
       <Outlet zwiftIdAuth={zwiftIdAuth} />
     </section>
   );

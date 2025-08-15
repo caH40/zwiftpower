@@ -15,3 +15,6 @@ export const profileSettingsButtons = [
   { id: 2, page: 'zwift', name: 'Звифт' },
   { id: 3, page: 'stream', name: 'Стрим' },
 ];
+export const profileSettingsOtherButtons = [
+  { id: 0, page: 'services-and-finances', name: 'Финансы и сервисы' },
+];

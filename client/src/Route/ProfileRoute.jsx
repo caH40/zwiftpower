@@ -18,6 +18,9 @@ const SettingsNotifications = lazy(() =>
 );
 const SettingsZwift = lazy(() => import('../Pages/Profile/SettingsZwift/SettingsZwift'));
 const SettingsStream = lazy(() => import('../Pages/Profile/SettingsStream/SettingsStream'));
+const SettingsServicesAndFinances = lazy(() =>
+  import('../Pages/Profile/SettingsServicesAndFinances/SettingsServicesAndFinances')
+);
 
 export function ProfileRoute() {
   const { status, user } = useSelector((state) => state.checkAuth.value);
@@ -46,6 +49,7 @@ export function ProfileRoute() {
             <Route path="notifications" element={<SettingsNotifications />} />
             <Route path="zwift" element={<SettingsZwift />} />
             <Route path="stream" element={<SettingsStream />} />
+            <Route path="services-and-finances" element={<SettingsServicesAndFinances />} />
           </Route>
         )}
       </Route>

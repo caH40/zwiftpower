@@ -72,6 +72,7 @@ function Profile() {
 
         {/* Блок профиля: изображение и основные данные райдера */}
         <SkeletonProfileBlock status={statusProfile} />
+
         {statusProfile === 'resolved' && (
           <ProfileBlock
             profile={profile}

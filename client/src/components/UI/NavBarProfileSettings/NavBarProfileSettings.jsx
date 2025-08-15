@@ -3,10 +3,16 @@ import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { profileSettingsButtons } from '../../../assets/profile-buttons';
+import {
+  profileSettingsButtons,
+  profileSettingsOtherButtons,
+} from '../../../assets/profile-buttons';
 
 import styles from './NavBarProfileSettings.module.css';
 
+/**
+ * Навигация в настройках аккаунта пользователя.
+ */
 function NavBarProfileSettings({ zwiftId, addCls }) {
   const { status, user } = useSelector((state) => state.checkAuth.value);
 
@@ -16,9 +22,9 @@ function NavBarProfileSettings({ zwiftId, addCls }) {
   // Не показывать кнопки при просмотре своего аккаунта если не добавлен zwiftId.
   const hideProfileButtons = status && !user.zwiftId && zwiftId === 0;
 
-  const getStyle = (isActive, index) => {
+  const getStyle = (buttons, isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили
-    const quantityBtn = profileSettingsButtons.length;
+    const quantityBtn = buttons.length;
 
     const positions = {
       [styles.button__left]: index === 0 && quantityBtn !== 1,
@@ -36,17 +42,33 @@ function NavBarProfileSettings({ zwiftId, addCls }) {
   return (
     <nav className={cn(styles.wrapper, cns(styles, addCls))}>
       {!hideProfileButtons && (
-        <div className={styles.wrapper__buttons}>
-          {profileSettingsButtons.map((buttonLink, index) => (
-            <NavLink
-              className={({ isActive }) => getStyle(isActive, index)}
-              to={`/profile/${zwiftId}/settings/${buttonLink.page}`}
-              key={buttonLink.id}
-            >
-              {buttonLink.name}
-            </NavLink>
-          ))}
-        </div>
+        <>
+          <div className={styles.wrapper__buttons}>
+            {profileSettingsButtons.map((buttonLink, index) => (
+              <NavLink
+                className={({ isActive }) => getStyle(profileSettingsButtons, isActive, index)}
+                to={`/profile/${zwiftId}/settings/${buttonLink.page}`}
+                key={buttonLink.id}
+              >
+                {buttonLink.name}
+              </NavLink>
+            ))}
+          </div>
+
+          <div className={styles.wrapper__buttons}>
+            {profileSettingsOtherButtons.map((buttonLink, index) => (
+              <NavLink
+                className={({ isActive }) =>
+                  getStyle(profileSettingsOtherButtons, isActive, index)
+                }
+                to={`/profile/${zwiftId}/settings/${buttonLink.page}`}
+                key={buttonLink.id}
+              >
+                {buttonLink.name}
+              </NavLink>
+            ))}
+          </div>
+        </>
       )}
     </nav>
   );
