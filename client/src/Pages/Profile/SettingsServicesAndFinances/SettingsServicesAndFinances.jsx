@@ -1,6 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../../hook/useTitle';
+import { fetchSiteServices } from '../../../redux/features/api/site_service/fetchSiteServices';
 import PaymentServicesBlock from '../../../components/PaymentServicesBlock/PaymentServicesBlock';
 
 import styles from './SettingsServicesAndFinances.module.css';
@@ -10,15 +12,21 @@ import styles from './SettingsServicesAndFinances.module.css';
  */
 export default function SettingsServicesAndFinances() {
   useTitle('Финансы и Сервисы');
+  const { siteServices } = useSelector((state) => state.siteServices);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSiteServices());
+  }, []);
 
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
   return (
     <div className={styles.wrapper}>
       <div>
         <h3 className={styles.title}>Пополнить или оплатить сервисы</h3>
-        {zwiftIdAuth && (
+        {zwiftIdAuth && siteServices?.length > 0 && (
           <div className={styles.wrapper__block}>
-            <PaymentServicesBlock />
+            <PaymentServicesBlock services={siteServices} />
           </div>
         )}
       </div>

@@ -6,30 +6,18 @@ import { siteServicesList } from '../../assets/options';
 
 import styles from './PaymentServicesBlock.module.css';
 
-const s = [
-  {
-    label: 'Доступ к сервису Организатор',
-    entityName: 'organizer',
-    description:
-      'Доступ к сервисам Организатора, создания и редактирования заездов через ZwiftAPI. Подписка сроком на 31 день.',
-    subscriptionDescription: 'Оплата подписки на месяц.',
-    startDate: new Date().toISOString(),
-    endDate: new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000).toISOString(), // +31 день
-  },
-];
-
 /**
  * Блок оплаты сервисов.
  */
 export default function PaymentServicesBlock({ services }) {
-  const options = siteServicesList(s);
+  const options = siteServicesList(services);
   const [selectedService, setSelectedService] = useState(options[0].name);
 
   const handleBuy = () => {
     console.log('handleBuy', { selectedService });
   };
 
-  const service = s.find((s) => s.name === selectedService);
+  const service = services.find((s) => s.entityName === selectedService);
 
   // Форматирование дат
   const startDate = service ? new Date(service.startDate).toLocaleDateString() : '';

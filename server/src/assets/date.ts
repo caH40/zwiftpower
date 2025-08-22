@@ -14,6 +14,7 @@ export const millisecondsIn2Hours = 2 * millisecondsInHour;
 export const millisecondsIn3Days = 3 * millisecondsInDay;
 export const millisecondsInWeekDays = 7 * millisecondsInDay;
 export const millisecondsIn90Days = 90 * millisecondsInDay;
+export const millisecondsIn31Days = 31 * millisecondsInDay;
 
 /**
  * Дата 90 дней назад

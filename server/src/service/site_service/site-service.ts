@@ -1,3 +1,4 @@
+import { millisecondsIn31Days } from '../../assets/date.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { Organizer } from '../../Model/Organizer.js';
 
@@ -20,7 +21,7 @@ export async function getSiteServicesService(userId: string): Promise<TSiteServi
       subscriptionDescription: 'Оплата подписки на месяц.',
       origin: 'purchased',
       startDate: new Date().toISOString(),
-      endDate: new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000).toISOString(), // +31 день
+      endDate: new Date(new Date().getTime() + millisecondsIn31Days).toISOString(), // +31 день
     };
 
     const results: TSiteServiceForClient[] = [];

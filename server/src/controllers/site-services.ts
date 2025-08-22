@@ -10,8 +10,9 @@ import { MongooseUtils } from '../utils/MongooseUtils.js';
 export async function getSiteServicesController(req: Request, res: Response) {
   try {
     const mongooseUtils = new MongooseUtils();
+
     // Проверка параметров из тела запроса.
-    const userId = req.body.userId;
+    const userId = req.params.userId;
 
     if (!userId || typeof userId !== 'string' || !mongooseUtils.checkValidObjectId(userId)) {
       throw new Error('Не получен userId');
