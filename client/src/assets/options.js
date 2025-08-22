@@ -56,3 +56,10 @@ export const seriesTypes = [
   //   name: 'Критериум',
   // },
 ];
+
+export const siteServicesList = (services) =>
+  services.map((s) => ({
+    label: s.label,
+    name: s.entityName,
+    id: s.entityName,
+  }));

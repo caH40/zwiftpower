@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import useTitle from '../../../hook/useTitle';
+import PaymentServicesBlock from '../../../components/PaymentServicesBlock/PaymentServicesBlock';
 
 import styles from './SettingsServicesAndFinances.module.css';
 
@@ -16,7 +17,9 @@ export default function SettingsServicesAndFinances() {
       <div>
         <h3 className={styles.title}>Пополнить или оплатить сервисы</h3>
         {zwiftIdAuth && (
-          <div className={styles.wrapper__block}>Пополнить или оплатить сервисы</div>
+          <div className={styles.wrapper__block}>
+            <PaymentServicesBlock />
+          </div>
         )}
       </div>
 
