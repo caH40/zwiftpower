@@ -8,7 +8,7 @@ import {
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
-import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
+import { TSiteService } from './site-service.type.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -866,8 +866,9 @@ export type TSeriesClassification = {
  * Сущность, описывающая доступ пользователя к платным сервисам сайта.
  * Бесплатные сервисы включаются/отключаются простыми флагами и здесь не учитываются.
  */
+export type TPaidSiteServiceAccessDocument = TPaidSiteServiceAccess & Document;
 export type TPaidSiteServiceAccess = {
   _id: mongoose.Types.ObjectId;
   user: mongoose.Types.ObjectId; // Ссылка на пользователя.
-  services: Record<TEntityNameForSlot, TSiteService>;
+  services: TSiteService[];
 };
