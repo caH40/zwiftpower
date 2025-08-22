@@ -8,6 +8,7 @@ import {
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
+import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -859,4 +860,14 @@ export type TSeriesClassification = {
     finishPoints: number; // Заработанные финишные очки за этап.
     // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
   }[]; // Массив этапов, на которых участвовал райдер.
+};
+
+/**
+ * Сущность, описывающая доступ пользователя к платным сервисам сайта.
+ * Бесплатные сервисы включаются/отключаются простыми флагами и здесь не учитываются.
+ */
+export type TPaidSiteServiceAccess = {
+  _id: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId; // Ссылка на пользователя.
+  services: Record<TEntityNameForSlot, TSiteService>;
 };
