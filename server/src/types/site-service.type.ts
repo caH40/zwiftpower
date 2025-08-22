@@ -33,3 +33,13 @@ export type TSubscriptionSlot = {
  * - 'admin'     → вручную выдан администратором
  */
 export type TSlotOrigin = 'trial' | 'purchased' | 'gift' | 'promo' | 'admin';
+
+export type TSiteServiceForClient = {
+  entityName: TEntityNameForSlot;
+  description: string; // Подробное описание сервиса.
+  label: string; // Название для отображения опции в select.
+  subscriptionDescription: string; // Название (Оплата подписки на месяц. и т.д)
+  origin: TSlotOrigin;
+  startDate: string;
+  endDate: string;
+};
