@@ -17,11 +17,12 @@ export async function getSiteServicesService(userId: string): Promise<TSiteServi
       label: 'Доступ к сервису Организатор',
       entityName: 'organizer',
       description:
-        'Доступ к сервисам Организатора, создания и редактирования заездов через ZwiftAPI. Подписка сроком на 31 день.',
+        'Доступ к сервисам Организатора. Создание и редактирование заездов через ZwiftAPI. Подписка сроком на 31 день.',
       subscriptionDescription: 'Оплата подписки на месяц.',
       origin: 'purchased',
       startDate: new Date().toISOString(),
       endDate: new Date(new Date().getTime() + millisecondsIn31Days).toISOString(), // +31 день
+      price: { unitPrice: 2000, currency: 'RUB' },
     };
 
     const results: TSiteServiceForClient[] = [];

@@ -1,23 +1,34 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Button from '../UI/Button/Button';
 import SimpleSelectFunction from '../UI/SimpleSelect/SimpleSelectFunction';
+import { useOrganizerPurchase } from '../../hook/useOrganizerPurchase';
 import { siteServicesList } from '../../assets/options';
+import { serverExpress } from '../../config/environment';
 
 import styles from './PaymentServicesBlock.module.css';
 
 /**
  * Блок оплаты сервисов.
  */
-export default function PaymentServicesBlock({ services }) {
+export default function PaymentServicesBlock({ services, user }) {
   const options = siteServicesList(services);
   const [selectedService, setSelectedService] = useState(options[0].name);
 
-  const handleBuy = () => {
-    console.log('handleBuy', { selectedService });
-  };
+  const location = useLocation();
 
   const service = services.find((s) => s.entityName === selectedService);
+
+  const { handleClickPurchase } = useOrganizerPurchase({
+    returnUrl: `${serverExpress}/${location.pathname}`,
+    payloadData: {
+      unitPrice: service.price.unitPrice,
+      currency: service.price.currency,
+      customer: { full_name: user.username },
+    },
+    userId: user.id,
+  });
 
   // Форматирование дат
   const startDate = service ? new Date(service.startDate).toLocaleDateString() : '';
@@ -34,18 +45,25 @@ export default function PaymentServicesBlock({ services }) {
 
       <div className={styles.wrapper__info}>
         {!!service && (
-          <>
-            <p className={styles.description}>{service.description}</p>
+          <dl className={styles.list}>
+            <dt>Описание</dt>
+            <dd className={styles.description}>{service.description}</dd>
 
-            <p className={styles.dates}>
-              Срок действия: {startDate} — {endDate}
-            </p>
-          </>
+            <dt>Срок действия</dt>
+            <dd className={styles.dates}>
+              {startDate} — {endDate}
+            </dd>
+
+            <dt>Цена</dt>
+            <dd className={styles.dates}>
+              {service.price.unitPrice} {service.price.currency}
+            </dd>
+          </dl>
         )}
       </div>
 
       <div className={styles.actions}>
-        <Button getClick={handleBuy}>Оплатить</Button>
+        <Button getClick={handleClickPurchase}>Оплатить</Button>
       </div>
     </div>
   );

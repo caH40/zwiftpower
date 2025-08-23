@@ -48,6 +48,7 @@ import { organizerReducers } from './organizer';
 import { organizersPublicReducers } from './organizers-public';
 import { seriesOrganizerReducers, seriesPublicReducers } from './series';
 import { siteServiceReducers } from './site-services';
+import { paymentReducers } from './payment';
 
 export default configureStore({
   reducer: {
@@ -97,5 +98,6 @@ export default configureStore({
     ...seriesOrganizerReducers,
     ...seriesPublicReducers,
     ...siteServiceReducers,
+    ...paymentReducers,
   },
 });

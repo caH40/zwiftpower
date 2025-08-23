@@ -19,3 +19,24 @@
 .dates {
   font-size: 14px;
 }
+.list {
+  margin: 0;
+}
+.list dd {
+  margin-inline-start: 0;
+  margin: 0 0 15px 0;
+}
+.list dt {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.list dt::after {
+  content: ':';
+}
+.list dd pre {
+  margin: 0;
+}
+.right {
+  text-align: right;
+}

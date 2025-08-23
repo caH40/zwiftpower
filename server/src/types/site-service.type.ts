@@ -42,4 +42,8 @@ export type TSiteServiceForClient = {
   origin: TSlotOrigin;
   startDate: string;
   endDate: string;
+  price: {
+    unitPrice: number;
+    currency: 'RUB';
+  };
 };
