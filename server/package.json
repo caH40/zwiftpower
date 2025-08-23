@@ -17,6 +17,7 @@
   "author": "Berezhnev A.",
   "license": "ISC",
   "dependencies": {
+    "@a2seven/yoo-checkout": "^1.1.4",
     "@aws-sdk/client-s3": "^3.733.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",

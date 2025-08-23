@@ -24,6 +24,7 @@ import { createSitemap } from './service/sitemap/generate-sitemap.js';
 import { routerOrganizerPublic } from './routes/organizer-public.js';
 import { routerSeries } from './routes/series.js';
 import { siteServiceRouter } from './routes/site-service.js';
+import { paymentsRouter } from './routes/payments.js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
@@ -61,6 +62,7 @@ app.use('/api/organizer', routerOrganizer);
 app.use('/api/organizers', routerOrganizerPublic);
 app.use('/api/series', routerSeries);
 app.use('/api/site-services', siteServiceRouter);
+app.use('/api/payments', paymentsRouter);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })

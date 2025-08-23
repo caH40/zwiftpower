@@ -45,8 +45,6 @@ export function useOrganizerPurchase({
       ],
     };
 
-    setIsLoading(true);
-
     const createPayload = {
       amount: {
         value: String(unitPrice),
@@ -67,13 +65,18 @@ export function useOrganizerPurchase({
       description,
     };
 
-    dispatch(fetchPurchaseSiteService({ createPayload })).then((data) => {
-      if (data.meta.requestStatus === 'fulfilled') {
-        dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
-      }
-    });
+    try {
+      setIsLoading(true);
+      const data = await dispatch(fetchPurchaseSiteService({ createPayload })).unwrap();
 
-    setIsLoading(false);
+      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+    } catch (e) {
+      dispatch(
+        getAlert({ message: 'Ошибка при создании платежа', type: 'error', isOpened: true })
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return { handleClickPurchase, isLoading };

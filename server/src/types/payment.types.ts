@@ -1,0 +1,93 @@
+import { ICreatePayment } from '@a2seven/yoo-checkout';
+import { TEntityNameForSlot } from './site-service.type';
+
+export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
+  metadata: TCreatePayloadMetadata;
+};
+export type TCreatePayloadMetadata = {
+  userId: number;
+  quantity: number;
+  entityName: TEntityNameForSlot;
+};
+export type TNotificationMetadata = Omit<TCreatePayloadMetadata, 'userId' | 'quantity'> & {
+  userId: string;
+  quantity: string;
+};
+
+// Данные о покупке для обработки и сохранения в БД.
+export type TPurchaseMetadata = {
+  quantity: number;
+  entityName: TEntityNameForSlot;
+};
+
+/**
+ * Пример данных оповещения событий платежа от ЮКассы.
+ */
+export type TYooKassaPaymentNotification = {
+  type: 'notification';
+  event: TYooKassaPaymentEvent;
+  object: {
+    id: string;
+    // https://yookassa.ru/developers/payment-acceptance/getting-started/payment-process#lifecycle
+    status: TYooKassaPaymentStatus;
+    amount: {
+      value: string; // денежная сумма в виде строки
+      currency: TCurrency;
+    };
+    income_amount: {
+      value: string;
+      currency: TCurrency;
+    };
+    description: string;
+    recipient: {
+      account_id: string;
+      gateway_id: string;
+    };
+    payment_method: {
+      type: string; // 'yoo_money' и другие
+      id: string;
+      saved: boolean;
+      status: string;
+      title: string;
+      account_number: string;
+    };
+    captured_at?: string;
+    created_at: string;
+    expires_at?: string;
+    test: boolean;
+    refunded_amount: {
+      value: string;
+      currency: TCurrency;
+    };
+    cancellation_details?: { party: string; reason: string };
+    paid: boolean;
+    refundable: boolean;
+    metadata: TNotificationMetadata;
+  };
+};
+export type TCurrency = 'RUB';
+export type TYooKassaPaymentEvent =
+  | 'payment.succeeded'
+  | 'payment.canceled'
+  | 'payment.pending'
+  | 'payment.waiting_for_capture';
+
+export type TYooKassaPaymentStatus =
+  | 'succeeded'
+  | 'pending'
+  | 'waiting_for_capture'
+  | 'canceled';
+
+// Действия над слотами для сервисов. Покупка, Использование, Отмена использования.
+export type TActionSlot = 'purchase' | 'consume' | 'refund';
+
+/**
+ * Дополнительная отладочная информация, передаваемая в сервисы для логирования и диагностики ошибок.
+ */
+export type DebugMeta = {
+  caller?: string; // Откуда вызван сервис (например, 'ProfilePage' или 'api/user/[id]').
+  path?: string; // Абсолютный путь страницы или API (например, '/profile/123').
+  authUserId?: number; // ID на сайте текущего авторизованного пользователя.
+  rawParams?: unknown; // Оригинальные route-параметры (например, props.params).
+  search?: unknown; // Query-параметры (например, props.searchParams).
+};

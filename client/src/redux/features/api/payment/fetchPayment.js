@@ -10,13 +10,11 @@ import { serverExpress } from '../../../../config/environment';
 export const fetchPurchaseSiteService = createAsyncThunk(
   'purchaseSiteService/post',
   async ({ createPayload }, thunkAPI) => {
-    console.log(createPayload);
-
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/payment`,
+        url: `${serverExpress}/api/payments`,
         method: 'post',
-        data: createPayload,
+        data: { createPayload },
       });
 
       return response.data;

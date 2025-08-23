@@ -54,3 +54,21 @@ export const region: string = parsed.VK_AWS_REGION;
 export const endpoint: string = parsed.VK_AWS_ENDPOINT;
 export const bucketName: string = parsed.VK_AWS_BUCKET_NAME;
 export const endpointDomain: string = parsed.VK_AWS_ENDPOINT_DOMAIN;
+
+/**
+ * Данные YooKassa.
+ */
+export function getYooKassaConfig() {
+  if (!parsed) {
+    throw new Error('Пустой файл .env');
+  }
+
+  const secretKey: string = parsed.YOO_SECRET_KEY;
+  const shopId: string = parsed.YOO_SHOP_ID;
+
+  if (!secretKey || !shopId) {
+    throw new Error('Не получены данные конфигурации для yookassa');
+  }
+
+  return { secretKey, shopId };
+}
