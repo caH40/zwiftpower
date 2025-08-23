@@ -25,6 +25,7 @@ import { routerOrganizerPublic } from './routes/organizer-public.js';
 import { routerSeries } from './routes/series.js';
 import { siteServiceRouter } from './routes/site-service.js';
 import { paymentsRouter } from './routes/payments.js';
+import { notificationsRouter } from './routes/notifications.js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
@@ -63,11 +64,14 @@ app.use('/api/organizers', routerOrganizerPublic);
 app.use('/api/series', routerSeries);
 app.use('/api/site-services', siteServiceRouter);
 app.use('/api/payments', paymentsRouter);
+app.use('/api/notifications', notificationsRouter);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
 );
 app.get('*', async (req, res) => {
+  // console.log(req.path);
+
   const htmlContent = await setMetaTags(req.path);
   res.send(htmlContent);
 });

@@ -1,5 +1,6 @@
 import { ICreatePayment } from '@a2seven/yoo-checkout';
 import { TEntityNameForSlot } from './site-service.type';
+import mongoose from 'mongoose';
 
 export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
   metadata: TCreatePayloadMetadata;
@@ -90,4 +91,30 @@ export type DebugMeta = {
   authUserId?: number; // ID на сайте текущего авторизованного пользователя.
   rawParams?: unknown; // Оригинальные route-параметры (например, props.params).
   search?: unknown; // Query-параметры (например, props.searchParams).
+};
+
+export type TPaymentNotificationDocument = TPaymentNotification & Document;
+export type TPaymentNotification = {
+  _id: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId; // Ссылка на User.
+  event: TYooKassaPaymentEvent;
+  description: string;
+  id: string; // ID платежа в ЮKassa.
+  status: TYooKassaPaymentStatus; // Статус платежа.
+  amount: {
+    value: number;
+    currency: 'RUB';
+  };
+  income_amount?: {
+    value: number; // Сумма, полученная магазином (за вычетом комиссии).
+    currency: 'RUB';
+  };
+  metadata: {
+    entityName: TEntityNameForSlot;
+    quantity: number;
+  };
+  cancellation_details?: { party: string; reason: string };
+  capturedAt?: Date; // Оплачен платёж.
+  expiresAt?: Date; // Время когда истечет срок подтверждения платежа магазином.
+  createdAt: Date;
 };
