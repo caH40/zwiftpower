@@ -12,7 +12,7 @@ const initialState = {
  * Слайс для работы с сервисами сайта.
  */
 const siteServiceSlice = createSlice({
-  name: 'organizerClubsModerator',
+  name: 'siteService',
   initialState,
   reducers: {
     resetSiteServices(state) {

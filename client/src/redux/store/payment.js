@@ -1,5 +1,5 @@
-import paymentSlice from '../features/api/payment/paymentSlice';
+import paymentsSlice from '../features/api/payment/paymentsSlice';
 
 export const paymentReducers = {
-  payment: paymentSlice,
+  payment: paymentsSlice,
 };

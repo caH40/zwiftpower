@@ -40,6 +40,7 @@ export function useOrganizerPurchase({
         {
           description: 'Подписка на сервис Организатор сроком на 1 месяц (31 день)',
           amount: { value: String(unitPrice), currency },
+          quantity: 1,
           vat_code: 1,
         },
       ],
@@ -69,10 +70,14 @@ export function useOrganizerPurchase({
       setIsLoading(true);
       const data = await dispatch(fetchPurchaseSiteService({ createPayload })).unwrap();
 
-      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+      if (data && data.paymentResponse.confirmation_url) {
+        window.location.href = data.paymentResponse.confirmation_url;
+      } else {
+        throw new Error('Не получены данные с сервера!');
+      }
     } catch (e) {
       dispatch(
-        getAlert({ message: 'Ошибка при создании платежа', type: 'error', isOpened: true })
+        getAlert({ message: e || 'Ошибка при создании платежа', type: 'error', isOpened: true })
       );
     } finally {
       setIsLoading(false);

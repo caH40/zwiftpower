@@ -2,7 +2,6 @@ import { YooCheckout, IConfirmation } from '@a2seven/yoo-checkout';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getYooKassaConfig } from '../config/environment.js';
-import { handleAndLogError } from '../errors/error.js';
 
 // types
 import { TCreatePaymentWithMeta } from '../types/payment.types.js';
@@ -26,19 +25,12 @@ export class PaymentService {
     createPayload,
   }: {
     createPayload: TCreatePaymentWithMeta;
-  }): Promise<IConfirmation | null> {
-    try {
-      const idempotenceKey = uuidv4(); // Новый ключ для каждого вызова.
+  }): Promise<{ paymentResponse: IConfirmation; message: string }> {
+    const idempotenceKey = uuidv4(); // Новый ключ для каждого вызова.
 
-      console.log(createPayload);
+    const payment = await this.checkout.createPayment(createPayload, idempotenceKey);
 
-      const payment = await this.checkout.createPayment(createPayload, idempotenceKey);
-
-      return payment.confirmation;
-    } catch (error) {
-      handleAndLogError(error);
-      return null;
-    }
+    return { paymentResponse: payment.confirmation, message: 'Запрос на оплату' };
   }
 
   /**

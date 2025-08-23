@@ -5,7 +5,7 @@ import Button from '../UI/Button/Button';
 import SimpleSelectFunction from '../UI/SimpleSelect/SimpleSelectFunction';
 import { useOrganizerPurchase } from '../../hook/useOrganizerPurchase';
 import { siteServicesList } from '../../assets/options';
-import { serverExpress } from '../../config/environment';
+import { serverFront } from '../../config/environment';
 
 import styles from './PaymentServicesBlock.module.css';
 
@@ -21,7 +21,7 @@ export default function PaymentServicesBlock({ services, user }) {
   const service = services.find((s) => s.entityName === selectedService);
 
   const { handleClickPurchase } = useOrganizerPurchase({
-    returnUrl: `${serverExpress}/${location.pathname}`,
+    returnUrl: `${serverFront}${location.pathname}`,
     payloadData: {
       unitPrice: service.price.unitPrice,
       currency: service.price.currency,

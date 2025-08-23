@@ -10,12 +10,12 @@ const initialState = {
 /**
  * Слайс для работы с сервисами сайта.
  */
-const paymentSlice = createSlice({
-  name: 'organizerClubsModerator',
+const paymentsSlice = createSlice({
+  name: 'payments',
   initialState,
   reducers: {
-    // resetSiteServices(state) {
-    //   state.siteServices = [];
+    // resetPaymentResponseSite(state) {
+    //   state.paymentResponse = null;
     // },
   },
 
@@ -38,6 +38,6 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { resetSiteServices } = paymentSlice.actions;
+export const { resetSiteServices } = paymentsSlice.actions;
 
-export default paymentSlice.reducer;
+export default paymentsSlice.reducer;

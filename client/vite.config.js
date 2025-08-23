@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
       port: 80,
       host: true, // Позволяет прослушивать все интерфейсы (0.0.0.0)
       https: false, // Установите true, если используете 443 и сертификаты
+      allowedHosts: ['stockily-jaunty-whydah.cloudpub.ru'],
     },
     build: {
       outDir: './build',
