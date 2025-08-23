@@ -8,8 +8,6 @@ import { YooKassaNotification } from '../service/YooKassaNotification.js';
  */
 export async function postYooKassaNotificationsController(req: Request, res: Response) {
   try {
-    console.log('This is controller!');
-
     const body = req.body;
     if (!body) {
       throw new Error('Не получены данные оплаты с сервиса YooKassa!');

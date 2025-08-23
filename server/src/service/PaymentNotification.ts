@@ -33,7 +33,7 @@ const PaymentNotificationSchema = new Schema<TPaymentNotificationDocument>({
     currency: { type: String },
   },
   metadata: {
-    entityName: { type: String, enum: ['championship'], required: true },
+    entityName: { type: String, enum: ['organizer'], required: true },
     quantity: { type: Number, required: true },
   },
   cancellation_details: {

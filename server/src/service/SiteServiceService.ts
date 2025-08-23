@@ -54,11 +54,11 @@ export class SiteServiceService {
     metadata: TPurchaseMetadata;
   }): Promise<any> {
     try {
-      if (actionSlot !== 'purchase' && quantity > 1) {
-        throw new Error(
-          `При ${actionSlot} количество изменяемых слотов не может быть больше 1! quantity:${quantity}`
-        );
-      }
+      // if (actionSlot !== 'purchase' && quantity > 1) {
+      //   throw new Error(
+      //     `При ${actionSlot} количество изменяемых слотов не может быть больше 1! quantity:${quantity}`
+      //   );
+      // }
     } catch (error) {
       handleAndLogError(error);
     }

@@ -19,10 +19,6 @@ export class YooKassaNotification {
    * Обработка уведомления от ЮKassa.
    */
   public async handleNotifications(notification: TYooKassaPaymentNotification): Promise<void> {
-    console.log(notification);
-
-    return;
-
     try {
       switch (notification.event) {
         case 'payment.succeeded': {
