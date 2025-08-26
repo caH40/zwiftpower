@@ -49,3 +49,14 @@ export const PURCHASE_UNITS = ['month', 'week', 'day', 'piece'] as const;
 
 // Названия сущностей сервисов на сайте (платные сервисы).
 export const ENTITY_NAME_SLOTS = ['organizer'] as const;
+
+/**
+ * Способ получения подписки (слота).
+ *
+ * - 'trial'     → предоставлен как пробный период
+ * - 'purchased' → приобретён пользователем за деньги
+ * - 'gift'      → подарен сервисом (например, акция или бонус)
+ * - 'promo'     → активирован через промокод
+ * - 'admin'     → вручную выдан администратором
+ */
+export const SLOT_ORIGIN = ['trial', 'purchased', 'gift', 'promo', 'admin'] as const;

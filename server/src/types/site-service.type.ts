@@ -1,11 +1,12 @@
-import { ENTITY_NAME_SLOTS } from '../assets/constants';
+import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
 
 /**
  * Сервис с учетом доступных слотов и истории их использования.
  */
 export type TSiteService = {
   entityName: TEntityNameForSlot; // Название должно быть уникальным в массиве services сущности TPaidSiteServiceAccess
-  slots: TSubscriptionSlot[]; // История использования слотов пользователем.
+  periodSlots: TSubscriptionPeriodSlot[];
+  pieceSlots: TSubscriptionPieceSlot[];
 };
 
 /**
@@ -17,24 +18,21 @@ export type TEntityNameForSlot = (typeof ENTITY_NAME_SLOTS)[number];
  * Состояние слота.
  * active' | 'expired' вычисляется на лету.
  */
-export type TSubscriptionSlot = {
+export type TSubscriptionPeriodSlot = {
   description: string; // Название (Оплата подписки на месяц. и т.д)
   isPaused: boolean; // true → подписка на паузе
   origin: TSlotOrigin;
   startDate: Date;
   endDate: Date;
 };
+export type TSubscriptionPieceSlot = {
+  description: string;
+  origin: TSlotOrigin;
+  quantity: number;
+};
 
-/**
- * Способ получения подписки (слота).
- *
- * - 'trial'     → предоставлен как пробный период
- * - 'purchased' → приобретён пользователем за деньги
- * - 'gift'      → подарен сервисом (например, акция или бонус)
- * - 'promo'     → активирован через промокод
- * - 'admin'     → вручную выдан администратором
- */
-export type TSlotOrigin = 'trial' | 'purchased' | 'gift' | 'promo' | 'admin';
+// Способ получения подписки (слота).
+export type TSlotOrigin = (typeof SLOT_ORIGIN)[number];
 
 export type TSiteServiceForClient = {
   entityName: TEntityNameForSlot;

@@ -1,16 +1,22 @@
 import mongoose, { model, Schema } from 'mongoose';
 
+import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
+
 // types
 import { TPaidSiteServiceAccessDocument } from '../types/model.interface';
-import { TSiteService, TSubscriptionSlot } from '../types/site-service.type';
+import {
+  TSiteService,
+  TSubscriptionPeriodSlot,
+  TSubscriptionPieceSlot,
+} from '../types/site-service.type';
 
-const SubscriptionSlotSchema = new Schema<TSubscriptionSlot>(
+const SubscriptionPeriodSlotSchema = new Schema<TSubscriptionPeriodSlot>(
   {
     description: { type: String, required: true },
     isPaused: { type: Boolean, default: false },
     origin: {
       type: String,
-      enum: ['trial', 'purchased', 'gift', 'promo', 'admin'],
+      enum: SLOT_ORIGIN,
       required: true,
     },
     startDate: { type: Date, required: true },
@@ -19,10 +25,24 @@ const SubscriptionSlotSchema = new Schema<TSubscriptionSlot>(
   { _id: false }
 );
 
+const SubscriptionPieceSlotSchema = new Schema<TSubscriptionPieceSlot>(
+  {
+    description: { type: String, required: true },
+    origin: {
+      type: String,
+      enum: SLOT_ORIGIN,
+      required: true,
+    },
+    quantity: { type: Number },
+  },
+  { _id: false }
+);
+
 const SiteServiceSchema = new Schema<TSiteService>(
   {
-    entityName: { type: String, enum: ['organizer'], required: true },
-    slots: { type: [SubscriptionSlotSchema] },
+    entityName: { type: String, enum: ENTITY_NAME_SLOTS, required: true },
+    periodSlots: { type: [SubscriptionPeriodSlotSchema], default: [] },
+    pieceSlots: { type: [SubscriptionPieceSlotSchema], default: [] },
   },
   { _id: false }
 );

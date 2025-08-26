@@ -61,16 +61,15 @@ export class YooKassaNotification {
       quantity: Number(notification.metadata.quantity),
     };
 
-    console.log({ metadata });
-
     // Обработка удачной покупки, зачисление слотов пользователю.
     const siteServiceSlotService = new SiteServiceService();
     await siteServiceSlotService.manageServiceSlots({
       user: notification.metadata.userId,
       metadata,
-      actionSlot: 'purchase',
+      origin: 'purchased',
     });
 
+    // Данные для сохранения в БД.
     const query: Omit<TPaymentNotification, '_id' | 'user'> & { user: string } = {
       user: notification.metadata.userId,
       event,

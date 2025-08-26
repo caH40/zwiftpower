@@ -4,7 +4,7 @@ import { handleAndLogError } from '../errors/error.js';
 import { Organizer } from '../Model/Organizer.js';
 
 // types
-import { TSiteServiceForClient } from '../types/site-service.type.js';
+import { TSiteServiceForClient, TSlotOrigin } from '../types/site-service.type.js';
 import { TPurchaseMetadata } from '../types/payment.types.js';
 
 /**
@@ -45,15 +45,17 @@ export class SiteServiceService {
    * Обработка данных покупки слотов пользователя. Сохранение деталей покупки через ЮКассу.
    */
   public async manageServiceSlots({
-    actionSlot,
+    origin,
     user,
-    metadata: { entityName, quantity },
+    metadata: { entityName, quantity, unit },
   }: {
-    actionSlot: 'purchase' | 'consume' | 'refund';
+    origin: TSlotOrigin;
     user: Types.ObjectId | string;
     metadata: TPurchaseMetadata;
   }): Promise<any> {
     try {
+      console.log('manageServiceSlots', { origin, user, entityName, quantity, unit });
+
       // if (actionSlot !== 'purchase' && quantity > 1) {
       //   throw new Error(
       //     `При ${actionSlot} количество изменяемых слотов не может быть больше 1! quantity:${quantity}`
