@@ -41,6 +41,7 @@ export function useOrganizerPurchase({
           description: 'Подписка на сервис Организатор сроком на 1 месяц (31 день)',
           amount: { value: String(unitPrice), currency },
           quantity: 1, // Один месяц.
+          unit: 'month',
           vat_code: 1,
         },
       ],
@@ -60,6 +61,7 @@ export function useOrganizerPurchase({
 
       metadata: {
         userId,
+        unit: 'month',
         quantity: 1, // Один месяц.
         entityName: 'organizer',
       },

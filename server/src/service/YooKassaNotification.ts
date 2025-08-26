@@ -4,7 +4,7 @@ import {
   TYooKassaPaymentEvent,
   TYooKassaPaymentNotification,
 } from '../types/payment.types.js';
-import { PaymentNotificationModel } from './PaymentNotification.js';
+import { PaymentNotificationModel } from '../Model/PaymentNotification.js';
 
 import { handleAndLogError } from '../errors/error.js';
 import { SiteServiceService } from './SiteServiceService.js';
@@ -19,6 +19,8 @@ export class YooKassaNotification {
    * Обработка уведомления от ЮKassa.
    */
   public async handleNotifications(notification: TYooKassaPaymentNotification): Promise<void> {
+    console.log(notification);
+
     try {
       switch (notification.event) {
         case 'payment.succeeded': {
@@ -55,8 +57,11 @@ export class YooKassaNotification {
 
     const metadata: TPurchaseMetadata = {
       entityName: notification.metadata.entityName,
+      unit: notification.metadata.unit,
       quantity: Number(notification.metadata.quantity),
     };
+
+    console.log({ metadata });
 
     // Обработка удачной покупки, зачисление слотов пользователю.
     const siteServiceSlotService = new SiteServiceService();
@@ -97,6 +102,7 @@ export class YooKassaNotification {
 
     const metadata: TPurchaseMetadata = {
       entityName: notification.metadata.entityName,
+      unit: notification.metadata.unit,
       quantity: Number(notification.metadata.quantity),
     };
 
@@ -127,6 +133,7 @@ export class YooKassaNotification {
 
     const metadata: TPurchaseMetadata = {
       entityName: notification.metadata.entityName,
+      unit: notification.metadata.unit,
       quantity: Number(notification.metadata.quantity),
     };
 

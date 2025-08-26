@@ -1,7 +1,18 @@
-import mongoose, { model, models, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
+
+import { ENTITY_NAME_SLOTS, PURCHASE_UNITS } from '../assets/constants.js';
 
 // types
-import { TPaymentNotificationDocument } from '../types/payment.types.js';
+import { TPaymentNotificationDocument, TPurchaseMetadata } from '../types/payment.types.js';
+
+const MetadataSchema = new Schema<TPurchaseMetadata>(
+  {
+    entityName: { type: String, enum: ENTITY_NAME_SLOTS, required: true },
+    quantity: { type: Number, required: true },
+    unit: { type: String, enum: PURCHASE_UNITS, required: true },
+  },
+  { _id: false }
+);
 
 const PaymentNotificationSchema = new Schema<TPaymentNotificationDocument>({
   event: {
@@ -30,10 +41,8 @@ const PaymentNotificationSchema = new Schema<TPaymentNotificationDocument>({
     value: { type: Number },
     currency: { type: String },
   },
-  metadata: {
-    entityName: { type: String, enum: ['championship'], required: true },
-    quantity: { type: Number, required: true },
-  },
+  metadata: { type: MetadataSchema },
+
   cancellation_details: {
     party: { type: String },
     reason: { type: String },
@@ -43,6 +52,7 @@ const PaymentNotificationSchema = new Schema<TPaymentNotificationDocument>({
   expiresAt: Date, //Создан платёж.
 });
 
-export const PaymentNotificationModel =
-  models.PaymentNotification ||
-  model<TPaymentNotificationDocument>('PaymentNotification', PaymentNotificationSchema);
+export const PaymentNotificationModel = model<TPaymentNotificationDocument>(
+  'PaymentNotification',
+  PaymentNotificationSchema
+);

@@ -1,6 +1,7 @@
 import { ICreatePayment } from '@a2seven/yoo-checkout';
 import { TEntityNameForSlot } from './site-service.type';
 import mongoose from 'mongoose';
+import { PURCHASE_UNITS } from '../assets/constants';
 
 export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
   metadata: TCreatePayloadMetadata;
@@ -13,13 +14,17 @@ export type TCreatePayloadMetadata = {
 export type TNotificationMetadata = Omit<TCreatePayloadMetadata, 'userId' | 'quantity'> & {
   userId: string;
   quantity: string;
+  unit: TPurchaseUnit;
 };
 
 // Данные о покупке для обработки и сохранения в БД.
 export type TPurchaseMetadata = {
   quantity: number;
   entityName: TEntityNameForSlot;
+  unit: TPurchaseUnit;
 };
+
+export type TPurchaseUnit = (typeof PURCHASE_UNITS)[number];
 
 /**
  * Пример данных оповещения событий платежа от ЮКассы.

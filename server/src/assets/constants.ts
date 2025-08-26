@@ -43,3 +43,9 @@ export const eventOptionsVisibility = [
   { id: 1, name: 'SHAREABLE', translate: 'Могут участвовать все райдеры' },
   { id: 2, name: 'PUBLIC', translate: 'Публичный' },
 ];
+
+// Размерность приобретаемого слота (подписки) сервиса.
+export const PURCHASE_UNITS = ['month', 'week', 'day', 'piece'] as const;
+
+// Названия сущностей сервисов на сайте (платные сервисы).
+export const ENTITY_NAME_SLOTS = ['organizer'] as const;

@@ -1,3 +1,5 @@
+import { ENTITY_NAME_SLOTS } from '../assets/constants';
+
 /**
  * Сервис с учетом доступных слотов и истории их использования.
  */
@@ -9,7 +11,7 @@ export type TSiteService = {
 /**
  * Название сервиса.
  */
-export type TEntityNameForSlot = 'organizer';
+export type TEntityNameForSlot = (typeof ENTITY_NAME_SLOTS)[number];
 
 /**
  * Состояние слота.
