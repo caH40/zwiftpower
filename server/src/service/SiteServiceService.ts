@@ -3,18 +3,12 @@ import {
   TManageServiceSlotsParams,
 } from '../types/types.interface.js';
 import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
-import { millisecondsIn31Days, millisecondsInDay } from '../assets/date.js';
+import { millisecondsIn31Days } from '../assets/date.js';
 import { handleAndLogError } from '../errors/error.js';
 import { Organizer } from '../Model/Organizer.js';
 
 // types
-import {
-  TSiteServiceForClient,
-  TSlotOrigin,
-  TSubscriptionPeriodSlot,
-} from '../types/site-service.type.js';
-import { TPurchaseUnit } from '../types/payment.types.js';
-import { DAYS_IN_MONTH_FOR_SLOT } from '../assets/constants.js';
+import { TSiteServiceForClient } from '../types/site-service.type.js';
 import { SubscriptionService } from './SubscriptionService.js';
 
 /**
@@ -83,30 +77,10 @@ export class SiteServiceService {
     }
   }
 
-  private createPeriodSlot(
-    origin: TSlotOrigin,
-    startDate: Date,
-    endDate: Date
-  ): TSubscriptionPeriodSlot {
-    return {
-      description: 'Описание слота',
-      isPaused: false,
-      origin,
-      startDate,
-      endDate,
-    };
-  }
-
-  private getEndDateByUnit(unit: Exclude<TPurchaseUnit, 'piece'>): Date {
-    const millisecondsInUnit: Record<Exclude<TPurchaseUnit, 'piece'>, number> = {
-      month: millisecondsInDay * DAYS_IN_MONTH_FOR_SLOT,
-      week: millisecondsInDay * 7,
-      day: millisecondsInDay * 1,
-    };
-
-    return new Date(Date.now() + millisecondsInUnit[unit]);
-  }
-
+  /**
+   * Обработчик успешной оплаты за период-подписку на сервис сайта. Сохранение данных
+   * купленной подписке в список слотов пользователя.
+   */
   private async handlePeriodUnit({
     origin,
     user,
@@ -125,6 +99,7 @@ export class SiteServiceService {
    * Обработчик штучного слота.
    */
   private handlePieceUnit({ purchaseUnit }: { purchaseUnit: 'piece' }) {
+    // FIXME: записывать ошибку в платеж, сам платеж возвращать пользователю.
     throw Error(`Нет обработчика для purchaseUnit:${purchaseUnit}`);
   }
 }
