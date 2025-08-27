@@ -1,14 +1,14 @@
 import mongoose, { model, Schema } from 'mongoose';
 
-import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
+import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants.js';
 
 // types
-import { TPaidSiteServiceAccessDocument } from '../types/model.interface';
+import { TPaidSiteServiceAccessDocument } from '../types/model.interface.js';
 import {
   TSiteService,
   TSubscriptionPeriodSlot,
   TSubscriptionPieceSlot,
-} from '../types/site-service.type';
+} from '../types/site-service.type.js';
 
 const SubscriptionPeriodSlotSchema = new Schema<TSubscriptionPeriodSlot>(
   {

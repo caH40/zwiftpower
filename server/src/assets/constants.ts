@@ -60,3 +60,5 @@ export const ENTITY_NAME_SLOTS = ['organizer'] as const;
  * - 'admin'     → вручную выдан администратором
  */
 export const SLOT_ORIGIN = ['trial', 'purchased', 'gift', 'promo', 'admin'] as const;
+
+export const DAYS_IN_MONTH_FOR_SLOT = 31;

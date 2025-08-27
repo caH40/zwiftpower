@@ -25,6 +25,8 @@ import { PutResult } from './http.interface.js';
 import { EventSubgroupFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 import { TStagesPublicResponseDB } from './mongodb-response.types.js';
 import { TStagesPublicDto } from './dto.interface.js';
+import { TEntityNameForSlot, TSlotOrigin } from './site-service.type.js';
+import { TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -952,4 +954,17 @@ export type TFinishGapsGetters<T> = {
 export type TAllStageOrders = {
   requiredStageOrders: number[]; // Номера обязательных этапов для ГС.
   allStageOrders: number[]; // Все номера этапов в Серии заездов.
+};
+
+export type TManageServiceSlotsParams = {
+  origin: TSlotOrigin;
+  user: Types.ObjectId | string;
+  metadata: TPurchaseMetadata;
+};
+export type THandlePeriodUnitParams = Omit<TManageServiceSlotsParams, 'metadata'> & {
+  metadata: {
+    quantity: number;
+    entityName: TEntityNameForSlot;
+    unit: Exclude<TPurchaseUnit, 'piece'>;
+  };
 };

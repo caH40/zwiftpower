@@ -1,11 +1,21 @@
-import { Types } from 'mongoose';
-import { millisecondsIn31Days } from '../assets/date.js';
+import {
+  THandlePeriodUnitParams,
+  TManageServiceSlotsParams,
+} from '../types/types.interface.js';
+import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
+import { millisecondsIn31Days, millisecondsInDay } from '../assets/date.js';
 import { handleAndLogError } from '../errors/error.js';
 import { Organizer } from '../Model/Organizer.js';
 
 // types
-import { TSiteServiceForClient, TSlotOrigin } from '../types/site-service.type.js';
-import { TPurchaseMetadata } from '../types/payment.types.js';
+import {
+  TSiteServiceForClient,
+  TSlotOrigin,
+  TSubscriptionPeriodSlot,
+} from '../types/site-service.type.js';
+import { TPurchaseUnit } from '../types/payment.types.js';
+import { DAYS_IN_MONTH_FOR_SLOT } from '../assets/constants.js';
+import { SubscriptionService } from './SubscriptionService.js';
 
 /**
  * Сервис работы со слотами по доступу к платным сервисам сайта.
@@ -47,22 +57,74 @@ export class SiteServiceService {
   public async manageServiceSlots({
     origin,
     user,
-    metadata: { entityName, quantity, unit },
-  }: {
-    origin: TSlotOrigin;
-    user: Types.ObjectId | string;
-    metadata: TPurchaseMetadata;
-  }): Promise<any> {
+    metadata,
+  }: TManageServiceSlotsParams): Promise<void> {
     try {
-      console.log('manageServiceSlots', { origin, user, entityName, quantity, unit });
+      const unit = metadata.unit;
 
-      // if (actionSlot !== 'purchase' && quantity > 1) {
-      //   throw new Error(
-      //     `При ${actionSlot} количество изменяемых слотов не может быть больше 1! quantity:${quantity}`
-      //   );
-      // }
+      switch (unit) {
+        case 'piece':
+          this.handlePieceUnit({ purchaseUnit: unit });
+          break;
+
+        default:
+          {
+            await this.handlePeriodUnit({
+              origin,
+              user,
+              metadata: { ...metadata, unit },
+            });
+          }
+
+          break;
+      }
     } catch (error) {
       handleAndLogError(error);
     }
+  }
+
+  private createPeriodSlot(
+    origin: TSlotOrigin,
+    startDate: Date,
+    endDate: Date
+  ): TSubscriptionPeriodSlot {
+    return {
+      description: 'Описание слота',
+      isPaused: false,
+      origin,
+      startDate,
+      endDate,
+    };
+  }
+
+  private getEndDateByUnit(unit: Exclude<TPurchaseUnit, 'piece'>): Date {
+    const millisecondsInUnit: Record<Exclude<TPurchaseUnit, 'piece'>, number> = {
+      month: millisecondsInDay * DAYS_IN_MONTH_FOR_SLOT,
+      week: millisecondsInDay * 7,
+      day: millisecondsInDay * 1,
+    };
+
+    return new Date(Date.now() + millisecondsInUnit[unit]);
+  }
+
+  private async handlePeriodUnit({
+    origin,
+    user,
+    metadata,
+  }: THandlePeriodUnitParams): Promise<void> {
+    const subscriptionService = new SubscriptionService(PaidSiteServiceAccessModel);
+    const res = await subscriptionService.addPeriodSubscription({ origin, user, metadata });
+
+    // FIXME: записывать ошибку в платеж, сам платеж возвращать пользователю.
+    if (!res.ok) {
+      throw new Error(res.message);
+    }
+  }
+
+  /**
+   * Обработчик штучного слота.
+   */
+  private handlePieceUnit({ purchaseUnit }: { purchaseUnit: 'piece' }) {
+    throw Error(`Нет обработчика для purchaseUnit:${purchaseUnit}`);
   }
 }
