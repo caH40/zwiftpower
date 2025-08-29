@@ -52,6 +52,7 @@ select {
 :root {
   --gradient-main: linear-gradient(90deg, var(--color-blue-3) -0.39%, var(--color-blue-4) 100%);
   --gradient-orange: linear-gradient(90deg, #ff7c00 -0.39%, #ffb773 100%);
+  --gradient-green: linear-gradient(90deg, #00da0b -0.39%, rgb(145, 250, 159) 100%);
   --color-text-main: #ffffff;
   --color-text-dark: #000000;
 

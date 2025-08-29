@@ -25,6 +25,11 @@ export default function SettingsServicesAndFinances() {
   return (
     <div className={styles.wrapper}>
       <div>
+        <h3 className={styles.title}>Активные сервисы</h3>
+        {zwiftIdAuth && <div className={styles.wrapper__block}>Активные сервисы</div>}
+      </div>
+
+      <div>
         <h3 className={styles.title}>Пополнить или оплатить сервисы</h3>
 
         {zwiftIdAuth && (
@@ -36,11 +41,6 @@ export default function SettingsServicesAndFinances() {
             )}
           </div>
         )}
-      </div>
-
-      <div>
-        <h3 className={styles.title}>Ваши активные сервисы или Подписки в работе</h3>
-        {zwiftIdAuth && <div className={styles.wrapper__block}>Активные сервисы</div>}
       </div>
 
       <div>

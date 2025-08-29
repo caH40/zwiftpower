@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Button from '../UI/Button/Button';
-import SimpleSelectFunction from '../UI/SimpleSelect/SimpleSelectFunction';
 import { useOrganizerPurchase } from '../../hook/useOrganizerPurchase';
 import { siteServicesList } from '../../assets/options';
 import { serverFront } from '../../config/environment';
+import Button from '../UI/Button/Button';
+import SimpleSelectFunction from '../UI/SimpleSelect/SimpleSelectFunction';
+import SiteService from '../SiteService/SiteService';
 
 import styles from './PaymentServicesBlock.module.css';
 
@@ -30,13 +31,10 @@ export default function PaymentServicesBlock({ services, user }) {
     userId: user.id,
   });
 
-  // Форматирование дат
-  const startDate = service ? new Date(service.startDate).toLocaleDateString() : '';
-  const endDate = service ? new Date(service.endDate).toLocaleDateString() : '';
-
   return (
     <div className={styles.block}>
       <SimpleSelectFunction
+        closeEmptyOption={true}
         name={'Выберите сервис'}
         options={options}
         value={selectedService}
@@ -44,22 +42,7 @@ export default function PaymentServicesBlock({ services, user }) {
       />
 
       <div className={styles.wrapper__info}>
-        {!!service && (
-          <dl className={styles.list}>
-            <dt>Описание</dt>
-            <dd className={styles.description}>{service.description}</dd>
-
-            <dt>Срок действия</dt>
-            <dd className={styles.dates}>
-              {startDate} — {endDate}
-            </dd>
-
-            <dt>Цена</dt>
-            <dd className={styles.dates}>
-              {service.price.unitPrice} {service.price.currency}
-            </dd>
-          </dl>
-        )}
+        {!!service && <SiteService service={service} />}
       </div>
 
       <div className={styles.actions}>

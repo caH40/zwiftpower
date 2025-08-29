@@ -1,0 +1,26 @@
+.list {
+  display: grid;
+  grid-template-columns: 80px auto;
+  gap: 5px;
+  align-items: start;
+  border-radius: 1rem;
+  padding: 10px;
+  background: var(--gradient-green);
+  border: 1px solid green;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.description {
+  margin-inline-start: 0;
+  margin: 0;
+}
+.title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0;
+}
+.title::after {
+  content: ':';
+}
