@@ -11,7 +11,10 @@ import {
 } from '../types/site-service.type.js';
 import { THandlePeriodUnitParams } from '../types/types.interface.js';
 
-export class SubscriptionService {
+/**
+ * Класс работы с сервисами сайта на основе подписки на временной период использования.
+ */
+export class PeriodSubscriptionService {
   constructor() {}
 
   /**

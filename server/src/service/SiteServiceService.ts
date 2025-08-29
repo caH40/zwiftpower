@@ -1,7 +1,7 @@
 import { millisecondsIn31Days } from '../assets/date.js';
 import { handleAndLogError } from '../errors/error.js';
 import { Organizer } from '../Model/Organizer.js';
-import { SubscriptionService } from './SubscriptionService.js';
+import { PeriodSubscriptionService } from './PeriodSubscriptionService.js';
 import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
 
 // types
@@ -16,9 +16,9 @@ import {
  * Бесплатные сервисы включаются/отключаются простыми флагами и здесь не учитываются.
  */
 export class SiteServiceService {
-  private subscriptionService: SubscriptionService;
+  private subscriptionService: PeriodSubscriptionService;
   constructor() {
-    this.subscriptionService = new SubscriptionService();
+    this.subscriptionService = new PeriodSubscriptionService();
   }
 
   /**
