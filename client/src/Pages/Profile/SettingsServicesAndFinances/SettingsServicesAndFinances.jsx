@@ -21,24 +21,26 @@ export default function SettingsServicesAndFinances() {
   }, []);
 
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
+
   return (
     <div className={styles.wrapper}>
       <div>
         <h3 className={styles.title}>Пополнить или оплатить сервисы</h3>
-        {zwiftIdAuth && siteServices?.length > 0 && (
+
+        {zwiftIdAuth && (
           <div className={styles.wrapper__block}>
-            <PaymentServicesBlock services={siteServices} user={user} />
+            {siteServices?.length > 0 ? (
+              <PaymentServicesBlock services={siteServices} user={user} />
+            ) : (
+              <div>Нет доступных сервисов для оплаты</div>
+            )}
           </div>
         )}
       </div>
 
       <div>
         <h3 className={styles.title}>Ваши активные сервисы или Подписки в работе</h3>
-        {zwiftIdAuth && (
-          <div className={styles.wrapper__block}>
-            Ваши активные сервисы или Подписки в работе
-          </div>
-        )}
+        {zwiftIdAuth && <div className={styles.wrapper__block}>Активные сервисы</div>}
       </div>
 
       <div>

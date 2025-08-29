@@ -12,7 +12,7 @@ import {
 import { THandlePeriodUnitParams } from '../types/types.interface.js';
 
 export class SubscriptionService {
-  constructor(private model: typeof PaidSiteServiceAccessModel) {}
+  constructor() {}
 
   /**
    * Вычисляет дату окончания подписки в зависимости от unit (month/week/day).
@@ -62,7 +62,7 @@ export class SubscriptionService {
   /**
    * Проверяет, есть ли у сущности активная подписка (endDate >= now).
    */
-  private hasActiveSubscription(
+  public hasActiveSubscription(
     entity: { periodSlots: TSubscriptionPeriodSlot[] },
     now: Date
   ): boolean {
@@ -77,7 +77,7 @@ export class SubscriptionService {
     entityName: TEntityNameForSlot,
     slot: TSubscriptionPeriodSlot
   ) {
-    const service = new this.model({
+    const service = new PaidSiteServiceAccessModel({
       user,
       services: [{ entityName, periodSlots: [slot], pieceSlots: [] }],
     });
@@ -104,7 +104,7 @@ export class SubscriptionService {
     user,
     metadata,
   }: THandlePeriodUnitParams): Promise<{ ok: boolean; message: string }> {
-    const serviceDB = await this.model.findOne({ user });
+    const serviceDB = await PaidSiteServiceAccessModel.findOne({ user });
     const startDate = new Date();
     const endDate = this.getEndDateByUnit(metadata.unit);
     const newPeriodSlot = this.createPeriodSlot(origin, startDate, endDate);

@@ -1,22 +1,25 @@
+import { millisecondsIn31Days } from '../assets/date.js';
+import { handleAndLogError } from '../errors/error.js';
+import { Organizer } from '../Model/Organizer.js';
+import { SubscriptionService } from './SubscriptionService.js';
+import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
+
+// types
+import { TEntityNameForSlot, TSiteServiceForClient } from '../types/site-service.type.js';
 import {
   THandlePeriodUnitParams,
   TManageServiceSlotsParams,
 } from '../types/types.interface.js';
-import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
-import { millisecondsIn31Days } from '../assets/date.js';
-import { handleAndLogError } from '../errors/error.js';
-import { Organizer } from '../Model/Organizer.js';
-
-// types
-import { TSiteServiceForClient } from '../types/site-service.type.js';
-import { SubscriptionService } from './SubscriptionService.js';
 
 /**
  * Сервис работы со слотами по доступу к платным сервисам сайта.
  * Бесплатные сервисы включаются/отключаются простыми флагами и здесь не учитываются.
  */
 export class SiteServiceService {
-  constructor() {}
+  private subscriptionService: SubscriptionService;
+  constructor() {
+    this.subscriptionService = new SubscriptionService();
+  }
 
   /**
    * Сервис получения всех платных сервисов на сайте.
@@ -24,6 +27,13 @@ export class SiteServiceService {
   public async get(userId: string): Promise<TSiteServiceForClient[]> {
     // Проверка, является ли пользователем Организатором.
     const creatorDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean();
+
+    // Если у пользователя есть активные подписки, тогда исключать данную сущность из списка подписок для покупок, отсылаемого пользователю.
+    const hasActiveSubscription = await this.hasActiveSubscription(userId, 'organizer');
+
+    if (hasActiveSubscription) {
+      return [];
+    }
 
     const organizerService: TSiteServiceForClient = {
       label: 'Доступ к сервису Организатор',
@@ -86,8 +96,11 @@ export class SiteServiceService {
     user,
     metadata,
   }: THandlePeriodUnitParams): Promise<void> {
-    const subscriptionService = new SubscriptionService(PaidSiteServiceAccessModel);
-    const res = await subscriptionService.addPeriodSubscription({ origin, user, metadata });
+    const res = await this.subscriptionService.addPeriodSubscription({
+      origin,
+      user,
+      metadata,
+    });
 
     // FIXME: записывать ошибку в платеж, сам платеж возвращать пользователю.
     if (!res.ok) {
@@ -101,5 +114,26 @@ export class SiteServiceService {
   private handlePieceUnit({ purchaseUnit }: { purchaseUnit: 'piece' }) {
     // FIXME: записывать ошибку в платеж, сам платеж возвращать пользователю.
     throw Error(`Нет обработчика для purchaseUnit:${purchaseUnit}`);
+  }
+
+  /**
+   * Проверяет, есть ли у пользователя активная подписка entityName.
+   */
+  private async hasActiveSubscription(
+    userId: string,
+    entityName: TEntityNameForSlot
+  ): Promise<boolean> {
+    const serviceDB = await PaidSiteServiceAccessModel.findOne({ user: userId }).lean();
+
+    const currentEntity = serviceDB?.services.find((s) => s.entityName === entityName);
+
+    // Если нет сущности сервисов, или нет запрашиваемого сервиса у пользователя.
+    if (!currentEntity) {
+      return false;
+    }
+
+    const now = new Date();
+
+    return currentEntity.periodSlots.some((s) => s.endDate >= now);
   }
 }
