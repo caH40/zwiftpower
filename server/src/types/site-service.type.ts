@@ -6,7 +6,7 @@ import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
 export type TSiteService = {
   entityName: TEntityNameForSlot; // Название должно быть уникальным в массиве services сущности TPaidSiteServiceAccess
   periodSlots: TSubscriptionPeriodSlot[];
-  pieceSlots: TSubscriptionPieceSlot[];
+  // pieceSlots: TSubscriptionPieceSlot[];
 };
 
 /**
@@ -35,6 +35,7 @@ export type TSubscriptionPieceSlot = {
 export type TSlotOrigin = (typeof SLOT_ORIGIN)[number];
 
 export type TSiteServiceForClient = {
+  id: number;
   entityName: TEntityNameForSlot;
   description: string; // Подробное описание сервиса.
   label: string; // Название для отображения опции в select.

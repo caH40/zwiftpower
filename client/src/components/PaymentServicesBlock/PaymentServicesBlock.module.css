@@ -1,19 +1,10 @@
-.title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
 .wrapper__info {
   margin: 1rem 0;
-}
-.description {
-  font-size: 14px;
 }
 .actions {
   display: flex;
   gap: 8px;
 }
-
 .right {
   text-align: right;
 }

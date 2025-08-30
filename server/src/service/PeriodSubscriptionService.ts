@@ -82,7 +82,7 @@ export class PeriodSubscriptionService {
   ) {
     const service = new PaidSiteServiceAccessModel({
       user,
-      services: [{ entityName, periodSlots: [slot], pieceSlots: [] }],
+      services: [{ entityName, periodSlots: [slot] }],
     });
     await service.save();
   }
@@ -95,7 +95,7 @@ export class PeriodSubscriptionService {
     entityName: TEntityNameForSlot,
     slot: TSubscriptionPeriodSlot
   ) {
-    serviceDB.services.push({ entityName, periodSlots: [slot], pieceSlots: [] });
+    serviceDB.services.push({ entityName, periodSlots: [slot] });
   }
 
   /**

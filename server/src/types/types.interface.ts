@@ -25,7 +25,11 @@ import { PutResult } from './http.interface.js';
 import { EventSubgroupFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 import { TStagesPublicResponseDB } from './mongodb-response.types.js';
 import { TStagesPublicDto } from './dto.interface.js';
-import { TEntityNameForSlot, TSlotOrigin } from './site-service.type.js';
+import {
+  TEntityNameForSlot,
+  TSlotOrigin,
+  TSubscriptionPeriodSlot,
+} from './site-service.type.js';
 import { TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
@@ -967,4 +971,10 @@ export type THandlePeriodUnitParams = Omit<TManageServiceSlotsParams, 'metadata'
     entityName: TEntityNameForSlot;
     unit: Exclude<TPurchaseUnit, 'piece'>;
   };
+};
+
+export type TSubscriptionPeriodSlotWithEntity = TSubscriptionPeriodSlot & {
+  expired: boolean;
+  entityName: TEntityNameForSlot;
+  id: number;
 };

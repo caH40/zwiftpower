@@ -7,7 +7,7 @@ import {
 import { PaymentNotificationModel } from '../Model/PaymentNotification.js';
 
 import { handleAndLogError } from '../errors/error.js';
-import { SiteServiceService } from './SiteServiceService.js';
+import { SiteServicesService } from './SiteServicesService.js';
 
 /**
  * Сервис работы c эквайрингом.
@@ -62,7 +62,7 @@ export class YooKassaNotification {
     };
 
     // Обработка удачной покупки, зачисление слотов пользователю.
-    const siteServiceSlotService = new SiteServiceService();
+    const siteServiceSlotService = new SiteServicesService();
     await siteServiceSlotService.manageServiceSlots({
       user: notification.metadata.userId,
       metadata,

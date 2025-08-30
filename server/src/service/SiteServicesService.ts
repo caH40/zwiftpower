@@ -5,26 +5,32 @@ import { PeriodSubscriptionService } from './PeriodSubscriptionService.js';
 import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
 
 // types
-import { TEntityNameForSlot, TSiteServiceForClient } from '../types/site-service.type.js';
+import {
+  TEntityNameForSlot,
+  TSiteService,
+  TSiteServiceForClient,
+  TSubscriptionPeriodSlot,
+} from '../types/site-service.type.js';
 import {
   THandlePeriodUnitParams,
   TManageServiceSlotsParams,
+  TSubscriptionPeriodSlotWithEntity,
 } from '../types/types.interface.js';
 
 /**
  * Сервис работы со слотами по доступу к платным сервисам сайта.
  * Бесплатные сервисы включаются/отключаются простыми флагами и здесь не учитываются.
  */
-export class SiteServiceService {
+export class SiteServicesService {
   private subscriptionService: PeriodSubscriptionService;
   constructor() {
     this.subscriptionService = new PeriodSubscriptionService();
   }
 
   /**
-   * Сервис получения всех платных сервисов на сайте.
+   * Сервис получения всех доступных платных сервисов на сайте для покупки.
    */
-  public async get(userId: string): Promise<TSiteServiceForClient[]> {
+  public async getAllPurchasable(userId: string): Promise<TSiteServiceForClient[]> {
     // Проверка, является ли пользователем Организатором.
     const creatorDB = await Organizer.findOne({ creator: userId }, { _id: true }).lean();
 
@@ -36,6 +42,7 @@ export class SiteServiceService {
     }
 
     const organizerService: TSiteServiceForClient = {
+      id: 0,
       label: 'Доступ к сервису Организатор',
       entityName: 'organizer',
       description:
@@ -135,5 +142,41 @@ export class SiteServiceService {
     const now = new Date();
 
     return currentEntity.periodSlots.some((s) => s.endDate >= now);
+  }
+
+  /**
+   * Метод возвращает все активные и истекшие слоты на сервисы сайта у пользователя.
+   */
+  public async getAll(userId: string): Promise<TSubscriptionPeriodSlotWithEntity[]> {
+    const servicesDB = await PaidSiteServiceAccessModel.findOne(
+      { user: userId },
+      { services: true, _id: false }
+    ).lean<{ services: TSiteService[] }>();
+
+    if (!servicesDB) {
+      return [];
+    }
+
+    const now = new Date();
+    const slots = servicesDB.services.flatMap<TSubscriptionPeriodSlotWithEntity>(
+      (entity, entityIndex) =>
+        entity.periodSlots.map((slot, slotIndex) => ({
+          id: entityIndex * 10000 + slotIndex,
+          entityName: entity.entityName,
+          ...slot,
+          expired: this.isSlotExpired(slot, now),
+        }))
+    );
+
+    slots.sort((a, b) => b.endDate.getTime() - a.endDate.getTime());
+
+    return slots;
+  }
+
+  /**
+   * Проверяет, истёк ли период слота.
+   */
+  private isSlotExpired(slot: TSubscriptionPeriodSlot, now: Date): boolean {
+    return now > slot.endDate;
   }
 }
