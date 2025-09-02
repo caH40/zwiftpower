@@ -13,6 +13,8 @@ import {
   resetSiteServices,
 } from '../../../redux/features/api/site_service/siteServiceSlice';
 import TransactionCard from '../../../components/TransactionCard/TransactionCard';
+import { fetchPaymentTransactions } from '../../../redux/features/api/payment_notifications/fetchPaymentNotifications';
+import { resetPaymentTransactions } from '../../../redux/features/api/payment_notifications/paymentNotificationsSlice';
 
 import styles from './SettingsServicesAndFinances.module.css';
 
@@ -22,16 +24,21 @@ import styles from './SettingsServicesAndFinances.module.css';
 export default function SettingsServicesAndFinances() {
   useTitle('Финансы и Сервисы');
   const { siteServices, purchasableSiteServices } = useSelector((state) => state.siteServices);
+  const { paymentTransactions } = useSelector((state) => state.paymentNotifications);
   const { user } = useSelector((state) => state.checkAuth.value);
   const dispatch = useDispatch();
+
+  console.log(paymentTransactions);
 
   useEffect(() => {
     dispatch(fetchPurchasableSiteServices());
     dispatch(fetchAllSiteServices());
+    dispatch(fetchPaymentTransactions({ userId: user.id }));
 
     return () => {
       dispatch(resetSiteServices());
       dispatch(resetPurchasableSiteServices());
+      dispatch(resetPaymentTransactions());
     };
   }, []);
 
