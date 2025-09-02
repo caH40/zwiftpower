@@ -24,8 +24,8 @@ export default function PaymentServicesBlock({ services, user }) {
   const { handleClickPurchase } = useOrganizerPurchase({
     returnUrl: `${serverFront}${location.pathname}`,
     payloadData: {
-      unitPrice: service.price.unitPrice,
-      currency: service.price.currency,
+      value: service.amount.value,
+      currency: service.amount.currency,
       customer: { full_name: user.username },
     },
     userId: user.id,

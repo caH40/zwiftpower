@@ -1,7 +1,7 @@
 import { ICreatePayment } from '@a2seven/yoo-checkout';
 import { TEntityNameForSlot } from './site-service.type';
 import mongoose from 'mongoose';
-import { PURCHASE_UNITS } from '../assets/constants';
+import { CURRENCY, PURCHASE_UNITS } from '../assets/constants';
 
 export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
   metadata: TCreatePayloadMetadata;
@@ -71,7 +71,7 @@ export type TYooKassaPaymentNotification = {
     metadata: TNotificationMetadata;
   };
 };
-export type TCurrency = 'RUB';
+export type TCurrency = (typeof CURRENCY)[number];
 export type TYooKassaPaymentEvent =
   | 'payment.succeeded'
   | 'payment.canceled'

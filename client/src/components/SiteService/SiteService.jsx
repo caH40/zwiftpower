@@ -22,7 +22,7 @@ export default function SiteService({ service, theme }) {
 
       <dt className={styles.title}>Цена</dt>
       <dd className={styles.description}>
-        {service.price?.unitPrice} {service.price?.currency}
+        {service.amount?.value} {service.amount?.currency}
       </dd>
     </dl>
   );

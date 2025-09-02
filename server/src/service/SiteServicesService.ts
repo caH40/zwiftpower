@@ -51,7 +51,7 @@ export class SiteServicesService {
       origin: 'purchased',
       startDate: new Date().toISOString(),
       endDate: new Date(new Date().getTime() + millisecondsIn31Days).toISOString(), // +31 день
-      price: { unitPrice: 2000, currency: 'RUB' },
+      amount: { value: 2000, currency: 'RUB' },
     };
 
     const results: TSiteServiceForClient[] = [];
@@ -69,6 +69,8 @@ export class SiteServicesService {
     origin,
     user,
     metadata,
+    amount,
+    description,
   }: TManageServiceSlotsParams): Promise<void> {
     try {
       const unit = metadata.unit;
@@ -84,6 +86,8 @@ export class SiteServicesService {
               origin,
               user,
               metadata: { ...metadata, unit },
+              amount,
+              description,
             });
           }
 
@@ -102,11 +106,15 @@ export class SiteServicesService {
     origin,
     user,
     metadata,
+    amount,
+    description,
   }: THandlePeriodUnitParams): Promise<void> {
     const res = await this.subscriptionService.addPeriodSubscription({
       origin,
       user,
       metadata,
+      amount,
+      description,
     });
 
     // FIXME: записывать ошибку в платеж, сам платеж возвращать пользователю.
@@ -147,14 +155,17 @@ export class SiteServicesService {
   /**
    * Метод возвращает все активные и истекшие слоты на сервисы сайта у пользователя.
    */
-  public async getAll(userId: string): Promise<TSubscriptionPeriodSlotWithEntity[]> {
+  public async getAll(userId: string): Promise<{
+    expired: TSubscriptionPeriodSlotWithEntity[];
+    active: TSubscriptionPeriodSlotWithEntity[];
+  }> {
     const servicesDB = await PaidSiteServiceAccessModel.findOne(
       { user: userId },
       { services: true, _id: false }
     ).lean<{ services: TSiteService[] }>();
 
     if (!servicesDB) {
-      return [];
+      return { expired: [], active: [] };
     }
 
     const now = new Date();
@@ -170,7 +181,19 @@ export class SiteServicesService {
 
     slots.sort((a, b) => b.endDate.getTime() - a.endDate.getTime());
 
-    return slots;
+    const response = slots.reduce<{
+      expired: TSubscriptionPeriodSlotWithEntity[];
+      active: TSubscriptionPeriodSlotWithEntity[];
+    }>(
+      (acc, cur) => {
+        cur.expired ? acc.expired.push(cur) : acc.active.push(cur);
+
+        return acc;
+      },
+      { expired: [], active: [] }
+    );
+
+    return response;
   }
 
   /**

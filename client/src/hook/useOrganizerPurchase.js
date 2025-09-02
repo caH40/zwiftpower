@@ -11,7 +11,7 @@ import { getAlert } from '../redux/features/alertMessageSlice';
 export function useOrganizerPurchase({
   userId,
   returnUrl,
-  payloadData: { currency, unitPrice, customer },
+  payloadData: { currency, value, customer },
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export function useOrganizerPurchase({
       items: [
         {
           description: 'Подписка на сервис Организатор сроком на 1 месяц (31 день)',
-          amount: { value: String(unitPrice), currency },
+          amount: { value: String(value), currency },
           quantity: 1, // Один месяц.
           unit: 'month',
           vat_code: 1,
@@ -49,7 +49,7 @@ export function useOrganizerPurchase({
 
     const createPayload = {
       amount: {
-        value: String(unitPrice),
+        value: String(value),
         currency,
       },
       receipt,

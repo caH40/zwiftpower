@@ -30,7 +30,7 @@ import {
   TSlotOrigin,
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
-import { TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
+import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -964,6 +964,11 @@ export type TManageServiceSlotsParams = {
   origin: TSlotOrigin;
   user: Types.ObjectId | string;
   metadata: TPurchaseMetadata;
+  amount: {
+    value: number;
+    currency: TCurrency;
+  };
+  description: string;
 };
 export type THandlePeriodUnitParams = Omit<TManageServiceSlotsParams, 'metadata'> & {
   metadata: {

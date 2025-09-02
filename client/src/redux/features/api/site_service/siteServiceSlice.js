@@ -4,7 +4,7 @@ import { fetchAllSiteServices, fetchPurchasableSiteServices } from './fetchSiteS
 
 const initialState = {
   purchasableSiteServices: [],
-  siteServices: [],
+  siteServices: {},
   status: null,
   error: null,
 };
@@ -17,7 +17,7 @@ const siteServiceSlice = createSlice({
   initialState,
   reducers: {
     resetSiteServices(state) {
-      state.siteServices = [];
+      state.siteServices = {};
     },
     resetPurchasableSiteServices(state) {
       state.purchasableSiteServices = [];

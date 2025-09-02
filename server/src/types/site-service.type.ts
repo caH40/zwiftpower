@@ -1,4 +1,5 @@
 import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
+import { TCurrency } from './payment.types';
 
 /**
  * Сервис с учетом доступных слотов и истории их использования.
@@ -24,6 +25,10 @@ export type TSubscriptionPeriodSlot = {
   origin: TSlotOrigin;
   startDate: Date;
   endDate: Date;
+  amount: {
+    value: number;
+    currency: TCurrency;
+  };
 };
 export type TSubscriptionPieceSlot = {
   description: string;
@@ -43,8 +48,8 @@ export type TSiteServiceForClient = {
   origin: TSlotOrigin;
   startDate: string;
   endDate: string;
-  price: {
-    unitPrice: number;
-    currency: 'RUB';
+  amount: {
+    value: number;
+    currency: TCurrency;
   };
 };

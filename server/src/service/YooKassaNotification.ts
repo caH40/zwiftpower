@@ -85,6 +85,8 @@ export class YooKassaNotification {
       user: notification.metadata.userId,
       metadata,
       origin: 'purchased',
+      amount: { ...notification.amount, value: Number(notification.amount.value) },
+      description: notification.description,
     });
 
     // Данные для сохранения в БД.

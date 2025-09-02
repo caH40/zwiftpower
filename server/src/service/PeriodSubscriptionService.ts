@@ -3,7 +3,7 @@ import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
 
 // types
 import { TPaidSiteServiceAccessDocument } from '../types/model.interface.js';
-import { TPurchaseUnit } from '../types/payment.types.js';
+import { TCurrency, TPurchaseUnit } from '../types/payment.types.js';
 import {
   TEntityNameForSlot,
   TSlotOrigin,
@@ -48,17 +48,26 @@ export class PeriodSubscriptionService {
   /**
    * Создаёт объект слота подписки (period slot).
    */
-  private createPeriodSlot(
-    origin: TSlotOrigin,
-    startDate: Date,
-    endDate: Date
-  ): TSubscriptionPeriodSlot {
+  private createPeriodSlot({
+    origin,
+    startDate,
+    endDate,
+    amount,
+    description,
+  }: {
+    origin: TSlotOrigin;
+    startDate: Date;
+    endDate: Date;
+    amount: { value: number; currency: TCurrency };
+    description: string;
+  }): TSubscriptionPeriodSlot {
     return {
-      description: 'Описание слота',
+      description,
       isPaused: false,
       origin,
       startDate,
       endDate,
+      amount,
     };
   }
 
@@ -106,11 +115,19 @@ export class PeriodSubscriptionService {
     origin,
     user,
     metadata,
+    amount,
+    description,
   }: THandlePeriodUnitParams): Promise<{ ok: boolean; message: string }> {
     const serviceDB = await PaidSiteServiceAccessModel.findOne({ user });
     const startDate = new Date();
     const endDate = this.getEndDateByUnit(metadata.unit);
-    const newPeriodSlot = this.createPeriodSlot(origin, startDate, endDate);
+    const newPeriodSlot = this.createPeriodSlot({
+      origin,
+      startDate,
+      endDate,
+      amount,
+      description,
+    });
 
     const successResponse = { ok: true, message: 'Подписка успешно активирована' };
 

@@ -25,7 +25,13 @@ export default function SettingsServicesAndFinances() {
     <div className={styles.wrapper}>
       <div>
         <h3 className={styles.title}>Активные сервисы</h3>
-        <SiteServicesBlock services={siteServices.filter((s) => !s.expired)} theme={'green'} />
+        {siteServices.active?.length > 0 ? (
+          <SiteServicesBlock services={siteServices.active} theme={'green'} />
+        ) : (
+          <div className={styles.wrapper__block}>
+            <div>Нет сервисов</div>
+          </div>
+        )}
       </div>
 
       <div>
@@ -44,7 +50,13 @@ export default function SettingsServicesAndFinances() {
 
       <div>
         <h3 className={styles.title}>Истёкшие или завершённые сервисы</h3>
-        <SiteServicesBlock services={siteServices.filter((s) => s.expired)} theme={'red'} />
+        {siteServices.expired?.length > 0 ? (
+          <SiteServicesBlock services={siteServices.expired} theme={'red'} />
+        ) : (
+          <div className={styles.wrapper__block}>
+            <div>Нет сервисов</div>
+          </div>
+        )}
       </div>
 
       <div>
