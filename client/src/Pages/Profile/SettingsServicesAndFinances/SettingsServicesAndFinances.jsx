@@ -14,6 +14,7 @@ import {
 } from '../../../redux/features/api/site_service/siteServiceSlice';
 
 import styles from './SettingsServicesAndFinances.module.css';
+import TransactionCard from '../../../components/TransactionCard/TransactionCard';
 
 /**
  * Страница финансов и оплаченных сервисов.
@@ -40,13 +41,7 @@ export default function SettingsServicesAndFinances() {
     <div className={styles.wrapper}>
       <div>
         <h3 className={styles.title}>Активные сервисы</h3>
-
-        <div className={styles.wrapper__block}>
-          <SiteServicesBlock
-            services={siteServices.filter((s) => !s.expired)}
-            theme={'green'}
-          />
-        </div>
+        <SiteServicesBlock services={siteServices.filter((s) => !s.expired)} theme={'green'} />
       </div>
 
       <div>
@@ -65,16 +60,14 @@ export default function SettingsServicesAndFinances() {
 
       <div>
         <h3 className={styles.title}>Истёкшие или завершённые сервисы</h3>
-        <div className={styles.wrapper__block}>
-          <SiteServicesBlock services={siteServices.filter((s) => s.expired)} theme={'red'} />
-        </div>
+        <SiteServicesBlock services={siteServices.filter((s) => s.expired)} theme={'red'} />
       </div>
 
       <div>
         <h3 className={styles.title}>История транзакций и покупок или Платежи за сервисы</h3>
         {zwiftIdAuth && (
           <div className={styles.wrapper__block}>
-            История транзакций и покупок или Платежи за сервисы
+            <TransactionCard transaction={'transaction'} />
           </div>
         )}
       </div>

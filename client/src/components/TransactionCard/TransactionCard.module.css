@@ -1,0 +1,35 @@
+.list {
+  display: grid;
+  grid-template-columns: 80px auto;
+  gap: 5px;
+  align-items: start;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 10px;
+  border: 1px solid var(--color-border-minor);
+  margin: 0;
+  font-size: 0.9rem;
+}
+.green {
+  background: var(--gradient-green);
+}
+.red {
+  background: var(--gradient-red);
+}
+.gray {
+  background: var(--color-bg-minor-2);
+}
+.description {
+  margin-inline-start: 0;
+  margin: 0;
+}
+.title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0;
+}
+.title::after {
+  content: ':';
+}
