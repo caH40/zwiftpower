@@ -13,6 +13,7 @@ import {
   TSeriesAllPublicResponseDB,
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
+import { TPaymentNotification } from './payment.types';
 import { EventWithSubgroup } from './types.interface';
 
 /**
@@ -218,4 +219,15 @@ export type StageResultDto = Omit<
  */
 export type TGeneralClassificationDto = Omit<TGeneralClassificationDB, '_id'> & {
   _id: string;
+};
+
+export type TPaymentNotificationDto = Omit<
+  TPaymentNotification,
+  '_id' | 'user' | 'capturedAt' | 'expiresAt' | 'createdAt'
+> & {
+  _id: string;
+  user: string;
+  capturedAt?: string;
+  expiresAt?: string;
+  createdAt: string;
 };

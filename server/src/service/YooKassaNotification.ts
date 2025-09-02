@@ -8,6 +8,9 @@ import { PaymentNotificationModel } from '../Model/PaymentNotification.js';
 
 import { handleAndLogError } from '../errors/error.js';
 import { SiteServicesService } from './SiteServicesService.js';
+import { Types } from 'mongoose';
+import { TPaymentNotificationDto } from '../types/dto.interface.js';
+import { paymentNotificationDto } from '../dto/payment-notification.js';
 
 /**
  * Сервис работы c эквайрингом.
@@ -46,6 +49,17 @@ export class YooKassaNotification {
     } catch (error) {
       handleAndLogError(error);
     }
+  }
+
+  /**
+   * Получение всех оповещения для пользователя
+   */
+  public async getAllByUserId(userId: string): Promise<TPaymentNotificationDto[]> {
+    const notificationDB = await PaymentNotificationModel.find({ user: userId }).lean<
+      (TPaymentNotification & { _id: Types.ObjectId })[]
+    >();
+
+    return notificationDB.map((n) => paymentNotificationDto(n));
   }
 
   private async paymentSucceeded({

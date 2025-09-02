@@ -12,9 +12,9 @@ import {
   resetPurchasableSiteServices,
   resetSiteServices,
 } from '../../../redux/features/api/site_service/siteServiceSlice';
+import TransactionCard from '../../../components/TransactionCard/TransactionCard';
 
 import styles from './SettingsServicesAndFinances.module.css';
-import TransactionCard from '../../../components/TransactionCard/TransactionCard';
 
 /**
  * Страница финансов и оплаченных сервисов.
