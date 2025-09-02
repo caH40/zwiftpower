@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+import { useServicesAndFinances } from '../../../hook/useServicesAndFinances';
 import useTitle from '../../../hook/useTitle';
-import {
-  fetchAllSiteServices,
-  fetchPurchasableSiteServices,
-} from '../../../redux/features/api/site_service/fetchSiteServices';
 import PaymentServicesBlock from '../../../components/PaymentServicesBlock/PaymentServicesBlock';
 import SiteServicesBlock from '../../../components/SiteServicesBlock/SiteServicesBlock';
-import {
-  resetPurchasableSiteServices,
-  resetSiteServices,
-} from '../../../redux/features/api/site_service/siteServiceSlice';
-import TransactionCard from '../../../components/TransactionCard/TransactionCard';
-import { fetchPaymentTransactions } from '../../../redux/features/api/payment_notifications/fetchPaymentNotifications';
-import { resetPaymentTransactions } from '../../../redux/features/api/payment_notifications/paymentNotificationsSlice';
+import TransactionsBlock from '../../../components/TransactionsBlock/TransactionsBlock';
 
 import styles from './SettingsServicesAndFinances.module.css';
 
@@ -26,21 +16,8 @@ export default function SettingsServicesAndFinances() {
   const { siteServices, purchasableSiteServices } = useSelector((state) => state.siteServices);
   const { paymentTransactions } = useSelector((state) => state.paymentNotifications);
   const { user } = useSelector((state) => state.checkAuth.value);
-  const dispatch = useDispatch();
 
-  console.log(paymentTransactions);
-
-  useEffect(() => {
-    dispatch(fetchPurchasableSiteServices());
-    dispatch(fetchAllSiteServices());
-    dispatch(fetchPaymentTransactions({ userId: user.id }));
-
-    return () => {
-      dispatch(resetSiteServices());
-      dispatch(resetPurchasableSiteServices());
-      dispatch(resetPaymentTransactions());
-    };
-  }, []);
+  useServicesAndFinances(user.id);
 
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
 
@@ -72,9 +49,11 @@ export default function SettingsServicesAndFinances() {
 
       <div>
         <h3 className={styles.title}>История транзакций и покупок или Платежи за сервисы</h3>
-        {zwiftIdAuth && (
+        {paymentTransactions.length > 0 ? (
+          <TransactionsBlock transactions={paymentTransactions} />
+        ) : (
           <div className={styles.wrapper__block}>
-            <TransactionCard transaction={'transaction'} />
+            <div>Нет транзакций</div>
           </div>
         )}
       </div>

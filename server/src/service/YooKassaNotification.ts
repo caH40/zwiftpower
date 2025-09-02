@@ -55,11 +55,15 @@ export class YooKassaNotification {
    * Получение всех оповещения(транзакций) для пользователя.
    */
   public async getAllByUserId(userId: string): Promise<TPaymentNotificationDto[]> {
-    const notificationDB = await PaymentNotificationModel.find({ user: userId }).lean<
+    const notificationsDB = await PaymentNotificationModel.find({ user: userId }).lean<
       (TPaymentNotification & { _id: Types.ObjectId })[]
     >();
 
-    return notificationDB.map((n) => paymentNotificationDto(n));
+    notificationsDB.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    const notifications = notificationsDB.map((n) => paymentNotificationDto(n));
+
+    return notifications;
   }
 
   private async paymentSucceeded({
