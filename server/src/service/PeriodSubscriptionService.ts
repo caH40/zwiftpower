@@ -1,8 +1,15 @@
+import { Types } from 'mongoose';
+
+import { Club } from '../Model/Club.js';
 import { DAYS_IN_MONTH_FOR_SLOT } from '../assets/constants.js';
 import { PaidSiteServiceAccessModel } from '../Model/PaidSiteServiceAccess.js';
+import { handleAndLogError } from '../errors/error.js';
 
 // types
-import { TPaidSiteServiceAccessDocument } from '../types/model.interface.js';
+import {
+  TPaidSiteServiceAccess,
+  TPaidSiteServiceAccessDocument,
+} from '../types/model.interface.js';
 import { TCurrency, TPurchaseUnit } from '../types/payment.types.js';
 import {
   TEntityNameForSlot,
@@ -70,6 +77,67 @@ export class PeriodSubscriptionService {
       amount,
     };
   }
+
+  /**
+   * Проверка активной подписки у Организаторов соответствующих клубов.
+   * Возвращение актуальных клубов.
+   */
+  public async getClubsWithActiveOrganizerSubscription(clubs: string[]): Promise<string[]> {
+    try {
+      const result = [] as string[];
+      const now = new Date();
+
+      const clubsDB = await Club.find(
+        { id: { $in: clubs } },
+        { _id: false, id: true, organizer: true }
+      )
+        .populate({ path: 'organizer', select: ['creator', '-_id'] })
+        .lean<{ id: string; organizer: { creator: Types.ObjectId } }[]>();
+
+      const organizersIds = clubsDB.map((c) => c.organizer.creator);
+
+      const servicesDB = await PaidSiteServiceAccessModel.find({
+        user: { $in: organizersIds },
+      }).lean<TPaidSiteServiceAccess[]>();
+
+      const servicesMap = new Map(
+        servicesDB.map(({ user, services }) => [user.toString(), services])
+      );
+
+      // Запрос данных по слотам у организаторов.
+      for (const club of clubsDB) {
+        const services = servicesMap.get(club.organizer.creator.toString());
+        const periodSlots = services?.find((s) => s.entityName === 'organizer');
+
+        if (periodSlots && this.hasActiveSubscription(periodSlots, now)) {
+          result.push(club.id);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      handleAndLogError(error);
+      return [];
+    }
+  }
+
+  /**
+   * Проверка есть ли у пользователя userId который является модератором у организатора organizerId или организатором активная подписка на сервис entityName:organizer.
+   */
+
+  // Данные пользователя, являющегося модератором в клубе
+  //   {
+  //   username: 'caH4077',
+  //   email: 'info@zwiftpower.ru',
+  //   id: '68b7d5fe79e9c8319d56b45e',
+  //   role: 'user',
+  //   photoProfile: null,
+  //   zwiftId: 678687,
+  //   moderator: { clubs: [ '53fb86b7-1702-42f1-8b42-a37a7007ce72' ] },
+  //   externalAccounts: {},
+  //   iat: 1756878430,
+  //   exp: 1756964830
+  // }
 
   /**
    * Проверяет, есть ли у сущности активная подписка (endDate >= now).

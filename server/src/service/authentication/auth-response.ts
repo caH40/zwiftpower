@@ -11,6 +11,7 @@ import { generateToken } from './token.js';
 import { millisecondsInWeekDays } from '../../assets/date.js';
 import { TAuthService } from '../../types/types.interface.js';
 import { dtoProfileDataForClient } from '../../dto/auth.js';
+import { PeriodSubscriptionService } from '../PeriodSubscriptionService.js';
 
 type Params = {
   user: UserSchema;
@@ -87,9 +88,16 @@ export async function createDataForClient({
     { _id: false, imageSrc: true }
   ).lean<{ imageSrc: string | null }>();
 
+  // Проверка активной подписки у Организатора в клубах которых пользователь является модератором.
+  const periodSubscription = new PeriodSubscriptionService();
+
+  const clubs = user.moderator?.clubs;
+  const activeClubs =
+    clubs && (await periodSubscription.getClubsWithActiveOrganizerSubscription(clubs));
+
   // Данные для токенов и для возвращения клиенту.
   return dtoProfileDataForClient({
-    user,
+    user: { ...user, moderator: activeClubs && { clubs: activeClubs } },
     organizerId: organizerDB?._id,
     riderImg: riderDB?.imageSrc,
   });

@@ -54,6 +54,8 @@ export async function authorizationService({
     authService: 'credential',
   });
 
+  console.log(dataForClient);
+
   // Возвращаем данные для клиента.
   return {
     data: { user: dataForClient, tokens: tokensGenerated },
