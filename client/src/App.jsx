@@ -18,6 +18,7 @@ const Riders = lazy(() => import('./Pages/Riders/Riders.jsx'));
 const MainPage = lazy(() => import('./Pages/Main/MainPage'));
 const Message = lazy(() => import('./Pages/Message/Message'));
 const Streams = lazy(() => import('./Pages/Streams/Streams'));
+const SiteServices = lazy(() => import('./Pages/SiteServices/SiteServices'));
 
 import { sendMetrika } from './yandex/metrika.js';
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/riders" element={<Riders />} />
         <Route path="/streams" element={<Streams />} />
+        <Route path="/site-services" element={<SiteServices />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
         {isModeratorClub || isModerator ? ModeratorClubRoute() : ''}
