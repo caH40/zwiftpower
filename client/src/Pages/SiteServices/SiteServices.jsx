@@ -1,3 +1,4 @@
+import Price from '../../components/Price/Price';
 import useTitle from '../../hook/useTitle';
 
 import styles from './SiteServices.module.css';
@@ -8,5 +9,9 @@ import styles from './SiteServices.module.css';
 export default function SiteServices() {
   useTitle('Сервисы на сайте');
 
-  return <div className={styles.wrapper}>SiteServices</div>;
+  return (
+    <div className={styles.wrapper}>
+      <Price />
+    </div>
+  );
 }

@@ -1,0 +1,21 @@
+/* PriceList.module.css */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.description {
+  margin: 4px 0 0;
+  color: #666;
+}
+.price {
+  font-weight: bold;
+  color: #2a7a2a;
+}

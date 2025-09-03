@@ -3,6 +3,7 @@ import {
   TFinishProtocolConfig,
   TOrganizer,
   TSeries,
+  TSiteServicePrice,
   TStageResult,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
@@ -231,3 +232,11 @@ export type TPaymentNotificationDto = Omit<
   expiresAt?: string;
   createdAt: string;
 };
+
+/**
+ * DTO получения результатов этапа серии.
+ */
+export type TSiteServicePriceDto = Omit<
+  TSiteServicePrice,
+  '_id' | 'createdAt' | 'updatedAt'
+> & { _id: string; createdAt: string; updatedAt: string };

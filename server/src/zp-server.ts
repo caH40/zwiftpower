@@ -26,6 +26,7 @@ import { routerSeries } from './routes/series.js';
 import { siteServiceRouter } from './routes/site-service.js';
 import { paymentsRouter } from './routes/payments.js';
 import { notificationsRouter } from './routes/notifications.js';
+import { siteServicePriceRouter } from './routes/price.js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
@@ -65,6 +66,7 @@ app.use('/api/series', routerSeries);
 app.use('/api/site-services', siteServiceRouter);
 app.use('/api/payments', paymentsRouter);
 app.use('/api/notifications', notificationsRouter);
+app.use('/api/site-services-price', siteServicePriceRouter);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })

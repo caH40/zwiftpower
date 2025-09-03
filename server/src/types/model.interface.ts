@@ -8,7 +8,8 @@ import {
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
-import { TSiteService } from './site-service.type.js';
+import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
+import { TCurrency } from './payment.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -871,4 +872,24 @@ export type TPaidSiteServiceAccess = {
   _id: mongoose.Types.ObjectId;
   user: mongoose.Types.ObjectId; // Ссылка на пользователя.
   services: TSiteService[];
+};
+
+/**
+ * Тип описывает модель "цены услуги" на сайте.
+ *
+ * Используется для хранения информации о предоставляемых услугах,
+ * их стоимости и описании.
+ */
+export type TSiteServicePriceDocument = TSiteServicePrice & Document;
+export type TSiteServicePrice = {
+  _id: mongoose.Types.ObjectId; // Название услуги (человекочитаемое).
+  name: string;
+  entityName: TEntityNameForSlot; // Системное имя/сущность, к которой относится услуга.
+  description: string; // Текстовое описание услуги.
+  amount: {
+    value: number; // Числовое значение цены.
+    currency: TCurrency; // Валюта (например, "RUB", "USD").
+  };
+  createdAt: Date;
+  updatedAt: Date;
 };
