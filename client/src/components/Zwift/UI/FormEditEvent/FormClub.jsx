@@ -15,11 +15,6 @@ function FormClub({ clubs = [] }) {
     (state) => state.eventParams.eventMainParams
   );
 
-  // фильтрация клубов в зависимости от того, какие клубы может модерировать Пользователь (модератор)
-  // const clubsFiltered = [...clubs].filter((club) =>
-  //   moderator.clubs.find((clubId) => clubId === club.id)
-  // );
-
   // создание объекта для Selector
   const clubsCurrentForm = clubs.map((club) => ({
     id: club._id,

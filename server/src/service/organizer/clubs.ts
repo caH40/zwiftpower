@@ -9,6 +9,7 @@ import { getRequest } from '../zwift/api/request-get.js';
 import { ZwiftToken } from '../../Model/ZwiftToken.js';
 import { User } from '../../Model/User.js';
 import { TClubZwift } from '../../types/model.interface.js';
+import { PeriodSubscriptionService } from '../PeriodSubscriptionService.js';
 
 /**
  * Сервис получение клубов из БД для Организатора.
@@ -48,7 +49,15 @@ export async function getClubsZwiftForModeratorService({
     .populate({ path: 'organizer', select: 'name' })
     .lean<(TResponseClubsFromDB & { _id: ObjectId })[]>();
 
-  const clubsAfterDTO = transformClubsZwiftToDto(clubsDB);
+  // Получение списка клубов у которых у Организатора активная подписка на сервис организаторов.
+  const periodSubscriptionService = new PeriodSubscriptionService();
+  const activeClub = await periodSubscriptionService.getClubsWithActiveOrganizerSubscription(
+    clubsDB.map(({ id }) => id)
+  );
+
+  const filteredClubs = clubsDB.filter((c) => activeClub.includes(c.id));
+
+  const clubsAfterDTO = transformClubsZwiftToDto(filteredClubs);
 
   return {
     data: clubsAfterDTO,
