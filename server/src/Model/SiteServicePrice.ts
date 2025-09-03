@@ -29,13 +29,14 @@ export const SiteServicePriceModel = model<TSiteServicePriceDocument>(
   SiteServicePriceSchema
 );
 // db.siteserviceprices.insertOne({
-//   name: "Разработка сайта",
-//   entityName: "organizer", // одно из значений из ENTITY_NAME_SLOTS
-//   description: "Создание одностраничного сайта под ключ",
+//   name: 'Организатор заездов',
+//   entityName: 'organizer', // одно из значений из ENTITY_NAME_SLOTS
+//   description:
+//     'Создание серий заездов и туров. Создание, редактирования заездов с расширенными настройками в ZwiftСоздание серий заездов и туров с полной интеграцией в Zwift. Позволяет создавать и редактировать заезды с расширенными настройками: категории участников, маршруты, лимиты мощности, тайминги и уровни сложности. Удобно для организации соревнований, турниров и тренировок с автоматическим обновлением участников и доступной статистикой.',
 //   amount: {
-//     value: 15000,
-//     currency: "RUB" // одно из значений из CURRENCY
+//     value: 2000,
+//     currency: 'RUB', // одно из значений из CURRENCY
 //   },
 //   createdAt: new Date(),
-//   updatedAt: new Date()
-// })
+//   updatedAt: new Date(),
+// });

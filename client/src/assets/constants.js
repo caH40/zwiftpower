@@ -25,3 +25,14 @@ export const records = [
   { id: 4, value: 25 },
   { id: 5, value: 50 },
 ];
+
+export const CURRENCY = ['RUB'];
+export const currency = new Map([
+  [
+    'RUB',
+    {
+      shortName: 'руб',
+      symbol: '₽',
+    },
+  ],
+]);
