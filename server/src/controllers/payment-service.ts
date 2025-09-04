@@ -27,24 +27,22 @@ export async function createPaymentController(req: Request, res: Response) {
 }
 
 /**
- * Контроллер создания оплаты.
+ * Контроллер получение данных для совершения платежа на сервисе YooKassa для сервиса Организатор.
  */
-// export async function createPaymentController(req: Request, res: Response) {
-//   try {
-//     // Проверка параметров из тела запроса.
-//     const createPayload = req.body.createPayload;
+export async function getOrganizerPaymentPayloadController(req: Request, res: Response) {
+  try {
+    // id пользователя совершающего покупку, получаем из мидлваре роутера.
+    const id = req.user!.id;
 
-//     if (!createPayload) {
-//       throw new Error('Не получен createPayload');
-//     }
+    const returnUrl = req.query.returnUrl as string | undefined;
 
-//     const paymentService = new PaymentService();
+    const paymentService = new PaymentService();
 
-//     const response = await paymentService.getOrganizerPurchasable({ createPayload });
+    const response = await paymentService.getOrganizerPaymentPayload(id, returnUrl);
 
-//     // Возврат успешного ответа.
-//     return res.status(200).json(response);
-//   } catch (error) {
-//     handleErrorInController(res, error);
-//   }
-// }
+    // Возврат успешного ответа.
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
+  }
+}

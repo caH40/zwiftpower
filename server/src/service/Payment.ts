@@ -2,14 +2,14 @@ import { YooCheckout, IConfirmation, IReceipt } from '@a2seven/yoo-checkout';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getYooKassaConfig } from '../config/environment.js';
-
-// types
-import { TCreatePaymentWithMeta } from '../types/payment.types.js';
 import { SiteServicePriceModel } from '../Model/SiteServicePrice.js';
 import { TSiteServicePrice } from '../types/model.interface.js';
 import { TSiteServiceForClient } from '../types/site-service.type.js';
 import { User } from '../Model/User.js';
 import { millisecondsIn31Days } from '../assets/date.js';
+
+// types
+import { TCreatePaymentWithMeta } from '../types/payment.types.js';
 
 /**
  * Сервис работы c эквайрингом.
@@ -106,6 +106,9 @@ export class PaymentService {
     };
   }
 
+  /**
+   * Получение данных для совершения платежа на сервисе YooKassa для сервиса Организатор.
+   */
   public async getOrganizerPaymentPayload(
     userId: string,
     returnUrl?: string
