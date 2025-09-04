@@ -1,20 +1,30 @@
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-import { fetchPurchaseSiteService } from '../redux/features/api/payment/fetchPayment';
-
+import {
+  fetchOrganizerPaymentPayload,
+  fetchPurchaseSiteService,
+} from '../redux/features/api/payment/fetchPayment';
 import { getAlert } from '../redux/features/alertMessageSlice';
+import { serverFront } from '../config/environment';
 
 /**
  * Хук покупки сервиса Организатора.
  */
-export function useOrganizerPurchase({
-  userId,
-  returnUrl,
-  payloadData: { currency, value, customer },
-}) {
+export function useOrganizerPurchase() {
   const [isLoading, setIsLoading] = useState(false);
+  const { organizerPaymentPayload } = useSelector((state) => state.payment);
+  const location = useLocation();
+
   const dispatch = useDispatch();
+
+  // Запрос на получение данных для платежа (payload.)
+  useEffect(() => {
+    dispatch(
+      fetchOrganizerPaymentPayload({ returnUrl: `${serverFront}${location.pathname} ` })
+    );
+  }, []);
 
   const handleClickPurchase = async () => {
     // Исключение случайного второго клика по кнопке.
@@ -22,47 +32,11 @@ export function useOrganizerPurchase({
       return;
     }
 
-    const description =
-      'Покупка подписки на сервис Организатор сроком на 1 месяц (31 день) на сайте zwiftpower.ru';
-
-    const receipt = {
-      customer,
-      items: [
-        {
-          description: 'Подписка на сервис Организатор сроком на 1 месяц (31 день)',
-          amount: { value: String(value), currency },
-          quantity: 1, // Один месяц.
-          unit: 'month',
-          vat_code: 1,
-        },
-      ],
-    };
-
-    const createPayload = {
-      amount: {
-        value: String(value),
-        currency,
-      },
-      receipt,
-      capture: true,
-      confirmation: {
-        type: 'redirect',
-        return_url: returnUrl,
-      },
-
-      metadata: {
-        userId,
-        unit: 'month',
-        quantity: 1, // Один месяц.
-        entityName: 'organizer',
-      },
-
-      description,
-    };
-
     try {
       setIsLoading(true);
-      const data = await dispatch(fetchPurchaseSiteService({ createPayload })).unwrap();
+      const data = await dispatch(
+        fetchPurchaseSiteService({ createPayload: organizerPaymentPayload })
+      ).unwrap();
 
       if (data && data.paymentResponse.confirmation_url) {
         window.location.href = data.paymentResponse.confirmation_url;

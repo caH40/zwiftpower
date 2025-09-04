@@ -40,7 +40,7 @@ export default function SettingsServicesAndFinances() {
         {zwiftIdAuth && (
           <div className={styles.wrapper__block}>
             {purchasableSiteServices?.length > 0 ? (
-              <PaymentServicesBlock services={purchasableSiteServices} user={user} />
+              <PaymentServicesBlock services={purchasableSiteServices} />
             ) : (
               <div>Нет доступных сервисов для оплаты</div>
             )}

@@ -115,6 +115,9 @@ export class PaymentService {
   ): Promise<TCreatePaymentWithMeta> {
     const customer = await this.getCustomer(userId);
     const service = await this.getService('organizer');
+
+    service.description = `Подписка на сервис Организатор сроком на ${service.item.quantity} ${service.item.unit}`;
+
     return this.buildPaymentPayload(
       service,
       customer,
