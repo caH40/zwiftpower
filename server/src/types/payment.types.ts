@@ -7,12 +7,12 @@ export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
   metadata: TCreatePayloadMetadata;
 };
 export type TCreatePayloadMetadata = {
-  userId: number;
+  userId: string;
   quantity: number;
   entityName: TEntityNameForSlot;
+  unit: TPurchaseUnit;
 };
-export type TNotificationMetadata = Omit<TCreatePayloadMetadata, 'userId' | 'quantity'> & {
-  userId: string;
+export type TNotificationMetadata = Omit<TCreatePayloadMetadata, 'quantity'> & {
   quantity: string;
   unit: TPurchaseUnit;
 };

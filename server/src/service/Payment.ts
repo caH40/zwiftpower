@@ -1,10 +1,15 @@
-import { YooCheckout, IConfirmation } from '@a2seven/yoo-checkout';
+import { YooCheckout, IConfirmation, IReceipt } from '@a2seven/yoo-checkout';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getYooKassaConfig } from '../config/environment.js';
 
 // types
 import { TCreatePaymentWithMeta } from '../types/payment.types.js';
+import { SiteServicePriceModel } from '../Model/SiteServicePrice.js';
+import { TSiteServicePrice } from '../types/model.interface.js';
+import { TSiteServiceForClient } from '../types/site-service.type.js';
+import { User } from '../Model/User.js';
+import { millisecondsIn31Days } from '../assets/date.js';
 
 /**
  * Сервис работы c эквайрингом.
@@ -33,36 +38,90 @@ export class PaymentService {
     return { paymentResponse: payment.confirmation, message: 'Запрос на оплату' };
   }
 
-  /**
-   * История всех платежей (уведомлений) пользователя из БД сайта.
-   */
-  // public async getHistory({
-  //   userId,
-  // }: {
-  //   userId: string;
-  // }): Promise<ServerResponse<TPaymentNotificationDto[] | null>> {
-  //   try {
-  //     const paymentNotificationsDB = await PaymentNotificationModel.find({
-  //       user: userId,
-  //     }).lean<TPaymentNotification[]>();
+  private async getCustomer(userId: string): Promise<{ full_name: string }> {
+    const userDB = await User.findById(userId, { _id: false, username: true }).lean<{
+      username: string;
+    }>();
+    return { full_name: userDB?.username || `Пользователь с id: ${userId}` };
+  }
 
-  //     // Сортировка времени создания платежа, сначала более свежие.
-  //     // Если это удачный платеж, то берется дата оплаты, а не дата создания операции.
-  //     paymentNotificationsDB.sort((a, b) => {
-  //       const currentTime = (item: TPaymentNotification) =>
-  //         item.event === 'payment.succeeded' && item.capturedAt
-  //           ? item.capturedAt.getTime()
-  //           : item.createdAt.getTime();
+  private async getService(entityName: string): Promise<TSiteServicePrice> {
+    const service = await SiteServicePriceModel.findOne({
+      entityName,
+    }).lean<TSiteServicePrice>();
+    if (!service) {
+      throw new Error(`Не найден сервис "${entityName}" в прайс-листе`);
+    }
+    return service;
+  }
 
-  //       return currentTime(b) - currentTime(a);
-  //     });
+  private buildPaymentPayload(
+    service: TSiteServicePrice,
+    customer: { full_name: string },
+    userId: string,
+    returnUrl: string
+  ): TCreatePaymentWithMeta {
+    const {
+      description,
+      item: { quantity, unit },
+    } = service;
 
-  //     const afterDto = paymentNotificationsDB.map((n) => getPaymentNotificationDto(n));
+    const amount = {
+      value: String(service.amount.value),
+      currency: service.amount.currency,
+    };
 
-  //     return { data: afterDto, ok: true, message: 'История операций по платежам.' };
-  //   } catch (error) {
-  //     this.errorLogger(error);
-  //     return this.handlerErrorDB(error);
-  //   }
-  // }
+    const receipt: IReceipt = {
+      customer,
+      items: [
+        {
+          description,
+          amount,
+          quantity: String(quantity),
+          vat_code: 1,
+        },
+      ],
+    };
+
+    return {
+      amount,
+      receipt,
+      capture: true,
+      confirmation: { type: 'redirect', return_url: returnUrl },
+      metadata: { userId, unit, quantity, entityName: service.entityName },
+      description,
+    };
+  }
+
+  private buildOrganizerService(service: TSiteServicePrice): TSiteServiceForClient {
+    return {
+      id: 0,
+      label: 'Доступ к сервису Организатор',
+      entityName: service.entityName,
+      description: service.description,
+      origin: 'purchased',
+      startDate: new Date().toISOString(),
+      endDate: new Date(Date.now() + millisecondsIn31Days).toISOString(),
+      amount: service.amount,
+    };
+  }
+
+  public async getOrganizerPaymentPayload(
+    userId: string,
+    returnUrl?: string
+  ): Promise<TCreatePaymentWithMeta> {
+    const customer = await this.getCustomer(userId);
+    const service = await this.getService('organizer');
+    return this.buildPaymentPayload(
+      service,
+      customer,
+      userId,
+      returnUrl ?? 'https://zwiftpower.ru'
+    );
+  }
+
+  public async getOrganizerServiceCard(): Promise<TSiteServiceForClient> {
+    const service = await this.getService('organizer');
+    return this.buildOrganizerService(service);
+  }
 }

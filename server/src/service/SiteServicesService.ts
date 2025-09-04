@@ -1,4 +1,3 @@
-import { millisecondsIn31Days } from '../assets/date.js';
 import { handleAndLogError } from '../errors/error.js';
 import { Organizer } from '../Model/Organizer.js';
 import { PeriodSubscriptionService } from './PeriodSubscriptionService.js';
@@ -16,6 +15,7 @@ import {
   TManageServiceSlotsParams,
   TSubscriptionPeriodSlotWithEntity,
 } from '../types/types.interface.js';
+import { PaymentService } from './Payment.js';
 
 /**
  * Сервис работы со слотами по доступу к платным сервисам сайта.
@@ -23,8 +23,10 @@ import {
  */
 export class SiteServicesService {
   private subscriptionService: PeriodSubscriptionService;
+  private paymentService: PaymentService;
   constructor() {
     this.subscriptionService = new PeriodSubscriptionService();
+    this.paymentService = new PaymentService();
   }
 
   /**
@@ -41,18 +43,8 @@ export class SiteServicesService {
       return [];
     }
 
-    const organizerService: TSiteServiceForClient = {
-      id: 0,
-      label: 'Доступ к сервису Организатор',
-      entityName: 'organizer',
-      description:
-        'Доступ к сервисам Организатора. Создание и редактирование заездов через ZwiftAPI. Подписка сроком на 31 день.',
-      subscriptionDescription: 'Оплата подписки на месяц.',
-      origin: 'purchased',
-      startDate: new Date().toISOString(),
-      endDate: new Date(new Date().getTime() + millisecondsIn31Days).toISOString(), // +31 день
-      amount: { value: 2000, currency: 'RUB' },
-    };
+    // Данные для карточки покупки сервиса Организатор.
+    const organizerService = await this.paymentService.getOrganizerServiceCard();
 
     const results: TSiteServiceForClient[] = [];
 

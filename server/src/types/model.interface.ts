@@ -9,7 +9,7 @@ import {
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
-import { TCurrency } from './payment.types.js';
+import { TCurrency, TPurchaseUnit } from './payment.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -889,6 +889,10 @@ export type TSiteServicePrice = {
   amount: {
     value: number; // Числовое значение цены.
     currency: TCurrency; // Валюта (например, "RUB", "USD").
+  };
+  item: {
+    quantity: number;
+    unit: TPurchaseUnit;
   };
   createdAt: Date;
   updatedAt: Date;
