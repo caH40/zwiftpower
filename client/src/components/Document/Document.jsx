@@ -10,20 +10,20 @@ export default function Document({ dataJson }) {
     <div className={styles.wrapper}>
       {dataJson.application && (
         <div className={styles.wrapper__application}>
-          <h3 className={styles.title__application}>{dataJson.application}</h3>
-          <h3 className={styles.title__application}>{dataJson.applicationAffiliation}</h3>
+          <h4 className={styles.title__application}>{dataJson.application}</h4>
+          <h4 className={styles.title__application}>{dataJson.applicationAffiliation}</h4>
         </div>
       )}
 
-      <h1 className={styles.title}>{dataJson.title}</h1>
+      <h2 className={styles.title}>{dataJson.title}</h2>
       <p className={styles.updated}>{dataJson.lastUpdated}</p>
 
       {dataJson.sections.map((section, indexSection) => (
         <div key={indexSection} className={styles.section}>
-          <h2 className={styles.title__section}>
+          <h3 className={styles.title__section}>
             {section.number && `${section.number}. `}
             {section.title}
-          </h2>
+          </h3>
 
           {section.content.map((contentItem, indexContent) => (
             <div key={indexContent} className={styles.content__item}>

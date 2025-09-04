@@ -28,6 +28,7 @@ export const usefulLinks = [
 export const documentsLegal = [
   { id: 0, name: 'Политика конфиденциальности', href: `${serverFront}/legal/privacy-policy` },
   { id: 1, name: 'Пользовательское соглашение', href: `${serverFront}/legal/terms-of-use` },
+  { id: 2, name: 'Публичная оферта', href: `${serverFront}/legal/offer` },
 ];
 
 export const usefulLinksWithIcon = [
