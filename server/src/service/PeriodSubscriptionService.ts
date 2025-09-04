@@ -122,24 +122,6 @@ export class PeriodSubscriptionService {
   }
 
   /**
-   * Проверка есть ли у пользователя userId который является модератором у организатора organizerId или организатором активная подписка на сервис entityName:organizer.
-   */
-
-  // Данные пользователя, являющегося модератором в клубе
-  //   {
-  //   username: 'caH4077',
-  //   email: 'info@zwiftpower.ru',
-  //   id: '68b7d5fe79e9c8319d56b45e',
-  //   role: 'user',
-  //   photoProfile: null,
-  //   zwiftId: 678687,
-  //   moderator: { clubs: [ '53fb86b7-1702-42f1-8b42-a37a7007ce72' ] },
-  //   externalAccounts: {},
-  //   iat: 1756878430,
-  //   exp: 1756964830
-  // }
-
-  /**
    * Проверяет, есть ли у сущности активная подписка (endDate >= now).
    */
   public hasActiveSubscription(
