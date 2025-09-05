@@ -19,6 +19,7 @@ import {
 import { removeActivityFromFitFile } from './updates/fitfiles.js';
 import { updateAllRidersProfiles } from './updates/riders-profile.js';
 import { updateRidersDailyMetrics } from './metrics/metrics.js';
+import { closeExpiredSeries } from './updates/series.js';
 
 // создание sitemap.xml
 export async function setTimers() {
@@ -40,6 +41,7 @@ export async function setTimers() {
       // Обновление параметров заездов в расписании (еще не стартовавших)
       await updateScheduleEvents();
       await updateStartInfo();
+      await closeExpiredSeries();
     } catch (error) {
       handleAndLogError(error);
     }
