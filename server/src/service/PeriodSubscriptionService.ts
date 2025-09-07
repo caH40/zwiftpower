@@ -27,11 +27,19 @@ export class PeriodSubscriptionService {
   /**
    * Вычисляет дату окончания подписки в зависимости от unit (month/week/day).
    */
-  private getEndDateByUnit(unit: Exclude<TPurchaseUnit, 'piece'>): Date {
+  private getEndDateByUnit({
+    unit,
+    quantity,
+  }: {
+    unit: Exclude<TPurchaseUnit, 'piece'>;
+    quantity: number;
+  }): Date {
+    // Проверка, что quantity число.
+
     const now = new Date();
 
     const daysByUnit: Record<Exclude<TPurchaseUnit, 'piece'>, number> = {
-      month: DAYS_IN_MONTH_FOR_SLOT,
+      month: DAYS_IN_MONTH_FOR_SLOT * Number(quantity),
       week: 7,
       day: 1,
     };
@@ -170,7 +178,7 @@ export class PeriodSubscriptionService {
   }: THandlePeriodUnitParams): Promise<{ ok: boolean; message: string }> {
     const serviceDB = await PaidSiteServiceAccessModel.findOne({ user });
     const startDate = new Date();
-    const endDate = this.getEndDateByUnit(metadata.unit);
+    const endDate = this.getEndDateByUnit({ unit: metadata.unit, quantity: metadata.quantity });
     const newPeriodSlot = this.createPeriodSlot({
       origin,
       startDate,
