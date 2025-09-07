@@ -109,7 +109,7 @@ function MainPage() {
           <div className={styles.sidebar}>
             {/* Рекламный блок Серии догонялок */}
             <AdSeries
-              urlSlug={'kom-on-dogonyalki-po-sredam'}
+              urlSlug={'kom-on-komon-catch-up-race-202526'}
               isCard={true}
               pageType="schedule"
             />
