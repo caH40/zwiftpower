@@ -4,6 +4,22 @@ import { CURRENCY, ENTITY_NAME_SLOTS, PURCHASE_UNITS } from '../assets/constants
 
 // types
 import { TSiteServicePriceDocument } from '../types/model.interface.js';
+import { TPricingPlan } from '../types/types.interface.js';
+
+const PricingPlanSchema = new Schema<TPricingPlan>(
+  {
+    amount: {
+      value: { type: Number, required: true, min: 0 },
+      currency: { type: String, enum: CURRENCY, required: true },
+    },
+    item: {
+      quantity: { type: Number, default: 1 },
+      unit: { type: String, enum: PURCHASE_UNITS, required: true },
+    },
+    id: { type: String },
+  },
+  { _id: false }
+);
 
 /**
  * Схема MongoDB для хранения цен услуг на сайте.
@@ -13,14 +29,7 @@ const SiteServicePriceSchema = new Schema<TSiteServicePriceDocument>(
     name: { type: String, required: true, trim: true },
     entityName: { type: String, enum: ENTITY_NAME_SLOTS, required: true, unique: true },
     description: { type: String, required: true },
-    amount: {
-      value: { type: Number, required: true, min: 0 },
-      currency: { type: String, enum: CURRENCY, required: true },
-    },
-    item: {
-      quantity: { type: Number, default: 1 },
-      unit: { type: String, enum: PURCHASE_UNITS, required: true },
-    },
+    plans: { type: [PricingPlanSchema], required: true },
   },
   {
     timestamps: true,

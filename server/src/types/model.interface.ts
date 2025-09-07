@@ -5,11 +5,11 @@ import {
   ProfileDataInResultWithId,
   TAuthService,
   TCategorySeries,
+  TPricingPlan,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
-import { TCurrency, TPurchaseUnit } from './payment.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -886,14 +886,8 @@ export type TSiteServicePrice = {
   name: string;
   entityName: TEntityNameForSlot; // Системное имя/сущность, к которой относится услуга.
   description: string; // Текстовое описание услуги.
-  amount: {
-    value: number; // Числовое значение цены.
-    currency: TCurrency; // Валюта (например, "RUB", "USD").
-  };
-  item: {
-    quantity: number;
-    unit: TPurchaseUnit;
-  };
+  plans: TPricingPlan[];
+
   createdAt: Date;
   updatedAt: Date;
 };

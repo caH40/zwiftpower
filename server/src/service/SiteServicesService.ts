@@ -46,12 +46,8 @@ export class SiteServicesService {
     // Данные для карточки покупки сервиса Организатор.
     const organizerService = await this.paymentService.getOrganizerServiceCard();
 
-    const results: TSiteServiceForClient[] = [];
-
     // Если пользователь организатор, то в массив сервисов добавляется сервис организатора.
-    creatorDB && results.push(organizerService);
-
-    return results;
+    return creatorDB ? organizerService : [];
   }
 
   /**

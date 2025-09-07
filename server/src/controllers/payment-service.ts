@@ -32,13 +32,18 @@ export async function createPaymentController(req: Request, res: Response) {
 export async function getOrganizerPaymentPayloadController(req: Request, res: Response) {
   try {
     // id пользователя совершающего покупку, получаем из мидлваре роутера.
-    const id = req.user!.id;
+    const userId = req.user!.id;
 
     const returnUrl = req.query.returnUrl as string | undefined;
+    const planId = req.query.planId as string;
 
     const paymentService = new PaymentService();
 
-    const response = await paymentService.getOrganizerPaymentPayload(id, returnUrl);
+    const response = await paymentService.getOrganizerPaymentPayload({
+      userId,
+      returnUrl,
+      planId,
+    });
 
     // Возврат успешного ответа.
     return res.status(200).json(response);

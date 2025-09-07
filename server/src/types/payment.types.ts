@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { CURRENCY, PURCHASE_UNITS } from '../assets/constants';
 
 export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
+  id: string;
   metadata: TCreatePayloadMetadata;
 };
 export type TCreatePayloadMetadata = {

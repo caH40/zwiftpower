@@ -18,9 +18,9 @@ export default function PaymentServicesBlock({ services }) {
   const options = siteServicesList(services);
   const [selectedService, setSelectedService] = useState(options[0].name);
 
-  const service = services.find((s) => s.entityName === selectedService);
+  const service = services.find((s) => s.id === selectedService);
 
-  const { handleClickPurchase } = useOrganizerPurchase();
+  const { handleClickPurchase } = useOrganizerPurchase({ planId: service.id });
 
   return (
     <div className={styles.block}>

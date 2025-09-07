@@ -36,3 +36,11 @@ export const currency = new Map([
     },
   ],
 ]);
+
+export const PURCHASE_UNITS = ['month', 'week', 'day', 'piece'];
+export const purchaseUnits = new Map([
+  ['month', { label: 'месяц', symbol: 'мес.', full: 'за месяц' }],
+  ['week', { label: 'неделя', symbol: 'нед.', full: 'за неделю' }],
+  ['day', { label: 'день', symbol: 'дн.', full: 'за день' }],
+  ['piece', { label: 'штука', symbol: 'шт.', full: 'за штуку' }],
+]);

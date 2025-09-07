@@ -8,11 +8,12 @@ import {
 } from '../redux/features/api/payment/fetchPayment';
 import { getAlert } from '../redux/features/alertMessageSlice';
 import { serverFront } from '../config/environment';
+import { resetOrganizerPaymentPayload } from '../redux/features/api/payment/paymentsSlice';
 
 /**
  * Хук покупки сервиса Организатора.
  */
-export function useOrganizerPurchase() {
+export function useOrganizerPurchase({ planId }) {
   const [isLoading, setIsLoading] = useState(false);
   const { organizerPaymentPayload } = useSelector((state) => state.payment);
   const location = useLocation();
@@ -22,9 +23,11 @@ export function useOrganizerPurchase() {
   // Запрос на получение данных для платежа (payload.)
   useEffect(() => {
     dispatch(
-      fetchOrganizerPaymentPayload({ returnUrl: `${serverFront}${location.pathname} ` })
+      fetchOrganizerPaymentPayload({ returnUrl: `${serverFront}${location.pathname}`, planId })
     );
-  }, []);
+
+    dispatch(resetOrganizerPaymentPayload());
+  }, [planId]);
 
   const handleClickPurchase = async () => {
     // Исключение случайного второго клика по кнопке.

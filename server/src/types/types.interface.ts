@@ -983,3 +983,18 @@ export type TSubscriptionPeriodSlotWithEntity = TSubscriptionPeriodSlot & {
   entityName: TEntityNameForSlot;
   id: number;
 };
+
+/**
+ * Тарифный план на сервис сайта.
+ */
+export type TPricingPlan = {
+  id: string; // id тарифного плана.
+  amount: {
+    value: number; // Числовое значение цены.
+    currency: TCurrency; // Валюта (например, "RUB", "USD").
+  };
+  item: {
+    quantity: number;
+    unit: TPurchaseUnit;
+  };
+};

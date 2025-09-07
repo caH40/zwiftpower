@@ -40,7 +40,7 @@ export type TSubscriptionPieceSlot = {
 export type TSlotOrigin = (typeof SLOT_ORIGIN)[number];
 
 export type TSiteServiceForClient = {
-  id: number;
+  id: string;
   entityName: TEntityNameForSlot;
   description: string; // Подробное описание сервиса.
   label: string; // Название для отображения опции в select.

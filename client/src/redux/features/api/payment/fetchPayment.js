@@ -31,11 +31,12 @@ export const fetchPurchaseSiteService = createAsyncThunk(
  */
 export const fetchOrganizerPaymentPayload = createAsyncThunk(
   'organizerPaymentPayload/get',
-  async ({ returnUrl }, thunkAPI) => {
+  async ({ returnUrl, planId }, thunkAPI) => {
     try {
       const url = new URL('/api/payments/payload/organizer', serverExpress);
       if (returnUrl) {
         url.searchParams.set('returnUrl', returnUrl);
+        url.searchParams.set('planId', planId);
       }
 
       const response = await myAxios({

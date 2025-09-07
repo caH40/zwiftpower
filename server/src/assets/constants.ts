@@ -46,6 +46,12 @@ export const eventOptionsVisibility = [
 
 // Размерность приобретаемого слота (подписки) сервиса.
 export const PURCHASE_UNITS = ['month', 'week', 'day', 'piece'] as const;
+export const purchaseUnits = new Map([
+  ['month', { label: 'месяц', symbol: 'мес.', full: 'за месяц' }],
+  ['week', { label: 'неделя', symbol: 'нед.', full: 'за неделю' }],
+  ['day', { label: 'день', symbol: 'дн.', full: 'за день' }],
+  ['piece', { label: 'штука', symbol: 'шт.', full: 'за штуку' }],
+]);
 
 // Названия сущностей сервисов на сайте (платные сервисы).
 export const ENTITY_NAME_SLOTS = ['organizer'] as const;
@@ -64,3 +70,12 @@ export const SLOT_ORIGIN = ['trial', 'purchased', 'gift', 'promo', 'admin'] as c
 export const DAYS_IN_MONTH_FOR_SLOT = 31;
 
 export const CURRENCY = ['RUB'] as const;
+export const currency = new Map([
+  [
+    'RUB',
+    {
+      shortName: 'руб',
+      symbol: '₽',
+    },
+  ],
+]);

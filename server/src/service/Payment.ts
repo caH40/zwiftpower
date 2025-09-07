@@ -10,6 +10,7 @@ import { millisecondsIn31Days } from '../assets/date.js';
 
 // types
 import { TCreatePaymentWithMeta } from '../types/payment.types.js';
+import { getUnitData } from '../utils/pricing.js';
 
 /**
  * Сервис работы c эквайрингом.
@@ -55,20 +56,38 @@ export class PaymentService {
     return service;
   }
 
-  private buildPaymentPayload(
-    service: TSiteServicePrice,
-    customer: { full_name: string },
-    userId: string,
-    returnUrl: string
-  ): TCreatePaymentWithMeta {
-    const {
-      description,
-      item: { quantity, unit },
-    } = service;
+  private buildPaymentPayload({
+    service,
+    customer,
+    userId,
+    planId,
+    returnUrl,
+  }: {
+    service: TSiteServicePrice;
+    customer: { full_name: string };
+    userId: string;
+    planId: string;
+    returnUrl: string;
+  }): TCreatePaymentWithMeta {
+    const plan = service.plans.find(({ id }) => id === planId);
 
-    const amount = {
-      value: String(service.amount.value),
-      currency: service.amount.currency,
+    if (!plan) {
+      throw new Error(`Не найден тарифный план с id:${planId}`);
+    }
+
+    const description = `${service.description} ${plan.item.quantity} ${getUnitData(
+      plan.item.unit
+    )}`;
+
+    const {
+      id,
+      amount,
+      item: { quantity, unit },
+    } = plan;
+
+    const currentAmount = {
+      value: String(amount.value),
+      currency: amount.currency,
     };
 
     const receipt: IReceipt = {
@@ -76,58 +95,76 @@ export class PaymentService {
       items: [
         {
           description,
-          amount,
+          amount: currentAmount,
           quantity: String(quantity),
           vat_code: 1,
         },
       ],
     };
 
+    // Использование
+    const confirmation: IConfirmation = {
+      type: 'redirect',
+      return_url: returnUrl,
+    };
+
     return {
-      amount,
+      id,
+      amount: currentAmount,
       receipt,
       capture: true,
-      confirmation: { type: 'redirect', return_url: returnUrl },
+      confirmation,
       metadata: { userId, unit, quantity, entityName: service.entityName },
       description,
     };
   }
 
-  private buildOrganizerService(service: TSiteServicePrice): TSiteServiceForClient {
-    return {
-      id: 0,
-      label: 'Доступ к сервису Организатор',
+  private buildOrganizerService(service: TSiteServicePrice): TSiteServiceForClient[] {
+    return service.plans.map(({ item, amount, id }) => ({
+      id,
+      label: `Доступ к сервису Организатор (${item.quantity} ${getUnitData(item.unit)})`,
       entityName: service.entityName,
       description: service.description,
       origin: 'purchased',
       startDate: new Date().toISOString(),
-      endDate: new Date(Date.now() + millisecondsIn31Days).toISOString(),
-      amount: service.amount,
-    };
+      // FIXME: жестко установлено, что item.unit месяц и следовательно берется millisecondsIn31Days.
+      endDate: new Date(Date.now() + millisecondsIn31Days * item.quantity).toISOString(),
+      amount: amount,
+    }));
   }
 
   /**
    * Получение данных для совершения платежа на сервисе YooKassa для сервиса Организатор.
    */
-  public async getOrganizerPaymentPayload(
-    userId: string,
-    returnUrl?: string
-  ): Promise<TCreatePaymentWithMeta> {
+  public async getOrganizerPaymentPayload({
+    userId,
+    returnUrl,
+    planId,
+  }: {
+    userId: string;
+    returnUrl?: string;
+    planId: string;
+  }): Promise<TCreatePaymentWithMeta> {
     const customer = await this.getCustomer(userId);
     const service = await this.getService('organizer');
 
-    service.description = `Подписка на сервис Организатор сроком на ${service.item.quantity} ${service.item.unit}`;
+    service.description = 'Подписка на сервис Организатор сроком на';
 
-    return this.buildPaymentPayload(
+    return this.buildPaymentPayload({
       service,
+      planId,
       customer,
       userId,
-      returnUrl ?? 'https://zwiftpower.ru'
-    );
+      returnUrl: returnUrl ?? 'https://zwiftpower.ru',
+    });
   }
 
-  public async getOrganizerServiceCard(): Promise<TSiteServiceForClient> {
+  /**
+   * Получение данных по ценам сервиса Организатор для карточки оплаты.
+   */
+  public async getOrganizerServiceCard(): Promise<TSiteServiceForClient[]> {
     const service = await this.getService('organizer');
+
     return this.buildOrganizerService(service);
   }
 }
