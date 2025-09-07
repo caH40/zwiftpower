@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import IconRefresh from '../../icons/IconRefresh';
 import IconModify from '../../icons/IconModify';
+import { useSeriesOneFunctions } from '../../../hook/useSeriesOneFunctions';
 
 import styles from './PopupMenuTable.module.css';
 
@@ -11,14 +11,10 @@ import styles from './PopupMenuTable.module.css';
  * Обновление итоговых таблиц.
  * Обновление/создание результатов этапов серии.
  */
-function PopupMenuControlSeries({
-  seriesId,
-  stages,
-  updateStageResults,
-  updateGeneralClassification,
-  setIsVisibleMenuControl,
-}) {
-  const dispatch = useDispatch();
+function PopupMenuControlSeries({ seriesId, stages, setIsVisibleMenuControl, urlSlug }) {
+  // Функция updateStageResults обновляет результаты этапа (order) серии заездов (seriesId).
+  const { updateStageResults, updateGeneralClassification } = useSeriesOneFunctions();
+
   const navigate = useNavigate();
 
   // Обработчик нажатия на кнопку обновления результатов этапа серии.
@@ -28,6 +24,7 @@ function PopupMenuControlSeries({
     updateStageResults({
       seriesId,
       stageOrder,
+      urlSlug,
     });
   };
 

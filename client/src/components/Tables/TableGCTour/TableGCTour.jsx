@@ -23,7 +23,6 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
   const filterCategory = useSelector((state) => state.filterCategory.value);
 
   // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
-
   const filteredResult = useFilterGC(results);
 
   return (
@@ -43,6 +42,16 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
               ? result.gapsInCategories.absolute
               : result.gapsInCategories.category;
 
+          /**
+           * берутся данные профиля из Этапа под нулевым индексом в массиве этапов, но если райдер
+           * не проезжал этот этап, то данных нет и выскакивает ошибка. Необходимо продумать как
+           *  получать данные профиля, с какого этапа брать данные. Теоретически профиля могут
+           * изменятся от этапа к этапу. Брать из последнего (самые свежие данные)
+           */
+          const profileData = result.stages.findLast(
+            (stage) => stage?.profileData
+          )?.profileData;
+
           return (
             <tr
               className={cx('hover', { current: zwiftId === result.profileId })}
@@ -61,7 +70,13 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
               <td>
                 <CategoryBox showLabel={true} label={result.finalCategory} circle={true} />
               </td>
-              <TdRider profile={result.stages[0]?.profileData} profileId={result.profileId} />
+
+              {profileData ? (
+                <TdRider profile={profileData} profileId={result.profileId} />
+              ) : (
+                <span>Нет данных</span>
+              )}
+
               <td>
                 <FinishTime time={secondesToTimeThousandths(result.totalTimeInMilliseconds)} />
               </td>

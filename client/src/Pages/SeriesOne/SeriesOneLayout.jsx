@@ -8,7 +8,6 @@ import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
 import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSeriesPublic';
 // import AdContainer from '../../components/AdContainer/AdContainer';
 // import { useAd } from '../../hook/useAd';
-import { useSeriesOneFunctions } from '../../hook/useSeriesOneFunctions';
 
 import styles from './SeriesOneLayout.module.css';
 
@@ -31,9 +30,6 @@ export default function SeriesOneLayout() {
     dispatch(fetchGetSeriesOne({ urlSlug }));
   }, []);
 
-  // Функция updateStageResults обновляет результаты этапа (order) серии заездов (seriesId).
-  const { updateStageResults, updateGeneralClassification } = useSeriesOneFunctions();
-
   // useAd(adNumbers);
   return (
     <>
@@ -45,8 +41,7 @@ export default function SeriesOneLayout() {
             seriesId={seriesPublicOne._id}
             name={seriesPublicOne.name}
             mission={seriesPublicOne.mission}
-            updateStageResults={updateStageResults}
-            updateGeneralClassification={updateGeneralClassification}
+            urlSlug={seriesPublicOne.urlSlug}
             stages={seriesPublicOne.stages.map((stage) => ({ stageOrder: stage.order }))}
             // FIXME: не отображать иконку управления для не редактируемых серий
             showEditIcon={!['catchUp', 'series'].includes(seriesPublicOne.type)}

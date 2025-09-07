@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
 import PopupMenuControlSeries from '../UI/PopupMenuTable/PopupMenuControlSeries';
 import IconEdit from '../icons/IconEdit';
+import { useSeriesOneFunctions } from '../../hook/useSeriesOneFunctions';
 
 import styles from './SeriesOneHeader.module.css';
 
@@ -29,10 +30,9 @@ export default function SeriesOneHeader({
   name,
   mission,
   stages,
-  updateStageResults,
   showEditIcon,
   organizerId,
-  updateGeneralClassification,
+  urlSlug,
 }) {
   const [isVisibleMenuControl, setIsVisibleMenuControl] = useState(false);
   const { organizer, role } = useSelector((state) => state.checkAuth.value.user);
@@ -56,9 +56,8 @@ export default function SeriesOneHeader({
               <PopupMenuControlSeries
                 seriesId={seriesId}
                 stages={stages}
-                updateStageResults={updateStageResults}
-                updateGeneralClassification={updateGeneralClassification}
                 setIsVisibleMenuControl={setIsVisibleMenuControl}
+                urlSlug={urlSlug}
               />
             )}
           </>

@@ -56,12 +56,17 @@ export default function TourComponent({ series }) {
             />
           </nav>
 
-          <TableGCTour results={generalClassification} stages={seriesPublicOne.orderedStages} />
+          {generalClassification.length > 0 && (
+            <TableGCTour
+              results={generalClassification}
+              stages={seriesPublicOne.orderedStages}
+            />
+          )}
         </>
       )}
 
       <Outlet />
-      <JSONBlock json={generalClassification} />
+      {/* <JSONBlock json={generalClassification} /> */}
     </div>
   );
 }
