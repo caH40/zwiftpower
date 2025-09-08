@@ -20,6 +20,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: var(--color-orange-main);
   border: 2px solid black;
   font-size: 30px;
 }

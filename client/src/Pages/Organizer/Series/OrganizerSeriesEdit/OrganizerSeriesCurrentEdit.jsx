@@ -16,7 +16,7 @@ import UnderConstruction from '../../../../components/UnderConstruction/UnderCon
 import styles from './OrganizerSeriesCurrentEdit.module.css';
 
 /**
- * Страница редактирования Серии заездов.
+ * Страница (лейаут) редактирования Серии заездов.
  */
 export default function OrganizerSeriesCurrentEdit() {
   const { name } = useSelector((state) => state.menuOrganizerSeries.value);
@@ -38,28 +38,29 @@ export default function OrganizerSeriesCurrentEdit() {
     };
   }, [dispatch, seriesId, trigger]);
 
+  const content = seriesOne?._id && {
+    Главная: (
+      <FormOrganizerSeriesCreate
+        isCreating={false}
+        seriesOne={seriesOne}
+        setTrigger={setTrigger}
+      />
+    ),
+    Этапы: (
+      <StagesSeriesEdit
+        setTrigger={setTrigger}
+        stages={seriesOne.stages}
+        seriesId={seriesOne._id}
+      />
+    ),
+  };
   return (
     <section className={styles.wrapper}>
       <div className={styles.spacer__menu}>
         <MenuOrganizerSeries />
       </div>
 
-      {name === 'Главная' ? (
-        seriesOne?._id && (
-          <FormOrganizerSeriesCreate
-            isCreating={false}
-            seriesOne={seriesOne}
-            // loading={statusFetchEvents === 'loading'}
-            setTrigger={setTrigger}
-          />
-        )
-      ) : (
-        <StagesSeriesEdit
-          setTrigger={setTrigger}
-          stages={seriesOne.stages}
-          seriesId={seriesOne._id}
-        />
-      )}
+      {seriesOne?._id && content[name]}
     </section>
   );
 }

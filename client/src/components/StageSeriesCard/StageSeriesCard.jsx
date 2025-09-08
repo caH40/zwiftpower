@@ -3,6 +3,7 @@ import IconConnection from '../icons/IconConnection';
 import IconEdit from '../icons/IconEdit';
 import IconDelete from '../icons/IconDelete';
 import CheckboxSimple from '../UI/Checkbox/CheckboxSimple';
+import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './StageSeriesCard.module.css';
 
@@ -45,7 +46,9 @@ export default function StageSeriesCard({
     <section className={styles.wrapper}>
       <div className={styles.wrapper__top}>
         {/* Номер этапа */}
-        <div className={styles.order}>{order}</div>
+        <MyTooltip tooltip="Номер этапа" placement={'top'}>
+          <div className={styles.order}>{order}</div>
+        </MyTooltip>
 
         {/* Название Эвента и дата старта */}
         <div className={styles.titles}>
