@@ -100,15 +100,23 @@ export async function getEventsForSeriesService({
 }: {
   organizerId?: Types.ObjectId;
 }): Promise<TResponseService<TEventsForSeriesDto[]>> {
+  const twoMonthsAgo = new Date();
+  twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+  const twoMonthsAgoISO = twoMonthsAgo.toISOString();
+
   // Получение Эвентов, которые не включены в Серии.
   const eventsDB = await ZwiftEvent.find(
-    { organizerId, $or: [{ seriesId: null }, { seriesId: { $exists: false } }] },
+    {
+      organizerId,
+      $or: [{ seriesId: null }, { seriesId: { $exists: false } }],
+      eventStart: { $gte: twoMonthsAgoISO },
+    },
     { name: true, eventStart: true }
   ).lean<TEventsForSeriesResponseDB[]>();
 
-  // Сортировка, сначала те Эвенты, которые стартуют раньше.
+  // Сортировка, сначала те Эвенты, которые стартуют позже.
   eventsDB.sort((a, b) => {
-    return new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime();
+    return new Date(b.eventStart).getTime() - new Date(a.eventStart).getTime();
   });
 
   return {
