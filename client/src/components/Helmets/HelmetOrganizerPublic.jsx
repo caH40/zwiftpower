@@ -5,10 +5,18 @@ import { serverFront } from '../../config/environment';
 /**
  * Формирование Мета тегов для страницы "Организатор заездов"
  */
-export const HelmetOrganizerPublic = ({ urlSlug, name, imageSrc }) => {
-  const title = `${name} – Гонки и серии заездов Zwift 🚴`;
-  const canonical = `${serverFront}/organizers/${urlSlug}`;
-  const description = `${name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
+export const HelmetOrganizerPublic = ({ urlSlug, name, imageSrc, pageType = 'schedule' }) => {
+  const baseTitle = `${name} в Zwift 🚴`;
+  const baseDescription = `${name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
+
+  const pageTextMap = {
+    schedule: 'Расписание заездов',
+    series: 'Серии и туры',
+  };
+
+  const title = `${pageTextMap[pageType]} от ${baseTitle}`;
+  const description = `${baseDescription} 📅 ${pageTextMap[pageType]} доступны на этой странице.`;
+  const canonical = `${serverFront}/organizers/${urlSlug}/${pageType}`;
   const image = imageSrc;
   const recommendationsTag = 'organizer';
 

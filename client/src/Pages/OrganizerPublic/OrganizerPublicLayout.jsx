@@ -42,12 +42,6 @@ export default function OrganizerPublicLayout() {
   // useAd(adNumbers);
   return (
     <>
-      <HelmetOrganizerPublic
-        urlSlug={organizer.urlSlug}
-        name={organizer.name}
-        imageSrc={organizer.posterUrls?.medium}
-      />
-
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
           // Основная секция страницы

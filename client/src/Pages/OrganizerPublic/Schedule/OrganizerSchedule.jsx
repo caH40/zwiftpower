@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import useTitle from '../../../hook/useTitle';
 import CardRacePreview from '../../../components/CardRacePreview/CardRacePreview';
 import { fetchEvents, resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
+import { HelmetOrganizerPublic } from '../../../components/Helmets/HelmetOrganizerPublic';
 
 import styles from './OrganizerSchedule.module.css';
 
@@ -38,6 +39,13 @@ export default function OrganizerSchedule() {
 
   return (
     <section className={styles.wrapper}>
+      <HelmetOrganizerPublic
+        urlSlug={organizer.urlSlug}
+        name={organizer.name}
+        imageSrc={organizer.posterUrls?.large}
+        pageType="schedule"
+      />
+
       {!!eventsSchedule.length &&
         statusFetchEvents === 'resolved' &&
         eventsSchedule.map((eventPreview) => {

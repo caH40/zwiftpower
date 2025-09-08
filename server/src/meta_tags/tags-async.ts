@@ -193,6 +193,7 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
     // Парсинг url.
     const parts = url.split('/');
     const urlSlug = parts.at(-2);
+    const pageType = (parts.at(-1) as 'series' | 'schedule') || 'series';
 
     if (typeof urlSlug !== 'string') {
       return getMetaOtherPages(url);
@@ -215,8 +216,15 @@ export const getOrganizerPublicMeta = async (url: string): Promise<MetaTags> => 
     const posterUrls = createUrlsToFileCloud(organizerDB.posterFileInfo);
 
     // Формирование описания. По умолчанию описание главной страницы профиля с результатами заездов.
-    const descriptionRaw = `${organizerDB.name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
-    const titleRaw = `${organizerDB.name} – Гонки и серии заездов Zwift 🚴`;
+    const baseTitle = `${name} в Zwift 🚴`;
+    const baseDescription = `${name} организует виртуальные гонки в Zwift: одиночные заезды, командные гонки, TT, коферайды и туры. Присоединяйтесь к заездам и улучшайте результаты!`;
+    const pageTextMap = {
+      schedule: 'Расписание заездов',
+      series: 'Серии и туры',
+    } as const;
+
+    const descriptionRaw = `${baseDescription} 📅 ${pageTextMap[pageType]} доступны на этой странице.`;
+    const titleRaw = `${pageTextMap[pageType]} от ${baseTitle}`;
 
     // Запрещены двойные кавычки в мета тегах.
     const description = descriptionRaw.replace(/"/g, '');

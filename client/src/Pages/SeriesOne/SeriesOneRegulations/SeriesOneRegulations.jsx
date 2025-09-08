@@ -22,7 +22,7 @@ export default function SeriesOneRegulations() {
         <HelmetSeriesRegulations
           urlSlug={seriesPublicOne.urlSlug}
           name={seriesPublicOne.name}
-          imageSrc={seriesPublicOne.posterUrls?.medium}
+          imageSrc={seriesPublicOne.posterUrls?.large}
           dateStart={getTimerLocal(seriesPublicOne.dateStart, 'DDMMYY')}
           dateEnd={getTimerLocal(seriesPublicOne.dateEnd, 'DDMMYY')}
           organizer={seriesPublicOne.organizer.name}

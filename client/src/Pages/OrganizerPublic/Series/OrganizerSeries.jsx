@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { fetchGetSeries } from '../../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../../redux/features/api/series/seriesPublicSlice';
+import { HelmetOrganizerPublic } from '../../../components/Helmets/HelmetOrganizerPublic';
 import useTitle from '../../../hook/useTitle';
 import SeriesSection from '../../../components/SeriesSection/SeriesSection';
 
@@ -29,6 +30,13 @@ export default function OrganizerSeries() {
   }, [dispatch]);
   return (
     <section className={styles.wrapper_}>
+      <HelmetOrganizerPublic
+        urlSlug={organizer.urlSlug}
+        name={organizer.name}
+        imageSrc={organizer.posterUrls?.large}
+        pageType="series"
+      />
+
       <SeriesSection title="Текущие серии" series={seriesPublic?.ongoing || []} />
       <SeriesSection title="Анонсированные серии" series={seriesPublic?.upcoming || []} />
       <SeriesSection title="Завершенные серии" series={seriesPublic?.completed || []} />
