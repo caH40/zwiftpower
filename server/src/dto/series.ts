@@ -51,8 +51,8 @@ export function organizerSeriesOneDto(
   series: TOrganizerSeriesOneResponseDB
 ): TOrganizerSeriesOneDto {
   const _id = String(series._id);
-  const dateStart = series.dateStart.toISOString().split('T')[0];
-  const dateEnd = series.dateEnd.toISOString().split('T')[0];
+  const dateStart = series.dateStart.toISOString();
+  const dateEnd = series.dateEnd.toISOString();
 
   const stages = series.stages
     .filter((elm) => elm.event)

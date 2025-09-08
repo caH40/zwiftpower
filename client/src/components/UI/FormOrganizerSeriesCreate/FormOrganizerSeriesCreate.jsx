@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -65,12 +65,14 @@ export default function FormOrganizerSeriesCreate({
     reset,
     control,
     getValues,
+    watch,
+    trigger,
     formState: { errors },
   } = useForm({
     mode: 'all',
     values: {
-      dateStart: isCreating ? dateNow : dateStart,
-      dateEnd: isCreating ? dateNow : dateEnd,
+      dateStart: isCreating ? dateNow : getDateTimeStart(dateStart).date,
+      dateEnd: isCreating ? dateNow : getDateTimeStart(dateEnd).date,
       name,
       description,
       mission,
@@ -83,6 +85,24 @@ export default function FormOrganizerSeriesCreate({
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
+
+  // Следим за изменениями обеих дат.
+  const watchDateStart = watch('dateStart');
+  const watchDateEnd = watch('dateEnd');
+
+  // Эффект для перепроверки даты окончания при изменении даты начала
+  useEffect(() => {
+    if (watchDateStart) {
+      trigger('dateEnd'); // Принудительно валидируем dateEnd
+    }
+  }, [watchDateStart, trigger]);
+
+  // Эффект для перепроверки даты начала при изменении даты окончания
+  useEffect(() => {
+    if (watchDateEnd) {
+      trigger('dateStart'); // Принудительно валидируем dateStart
+    }
+  }, [watchDateEnd, trigger]);
 
   // Обработчик отправки формы на сервер.
   const onSubmit = async (formData) => {
@@ -201,7 +221,11 @@ export default function FormOrganizerSeriesCreate({
               },
             })}
             validationText={errors.dateStart?.message || ''}
-            input={{ id: 'dateStart-FormOrganizerSeriesCreate', type: 'date' }}
+            input={{
+              id: 'dateStart-FormOrganizerSeriesCreate',
+              type: 'date',
+              max: watchDateEnd,
+            }}
             loading={loading || loadingForm}
           />
         </div>
@@ -227,7 +251,11 @@ export default function FormOrganizerSeriesCreate({
               },
             })}
             validationText={errors.dateEnd?.message || ''}
-            input={{ id: 'dateEnd-FormOrganizerSeriesCreate', type: 'date' }}
+            input={{
+              id: 'dateEnd-FormOrganizerSeriesCreate',
+              type: 'date',
+              min: watchDateStart,
+            }}
             loading={loading || loadingForm}
           />
         </div>
@@ -366,7 +394,9 @@ export default function FormOrganizerSeriesCreate({
       </div>
 
       <div className={styles.box__btn}>
-        <Button disabled={loading || loadingForm}>Отправить</Button>
+        <Button disabled={loading || loadingForm || Object.keys(errors).length > 0}>
+          Отправить
+        </Button>
       </div>
     </form>
   );
