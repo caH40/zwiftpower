@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { getAccessToken } from '../token.js';
 import { zwiftAPI } from '../../../config/environment.js';
-import { handleAndLogError } from '../../../errors/error.js';
+import { handleAndLogError, handleInvalidZwiftIdError } from '../../../errors/error.js';
 
 //type
 import { ParamsGetRequestToZwift } from '../../../types/types.interface.js';
@@ -39,6 +39,7 @@ export async function getRequest({
         Authorization: 'Bearer ' + tokenCurrent,
       },
     }).catch((error) => {
+      handleInvalidZwiftIdError(error);
       handleAndLogError(error);
     });
 

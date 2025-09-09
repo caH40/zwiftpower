@@ -6,6 +6,7 @@ import { logError } from '../logger/logger.js';
 import { ignoreError } from './ignore.js';
 import { parseError } from './parse.js';
 import { logErrorToDB } from '../logger/logger-db.js';
+import { addInvalidZwiftId } from '../service/zwift/invalid_zwift_id/add.js';
 
 /**
  * Функция выбирает способ и необходимость логирования ошибок.
@@ -27,6 +28,34 @@ export const handleAndLogError = (error: unknown): void => {
     }
   } catch (error) {
     // при ошибке выполнения текущего модуля сохранять в файл
+    const errorParsed = parseError(error);
+    logError(errorParsed);
+    console.log(error); // eslint-disable-line
+  }
+};
+
+/**
+ * Обработчик ошибки из ZwiftAPI если она Profile not found.
+ * Обработчик для функции getRequest запросов на ZwiftAPI.
+ */
+export const handleInvalidZwiftIdError = async (error: unknown): Promise<void> => {
+  try {
+    if (!(error instanceof AxiosError)) {
+      return;
+    }
+
+    const responseKey: string | undefined = error.response?.data?.key;
+
+    if (responseKey && responseKey.includes('Profile not found')) {
+      const match = responseKey.match(/\d+$/);
+      const zwiftId = match ? Number(match[0]) : NaN;
+
+      if (!isNaN(zwiftId)) {
+        await addInvalidZwiftId(zwiftId);
+      }
+    }
+  } catch (error) {
+    // при ошибке выполнения текущего модуля сохранять в файл.
     const errorParsed = parseError(error);
     logError(errorParsed);
     console.log(error); // eslint-disable-line

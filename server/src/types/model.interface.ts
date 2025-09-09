@@ -891,3 +891,15 @@ export type TSiteServicePrice = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+/**
+ * Удаленный (заблокированный) zwiftId.
+ * Для исключение запросов данных с Zwift API для этих id.
+ */
+export type TInvalidZwiftIdDocument = TInvalidZwiftId & Document;
+export type TInvalidZwiftId = {
+  zwiftId: number; // Сам id, который вернул ошибку.
+  reason?: string; // Опционально: причина (например "deleted", "banned").
+  lastCheckedAt: Date; // Когда в последний раз проверяли.
+  createdAt: Date; // Когда впервые поймали ошибку.
+};
