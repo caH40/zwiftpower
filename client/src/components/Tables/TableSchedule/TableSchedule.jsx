@@ -9,7 +9,6 @@ import { getToday } from '../../../utils/date-local';
 import { getDuration, getLaps, map, routeName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
-// import TdRaceType from '../Td/TdRaceType';
 import TdSeries from '../Td/TdSeries';
 import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleList';
 import RulesBox from '../../RulesBox/RulesBox';
@@ -49,7 +48,11 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
           return (
             <tr className={cx('hover')} key={event._id}>
               <td className={cx('td__nowrap')}>{getToday(event.eventStart)}</td>
-              <TdSeries seriesName={event.seriesId?.name} />
+
+              <TdSeries
+                seriesName={event.seriesId?.name}
+                logoFileInfo={event.seriesId?.logoFileInfo}
+              />
 
               <td className={cx('td__name')}>
                 <Link className={cx('link')} to={String(event.id)}>

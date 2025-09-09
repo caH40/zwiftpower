@@ -23,6 +23,10 @@ export function createUrlsToFileCloud(
 
   const { baseName, originalExtension, optimizedExtension, availableSizes } = metadata;
 
+  if (!availableSizes) {
+    return;
+  }
+
   // Инициализация облачного сервиса для получения имени бакета и домена.
   const cloud = new Cloud({ cloudName: 'vk' });
   const bucketName = cloud.bucketName;

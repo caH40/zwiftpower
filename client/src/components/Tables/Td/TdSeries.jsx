@@ -4,10 +4,24 @@ import IconSummer from '../../icons/Seasons/IconSummer';
 import IconWinter from '../../icons/Seasons/IconWinter';
 import IconSpring from '../../icons/Seasons/IconSpring';
 import IconAutumn from '../../icons/Seasons/IconAutumn';
+import { AdaptiveImage } from '../../AdaptiveImage/AdaptiveImage';
 
 const seasons = ['winter', 'spring', 'summer', 'autumn'];
 
-function TdSeries({ seriesName = '' }) {
+function TdSeries({ logoFileInfo, seriesName = '' }) {
+  if (logoFileInfo) {
+    return (
+      <td>
+        <AdaptiveImage
+          height={32}
+          width={32}
+          sources={logoFileInfo}
+          fallbackSrc={'/images/transparent.png'}
+        />
+      </td>
+    );
+  }
+
   const seasonCurrent = seriesName
     .split(' ')
     .find((elm) => seasons.includes(elm.toLowerCase()));

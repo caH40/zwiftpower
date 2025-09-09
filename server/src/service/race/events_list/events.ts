@@ -30,7 +30,7 @@ export async function getEventsService({
 
   const eventsDB = await ZwiftEvent.find(query)
     .populate('eventSubgroups')
-    .populate('seriesId')
+    .populate({ path: 'seriesId', select: ['logoFileInfo', 'name', 'urlSlug'] })
     .populate({ path: 'organizerId', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
     .lean<EventWithSubgroupAndSeries[]>();
 

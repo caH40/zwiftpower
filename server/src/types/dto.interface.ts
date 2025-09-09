@@ -41,10 +41,13 @@ export type TOrganizerMainDto = {
 /**
  * Данные Эвента с подгруппами для расписания для клиента.
  */
-export type TEventWithSubgroupDto = Omit<EventWithSubgroup, 'organizerId'> & {
-  organizerId?: string;
+export type TEventWithSubgroupDto = Omit<EventWithSubgroup, 'organizerId' | 'seriesId'> & {
+  seriesId: Pick<TSeries, '_id' | 'name' | 'urlSlug'> & {
+    logoFileInfo?: Record<string, string>;
+  };
+  organizerId: string;
   logoFileInfo?: Record<string, string>;
-  [key: string]: unknown;
+  // [key: string]: unknown;
 };
 
 /**

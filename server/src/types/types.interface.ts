@@ -3,7 +3,6 @@ import {
   CriticalPower,
   LogsAdminSchema,
   ProfileDataInResult,
-  SeriesSchema,
   SignedRidersSchema,
   TClubZwift,
   TDeviceInfo,
@@ -12,6 +11,7 @@ import {
   TLocationInfo,
   TMetrics,
   TOrganizer,
+  TSeries,
   TSeriesClassification,
   TSeriesStage,
   TStageResult,
@@ -148,7 +148,7 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
  * Данные Event с подгруппами и параметрами Series
  */
 export type EventWithSubgroupAndSeries = Omit<EventWithSubgroup, 'seriesId'> & {
-  seriesId: SeriesSchema;
+  seriesId: Pick<TSeries, '_id' | 'logoFileInfo' | 'name' | 'urlSlug'>;
   organizerId: {
     logoFileInfo?: TFileMetadataForCloud;
     _id: Types.ObjectId;
