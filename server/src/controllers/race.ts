@@ -12,13 +12,12 @@ import { putResultsService } from '../service/race/results-put.js';
 import { getResultsService } from '../service/race/results.js';
 import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { checkModeratorClub } from '../service/moderator-club.js';
+import { eventParamsDto } from '../dto/eventParams.dto.js';
+import { getNextWeekRacesService } from '../service/race/events_list/next-week.js';
+import { SeriesController } from './series.js';
 
 // types
 import { GetEvents, PostEvent } from '../types/http.interface.js';
-import { eventParamsDto } from '../dto/eventParams.dto.js';
-import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
-import { getNextWeekRacesService } from '../service/race/events_list/next-week.js';
-import { SeriesController } from './series.js';
 
 /**
  * Получение Event (описание) и зарегистрировавшихся райдеров
@@ -26,7 +25,7 @@ import { SeriesController } from './series.js';
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const event: EventSignedRidersFetch = await getEventService(eventId);
+    const event = await getEventService(eventId);
 
     res.status(200).json({ event });
   } catch (error) {

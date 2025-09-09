@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 /**
  * Компонент для отображения адаптивного изображения.
  * Использует разные размеры изображений в зависимости от устройства пользователя.
@@ -6,40 +8,57 @@
  * @param {Object} [props.sources] - Объект с ссылками на разные размеры изображения (может быть undefined).
  * @param {string} [props.className] - Дополнительный CSS-класс.
  */
-export function AdaptiveImage({ sources, isCard, height, width, ...propsImg }) {
-  // Проверка наличия sources
-  if (!sources) {
-    return <img {...propsImg} />;
+export function AdaptiveImage({
+  sources,
+  isCard,
+  height,
+  width,
+  fallbackSrc = '/images/background-road-blur.jpg',
+  ...propsImg
+}) {
+  const [imgSrc, setImgSrc] = useState(sources?.original || fallbackSrc);
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = () => {
+    if (!hasError) {
+      setImgSrc(fallbackSrc);
+      setHasError(true);
+    }
+  };
+
+  // Если sources нет или произошла ошибка — показываем дефолтное изображение.
+  if (!sources || hasError) {
+    return <img src={fallbackSrc} {...propsImg} height={height} width={width} />;
   }
 
   return isCard ? (
-    // Требуется изображение для карточки с минимальными размерами
     <picture>
       <img
-        src={sources.small || sources?.original}
+        src={sources.small || sources.original || fallbackSrc}
         {...propsImg}
         height={height}
         width={width}
+        onError={handleError}
+        alt={propsImg.alt || ''}
       />
     </picture>
   ) : (
     <picture>
-      {/* Источник для изображений с размером для экранов 2K и выше */}
-      {sources?.xLarge && <source srcSet={sources.xLarge} media="(min-width: 2000px)" />}
-
-      {/* Источник для изображений большого размера (для FHD экранов и выше) */}
-      {sources?.large && <source srcSet={sources.large} media="(min-width: 1300px)" />}
-
-      {/* Источник для изображений среднего размера (для планшетов и ноутбуков) */}
-      {sources?.medium && (
+      {sources.xLarge && <source srcSet={sources.xLarge} media="(min-width: 2000px)" />}
+      {sources.large && <source srcSet={sources.large} media="(min-width: 1300px)" />}
+      {sources.medium && (
         <source srcSet={sources.medium} media="(min-width: 768px) and (max-width: 1299px)" />
       )}
+      {sources.small && <source srcSet={sources.small} media="(max-width: 767px)" />}
 
-      {/* Источник для изображений маленького размера (для мобильных устройств) */}
-      {sources?.small && <source srcSet={sources.small} media="(max-width: 767px)" />}
-
-      {/* Фолбек для случаев, если <picture> не поддерживается */}
-      <img src={sources?.original} {...propsImg} height={height} width={width} />
+      <img
+        src={imgSrc}
+        {...propsImg}
+        height={height}
+        width={width}
+        onError={handleError}
+        alt={propsImg.alt || ''}
+      />
     </picture>
   );
 }

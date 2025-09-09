@@ -18,6 +18,7 @@ export async function getEventService(eventId: string) {
     id: eventId,
   })
     .populate('eventSubgroups')
+    .populate({ path: 'seriesId', select: ['name', 'urlSlug'] })
     .lean<EventWithSignedRiders>();
 
   if (!eventDataDB) {

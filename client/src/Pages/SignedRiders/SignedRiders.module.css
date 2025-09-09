@@ -16,3 +16,10 @@
 .wrapper__wide {
   overflow-x: auto;
 }
+.wrapper__series {
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}

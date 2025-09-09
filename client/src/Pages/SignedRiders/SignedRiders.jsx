@@ -87,7 +87,7 @@ function SignedRiders() {
 
             {event?.seriesId?.urlSlug && (
               <div className={styles.wrapper__series}>
-                <AdSeries urlSlug={event.seriesId?.urlSlug} pageType="results" />
+                <AdSeries urlSlug={event.seriesId?.urlSlug} pageType="schedule" />
               </div>
             )}
 

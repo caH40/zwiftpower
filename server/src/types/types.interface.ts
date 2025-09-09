@@ -182,9 +182,10 @@ export interface SignedRidersPowerCurves extends SignedRidersSchema {
 /**
  * Данные Event с зарегистрированными райдерами
  */
-export interface EventWithSignedRiders extends EventWithSubgroup {
+export type EventWithSignedRiders = Omit<EventWithSubgroup, 'seriesId'> & {
+  seriesId: { _id: Types.ObjectId; name: string; urlSlug: string };
   signedRiders: SignedRidersPowerCurves[];
-}
+};
 /**
  * Параметры для функции eventsListDto
  */
