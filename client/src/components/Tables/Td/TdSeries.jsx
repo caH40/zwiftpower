@@ -16,8 +16,8 @@ function TdSeries({ logoFileInfo, seriesName = '' }) {
         <MyTooltip tooltip={seriesName}>
           <div>
             <AdaptiveImage
-              height={32}
-              width={32}
+              height={28}
+              width={28}
               sources={logoFileInfo}
               fallbackSrc={'/images/transparent.png'}
               alt={seriesName}
