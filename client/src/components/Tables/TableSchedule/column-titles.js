@@ -1,6 +1,6 @@
 export const scheduleListColumnsFull = [
   { name: 'Дата', id: 0 },
-  { name: '', id: 1 },
+  { name: 'Серия заездов', id: 1 },
   { name: 'Название', id: 2 },
   { name: 'Организатор', id: 3 },
   // { name: 'Формат заезда', id: 4 },

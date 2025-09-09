@@ -32,6 +32,7 @@ import IconNP from '../../icons/IconNP';
 import IconGapStart from '../../icons/IconGapStart';
 import IconRules from '../../icons/IconRules';
 import IconScoreBased from '../../icons/IconScoreBased';
+import IconSeriesWorld from '../../icons/IconSeriesWorld';
 
 const ColumnName = ({ columnName, tooltip }) => {
   /* eslint-disable */
@@ -149,6 +150,9 @@ const ColumnName = ({ columnName, tooltip }) => {
 
     case 'Рейтинговые очки':
       return <IconScoreBased tooltip={tooltip || columnName} />;
+
+    case 'Серия заездов':
+      return <IconSeriesWorld tooltip={tooltip || columnName} />;
 
     default:
       return columnName;

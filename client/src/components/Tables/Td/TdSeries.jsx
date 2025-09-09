@@ -5,6 +5,7 @@ import IconWinter from '../../icons/Seasons/IconWinter';
 import IconSpring from '../../icons/Seasons/IconSpring';
 import IconAutumn from '../../icons/Seasons/IconAutumn';
 import { AdaptiveImage } from '../../AdaptiveImage/AdaptiveImage';
+import MyTooltip from '../../../HOC/MyTooltip';
 
 const seasons = ['winter', 'spring', 'summer', 'autumn'];
 
@@ -12,12 +13,17 @@ function TdSeries({ logoFileInfo, seriesName = '' }) {
   if (logoFileInfo) {
     return (
       <td>
-        <AdaptiveImage
-          height={32}
-          width={32}
-          sources={logoFileInfo}
-          fallbackSrc={'/images/transparent.png'}
-        />
+        <MyTooltip tooltip={seriesName}>
+          <div>
+            <AdaptiveImage
+              height={32}
+              width={32}
+              sources={logoFileInfo}
+              fallbackSrc={'/images/transparent.png'}
+              alt={seriesName}
+            />
+          </div>
+        </MyTooltip>
       </td>
     );
   }
