@@ -23,6 +23,7 @@ import {
 import { handleAndLogError } from '../../errors/error.js';
 import { Cloud } from '../cloud.js';
 import { TParamsSeriesServiceAddStage } from '../../types/types.interface.js';
+import { getDateSuffix } from '../../utils/date-local.js';
 
 export class SeriesService {
   constructor() {}
@@ -145,7 +146,10 @@ export class SeriesService {
     const { shortName } = await this.checkOrganizer(organizerId);
 
     // Создание уникального названия для url.
-    const urlSlug = slugify(`${shortName} -${name}`, { lower: true, strict: true });
+    const urlSlug = slugify(`${shortName} -${name}-${getDateSuffix()}`, {
+      lower: true,
+      strict: true,
+    });
 
     // Проверка на уникальность названия Серии у данного Организатора.
     await this.checkUrlSlug({ urlSlug, name });

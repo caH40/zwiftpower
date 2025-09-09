@@ -55,3 +55,12 @@ export function getTimerLocal(
       return formatterDDMMYYYY.format(dateForFormat);
   }
 }
+
+/**
+ * Получение даты в виде только цифр.
+ */
+export function getDateSuffix(date = new Date()): string {
+  return date
+    .toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    .replace(/\./g, '');
+}
