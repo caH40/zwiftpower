@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // import { useResize } from '../../hook/use-resize';
 // import AdContainer from '../../components/AdContainer/AdContainer';
@@ -16,8 +16,10 @@ import {
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 // import { useAd } from '../../hook/useAd';
 import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
+import SignedRidersLinks from '../../components/SignedRidersLinks/SignedRidersLinks';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './SignedRiders.module.css';
 
@@ -76,49 +78,19 @@ function SignedRiders() {
           <>
             <DescriptionEventZwift event={event} forSchedule={true} />
 
-            <a
-              className={styles.button__link}
-              href={`zwift://event/${event.id}`}
-              onClick={(e) => {
-                e.preventDefault();
+            <SignedRidersLinks
+              eventId={event.id}
+              clubName={event.clubName}
+              microserviceExternalResourceId={event.microserviceExternalResourceId}
+              microserviceEventVisibility={event.microserviceEventVisibility}
+            />
 
-                const timeout = setTimeout(() => {
-                  window.location.href = `https://www.zwift.com/eu/events/view/${event.id}`;
-                }, 1000); // 1 секунда на открытие приложения
-
-                // Попытка открыть приложение
-                window.location.href = `zwift://event/${event.id}`;
-
-                // Очистка таймера, если вдруг сработал deep link
-                window.addEventListener('blur', () => {
-                  clearTimeout(timeout);
-                });
-              }}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <div>
-                <span className={styles.button__title}>Регистрация</span>
-                <span className={styles.button__additional}>
-                  {event.microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' &&
-                    `(только для участников клуба ${event.clubName})`}
-                </span>
+            {event?.seriesId?.urlSlug && (
+              <div className={styles.wrapper__series}>
+                <AdSeries urlSlug={event.seriesId?.urlSlug} pageType="results" />
               </div>
-            </a>
+            )}
 
-            {/* javascript:window.open('https://zwift.com/events/view/4913266','join_zwift_event');return false */}
-
-            <Link
-              className={styles.button__link}
-              to={`https://www.zwift.com/eu/clubs/${event.microserviceExternalResourceId}/join`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div>
-                <span className={styles.button__title}>Вступить в клуб</span>
-                <span className={styles.button__additional}>{event.clubName}</span>
-              </div>
-            </Link>
             <NavBarSignedRiders />
           </>
         )}
