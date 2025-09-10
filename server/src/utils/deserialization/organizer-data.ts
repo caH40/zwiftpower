@@ -8,6 +8,7 @@ export const OrganizerDataZSchema = z
     isPublished: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
+        // Функции уточнения никогда не должны генерировать исключения. Вместо этого они должны возвращать ложное значение, сигнализирующее о сбое. Генерируемые исключения не перехватываются Zod.
         message: 'isPublished должно быть строкой "true" или "false".',
       })
       .transform((val) => val === 'true') // Преобразуем строку в булево значение

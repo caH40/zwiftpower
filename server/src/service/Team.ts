@@ -5,6 +5,7 @@ import { TeamModel } from '../Model/Team.js';
 // types
 import { TTeam } from '../types/model.interface.js';
 import { TCreateTeamParams } from '../types/team.types.js';
+import { ImagesService } from './Images.js';
 
 export class TeamService {
   constructor() {}
@@ -34,7 +35,15 @@ export class TeamService {
   /**
    * Создание команды.
    */
-  async create(team: TCreateTeamParams): Promise<unknown> {
+  async create({
+    team,
+    logoFile,
+    posterFile,
+  }: {
+    team: TCreateTeamParams;
+    logoFile?: Express.Multer.File;
+    posterFile?: Express.Multer.File;
+  }): Promise<{ message: string }> {
     const isTeamNameExists = await this.isTeamNameExists(team.name);
 
     if (isTeamNameExists) {
@@ -43,7 +52,15 @@ export class TeamService {
 
     const urlSlug = this.createUrlSlug(team.name);
 
-    await TeamModel.create({ ...team, urlSlug });
+    // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
+    const { logoFileInfo, posterFileInfo } = await ImagesService.save({
+      name: team.name,
+      shortName: team.shortName,
+      logoFile,
+      posterFile,
+    });
+
+    await TeamModel.create({ ...team, logoFileInfo, posterFileInfo, urlSlug });
 
     return { message: 'Команда успешно создана.' };
   }

@@ -15,7 +15,6 @@ export type TTeamRole = (typeof TEAM_ROLES)[number];
 
 export type TCreateTeamParams = Pick<
   TTeam,
-  | 'creator'
   | 'contact'
   | 'country'
   | 'description'
@@ -26,5 +25,5 @@ export type TCreateTeamParams = Pick<
   | 'shortName'
   | 'telegram'
   | 'socialLinks'
-  | 'website'
+  | ('website' & { _id: string })
 >;

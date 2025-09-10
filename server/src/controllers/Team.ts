@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
 import { TeamService } from '../service/Team.js';
+import { TeamZSchema } from '../utils/deserialization/team.js';
 
 // types
 
@@ -57,25 +58,51 @@ export class TeamController {
     }
   };
 
-  // /**
-  //  * Создание команды.
-  //  * @param {Request} req - Запрос Express.
-  //  * @param {Response} res - Ответ Express.
-  //  * @returns {Promise<Response>} JSON-ответ с сериями.
-  //  */
-  // public post = async (req: Request, res: Response): Promise<Response | void> => {
-  //   try {
-  //     const userId = req.user?.id;
+  /**
+   * Создание команды.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public post = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
 
-  //     const team = req.body.team;
+      const team = req.body.team;
 
-  //     // Вызов сервиса.
-  //     const response = await this.teamService.create();
+      const result = TeamZSchema.safeParse(team);
 
-  //     // Возврат успешного ответа.
-  //     return res.status(200).json(response);
-  //   } catch (error) {
-  //     handleErrorInController(res, error);
-  //   }
-  // };
+      if (!result.success) {
+        return res.status(400).json({ errors: result.error.format() });
+      }
+
+      const parsedTeamData = result.data;
+
+      // Проверяем чтобы id авторизованного пользователя совпадала с id из формы создания команды.
+      if (userId !== parsedTeamData.creator) {
+        return res.status(403).json({
+          error: true,
+          code: 'FORBIDDEN',
+          message: 'У вас нет прав для создания этой команды',
+        });
+      }
+
+      // Получение файлов изображений, если они есть.
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const logoFile = files?.logoFile?.[0];
+      const posterFile = files?.posterFile?.[0];
+
+      // Вызов сервиса.
+      const response = await this.teamService.create({
+        team: parsedTeamData,
+        logoFile,
+        posterFile,
+      });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }
