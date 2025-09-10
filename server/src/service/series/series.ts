@@ -146,7 +146,7 @@ export class SeriesService {
     const { shortName } = await this.checkOrganizer(organizerId);
 
     // Создание уникального названия для url.
-    const urlSlug = slugify(`${shortName} -${name}-${getDateSuffix()}`, {
+    const urlSlug = slugify(`${shortName}-${name}-${getDateSuffix()}`, {
       lower: true,
       strict: true,
     });

@@ -17,15 +17,15 @@ const teamSchema = new Schema<TTeamDocument>(
       required: true,
       unique: true,
     },
-    name: { type: String, required: true, unique: true },
-    shortName: { type: String, required: true, unique: true },
-    urlSlug: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true, trim: true },
+    shortName: { type: String, required: true, unique: true, trim: true },
+    urlSlug: { type: String, required: true, unique: true, trim: true },
     logoFileInfo: { type: FileMetadataSchema },
     posterFileInfo: { type: FileMetadataSchema },
-    mission: { type: String },
-    description: { type: String },
+    mission: { type: String, trim: true },
+    description: { type: String, trim: true },
     telegram: { type: TelegramSchema },
-    website: { type: String },
+    website: { type: String, trim: true },
     contact: {
       email: { type: String },
       phone: { type: String },
@@ -48,5 +48,8 @@ const teamSchema = new Schema<TTeamDocument>(
   },
   { timestamps: true }
 );
+
+// Уникальный индекс для name без учёта регистра.
+teamSchema.index({ name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } });
 
 export const TeamModel = model<TTeamDocument>('Team', teamSchema);
