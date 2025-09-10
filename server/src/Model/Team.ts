@@ -1,25 +1,52 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Document, Schema, model } from 'mongoose';
 
-import { TeamSchema } from '../types/model.interface.js';
+import { SocialLinksSchema } from './Schema/SocialLinksSchema.js';
+import { TelegramSchema } from './Schema/TelegramSchema.js';
+import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
 
-const teamSchema = new Schema<TeamSchema>({
-  name: { type: String, unique: true },
-  riders: [
-    {
-      rider: { type: mongoose.Schema.Types.ObjectId, ref: 'Rider', required: true },
-      dateJoin: { type: Number, required: true },
-      dateLeave: Number,
-      _id: false,
+// types
+import { TTeam } from '../types/model.interface.js';
+
+export type TTeamDocument = TTeam & Document;
+
+const teamSchema = new Schema<TTeamDocument>(
+  {
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      unique: true,
     },
-  ],
-  description: String,
-  logoUrl: String,
-  logoBase64: String,
-  groupName: String,
-  link: String,
-  isAllowed: { type: Boolean, default: false },
-  requestRiders: [],
-  deleted: { isDeleted: { type: Boolean, default: false }, date: { type: Number } },
-});
+    name: { type: String, required: true, unique: true },
+    shortName: { type: String, required: true, unique: true },
+    urlSlug: { type: String, required: true, unique: true },
+    logoFileInfo: { type: FileMetadataSchema },
+    posterFileInfo: { type: FileMetadataSchema },
+    mission: { type: String },
+    description: { type: String },
+    telegram: { type: TelegramSchema },
+    website: { type: String },
+    contact: {
+      email: { type: String },
+      phone: { type: String },
+    },
+    country: { type: String },
+    socialLinks: { type: SocialLinksSchema },
+    pendingRiders: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        requestedAt: { type: Date, required: true, default: () => new Date() },
+      },
+    ],
+    bannedRiders: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        reason: { type: String },
+        bannedAt: { type: Date, required: true, default: () => new Date() },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-export const Team = model<TeamSchema>('Team', teamSchema);
+export const TeamModel = model<TTeamDocument>('Team', teamSchema);

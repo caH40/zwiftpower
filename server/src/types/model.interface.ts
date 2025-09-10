@@ -178,24 +178,7 @@ export type SeriesSchema = {
   hasTeams: boolean;
   isFinished: boolean;
 };
-//
-//
-export interface TeamSchema {
-  name: string;
-  riders: {
-    rider: Types.ObjectId;
-    dateJoin: number;
-    dateLeave: number;
-  }[];
-  description: string;
-  logoUrl: string;
-  logoBase64: string;
-  groupName: string;
-  link: string;
-  isAllowed: boolean;
-  requestRiders: [];
-  deleted: boolean;
-}
+
 //
 //
 export interface LogsAdminSchema {
@@ -946,8 +929,8 @@ export type TTeamRider = {
   _id: Types.ObjectId;
   team: Types.ObjectId; // Команда в которой состоит райдер.
   user: Types.ObjectId;
-  role: TTeamRole;
-  specialization: TTeamSpecialization;
+  role?: TTeamRole;
+  specialization?: TTeamSpecialization;
   createdAt: Date;
   updatedAt: Date;
 };

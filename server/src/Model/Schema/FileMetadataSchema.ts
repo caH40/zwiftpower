@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TFileMetadataForCloud } from '../types/model.interface';
+import { TFileMetadataForCloud } from '../../types/model.interface';
 
 export const FileMetadataSchema = new Schema<TFileMetadataForCloud>(
   {

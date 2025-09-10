@@ -1,44 +1,16 @@
 import mongoose, { Document, Schema, model } from 'mongoose';
 
-import { FileMetadataSchema } from './FileMetadataSchema.js';
+import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
+import { SocialLinksSchema } from './Schema/SocialLinksSchema.js';
+import { TelegramSchema } from './Schema/TelegramSchema.js';
+import { BotZwiftSchema } from './Schema/BotZwiftSchema.js';
 
 // types
-import {
-  TOrganizer,
-  TOrganizerBotZwift,
-  TSocialLinks,
-  TTelegram,
-} from '../types/model.interface.js';
+import { TOrganizer } from '../types/model.interface.js';
 
 /**
  *  Схема Организатора заезда, у организатора может быть несколько клубов
  */
-const BotZwiftSchema = new Schema<TOrganizerBotZwift>(
-  {
-    token: { type: String },
-    email: { type: String },
-    password: { type: String },
-  },
-  { _id: false }
-);
-const TelegramSchema = new Schema<TTelegram>(
-  {
-    group: { type: String },
-    channel: { type: String },
-  },
-  { _id: false }
-);
-const SocialLinksSchema = new Schema<TSocialLinks>(
-  {
-    vk: { type: String },
-    facebook: { type: String },
-    twitter: { type: String },
-    instagram: { type: String },
-    youtube: { type: String },
-  },
-  { _id: false }
-);
-
 const organizerSchema = new Schema<TOrganizer & Document>(
   {
     isPublished: { type: Boolean, default: false },

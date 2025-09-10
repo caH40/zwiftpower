@@ -9,7 +9,7 @@ import {
   TSeriesStage,
   TSeriesType,
 } from '../types/model.interface';
-import { FileMetadataSchema } from './FileMetadataSchema.js';
+import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
 
 export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   scoringAlgorithms: TScoringAlgorithm;
