@@ -51,6 +51,7 @@ import { siteServiceReducers } from './site-services';
 import { paymentReducers } from './payment';
 import { paymentNotificationsReducers } from './payment-notifications';
 import { siteServicePriceReducers } from './site-service-price';
+import { teamReducers } from './team';
 
 export default configureStore({
   reducer: {
@@ -103,5 +104,6 @@ export default configureStore({
     ...paymentReducers,
     ...paymentNotificationsReducers,
     ...siteServicePriceReducers,
+    ...teamReducers,
   },
 });

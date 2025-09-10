@@ -5,6 +5,7 @@ import {
   TSeries,
   TSiteServicePrice,
   TStageResult,
+  TTeam,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 import {
@@ -243,3 +244,12 @@ export type TSiteServicePriceDto = Omit<
   TSiteServicePrice,
   '_id' | 'createdAt' | 'updatedAt'
 > & { _id: string; createdAt: string; updatedAt: string };
+
+export type TTeamForListDto = Pick<
+  TTeam,
+  'name' | 'shortName' | 'urlSlug' | 'mission' | 'description'
+> & {
+  _id: string;
+  logoUrls?: Record<string, string>;
+  posterUrls?: Record<string, string>;
+};

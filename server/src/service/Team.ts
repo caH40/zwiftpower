@@ -6,6 +6,8 @@ import { TeamModel } from '../Model/Team.js';
 import { TTeam } from '../types/model.interface.js';
 import { TCreateTeamParams } from '../types/team.types.js';
 import { ImagesService } from './Images.js';
+import { TTeamForListDB } from '../types/mongodb-response.types.js';
+import { dtoTeamForList } from '../dto/teams.js';
 
 export class TeamService {
   constructor() {}
@@ -20,16 +22,20 @@ export class TeamService {
       throw new Error(`Не найдена запрашиваемая команда с urlSlug: "${urlSlug}"!`);
     }
 
-    return teamDB;
+    return { data: teamDB };
   }
 
   /**
    * Получение всех команд.
    */
   async getAll(): Promise<unknown> {
-    const teamsDB = await TeamModel.find().lean<TTeam[]>();
+    const teamsDB = await TeamModel.find({}, TeamService.ALL_TEAMS_FOR_LIST_PROJECTION).lean<
+      TTeamForListDB[]
+    >();
 
-    return teamsDB;
+    const teams = teamsDB.map((team) => dtoTeamForList(team));
+
+    return { data: teams, message: 'Список команд' };
   }
 
   /**
@@ -88,4 +94,14 @@ export class TeamService {
       strict: true,
     });
   }
+
+  private static ALL_TEAMS_FOR_LIST_PROJECTION = {
+    name: true,
+    shortName: true,
+    urlSlug: true,
+    mission: true,
+    description: true,
+    logoFileInfo: true,
+    posterFileInfo: true,
+  };
 }

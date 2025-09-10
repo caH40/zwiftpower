@@ -10,6 +10,7 @@ import {
   TSeriesClassification,
   TSeriesStage,
   TStageResult,
+  TTeam,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 
@@ -170,3 +171,15 @@ export type TStagesResultsForGC = Pick<
  * Генеральная классификация серии заездов.
  */
 export type TGeneralClassificationDB = TSeriesClassification;
+
+export type TTeamForListDB = Pick<
+  TTeam,
+  | '_id'
+  | 'name'
+  | 'shortName'
+  | 'urlSlug'
+  | 'mission'
+  | 'description'
+  | 'logoFileInfo'
+  | 'posterFileInfo'
+>;
