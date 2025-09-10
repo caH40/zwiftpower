@@ -10,6 +10,7 @@ import {
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
+import { TTeamRole, TTeamSpecialization } from './team.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -902,4 +903,51 @@ export type TInvalidZwiftId = {
   reason?: string; // Опционально: причина (например "deleted", "banned").
   lastCheckedAt: Date; // Когда в последний раз проверяли.
   createdAt: Date; // Когда впервые поймали ошибку.
+};
+
+/**
+ * Команда.
+ */
+export type TTeam = {
+  _id: Types.ObjectId;
+  creator: Types.ObjectId; // Создатель (владелец);
+  name: string; // Название.
+  shortName: string; // Короткое название.
+  urlSlug: string;
+  logoFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений лого.
+  posterFileInfo?: TFileMetadataForCloud; // Объект с URL с разными размерами изображений постера.
+  mission?: string; // Цель.
+  description?: string; // Описание.
+  telegram?: TTelegram;
+  website?: string;
+  contact?: {
+    email?: string;
+    phone?: string;
+  };
+  country?: string; // Страна организатора. RU, BY, KZ и т.д.
+  socialLinks?: TSocialLinks;
+  pendingRiders?: {
+    user: Types.ObjectId;
+    requestedAt: Date; // Дата подачи заявки.
+  }[];
+  bannedRiders?: {
+    user: Types.ObjectId;
+    reason?: string; // Причина блокировки.
+    bannedAt: Date; // Дата блокировки.
+  }[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+/**
+ * Член команды.
+ */
+export type TTeamRider = {
+  _id: Types.ObjectId;
+  team: Types.ObjectId; // Команда в которой состоит райдер.
+  user: Types.ObjectId;
+  role: TTeamRole;
+  specialization: TTeamSpecialization;
+  createdAt: Date;
+  updatedAt: Date;
 };

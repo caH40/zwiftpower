@@ -79,3 +79,39 @@ export const currency = new Map([
     },
   ],
 ]);
+
+/**
+ * Специализация райдера.
+ * - Climber: силен в горах, высокий W/kg на подъемах.
+ * - Sprinter: сильный на коротких разгонах, финишный спринтер.
+ * - Time Trialist: силен в индивидуальной гонке, поддерживает ровный темп.
+ * - All-Rounder: универсал, стабилен на всех типах трасс.
+ * - Puncheur: «взрывной» райдер, хорошо идет на коротких крутых подъемах.
+ */
+export const TEAM_SPECIALIZATIONS = [
+  'Climber',
+  'Sprinter',
+  'Time Trialist',
+  'All-Rounder',
+  'Puncheur',
+] as const;
+
+/**
+ * Роль райдера в команде.
+ * - Founder: создатель команды, владелец.
+ * - Captain: лидер команды, основной стратег на гонках.
+ * - Vice-Captain: сокопитан, помогает капитану в принятии решений.
+ * - Domestique: помощник команды, работает на лидеров.
+ * - Sprinter: специализация на спринтах (может совмещаться с ролью).
+ * - Climber: специализация на горах (может совмещаться с ролью).
+ * - All-Rounder: универсал, может закрывать разные роли.
+ */
+export const TEAM_ROLES = [
+  'Founder',
+  'Captain',
+  'Vice-Captain',
+  'Domestique',
+  'Sprinter',
+  'Climber',
+  'All-Rounder',
+] as const;
