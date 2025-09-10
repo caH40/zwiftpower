@@ -22,11 +22,12 @@ const SiteServices = lazy(() => import('./Pages/SiteServices/SiteServices'));
 
 import { sendMetrika } from './yandex/metrika.js';
 
-import './css/App.css';
 import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
 import { ModeratorClubRoute } from './Route/ModeratorClubRoute.jsx';
 import { LegalRoute } from './Route/Legal.jsx';
 import { OrganizersPublicRoute } from './Route/OrganizersPublic.jsx';
+import { TeamsRoute } from './Route/Teams.jsx';
+import './css/App.css';
 
 function App() {
   useFirstAuth();
@@ -62,6 +63,7 @@ function App() {
         {AuthRoute()}
         {LegalRoute()}
         {OrganizersPublicRoute()}
+        {TeamsRoute()}
       </Route>
     </Routes>
   );

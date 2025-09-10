@@ -1,12 +1,18 @@
+import cn from 'classnames';
+
+import { addClasses as cns } from '../../utils/additional-classes';
 import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconTeam({ isActive, squareSize = 24, tooltip, color = 'black' }) {
+function IconTeam({ isActive, squareSize = 24, addCls = ' ', tooltip, color = 'black' }) {
   const activeColorFill = isActive ? styles.active__fill : undefined;
   return (
     <MyTooltip tooltip={tooltip}>
-      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
+      <div
+        className={cn(styles.box, cns(styles, addCls))}
+        style={{ width: squareSize, height: squareSize }}
+      >
         <svg
           width="24"
           height="24"

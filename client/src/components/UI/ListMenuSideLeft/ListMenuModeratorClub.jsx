@@ -16,7 +16,13 @@ export default function ListMenuModeratorClub({ state }) {
   return (
     <ul className={styles.list}>
       {(isModerator || isModeratorClub) && (
-        <ItemMenuSideLeft to={'/zwift'} Icon={IconZwiftEdit} name={'Zwift'} state={state} />
+        <ItemMenuSideLeft
+          to={'/zwift'}
+          Icon={IconZwiftEdit}
+          name={'Zwift'}
+          state={state}
+          iconProps={{ color: '#CECECE' }}
+        />
       )}
 
       {user.organizer && (
