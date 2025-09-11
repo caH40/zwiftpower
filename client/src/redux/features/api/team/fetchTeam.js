@@ -21,3 +21,43 @@ export const fetchGetTeams = createAsyncThunk('teams/getAll', async (_, thunkAPI
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+/**
+ * Создание команды.
+ */
+export const fetchPostTeam = createAsyncThunk('teams/post', async ({ team }, thunkAPI) => {
+  try {
+    const response = await myAxios({
+      url: `${serverExpress}/api/teams`,
+      method: 'post',
+      data: team,
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+
+    return response.data;
+  } catch (error) {
+    const message = error.response.data.message || error.message;
+    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+/**
+ * Обновление данных команды.
+ */
+export const fetchPutTeam = createAsyncThunk('teams/put', async ({ team }, thunkAPI) => {
+  try {
+    const response = await myAxios({
+      url: `${serverExpress}/api/teams`,
+      method: 'put',
+      data: team,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    return response.data;
+  } catch (error) {
+    const message = error.response.data.message || error.message;
+    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+    return thunkAPI.rejectWithValue(message);
+  }
+});

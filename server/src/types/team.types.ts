@@ -25,5 +25,5 @@ export type TCreateTeamParams = Pick<
   | 'shortName'
   | 'telegram'
   | 'socialLinks'
-  | ('website' & { _id: string })
->;
+  | 'website'
+> & { creator: string };

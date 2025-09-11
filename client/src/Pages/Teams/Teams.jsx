@@ -7,7 +7,6 @@ import { shuffleArray } from '../../utils/shuffle';
 import { fetchGetTeams } from '../../redux/features/api/team/fetchTeam';
 import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
-import Button from '../../components/UI/Button/Button';
 import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
 
 import styles from './Teams.module.css';

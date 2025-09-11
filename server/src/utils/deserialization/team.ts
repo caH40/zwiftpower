@@ -1,6 +1,5 @@
 import { z } from 'zod';
-
-import { safeJsonParse } from './utils.js';
+import { preprocessCB } from './utils.js';
 
 export const ContactZSchema = z.object({
   email: z.string().email().optional(),
@@ -24,27 +23,14 @@ export const SocialLinksZSchema = z.object({
 });
 
 export const TeamZSchema = z.object({
-  creator: z.string().describe('_id пользователя, создающего команду'),
   name: z.string().min(2).describe('Название'),
   shortName: z.string().min(2).describe('Короткое название'),
   mission: z.string().optional().describe('Цель'),
   description: z.string().optional().describe('Описание'),
   country: z.string().optional().describe('Страна'),
   website: z.string().optional().describe('Вебсайт'),
-  telegram: z
-    .string()
-    .transform(safeJsonParse)
-    .pipe(TelegramZSchema.optional())
-    .describe('Telegram-данные'),
-  contact: z
-    .string()
-    .transform(safeJsonParse)
-    .pipe(ContactZSchema.optional())
-    .describe('Контакты email, phone'),
 
-  socialLinks: z
-    .string()
-    .transform(safeJsonParse)
-    .pipe(SocialLinksZSchema.optional())
-    .describe('Соц.сети'),
+  telegram: z.preprocess(preprocessCB, TelegramZSchema.optional()),
+  contact: z.preprocess(preprocessCB, ContactZSchema.optional()),
+  socialLinks: z.preprocess(preprocessCB, SocialLinksZSchema.optional()),
 });

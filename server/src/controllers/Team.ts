@@ -68,24 +68,17 @@ export class TeamController {
     try {
       const userId = req.user?.id;
 
-      const team = req.body.team;
+      if (!userId) {
+        return res.status(400).json({ message: 'Не получен userId!' });
+      }
 
-      const result = TeamZSchema.safeParse(team);
+      const result = TeamZSchema.safeParse(req.body);
 
       if (!result.success) {
         return res.status(400).json({ errors: result.error.format() });
       }
 
       const parsedTeamData = result.data;
-
-      // Проверяем чтобы id авторизованного пользователя совпадала с id из формы создания команды.
-      if (userId !== parsedTeamData.creator) {
-        return res.status(403).json({
-          error: true,
-          code: 'FORBIDDEN',
-          message: 'У вас нет прав для создания этой команды',
-        });
-      }
 
       // Получение файлов изображений, если они есть.
       const files = req.files as { [fieldname: string]: Express.Multer.File[] };
@@ -94,7 +87,7 @@ export class TeamController {
 
       // Вызов сервиса.
       const response = await this.teamService.create({
-        team: parsedTeamData,
+        team: { ...parsedTeamData, creator: userId },
         logoFile,
         posterFile,
       });

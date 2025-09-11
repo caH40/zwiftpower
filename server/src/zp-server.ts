@@ -27,7 +27,7 @@ import { siteServiceRouter } from './routes/site-service.js';
 import { paymentsRouter } from './routes/payments.js';
 import { notificationsRouter } from './routes/notifications.js';
 import { siteServicePriceRouter } from './routes/price.js';
-import { teamRouter } from './routes/Team.js';
+import { teamRouter } from './routes/team-public.js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();

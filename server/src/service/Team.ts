@@ -8,6 +8,7 @@ import { TCreateTeamParams } from '../types/team.types.js';
 import { ImagesService } from './Images.js';
 import { TTeamForListDB } from '../types/mongodb-response.types.js';
 import { dtoTeamForList } from '../dto/teams.js';
+import { TeamRiderModel } from '../Model/TeamRider.js';
 
 export class TeamService {
   constructor() {}
@@ -53,7 +54,14 @@ export class TeamService {
     const isTeamNameExists = await this.isTeamNameExists(team.name);
 
     if (isTeamNameExists) {
-      throw new Error(`Выбранное название команды: "${team.name}" уже существует `);
+      throw new Error(`Выбранное название команды: "${team.name}" уже существует!`);
+    }
+    const alreadyHasTeam = await this.alreadyHasTeam(team.creator);
+
+    if (alreadyHasTeam) {
+      throw new Error(
+        `Вы уже состоите в команде. Создать новую команду можно только если вы не участник другой команды.`
+      );
     }
 
     const urlSlug = this.createUrlSlug(team.name);
@@ -72,7 +80,7 @@ export class TeamService {
   }
 
   // /**
-  //  * Создание команды.
+  //  * Обновление данных команды.
   //  */
   // async put({ creatorId }: { creatorId: string }): Promise<unknown> {}
 
@@ -86,6 +94,16 @@ export class TeamService {
    */
   private async isTeamNameExists(name: string): Promise<boolean> {
     return Boolean(await TeamModel.exists({ name }));
+  }
+
+  /**
+   * Проверка что пользователь не является создателем или членом команды.
+   */
+  private async alreadyHasTeam(creatorId: string): Promise<boolean> {
+    const team = Boolean(await TeamModel.exists({ creator: creatorId }));
+    const teamRider = Boolean(await TeamRiderModel.exists({ user: creatorId }));
+
+    return team || teamRider;
   }
 
   private createUrlSlug(name: string): string {

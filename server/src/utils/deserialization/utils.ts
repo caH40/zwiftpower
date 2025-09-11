@@ -11,3 +11,14 @@ export const safeJsonParse = (val: string | undefined): unknown => {
     return val; // Если ошибка, возвращаем как есть
   }
 };
+
+export function preprocessCB(val: unknown) {
+  if (typeof val === 'string') {
+    try {
+      return JSON.parse(val);
+    } catch {
+      return undefined;
+    }
+  }
+  return val;
+}
