@@ -5,7 +5,10 @@ import { helmetProps } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
 import { fetchGetTeams } from '../../redux/features/api/team/fetchTeam';
+import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
+import Button from '../../components/UI/Button/Button';
+import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
 
 import styles from './Teams.module.css';
 
@@ -30,12 +33,15 @@ export default function TeamsPublic() {
   useEffect(() => {
     dispatch(fetchGetTeams());
 
-    return () => dispatch();
+    return () => dispatch(resetTeams());
   }, []);
 
   return (
     <div className={styles.wrapper}>
       <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
+      <div className={styles.control}>
+        <ButtonLocalUrl href="/teams/create">Создать команду</ButtonLocalUrl>
+      </div>
 
       {!!shuffledTeams?.length && <section className={styles.cards}></section>}
     </div>

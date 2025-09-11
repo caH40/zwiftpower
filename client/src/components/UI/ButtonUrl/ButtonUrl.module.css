@@ -19,4 +19,5 @@
 .btn:hover {
   background-color: var(--color-text-main);
   color: var(--color-blue-main);
+  border: 1px solid var(--color-blue-main);
 }
