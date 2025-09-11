@@ -7,6 +7,7 @@ import { shuffleArray } from '../../utils/shuffle';
 import { fetchGetTeams } from '../../redux/features/api/team/fetchTeam';
 import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
+import CardTeam from '../../components/CardTeam/CardTeam';
 import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
 
 import styles from './Teams.module.css';
@@ -20,8 +21,6 @@ export default function TeamsPublic() {
   // Данные организаторов из хранилища редакс.
   const { teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
-
-  console.log(teams);
 
   // // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Teams.
   const shuffledTeams = useMemo(() => {
@@ -42,7 +41,13 @@ export default function TeamsPublic() {
         <ButtonLocalUrl href="/teams/create">Создать команду</ButtonLocalUrl>
       </div>
 
-      {!!shuffledTeams?.length && <section className={styles.cards}></section>}
+      {!!shuffledTeams?.length && (
+        <section className={styles.cards}>
+          {teams.map((team) => (
+            <CardTeam key={team._id} {...team} />
+          ))}
+        </section>
+      )}
     </div>
   );
 }

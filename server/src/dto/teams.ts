@@ -9,8 +9,6 @@ export function dtoTeamForList({
   name,
   shortName,
   urlSlug,
-  mission,
-  description,
   logoFileInfo,
   posterFileInfo,
 }: TTeamForListDB): TTeamForListDto {
@@ -18,5 +16,5 @@ export function dtoTeamForList({
   const logoUrls = createUrlsToFileCloud(logoFileInfo);
   const posterUrls = createUrlsToFileCloud(posterFileInfo);
 
-  return { _id: _idStr, name, shortName, urlSlug, mission, description, logoUrls, posterUrls };
+  return { _id: _idStr, name, shortName, urlSlug, logoUrls, posterUrls };
 }

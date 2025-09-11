@@ -148,8 +148,6 @@ export class TeamService {
     name: true,
     shortName: true,
     urlSlug: true,
-    mission: true,
-    description: true,
     logoFileInfo: true,
     posterFileInfo: true,
   };

@@ -245,10 +245,7 @@ export type TSiteServicePriceDto = Omit<
   '_id' | 'createdAt' | 'updatedAt'
 > & { _id: string; createdAt: string; updatedAt: string };
 
-export type TTeamForListDto = Pick<
-  TTeam,
-  'name' | 'shortName' | 'urlSlug' | 'mission' | 'description'
-> & {
+export type TTeamForListDto = Pick<TTeam, 'name' | 'shortName' | 'urlSlug'> & {
   _id: string;
   logoUrls?: Record<string, string>;
   posterUrls?: Record<string, string>;

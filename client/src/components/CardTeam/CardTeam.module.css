@@ -1,0 +1,120 @@
+.cardParallax {
+  position: relative;
+  height: 280px;
+  border-radius: 20px;
+  width: 220px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cardParallax:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.cardParallax:hover .backgroundImage {
+  transform: scale(1.05);
+}
+
+.gradientBackground {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+}
+
+.contentWrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.logoContainer {
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 160px;
+  max-height: 120px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  border-radius: 5px;
+}
+
+.logoPlaceholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.initials {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.teamName {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.viewText {
+  margin: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cardParallax:hover .viewText {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+  }
+
+  .imageContainer {
+    height: 160px;
+  }
+
+  .cardParallax {
+    width: 100%;
+  }
+
+  .teamName {
+    font-size: 18px;
+  }
+}
