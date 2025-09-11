@@ -42,6 +42,7 @@ export default function FormOrganizerMain({
   clubs = [],
   loading,
 }) {
+  const [resetImage, setResetImage] = useState(false);
   // Ссылка на лого Организатора.
   const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
 
@@ -80,6 +81,7 @@ export default function FormOrganizerMain({
       if (data.meta.requestStatus === 'fulfilled') {
         dispatch(fetchGetOrganizerModerator({ organizerId }));
         dispatch(getAlert({ message: data.payload.message, type: 'success', isOpened: true }));
+        setResetImage((p) => !p);
         reset(); // Очистка полей формы.
       } else {
         return; // Ошибка обрабатывается в sendNotification
@@ -202,6 +204,7 @@ export default function FormOrganizerMain({
                 setPosterUrl={setLogoSrcState}
                 accept={'.jpg, .jpeg, .png, .webp, .svg'}
                 validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />
@@ -244,6 +247,7 @@ export default function FormOrganizerMain({
                 setPosterUrl={setPosterSrcState}
                 accept={'.jpg, .jpeg, .png, .webp'}
                 validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />

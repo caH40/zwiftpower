@@ -48,6 +48,7 @@ export default function FormOrganizerSeriesCreate({
   loading,
   setTrigger,
 }) {
+  const [resetImage, setResetImage] = useState(false);
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
 
@@ -127,6 +128,7 @@ export default function FormOrganizerSeriesCreate({
       if (isCreating) {
         // Очистка полей формы
         reset();
+        setResetImage((p) => !p);
         setLogoSrcState(null);
         setPosterSrcState(null);
       } else {
@@ -300,6 +302,7 @@ export default function FormOrganizerSeriesCreate({
                 setPosterUrl={setLogoSrcState}
                 accept={'.jpg, .jpeg, .png, .webp, .svg'}
                 validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />
@@ -342,6 +345,7 @@ export default function FormOrganizerSeriesCreate({
                 setPosterUrl={setPosterSrcState}
                 accept={'.jpg, .jpeg, .png, .webp'}
                 validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />
