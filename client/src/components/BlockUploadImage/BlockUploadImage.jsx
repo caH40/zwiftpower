@@ -23,7 +23,7 @@ export default function BlockUploadImage({
   poster,
   setPoster,
   isLoading,
-  resetData,
+  resetTrigger,
   posterUrl,
   setPosterUrl,
   isSquare,
@@ -38,7 +38,7 @@ export default function BlockUploadImage({
   // Сброс отображаемого изображения после отправки формы.
   useEffect(() => {
     setImageTitle(noImage);
-  }, [resetData]);
+  }, [resetTrigger]);
 
   // обработка загрузки изображения
   const getPictures = async (event) => {

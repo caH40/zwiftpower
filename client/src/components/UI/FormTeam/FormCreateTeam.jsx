@@ -26,6 +26,7 @@ export default function FormCreateTeam({
   loading,
   setTrigger,
 }) {
+  const [resetImage, setResetImage] = useState(false);
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
 
@@ -42,7 +43,8 @@ export default function FormCreateTeam({
     handleSubmit,
     reset,
     control,
-
+    watch,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'all',
@@ -69,6 +71,7 @@ export default function FormCreateTeam({
         // FIXME: не сбрасываются изображения
         // Очистка полей формы
         reset();
+        setResetImage((p) => !p);
         setLogoSrcState(null);
         setPosterSrcState(null);
       } else {
@@ -155,6 +158,7 @@ export default function FormCreateTeam({
                 setPosterUrl={setLogoSrcState}
                 accept={'.jpg, .jpeg, .png, .webp, .svg'}
                 validationText={errors.logoFile?.message ? errors.logoFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />
@@ -197,6 +201,7 @@ export default function FormCreateTeam({
                 setPosterUrl={setPosterSrcState}
                 accept={'.jpg, .jpeg, .png, .webp'}
                 validationText={errors.posterFile?.message ? errors.posterFile.message : ''}
+                resetTrigger={resetImage}
               />
             )}
           />
