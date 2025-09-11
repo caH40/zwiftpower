@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetTeam } from '../../redux/features/api/team/fetchTeam';
 import { resetTeam } from '../../redux/features/api/team/teamSlice';
+import TeamHeader from '../../components/TeamHeader/TeamHeader';
+
+import styles from './Team.module.css';
 
 export default function TeamPage() {
   const { urlSlug } = useParams();
@@ -17,7 +20,5 @@ export default function TeamPage() {
     return () => dispatch(resetTeam());
   }, []);
 
-  console.log(team);
-
-  return <div>Team</div>;
+  return <div className={styles.wrapper}>{team && <TeamHeader team={team} />}</div>;
 }
