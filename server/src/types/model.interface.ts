@@ -905,7 +905,6 @@ export type TTeam = {
   website?: string;
   contact?: {
     email?: string;
-    phone?: string;
   };
   country?: string; // Страна организатора. RU, BY, KZ и т.д.
   socialLinks?: TSocialLinks;

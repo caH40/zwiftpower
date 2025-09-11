@@ -174,12 +174,10 @@ export type TGeneralClassificationDB = TSeriesClassification;
 
 export type TTeamForListDB = Pick<
   TTeam,
-  | '_id'
-  | 'name'
-  | 'shortName'
-  | 'urlSlug'
-  | 'mission'
-  | 'description'
-  | 'logoFileInfo'
-  | 'posterFileInfo'
+  '_id' | 'name' | 'shortName' | 'urlSlug' | 'logoFileInfo' | 'posterFileInfo'
+>;
+
+export type TTeamPublicDB = Omit<
+  TTeam,
+  'creator' | 'pendingRiders' | 'bannedRiders' | 'createdAt' | 'updatedAt'
 >;

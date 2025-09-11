@@ -250,3 +250,19 @@ export type TTeamForListDto = Pick<TTeam, 'name' | 'shortName' | 'urlSlug'> & {
   logoUrls?: Record<string, string>;
   posterUrls?: Record<string, string>;
 };
+
+export type TTeamPublicDto = Omit<
+  TTeam,
+  | 'creator'
+  | 'pendingRiders'
+  | 'bannedRiders'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'logoFileInfo'
+  | 'posterFileInfo'
+  | '_id'
+> & {
+  _id: string;
+  logoUrls?: Record<string, string>;
+  posterUrls?: Record<string, string>;
+};

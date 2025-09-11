@@ -3,13 +3,12 @@ import slugify from 'slugify';
 import { TeamModel } from '../Model/Team.js';
 import { TeamMemberService } from './TeamMember.js';
 import { ImagesService } from './Images.js';
-import { dtoTeamForList } from '../dto/teams.js';
+import { teamForListDto, teamPublicDto } from '../dto/teams.js';
 import { TeamMemberModel } from '../Model/TeamMember.js';
 
 // types
-import { TTeam } from '../types/model.interface.js';
 import { TCreateTeamParams } from '../types/team.types.js';
-import { TTeamForListDB } from '../types/mongodb-response.types.js';
+import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 
 export class TeamService {
   constructor() {}
@@ -18,13 +17,16 @@ export class TeamService {
    * Получение данных команды с teamId.
    */
   async get(urlSlug: string): Promise<unknown> {
-    const teamDB = await TeamModel.findOne({ urlSlug }).lean<TTeam>();
+    const teamDB = await TeamModel.findOne(
+      { urlSlug },
+      TeamService.ALL_TEAM_PUBLIC_PROJECTION
+    ).lean<TTeamPublicDB>();
 
     if (!teamDB) {
       throw new Error(`Не найдена запрашиваемая команда с urlSlug: "${urlSlug}"!`);
     }
 
-    return { data: teamDB };
+    return { data: teamPublicDto(teamDB) };
   }
 
   /**
@@ -35,7 +37,7 @@ export class TeamService {
       TTeamForListDB[]
     >();
 
-    const teams = teamsDB.map((team) => dtoTeamForList(team));
+    const teams = teamsDB.map((team) => teamForListDto(team));
 
     return { data: teams, message: 'Список команд' };
   }
@@ -150,5 +152,13 @@ export class TeamService {
     urlSlug: true,
     logoFileInfo: true,
     posterFileInfo: true,
+  };
+
+  private static ALL_TEAM_PUBLIC_PROJECTION = {
+    creator: false,
+    pendingRiders: false,
+    bannedRiders: false,
+    createdAt: false,
+    updatedAt: false,
   };
 }
