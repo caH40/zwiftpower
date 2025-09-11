@@ -1,14 +1,15 @@
 import slugify from 'slugify';
 
 import { TeamModel } from '../Model/Team.js';
+import { TeamMemberService } from './TeamMember.js';
+import { ImagesService } from './Images.js';
+import { dtoTeamForList } from '../dto/teams.js';
+import { TeamMemberModel } from '../Model/TeamMember.js';
 
 // types
 import { TTeam } from '../types/model.interface.js';
 import { TCreateTeamParams } from '../types/team.types.js';
-import { ImagesService } from './Images.js';
 import { TTeamForListDB } from '../types/mongodb-response.types.js';
-import { dtoTeamForList } from '../dto/teams.js';
-import { TeamRiderModel } from '../Model/TeamRider.js';
 
 export class TeamService {
   constructor() {}
@@ -63,6 +64,13 @@ export class TeamService {
         `Вы уже состоите в команде. Создать новую команду можно только если вы не участник другой команды.`
       );
     }
+    const hasPendingRequest = await this.hasPendingRequest(team.creator);
+
+    if (hasPendingRequest) {
+      throw new Error(
+        `Вы сделали запрос на присоединение к другой команде. Создать новую команду можно только если вы не участник другой команды.`
+      );
+    }
 
     const urlSlug = this.createUrlSlug(team.name);
 
@@ -74,7 +82,14 @@ export class TeamService {
       posterFile,
     });
 
-    await TeamModel.create({ ...team, logoFileInfo, posterFileInfo, urlSlug });
+    const createdTeam = await TeamModel.create({
+      ...team,
+      logoFileInfo,
+      posterFileInfo,
+      urlSlug,
+    });
+
+    await this.addFounderToTeam(team.creator, createdTeam._id.toString());
 
     return { message: 'Команда успешно создана.' };
   }
@@ -90,6 +105,15 @@ export class TeamService {
   // async delete(): Promise<unknown> {}
 
   /**
+   * Добавление создателя команды в команду.
+   */
+  private async addFounderToTeam(creatorId: string, teamId: string): Promise<void> {
+    const teamMember = new TeamMemberService();
+
+    await teamMember.create({ userId: creatorId, teamRole: 'Founder', teamId });
+  }
+
+  /**
    * Проверка уникальности urlSlug.
    */
   private async isTeamNameExists(name: string): Promise<boolean> {
@@ -97,13 +121,20 @@ export class TeamService {
   }
 
   /**
+   * Проверка есть ли в списке на присоединение к какой либо команде.
+   */
+  private async hasPendingRequest(userId: string): Promise<boolean> {
+    return Boolean(await TeamModel.findOne({ 'pendingRiders.user': userId }));
+  }
+
+  /**
    * Проверка что пользователь не является создателем или членом команды.
    */
   private async alreadyHasTeam(creatorId: string): Promise<boolean> {
     const team = Boolean(await TeamModel.exists({ creator: creatorId }));
-    const teamRider = Boolean(await TeamRiderModel.exists({ user: creatorId }));
+    const teamMember = Boolean(await TeamMemberModel.exists({ user: creatorId }));
 
-    return team || teamRider;
+    return team || teamMember;
   }
 
   private createUrlSlug(name: string): string {

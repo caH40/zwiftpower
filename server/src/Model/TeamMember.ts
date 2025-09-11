@@ -3,11 +3,11 @@ import mongoose, { Document, Schema, model } from 'mongoose';
 import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants.js';
 
 // types
-import { TTeamRider } from '../types/model.interface.js';
+import { TTeamMember } from '../types/model.interface.js';
 
-export type TTeamRiderDocument = TTeamRider & Document;
+export type TTeamMemberDocument = TTeamMember & Document;
 
-const teamRiderSchema = new Schema<TTeamRiderDocument>(
+const teamMemberSchema = new Schema<TTeamMemberDocument>(
   {
     team: {
       type: mongoose.Schema.Types.ObjectId,
@@ -26,4 +26,4 @@ const teamRiderSchema = new Schema<TTeamRiderDocument>(
   { timestamps: true }
 );
 
-export const TeamRiderModel = model<TTeamRiderDocument>('TeamRider', teamRiderSchema);
+export const TeamMemberModel = model<TTeamMemberDocument>('TeamMember', teamMemberSchema);

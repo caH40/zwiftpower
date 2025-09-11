@@ -3,6 +3,8 @@ import mongoose, { Document, Schema, model } from 'mongoose';
 import { SocialLinksSchema } from './Schema/SocialLinksSchema.js';
 import { TelegramSchema } from './Schema/TelegramSchema.js';
 import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
+import { PendingRiderSchema } from './Schema/PendingRiderSchema.js';
+import { BannedRiderSchema } from './Schema/BannedRiderSchema.js';
 
 // types
 import { TTeam } from '../types/model.interface.js';
@@ -32,19 +34,8 @@ const teamSchema = new Schema<TTeamDocument>(
     },
     country: { type: String },
     socialLinks: { type: SocialLinksSchema },
-    pendingRiders: [
-      {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        requestedAt: { type: Date, required: true, default: () => new Date() },
-      },
-    ],
-    bannedRiders: [
-      {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        reason: { type: String },
-        bannedAt: { type: Date, required: true, default: () => new Date() },
-      },
-    ],
+    pendingRiders: [PendingRiderSchema],
+    bannedRiders: [BannedRiderSchema],
   },
   { timestamps: true }
 );

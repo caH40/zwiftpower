@@ -925,7 +925,7 @@ export type TTeam = {
 /**
  * Член команды.
  */
-export type TTeamRider = {
+export type TTeamMember = {
   _id: Types.ObjectId;
   team: Types.ObjectId; // Команда в которой состоит райдер.
   user: Types.ObjectId;

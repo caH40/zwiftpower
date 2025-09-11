@@ -1,5 +1,8 @@
 // types
 
+import { TeamMemberModel } from '../Model/TeamMember.js';
+import { TTeamRole } from '../types/team.types.js';
+
 export class TeamMemberService {
   constructor() {}
 
@@ -13,4 +16,21 @@ export class TeamMemberService {
   // }
   // return { data: teamDB };
   // }
+
+  /**
+   * Создание участника команды.
+   */
+  async create({
+    userId,
+    teamRole,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+    teamRole?: TTeamRole;
+  }): Promise<{ message: string }> {
+    await TeamMemberModel.create({ user: userId, role: teamRole, team: teamId });
+
+    return { message: 'Участник добавлен в команду' };
+  }
 }

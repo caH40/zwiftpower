@@ -66,6 +66,7 @@ export default function FormCreateTeam({
       // Успешный результат.
       dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
       if (isCreating) {
+        // FIXME: не сбрасываются изображения
         // Очистка полей формы
         reset();
         setLogoSrcState(null);
