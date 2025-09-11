@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetTeams } from './fetchTeam';
+import { fetchGetTeam, fetchGetTeams } from './fetchTeam';
 
 const initialState = {
   teams: [],
@@ -39,6 +39,22 @@ const teamSlice = createSlice({
     });
 
     builder.addCase(fetchGetTeams.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+    // ============== получение команды =================
+    builder.addCase(fetchGetTeam.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetTeam.fulfilled, (state, action) => {
+      state.team = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetTeam.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
