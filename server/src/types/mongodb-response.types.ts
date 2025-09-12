@@ -11,6 +11,7 @@ import {
   TSeriesStage,
   TStageResult,
   TTeam,
+  TTeamMember,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 
@@ -181,3 +182,10 @@ export type TTeamPublicDB = Omit<
   TTeam,
   'creator' | 'pendingRiders' | 'bannedRiders' | 'createdAt' | 'updatedAt'
 >;
+
+export type TTeamMembersPublicDB = Pick<
+  TTeamMember,
+  '_id' | 'role' | 'specialization' | 'createdAt'
+> & {
+  user: { zwiftId?: number };
+};

@@ -1,7 +1,8 @@
 import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants';
 
 // types
-import { TTeam } from './model.interface';
+import { RiderProfileSchema, TTeam } from './model.interface';
+import { TTeamMembersPublicDB } from './mongodb-response.types';
 
 /**
  * Специализация райдера.
@@ -27,3 +28,7 @@ export type TCreateTeamParams = Pick<
   | 'socialLinks'
   | 'website'
 > & { creator: string };
+
+export type TTeamMembersForDto = TTeamMembersPublicDB & {
+  rider?: RiderProfileSchema;
+};

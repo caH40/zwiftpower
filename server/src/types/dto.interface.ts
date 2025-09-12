@@ -1,11 +1,13 @@
 // types
 import {
+  RiderProfileSchema,
   TFinishProtocolConfig,
   TOrganizer,
   TSeries,
   TSiteServicePrice,
   TStageResult,
   TTeam,
+  TTeamMember,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 import {
@@ -266,3 +268,7 @@ export type TTeamPublicDto = Omit<
   logoUrls?: Record<string, string>;
   posterUrls?: Record<string, string>;
 };
+
+export type TTeamMemberPublicDto = {
+  rider?: RiderProfileSchema;
+} & Pick<TTeamMember, 'role' | 'specialization' | 'createdAt'> & { _id: string };

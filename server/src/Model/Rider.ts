@@ -2,6 +2,9 @@ import { Schema, model } from 'mongoose';
 
 import { RiderProfileSchema } from '../types/model.interface.js';
 
+/**
+ * Все райдеры участвующие в заездах на сайте zwiftpower.ru
+ */
 const riderSchema = new Schema<RiderProfileSchema>({
   zwiftId: { type: Number, unique: true, required: true },
   firstName: String,
