@@ -76,12 +76,17 @@ select {
   --color-orange-4: #ff9d40;
   --color-orange-5: #ffb773;
 
+  --color-gold: #ffd700;
+  --color-silver: #c0c0c0;
+  --color-bronze: #cd7f32;
+
   --error: #d74444;
   --error-hover: #fa0000;
 
   --color-text-minor: #444444;
   --menu-side: #444444;
   --color-bg-minor: #f6f8fa;
+  --color-bg-minor-3: #f0f0f0;
   --color-bg-minor-2: #e4e4e4;
   --color-border-minor: #cecece;
   --color-bg: #ffffff;

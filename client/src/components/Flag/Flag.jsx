@@ -2,7 +2,7 @@ import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './Flag.module.css';
 
-function Flag({ name = '' }) {
+function Flag({ name = '', width, height }) {
   let nameShort = '';
 
   switch (name) {
@@ -81,7 +81,13 @@ function Flag({ name = '' }) {
 
   return (
     <MyTooltip tooltip={name}>
-      <img className={styles.box} src={`/images/flags/${nameShort}.svg`} alt={`flag-${name}`} />
+      <img
+        className={styles.box}
+        src={`/images/flags/${nameShort}.svg`}
+        alt={`flag-${name}`}
+        width={width}
+        height={height}
+      />
     </MyTooltip>
   );
 }

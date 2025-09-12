@@ -11,3 +11,9 @@
   text-align: right;
   margin-bottom: 1rem;
 }
+/* ====================================================================== */
+@media (max-width: 578px) {
+  .cards {
+    justify-content: center;
+  }
+}

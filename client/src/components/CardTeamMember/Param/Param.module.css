@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.label {
+  font-size: 12px;
+  color: var(--color-text-minor);
+}
+.label::after {
+  content: ':';
+}
+.value {
+  font-size: 14px;
+  font-weight: 600;
+}

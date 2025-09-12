@@ -1,0 +1,123 @@
+.card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  width: 280px;
+  height: 458px;
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+.imageContainer {
+  border-radius: 10px 10px 0 0;
+  position: absolute;
+  background-color: gray;
+  width: 280px;
+  height: 200px;
+}
+.gray {
+  background-color: gray;
+}
+.imageLogo {
+  position: absolute;
+  object-fit: cover;
+  width: 116px;
+  height: 116px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 5px solid rgba(255, 255, 255, 0.45);
+  top: calc(50% - 58px);
+  left: calc(50% - 58px);
+}
+.role {
+  position: absolute;
+  border-radius: 9px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: white;
+  background-color: #00000070;
+  top: 12px;
+  right: 15px;
+}
+.category {
+  position: absolute;
+  border-radius: 9px;
+  height: 18px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: white;
+  background-color: gray;
+  bottom: 15px;
+  left: 15px;
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+}
+.infoContainer {
+  padding: 215px 15px 15px 15px;
+}
+.nameContainer {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.flagContainer {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.paramsContainer {
+  display: flex;
+  gap: 5px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.specContainer,
+.statsContainer,
+.eventsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+.eventsContainer {
+  margin-bottom: 0;
+}
+.label {
+  font-size: 12px;
+  color: var(--color-text-minor);
+}
+.label::after {
+  content: ':';
+}
+.eventValue,
+.specValue {
+  font-size: 12px;
+  font-weight: 600;
+}
+.A {
+  background-color: var(--catA);
+}
+.B {
+  background-color: var(--catB);
+}
+.C {
+  background-color: var(--catC);
+}
+.D {
+  background-color: var(--catD);
+}
+.E {
+  background-color: var(--catE);
+}

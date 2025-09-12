@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
+import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
 import { fetchTeamMember } from '../../../redux/features/api/team-member/fetchTeamMember';
 
 import styles from './TeamMembers.module.css';
@@ -27,7 +28,11 @@ export default function TeamMembersPage() {
         <Button getClick={join}>Присоединиться</Button>
       </div>
 
-      <section className={styles.members}></section>
+      <section className={styles.cards}>
+        {teamMembers.map((m) => (
+          <CardTeamMember key={m._id} member={m} />
+        ))}
+      </section>
     </div>
   );
 }
