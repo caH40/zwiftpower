@@ -19,7 +19,7 @@ export default function CardTeam({ name, shortName, urlSlug, logoUrls, posterUrl
 
   const handleClick = () => {
     if (urlSlug) {
-      navigate(`/teams/${urlSlug}`);
+      navigate(`/teams/${urlSlug}/members`);
     }
   };
 
