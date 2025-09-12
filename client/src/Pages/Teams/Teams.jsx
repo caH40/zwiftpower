@@ -18,6 +18,8 @@ import styles from './Teams.module.css';
 export default function TeamsPublic() {
   useTitle('Команды');
 
+  const { status } = useSelector((state) => state.checkAuth.value);
+
   // Данные организаторов из хранилища редакс.
   const { teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
@@ -37,9 +39,12 @@ export default function TeamsPublic() {
   return (
     <div className={styles.wrapper}>
       <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
-      <div className={styles.control}>
-        <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
-      </div>
+
+      {status && (
+        <div className={styles.control}>
+          <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
+        </div>
+      )}
 
       {!!shuffledTeams?.length && (
         <section className={styles.cards}>

@@ -34,8 +34,8 @@ const teamSchema = new Schema<TTeamDocument>(
     },
     country: { type: String },
     socialLinks: { type: SocialLinksSchema },
-    pendingRiders: [PendingRiderSchema],
-    bannedRiders: [BannedRiderSchema],
+    pendingRiders: { type: [PendingRiderSchema], default: [] },
+    bannedRiders: { type: [BannedRiderSchema], default: [] },
   },
   { timestamps: true }
 );

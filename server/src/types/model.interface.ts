@@ -912,7 +912,7 @@ export type TTeam = {
     user: Types.ObjectId;
     requestedAt: Date; // Дата подачи заявки.
   }[];
-  bannedRiders?: {
+  bannedRiders: {
     user: Types.ObjectId;
     reason?: string; // Причина блокировки.
     bannedAt: Date; // Дата блокировки.

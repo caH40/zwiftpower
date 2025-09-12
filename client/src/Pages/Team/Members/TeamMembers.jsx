@@ -13,6 +13,7 @@ import styles from './TeamMembers.module.css';
 export default function TeamMembersPage() {
   const { urlSlug } = useParams();
   const { teamMembers } = useSelector((state) => state.teamMember);
+  const { status } = useSelector((state) => state.checkAuth.value);
 
   const dispatch = useDispatch();
 
@@ -31,9 +32,11 @@ export default function TeamMembersPage() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.control}>
-        <Button getClick={join}>Присоединиться</Button>
-      </div>
+      {status && (
+        <div className={styles.control}>
+          <Button getClick={join}>Присоединиться</Button>
+        </div>
+      )}
 
       <section className={styles.cards}>
         {teamMembers.map((m) => (

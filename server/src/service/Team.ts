@@ -117,6 +117,14 @@ export class TeamService {
       throw new Error(`Не найдена команда с urlSlug: "${urlSlug}"`);
     }
 
+    // Проверяем, не забанен ли участник в данном клубе.
+    const isBannedCandidate = teamDB.bannedRiders.some((rider) =>
+      rider.user.equals(candidateId)
+    );
+    if (isBannedCandidate) {
+      throw new Error('К сожалению, вы не можете присоединиться к этой команде.');
+    }
+
     // Проверяем, есть ли уже заявка или участник.
     const alreadyPending = teamDB.pendingRiders.some((rider) => rider.user.equals(candidateId));
     if (alreadyPending) {
@@ -151,17 +159,6 @@ export class TeamService {
   }
 
   /**
-   * Проверка привязал ли пользователь к своему аккаунту zwiftId.
-   */
-  private async hasLinkedZwiftId(userId: string): Promise<boolean> {
-    const userDB = await User.findOne({ _id: userId }, { _id: false, zwiftId: true }).lean<{
-      zwiftId?: number;
-    }>();
-
-    return !!userDB?.zwiftId;
-  }
-
-  /**
    * Получение списка пользователей, которые подали заявку на вступление в команду.
    */
   async getPendingRiders({ teamCreatorId }: { teamCreatorId: string }): Promise<unknown> {
@@ -191,6 +188,17 @@ export class TeamService {
       data: pendingRiderAfterDto,
       message: `Список райдеров, подавших заявки на вступление в команду "${teamDB?.name}"`,
     };
+  }
+
+  /**
+   * Проверка привязал ли пользователь к своему аккаунту zwiftId.
+   */
+  private async hasLinkedZwiftId(userId: string): Promise<boolean> {
+    const userDB = await User.findOne({ _id: userId }, { _id: false, zwiftId: true }).lean<{
+      zwiftId?: number;
+    }>();
+
+    return !!userDB?.zwiftId;
   }
 
   // /**
