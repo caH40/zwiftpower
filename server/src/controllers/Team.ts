@@ -98,4 +98,37 @@ export class TeamController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Обработчик заявки на вступление.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public handleJoinRequest = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        return res.status(400).json({ message: 'Не получен userId!' });
+      }
+
+      const { urlSlug } = req.body;
+
+      if (!urlSlug) {
+        return res.status(400).json({ message: 'Не получен urlSlug команды!' });
+      }
+
+      // Вызов сервиса.
+      const response = await this.teamService.handleJoinRequest({
+        candidateId: userId,
+        urlSlug,
+      });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

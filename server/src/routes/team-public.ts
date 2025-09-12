@@ -11,6 +11,7 @@ const team = new TeamController();
 teamRouter.get('/:urlSlug', team.get);
 teamRouter.get('/', team.getAll);
 
+teamRouter.post('/join-request', checkAuth, team.handleJoinRequest);
 teamRouter.post(
   '/',
   checkAuth,

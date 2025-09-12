@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetTeam, fetchGetTeams } from './fetchTeam';
+import { fetchGetTeam, fetchGetTeams, fetchPostJoinRequestInTeam } from './fetchTeam';
 
 const initialState = {
   teams: [],
@@ -21,6 +21,9 @@ const teamSlice = createSlice({
       state.teams = [];
     },
     resetTeam: (state) => {
+      state.team = null;
+    },
+    resetTeamMessage: (state) => {
       state.team = null;
     },
   },

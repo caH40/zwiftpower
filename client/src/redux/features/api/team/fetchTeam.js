@@ -79,3 +79,25 @@ export const fetchPutTeam = createAsyncThunk('teams/put', async ({ team }, thunk
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+/**
+ * Заявка на вступление в команду.
+ */
+export const fetchPostJoinRequestInTeam = createAsyncThunk(
+  'teams/put',
+  async ({ urlSlug }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/teams/join-request`,
+        method: 'post',
+        data: { urlSlug },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

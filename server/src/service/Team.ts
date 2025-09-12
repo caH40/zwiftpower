@@ -9,6 +9,7 @@ import { TeamMemberModel } from '../Model/TeamMember.js';
 // types
 import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
+import mongoose from 'mongoose';
 
 export class TeamService {
   constructor() {}
@@ -94,6 +95,48 @@ export class TeamService {
     await this.addFounderToTeam(team.creator, createdTeam._id.toString());
 
     return { message: 'Команда успешно создана.' };
+  }
+
+  /**
+   * Обработчик заявки на вступление.
+   */
+  async handleJoinRequest({
+    candidateId,
+    urlSlug,
+  }: {
+    candidateId: string;
+    urlSlug: string;
+  }): Promise<unknown> {
+    // Находим команду.
+    const teamDB = await TeamModel.findOne({ urlSlug });
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда с urlSlug: "${urlSlug}"`);
+    }
+
+    // Проверяем, есть ли уже заявка или участник.
+    const alreadyPending = teamDB.pendingRiders.some((rider) => rider.user.equals(candidateId));
+    if (alreadyPending) {
+      throw new Error('Заявка уже отправлена и ожидает подтверждения.');
+    }
+
+    const alreadyMember = await TeamMemberModel.exists({ user: candidateId });
+    if (alreadyMember) {
+      throw new Error(
+        'Вы уже состоите в другой команде. Допускается быть только в одной команде.'
+      );
+    }
+
+    // 3️⃣ Добавляем заявку.
+    teamDB.pendingRiders.push({
+      user: new mongoose.Types.ObjectId(candidateId),
+      requestedAt: new Date(),
+    });
+    await teamDB.save();
+
+    return {
+      message: 'Ваша заявка на вступление отправлена. Ожидайте подтверждения капитана команды.',
+    };
   }
 
   // /**
