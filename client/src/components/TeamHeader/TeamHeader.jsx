@@ -45,7 +45,6 @@ export default function TeamHeader({
         {/* Блок с контентом */}
         <div className={styles.content}>
           {/* Блок с лого и названием Организатора */}
-          {/* <div className={styles.title__box}> */}
           {logoUrls?.original && (
             <img
               src={logoUrls?.original}
@@ -57,7 +56,6 @@ export default function TeamHeader({
           )}
 
           <h3 className={styles.title}>{name}</h3>
-          {/* </div> */}
 
           <div className={styles.content__bottom}>
             <div className={styles.buttons__block}>

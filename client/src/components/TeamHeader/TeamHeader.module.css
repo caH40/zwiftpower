@@ -113,7 +113,7 @@
   border-radius: 10px;
   background-color: var(--color-text-main);
   padding: 5px;
-  object-fit: cover;
+  object-fit: contain;
 }
 .title {
   font-size: 40px;
@@ -187,6 +187,13 @@
     width: 150px;
     height: 150px;
   }
+  .buttons__block {
+    justify-content: flex-start;
+  }
+  .content__bottom {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
 }
 @media (max-width: 420px) {
   .title__box {
@@ -201,5 +208,8 @@
   .logo {
     width: 120px;
     height: 120px;
+  }
+  .poster {
+    min-height: 188px;
   }
 }

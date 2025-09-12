@@ -2,7 +2,7 @@
   position: relative;
   height: 280px;
   border-radius: 20px;
-  width: 220px;
+  width: 280px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -57,10 +57,11 @@
 }
 
 .logo {
-  max-width: 160px;
-  max-height: 120px;
+  width: 120px;
+  height: 120px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   border-radius: 5px;
+  border: 4px solid white;
 }
 
 .logoPlaceholder {
