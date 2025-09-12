@@ -272,3 +272,5 @@ export type TTeamPublicDto = Omit<
 export type TTeamMemberPublicDto = {
   rider?: RiderProfileSchema;
 } & Pick<TTeamMember, 'role' | 'specialization' | 'createdAt'> & { _id: string };
+
+export type TPendingRiderDto = RiderProfileSchema & { _id: string };

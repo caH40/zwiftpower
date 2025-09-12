@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetTeam, fetchGetTeams, fetchPostJoinRequestInTeam } from './fetchTeam';
+import {
+  fetchGetPendingRiders,
+  fetchGetTeam,
+  fetchGetTeams,
+  fetchPostJoinRequestInTeam,
+} from './fetchTeam';
 
 const initialState = {
   teams: [],
+  pendingRiders: [],
   team: null,
   message: null,
   status: null,
@@ -20,11 +26,14 @@ const teamSlice = createSlice({
     resetTeams: (state) => {
       state.teams = [];
     },
+    resetPendingRiders: (state) => {
+      state.pendingRiders = [];
+    },
     resetTeam: (state) => {
       state.team = null;
     },
     resetTeamMessage: (state) => {
-      state.team = null;
+      state.message = null;
     },
   },
 
@@ -61,9 +70,25 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+    // ============== пользователи, которые подали заявку на вступление в команду =================
+    builder.addCase(fetchGetPendingRiders.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetPendingRiders.fulfilled, (state, action) => {
+      state.pendingRiders = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetPendingRiders.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetTeam, resetTeams } = teamSlice.actions;
+export const { resetTeam, resetTeams, resetPendingRiders } = teamSlice.actions;
 
 export default teamSlice.reducer;

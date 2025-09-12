@@ -1,8 +1,10 @@
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
-import { TTeamForListDto, TTeamPublicDto } from '../types/dto.interface.js';
+import { TPendingRiderDto, TTeamForListDto, TTeamPublicDto } from '../types/dto.interface.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
+import { RiderProfileSchema } from '../types/model.interface.js';
+import { Types } from 'mongoose';
 
 export function teamForListDto({
   _id,
@@ -26,4 +28,10 @@ export function teamPublicDto(team: TTeamPublicDB): TTeamPublicDto {
   const posterUrls = createUrlsToFileCloud(posterFileInfo);
 
   return { ...currentTeam, _id, logoUrls, posterUrls };
+}
+
+export function pendingRiderDto(
+  rider: RiderProfileSchema & { _id: Types.ObjectId }
+): TPendingRiderDto {
+  return { ...rider, _id: rider._id.toString() };
 }

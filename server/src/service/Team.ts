@@ -1,15 +1,18 @@
+import mongoose, { Types } from 'mongoose';
 import slugify from 'slugify';
 
 import { TeamModel } from '../Model/Team.js';
 import { TeamMemberService } from './TeamMember.js';
 import { ImagesService } from './Images.js';
-import { teamForListDto, teamPublicDto } from '../dto/teams.js';
+import { pendingRiderDto, teamForListDto, teamPublicDto } from '../dto/teams.js';
 import { TeamMemberModel } from '../Model/TeamMember.js';
+import { User } from '../Model/User.js';
 
 // types
 import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
-import mongoose from 'mongoose';
+import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
+import { Rider } from '../Model/Rider.js';
 
 export class TeamService {
   constructor() {}
@@ -106,7 +109,7 @@ export class TeamService {
   }: {
     candidateId: string;
     urlSlug: string;
-  }): Promise<unknown> {
+  }): Promise<{ message: string }> {
     // Находим команду.
     const teamDB = await TeamModel.findOne({ urlSlug });
 
@@ -127,7 +130,15 @@ export class TeamService {
       );
     }
 
-    // 3️⃣ Добавляем заявку.
+    const hasLinkedZwiftId = await this.hasLinkedZwiftId(candidateId);
+
+    if (!hasLinkedZwiftId) {
+      throw new Error(
+        'Для вступления в команду необходимо привязать ZwiftId к вашему аккаунту в Личном кабинете!'
+      );
+    }
+
+    // Добавляем заявку.
     teamDB.pendingRiders.push({
       user: new mongoose.Types.ObjectId(candidateId),
       requestedAt: new Date(),
@@ -136,6 +147,49 @@ export class TeamService {
 
     return {
       message: 'Ваша заявка на вступление отправлена. Ожидайте подтверждения капитана команды.',
+    };
+  }
+
+  /**
+   * Проверка привязал ли пользователь к своему аккаунту zwiftId.
+   */
+  private async hasLinkedZwiftId(userId: string): Promise<boolean> {
+    const userDB = await User.findOne({ _id: userId }, { _id: false, zwiftId: true }).lean<{
+      zwiftId?: number;
+    }>();
+
+    return !!userDB?.zwiftId;
+  }
+
+  /**
+   * Получение списка пользователей, которые подали заявку на вступление в команду.
+   */
+  async getPendingRiders({ teamCreatorId }: { teamCreatorId: string }): Promise<unknown> {
+    const teamDB = await TeamModel.findOne(
+      { creator: teamCreatorId },
+      { _id: false, pendingRiders: true, name: true }
+    ).lean<Pick<TTeam, 'pendingRiders' | 'name'>>();
+
+    const userIds = teamDB?.pendingRiders.map((u) => u.user);
+
+    const usersDB = await User.find(
+      { _id: { $in: userIds } },
+      { zwiftId: true, _id: false }
+    ).lean<{ zwiftId?: number }[]>();
+
+    const zwiftIds = usersDB
+      .map(({ zwiftId }) => zwiftId)
+      .filter((item): item is number => !!item);
+
+    const ridersDB = await Rider.find({ zwiftId: { $in: zwiftIds } }).lean<
+      (RiderProfileSchema & { _id: Types.ObjectId })[]
+    >();
+
+    const pendingRiderAfterDto = ridersDB.map((r) => pendingRiderDto(r));
+
+    return {
+      data: pendingRiderAfterDto,
+      message: `Список райдеров, подавших заявки на вступление в команду "${teamDB?.name}"`,
     };
   }
 

@@ -101,3 +101,24 @@ export const fetchPostJoinRequestInTeam = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Получения списка пользователей, которые подали заявку на вступление в команду.
+ */
+export const fetchGetPendingRiders = createAsyncThunk(
+  'pendingRiders/get',
+  async (_, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/teams/pending-riders`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
