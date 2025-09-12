@@ -38,7 +38,7 @@ export default function TeamsPublic() {
     <div className={styles.wrapper}>
       <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
       <div className={styles.control}>
-        <ButtonLocalUrl href="/teams/create">Создать команду</ButtonLocalUrl>
+        <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
       </div>
 
       {!!shuffledTeams?.length && (
