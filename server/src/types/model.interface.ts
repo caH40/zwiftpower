@@ -292,7 +292,6 @@ export type UserSchema = {
   gender: string;
   birthday: number;
   city: string;
-  team: string;
   role: string;
   moderator?: {
     clubs: string[]; // список клубов в которых является модератором

@@ -12,12 +12,17 @@ const TeamResultsPage = lazy(() => import('../Pages/Team/Results/TeamResults'));
  * Маршруты для страниц команд.
  */
 export function TeamsRoute() {
-  const { status, user } = useSelector((state) => state.checkAuth.value);
+  const {
+    status,
+    user: { team: userInAnyTeam },
+  } = useSelector((state) => state.checkAuth.value);
 
   return (
     <>
       <Route path="/teams" element={<TeamsPublic />} />
-      {status && <Route path="/moderation/teams/create" element={<TeamCreatePage />} />}
+      {status && !userInAnyTeam && (
+        <Route path="/moderation/teams/create" element={<TeamCreatePage />} />
+      )}
       <Route path="/teams/:urlSlug" element={<TeamPageLayout />}>
         <Route path="members" element={<TeamMembersPage />} />
         <Route path="results" element={<TeamResultsPage />} />

@@ -18,7 +18,10 @@ import styles from './Teams.module.css';
 export default function TeamsPublic() {
   useTitle('Команды');
 
-  const { status } = useSelector((state) => state.checkAuth.value);
+  const {
+    status,
+    user: { team: userInAnyTeam },
+  } = useSelector((state) => state.checkAuth.value);
 
   // Данные организаторов из хранилища редакс.
   const { teams } = useSelector((state) => state.team);
@@ -40,7 +43,8 @@ export default function TeamsPublic() {
     <div className={styles.wrapper}>
       <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
 
-      {status && (
+      {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
+      {status && !userInAnyTeam && (
         <div className={styles.control}>
           <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
         </div>

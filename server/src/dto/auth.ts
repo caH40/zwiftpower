@@ -6,6 +6,7 @@ import { UserSchema } from '../types/model.interface.js';
 
 type Params = {
   user: UserSchema;
+  team?: Types.ObjectId;
   riderImg?: string | null;
   organizerId: Types.ObjectId | undefined;
 };
@@ -17,6 +18,7 @@ export function dtoProfileDataForClient({
   user,
   riderImg,
   organizerId,
+  team,
 }: Params): GenerateToken {
   const vkProfile = user.externalAccounts?.vk;
   const vk = vkProfile && {
@@ -32,6 +34,7 @@ export function dtoProfileDataForClient({
     photoProfile: riderImg,
     zwiftId: user.zwiftId,
     moderator: user.moderator,
+    team: team?.toString(),
     externalAccounts: {
       vk,
     },

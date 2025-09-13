@@ -13,7 +13,10 @@ import styles from './TeamMembers.module.css';
 export default function TeamMembersPage() {
   const { urlSlug } = useParams();
   const { teamMembers } = useSelector((state) => state.teamMember);
-  const { status } = useSelector((state) => state.checkAuth.value);
+  const {
+    status,
+    user: { team: userInAnyTeam },
+  } = useSelector((state) => state.checkAuth.value);
 
   const dispatch = useDispatch();
 
@@ -32,7 +35,8 @@ export default function TeamMembersPage() {
 
   return (
     <div className={styles.wrapper}>
-      {status && (
+      {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
+      {status && !userInAnyTeam && (
         <div className={styles.control}>
           <Button getClick={join}>Присоединиться</Button>
         </div>

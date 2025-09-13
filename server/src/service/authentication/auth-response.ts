@@ -12,6 +12,7 @@ import { millisecondsInWeekDays } from '../../assets/date.js';
 import { TAuthService } from '../../types/types.interface.js';
 import { dtoProfileDataForClient } from '../../dto/auth.js';
 import { PeriodSubscriptionService } from '../PeriodSubscriptionService.js';
+import { TeamMemberModel } from '../../Model/TeamMember.js';
 
 type Params = {
   user: UserSchema;
@@ -78,15 +79,20 @@ export async function createDataForClient({
   user: UserSchema;
 }): Promise<GenerateToken> {
   // Получение данных организатора для генерации новой пары токенов.
-  const organizerDB = await Organizer.findOne({ creator: user._id }, { _id: true }).lean<{
-    _id: Types.ObjectId;
-  }>();
 
   // Получение лого райдера из коллекции Rider.
-  const riderDB = await Rider.findOne(
-    { zwiftId: user.zwiftId },
-    { _id: false, imageSrc: true }
-  ).lean<{ imageSrc: string | null }>();
+
+  const [organizerDB, riderDB, teamDB] = await Promise.all([
+    Organizer.findOne({ creator: user._id }, { _id: true }).lean<{
+      _id: Types.ObjectId;
+    }>(),
+    Rider.findOne({ zwiftId: user.zwiftId }, { _id: false, imageSrc: true }).lean<{
+      imageSrc: string | null;
+    }>(),
+    TeamMemberModel.findOne({ user: user._id }, { team: true, _id: false }).lean<{
+      team: Types.ObjectId;
+    }>(),
+  ]);
 
   // Проверка активной подписки у Организатора в клубах которых пользователь является модератором.
   const periodSubscription = new PeriodSubscriptionService();
@@ -98,6 +104,7 @@ export async function createDataForClient({
   // Данные для токенов и для возвращения клиенту.
   return dtoProfileDataForClient({
     user: { ...user, moderator: activeClubs && { clubs: activeClubs } },
+    team: teamDB?.team,
     organizerId: organizerDB?._id,
     riderImg: riderDB?.imageSrc,
   });

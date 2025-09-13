@@ -64,7 +64,6 @@ const userSchema = new Schema<UserSchema>({
   gender: { type: String },
   birthday: { type: Number },
   city: { type: String },
-  team: { type: String },
   role: { type: String },
   moderator: { clubs: [String] },
   bio: { type: String },
