@@ -11,6 +11,10 @@ const TeamEditPage = lazy(() => import('../Pages/Team/Edit/TeamEdit'));
 
 /**
  * Маршруты для страниц команд.
+ * team:{
+ * id:string; id команды в которой состоит пользователь.
+ * isCreator:boolean; Является ли пользователь создателем команды с team.id
+ * }
  */
 export function TeamsRoute() {
   const {

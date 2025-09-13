@@ -30,7 +30,7 @@ export default function TeamMembersPage() {
   };
 
   useEffect(() => {
-    // dispatch(fetchTeamMember({ urlSlug }));
+    dispatch(fetchTeamMember({ urlSlug }));
   }, []);
 
   return (
