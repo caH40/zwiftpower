@@ -6,11 +6,11 @@ import { NavBarTeamControl } from '../../../components/UI/NavBarTeamControl/NavB
 
 import useTitle from '../../../hook/useTitle';
 
-import styles from './TeamControl.module.css';
+import styles from './TeamControlLayout.module.css';
 /**
  * Страница управления/редактирования командой.
  */
-export default function TeamControlPage() {
+export default function TeamControlLayout() {
   useTitle('Управление командой');
 
   const {

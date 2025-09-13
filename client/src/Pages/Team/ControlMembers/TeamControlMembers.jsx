@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { usePendingTeamMember } from '../../../hook/usePendingTeamMember';
 import { fetchTeamMember } from '../../../redux/features/api/team-member/fetchTeamMember';
 import {
   fetchGetBannedRiders,
@@ -12,6 +13,8 @@ import {
   resetBannedRiders,
   resetPendingRiders,
 } from '../../../redux/features/api/team/teamSlice';
+import TableTeamPendingUsers from '../../../components/Tables/TableTeamPendingUsers/TableTeamPendingUsers';
+import PendingUserControl from '../../../components/UI/PendingUserControl/PendingUserControl';
 
 import styles from './TeamControlMembers.module.css';
 
@@ -37,5 +40,16 @@ export default function TeamControlMembersPage() {
     dispatch(resetBannedRiders());
   }, []);
 
-  return <div className={styles.wrapper}>TeamControlMembersPage</div>;
+  const controlHandlers = usePendingTeamMember();
+
+  return (
+    <div className={styles.wrapper}>
+      <TableTeamPendingUsers
+        riders={pendingRiders}
+        Control={PendingUserControl}
+        caption={'Участники, подавшие заявку на вступление в команду'}
+        controlHandlers={controlHandlers}
+      />
+    </div>
+  );
 }
