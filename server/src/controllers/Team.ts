@@ -147,9 +147,31 @@ export class TeamController {
       }
 
       // Вызов сервиса.
-      const response = await this.teamService.getPendingRiders({
-        teamCreatorId: userId,
-      });
+      const response = await this.teamService.getPendingRiders(userId);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Контроллер получения списка заблокированных пользователей.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public getBannedRiders = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        return res.status(400).json({ message: 'Не получен userId!' });
+      }
+
+      // Вызов сервиса.
+      const response = await this.teamService.getBannedUsers(userId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

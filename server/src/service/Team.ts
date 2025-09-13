@@ -4,7 +4,12 @@ import slugify from 'slugify';
 import { TeamModel } from '../Model/Team.js';
 import { TeamMemberService } from './TeamMember.js';
 import { ImagesService } from './Images.js';
-import { pendingRiderDto, teamForListDto, teamPublicDto } from '../dto/teams.js';
+import {
+  bannedRiderDto,
+  pendingRiderDto,
+  teamForListDto,
+  teamPublicDto,
+} from '../dto/teams.js';
 import { TeamMemberModel } from '../Model/TeamMember.js';
 import { User } from '../Model/User.js';
 
@@ -13,6 +18,7 @@ import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { Rider } from '../Model/Rider.js';
+import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
 
 export class TeamService {
   constructor() {}
@@ -161,32 +167,103 @@ export class TeamService {
   /**
    * Получение списка пользователей, которые подали заявку на вступление в команду.
    */
-  async getPendingRiders({ teamCreatorId }: { teamCreatorId: string }): Promise<unknown> {
+  async getPendingRiders(
+    teamCreatorId: string
+  ): Promise<{ data: TPendingRiderDto[]; message: string }> {
     const teamDB = await TeamModel.findOne(
       { creator: teamCreatorId },
       { _id: false, pendingRiders: true, name: true }
-    ).lean<Pick<TTeam, 'pendingRiders' | 'name'>>();
+    )
+      .populate({ path: 'pendingRiders.user', select: ['-_id', 'zwiftId'] })
+      .lean<
+        Pick<TTeam, 'name'> & {
+          pendingRiders: { user: { zwiftId?: number }; requestedAt: Date }[];
+        }
+      >();
 
-    const userIds = teamDB?.pendingRiders.map((u) => u.user);
+    if (!teamDB) {
+      throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
+    }
 
-    const usersDB = await User.find(
-      { _id: { $in: userIds } },
-      { zwiftId: true, _id: false }
-    ).lean<{ zwiftId?: number }[]>();
-
-    const zwiftIds = usersDB
-      .map(({ zwiftId }) => zwiftId)
+    const zwiftIds = teamDB.pendingRiders
+      .map(({ user }) => user.zwiftId)
       .filter((item): item is number => !!item);
 
+    // Данные райдеров.
     const ridersDB = await Rider.find({ zwiftId: { $in: zwiftIds } }).lean<
       (RiderProfileSchema & { _id: Types.ObjectId })[]
     >();
 
-    const pendingRiderAfterDto = ridersDB.map((r) => pendingRiderDto(r));
+    // Добавление времени подачи заявки каждым райдером.
+    const riders = ridersDB.reduce<
+      (RiderProfileSchema & { _id: Types.ObjectId; requestedAt: Date })[]
+    >((acc, cur) => {
+      const requestedAt = teamDB.pendingRiders.find((p) => {
+        return p.user.zwiftId === cur.zwiftId;
+      })?.requestedAt;
+
+      if (requestedAt) {
+        acc.push({ ...cur, requestedAt });
+      }
+
+      return acc;
+    }, []);
+
+    const pendingRiderAfterDto = riders.map((r) => pendingRiderDto(r));
 
     return {
       data: pendingRiderAfterDto,
       message: `Список райдеров, подавших заявки на вступление в команду "${teamDB?.name}"`,
+    };
+  }
+
+  async getBannedUsers(
+    teamCreatorId: string
+  ): Promise<{ data: TBannedRiderDto[]; message: string }> {
+    const teamDB = await TeamModel.findOne(
+      { creator: teamCreatorId },
+      { _id: false, bannedRiders: true, name: true }
+    )
+      .populate({ path: 'bannedRiders.user', select: ['-_id', 'zwiftId'] })
+      .lean<
+        Pick<TTeam, 'name'> & {
+          bannedRiders: { user: { zwiftId?: number }; bannedAt: Date; reason?: string }[];
+        }
+      >();
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
+    }
+
+    const zwiftIds = teamDB.bannedRiders
+      .map(({ user }) => user.zwiftId)
+      .filter((item): item is number => !!item);
+
+    // Данные райдеров.
+    const ridersDB = await Rider.find({ zwiftId: { $in: zwiftIds } }).lean<
+      (RiderProfileSchema & { _id: Types.ObjectId })[]
+    >();
+
+    // Добавление времени подачи заявки каждым райдером.
+    const riders = ridersDB.reduce<
+      (RiderProfileSchema & { _id: Types.ObjectId; bannedAt: Date; bannedReason?: string })[]
+    >((acc, cur) => {
+      const bannedUser = teamDB.bannedRiders.find((p) => {
+        return p.user.zwiftId === cur.zwiftId;
+      });
+
+      if (bannedUser) {
+        acc.push({ ...cur, bannedAt: bannedUser.bannedAt, bannedReason: bannedUser.reason });
+      }
+
+      return acc;
+    }, []);
+
+    const bannedRiderAfterDto = riders.map((r) => bannedRiderDto(r));
+
+    return {
+      data: bannedRiderAfterDto,
+      message: 'Список заблокированных пользователей.',
     };
   }
 

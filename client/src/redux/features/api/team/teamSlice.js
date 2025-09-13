@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  fetchGetBannedRiders,
   fetchGetPendingRiders,
   fetchGetTeam,
   fetchGetTeams,
@@ -10,6 +11,7 @@ import {
 const initialState = {
   teams: [],
   pendingRiders: [],
+  bannedRiders: [],
   team: null,
   message: null,
   status: null,
@@ -28,6 +30,9 @@ const teamSlice = createSlice({
     },
     resetPendingRiders: (state) => {
       state.pendingRiders = [];
+    },
+    resetBannedRiders: (state) => {
+      state.bannedRiders = [];
     },
     resetTeam: (state) => {
       state.team = null;
@@ -86,9 +91,26 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+    // ============== заблокированные пользователи =================
+    builder.addCase(fetchGetBannedRiders.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetBannedRiders.fulfilled, (state, action) => {
+      state.bannedRiders = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetBannedRiders.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetTeam, resetTeams, resetPendingRiders } = teamSlice.actions;
+export const { resetTeam, resetTeams, resetPendingRiders, resetBannedRiders } =
+  teamSlice.actions;
 
 export default teamSlice.reducer;

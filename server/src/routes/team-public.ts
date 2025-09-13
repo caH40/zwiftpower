@@ -9,6 +9,7 @@ export const teamRouter = Router();
 const team = new TeamController();
 
 teamRouter.get('/pending-riders', checkAuth, team.getPendingRiders);
+teamRouter.get('/banned-riders', checkAuth, team.getBannedRiders);
 teamRouter.get('/:urlSlug', team.get);
 teamRouter.get('/', team.getAll);
 

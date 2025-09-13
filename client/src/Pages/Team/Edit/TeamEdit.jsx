@@ -1,7 +1,18 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { allowForTeamCreator } from '../../../utils/check-team-creator';
+import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
+import {
+  resetBannedRiders,
+  resetPendingRiders,
+} from '../../../redux/features/api/team/teamSlice';
+import {
+  fetchGetBannedRiders,
+  fetchGetPendingRiders,
+} from '../../../redux/features/api/team/fetchTeam';
+import { fetchTeamMember } from '../../../redux/features/api/team-member/fetchTeamMember';
 import useTitle from '../../../hook/useTitle';
 
 import styles from './TeamEdit.module.css';
@@ -16,7 +27,18 @@ export default function TeamEditPage() {
     status,
     user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
-  const { team } = useSelector((state) => state.team);
+  const { team, pendingRiders, bannedRiders } = useSelector((state) => state.team);
+  console.log({ pendingRiders, bannedRiders });
+
+  useEffect(() => {
+    dispatch(fetchTeamMember({ urlSlug }));
+    dispatch(fetchGetPendingRiders());
+    dispatch(fetchGetBannedRiders());
+
+    dispatch(resetTeamMembers());
+    dispatch(resetPendingRiders());
+    dispatch(resetBannedRiders());
+  }, []);
 
   const dispatch = useDispatch();
 

@@ -273,4 +273,9 @@ export type TTeamMemberPublicDto = {
   rider?: RiderProfileSchema;
 } & Pick<TTeamMember, 'role' | 'specialization' | 'createdAt'> & { _id: string };
 
-export type TPendingRiderDto = RiderProfileSchema & { _id: string };
+export type TPendingRiderDto = RiderProfileSchema & { _id: string; requestedAt: string };
+export type TBannedRiderDto = RiderProfileSchema & {
+  _id: string;
+  bannedAt: string;
+  bannedReason?: string;
+};

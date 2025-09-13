@@ -1,7 +1,12 @@
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
-import { TPendingRiderDto, TTeamForListDto, TTeamPublicDto } from '../types/dto.interface.js';
+import {
+  TBannedRiderDto,
+  TPendingRiderDto,
+  TTeamForListDto,
+  TTeamPublicDto,
+} from '../types/dto.interface.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema } from '../types/model.interface.js';
 import { Types } from 'mongoose';
@@ -31,7 +36,15 @@ export function teamPublicDto(team: TTeamPublicDB): TTeamPublicDto {
 }
 
 export function pendingRiderDto(
-  rider: RiderProfileSchema & { _id: Types.ObjectId }
+  rider: RiderProfileSchema & { _id: Types.ObjectId; requestedAt: Date }
 ): TPendingRiderDto {
-  return { ...rider, _id: rider._id.toString() };
+  const requestedAt = rider.requestedAt.toISOString();
+  return { ...rider, _id: rider._id.toString(), requestedAt };
+}
+
+export function bannedRiderDto(
+  rider: RiderProfileSchema & { _id: Types.ObjectId; bannedAt: Date; bannedReason?: string }
+): TBannedRiderDto {
+  const bannedAt = rider.bannedAt.toISOString();
+  return { ...rider, _id: rider._id.toString(), bannedAt, bannedReason: rider.bannedReason };
 }

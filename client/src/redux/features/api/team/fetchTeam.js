@@ -122,3 +122,24 @@ export const fetchGetPendingRiders = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Получения списка заблокированных пользователей.
+ */
+export const fetchGetBannedRiders = createAsyncThunk(
+  'bannedRiders/get',
+  async (_, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/teams/banned-riders`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
