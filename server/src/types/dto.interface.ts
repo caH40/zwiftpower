@@ -281,5 +281,6 @@ export type TPendingRiderDto = RiderProfileSchema & {
 export type TBannedRiderDto = RiderProfileSchema & {
   _id: string;
   bannedAt: string;
+  userId: string;
   bannedReason?: string;
 };

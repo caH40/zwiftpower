@@ -235,10 +235,14 @@ export class TeamService {
       { creator: teamCreatorId },
       { _id: false, bannedRiders: true, name: true }
     )
-      .populate({ path: 'bannedRiders.user', select: ['-_id', 'zwiftId'] })
+      .populate({ path: 'bannedRiders.user', select: ['zwiftId'] })
       .lean<
         Pick<TTeam, 'name'> & {
-          bannedRiders: { user: { zwiftId?: number }; bannedAt: Date; reason?: string }[];
+          bannedRiders: {
+            user: { zwiftId?: number; _id: Types.ObjectId };
+            bannedAt: Date;
+            reason?: string;
+          }[];
         }
       >();
 
@@ -257,14 +261,24 @@ export class TeamService {
 
     // Добавление времени подачи заявки каждым райдером.
     const riders = ridersDB.reduce<
-      (RiderProfileSchema & { _id: Types.ObjectId; bannedAt: Date; bannedReason?: string })[]
+      (RiderProfileSchema & {
+        _id: Types.ObjectId;
+        userId: Types.ObjectId;
+        bannedAt: Date;
+        bannedReason?: string;
+      })[]
     >((acc, cur) => {
       const bannedUser = teamDB.bannedRiders.find((p) => {
         return p.user.zwiftId === cur.zwiftId;
       });
 
       if (bannedUser) {
-        acc.push({ ...cur, bannedAt: bannedUser.bannedAt, bannedReason: bannedUser.reason });
+        acc.push({
+          ...cur,
+          bannedAt: bannedUser.bannedAt,
+          bannedReason: bannedUser.reason,
+          userId: bannedUser.user._id,
+        });
       }
 
       return acc;

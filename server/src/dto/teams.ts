@@ -49,8 +49,20 @@ export function pendingRiderDto(
 }
 
 export function bannedRiderDto(
-  rider: RiderProfileSchema & { _id: Types.ObjectId; bannedAt: Date; bannedReason?: string }
+  rider: RiderProfileSchema & {
+    _id: Types.ObjectId;
+    userId: Types.ObjectId;
+    bannedAt: Date;
+    bannedReason?: string;
+  }
 ): TBannedRiderDto {
   const bannedAt = rider.bannedAt.toISOString();
-  return { ...rider, _id: rider._id.toString(), bannedAt, bannedReason: rider.bannedReason };
+  const userId = rider.userId.toString();
+  return {
+    ...rider,
+    _id: rider._id.toString(),
+    bannedAt,
+    bannedReason: rider.bannedReason,
+    userId,
+  };
 }
