@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +7,11 @@ const TeamCreatePage = lazy(() => import('../Pages/TeamCreate/TeamCreate'));
 const TeamPageLayout = lazy(() => import('../Pages/Team/TeamPageLayout'));
 const TeamMembersPage = lazy(() => import('../Pages/Team/Members/TeamMembers'));
 const TeamResultsPage = lazy(() => import('../Pages/Team/Results/TeamResults'));
-const TeamEditPage = lazy(() => import('../Pages/Team/Edit/TeamEdit'));
+const TeamControlPage = lazy(() => import('../Pages/Team/Control/TeamControl'));
+const TeamControlMembersPage = lazy(() =>
+  import('../Pages/Team/ControlMembers/TeamControlMembers')
+);
+const TeamControlEditPage = lazy(() => import('../Pages/Team/ControlEdit/TeamControlEdit'));
 
 /**
  * Маршруты для страниц команд.
@@ -32,7 +36,13 @@ export function TeamsRoute() {
         <Route path="members" element={<TeamMembersPage />} />
         <Route path="results" element={<TeamResultsPage />} />
 
-        {status && userInTeam?.isCreator && <Route path="edit" element={<TeamEditPage />} />}
+        {status && userInTeam?.isCreator && (
+          <Route path="control" element={<TeamControlPage />}>
+            <Route index element={<Navigate to="members" replace />} />
+            <Route path="members" element={<TeamControlMembersPage />} />
+            <Route path="edit" element={<TeamControlEditPage />} />
+          </Route>
+        )}
       </Route>
     </>
   );

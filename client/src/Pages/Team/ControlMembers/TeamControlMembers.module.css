@@ -1,0 +1,19 @@
+.wrapper {
+  min-height: calc(100vh - 60px);
+}
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.control {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+/* ====================================================================== */
+@media (max-width: 578px) {
+  .cards {
+    justify-content: center;
+  }
+}
