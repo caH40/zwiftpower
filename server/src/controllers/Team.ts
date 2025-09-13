@@ -4,8 +4,6 @@ import { handleErrorInController } from '../errors/error.js';
 import { TeamService } from '../service/Team.js';
 import { TeamZSchema } from '../utils/deserialization/team.js';
 
-// types
-
 /**
  * Контроллер работы с сущностью "Команда".
  */

@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux';
 
 import { getAlert } from '../redux/features/alertMessageSlice';
+import { fetchControlMembers } from '../redux/features/api/team-member/fetchTeamMember';
+import { fetchGetPendingRiders } from '../redux/features/api/team/fetchTeam';
 
 export function usePendingTeamMember() {
   const dispatch = useDispatch();
@@ -13,8 +15,12 @@ export function usePendingTeamMember() {
     }
 
     try {
-      const res = await dispatch().unwrap();
-      dispatch(getAlert({ message: res, type: 'success', isOpened: true }));
+      const res = await dispatch(fetchControlMembers({ userId, action: 'approve' })).unwrap();
+
+      // Запрос обновленного списка участников.
+      dispatch(fetchGetPendingRiders());
+
+      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
     } catch (error) {
       dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
     }

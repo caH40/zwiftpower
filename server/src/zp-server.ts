@@ -27,7 +27,7 @@ import { siteServiceRouter } from './routes/site-service.js';
 import { paymentsRouter } from './routes/payments.js';
 import { notificationsRouter } from './routes/notifications.js';
 import { siteServicePriceRouter } from './routes/price.js';
-import { teamRouter } from './routes/team-public.js';
+import { teamRouter } from './routes/team.js';
 import { teamMemberRouter } from './routes/team-member.js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 

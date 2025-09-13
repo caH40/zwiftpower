@@ -32,3 +32,5 @@ export type TCreateTeamParams = Pick<
 export type TTeamMembersForDto = TTeamMembersPublicDB & {
   rider?: RiderProfileSchema;
 };
+
+export type TControlMemberAction = 'approve' | 'cancel' | 'ban' | 'cancelBan';

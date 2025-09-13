@@ -2,6 +2,7 @@ import mongoose, { Types } from 'mongoose';
 import slugify from 'slugify';
 
 import { TeamModel } from '../Model/Team.js';
+import { Rider } from '../Model/Rider.js';
 import { TeamMemberService } from './TeamMember.js';
 import { ImagesService } from './Images.js';
 import {
@@ -17,7 +18,6 @@ import { User } from '../Model/User.js';
 import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
-import { Rider } from '../Model/Rider.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
 
 export class TeamService {
@@ -174,10 +174,13 @@ export class TeamService {
       { creator: teamCreatorId },
       { _id: false, pendingRiders: true, name: true }
     )
-      .populate({ path: 'pendingRiders.user', select: ['-_id', 'zwiftId'] })
+      .populate({ path: 'pendingRiders.user', select: ['zwiftId'] })
       .lean<
         Pick<TTeam, 'name'> & {
-          pendingRiders: { user: { zwiftId?: number }; requestedAt: Date }[];
+          pendingRiders: {
+            user: { zwiftId?: number; _id: Types.ObjectId };
+            requestedAt: Date;
+          }[];
         }
       >();
 
@@ -196,14 +199,22 @@ export class TeamService {
 
     // Добавление времени подачи заявки каждым райдером.
     const riders = ridersDB.reduce<
-      (RiderProfileSchema & { _id: Types.ObjectId; requestedAt: Date })[]
+      (RiderProfileSchema & {
+        _id: Types.ObjectId;
+        userId: Types.ObjectId;
+        requestedAt: Date;
+      })[]
     >((acc, cur) => {
-      const requestedAt = teamDB.pendingRiders.find((p) => {
+      const pendingRider = teamDB.pendingRiders.find((p) => {
         return p.user.zwiftId === cur.zwiftId;
-      })?.requestedAt;
+      });
 
-      if (requestedAt) {
-        acc.push({ ...cur, requestedAt });
+      if (pendingRider) {
+        acc.push({
+          ...cur,
+          requestedAt: pendingRider.requestedAt,
+          userId: pendingRider.user._id,
+        });
       }
 
       return acc;

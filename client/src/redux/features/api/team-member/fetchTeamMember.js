@@ -24,3 +24,25 @@ export const fetchTeamMember = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Управление участниками команды.
+ */
+export const fetchControlMembers = createAsyncThunk(
+  'controlMembers/post',
+  async ({ action, userId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/team-members`,
+        method: 'post',
+        data: { action, teamMemberId: userId },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

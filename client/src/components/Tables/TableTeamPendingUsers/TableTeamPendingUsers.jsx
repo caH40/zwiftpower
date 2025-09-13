@@ -48,7 +48,7 @@ function TableTeamPendingUsers({ riders = [], caption, Control, controlHandlers 
 
             <td>
               <Control
-                userId={rider._id}
+                userId={rider.userId}
                 name={`${rider.firstName} ${rider.lastName}`}
                 controlHandlers={controlHandlers}
               />

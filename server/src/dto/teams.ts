@@ -36,10 +36,16 @@ export function teamPublicDto(team: TTeamPublicDB): TTeamPublicDto {
 }
 
 export function pendingRiderDto(
-  rider: RiderProfileSchema & { _id: Types.ObjectId; requestedAt: Date }
+  rider: RiderProfileSchema & {
+    _id: Types.ObjectId;
+    userId: Types.ObjectId;
+    requestedAt: Date;
+  }
 ): TPendingRiderDto {
   const requestedAt = rider.requestedAt.toISOString();
-  return { ...rider, _id: rider._id.toString(), requestedAt };
+  const userId = rider.userId.toString();
+
+  return { ...rider, _id: rider._id.toString(), requestedAt, userId };
 }
 
 export function bannedRiderDto(

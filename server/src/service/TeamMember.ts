@@ -4,8 +4,8 @@ import { teamMemberPublicDto } from '../dto/team-member.js';
 
 // types
 import { TTeamMembersPublicDB } from '../types/mongodb-response.types.js';
-import { TTeamMembersForDto, TTeamRole } from '../types/team.types.js';
-import { RiderProfileSchema } from '../types/model.interface.js';
+import { TControlMemberAction, TTeamMembersForDto, TTeamRole } from '../types/team.types.js';
+import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TeamModel } from '../Model/Team.js';
 import { Types } from 'mongoose';
 import { TTeamMemberPublicDto } from '../types/dto.interface.js';
@@ -79,5 +79,70 @@ export class TeamMemberService {
     }
 
     return teamDB;
+  }
+
+  /**
+   * Управление участниками команды.
+   */
+  async controlMembers({
+    teamCreatorId,
+    teamMemberId,
+    action,
+  }: {
+    teamCreatorId: string;
+    teamMemberId: string;
+    action: TControlMemberAction;
+  }): Promise<{ message: string }> {
+    let response = { message: 'start' };
+    const teamDB = await TeamModel.findOne(
+      { creator: teamCreatorId },
+      { pendingRiders: true, bannedRiders: true }
+    ).lean<Pick<TTeam, '_id' | 'pendingRiders' | 'bannedRiders'>>();
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
+    }
+
+    if (action === 'approve') {
+      response = await this.approveRequest({ team: teamDB, teamCreatorId, teamMemberId });
+    } else if (action === 'cancel') {
+      response = { message: 'cancel' };
+    } else if (action === 'ban') {
+      response = { message: 'ban' };
+    } else {
+      throw new Error('Не получен валидный action для действий с участником команды!');
+    }
+
+    return response;
+  }
+
+  private async approveRequest({
+    team,
+    teamCreatorId,
+    teamMemberId,
+  }: {
+    team: Pick<TTeam, '_id' | 'pendingRiders' | 'bannedRiders'>;
+    teamCreatorId: string;
+    teamMemberId: string;
+  }): Promise<{ message: string }> {
+    const candidate = team.pendingRiders.find((u) => u.user._id.equals(teamMemberId));
+
+    if (!candidate) {
+      throw new Error(
+        `Не найдена заявка от пользователя _id: "${teamMemberId}" для присоединения к команде `
+      );
+    }
+
+    // Удаляем заявку от кандидата из массива заявок команды.
+    await TeamModel.findOneAndUpdate(
+      { creator: teamCreatorId },
+      { $pull: { pendingRiders: { user: teamMemberId } } },
+      { new: true }
+    );
+
+    return await this.create({
+      userId: teamMemberId,
+      teamId: team._id.toString(),
+    });
   }
 }
