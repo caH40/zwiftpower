@@ -7,6 +7,7 @@ const TeamCreatePage = lazy(() => import('../Pages/TeamCreate/TeamCreate'));
 const TeamPageLayout = lazy(() => import('../Pages/Team/TeamPageLayout'));
 const TeamMembersPage = lazy(() => import('../Pages/Team/Members/TeamMembers'));
 const TeamResultsPage = lazy(() => import('../Pages/Team/Results/TeamResults'));
+const TeamEditPage = lazy(() => import('../Pages/Team/Edit/TeamEdit'));
 
 /**
  * Маршруты для страниц команд.
@@ -14,18 +15,20 @@ const TeamResultsPage = lazy(() => import('../Pages/Team/Results/TeamResults'));
 export function TeamsRoute() {
   const {
     status,
-    user: { team: userInAnyTeam },
+    user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
   return (
     <>
       <Route path="/teams" element={<TeamsPublic />} />
-      {status && !userInAnyTeam && (
+      {status && !userInTeam?.id && (
         <Route path="/moderation/teams/create" element={<TeamCreatePage />} />
       )}
       <Route path="/teams/:urlSlug" element={<TeamPageLayout />}>
         <Route path="members" element={<TeamMembersPage />} />
         <Route path="results" element={<TeamResultsPage />} />
+
+        {status && userInTeam?.isCreator && <Route path="edit" element={<TeamEditPage />} />}
       </Route>
     </>
   );

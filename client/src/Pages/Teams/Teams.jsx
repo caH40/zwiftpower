@@ -20,7 +20,7 @@ export default function TeamsPublic() {
 
   const {
     status,
-    user: { team: userInAnyTeam },
+    user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
   // Данные организаторов из хранилища редакс.
@@ -44,7 +44,7 @@ export default function TeamsPublic() {
       <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
 
       {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
-      {status && !userInAnyTeam && (
+      {status && !userInTeam?.id && (
         <div className={styles.control}>
           <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
         </div>

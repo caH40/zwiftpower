@@ -8,7 +8,10 @@ export interface GenerateToken {
   id: Types.ObjectId;
   role: string;
   photoProfile?: string | null;
-  team?: string;
+  team?: {
+    id: string;
+    isCreator: boolean;
+  };
   moderator?: {
     clubs: string[];
   };

@@ -89,9 +89,11 @@ export async function createDataForClient({
     Rider.findOne({ zwiftId: user.zwiftId }, { _id: false, imageSrc: true }).lean<{
       imageSrc: string | null;
     }>(),
-    TeamMemberModel.findOne({ user: user._id }, { team: true, _id: false }).lean<{
-      team: Types.ObjectId;
-    }>(),
+    TeamMemberModel.findOne({ user: user._id }, { team: true, _id: false })
+      .populate({ path: 'team', select: ['creator'] })
+      .lean<{
+        team: { _id: Types.ObjectId; creator: Types.ObjectId };
+      }>(),
   ]);
 
   // Проверка активной подписки у Организатора в клубах которых пользователь является модератором.
@@ -104,7 +106,10 @@ export async function createDataForClient({
   // Данные для токенов и для возвращения клиенту.
   return dtoProfileDataForClient({
     user: { ...user, moderator: activeClubs && { clubs: activeClubs } },
-    team: teamDB?.team,
+    team: teamDB?.team && {
+      id: teamDB?.team._id.toString(),
+      isCreator: teamDB?.team.creator.equals(user._id),
+    },
     organizerId: organizerDB?._id,
     riderImg: riderDB?.imageSrc,
   });

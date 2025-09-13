@@ -15,7 +15,7 @@ export default function TeamMembersPage() {
   const { teamMembers } = useSelector((state) => state.teamMember);
   const {
     status,
-    user: { team: userInAnyTeam },
+    user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
   const dispatch = useDispatch();
@@ -30,13 +30,13 @@ export default function TeamMembersPage() {
   };
 
   useEffect(() => {
-    dispatch(fetchTeamMember({ urlSlug }));
+    // dispatch(fetchTeamMember({ urlSlug }));
   }, []);
 
   return (
     <div className={styles.wrapper}>
       {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
-      {status && !userInAnyTeam && (
+      {status && !userInTeam?.id && (
         <div className={styles.control}>
           <Button getClick={join}>Присоединиться</Button>
         </div>

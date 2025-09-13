@@ -12,6 +12,10 @@ import styles from './TeamPageLayout.module.css';
 export default function TeamPage() {
   const { urlSlug } = useParams();
   const { team } = useSelector((state) => state.team);
+  const {
+    status,
+    user: { team: userInTeam },
+  } = useSelector((state) => state.checkAuth.value);
 
   const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ export default function TeamPage() {
 
       {/* Кнопки навигации по страницам организатора */}
       <div className={styles.box__navbar}>
-        <NavBarTeamPublic urlSlug={team?.urlSlug} />
+        <NavBarTeamPublic urlSlug={team?.urlSlug} isCreator={status && userInTeam?.isCreator} />
       </div>
 
       <Outlet />

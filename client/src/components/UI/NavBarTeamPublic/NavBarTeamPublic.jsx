@@ -2,14 +2,17 @@ import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
-import { teamButtons } from '../../../assets/team-buttons';
+import { teamButtons, teamEditButton } from '../../../assets/team-buttons';
 
 import styles from './NavBarTeamPublic.module.css';
 
-export function NavBarTeamPublic({ urlSlug, addCls }) {
+export function NavBarTeamPublic({ urlSlug, addCls, isCreator }) {
+  // Добавляем кнопку управления если пользователь является создателем команды.
+  const buttons = isCreator ? [...teamButtons, teamEditButton] : teamButtons;
+
   const getStyle = (isActive, index) => {
     // в зависимости от относительного положения и количества кнопок применяются разные стили
-    const quantityBtn = teamButtons.length;
+    const quantityBtn = buttons.length;
 
     const positions = {
       [styles.button__left]: index === 0 && quantityBtn !== 1,
@@ -27,7 +30,7 @@ export function NavBarTeamPublic({ urlSlug, addCls }) {
   return (
     <nav className={cn(styles.wrapper, cns(styles, addCls))}>
       <div className={styles.wrapper__buttons}>
-        {teamButtons.map((buttonLink, index) => (
+        {buttons.map((buttonLink, index) => (
           <NavLink
             className={({ isActive }) => getStyle(isActive, index)}
             to={`/teams/${urlSlug}${buttonLink.page}`}
