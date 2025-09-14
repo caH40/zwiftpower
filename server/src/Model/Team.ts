@@ -40,7 +40,4 @@ const teamSchema = new Schema<TTeamDocument>(
   { timestamps: true }
 );
 
-// Уникальный индекс для name без учёта регистра.
-teamSchema.index({ name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } });
-
 export const TeamModel = model<TTeamDocument>('Team', teamSchema);

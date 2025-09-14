@@ -69,6 +69,13 @@ export class TeamService {
     if (isTeamNameExists) {
       throw new Error(`Выбранное название команды: "${team.name}" уже существует!`);
     }
+    const isTeamShortNameExists = await this.isTeamShortNameExists(team.shortName);
+
+    if (isTeamShortNameExists) {
+      throw new Error(
+        `Выбранное короткое название команды: "${team.shortName}" уже существует!`
+      );
+    }
     const alreadyHasTeam = await this.alreadyHasTeam(team.creator);
 
     if (alreadyHasTeam) {
@@ -323,10 +330,19 @@ export class TeamService {
   }
 
   /**
-   * Проверка уникальности urlSlug.
+   * Проверка уникальности Name и следовательно urlSlug.
    */
   private async isTeamNameExists(name: string): Promise<boolean> {
-    return Boolean(await TeamModel.exists({ name }));
+    return Boolean(await TeamModel.exists({ name }).collation({ locale: 'en', strength: 2 }));
+  }
+
+  /**
+   * Проверка уникальности Name и следовательно urlSlug.
+   */
+  private async isTeamShortNameExists(shortName: string): Promise<boolean> {
+    return Boolean(
+      await TeamModel.exists({ shortName }).collation({ locale: 'en', strength: 2 })
+    );
   }
 
   /**
