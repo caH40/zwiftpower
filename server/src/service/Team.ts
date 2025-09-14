@@ -65,18 +65,8 @@ export class TeamService {
     logoFile?: Express.Multer.File;
     posterFile?: Express.Multer.File;
   }): Promise<{ message: string }> {
-    const isTeamNameExists = await this.isTeamNameExists(team.name);
-
-    if (isTeamNameExists) {
-      throw new Error(`Выбранное название команды: "${team.name}" уже существует!`);
-    }
-    const isTeamShortNameExists = await this.isTeamShortNameExists(team.shortName);
-
-    if (isTeamShortNameExists) {
-      throw new Error(
-        `Выбранное короткое название команды: "${team.shortName}" уже существует!`
-      );
-    }
+    await this.assertTeamFieldUnique('name', team.name);
+    await this.assertTeamFieldUnique('shortName', team.shortName);
 
     const alreadyHasTeam = await this.alreadyHasTeam(team.creator);
 
@@ -320,10 +310,14 @@ export class TeamService {
     logoFile,
     posterFile,
   }: {
-    team: TCreateTeamParams & { _id: string };
+    team: TCreateTeamParams & { _id?: string };
     logoFile?: Express.Multer.File;
     posterFile?: Express.Multer.File;
   }): Promise<unknown> {
+    if (!team._id) {
+      throw new Error('Не получен teamId');
+    }
+
     const teamDB = await TeamModel.findOne({ _id: team._id, creator: team.creator });
 
     if (!teamDB) {
@@ -401,36 +395,6 @@ export class TeamService {
         } команды: "${value}" уже существует!`
       );
     }
-  }
-
-  /**
-   * Проверка уникальности Name и следовательно urlSlug.
-   * Если передан exceptTeamId, то исключить команду с _id:exceptTeamId
-   */
-  private async isTeamNameExists(name: string, exceptTeamId?: string): Promise<boolean> {
-    const query: { name: string; _id?: { $ne: string } } = { name };
-
-    if (exceptTeamId) {
-      query._id = { $ne: exceptTeamId };
-    }
-
-    return Boolean(await TeamModel.exists(query).collation({ locale: 'en', strength: 2 }));
-  }
-
-  /**
-   * Проверка уникальности Name и следовательно urlSlug.
-   */
-  private async isTeamShortNameExists(
-    shortName: string,
-    exceptTeamId?: string
-  ): Promise<boolean> {
-    const query: { shortName: string; _id?: { $ne: string } } = { shortName };
-
-    if (exceptTeamId) {
-      query._id = { $ne: exceptTeamId };
-    }
-
-    return Boolean(await TeamModel.exists(query).collation({ locale: 'en', strength: 2 }));
   }
 
   /**

@@ -23,7 +23,7 @@ export const SocialLinksZSchema = z.object({
 });
 
 export const TeamZSchema = z.object({
-  _id: z.string().describe('_id изменяемой команды в БД'),
+  _id: z.string().optional().describe('_id изменяемой команды в БД'),
   name: z.string().min(2).describe('Название'),
   shortName: z.string().min(2).describe('Короткое название'),
   mission: z.string().optional().describe('Цель'),
