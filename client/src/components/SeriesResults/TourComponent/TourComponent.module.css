@@ -1,3 +1,6 @@
 .box__navbar {
   margin: 10px 0 15px;
 }
+.wrapper__wide {
+  overflow-x: auto;
+}
