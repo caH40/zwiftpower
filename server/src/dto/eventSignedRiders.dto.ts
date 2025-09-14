@@ -6,7 +6,7 @@ import { EventWithSignedRiders } from '../types/types.interface.js';
  * DTO для отправки данных Event и зарегистрированных райдеров
  */
 export const eventSignedRidersDto = (event: EventWithSignedRiders) => {
-  const seriesId = {
+  const seriesId = event.seriesId && {
     _id: String(event.seriesId._id),
     name: event.seriesId.name,
     urlSlug: event.seriesId.urlSlug,
