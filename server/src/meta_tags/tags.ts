@@ -199,3 +199,17 @@ export const getTeamsMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Создание команды"
+ */
+export const getCreateTeamsMeta = (url: string): MetaTags => {
+  const title = 'Создать команду на сайте Zwiftpower.ru – Организация и управление';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Создайте собственную велосипедную команду на сайте Zwiftpower.ru! Добавляйте участников, настраивайте профиль команды и участвуйте в гонках, турах и сериях под своим флагом. 🚴‍♂️🚴‍♀️💨';
+  const image = 'http://zwiftpower.ru/images/open_graph/teams.png';
+  const recommendationsTag = 'createTeams';
+
+  return { title, canonical, description, image, recommendationsTag };
+};

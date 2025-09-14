@@ -9,6 +9,7 @@ import {
   getSignedRidersMeta,
 } from './tags-async.js';
 import {
+  getCreateTeamsMeta,
   getFTPMeta,
   getFaqMeta,
   getHomeMeta,
@@ -71,6 +72,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getSeriesMeta(url);
   } else if (url.includes('/teams')) {
     tags = getTeamsMeta(url);
+  } else if (url.includes('/moderation/teams/create')) {
+    tags = getCreateTeamsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }
