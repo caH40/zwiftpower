@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchPostJoinRequestInTeam } from '../../../redux/features/api/team/fetchTeam';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
-import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
+import {
+  fetchPostLeaveTeam,
+  fetchTeamMembers,
+} from '../../../redux/features/api/team-member/fetchTeamMember';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../../components/UI/Button/Button';
 import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
@@ -24,6 +27,16 @@ export default function TeamMembersPage() {
   const join = async () => {
     try {
       const res = await dispatch(fetchPostJoinRequestInTeam({ urlSlug })).unwrap();
+      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
+    } catch (error) {
+      dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
+    }
+  };
+
+  const leave = async () => {
+    try {
+      const res = await dispatch(fetchPostLeaveTeam({ urlSlug })).unwrap();
+      dispatch(fetchTeamMembers({ urlSlug }));
       dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
     } catch (error) {
       dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
@@ -50,6 +63,14 @@ export default function TeamMembersPage() {
           <CardTeamMember key={m._id} member={m} />
         ))}
       </section>
+
+      {status && userInTeam?.id && (
+        <div className={styles.control}>
+          <Button getClick={leave} addCls="back">
+            Выйти из состава команды
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

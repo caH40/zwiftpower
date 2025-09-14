@@ -232,6 +232,39 @@ export class TeamMemberService {
   }
 
   /**
+   * Выход участника из команды.
+   */
+  async leave({
+    urlSlug,
+    teamMemberId,
+  }: {
+    urlSlug: string;
+    teamMemberId: string;
+  }): Promise<{ message: string }> {
+    const teamDB = await TeamModel.findOne({ urlSlug }, { name: true, creator: true }).lean<{
+      _id: Types.ObjectId;
+      creator: Types.ObjectId;
+      name: string;
+    }>();
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда с urlSlug:"${urlSlug}"!`);
+    }
+
+    if (teamDB.creator.equals(teamMemberId)) {
+      throw new Error('Невозможно выйти создателю команды из команды!');
+    }
+
+    const res = await TeamMemberModel.findOneAndDelete({ user: teamMemberId });
+
+    if (!res) {
+      throw new Error(`Вы не числитесь в составе команды "${teamDB.name}"`);
+    }
+
+    return { message: `Вы покинули команду "${teamDB.name}"` };
+  }
+
+  /**
    * Удаление заявки от кандидата из массива заявок команды.
    */
   private async removePendingUser({

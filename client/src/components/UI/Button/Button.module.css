@@ -34,6 +34,7 @@
 .w_full {
   width: 100%;
 }
+
 .danger {
   background-color: var(--error);
 }
@@ -46,6 +47,7 @@
 .td {
   font-size: 11px;
 }
+
 .back {
   background-color: var(--color-orange-3);
 }

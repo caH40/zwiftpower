@@ -9,4 +9,5 @@ const member = new TeamMemberController();
 
 teamMemberRouter.get('/:urlSlug', member.getAll);
 
+teamMemberRouter.post('/leave', checkAuth, member.leave);
 teamMemberRouter.post('/', checkAuth, member.controlMembers);

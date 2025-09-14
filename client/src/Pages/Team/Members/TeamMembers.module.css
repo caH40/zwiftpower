@@ -6,6 +6,7 @@
   align-items: flex-start;
   gap: 20px;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 .control {
   text-align: right;

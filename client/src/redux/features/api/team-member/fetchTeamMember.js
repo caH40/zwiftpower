@@ -26,6 +26,28 @@ export const fetchTeamMembers = createAsyncThunk(
 );
 
 /**
+ * Выход из состава команды.
+ */
+export const fetchPostLeaveTeam = createAsyncThunk(
+  'leaveFromTeam/post',
+  async ({ urlSlug }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/team-members/leave`,
+        method: 'post',
+        data: { urlSlug },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+/**
  * Управление участниками команды.
  */
 export const fetchControlMembers = createAsyncThunk(
