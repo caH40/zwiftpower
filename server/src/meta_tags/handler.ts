@@ -22,6 +22,7 @@ import {
   getSeriesMeta,
   getStatisticsMeta,
   getStreamsMeta,
+  getTeamsMeta,
 } from './tags.js';
 
 /**
@@ -68,6 +69,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getSeriesResultsMeta(url);
   } else if (url === '/series') {
     tags = getSeriesMeta(url);
+  } else if (url.includes('/teams')) {
+    getTeamsMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

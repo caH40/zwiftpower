@@ -185,3 +185,17 @@ export const getOrganizersPublicMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Команды"
+ */
+export const getTeamsMeta = (url: string): MetaTags => {
+  const title = 'Велосипедные команды Zwift – Составы, Участники, Результаты';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Откройте для себя велосипедные команды в Zwift! Составы участников, результаты гонок и рейтинги. Присоединяйтесь к командам и участвуйте в виртуальных заездах вместе! 🚴‍♀️🚴‍♂️🔥';
+  const image = 'http://zwiftpower.ru/images/open_graph/teams.png';
+  const recommendationsTag = 'teams';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
