@@ -18,7 +18,7 @@ export default function TeamMemberControl({ userId, name, controlHandlers }) {
       <IconBan
         addCls="pointer"
         squareSize={20}
-        tooltip="Забанить"
+        tooltip="Заблокировать"
         getClick={() => controlHandlers.handleBanUser({ userId, name })}
       />
     </div>

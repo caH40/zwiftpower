@@ -5,7 +5,10 @@ import {
   fetchControlMembers,
   fetchTeamMembers,
 } from '../redux/features/api/team-member/fetchTeamMember';
-import { fetchGetPendingRiders } from '../redux/features/api/team/fetchTeam';
+import {
+  fetchGetBannedRiders,
+  fetchGetPendingRiders,
+} from '../redux/features/api/team/fetchTeam';
 
 /**
  * Хук с обработчиками блока контроля над пользователем, подавшем заявку на вступление в команду.
@@ -30,8 +33,8 @@ export function useControlTeamMember({ urlSlug }) {
       const res = await dispatch(fetchControlMembers({ userId, action: 'approve' })).unwrap();
 
       // Запрос обновленного списка участников.
-      dispatch(fetchGetPendingRiders());
-      dispatch(fetchTeamMembers({ urlSlug }));
+      // dispatch(fetchGetPendingRiders());
+      // dispatch(fetchTeamMembers({ urlSlug }));
 
       dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
     } catch (error) {
@@ -78,6 +81,30 @@ export function useControlTeamMember({ urlSlug }) {
 
       // Запрос обновленного списка участников.
       dispatch(fetchGetPendingRiders());
+      dispatch(fetchTeamMembers({ urlSlug }));
+      dispatch(fetchGetBannedRiders());
+
+      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
+    } catch (error) {
+      dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
+    }
+  }
+
+  /**
+   * Обработчик для разблокировки пользователя для команды.
+   */
+  async function handleCancelBanUser({ userId, name }) {
+    const confirmResponse = window.confirm(`Заблокировать пользователя ${name} для команды?`);
+    if (!confirmResponse) {
+      dispatch(getAlert({ message: 'Отмена действия', type: 'warning', isOpened: true }));
+      return;
+    }
+
+    try {
+      const res = await dispatch(fetchControlMembers({ userId, action: 'cancelBan' })).unwrap();
+
+      // Запрос обновленного списка участников.
+      dispatch(fetchGetBannedRiders());
 
       dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
     } catch (error) {
@@ -99,7 +126,6 @@ export function useControlTeamMember({ urlSlug }) {
       const res = await dispatch(fetchControlMembers({ userId, action: 'exclude' })).unwrap();
 
       // Запрос обновленного списка участников.
-      dispatch(fetchGetPendingRiders());
       dispatch(fetchTeamMembers({ urlSlug }));
 
       dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
@@ -108,5 +134,11 @@ export function useControlTeamMember({ urlSlug }) {
     }
   }
 
-  return { handleApproveRequest, handleRejectRequest, handleBanUser, handleExcludeUser };
+  return {
+    handleApproveRequest,
+    handleRejectRequest,
+    handleBanUser,
+    handleExcludeUser,
+    handleCancelBanUser,
+  };
 }

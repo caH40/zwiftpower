@@ -1,4 +1,5 @@
 import IconAdd from '../../icons/IconAdd';
+import { IconBan } from '../../icons/IconBan';
 import IconDelete from '../../icons/IconDelete';
 
 import styles from './PendingUserControl.module.css';
@@ -22,10 +23,10 @@ export default function PendingUserControl({ userId, name, controlHandlers }) {
         tooltip="Отказать"
         getClick={() => controlHandlers.handleRejectRequest({ userId, name })}
       />
-      <IconDelete
+      <IconBan
         addCls="pointer"
         squareSize={20}
-        tooltip="Забанить"
+        tooltip="Заблокировать"
         getClick={() => controlHandlers.handleBanUser({ userId, name })}
       />
     </div>

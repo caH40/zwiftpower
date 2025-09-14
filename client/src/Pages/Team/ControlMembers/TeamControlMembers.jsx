@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useControlTeamMember } from '../../../hook/useControlTeamMember';
 import { useMembersForControl } from '../../../hook/useMembersForControl';
 import TableTeamMembers from '../../../components/Tables/TableTeamMembers/TableTeamMembers';
+import BanUserControl from '../../../components/UI/BanUserControl/BanUserControl';
 import PendingUserControl from '../../../components/UI/PendingUserControl/PendingUserControl';
 import TeamMemberControl from '../../../components/UI/TeamMemberControl/TeamMemberControl';
 
@@ -19,6 +20,11 @@ export default function TeamControlMembersPage() {
   const { urlSlug } = useParams();
   const { team, pendingRiders, bannedRiders } = useSelector((state) => state.team);
   const { teamMembers } = useSelector((state) => state.teamMember);
+
+  // Скрыть панель управления у создателя команды.
+  // const {
+  //   user: { id: creatorId },
+  // } = useSelector((state) => state.checkAuth.value);
 
   useMembersForControl(urlSlug);
 
@@ -40,6 +46,15 @@ export default function TeamControlMembersPage() {
           riders={pendingRiders}
           Control={PendingUserControl}
           caption={'Участники, подавшие заявку на вступление в команду'}
+          controlHandlers={controlHandlers}
+        />
+      </div>
+
+      <div className={styles.tableContainer}>
+        <TableTeamMembers
+          riders={bannedRiders}
+          Control={BanUserControl}
+          caption={'Заблокированные участники'}
           controlHandlers={controlHandlers}
         />
       </div>

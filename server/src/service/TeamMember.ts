@@ -111,9 +111,9 @@ export class TeamMemberService {
     } else if (action === 'exclude') {
       response = await this.delete({ teamCreatorId, teamMemberId });
     } else if (action === 'ban') {
-      response = { message: 'В разработке!' };
+      response = await this.banUser({ teamCreatorId, teamMemberId });
     } else if (action === 'cancelBan') {
-      response = { message: 'В разработке!' };
+      response = await this.cancelBan({ teamCreatorId, bannedUserId: teamMemberId });
     } else {
       throw new Error('Не получен валидный action для действий с участником команды!');
     }
@@ -145,6 +145,65 @@ export class TeamMemberService {
       userId: teamMemberId,
       teamId: team._id.toString(),
     });
+  }
+
+  /**
+   * Снятие блокировки с участника.
+   */
+  private async cancelBan({
+    teamCreatorId,
+    bannedUserId,
+  }: {
+    teamCreatorId: string;
+    bannedUserId: string;
+  }): Promise<{ message: string }> {
+    await TeamModel.findOneAndUpdate(
+      { creator: teamCreatorId },
+      { $pull: { bannedRiders: { user: bannedUserId } } }
+    );
+
+    return { message: 'С пользователя снята блокировка.' };
+  }
+
+  /**
+   * Блокировка пользователя.
+   */
+  private async banUser({
+    teamCreatorId,
+    teamMemberId,
+  }: {
+    teamCreatorId: string;
+    teamMemberId: string;
+  }): Promise<{ message: string }> {
+    if (teamCreatorId === teamMemberId) {
+      throw new Error('Невозможно заблокировать создателя команды!');
+    }
+
+    const teamDB = await TeamModel.findOneAndUpdate(
+      { creator: teamCreatorId },
+      { $push: { bannedRiders: { user: teamMemberId } } }
+    );
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
+    }
+
+    // Если была заявка на вступление, удаление заявки.
+    await this.removePendingUser({
+      teamCreatorId,
+      teamMemberId,
+    });
+
+    // Удаление участника из команды, если он там состоял.
+    const isExistedUser = await TeamMemberModel.exists({ user: teamMemberId });
+    if (isExistedUser) {
+      await this.delete({
+        teamCreatorId,
+        teamMemberId,
+      });
+    }
+
+    return { message: 'Участник заблокирован в команде.' };
   }
 
   /**
@@ -184,8 +243,7 @@ export class TeamMemberService {
   }): Promise<{ message: string }> {
     await TeamModel.findOneAndUpdate(
       { creator: teamCreatorId },
-      { $pull: { pendingRiders: { user: teamMemberId } } },
-      { new: true }
+      { $pull: { pendingRiders: { user: teamMemberId } } }
     );
 
     return { message: 'Заявка на присоединение к команде удалена из списка.' };
