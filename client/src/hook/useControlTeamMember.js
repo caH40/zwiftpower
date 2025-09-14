@@ -33,8 +33,8 @@ export function useControlTeamMember({ urlSlug }) {
       const res = await dispatch(fetchControlMembers({ userId, action: 'approve' })).unwrap();
 
       // Запрос обновленного списка участников.
-      // dispatch(fetchGetPendingRiders());
-      // dispatch(fetchTeamMembers({ urlSlug }));
+      dispatch(fetchGetPendingRiders());
+      dispatch(fetchTeamMembers({ urlSlug }));
 
       dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
     } catch (error) {

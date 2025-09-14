@@ -1,6 +1,9 @@
 import IconAdd from '../../icons/IconAdd';
 import { IconBan } from '../../icons/IconBan';
 import IconDelete from '../../icons/IconDelete';
+import { ApproveTeamMemberIcon } from '../../icons/TeamMemberControl/ApproveTeamMemberIcon';
+import { BanTeamMemberIcon } from '../../icons/TeamMemberControl/BanTeamMemberIcon';
+import { RejectTeamMemberIcon } from '../../icons/TeamMemberControl/RejectTeamMemberIcon';
 
 import styles from './PendingUserControl.module.css';
 
@@ -10,25 +13,14 @@ import styles from './PendingUserControl.module.css';
 export default function PendingUserControl({ userId, name, controlHandlers }) {
   return (
     <div className={styles.controlContainer}>
-      <IconAdd
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Принять заявку"
-        getClick={() => controlHandlers.handleApproveRequest({ userId, name })}
+      <ApproveTeamMemberIcon
+        handler={() => controlHandlers.handleApproveRequest({ userId, name })}
       />
-      <IconDelete
-        color={'orange'}
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Отказать"
-        getClick={() => controlHandlers.handleRejectRequest({ userId, name })}
+
+      <RejectTeamMemberIcon
+        handler={() => controlHandlers.handleRejectRequest({ userId, name })}
       />
-      <IconBan
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Заблокировать"
-        getClick={() => controlHandlers.handleBanUser({ userId, name })}
-      />
+      <BanTeamMemberIcon handler={() => controlHandlers.handleBanUser({ userId, name })} />
     </div>
   );
 }

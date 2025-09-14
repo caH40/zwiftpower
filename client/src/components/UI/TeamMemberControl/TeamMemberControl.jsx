@@ -1,5 +1,7 @@
 import { IconBan } from '../../icons/IconBan';
 import IconDelete from '../../icons/IconDelete';
+import { BanTeamMemberIcon } from '../../icons/TeamMemberControl/BanTeamMemberIcon';
+import { ExcludeTeamMemberIcon } from '../../icons/TeamMemberControl/ExcludeTeamMemberIcon';
 
 import styles from './TeamMemberControl.module.css';
 
@@ -9,18 +11,11 @@ import styles from './TeamMemberControl.module.css';
 export default function TeamMemberControl({ userId, name, controlHandlers }) {
   return (
     <div className={styles.controlContainer}>
-      <IconDelete
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Исключить из команды"
-        getClick={() => controlHandlers.handleExcludeUser({ userId, name })}
+      <ExcludeTeamMemberIcon
+        handler={() => controlHandlers.handleExcludeUser({ userId, name })}
       />
-      <IconBan
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Заблокировать"
-        getClick={() => controlHandlers.handleBanUser({ userId, name })}
-      />
+
+      <BanTeamMemberIcon handler={() => controlHandlers.handleBanUser({ userId, name })} />
     </div>
   );
 }

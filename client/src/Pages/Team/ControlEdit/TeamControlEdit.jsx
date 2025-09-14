@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 
+import UnderConstruction from '../../../components/UnderConstruction/UnderConstruction';
+
 import styles from './TeamControlEdit.module.css';
 
 /**
@@ -8,5 +10,9 @@ import styles from './TeamControlEdit.module.css';
 export default function TeamControlEditPage() {
   const { urlSlug } = useParams();
 
-  return <div className={styles.wrapper}>TeamControlEdit</div>;
+  return (
+    <div className={styles.wrapper}>
+      <UnderConstruction />
+    </div>
+  );
 }

@@ -1,4 +1,5 @@
 import { IconBan } from '../../icons/IconBan';
+import { CancelBanTeamMemberIcon } from '../../icons/TeamMemberControl/CancelBanTeamMemberIcon';
 
 import styles from './BanUserControl.module.css';
 
@@ -8,12 +9,8 @@ import styles from './BanUserControl.module.css';
 export default function BanUserControl({ userId, name, controlHandlers }) {
   return (
     <div className={styles.controlContainer}>
-      <IconBan
-        color="green"
-        addCls="pointer"
-        squareSize={20}
-        tooltip="Снять блокировку"
-        getClick={() => controlHandlers.handleCancelBanUser({ userId, name })}
+      <CancelBanTeamMemberIcon
+        handler={() => controlHandlers.handleCancelBanUser({ userId, name })}
       />
     </div>
   );

@@ -19,11 +19,16 @@ export default function TeamControlLayout() {
   } = useSelector((state) => state.checkAuth.value);
   const { team } = useSelector((state) => state.team);
 
+  if (!team) {
+    // Ещё не подтянули данные — ничего не делаем
+    return <div>Загрузка...</div>;
+  }
+
   const showPage = allowForTeamCreator({ status, teamIdForPermission: team?._id, userInTeam });
   // Если пользователь не создатель команды - редирект на 404
-  // if (!showPage) {
-  //   return <Navigate to="/404" replace />;
-  // }
+  if (!showPage) {
+    return <Navigate to="/404" replace />;
+  }
   return (
     <div className={styles.wrapper}>
       {/* Кнопки навигации по страницам организатора */}
