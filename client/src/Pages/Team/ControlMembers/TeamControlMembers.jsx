@@ -1,20 +1,11 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { usePendingTeamMember } from '../../../hook/usePendingTeamMember';
-import { fetchTeamMember } from '../../../redux/features/api/team-member/fetchTeamMember';
-import {
-  fetchGetBannedRiders,
-  fetchGetPendingRiders,
-} from '../../../redux/features/api/team/fetchTeam';
-import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
-import {
-  resetBannedRiders,
-  resetPendingRiders,
-} from '../../../redux/features/api/team/teamSlice';
-import TableTeamPendingUsers from '../../../components/Tables/TableTeamPendingUsers/TableTeamPendingUsers';
+import { useControlTeamMember } from '../../../hook/useControlTeamMember';
+import { useMembersForControl } from '../../../hook/useMembersForControl';
+import TableTeamMembers from '../../../components/Tables/TableTeamMembers/TableTeamMembers';
 import PendingUserControl from '../../../components/UI/PendingUserControl/PendingUserControl';
+import TeamMemberControl from '../../../components/UI/TeamMemberControl/TeamMemberControl';
 
 import styles from './TeamControlMembers.module.css';
 
@@ -27,29 +18,31 @@ import styles from './TeamControlMembers.module.css';
 export default function TeamControlMembersPage() {
   const { urlSlug } = useParams();
   const { team, pendingRiders, bannedRiders } = useSelector((state) => state.team);
+  const { teamMembers } = useSelector((state) => state.teamMember);
 
-  const dispatch = useDispatch();
+  useMembersForControl(urlSlug);
 
-  useEffect(() => {
-    dispatch(fetchTeamMember({ urlSlug }));
-    dispatch(fetchGetPendingRiders());
-    dispatch(fetchGetBannedRiders());
-
-    dispatch(resetTeamMembers());
-    dispatch(resetPendingRiders());
-    dispatch(resetBannedRiders());
-  }, []);
-
-  const controlHandlers = usePendingTeamMember();
+  const controlHandlers = useControlTeamMember({ urlSlug });
 
   return (
-    <div className={styles.wrapper}>
-      <TableTeamPendingUsers
-        riders={pendingRiders}
-        Control={PendingUserControl}
-        caption={'Участники, подавшие заявку на вступление в команду'}
-        controlHandlers={controlHandlers}
-      />
-    </div>
+    <section className={styles.wrapper}>
+      <div className={styles.tableContainer}>
+        <TableTeamMembers
+          riders={teamMembers.map((m) => ({ ...m.rider, _id: m._id, userId: m.userId }))}
+          Control={TeamMemberControl}
+          caption={'Участники команды'}
+          controlHandlers={controlHandlers}
+        />
+      </div>
+
+      <div className={styles.tableContainer}>
+        <TableTeamMembers
+          riders={pendingRiders}
+          Control={PendingUserControl}
+          caption={'Участники, подавшие заявку на вступление в команду'}
+          controlHandlers={controlHandlers}
+        />
+      </div>
+    </section>
   );
 }

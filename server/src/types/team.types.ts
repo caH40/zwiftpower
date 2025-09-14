@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants';
 
 // types
@@ -31,6 +32,7 @@ export type TCreateTeamParams = Pick<
 
 export type TTeamMembersForDto = TTeamMembersPublicDB & {
   rider?: RiderProfileSchema;
+  userId: Types.ObjectId;
 };
 
-export type TControlMemberAction = 'approve' | 'cancel' | 'ban' | 'cancelBan';
+export type TControlMemberAction = 'approve' | 'cancel' | 'ban' | 'cancelBan' | 'exclude';

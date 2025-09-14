@@ -22,7 +22,7 @@ export class TeamMemberService {
       { team: _id },
       { role: true, specialization: true, createdAt: true }
     )
-      .populate({ path: 'user', select: ['zwiftId', '-_id'] })
+      .populate({ path: 'user', select: ['zwiftId'] })
       .lean<TTeamMembersPublicDB[]>();
 
     const zwiftIds = teamMembersDB
@@ -35,7 +35,8 @@ export class TeamMemberService {
 
     const teamMembers = teamMembersDB.reduce<TTeamMembersForDto[]>((acc, cur) => {
       const rider = ridersDB.find((r) => r.zwiftId === cur.user.zwiftId);
-      acc.push({ ...cur, rider });
+
+      acc.push({ ...cur, rider, userId: cur.user._id });
       return acc;
     }, []);
 
@@ -106,9 +107,13 @@ export class TeamMemberService {
     if (action === 'approve') {
       response = await this.approveRequest({ team: teamDB, teamCreatorId, teamMemberId });
     } else if (action === 'cancel') {
-      response = { message: 'cancel' };
+      response = await this.removePendingUser({ teamCreatorId, teamMemberId });
+    } else if (action === 'exclude') {
+      response = await this.delete({ teamCreatorId, teamMemberId });
     } else if (action === 'ban') {
-      response = { message: 'ban' };
+      response = { message: 'В разработке!' };
+    } else if (action === 'cancelBan') {
+      response = { message: 'В разработке!' };
     } else {
       throw new Error('Не получен валидный action для действий с участником команды!');
     }
@@ -133,16 +138,56 @@ export class TeamMemberService {
       );
     }
 
-    // Удаляем заявку от кандидата из массива заявок команды.
+    // Удаление заявки от кандидата из массива заявок команды.
+    await this.removePendingUser({ teamCreatorId, teamMemberId });
+
+    return await this.create({
+      userId: teamMemberId,
+      teamId: team._id.toString(),
+    });
+  }
+
+  /**
+   * Исключение пользователя из команды.
+   */
+  private async delete({
+    teamCreatorId,
+    teamMemberId,
+  }: {
+    teamCreatorId: string;
+    teamMemberId: string;
+  }): Promise<{ message: string }> {
+    if (teamCreatorId === teamMemberId) {
+      throw new Error('Невозможно удалить создателя команды!');
+    }
+
+    const memberDB = await TeamMemberModel.findOneAndDelete({ user: teamMemberId });
+    // FIXME: добавить userId в запрос на участников команды
+    if (!memberDB) {
+      throw new Error(
+        `Не найден пользователь с _id:"${teamMemberId}" для исключения из команды!`
+      );
+    }
+
+    return { message: 'Участник исключен из команды.' };
+  }
+
+  /**
+   * Удаление заявки от кандидата из массива заявок команды.
+   */
+  private async removePendingUser({
+    teamCreatorId,
+    teamMemberId,
+  }: {
+    teamCreatorId: string;
+    teamMemberId: string;
+  }): Promise<{ message: string }> {
     await TeamModel.findOneAndUpdate(
       { creator: teamCreatorId },
       { $pull: { pendingRiders: { user: teamMemberId } } },
       { new: true }
     );
 
-    return await this.create({
-      userId: teamMemberId,
-      teamId: team._id.toString(),
-    });
+    return { message: 'Заявка на присоединение к команде удалена из списка.' };
   }
 }

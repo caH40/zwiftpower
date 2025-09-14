@@ -187,5 +187,5 @@ export type TTeamMembersPublicDB = Pick<
   TTeamMember,
   '_id' | 'role' | 'specialization' | 'createdAt'
 > & {
-  user: { zwiftId?: number };
+  user: { zwiftId?: number; _id: Types.ObjectId };
 };

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchPostJoinRequestInTeam } from '../../../redux/features/api/team/fetchTeam';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
-import { fetchTeamMember } from '../../../redux/features/api/team-member/fetchTeamMember';
+import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import Button from '../../../components/UI/Button/Button';
 import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
@@ -31,7 +31,7 @@ export default function TeamMembersPage() {
   };
 
   useEffect(() => {
-    dispatch(fetchTeamMember({ urlSlug }));
+    dispatch(fetchTeamMembers({ urlSlug }));
 
     dispatch(resetTeamMembers());
   }, []);

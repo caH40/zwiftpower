@@ -7,7 +7,7 @@ import { serverExpress } from '../../../../config/environment';
 /**
  * Получение всех участников команды.
  */
-export const fetchTeamMember = createAsyncThunk(
+export const fetchTeamMembers = createAsyncThunk(
   'teamMembers/getAll',
   async ({ urlSlug }, thunkAPI) => {
     try {

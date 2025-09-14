@@ -13,7 +13,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableTeamPendingUsers({ riders = [], caption, Control, controlHandlers }) {
+function TableTeamMembers({ riders = [], caption, Control, controlHandlers }) {
   return (
     <table className={cx('table')}>
       <caption className={styles.caption}>{caption}</caption>
@@ -60,4 +60,4 @@ function TableTeamPendingUsers({ riders = [], caption, Control, controlHandlers 
   );
 }
 
-export default TableTeamPendingUsers;
+export default TableTeamMembers;

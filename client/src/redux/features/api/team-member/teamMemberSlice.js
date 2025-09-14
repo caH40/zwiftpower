@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchTeamMember } from './fetchTeamMember';
+import { fetchTeamMembers } from './fetchTeamMember';
 
 const initialState = {
   teamMembers: [],
@@ -23,18 +23,18 @@ const teamMemberSlice = createSlice({
 
   extraReducers: (builder) => {
     // ============== получение всех участников команды =================
-    builder.addCase(fetchTeamMember.pending, (state) => {
+    builder.addCase(fetchTeamMembers.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
 
-    builder.addCase(fetchTeamMember.fulfilled, (state, action) => {
+    builder.addCase(fetchTeamMembers.fulfilled, (state, action) => {
       state.teamMembers = action.payload.data;
       state.error = null;
       state.status = 'resolved';
     });
 
-    builder.addCase(fetchTeamMember.rejected, (state, action) => {
+    builder.addCase(fetchTeamMembers.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
