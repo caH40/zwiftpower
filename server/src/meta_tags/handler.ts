@@ -70,7 +70,7 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getSeriesResultsMeta(url);
   } else if (url === '/series') {
     tags = getSeriesMeta(url);
-  } else if (url.includes('/teams')) {
+  } else if (url === '/teams') {
     tags = getTeamsMeta(url);
   } else if (url.includes('/moderation/teams/create')) {
     tags = getCreateTeamsMeta(url);
