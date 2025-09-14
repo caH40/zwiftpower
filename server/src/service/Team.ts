@@ -19,6 +19,7 @@ import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
+import { FilterQuery } from 'mongoose';
 
 export class TeamService {
   constructor() {}
@@ -76,6 +77,7 @@ export class TeamService {
         `Выбранное короткое название команды: "${team.shortName}" уже существует!`
       );
     }
+
     const alreadyHasTeam = await this.alreadyHasTeam(team.creator);
 
     if (alreadyHasTeam) {
@@ -310,10 +312,56 @@ export class TeamService {
     return !!userDB?.zwiftId;
   }
 
-  // /**
-  //  * Обновление данных команды.
-  //  */
-  // async put({ creatorId }: { creatorId: string }): Promise<unknown> {}
+  /**
+   * Обновление данных команды.
+   */
+  async put({
+    team,
+    logoFile,
+    posterFile,
+  }: {
+    team: TCreateTeamParams & { _id: string };
+    logoFile?: Express.Multer.File;
+    posterFile?: Express.Multer.File;
+  }): Promise<unknown> {
+    const teamDB = await TeamModel.findOne({ _id: team._id, creator: team.creator });
+
+    if (!teamDB) {
+      throw new Error(
+        `Не найден изменяемая команда с _id: "${team._id}" и создателем creator: "${team.creator}"`
+      );
+    }
+
+    await this.assertTeamFieldUnique('name', team.name, team._id);
+    await this.assertTeamFieldUnique('shortName', team.shortName, team._id);
+
+    // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
+    const { logoFileInfo, posterFileInfo } = await ImagesService.save({
+      name: team.name,
+      shortName: team.shortName,
+      baseNameLogoOld: teamDB.logoFileInfo?.baseName,
+      baseNamePosterOld: teamDB.posterFileInfo?.baseName,
+      logoFile,
+      posterFile,
+    });
+
+    // Итоговые данные для сохранения в БД.
+    const updateFields = {
+      name: team.name,
+      shortName: team.shortName,
+      mission: team.mission,
+      description: team.description,
+      ...(logoFileInfo && { logoFileInfo }),
+      ...(posterFileInfo && { posterFileInfo }),
+    };
+
+    Object.assign(teamDB, updateFields);
+
+    // Сохранение Серии в БД.
+    await teamDB.save();
+
+    return { data: null, message: `Обновлены данные Команды "${team.name}"!` };
+  }
 
   // /**
   //  * Удаление команды.
@@ -330,19 +378,59 @@ export class TeamService {
   }
 
   /**
-   * Проверка уникальности Name и следовательно urlSlug.
+   * Проверка уникальности Name или shortName.
+   * Если передан exceptTeamId, то исключить команду с _id:exceptTeamId
    */
-  private async isTeamNameExists(name: string): Promise<boolean> {
-    return Boolean(await TeamModel.exists({ name }).collation({ locale: 'en', strength: 2 }));
+  private async assertTeamFieldUnique(
+    field: 'name' | 'shortName',
+    value: string,
+    exceptTeamId?: string
+  ): Promise<void> {
+    const query: FilterQuery<typeof TeamModel> = { [field]: value };
+
+    if (exceptTeamId) {
+      query._id = { $ne: exceptTeamId };
+    }
+
+    const exists = await TeamModel.exists(query).collation({ locale: 'en', strength: 2 });
+
+    if (exists) {
+      throw new Error(
+        `Выбранное ${
+          field === 'name' ? 'название' : 'короткое название'
+        } команды: "${value}" уже существует!`
+      );
+    }
+  }
+
+  /**
+   * Проверка уникальности Name и следовательно urlSlug.
+   * Если передан exceptTeamId, то исключить команду с _id:exceptTeamId
+   */
+  private async isTeamNameExists(name: string, exceptTeamId?: string): Promise<boolean> {
+    const query: { name: string; _id?: { $ne: string } } = { name };
+
+    if (exceptTeamId) {
+      query._id = { $ne: exceptTeamId };
+    }
+
+    return Boolean(await TeamModel.exists(query).collation({ locale: 'en', strength: 2 }));
   }
 
   /**
    * Проверка уникальности Name и следовательно urlSlug.
    */
-  private async isTeamShortNameExists(shortName: string): Promise<boolean> {
-    return Boolean(
-      await TeamModel.exists({ shortName }).collation({ locale: 'en', strength: 2 })
-    );
+  private async isTeamShortNameExists(
+    shortName: string,
+    exceptTeamId?: string
+  ): Promise<boolean> {
+    const query: { shortName: string; _id?: { $ne: string } } = { shortName };
+
+    if (exceptTeamId) {
+      query._id = { $ne: exceptTeamId };
+    }
+
+    return Boolean(await TeamModel.exists(query).collation({ locale: 'en', strength: 2 }));
   }
 
   /**

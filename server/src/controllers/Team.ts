@@ -16,9 +16,6 @@ export class TeamController {
 
   /**
    * Получает данные команды.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public get = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -40,9 +37,6 @@ export class TeamController {
 
   /**
    * Получает список всех команд.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public getAll = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -58,9 +52,6 @@ export class TeamController {
 
   /**
    * Создание команды.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public post = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -98,10 +89,45 @@ export class TeamController {
   };
 
   /**
+   * Обновление данных команды.
+   */
+  public put = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        return res.status(400).json({ message: 'Не получен userId!' });
+      }
+
+      const result = TeamZSchema.safeParse(req.body);
+
+      if (!result.success) {
+        return res.status(400).json({ errors: result.error.format() });
+      }
+
+      const parsedTeamData = result.data;
+
+      // Получение файлов изображений, если они есть.
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const logoFile = files?.logoFile?.[0];
+      const posterFile = files?.posterFile?.[0];
+
+      // Вызов сервиса.
+      const response = await this.teamService.put({
+        team: { ...parsedTeamData, creator: userId },
+        logoFile,
+        posterFile,
+      });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
    * Обработчик заявки на вступление.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public handleJoinRequest = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -132,9 +158,6 @@ export class TeamController {
 
   /**
    * Контроллер получения списка пользователей, которые подали заявку на вступление в команду.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public getPendingRiders = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -156,9 +179,6 @@ export class TeamController {
 
   /**
    * Контроллер получения списка заблокированных пользователей.
-   * @param {Request} req - Запрос Express.
-   * @param {Response} res - Ответ Express.
-   * @returns {Promise<Response>} JSON-ответ с сериями.
    */
   public getBannedRiders = async (req: Request, res: Response): Promise<Response | void> => {
     try {

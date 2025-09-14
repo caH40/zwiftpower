@@ -23,6 +23,8 @@ teamRouter.post(
   ]),
   team.post
 );
+
+// put
 teamRouter.put(
   '/',
   checkAuth,
@@ -30,5 +32,5 @@ teamRouter.put(
     { name: 'logoFile', maxCount: 1 },
     { name: 'posterFile', maxCount: 1 },
   ]),
-  team.post
+  team.put
 );

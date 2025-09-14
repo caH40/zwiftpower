@@ -24,7 +24,7 @@ export default function FormCreateTeam({
 
   team,
   loading,
-  setTrigger,
+  onSuccessUpdate,
 }) {
   const [resetImage, setResetImage] = useState(false);
   // Статус загрузки текущей формы на сервер.
@@ -57,7 +57,7 @@ export default function FormCreateTeam({
   const onSubmit = async (formData) => {
     try {
       setLoadingForm(true);
-      // console.log(stagesAdded);
+
       // Сериализация данных перед отправкой на сервер.
       const serializedSeriesData = serializeTeamCreate(formData);
 
@@ -75,8 +75,9 @@ export default function FormCreateTeam({
         setLogoSrcState(null);
         setPosterSrcState(null);
       } else {
-        // Триггер запускает запрос на получение обновлённых данных.
-        setTrigger((prev) => !prev);
+        // Получение обновленных данных команды.
+        reset();
+        onSuccessUpdate();
       }
     } catch (error) {
       console.log(error); // eslint-disable-line
