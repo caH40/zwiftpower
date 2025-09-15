@@ -1,8 +1,10 @@
+import cn from 'classnames/bind';
+
 import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './icon.module.css';
 
-function IconCloseBox({ squareSize = 24, tooltip, color = '#ff7c00' }) {
+function IconCloseBox({ squareSize = 24, tooltip, pulse, color = '#ff7c00' }) {
   return (
     <MyTooltip tooltip={tooltip}>
       <div className={styles.box} style={{ width: squareSize, height: squareSize }}>
@@ -13,7 +15,13 @@ function IconCloseBox({ squareSize = 24, tooltip, color = '#ff7c00' }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M1 1H26V25H1V1Z" fill={color} stroke="white" strokeWidth="2" />
+          <path
+            d="M1 1H26V25H1V1Z"
+            fill={color}
+            stroke="white"
+            strokeWidth="2"
+            className={cn(styles[pulse])}
+          />
           <line
             y1="-1.5"
             x2="12.9126"

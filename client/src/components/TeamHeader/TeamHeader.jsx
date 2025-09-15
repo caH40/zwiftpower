@@ -9,7 +9,6 @@ import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import ButtonUrl from '../UI/ButtonUrl/ButtonUrl';
 import IconTelegram from '../icons/IconTelegram';
 import IconWebsite from '../icons/IconWebsite';
-
 import IconVk from '../icons/IconVk';
 
 import styles from './TeamHeader.module.css';
@@ -39,6 +38,7 @@ export default function TeamHeader({
             isOpened={isOpenDescription}
             tooltip={'Открыть подробное описание Организатора'}
             color="#0f4fa8"
+            pulse={'bluePulseStroke'}
           />
         </div>
 

@@ -49,6 +49,7 @@ export default function OrganizerHeader({
             isOpened={isOpenDescription}
             tooltip={'Открыть подробное описание Организатора'}
             color="#0f4fa8"
+            pulse="bluePulseStroke"
           />
         </div>
 

@@ -78,3 +78,33 @@
 .cursorInherit {
   cursor: inherit;
 }
+.orangePulseStroke {
+  animation: orangePulseStrokeKeyframes 1.5s infinite ease-in-out;
+}
+
+@keyframes orangePulseStrokeKeyframes {
+  0%,
+  100% {
+    stroke-width: 2;
+    stroke: white;
+  }
+  50% {
+    stroke-width: 4;
+    stroke: #ff7c00;
+  }
+}
+.bluePulseStroke {
+  animation: bluePulseStrokeKeyframes 1.5s infinite ease-in-out;
+}
+
+@keyframes bluePulseStrokeKeyframes {
+  0%,
+  100% {
+    stroke-width: 2;
+    stroke: white;
+  }
+  50% {
+    stroke-width: 4;
+    stroke: #0f4fa8;
+  }
+}

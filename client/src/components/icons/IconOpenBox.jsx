@@ -13,7 +13,13 @@ function IconOpenBox({ squareSize = 24, tooltip, color = '#FF7C00' }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M1 1H26V25H1V1Z" fill={color} stroke="white" strokeWidth="2" />
+          <path
+            d="M1 1H26V25H1V1Z"
+            fill={color}
+            stroke="white"
+            strokeWidth="2"
+            className={styles.alarm}
+          />
           <line
             y1="-1.5"
             x2="12.9126"

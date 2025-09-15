@@ -3,13 +3,13 @@ import IconCloseBox from '../../icons/IconCloseBox';
 
 import styles from './OpenBoxArrow.module.css';
 
-function OpenBoxArrow({ isOpened, getClick, tooltip, color }) {
+function OpenBoxArrow({ isOpened, getClick, tooltip, color, pulse }) {
   return (
     <div className={styles.box__open} onClick={getClick}>
       {isOpened ? (
-        <IconOpenBox squareSize={22} color={color} />
+        <IconOpenBox squareSize={28} color={color} pulse={pulse} />
       ) : (
-        <IconCloseBox squareSize={22} tooltip={tooltip} color={color} />
+        <IconCloseBox squareSize={28} tooltip={tooltip} color={color} pulse={pulse} />
       )}
     </div>
   );

@@ -57,6 +57,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
             getClick={openDetailed}
             isOpened={isOpened}
             tooltip={'Открыть подробное описание заезда'}
+            pulse={'orangePulseStroke'}
           />
         </div>
 
