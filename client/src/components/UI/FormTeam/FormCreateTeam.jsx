@@ -110,7 +110,7 @@ export default function FormCreateTeam({
             register={register('shortName', {
               required: 'Обязательное поле',
               minLength: { value: 2, message: 'Больше 1 символов' },
-              maxLength: { value: 10, message: 'Не больше 10 символов' },
+              maxLength: { value: 10, message: 'Не больше 12 символов' },
             })}
             validationText={errors.shortName?.message || ''}
             input={{ id: 'shortName-FormTeamCreate', type: 'text' }}

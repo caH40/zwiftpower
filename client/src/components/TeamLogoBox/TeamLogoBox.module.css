@@ -1,0 +1,22 @@
+.link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.shortName {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  padding: 3px 4px;
+  border: 1px solid white;
+  color: white;
+  background-color: var(--color-blue-main);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+/* .shortName:hover {
+  color: chartreuse;
+  border: 1px solid chartreuse;
+} */

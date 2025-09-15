@@ -58,7 +58,6 @@ function SignedRiders() {
   }, [event, navigate, eventId]);
 
   // useAd(adNumbers);
-  console.log(event.signedRiders);
 
   return (
     <>

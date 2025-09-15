@@ -11,6 +11,7 @@ import TdRider from '../Td/TdRider';
 import TdCpWatts from '../Td/TdCpWatts';
 import TdWeight from '../Td/TdWeight';
 import CategoryRSBox from '../../CategoryRSBox/CategoryRSBox';
+import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 
 import styles from '../Table.module.css';
 
@@ -47,7 +48,7 @@ function TableSignedRiders({ riders = [], event }) {
             />
 
             {/* для "space-between" столбцов */}
-            <td></td>
+            <td>{rider.team && <TeamLogoBox team={rider.team} />}</td>
 
             <td>
               <CategoryRSBox racingScore={rider.racingScore || 0} zwiftId={rider.id} />
