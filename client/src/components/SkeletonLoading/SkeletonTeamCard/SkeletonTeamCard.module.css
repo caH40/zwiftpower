@@ -1,0 +1,101 @@
+.cardSkeleton {
+  position: relative;
+  height: 280px;
+  border-radius: 20px;
+  width: 280px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.skeletonBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--skeleton-light);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonContentWrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.4);
+  padding: 30px;
+  text-align: center;
+}
+
+.skeletonLogoContainer {
+  margin-bottom: 15px;
+}
+
+.skeletonLogo {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  background: var(--skeleton-medium);
+  border: 4px solid var(--skeleton-border-light);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.skeletonTextContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.skeletonTeamName {
+  width: 70%;
+  height: 22px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonViewText {
+  width: 40%;
+  height: 14px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-color: var(--skeleton-light);
+    border-color: var(--skeleton-border-light);
+  }
+  50% {
+    background-color: var(--skeleton-medium);
+    border-color: var(--skeleton-border-dark);
+  }
+  100% {
+    background-color: var(--skeleton-light);
+    border-color: var(--skeleton-border-light);
+  }
+}
+
+@media (max-width: 768px) {
+  .cardSkeleton {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .skeletonTeamName {
+    height: 18px;
+  }
+
+  .skeletonLogo {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -107,4 +107,10 @@ select {
   --catT: var(--color-blue-3);
 
   --focus-within: color-mix(in srgb, var(--color-blue-main), transparent 70%);
+
+  --skeleton-light: #f0f0f0;
+  --skeleton-medium: #d5d5d5;
+  --skeleton-dark: #c5c5c5;
+  --skeleton-border-light: #e8e8e8;
+  --skeleton-border-dark: #d8d8d8;
 }

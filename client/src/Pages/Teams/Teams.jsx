@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { SkeletonTeamCard } from '../../components/SkeletonLoading/SkeletonTeamCard/SkeletonTeamCard';
 import { helmetProps } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
@@ -24,7 +25,7 @@ export default function TeamsPublic() {
   } = useSelector((state) => state.checkAuth.value);
 
   // Данные организаторов из хранилища редакс.
-  const { teams } = useSelector((state) => state.team);
+  const { status: fetchTeamsStatus, teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
 
   // // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Teams.
@@ -50,13 +51,13 @@ export default function TeamsPublic() {
         </div>
       )}
 
-      {!!shuffledTeams?.length && (
-        <section className={styles.cards}>
-          {teams.map((team) => (
-            <CardTeam key={team._id} {...team} />
-          ))}
-        </section>
-      )}
+      <section className={styles.cards}>
+        {[1, 2, 3].map((i) => (
+          <SkeletonTeamCard status={'loading'} key={i} />
+        ))}
+
+        {!!shuffledTeams?.length && teams.map((team) => <CardTeam key={team._id} {...team} />)}
+      </section>
     </div>
   );
 }
