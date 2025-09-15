@@ -3,6 +3,8 @@ import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetTeam } from '../../redux/features/api/team/fetchTeam';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
+import { SkeletonTeamHeader } from '../../components/SkeletonLoading/SkeletonTeamHeader/SkeletonTeamHeader';
 import { allowForTeamCreator } from '../../utils/check-team-creator';
 import { resetTeam } from '../../redux/features/api/team/teamSlice';
 import { NavBarTeamPublic } from '../../components/UI/NavBarTeamPublic/NavBarTeamPublic';
@@ -12,7 +14,7 @@ import styles from './TeamPageLayout.module.css';
 
 export default function TeamPage() {
   const { urlSlug } = useParams();
-  const { team } = useSelector((state) => state.team);
+  const { status: fetchTeamStatus, team } = useSelector((state) => state.team);
   const {
     status,
     user: { team: userInTeam },
@@ -29,6 +31,12 @@ export default function TeamPage() {
   const isCreator = allowForTeamCreator({ status, teamIdForPermission: team?._id, userInTeam });
   return (
     <div className={styles.wrapper}>
+      {renderSkeletonCards({
+        count: 1,
+        SkeletonComponent: SkeletonTeamHeader,
+        status: fetchTeamStatus,
+      })}
+
       {team && <TeamHeader team={team} />}
 
       {/* Кнопки навигации по страницам организатора */}
