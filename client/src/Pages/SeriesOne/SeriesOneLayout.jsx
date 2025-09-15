@@ -6,8 +6,11 @@ import { Outlet, useParams } from 'react-router-dom';
 import { fetchGetSeriesOne } from '../../redux/features/api/series/fetchSeries';
 import SeriesOneHeader from '../../components/SeriesOneHeader/SeriesOneHeader';
 import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSeriesPublic';
-// import AdContainer from '../../components/AdContainer/AdContainer';
+import { resetSeriesPublicOne } from '../../redux/features/api/series/seriesPublicSlice';
+import SkeletonSeriesHeader from '../../components/SkeletonLoading/SkeletonSeriesHeader/SkeletonSeriesHeader';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
 // import { useAd } from '../../hook/useAd';
+// import AdContainer from '../../components/AdContainer/AdContainer';
 
 import styles from './SeriesOneLayout.module.css';
 
@@ -22,19 +25,23 @@ import styles from './SeriesOneLayout.module.css';
 export default function SeriesOneLayout() {
   const { urlSlug } = useParams();
   // const { isScreenLg: isDesktop } = useResize();
-  const { seriesPublicOne } = useSelector((state) => state.seriesPublic);
+  const { status: fetchSeriesStatus, seriesPublicOne } = useSelector(
+    (state) => state.seriesPublic
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchGetSeriesOne({ urlSlug }));
+
+    return () => dispatch(resetSeriesPublicOne());
   }, []);
 
   // useAd(adNumbers);
   return (
     <>
       <section className={styles.wrapper}>
-        {seriesPublicOne && (
+        {seriesPublicOne ? (
           <SeriesOneHeader
             posterUrls={seriesPublicOne.posterUrls}
             logoUrls={seriesPublicOne.logoUrls}
@@ -47,6 +54,12 @@ export default function SeriesOneLayout() {
             showEditIcon={!['catchUp', 'series'].includes(seriesPublicOne.type)}
             organizerId={seriesPublicOne.organizer._id}
           />
+        ) : (
+          renderSkeletonCards({
+            count: 1,
+            SkeletonComponent: SkeletonSeriesHeader,
+            status: fetchSeriesStatus,
+          })
         )}
 
         {/* Кнопки навигации по страницам Серии заездов */}
