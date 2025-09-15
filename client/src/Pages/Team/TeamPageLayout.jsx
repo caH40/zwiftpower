@@ -1,5 +1,5 @@
 import { Outlet, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetTeam } from '../../redux/features/api/team/fetchTeam';
@@ -36,7 +36,9 @@ export default function TeamPage() {
         <NavBarTeamPublic urlSlug={team?.urlSlug} isCreator={isCreator} />
       </div>
 
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

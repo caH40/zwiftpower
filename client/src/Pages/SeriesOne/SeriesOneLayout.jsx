@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
@@ -54,7 +54,9 @@ export default function SeriesOneLayout() {
           <NavBarSeriesPublic urlSlug={seriesPublicOne?.urlSlug} />
         </div>
 
-        <Outlet />
+        <Suspense>
+          <Outlet />
+        </Suspense>
       </section>
 
       {/* {isDesktop ? (

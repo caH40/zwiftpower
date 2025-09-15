@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
@@ -57,7 +57,9 @@ export default function OrganizerPublicLayout() {
               <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
             </div>
 
-            <Outlet />
+            <Suspense>
+              <Outlet />
+            </Suspense>
           </section>
         ) : (
           <div></div>
