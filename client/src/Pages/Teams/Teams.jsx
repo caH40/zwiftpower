@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SkeletonTeamCard } from '../../components/SkeletonLoading/SkeletonTeamCard/SkeletonTeamCard';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
 import { helmetProps } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
@@ -52,9 +53,11 @@ export default function TeamsPublic() {
       )}
 
       <section className={styles.cards}>
-        {[1, 2, 3].map((i) => (
-          <SkeletonTeamCard status={'loading'} key={i} />
-        ))}
+        {renderSkeletonCards({
+          count: 3,
+          SkeletonComponent: SkeletonTeamCard,
+          status: fetchTeamsStatus,
+        })}
 
         {!!shuffledTeams?.length && teams.map((team) => <CardTeam key={team._id} {...team} />)}
       </section>

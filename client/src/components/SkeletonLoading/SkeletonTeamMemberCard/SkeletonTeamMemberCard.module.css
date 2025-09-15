@@ -1,0 +1,168 @@
+.cardSkeleton {
+  position: relative;
+  display: block;
+  width: 280px;
+  height: 458px;
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.skeletonImageContainer {
+  border-radius: 10px 10px 0 0;
+  position: absolute;
+  width: 280px;
+  height: 200px;
+  background: var(--skeleton-light);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonGray {
+  background: var(--skeleton-medium);
+}
+
+.skeletonImageLogo {
+  position: absolute;
+  width: 116px;
+  height: 116px;
+  border-radius: 10px;
+  border: 5px solid rgba(255, 255, 255, 0.45);
+  top: calc(50% - 58px);
+  left: calc(50% - 58px);
+  background: var(--skeleton-medium);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonRole {
+  position: absolute;
+  border-radius: 9px;
+  width: 50px;
+  height: 18px;
+  background: var(--skeleton-medium);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  top: 12px;
+  right: 15px;
+}
+
+.skeletonCategory {
+  position: absolute;
+  border-radius: 9px;
+  width: 30px;
+  height: 18px;
+  background: var(--skeleton-medium);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  bottom: 15px;
+  left: 15px;
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+}
+
+.skeletonInfoContainer {
+  padding: 215px 15px 15px 15px;
+}
+
+.skeletonNameContainer {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.skeletonName {
+  width: 70%;
+  height: 20px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonFlagContainer {
+  width: 22px;
+  height: 18px;
+  background: var(--skeleton-light);
+  border-radius: 2px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.skeletonParamsContainer {
+  display: flex;
+  gap: 5px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.skeletonParam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 60px;
+  margin-bottom: 10px;
+}
+
+.skeletonParamLabel {
+  width: 40px;
+  height: 12px;
+  background: var(--skeleton-light);
+  border-radius: 2px;
+  margin-bottom: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonParamValue {
+  width: 30px;
+  height: 14px;
+  background: var(--skeleton-medium);
+  border-radius: 2px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSpecContainer,
+.skeletonStatsContainer,
+.skeletonEventsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+.skeletonEventsContainer {
+  margin-bottom: 0;
+}
+
+.skeletonLabel {
+  width: 80px;
+  height: 12px;
+  background: var(--skeleton-light);
+  border-radius: 2px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSpecValue,
+.skeletonStatValue,
+.skeletonEventValue {
+  width: 50px;
+  height: 12px;
+  background: var(--skeleton-medium);
+  border-radius: 2px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-color: var(--skeleton-light);
+  }
+  50% {
+    background-color: var(--skeleton-medium);
+  }
+  100% {
+    background-color: var(--skeleton-light);
+  }
+}

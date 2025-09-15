@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { SkeletonTeamMemberCard } from '../../../components/SkeletonLoading/SkeletonTeamMemberCard/SkeletonTeamMemberCard';
+import { renderSkeletonCards } from '../../../utils/skeleton-cards';
 import { fetchPostJoinRequestInTeam } from '../../../redux/features/api/team/fetchTeam';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
 import {
@@ -16,7 +18,7 @@ import styles from './TeamMembers.module.css';
 
 export default function TeamMembersPage() {
   const { urlSlug } = useParams();
-  const { teamMembers } = useSelector((state) => state.teamMember);
+  const { status: fetchMembersStatus, teamMembers } = useSelector((state) => state.teamMember);
   const {
     status,
     user: { team: userInTeam },
@@ -59,6 +61,12 @@ export default function TeamMembersPage() {
       )}
 
       <section className={styles.cards}>
+        {renderSkeletonCards({
+          count: 3,
+          SkeletonComponent: SkeletonTeamMemberCard,
+          status: fetchMembersStatus,
+        })}
+
         {teamMembers.map((m) => (
           <CardTeamMember key={m._id} member={m} />
         ))}
