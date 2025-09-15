@@ -31,13 +31,15 @@ export default function TeamPage() {
   const isCreator = allowForTeamCreator({ status, teamIdForPermission: team?._id, userInTeam });
   return (
     <div className={styles.wrapper}>
-      {renderSkeletonCards({
-        count: 1,
-        SkeletonComponent: SkeletonTeamHeader,
-        status: fetchTeamStatus,
-      })}
-
-      {team && <TeamHeader team={team} />}
+      {team ? (
+        <TeamHeader team={team} />
+      ) : (
+        renderSkeletonCards({
+          count: 1,
+          SkeletonComponent: SkeletonTeamHeader,
+          status: fetchTeamStatus,
+        })
+      )}
 
       {/* Кнопки навигации по страницам организатора */}
       <div className={styles.box__navbar}>
