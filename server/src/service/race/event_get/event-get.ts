@@ -5,21 +5,19 @@ import { eventSignedRidersDto } from '../../../dto/eventSignedRiders.dto.js';
 import { addPropertyAdditionCP } from '../../../utils/property-additionCP.js';
 
 // types
-import { EventWithSignedRiders } from '../../../types/types.interface.js';
+import {
+  EventWithSignedRiders,
+  TSignedRidersWithTeam,
+} from '../../../types/types.interface.js';
 import { sortSignedRiders } from './sort.js';
 import { Rider } from '../../../Model/Rider.js';
-import { SignedRidersSchema } from '../../../types/model.interface.js';
+import { Types } from 'mongoose';
 
 /**
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
  */
 export async function getEventService(eventId: string) {
-  const eventDataDB = await ZwiftEvent.findOne({
-    id: eventId,
-  })
-    .populate('eventSubgroups')
-    .populate({ path: 'seriesId', select: ['name', 'urlSlug'] })
-    .lean<EventWithSignedRiders>();
+  const eventDataDB = await getEventData(eventId);
 
   if (!eventDataDB) {
     throw new Error(`Заезд id=${eventId} не найден на zwiftpower.ru`);
@@ -29,9 +27,7 @@ export async function getEventService(eventId: string) {
   const subgroupIds = eventDataDB.eventSubgroups.map((subgroup) => subgroup._id);
 
   // Поиск всех зарегистрированных райдеров в подгруппы.
-  const signedRiders: SignedRidersSchema[] = await ZwiftSignedRiders.find({
-    subgroup: subgroupIds,
-  }).lean();
+  const signedRiders = await getSignedRiders(subgroupIds);
 
   const labelsSubgroup: string[] = eventDataDB.eventSubgroups.map(
     (subgroup) => subgroup.subgroupLabel
@@ -67,19 +63,37 @@ export async function getEventService(eventId: string) {
     riderRacingScoreDB.map((rs) => [rs.zwiftId, rs.competitionMetrics?.racingScore])
   );
 
-  for (const rider of signedRidersSorted) {
+  const signedRidersPowerCurves = signedRidersSorted.map((rider) => {
     // powerCurve для райдера с zwiftId
     const powerCurve = powerCurvesMap.get(rider.id);
 
     // Добавление рейтинговых очков.
-    rider.racingScore = riderRacingScoreMap.get(rider.id) || 0;
+    const racingScore = riderRacingScoreMap.get(rider.id) || 0;
 
     // Изменение powerCurve на cpBestEfforts.
-    rider.cpBestEfforts = powerCurve ? addPropertyAdditionCP(powerCurve) : undefined;
-  }
+    const cpBestEfforts = powerCurve ? addPropertyAdditionCP(powerCurve) : undefined;
+
+    return { ...rider, racingScore, cpBestEfforts };
+  });
 
   // Добавление массива с зарегистрированными райдерами в итоговый документ Эвента.
-  eventDataDB.signedRiders = signedRidersSorted;
 
-  return eventSignedRidersDto(eventDataDB);
+  return eventSignedRidersDto(eventDataDB, signedRidersPowerCurves);
+}
+
+async function getSignedRiders(subgroupIds: (Types.ObjectId | undefined)[]) {
+  return await ZwiftSignedRiders.find({
+    subgroup: subgroupIds,
+  })
+    .populate({ path: 'team', select: ['urlSlug', 'name', 'shortName', 'logoFileInfo'] })
+    .lean<TSignedRidersWithTeam[]>();
+}
+
+async function getEventData(eventId: string) {
+  return await ZwiftEvent.findOne({
+    id: eventId,
+  })
+    .populate('eventSubgroups')
+    .populate({ path: 'seriesId', select: ['name', 'urlSlug'] })
+    .lean<EventWithSignedRiders>();
 }

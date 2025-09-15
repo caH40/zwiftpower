@@ -1,4 +1,4 @@
-import { SignedRidersPowerCurves } from '../../../types/types.interface.js';
+import { TSignedRidersWithTeam } from '../../../types/types.interface.js';
 
 /**
  * Сортировка по названию группы (по убыванию)
@@ -8,13 +8,13 @@ import { SignedRidersPowerCurves } from '../../../types/types.interface.js';
  * @returns отсортированные райдеры
  */
 export const sortSignedRiders = (
-  signedRiders: SignedRidersPowerCurves[],
+  signedRiders: TSignedRidersWithTeam[],
   labelsSubgroup: string[]
-): SignedRidersPowerCurves[] => {
+): TSignedRidersWithTeam[] => {
   labelsSubgroup.sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLowerCase()));
 
   // инициализация массива для добавление отсортированных райдер
-  const signedRidersSorted = [] as SignedRidersPowerCurves[];
+  const signedRidersSorted = [] as TSignedRidersWithTeam[];
 
   for (const label of labelsSubgroup) {
     const group = signedRiders

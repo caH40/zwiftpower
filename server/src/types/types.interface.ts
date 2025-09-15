@@ -15,6 +15,7 @@ import {
   TSeriesClassification,
   TSeriesStage,
   TStageResult,
+  TTeam,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
   ZwiftResultSchema,
@@ -179,12 +180,23 @@ export interface SignedRidersPowerCurves extends SignedRidersSchema {
   cpBestEfforts?: CpBestEffortsAdditional[];
   racingScore?: number;
 }
+export type TSignedRidersWithTeam = Omit<SignedRidersSchema, 'team'> & {
+  team: Pick<TTeam, '_id' | 'name' | 'shortName' | 'logoFileInfo' | 'urlSlug'>;
+};
 /**
  * Данные Event с зарегистрированными райдерами
  */
 export type EventWithSignedRiders = Omit<EventWithSubgroup, 'seriesId'> & {
   seriesId: { _id: Types.ObjectId; name: string; urlSlug: string };
-  signedRiders: SignedRidersPowerCurves[];
+  signedRiders: (SignedRidersPowerCurves & {
+    team?: {
+      _id: Types.ObjectId;
+      name: string;
+      shortName: string;
+      urlSlug: string;
+      logoFileInfo?: TFileMetadataForCloud;
+    };
+  })[];
 };
 /**
  * Параметры для функции eventsListDto

@@ -1,19 +1,43 @@
 // types
 import { EventSignedRidersFetch } from '../common/types/eventSignedRiders.interface.js';
-import { EventWithSignedRiders } from '../types/types.interface.js';
+import {
+  CpBestEffortsAdditional,
+  EventWithSignedRiders,
+  TSignedRidersWithTeam,
+} from '../types/types.interface.js';
+import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
  * DTO для отправки данных Event и зарегистрированных райдеров
  */
-export const eventSignedRidersDto = (event: EventWithSignedRiders) => {
+export const eventSignedRidersDto = (
+  event: EventWithSignedRiders,
+  signedRidersPowerCurves: (TSignedRidersWithTeam & {
+    racingScore: number;
+    cpBestEfforts: CpBestEffortsAdditional[] | undefined;
+  })[]
+) => {
   const seriesId = event.seriesId && {
     _id: String(event.seriesId._id),
     name: event.seriesId.name,
     urlSlug: event.seriesId.urlSlug,
   };
+
+  const signedRiders = signedRidersPowerCurves.map((r) => {
+    const team = r.team && {
+      name: r.team.name,
+      shortName: r.team.shortName,
+      urlSlug: r.team.urlSlug,
+      _id: r.team._id.toString(),
+      logoUrl: createUrlsToFileCloud(r.team.logoFileInfo),
+    };
+    return { ...r, team };
+  });
+
   const eventForFetch: Omit<EventSignedRidersFetch, 'seriesId'> & {
     seriesId: { _id: string; name: string; urlSlug: string };
-  } = { ...event, seriesId };
+  } = { ...event, seriesId, signedRiders };
+
   delete eventForFetch.totalEntrantCount;
   delete eventForFetch.totalJoinedCount;
 

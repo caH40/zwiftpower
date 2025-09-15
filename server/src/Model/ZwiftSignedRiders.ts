@@ -15,6 +15,7 @@ const zwiftSignedRidersSchema = new Schema<SignedRidersSchema>({
   height: { type: Number, default: null },
   weight: { type: Number, default: null },
   subgroupLabel: { type: String, default: 'E' },
+  team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
 });
 
 export const ZwiftSignedRiders = model<SignedRidersSchema>(

@@ -64,6 +64,13 @@ export interface EventSignedRidersFetch {
   started: boolean;
   totalFinishedCount?: number;
   signedRiders: {
+    team?: {
+      _id: string;
+      name: string;
+      shortName: string;
+      urlSlug: string;
+      logoUrl?: Record<string, string>;
+    };
     subgroup: Types.ObjectId;
     id: number;
     firstName: string;

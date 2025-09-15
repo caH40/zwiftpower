@@ -500,6 +500,7 @@ export interface SignedRidersSchema {
   height: number;
   weight: number;
   subgroupLabel: string;
+  team?: Types.ObjectId;
 }
 //
 //
