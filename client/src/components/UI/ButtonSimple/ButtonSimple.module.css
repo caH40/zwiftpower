@@ -1,0 +1,50 @@
+/* базовый стиль */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid transparent;
+  border-radius: 0.4em;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  user-select: none;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.blue {
+  background-color: var(--color-blue-main);
+  border-color: var(--color-blue-main);
+  color: #fff;
+}
+.blue:hover {
+  background-color: #fff;
+  color: var(--color-blue-main);
+}
+.blue:active {
+  background-color: var(--color-blue-2);
+}
+
+.orange {
+  background-color: var(--color-orange-main);
+  border-color: var(--color-orange-main);
+  color: #fff;
+}
+.orange:hover {
+  background-color: #fff;
+  color: var(--color-orange-main);
+}
+.orange:active {
+  background-color: var(--color-orange-2);
+}
+/* ====================================================================== */
+@media screen and (max-width: 992px) {
+  .button {
+    padding: 0.2em 0.6em;
+    letter-spacing: inherit;
+  }
+}

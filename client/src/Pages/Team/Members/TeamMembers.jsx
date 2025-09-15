@@ -4,14 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { SkeletonTeamMemberCard } from '../../../components/SkeletonLoading/SkeletonTeamMemberCard/SkeletonTeamMemberCard';
 import { renderSkeletonCards } from '../../../utils/skeleton-cards';
-import { fetchPostJoinRequestInTeam } from '../../../redux/features/api/team/fetchTeam';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
-import {
-  fetchPostLeaveTeam,
-  fetchTeamMembers,
-} from '../../../redux/features/api/team-member/fetchTeamMember';
-import { getAlert } from '../../../redux/features/alertMessageSlice';
-import Button from '../../../components/UI/Button/Button';
+import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
+import useTeamMembers from '../../../hook/useTeamMembers';
+import ButtonSimple from '../../../components/UI/ButtonSimple/ButtonSimple';
 import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
 
 import styles from './TeamMembers.module.css';
@@ -19,6 +15,7 @@ import styles from './TeamMembers.module.css';
 export default function TeamMembersPage() {
   const { urlSlug } = useParams();
   const { status: fetchMembersStatus, teamMembers } = useSelector((state) => state.teamMember);
+  const { team } = useSelector((state) => state.team);
   const {
     status,
     user: { team: userInTeam },
@@ -26,37 +23,20 @@ export default function TeamMembersPage() {
 
   const dispatch = useDispatch();
 
-  const join = async () => {
-    try {
-      const res = await dispatch(fetchPostJoinRequestInTeam({ urlSlug })).unwrap();
-      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
-    } catch (error) {
-      dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
-    }
-  };
-
-  const leave = async () => {
-    try {
-      const res = await dispatch(fetchPostLeaveTeam({ urlSlug })).unwrap();
-      dispatch(fetchTeamMembers({ urlSlug }));
-      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
-    } catch (error) {
-      dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
-    }
-  };
-
   useEffect(() => {
     dispatch(fetchTeamMembers({ urlSlug }));
 
     dispatch(resetTeamMembers());
   }, []);
 
+  const { join, leave } = useTeamMembers({ urlSlug, teamName: team?.name });
+
   return (
     <div className={styles.wrapper}>
       {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
       {status && !userInTeam?.id && (
         <div className={styles.control}>
-          <Button getClick={join}>Присоединиться</Button>
+          <ButtonSimple onClick={join}>Присоединиться</ButtonSimple>
         </div>
       )}
 
@@ -74,9 +54,9 @@ export default function TeamMembersPage() {
 
       {status && userInTeam?.id && (
         <div className={styles.control}>
-          <Button getClick={leave} addCls="back">
-            Выйти из состава команды
-          </Button>
+          <ButtonSimple onClick={leave} theme="orange">
+            Выйти из команды
+          </ButtonSimple>
         </div>
       )}
     </div>
