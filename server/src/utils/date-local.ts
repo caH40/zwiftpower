@@ -64,3 +64,13 @@ export function getDateSuffix(date = new Date()): string {
     .toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
     .replace(/\./g, '');
 }
+
+/**
+ * Устанавливает 23:59 для входящей даты того же числа.
+ */
+export function setEndOfDay(date: Date): Date {
+  // Создаем копию даты, чтобы не мутировать исходный объект
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
+  return endOfDay;
+}

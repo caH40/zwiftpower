@@ -336,15 +336,17 @@ export class PublicSeriesService {
       }
     });
 
-    // Сортируем каждую группу по дате начала.
+    // Сортируем группу по дате начала.
     grouped.upcoming.sort(
       (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
     );
+    // Сортируем группу по дате начала.
     grouped.ongoing.sort(
       (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
     );
+    // Завершенные серии сортируем по дате завершения.
     grouped.completed.sort(
-      (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+      (a, b) => new Date(b.dateEnd).getTime() - new Date(a.dateEnd).getTime()
     );
 
     return grouped;

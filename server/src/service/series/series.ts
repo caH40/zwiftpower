@@ -23,7 +23,7 @@ import {
 import { handleAndLogError } from '../../errors/error.js';
 import { Cloud } from '../cloud.js';
 import { TParamsSeriesServiceAddStage } from '../../types/types.interface.js';
-import { getDateSuffix } from '../../utils/date-local.js';
+import { getDateSuffix, setEndOfDay } from '../../utils/date-local.js';
 
 export class SeriesService {
   constructor() {}
@@ -170,7 +170,7 @@ export class SeriesService {
       hasTeams,
       isFinished,
       dateStart,
-      dateEnd,
+      dateEnd: setEndOfDay(dateEnd),
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
@@ -235,7 +235,7 @@ export class SeriesService {
       hasTeams,
       isFinished,
       dateStart,
-      dateEnd,
+      dateEnd: setEndOfDay(dateEnd),
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
