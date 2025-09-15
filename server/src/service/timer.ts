@@ -11,9 +11,9 @@ import { handleAndLogError } from '../errors/error.js';
 import { createSitemap } from './sitemap/generate-sitemap.js';
 import {
   millisecondsInDay,
-  millisecondsIn23Minutes,
-  millisecondsIn5Minutes,
   millisecondsInHour,
+  millisecondsIn63Minutes,
+  millisecondsIn10Minutes,
 } from '../assets/date.js';
 
 import { removeActivityFromFitFile } from './updates/fitfiles.js';
@@ -45,7 +45,7 @@ export async function setTimers() {
     } catch (error) {
       handleAndLogError(error);
     }
-  }, millisecondsIn23Minutes);
+  }, millisecondsIn63Minutes);
 
   // обновление результатов Эвентов
   setInterval(async () => {
@@ -54,7 +54,7 @@ export async function setTimers() {
     } catch (error) {
       handleAndLogError(error);
     }
-  }, millisecondsIn5Minutes);
+  }, millisecondsIn10Minutes);
 
   // запуск обновления фитфалов мощности в 2 часа каждую ночь
   new CronJob(

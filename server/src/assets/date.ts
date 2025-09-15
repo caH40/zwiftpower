@@ -4,6 +4,7 @@ export const millisecondsInMinute = 60 * 1000;
 
 export const millisecondsInDay = 24 * 60 * millisecondsInMinute;
 export const millisecondsIn23Minutes = 23 * millisecondsInMinute;
+export const millisecondsIn63Minutes = 63 * millisecondsInMinute;
 export const millisecondsIn10Minutes = 10 * millisecondsInMinute;
 export const millisecondsIn30Minutes = 30 * millisecondsInMinute;
 export const millisecondsIn5Minutes = 5 * millisecondsInMinute;
