@@ -170,6 +170,7 @@
   }
   .title {
     font-size: 30px;
+    align-self: center;
   }
   .description__control {
     top: 14px;
