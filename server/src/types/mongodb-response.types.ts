@@ -202,7 +202,10 @@ export type TEventForMailingPreviewDB = Pick<
   | 'microserviceExternalResourceId'
   | 'name'
 > & {
-  eventSubgroups: Pick<ZwiftEventSubgroupSchema, 'mapId' | 'routeId' | 'subgroupLabel'>[];
+  eventSubgroups: Pick<
+    ZwiftEventSubgroupSchema,
+    'mapId' | 'routeId' | 'subgroupLabel' | 'laps' | 'distanceSummary'
+  >[];
 } & { seriesId?: Pick<TSeries, 'posterFileInfo' | 'name' | 'urlSlug' | '_id'> } & {
   organizerId: Pick<TOrganizer, 'logoFileInfo' | 'name' | 'urlSlug' | '_id'>;
 };

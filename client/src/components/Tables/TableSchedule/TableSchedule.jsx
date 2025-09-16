@@ -6,7 +6,7 @@ import classnames from 'classnames/bind';
 import styles from '../Table.module.css';
 
 import { getToday } from '../../../utils/date-local';
-import { getDuration, getLaps, map, routeName } from '../../../utils/event';
+import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdSeries from '../Td/TdSeries';
@@ -72,10 +72,10 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                 <RulesBox event={event} squareSize={16} addCls={'nowrap'} />
               </td>
 
-              <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+              <td>{getMapName(event.eventSubgroups[0]?.mapId)}</td>
 
               <td className={cx('min__w_150')}>
-                {routeName(event.eventSubgroups[0]?.routeId)}
+                {getRouteName(event.eventSubgroups[0]?.routeId)}
               </td>
 
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>

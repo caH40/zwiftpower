@@ -45,11 +45,6 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.eventCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
 .removeButton {
   position: absolute;
   top: 10px;
@@ -83,7 +78,7 @@
 }
 
 .eventPoster {
-  width: 150px;
+  width: 250px;
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
@@ -103,13 +98,6 @@
   word-wrap: break-word;
 }
 
-.eventSeries {
-  color: #666;
-  margin: 0 0 10px;
-  font-style: italic;
-  word-wrap: break-word;
-}
-
 .eventDate {
   color: #e74c3c;
   font-weight: bold;
@@ -120,18 +108,23 @@
 .organizer {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 5px;
+  margin-top: 10px;
   flex-wrap: wrap;
 }
 
 .organizerLogo {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: auto;
+  height: 25px;
+  border-radius: 5px;
+  object-fit: fill;
 }
-
+.noteContainer {
+  text-align: right;
+}
+.note {
+  font-size: 10px;
+}
 .eventDetails {
   margin: 20px 0;
 }
@@ -183,7 +176,7 @@
 
 .ctaButton {
   display: inline-block;
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  background: linear-gradient(135deg, #ff7c00, #ffb773);
   color: white;
   padding: 12px 30px;
   text-decoration: none;
@@ -195,7 +188,7 @@
 
 .ctaButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+  box-shadow: 0 4px 15px rgba(174, 127, 39, 0.3);
 }
 
 .footer {

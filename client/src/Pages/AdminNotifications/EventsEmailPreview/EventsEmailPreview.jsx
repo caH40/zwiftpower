@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetEventsEmailPreview } from '../../../redux/features/api/eventPreviewSlice';
+import {
+  fetchGetEventsForMailing,
+  removeEventFromEmailPreview,
+  resetEventsEmailPreview,
+} from '../../../redux/features/api/eventPreviewSlice';
 import FormEventsEmailPreview from '../../../components/UI/FormEventsEmailPreview/FormEventsEmailPreview';
 
+import EmailPreview from './EmailPreview/EmailPreview';
 import styles from './EventsEmailPreview.module.css';
-import EmailPreview from './EmailPreview';
 
 /**
  *
@@ -16,16 +20,23 @@ export default function EventsEmailPreviewPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(
+      fetchGetEventsForMailing({ startDate: new Date(), endDate: new Date('2025-09-21') })
+    );
     return () => {
       dispatch(resetEventsEmailPreview());
     };
   }, []);
 
+  const onRemoveEvent = (id) => {
+    dispatch(removeEventFromEmailPreview({ id }));
+  };
+
   return (
     <div className={styles.wrapper}>
       <FormEventsEmailPreview />
 
-      <EmailPreview events={eventsEmailPreview} />
+      <EmailPreview events={eventsEmailPreview} onRemoveEvent={onRemoveEvent} />
     </div>
   );
 }

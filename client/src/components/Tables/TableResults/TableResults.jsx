@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import { resetEventsResults } from '../../../redux/features/api/eventsSlice';
 import { getTimerLocal } from '../../../utils/date-local';
-import { getDuration, getLaps, map, routeName } from '../../../utils/event';
+import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 // import TdRaceType from '../Td/TdRaceType';
@@ -58,9 +58,9 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               <td>
                 <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
               </td>
-              <td>{map(event.eventSubgroups[0]?.mapId)}</td>
+              <td>{getMapName(event.eventSubgroups[0]?.mapId)}</td>
               <td className={cx('min__w_150')}>
-                {routeName(event.eventSubgroups[0]?.routeId)}
+                {getRouteName(event.eventSubgroups[0]?.routeId)}
               </td>
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
               {TdDistance(

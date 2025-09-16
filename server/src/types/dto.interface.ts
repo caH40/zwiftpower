@@ -293,7 +293,10 @@ export type TEventForMailingPreviewDto = Omit<
   TEventForMailingPreviewDB,
   '_id' | 'eventSubgroups' | 'seriesId' | 'organizerId'
 > & { _id: string } & {
-  eventSubgroups: Pick<ZwiftEventSubgroupSchema, 'mapId' | 'routeId' | 'subgroupLabel'>[];
+  eventSubgroups: Pick<
+    ZwiftEventSubgroupSchema,
+    'mapId' | 'routeId' | 'subgroupLabel' | 'laps' | 'distanceSummary'
+  >[];
 } & {
   seriesId?: Pick<TSeries, 'name' | 'urlSlug'> & {
     posterUrls?: Record<string, string>;

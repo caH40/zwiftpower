@@ -26,13 +26,16 @@ export async function getEventsForMailingPreviewService({
       microserviceExternalResourceId: true,
     }
   )
-    .populate({ path: 'eventSubgroups', select: ['mapId', 'routeId', 'subgroupLabel', '-_id'] })
+    .populate({
+      path: 'eventSubgroups',
+      select: ['mapId', 'routeId', 'subgroupLabel', 'laps', '-_id', 'distanceSummary'],
+    })
     .populate({ path: 'seriesId', select: ['posterFileInfo', 'name', 'urlSlug'] })
     .populate({ path: 'organizerId', select: ['logoFileInfo', 'urlSlug', 'name'] })
     .lean<TEventForMailingPreviewDB[]>();
 
   const eventsAfterDto = eventsDB.map((e) => eventsForMailingPreviewDto(e));
-
+  // eventsAfterDto[0].eventSubgroups[0].
   // Сортировка по возрастанию по дате старта.
   eventsAfterDto.sort(
     (a, b) => new Date(a.eventStart).getTime() - new Date(b.eventStart).getTime()

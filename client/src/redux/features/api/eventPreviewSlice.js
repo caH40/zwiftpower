@@ -63,6 +63,13 @@ const eventPreviewSlice = createSlice({
     resetEventsEmailPreview: (state) => {
       state.eventsEmailPreview = [];
     },
+    removeEventFromEmailPreview: (state, action) => {
+      const eventId = action.payload.id;
+
+      state.eventsEmailPreview = state.eventsEmailPreview.filter(
+        (event) => event.id !== eventId
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchEventPreview.pending, (state) => {
@@ -98,5 +105,6 @@ const eventPreviewSlice = createSlice({
   },
 });
 
-export const { resetPreviewEventData, resetEventsEmailPreview } = eventPreviewSlice.actions;
+export const { resetPreviewEventData, resetEventsEmailPreview, removeEventFromEmailPreview } =
+  eventPreviewSlice.actions;
 export default eventPreviewSlice.reducer;

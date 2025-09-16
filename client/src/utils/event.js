@@ -6,7 +6,7 @@ import { secondesToMinutes, secondesToTime } from './date-convert';
 import { getLapsString } from './declination';
 import { checkSeconds } from './seconds';
 
-export const map = (id) => {
+export const getMapName = (id) => {
   return worlds.find((map) => map.id === id)?.name;
 };
 
@@ -26,7 +26,7 @@ export const getEventType = (eventType) => {
 /**
  * Название маршрута по ID
  */
-export const routeName = (id) => {
+export const getRouteName = (id) => {
   return routes.find((route) => route.id === id)?.name;
 };
 /**

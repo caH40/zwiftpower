@@ -15,7 +15,7 @@ import TdElevation from '../Td/TdElevation';
 import TdSpeed from '../Td/TdSpeed';
 
 import { changeLabelCategoryInGaps } from '../../../utils/category';
-import { getLaps, map, routeName } from '../../../utils/event';
+import { getLaps, getMapName, getRouteName } from '../../../utils/event';
 
 import Thead from './Thead';
 
@@ -61,8 +61,8 @@ function TableCatchup({ catchups }) {
                   })}
                 />
               </td>
-              <td>{map(eventSubgroup.mapId)}</td>
-              <td className={styles.td__nowrap}>{routeName(eventSubgroup.routeId)}</td>
+              <td>{getMapName(eventSubgroup.mapId)}</td>
+              <td className={styles.td__nowrap}>{getRouteName(eventSubgroup.routeId)}</td>
               <td>{getLaps(eventSubgroup.laps)}</td>
               {TdDistance(
                 eventSubgroup.durationInSeconds,

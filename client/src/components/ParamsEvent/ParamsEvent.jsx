@@ -4,7 +4,7 @@ import IconParamsDistance from '../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../icons/Params/IconParamsAscent';
 import IconParamsDuration from '../icons/Params/IconParamsDuration';
 import IconParamsLap from '../icons/Params/IconParamsLap';
-import { distanceObject, map, routeName } from '../../utils/event';
+import { distanceObject, getMapName, getRouteName } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
@@ -45,7 +45,7 @@ function ParamsEvent({
         <div className={styles.box}>
           <IconParamsWorld squareSize={30} />
           <div className={styles.description}>
-            <h4 className={styles.title}>{map(mapId)}</h4>
+            <h4 className={styles.title}>{getMapName(mapId)}</h4>
             <p className={styles.title__sub}>КАРТА</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ function ParamsEvent({
         <div className={styles.box}>
           <IconParamsRoute squareSize={30} />
           <div className={styles.description}>
-            <h4 className={styles.title}>{routeName(routeId)}</h4>
+            <h4 className={styles.title}>{getRouteName(routeId)}</h4>
             <p className={styles.title__sub}>МАРШРУТ</p>
           </div>
         </div>

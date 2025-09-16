@@ -8,7 +8,7 @@ import { jerseys } from '../../../assets/zwift/raw/jerseys';
 import { rules } from '../../../assets/zwift/rule';
 import { tags } from '../../../assets/zwift/tags';
 import { getTimerLocal } from '../../../utils/date-local';
-import { distanceObject, map, routeName } from '../../../utils/event';
+import { distanceObject, getMapName, getRouteName } from '../../../utils/event';
 
 /**
  * Создаёт подробное описание настроек для эвента и для каждой группы.
@@ -99,8 +99,8 @@ export const createDescription = (eventParams) => {
       strGroups += `
 Группа: <b>${subgroup.subgroupLabel}${isWomenOnly ? ' (только для женщин)' : ''}</b>
 Старт: <b>${getTimerLocal(subgroup.eventSubgroupStart, 'DDMMYYHms')}</b>
-Карта: <b>${map(subgroup.mapId)}</b>
-Маршрут: <b>${routeName(subgroup.routeId)}</b>
+Карта: <b>${getMapName(subgroup.mapId)}</b>
+Маршрут: <b>${getRouteName(subgroup.routeId)}</b>
 ${startLocationStr}${lapsStr}${distanceStr}${durationStr}${elevationStr}${leadInDistance}${leadInElevation}${jerseyStr}${name}${descriptionStr}`;
     }
   }
