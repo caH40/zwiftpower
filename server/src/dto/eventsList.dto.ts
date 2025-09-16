@@ -1,9 +1,16 @@
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
-import { TEventsForSeriesDto, TEventWithSubgroupDto } from '../types/dto.interface.js';
+import {
+  TEventForMailingPreviewDto,
+  TEventsForSeriesDto,
+  TEventWithSubgroupDto,
+} from '../types/dto.interface.js';
 import { EventsListDtoArg } from '../types/types.interface.js';
-import { TEventsForSeriesResponseDB } from '../types/mongodb-response.types.js';
+import {
+  TEventForMailingPreviewDB,
+  TEventsForSeriesResponseDB,
+} from '../types/mongodb-response.types.js';
 
 /**
  *  Массив Events для страниц расписания, анонса или результатов
@@ -45,4 +52,26 @@ export function eventsForSeriesDto(
     ...event,
     _id: String(event._id),
   }));
+}
+
+export function eventsForMailingPreviewDto(
+  event: TEventForMailingPreviewDB
+): TEventForMailingPreviewDto {
+  const _id = event._id!.toString();
+
+  const seriesId = event.seriesId?._id && {
+    _id: event.seriesId._id.toString(),
+    name: event.seriesId.name,
+    urlSlug: event.seriesId.urlSlug,
+    posterUrls: createUrlsToFileCloud(event.seriesId.posterFileInfo),
+  };
+
+  const organizerId = event.organizerId?._id && {
+    _id: event.organizerId._id.toString(),
+    name: event.organizerId.name,
+    urlSlug: event.organizerId.urlSlug,
+    logoUrls: createUrlsToFileCloud(event.organizerId.logoFileInfo),
+  };
+
+  return { ...event, _id, seriesId, organizerId };
 }

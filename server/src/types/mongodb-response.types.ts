@@ -6,12 +6,14 @@ import { Types } from 'mongoose';
 import {
   TFileMetadataForCloud,
   TFinishProtocolConfig,
+  TOrganizer,
   TSeries,
   TSeriesClassification,
   TSeriesStage,
   TStageResult,
   TTeam,
   TTeamMember,
+  ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 
@@ -188,4 +190,19 @@ export type TTeamMembersPublicDB = Pick<
   '_id' | 'role' | 'specialization' | 'createdAt'
 > & {
   user: { zwiftId?: number; _id: Types.ObjectId };
+};
+
+export type TEventForMailingPreviewDB = Pick<
+  ZwiftEventSchema,
+  | '_id'
+  | 'description'
+  | 'eventStart'
+  | 'id'
+  | 'imageUrl'
+  | 'microserviceExternalResourceId'
+  | 'name'
+> & {
+  eventSubgroups: Pick<ZwiftEventSubgroupSchema, 'mapId' | 'routeId' | 'subgroupLabel'>[];
+} & { seriesId?: Pick<TSeries, 'posterFileInfo' | 'name' | 'urlSlug' | '_id'> } & {
+  organizerId: Pick<TOrganizer, 'logoFileInfo' | 'name' | 'urlSlug' | '_id'>;
 };

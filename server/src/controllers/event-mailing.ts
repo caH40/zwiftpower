@@ -14,10 +14,12 @@ export class EventEmailingTeamController {
    */
   public get = async (req: Request, res: Response): Promise<Response | void> => {
     try {
-      const period = req.params.period as 'week' | 'month';
-      console.log({ period });
+      const period = req.query as {
+        startDate: string;
+        endDate: string;
+      };
 
-      if (!period || !['week', 'month'].includes(period)) {
+      if (!period?.startDate || !period?.endDate) {
         return res.status(400).json({ message: 'В запросе не получен period!' });
       }
 

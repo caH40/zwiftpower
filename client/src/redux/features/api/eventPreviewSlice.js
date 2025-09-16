@@ -28,10 +28,14 @@ export const fetchEventPreview = createAsyncThunk(
  */
 export const fetchGetEventsForMailing = createAsyncThunk(
   'eventGetPreviewForMailing/get',
-  async ({ period = 'week' } = {}, thunkAPI) => {
+  async ({ startDate, endDate }, thunkAPI) => {
     try {
+      const url = new URL(`${serverExpress}/api/race/events/mailings/preview`);
+      url.searchParams.append('startDate', startDate);
+      url.searchParams.append('endDate', endDate);
+
       const response = await myAxios({
-        url: `${serverExpress}/api/race/events/mailings/preview/${period}`,
+        url: url.toString(),
         method: 'get',
       });
 
@@ -83,7 +87,7 @@ const eventPreviewSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(fetchGetEventsForMailing.fulfilled, (state, action) => {
-      state.eventsEmailPreview = action.payload;
+      state.eventsEmailPreview = action.payload.data;
       state.status = 'resolved';
       state.error = null;
     });

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authModeratorClub } from '../middleware/authRole.js';
+import { authAdmin, authModeratorClub } from '../middleware/authRole.js';
 import {
   getEvent,
   getEvents,
@@ -18,7 +18,7 @@ const eventEmailing = new EventEmailingTeamController();
 
 export const routerRace = Router();
 
-routerRace.get('/events/mailings/preview/:period', eventEmailing.get);
+routerRace.get('/events/mailings/preview', authAdmin, eventEmailing.get);
 routerRace.get('/events/:eventId', getEvent);
 routerRace.get('/events', getEvents);
 routerRace.post('/events', authModeratorClub, postEvent);

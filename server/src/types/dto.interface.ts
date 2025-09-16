@@ -11,6 +11,7 @@ import {
   ZwiftEventSubgroupSchema,
 } from './model.interface';
 import {
+  TEventForMailingPreviewDB,
   TEventsForSeriesResponseDB,
   TGeneralClassificationDB,
   TOrganizerSeriesAllResponseDB,
@@ -286,4 +287,21 @@ export type TBannedRiderDto = RiderProfileSchema & {
   bannedAt: string;
   userId: string;
   bannedReason?: string;
+};
+
+export type TEventForMailingPreviewDto = Omit<
+  TEventForMailingPreviewDB,
+  '_id' | 'eventSubgroups' | 'seriesId' | 'organizerId'
+> & { _id: string } & {
+  eventSubgroups: Pick<ZwiftEventSubgroupSchema, 'mapId' | 'routeId' | 'subgroupLabel'>[];
+} & {
+  seriesId?: Pick<TSeries, 'name' | 'urlSlug'> & {
+    posterUrls?: Record<string, string>;
+    _id: string;
+  };
+} & {
+  organizerId?: Pick<TOrganizer, 'name' | 'urlSlug'> & {
+    logoUrls?: Record<string, string>;
+    _id: string;
+  };
 };
