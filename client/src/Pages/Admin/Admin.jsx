@@ -29,6 +29,7 @@ function Admin() {
   return (
     <section>
       <NavAdmin items={items} />
+
       <Outlet />
     </section>
   );

@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 
-import FormNotification from '../../components/UI/FormNotification/FormNotification';
-import useTitle from '../../hook/useTitle';
+import FormNotification from '../../../components/UI/FormNotification/FormNotification';
+import useTitle from '../../../hook/useTitle';
 
-import styles from './AdminNotifications.module.css';
+import styles from './AdminCreateEmail.module.css';
 
 /**
  * Страница создания/отправки оповещений на email.
  */
-export default function AdminNotifications() {
+export default function AdminCreateEmailPage() {
   useTitle('Оповещения пользователей');
   const { letterPreview, status } = useSelector((state) => state.notification);
 

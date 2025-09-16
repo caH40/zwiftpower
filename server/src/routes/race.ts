@@ -12,9 +12,13 @@ import {
   getNextWeekRaces,
 } from '../controllers/race.js';
 import { putResult } from '../controllers/result.js';
+import { EventEmailingTeamController } from '../controllers/event-mailing.js';
+
+const eventEmailing = new EventEmailingTeamController();
 
 export const routerRace = Router();
 
+routerRace.get('/events/mailings/preview/:period', eventEmailing.get);
 routerRace.get('/events/:eventId', getEvent);
 routerRace.get('/events', getEvents);
 routerRace.post('/events', authModeratorClub, postEvent);

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { getAlert } from '../alertMessageSlice';
 import { serverExpress } from '../../../config/environment';
+import { myAxios } from '../../../api/axios';
 
 export const fetchEventPreview = createAsyncThunk(
   'eventGetPreview/fetchEvent',
@@ -22,16 +23,41 @@ export const fetchEventPreview = createAsyncThunk(
   }
 );
 
+/**
+ * Данные предстоящих эвентов для рассылки на email.
+ */
+export const fetchGetEventsForMailing = createAsyncThunk(
+  'eventGetPreviewForMailing/get',
+  async ({ period = 'week' } = {}, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/race/events/mailings/preview/${period}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const eventPreviewSlice = createSlice({
   name: 'eventGetPreview',
   initialState: {
     event: {},
+    eventsEmailPreview: [],
     status: null,
     error: null,
   },
   reducers: {
     resetPreviewEventData: (state) => {
       state.event = {};
+    },
+    resetEventsEmailPreview: (state) => {
+      state.eventsEmailPreview = [];
     },
   },
   extraReducers: (builder) => {
@@ -49,8 +75,24 @@ const eventPreviewSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ======================= Данные предстоящих эвентов для рассылки на email =======================
+    builder.addCase(fetchGetEventsForMailing.pending, (state) => {
+      state.event = {};
+      state.error = null;
+      state.status = 'loading';
+    });
+    builder.addCase(fetchGetEventsForMailing.fulfilled, (state, action) => {
+      state.eventsEmailPreview = action.payload;
+      state.status = 'resolved';
+      state.error = null;
+    });
+    builder.addCase(fetchGetEventsForMailing.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetPreviewEventData } = eventPreviewSlice.actions;
+export const { resetPreviewEventData, resetEventsEmailPreview } = eventPreviewSlice.actions;
 export default eventPreviewSlice.reducer;

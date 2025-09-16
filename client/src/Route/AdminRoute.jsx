@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 const AdminOrganizer = lazy(() => import('../Pages/AdminOrganizer/AdminOrganizer'));
@@ -26,7 +26,15 @@ const RiderModerationLayout = lazy(() =>
   import('../Pages/RiderModerationLayout/RiderModerationLayout')
 );
 const ZwiftClubs = lazy(() => import('../Pages/ZwiftClubs/ZwiftClubs'));
-const AdminNotifications = lazy(() => import('../Pages/AdminNotifications/AdminNotifications'));
+const AdminCreateEmail = lazy(() =>
+  import('../Pages/AdminNotifications/AdminCreateEmail/AdminCreateEmail')
+);
+const AdminNotificationsLayout = lazy(() =>
+  import('../Pages/AdminNotifications/AdminNotificationsLayout')
+);
+const EventsEmailPreviewPage = lazy(() =>
+  import('../Pages/AdminNotifications/EventsEmailPreview/EventsEmailPreview')
+);
 
 const AdminOthersLayout = lazy(() => import('../Pages/AdminOthers/AdminOthersLayout'));
 const AdminFinishProtocolLayout = lazy(() =>
@@ -63,7 +71,12 @@ export function AdminRoute(isAdmin) {
           <Route path="organizer" element={<AdminOrganizer />} />
           <Route path="logs/errors/:id" element={<LogErrorDescription />} />
           <Route path="clubs" element={<ZwiftClubs />} />
-          <Route path="notifications" element={<AdminNotifications />} />
+
+          <Route path="notifications" element={<AdminNotificationsLayout />}>
+            <Route index element={<Navigate to="create-email" replace />} />
+            <Route path="create-email" element={<AdminCreateEmail />} />
+            <Route path="events-email-preview" element={<EventsEmailPreviewPage />} />
+          </Route>
 
           <Route path="others" element={<AdminOthersLayout />}>
             <Route path="finish-protocol" element={<AdminFinishProtocolLayout />}>
