@@ -35,7 +35,11 @@ export default function FormEventsEmailPreview({ loading }) {
     formState: { errors },
   } = useForm({
     mode: 'all',
-    values: { startDate: dateNow, endDate: dateNow },
+    values: {
+      subject: 'Еженедельный дайджест заездов ZwiftPower.ru',
+      startDate: dateNow,
+      endDate: dateNow,
+    },
   });
 
   // Следим за изменениями обеих дат.
@@ -77,6 +81,16 @@ export default function FormEventsEmailPreview({ loading }) {
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.wrapper__fields}>
         {/* Поле для даты старта серии */}
+        <div className={styles.wrapper__input}>
+          {' '}
+          <InputAuth
+            label={'Тема письма (заголовок)'}
+            register={register('subject')}
+            validationText={errors.subject?.message || ''}
+            input={{ id: 'subject', type: 'text' }}
+          />
+        </div>
+
         <div className={styles.wrapper__input}>
           <InputAuth
             label={'Дата начала выборки старта Эвентов*'}
@@ -139,7 +153,7 @@ export default function FormEventsEmailPreview({ loading }) {
 
       <div className={styles.box__btn}>
         <Button disabled={loading || loadingForm || Object.keys(errors).length > 0}>
-          Отправить
+          Получить Эвенты
         </Button>
       </div>
     </form>

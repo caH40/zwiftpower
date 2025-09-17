@@ -52,3 +52,27 @@ export const getNotificationLetterPreview = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Запрос на письма-оповещения для предварительного просмотра и контроля содержимого.
+ */
+export const postEventsEmailPreview = createAsyncThunk(
+  'users/postEventsEmailPreview',
+  async function ({ eventsEmailPreview }, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/admin/notification/events-preview`,
+        method: 'post',
+        data: {
+          eventsEmailPreview,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

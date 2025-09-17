@@ -28,11 +28,12 @@ export const fetchEventPreview = createAsyncThunk(
  */
 export const fetchGetEventsForMailing = createAsyncThunk(
   'eventGetPreviewForMailing/get',
-  async ({ startDate, endDate }, thunkAPI) => {
+  async ({ startDate, endDate, subject }, thunkAPI) => {
     try {
       const url = new URL(`${serverExpress}/api/race/events/mailings/preview`);
       url.searchParams.append('startDate', startDate);
       url.searchParams.append('endDate', endDate);
+      url.searchParams.append('subject', subject);
 
       const response = await myAxios({
         url: url.toString(),
@@ -52,7 +53,7 @@ const eventPreviewSlice = createSlice({
   name: 'eventGetPreview',
   initialState: {
     event: {},
-    eventsEmailPreview: [],
+    eventsEmailPreview: { events: [], startDate: null, endDate: null },
     status: null,
     error: null,
   },
@@ -61,12 +62,12 @@ const eventPreviewSlice = createSlice({
       state.event = {};
     },
     resetEventsEmailPreview: (state) => {
-      state.eventsEmailPreview = [];
+      state.eventsEmailPreview = { events: [] };
     },
     removeEventFromEmailPreview: (state, action) => {
       const eventId = action.payload.id;
 
-      state.eventsEmailPreview = state.eventsEmailPreview.filter(
+      state.eventsEmailPreview = state.eventsEmailPreview.events.filter(
         (event) => event.id !== eventId
       );
     },

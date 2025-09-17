@@ -17,6 +17,7 @@ export class EventEmailingTeamController {
       const period = req.query as {
         startDate: string;
         endDate: string;
+        subject: string;
       };
 
       if (!period?.startDate || !period?.endDate) {

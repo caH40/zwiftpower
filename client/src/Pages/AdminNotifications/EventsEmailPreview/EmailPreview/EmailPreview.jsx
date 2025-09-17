@@ -4,7 +4,10 @@ import { getMapName, getRouteName } from '../../../../utils/event';
 
 import styles from './EmailPreview.module.css';
 
-export default function EmailPreview({ events, onRemoveEvent }) {
+export default function EmailPreview({
+  eventsEmailPreview: { events, startDate, endDate, subject },
+  onRemoveEvent,
+}) {
   const handleRemove = (eventId) => {
     if (onRemoveEvent) {
       onRemoveEvent(eventId);
@@ -25,7 +28,10 @@ export default function EmailPreview({ events, onRemoveEvent }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Предстоящие заезды Zwift</h1>
+        <h1 className={styles.title}>{subject}</h1>
+        <p className={styles.subtitle}>
+          c {getTimerLocal(startDate, 'DDMMYY')} по {getTimerLocal(endDate, 'DDMMYY')}
+        </p>
         <p className={styles.subtitle}>Не пропустите эти захватывающие события!</p>
       </div>
 
@@ -41,16 +47,14 @@ export default function EmailPreview({ events, onRemoveEvent }) {
             </button>
 
             <div className={styles.eventHeader}>
-              {event.seriesId && (
-                <img
-                  src={event.seriesId?.posterUrls?.original}
-                  alt={event.seriesId?.name}
-                  className={styles.eventPoster}
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              )}
+              <img
+                src={event.seriesId ? event.seriesId?.posterUrls?.original : event.imageUrl}
+                alt={event.seriesId ? event.seriesId?.name : event.name}
+                className={styles.eventPoster}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
 
               <div className={styles.eventInfo}>
                 <h2 className={styles.eventTitle}>{event.name}</h2>
@@ -77,26 +81,15 @@ export default function EmailPreview({ events, onRemoveEvent }) {
                 {event.organizerId && (
                   <div className={styles.organizer}>
                     <span>Организатор: </span>
-                    {event.organizerId.logoUrls?.original ? (
-                      <img
-                        src={event.organizerId.logoUrls?.original}
-                        alt={event.organizerId.name}
-                        className={styles.organizerLogo}
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      event.organizerId.name
-                    )}
+                    {event.organizerId.name}
                   </div>
                 )}
               </div>
             </div>
 
             <div className={styles.eventDetails}>
-              <h3>Группы заезда:</h3>
               <div className={styles.subgroups}>
+                <span>Группы заезда:</span>
                 {event.eventSubgroups?.map((subgroup, idx) => (
                   <CategoryBox
                     label={subgroup.subgroupLabel}

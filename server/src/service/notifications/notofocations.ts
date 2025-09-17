@@ -1,9 +1,13 @@
 import { User } from '../../Model/User.js';
-import { TResponseService } from '../../types/http.interface.js';
-import { TNotifications } from '../../types/model.interface.js';
 import { createNotificationLetter } from '../mail/letters/createNotificationLetter.js';
 import { mailService } from '../mail/nodemailer.js';
 import { mailUserNotification, mailPassNotification } from '../../config/environment.js';
+import { generateEmailHTML } from '../mail/letters/eventsPreview.js';
+
+// types
+import { TEventForMailingPreviewDto } from '../../types/dto.interface.js';
+import { TResponseService } from '../../types/http.interface.js';
+import { TNotifications } from '../../types/model.interface.js';
 
 type Params = {
   text: string;
@@ -43,6 +47,40 @@ export async function postNotificationService({
     return mailService({
       email: user.email,
       subject,
+      letter,
+      auth: {
+        user: mailUserNotification,
+        pass: mailPassNotification,
+      },
+    });
+  });
+
+  await Promise.allSettled(sendAllEmails);
+
+  return { data: null, message: 'Оповещение отправлено пользователям на email!' };
+}
+
+/**
+ * Отправка письма с предстоящими Эвенатми пользователем сайта.
+ */
+export async function postEventsPreviewService(eventsEmailPreview: {
+  events: TEventForMailingPreviewDto[];
+  startDate: string;
+  endDate: string;
+  subject: string;
+}): Promise<TResponseService<null>> {
+  // Выполнение запроса с использованием динамического условия
+  const usersDB = await User.find(
+    { 'notifications.events': true },
+    { email: true, zwiftId: true, _id: false }
+  ).lean<{ email: string; zwiftId: number }[]>();
+
+  const sendAllEmails = usersDB.map((user) => {
+    const letter = generateEmailHTML(eventsEmailPreview, user.zwiftId);
+
+    return mailService({
+      email: user.email,
+      subject: eventsEmailPreview.subject,
       letter,
       auth: {
         user: mailUserNotification,

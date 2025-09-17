@@ -1,0 +1,11 @@
+.wrapper__block {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  margin-bottom: 20px;
+}
+.btnContainer {
+  text-align: right;
+  margin-top: 20px;
+}

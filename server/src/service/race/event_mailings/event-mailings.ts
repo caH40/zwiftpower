@@ -7,10 +7,20 @@ import { setStartOfDay, setEndOfDay, getTimerLocal } from '../../../utils/date-l
 export async function getEventsForMailingPreviewService({
   startDate,
   endDate,
+  subject,
 }: {
   startDate: string;
   endDate: string;
-}): Promise<{ data: TEventForMailingPreviewDto[]; message: string }> {
+  subject: string;
+}): Promise<{
+  data: {
+    events: TEventForMailingPreviewDto[];
+    startDate: string;
+    endDate: string;
+    subject: string;
+  };
+  message: string;
+}> {
   const currentStartDate = setStartOfDay(new Date(startDate)).toISOString();
   const currentEndDate = setEndOfDay(new Date(endDate)).toISOString();
 
@@ -42,7 +52,7 @@ export async function getEventsForMailingPreviewService({
   );
 
   return {
-    data: eventsAfterDto,
+    data: { events: eventsAfterDto, startDate, endDate, subject },
     message: `Эвенты с ${getTimerLocal(startDate, 'DDMMYY')} по ${getTimerLocal(
       endDate,
       'DDMMYY'
