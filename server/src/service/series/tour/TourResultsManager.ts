@@ -4,6 +4,7 @@ import { TResponseService } from '../../../types/http.interface.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
 import { addAgeAndFlagNew } from '../../protocol/age-and-flag.js';
 import { HandlerSeries } from '../HandlerSeries.js';
+import { TourGCManager } from './TourGCManager.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour'
@@ -79,6 +80,11 @@ export class TourResultsManager extends HandlerSeries {
       { new: true }
     );
 
-    return { data: null, message: `Созданы результаты этапа №${stageOrder}` };
+    // Обновление генеральной классификации серии.
+    const tourGC = new TourGCManager(this.seriesId);
+
+    const res = await tourGC.update();
+
+    return { data: null, message: `Созданы результаты этапа №${stageOrder}. ${res.message}` };
   }
 }
