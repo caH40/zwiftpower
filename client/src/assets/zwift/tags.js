@@ -29,4 +29,11 @@ export const tags = [
     translate: 'Единые характеристики для всех велосипедов',
     checked: false,
   },
+  {
+    id: 3,
+    value: ['bighead'],
+    label: 'Большие головы у аватаров',
+    translate: 'Большие головы у аватаров',
+    checked: false,
+  },
 ];
