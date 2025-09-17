@@ -6,7 +6,7 @@ import { generateEmailHTML } from '../mail/letters/eventsPreview.js';
 
 // types
 import { TEventForMailingPreviewDto } from '../../types/dto.interface.js';
-import { TResponseService } from '../../types/http.interface.js';
+import { TNotificationsPrefixedKeys, TResponseService } from '../../types/http.interface.js';
 import { TNotifications } from '../../types/model.interface.js';
 
 type Params = {
@@ -36,7 +36,9 @@ export async function postNotificationService({
     { email: true, zwiftId: true, _id: false }
   ).lean<{ email: string; zwiftId: number }[]>();
 
-  const sendAllEmails = usersDB.map((user) => {
+  const filteredUsers = filterEmails(usersDB);
+
+  const sendAllEmails = filteredUsers.map((user) => {
     const letter = createNotificationLetter({
       text,
       title,
@@ -69,13 +71,17 @@ export async function postEventsPreviewService(eventsEmailPreview: {
   endDate: string;
   subject: string;
 }): Promise<TResponseService<null>> {
+  const notificationType: TNotificationsPrefixedKeys = 'notifications.events';
+
   // Выполнение запроса с использованием динамического условия
   const usersDB = await User.find(
-    { 'notifications.events': true },
+    { [notificationType]: true },
     { email: true, zwiftId: true, _id: false }
   ).lean<{ email: string; zwiftId: number }[]>();
 
-  const sendAllEmails = usersDB.map((user) => {
+  const filteredUsers = filterEmails(usersDB);
+
+  const sendAllEmails = filteredUsers.map((user) => {
     const letter = generateEmailHTML(eventsEmailPreview, user.zwiftId);
 
     return mailService({
@@ -115,4 +121,15 @@ export async function createNotificationLetterService({
   });
 
   return { data: letter, message: 'Оповещение отправлено пользователям на email!' };
+}
+
+/**
+ * Фильтрация email которые были созданы автоматически при отсутствии email у
+ * пользователя при регистрации.
+ */
+function filterEmails(users: { email: string; zwiftId: number }[]): {
+  email: string;
+  zwiftId: number;
+}[] {
+  return users.filter((e) => !e.email.startsWith('temp_email_'));
 }

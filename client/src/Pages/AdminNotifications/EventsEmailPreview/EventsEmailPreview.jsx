@@ -19,7 +19,6 @@ import styles from './EventsEmailPreview.module.css';
  */
 export default function EventsEmailPreviewPage() {
   const { eventsEmailPreview } = useSelector((state) => state.fetchEventPreview);
-  console.log(eventsEmailPreview);
 
   const dispatch = useDispatch();
 

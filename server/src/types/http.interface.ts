@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import { eventDataFromZwiftAPI } from './zwiftAPI/eventsDataFromZwift.interface.js';
 import {
   TAccessExpressionObj,
+  TNotifications,
   TSeries,
   TSeriesStage,
   TSocialLinks,
@@ -254,3 +255,5 @@ export type SeriesStagesFromClientForPatch = {
     event: string;
   };
 };
+type TNotificationsKeys = keyof TNotifications;
+export type TNotificationsPrefixedKeys = `notifications.${TNotificationsKeys & string}`;
