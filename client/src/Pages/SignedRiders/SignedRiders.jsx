@@ -4,18 +4,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 // import { useResize } from '../../hook/use-resize';
 // import AdContainer from '../../components/AdContainer/AdContainer';
-import useTitle from '../../hook/useTitle';
+import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
 import { initialSorting } from '../../redux/features/sortTableSlice';
-import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
-import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
-import { getTimerLocal } from '../../utils/date-local';
 import {
   fetchEventPreview,
   resetPreviewEventData,
 } from '../../redux/features/api/eventPreviewSlice';
+import useTitle from '../../hook/useTitle';
+import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSignedRiders';
+import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
+import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
 // import { useAd } from '../../hook/useAd';
-import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
 import SignedRidersLinks from '../../components/SignedRidersLinks/SignedRidersLinks';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
@@ -102,12 +102,9 @@ function SignedRiders() {
           <>
             <section className={styles.wrapper__wide}>
               <TableSignedRiders riders={event.signedRiders} event={event} />
-            </section>
 
-            <div className={styles.right}>
-              <span className={styles.service}>Обновлено:</span>
-              <span className={styles.service}>{getTimerLocal(event.updated, 'DDMMYYHm')}</span>
-            </div>
+              <ServiceBox updated={event.updated} />
+            </section>
           </>
         )}
       </div>
