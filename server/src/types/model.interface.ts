@@ -845,6 +845,8 @@ export type TSeriesClassification = {
     finishPoints: number; // Заработанные финишные очки за этап.
     // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
   }[]; // Массив этапов, на которых участвовал райдер.
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 /**

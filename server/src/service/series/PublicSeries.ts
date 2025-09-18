@@ -177,7 +177,7 @@ export class PublicSeriesService {
    */
   public getGeneralClassification = async (
     urlSlug: string
-  ): Promise<TResponseService<TGeneralClassificationDto[]>> => {
+  ): Promise<TResponseService<TGeneralClassificationDto>> => {
     // Данные по Серии заездов.
     const seriesOneDB = await NSeriesModel.findOne(
       { urlSlug },
@@ -197,11 +197,13 @@ export class PublicSeriesService {
       seriesId: seriesOneDB._id,
     }).lean<TGeneralClassificationDB[]>();
 
+    const updatedAt = generalClassification[0]?.updatedAt;
+
     // Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
     const sortedGC = this.sortClassifications(generalClassification);
 
     return {
-      data: generalClassificationDto(sortedGC),
+      data: generalClassificationDto(sortedGC, updatedAt),
       message: `Генеральная классификация серии "${seriesOneDB.name}"`,
     };
   };

@@ -23,7 +23,13 @@ export const resultsSeriesDto = ({
  * DTO для генеральной классификации серии заездов.
  */
 export function generalClassificationDto(
-  generalClassificationSeries: TGeneralClassificationDB[]
-): TGeneralClassificationDto[] {
-  return generalClassificationSeries.map((gc) => ({ ...gc, _id: String(gc._id) }));
+  generalClassificationSeries: TGeneralClassificationDB[],
+  updatedAt: Date | undefined
+): TGeneralClassificationDto {
+  return {
+    results: generalClassificationSeries.map(({ createdAt: _c, updatedAt: _u, ...gc }) => {
+      return { ...gc, _id: String(gc._id) };
+    }),
+    updatedAt: updatedAt && updatedAt.toISOString(),
+  };
 }

@@ -7,7 +7,7 @@ import { fetchGeneralClassification } from '../../../redux/features/api/series/f
 import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
 import NavBarGCTable from '../../UI/NavBarGCTable/NavBarGCTable';
 import NavBarSeriesPublicResults from '../../UI/NavBarSeriesPublicResults/NavBarSeriesPublicResults';
-import JSONBlock from '../../JSONBlock/JSONBlock';
+import ServiceBox from '../../ServiceBox/ServiceBox';
 import TableGCTour from '../../Tables/TableGCTour/TableGCTour';
 
 import styles from './TourComponent.module.css';
@@ -47,23 +47,28 @@ export default function TourComponent({ series }) {
         <>
           <nav className={styles.block__nav}>
             <NavBarGCTable
-              results={generalClassification}
+              results={generalClassification.results}
               categoriesButton={getCategoriesSortedDry({
-                results: generalClassification,
+                results: generalClassification.results,
                 getCategory: (r) => r.finalCategory,
                 needAbsolute: true,
               })}
             />
           </nav>
 
-          {generalClassification.length > 0 && (
+          {generalClassification.results.length > 0 && (
             <section className={styles.wrapper__wide}>
               <TableGCTour
-                results={generalClassification}
+                results={generalClassification.results}
                 stages={seriesPublicOne.orderedStages}
               />
             </section>
           )}
+
+          <ServiceBox
+            updated={generalClassification.updatedAt}
+            // modifiedResults={eventData.modifiedResults}
+          />
         </>
       )}
 

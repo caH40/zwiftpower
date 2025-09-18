@@ -225,8 +225,11 @@ export type StageResultDto = Omit<
 /**
  * DTO получения результатов этапа серии.
  */
-export type TGeneralClassificationDto = Omit<TGeneralClassificationDB, '_id'> & {
-  _id: string;
+export type TGeneralClassificationDto = {
+  results: (Omit<TGeneralClassificationDB, '_id' | 'createdAt' | 'updatedAt'> & {
+    _id: string;
+  })[];
+  updatedAt?: string;
 };
 
 export type TPaymentNotificationDto = Omit<
