@@ -1,5 +1,6 @@
 import {
   StageResultDto,
+  StageResultsDto,
   TOrganizerSeriesAllDto,
   TOrganizerSeriesOneDto,
   TSeriesAllPublicDto,
@@ -186,7 +187,11 @@ export function stagesPublicDto(
 /**
  * DTO получения результатов этапа серии.
  */
-export function stageResultsDto(result: TStageResult): StageResultDto {
+export function stageResultDto({
+  updatedAt: _u,
+  createdAt: _c,
+  ...result
+}: TStageResult): StageResultDto {
   // Удельная мощность за весь заезд.
   const wattsPerKg = result.sensorData.avgWatts / (result.profileData.weightInGrams / 1000);
 
@@ -196,7 +201,17 @@ export function stageResultsDto(result: TStageResult): StageResultDto {
     series: String(result.series),
     teamSquadAtRace: result.teamSquadAtRace && String(result._id),
     wattsPerKg,
-    createdAt: result.createdAt.toISOString(),
-    updatedAt: result.createdAt.toISOString(),
+  };
+}
+
+/**
+ * DTO получения результатов этапа серии.
+ */
+export function stageResultsDto(results: TStageResult[], updatedAt?: Date): StageResultsDto {
+  const resultsAfterDto = results.map((r) => stageResultDto(r));
+
+  return {
+    results: resultsAfterDto,
+    updatedAt: updatedAt?.toISOString(),
   };
 }

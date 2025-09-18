@@ -2,11 +2,12 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
-import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
 import { resetStageResults } from '../../../redux/features/api/series/seriesPublicSlice';
+import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
+import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
+import ServiceBox from '../../ServiceBox/ServiceBox';
 
 import styles from './StageResults.module.css';
 
@@ -44,25 +45,27 @@ export default function StageResults() {
           <nav className={styles.block__nav}>
             {/* Фильтры данных в таблице */}
             <NavBarResultsRaceTable
-              results={stageResults}
+              results={stageResults.results}
               hideDocsOnPage={true}
               hideFilterColumn={true}
               categoriesButton={getCategoriesSortedDry({
-                results: stageResults,
+                results: stageResults.results,
                 needAbsolute: true,
                 getCategory: (r) => r.category,
               })}
             />
           </nav>
 
-          <div className={styles.wrapper__wide}>
+          <section className={styles.wrapper__wide}>
             <TableStageResults
-              results={stageResults}
+              results={stageResults.results}
               stageOrder={stageOrder}
               stageName={stageData.name}
               stageStart={stageData.eventStart}
             />
-          </div>
+
+            <ServiceBox updated={stageResults.updatedAt} />
+          </section>
         </>
       )}
     </section>

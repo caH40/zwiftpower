@@ -218,8 +218,10 @@ export type StageResultDto = Omit<
   series: string;
   teamSquadAtRace: string | null;
   wattsPerKg: number;
-  createdAt: string;
-  updatedAt: string;
+};
+export type StageResultsDto = {
+  results: StageResultDto[];
+  updatedAt?: string;
 };
 
 /**

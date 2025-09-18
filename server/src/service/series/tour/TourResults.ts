@@ -1,8 +1,10 @@
-import { stageResultsDto } from '../../../dto/series.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
-import { StageResultDto } from '../../../types/dto.interface.js';
-import { TStageResult } from '../../../types/model.interface.js';
 import { HandlerSeries } from '../HandlerSeries.js';
+import { stageResultsDto } from '../../../dto/series.js';
+
+// types
+import { TStageResult } from '../../../types/model.interface.js';
+import { StageResultsDto } from '../../../types/dto.interface.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour'
@@ -15,24 +17,26 @@ export class TourResults extends HandlerSeries {
   /**
    * Результаты этапа серии заездов.
    */
-  public getStageResults = async (stageOrder: number): Promise<StageResultDto[]> => {
+  public getStageResults = async (stageOrder: number): Promise<StageResultsDto> => {
     const resultsDB = await StageResultModel.find({
       series: this.seriesId,
       order: stageOrder,
     }).lean<TStageResult[]>();
 
-    const resultsAfterDto = resultsDB.map((result) => stageResultsDto(result));
+    const updatedAt = resultsDB[0]?.updatedAt;
 
-    const sortedResults = this.sortAndFilterResultsGroups(resultsAfterDto);
+    const sortedResults = this.sortAndFilterResultsToutGroups(resultsDB);
 
-    return sortedResults;
+    const resultsAfterDto = stageResultsDto(sortedResults, updatedAt);
+
+    return resultsAfterDto;
   };
 
   /**
    * Разделяет результаты на нормальные и дисквалифицированные, сохраняя сортировку по времени.
    * Дисквалификация может быть из-за нарушений, отсутствия финиша или невыполнения условий тура.
    */
-  public sortAndFilterResultsGroups = (results: StageResultDto[]): StageResultDto[] => {
+  private sortAndFilterResultsToutGroups = (results: TStageResult[]): TStageResult[] => {
     // Сортируем все результаты по времени.
     const sortedResults = results.toSorted(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds

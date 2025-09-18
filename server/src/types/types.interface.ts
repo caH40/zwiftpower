@@ -953,7 +953,9 @@ export type TPublicSeriesServiceSortStagesParams = {
 /**
  * Тип генеральной классификации серии при её создании.
  */
-export type TGCForSave = Omit<TSeriesClassification, 'seriesId'> & { seriesId: string };
+export type TGCForSave = Omit<TSeriesClassification, 'seriesId' | 'createdAt' | 'updatedAt'> & {
+  seriesId: string;
+};
 
 /**
  * Тип адаптера для универсальной работы с разными типами результатов.

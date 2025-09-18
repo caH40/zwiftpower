@@ -62,13 +62,10 @@ export default function TourComponent({ series }) {
                 results={generalClassification.results}
                 stages={seriesPublicOne.orderedStages}
               />
+
+              <ServiceBox updated={generalClassification.updatedAt} />
             </section>
           )}
-
-          <ServiceBox
-            updated={generalClassification.updatedAt}
-            // modifiedResults={eventData.modifiedResults}
-          />
         </>
       )}
 
