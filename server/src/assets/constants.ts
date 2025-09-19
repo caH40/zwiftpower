@@ -115,3 +115,14 @@ export const TEAM_ROLES = [
   'Climber',
   'All-Rounder',
 ] as const;
+
+// Тип для ключей групп
+// export type GroupLabel = 1 | 2 | 3 | 4;
+
+// Соответствие: номер группы -> целевая удельная мощность (Вт/кг)
+export const groupTargetWattsPerKg: Record<number, number> = {
+  1: 4.5,
+  2: 4.2,
+  3: 3.35,
+  4: 2.62,
+};

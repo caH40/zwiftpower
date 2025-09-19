@@ -29,6 +29,7 @@ import { notificationsRouter } from './routes/notifications.js';
 import { siteServicePriceRouter } from './routes/price.js';
 import { teamRouter } from './routes/team.js';
 import { teamMemberRouter } from './routes/team-member.js';
+import { CronScheduler } from './service/CronScheduler .js';
 // import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
@@ -81,6 +82,14 @@ app.get('*', async (req, res) => {
   const htmlContent = await setMetaTags(req.path);
   res.send(htmlContent);
 });
+
+// const cronScheduler = new CronScheduler();
+
+// cronScheduler.add({
+//   name: 'test',
+//   cronTime: '0 */5 * * * *',
+//   job: () => console.log('Время запуска:', new Date().toLocaleString()),
+// });
 
 // запуск сервера на express
 const start = async () => {
