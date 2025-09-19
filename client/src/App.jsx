@@ -10,6 +10,7 @@ import { ProfileRoute } from './Route/ProfileRoute';
 import { StatisticsRoute } from './Route/StatisticsRoute';
 import { ScheduleRouteRoute } from './Route/ScheduleRoute';
 import { SeriesRoute } from './Route/Series.jsx';
+import { DocumentsRoute } from './Route/Documents.jsx';
 import MainLayer from './components/Layers/MainLayer';
 
 const Page404 = lazy(() => import('./Pages/Page404/Page404'));
@@ -64,6 +65,7 @@ function App() {
         {LegalRoute()}
         {OrganizersPublicRoute()}
         {TeamsRoute()}
+        {DocumentsRoute()}
       </Route>
     </Routes>
   );

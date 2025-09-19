@@ -17,11 +17,13 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.53.1",
+    "react-markdown": "^10.1.0",
     "react-multi-select-component": "^4.3.4",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-textarea-autosize": "^8.5.7",
     "react-transition-group": "^4.4.5",
+    "rehype-highlight": "^7.0.2",
     "styled-components": "^6.0.0-rc.3",
     "web-vitals": "^2.1.4"
   },

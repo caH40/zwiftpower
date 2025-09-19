@@ -78,7 +78,7 @@ export async function setTimers() {
   const cronScheduler = new CronScheduler();
 
   cronScheduler.add({
-    name: 'test',
+    name: 'Обновление результатов этапов и генеральной классификации актуальных Туров',
     cronTime: '0 */5 * * * *',
     job: async () => {
       const now = new Date();

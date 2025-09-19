@@ -24,7 +24,7 @@ export class CronScheduler {
         cronTime,
         async () => {
           try {
-            console.log(`Запуск задачи: ${name}`); // eslint-disable-line
+            console.log(`Запуск задачи: ${name}: Дата: ${new Date().toLocaleString()}`); // eslint-disable-line
             await job();
           } catch (error) {
             console.error(`Ошибка в задаче ${name}:`, error); // eslint-disable-line
