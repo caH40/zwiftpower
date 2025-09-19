@@ -1,10 +1,9 @@
-import { groupTargetWattsPerKg } from '../../assets/constants';
-import { millisecondsIn30Minutes } from '../../assets/date';
-import { routes } from '../../assets/zwift/lib/cjs/routes';
-import { handleAndLogError } from '../../errors/error';
-import { NSeriesModel } from '../../Model/NSeries';
-import { cyclingTimeInMilliseconds } from '../../utils/cycling-time';
-import { TourResultsManager } from '../series/tour/TourResultsManager';
+import { FINISH_TIME_ADJUSTMENT, groupTargetWattsPerKg } from '../../assets/constants.js';
+import { routes } from '../../assets/zwift/lib/cjs/routes.js';
+import { handleAndLogError } from '../../errors/error.js';
+import { NSeriesModel } from '../../Model/NSeries.js';
+import { cyclingTimeInMilliseconds } from '../../utils/cycling-time.js';
+import { TourResultsManager } from '../series/tour/TourResultsManager.js';
 
 /**
  * Решает когда запускать обновление результатов  этапа серии.
@@ -25,7 +24,9 @@ export class SeriesResultsUpdater {
         return acc;
       }, []);
 
-      await Promise.all(stageOrders.map((stageOrder) => tour.buildStageProtocol(stageOrder)));
+      if (stageOrders.length > 0) {
+        await Promise.all(stageOrders.map((stageOrder) => tour.buildStageProtocol(stageOrder)));
+      }
     } catch (e) {
       handleAndLogError(e);
     }
@@ -103,8 +104,7 @@ export class SeriesResultsUpdater {
       laps: number;
     }[]
   ): boolean {
-    const now = new Date().getTime();
-    const GAP = millisecondsIn30Minutes;
+    const now = Date.now();
 
     // Получаем все времена финиша
     const finishTimes = subgroups
@@ -112,32 +112,58 @@ export class SeriesResultsUpdater {
         const routeData = routes.find((r) => r.id === cur.routeId);
         if (!routeData) return null;
 
-        const { distance, elevation } = routeData as { distance: number; elevation: number };
+        const { distance, elevation, leadInDistance, leadInElevation } = routeData as {
+          distance: number;
+          elevation: number;
+          leadInDistance: number;
+          leadInElevation: number;
+        };
         const avgPowerWatts = groupTargetWattsPerKg[cur.label];
 
-        if (!avgPowerWatts || isNaN(distance) || isNaN(elevation)) {
+        if (
+          !avgPowerWatts ||
+          isNaN(distance) ||
+          isNaN(elevation) ||
+          isNaN(leadInDistance) ||
+          isNaN(leadInElevation)
+        ) {
           return null;
         }
 
+        const distanceKilometers = distance + leadInDistance;
+        const ascentMeters = elevation + leadInElevation;
+
         const time = cyclingTimeInMilliseconds({
-          distanceMeters: distance,
-          ascentMeters: elevation,
+          distanceKilometers,
+          ascentMeters,
           avgPowerWatts,
-          laps: cur.laps,
+          laps: cur.laps ? cur.laps : 1,
         });
 
-        return new Date(cur.eventSubgroupStart).getTime() + time;
+        const startTime = new Date(cur.eventSubgroupStart).getTime();
+
+        return { finish: startTime + Math.trunc(time), active: time };
       })
-      .filter((time): time is number => time !== null);
+      .filter(
+        (
+          time
+        ): time is {
+          finish: number;
+          active: number;
+        } => time !== null
+      );
 
     if (finishTimes.length === 0) {
       return false;
     }
 
-    const minFinishTime = Math.min(...finishTimes);
-    const maxFinishTime = Math.max(...finishTimes);
+    finishTimes.sort((a, b) => a.finish - b.finish);
+
+    const minFinishTime = finishTimes[0].finish;
+    const maxFinishTime = finishTimes.at(-1)!.finish;
+    const activeTime = finishTimes.at(-1)!.active;
 
     // Обновляем от старта первой группы до финиша последней + дополнительное время
-    return now >= minFinishTime && now <= maxFinishTime + GAP;
+    return now >= minFinishTime && now <= maxFinishTime + activeTime * FINISH_TIME_ADJUSTMENT;
   }
 }

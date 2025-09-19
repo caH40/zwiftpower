@@ -29,8 +29,6 @@ import { notificationsRouter } from './routes/notifications.js';
 import { siteServicePriceRouter } from './routes/price.js';
 import { teamRouter } from './routes/team.js';
 import { teamMemberRouter } from './routes/team-member.js';
-import { CronScheduler } from './service/CronScheduler .js';
-// import { handleCatchUpSeries } from './temp/handleCatchUpSeries.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -83,22 +81,11 @@ app.get('*', async (req, res) => {
   res.send(htmlContent);
 });
 
-// const cronScheduler = new CronScheduler();
-
-// cronScheduler.add({
-//   name: 'test',
-//   cronTime: '0 */5 * * * *',
-//   job: () => console.log('Время запуска:', new Date().toLocaleString()),
-// });
-
 // запуск сервера на express
 const start = async () => {
   try {
     app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
-    // await handleCatchUpSeries({
-    //   season: { start: '2024-09-01T00:00:00Z', end: '2025-08-31T23:59:59Z' },
-    //   seriesId: '67c58f6629efba9ae533b602',
-    // });
+
     // Первоначальная инициализация, чтобы сразу был после build.
     await createSitemap();
   } catch (error) {

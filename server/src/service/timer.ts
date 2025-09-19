@@ -20,6 +20,9 @@ import { removeActivityFromFitFile } from './updates/fitfiles.js';
 import { updateAllRidersProfiles } from './updates/riders-profile.js';
 import { updateRidersDailyMetrics } from './metrics/metrics.js';
 import { closeExpiredSeries } from './updates/series.js';
+import { CronScheduler } from './CronScheduler.js';
+import { NSeriesModel } from '../Model/NSeries.js';
+import { SeriesResultsUpdater } from './updates/SeriesResults.js';
 
 // создание sitemap.xml
 export async function setTimers() {
@@ -71,4 +74,27 @@ export async function setTimers() {
     true,
     'Europe/Moscow'
   );
+
+  const cronScheduler = new CronScheduler();
+
+  cronScheduler.add({
+    name: 'test',
+    cronTime: '0 */5 * * * *',
+    job: async () => {
+      const now = new Date();
+      const seriesDB = await NSeriesModel.find(
+        { type: 'tour', dateStart: { $lte: now }, dateEnd: { $gte: now } },
+        { _id: true }
+      ).lean();
+
+      for (const { _id } of seriesDB) {
+        try {
+          const updater = new SeriesResultsUpdater(_id.toString());
+          await updater.update();
+        } catch (err) {
+          console.error(`Ошибка при обновлении тура ${_id}:`, err); // eslint-disable-line
+        }
+      }
+    },
+  });
 }

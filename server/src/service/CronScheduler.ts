@@ -38,7 +38,7 @@ export class CronScheduler {
 
       this.tasks.set(name, task);
     } catch (error) {
-      console.error(`Ошибка для задачи "${name}":`, error);
+      console.error(`Ошибка для задачи "${name}":`, error); // eslint-disable-line
     }
   }
 

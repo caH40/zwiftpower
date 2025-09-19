@@ -126,3 +126,8 @@ export const groupTargetWattsPerKg: Record<number, number> = {
   3: 3.35,
   4: 2.62,
 };
+
+/**
+ * Корректировка времени финиша, дополнительное время для обновления результатов.
+ */
+export const FINISH_TIME_ADJUSTMENT = 0.15;
