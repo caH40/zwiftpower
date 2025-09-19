@@ -1,3 +1,4 @@
 /server/build
-/doc
+doc/other
+doc/.prettierrc
 /vscode
