@@ -12,7 +12,7 @@ import DocumentContent from '../../../components/DocumentContent/DocumentContent
 
 import styles from '../Documentation.module.css';
 
-export default function OrganizerDocumentPage() {
+export default function OrganizerDocumentationPage() {
   useTitle('Документация организатора');
   const { urlSlug } = useParams();
   const [searchParams] = useSearchParams();

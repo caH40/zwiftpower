@@ -213,3 +213,59 @@ export const getCreateTeamsMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Документация и справочные материалы"
+ */
+export const getDocumentationMeta = (url: string): MetaTags => {
+  const title = 'Документация и руководства | Zwiftpower.ru – Вся официальная информация';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Полная документация по Zwiftpower.ru: руководство для пользователей, FAQ, гайды для организаторов событий и материалы для разработчиков. Найдите ответы на все ваши вопросы!';
+  const image = 'http://zwiftpower.ru/images/open_graph/documentation.jpg';
+  const recommendationsTag = 'documentation';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
+
+/**
+ * Формирование Мета тегов для страницы "Пользовательская документация"
+ */
+export const getPublicDocumentationMeta = (url: string): MetaTags => {
+  const title = 'Руководство пользователя Zwiftpower.ru | Полная инструкция по сайту';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Подробное руководство пользователя по Zwiftpower.ru. Как связать аккаунты, анализировать гонки, понять рейтинг ZP и использовать все возможности платформы для улучшения своих результатов. 🚴‍♂️📊';
+  const image = 'http://zwiftpower.ru/images/open_graph/documentation.jpg';
+  const recommendationsTag = 'documentation';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
+
+/**
+ * Формирование Мета тегов для страницы "Документация организатора"
+ */
+export const getOrganizerDocumentationMeta = (url: string): MetaTags => {
+  const title = 'Руководство организатора Zwiftpower | Создание заездов, серий и туров';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Полное руководство по организации мероприятий в Zwift. Как создать одиночный заезд, многодневный тур или серию гонок: настройка этапов, общих правил, категорий и автоматического подсчета очков. 🏁🗓️';
+  const image = 'http://zwiftpower.ru/images/open_graph/documentation.jpg';
+  const recommendationsTag = 'documentation';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
+
+/**
+ * Формирование Мета тегов для страницы "Документация разработчика"
+ */
+export const getDevelopmentDocumentationMeta = (url: string): MetaTags => {
+  const title = 'API и документация для разработчиков | Zwiftpower Developer Portal';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Техническая документация и API для интеграции с Zwiftpower. Получите доступ к данным гонок, профилей гонщиков и результатов. Руководство по аутентификации, примерам запросов и форматам данных (JSON). 🚴‍♂️💻';
+  const image = 'http://zwiftpower.ru/images/open_graph/documentation.jpg';
+  const recommendationsTag = 'documentation';
+
+  return { title, canonical, description, image, recommendationsTag };
+};

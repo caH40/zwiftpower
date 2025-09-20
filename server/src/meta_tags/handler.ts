@@ -10,12 +10,16 @@ import {
 } from './tags-async.js';
 import {
   getCreateTeamsMeta,
+  getDevelopmentDocumentationMeta,
+  getDocumentationMeta,
   getFTPMeta,
   getFaqMeta,
   getHomeMeta,
   getLeadersMeta,
   getMetaOtherPages,
+  getOrganizerDocumentationMeta,
   getOrganizersPublicMeta,
+  getPublicDocumentationMeta,
   getRacingScoreMeta,
   getResultListMeta,
   getRidersMeta,
@@ -46,8 +50,6 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getFTPMeta(url);
   } else if (url === '/race/statistics/riders-racing-score') {
     tags = getRacingScoreMeta(url);
-  } else if (url.includes('/faq')) {
-    tags = getFaqMeta(url);
   } else if (url.includes('/riders')) {
     tags = getRidersMeta(url);
   } else if (url.includes('/race/results/')) {
@@ -74,6 +76,16 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getTeamsMeta(url);
   } else if (url.includes('/moderation/teams/create')) {
     tags = getCreateTeamsMeta(url);
+  } else if (url.includes('/documentation/faq')) {
+    tags = getFaqMeta(url);
+  } else if (url.includes('/documentation/public')) {
+    tags = getPublicDocumentationMeta(url);
+  } else if (url.includes('/documentation/organizer')) {
+    tags = getOrganizerDocumentationMeta(url);
+  } else if (url.includes('/documentation/development')) {
+    tags = getDevelopmentDocumentationMeta(url);
+  } else if (url.includes('/documentation')) {
+    tags = getDocumentationMeta(url);
   } else {
     tags = getMetaOtherPages(url);
   }

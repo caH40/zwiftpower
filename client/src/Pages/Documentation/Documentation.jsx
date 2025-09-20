@@ -11,7 +11,7 @@ import styles from './Index.module.css';
 /**
  * Страница со списком разделов для всех документации сайта.
  */
-export default function DocumentsPage() {
+export default function DocumentationPage() {
   useTitle('Документация и справочные материалы');
   const { isAdmin, isOrganizer } = useUserRole();
 
