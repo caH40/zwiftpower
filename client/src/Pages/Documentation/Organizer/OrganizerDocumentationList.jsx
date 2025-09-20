@@ -7,7 +7,7 @@ import useTitle from '../../../hook/useTitle';
 
 import DocumentsListPage from '../../../components/DocumentsListPage/DocumentsListPage';
 
-export default function OrganizerDocumentsPage() {
+export default function OrganizerDocumentationListPage() {
   useTitle('Документация организатора - Материалы');
   const { documents } = useSelector((state) => state.documents);
   const dispatch = useDispatch();

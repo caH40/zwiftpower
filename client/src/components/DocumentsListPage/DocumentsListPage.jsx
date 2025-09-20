@@ -45,7 +45,7 @@ export default function DocumentsListPage({
               return (
                 <article key={fileName} className={styles.card}>
                   <Link
-                    to={`/documents/${type}/${fileName}?extension=${extension}`}
+                    to={`/documentation/${type}/${fileName}?extension=${extension}`}
                     className={styles.cardLink}
                   >
                     <div className={styles.cardHeader}>
@@ -68,7 +68,7 @@ export default function DocumentsListPage({
       </div>
 
       <div className={styles.controlContainer}>
-        <GithubButtonUrl href={'/documents'}>← К общему справочнику</GithubButtonUrl>
+        <GithubButtonUrl href={'/documentation'}>← К общему справочнику</GithubButtonUrl>
       </div>
     </div>
   );

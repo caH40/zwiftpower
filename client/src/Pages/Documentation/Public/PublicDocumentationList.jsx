@@ -7,7 +7,7 @@ import useTitle from '../../../hook/useTitle';
 
 import DocumentsListPage from '../../../components/DocumentsListPage/DocumentsListPage';
 
-export default function PublicDocumentsPage() {
+export default function PublicDocumentationListPage() {
   useTitle('Справочник пользователя - Документы');
   const { documents } = useSelector((state) => state.documents);
   const dispatch = useDispatch();

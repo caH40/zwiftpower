@@ -10,7 +10,7 @@ import { ProfileRoute } from './Route/ProfileRoute';
 import { StatisticsRoute } from './Route/StatisticsRoute';
 import { ScheduleRouteRoute } from './Route/ScheduleRoute';
 import { SeriesRoute } from './Route/Series.jsx';
-import { DocumentsRoute } from './Route/Documents.jsx';
+import { DocumentationRoute } from './Route/Documentation.jsx';
 import MainLayer from './components/Layers/MainLayer';
 
 const Page404 = lazy(() => import('./Pages/Page404/Page404'));
@@ -64,7 +64,7 @@ function App() {
         {LegalRoute()}
         {OrganizersPublicRoute()}
         {TeamsRoute()}
-        {DocumentsRoute({ isOrganizer, isAdmin })}
+        {DocumentationRoute({ isOrganizer, isAdmin })}
 
         <Route path="*" element={<Page404 />} />
       </Route>

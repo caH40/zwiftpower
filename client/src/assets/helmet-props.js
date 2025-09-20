@@ -56,4 +56,13 @@ export const helmetProps = {
     image: '/images/open_graph/teams.webp',
     noindex: true,
   },
+
+  DOCUMENTATION: {
+    title: 'Документация и руководства | Zwiftpower.ru – Вся официальная информация',
+    canonical: '/documentation',
+    description:
+      'Полная документация по Zwiftpower.ru: руководство для пользователей, FAQ, гайды для организаторов событий и материалы для разработчиков. Найдите ответы на все ваши вопросы!',
+    image: '/images/open_graph/documentation.jpg',
+    noindex: false,
+  },
 };

@@ -8,7 +8,7 @@ import useTitle from '../../../hook/useTitle';
 
 import DocumentsListPage from '../../../components/DocumentsListPage/DocumentsListPage';
 
-export default function DevelopmentDocumentsPage() {
+export default function DevelopmentDocumentationListPage() {
   useTitle('Документация разработчика - Список файлов');
   const { documents } = useSelector((state) => state.documents);
   const dispatch = useDispatch();

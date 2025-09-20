@@ -8,10 +8,10 @@ import useTitle from '../../../hook/useTitle';
 import GithubButtonUrl from '../../../components/UI/GithubButtonUrl/GithubButtonUrl';
 import DocumentContent from '../../../components/DocumentContent/DocumentContent';
 
-import styles from '../Document.module.css';
+import styles from '../Documentation.module.css';
 
-export default function DevelopmentDocumentPage() {
-  useTitle('Документация разработчика');
+export default function OrganizerDocumentPage() {
+  useTitle('Документация организатора');
   const { urlSlug } = useParams();
   const [searchParams] = useSearchParams();
 
@@ -21,7 +21,7 @@ export default function DevelopmentDocumentPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchDocument({ type: 'development', fileName: `${urlSlug}.${extension}` }));
+    dispatch(fetchDocument({ type: 'organizer', fileName: `${urlSlug}.${extension}` }));
 
     return () => dispatch(resetDocument());
   }, [dispatch]);
@@ -31,7 +31,9 @@ export default function DevelopmentDocumentPage() {
       {document?.content && <DocumentContent content={document.content} />}
 
       <div className={styles.controlContainer}>
-        <GithubButtonUrl href={'/documents/development'}>← Список документации</GithubButtonUrl>
+        <GithubButtonUrl href={'/documentation/organizer'}>
+          ← Список документации
+        </GithubButtonUrl>
       </div>
     </div>
   );
