@@ -12,5 +12,9 @@
  * @returns {boolean} true, если пользователь авторизован и является создателем команды, иначе false.
  */
 export function allowForTeamCreator({ status, teamIdForPermission, userInTeam }) {
-  return status && userInTeam && teamIdForPermission === userInTeam.id && userInTeam.isCreator;
+  if (!status || !userInTeam?.isCreator) {
+    return false;
+  }
+
+  return teamIdForPermission === userInTeam.id;
 }

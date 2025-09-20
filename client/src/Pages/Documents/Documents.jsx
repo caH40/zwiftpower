@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import useTitle from '../../hook/useTitle';
 import { documentChapters } from '../../assets/documents';
+import { useUserRole } from '../../hook/useUserRole';
 
 import styles from './Index.module.css';
 
@@ -10,6 +11,7 @@ import styles from './Index.module.css';
  */
 export default function DocumentsPage() {
   useTitle('Документация и справочные материалы');
+  useUserRole();
 
   return (
     <div className={styles.wrapper}>
