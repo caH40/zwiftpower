@@ -29,6 +29,7 @@ import { LegalRoute } from './Route/Legal.jsx';
 import { OrganizersPublicRoute } from './Route/OrganizersPublic.jsx';
 import { TeamsRoute } from './Route/Teams.jsx';
 import './css/App.css';
+import ForbiddenPage from './Pages/403Forbidden/403Forbidden.jsx';
 
 function App() {
   useFirstAuth();
@@ -37,6 +38,7 @@ function App() {
   const isModeratorClub = !!userAuth.moderator?.clubs?.length;
   const isModerator = ['admin', 'moderator'].includes(userAuth.role);
   const isAdmin = ['admin'].includes(userAuth.role);
+  const organizerId = userAuth.organizer;
 
   const location = useLocation();
   sendMetrika('hit', location.pathname);
@@ -50,11 +52,11 @@ function App() {
         <Route path="/riders" element={<Riders />} />
         <Route path="/streams" element={<Streams />} />
         <Route path="/site-services" element={<SiteServices />} />
+        <Route path="/403" element={<ForbiddenPage />} />
 
         {isModerator ? AdminRoute(isAdmin) : ''}
         {isModeratorClub || isModerator ? ModeratorClubRoute() : ''}
-        {userAuth.organizer ? OrganizerRoute(userAuth.organizer) : ''}
-        <Route path="*" element={<Page404 />} />
+        {organizerId ? OrganizerRoute(organizerId) : ''}
 
         {ResultsRoute()}
         {ScheduleRouteRoute()}
@@ -65,7 +67,9 @@ function App() {
         {LegalRoute()}
         {OrganizersPublicRoute()}
         {TeamsRoute()}
-        {DocumentsRoute()}
+        {DocumentsRoute({ isOrganizer: !!organizerId, isAdmin })}
+
+        <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>
   );

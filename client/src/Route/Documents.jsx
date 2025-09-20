@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 const DocumentsPage = lazy(() => import('../Pages/Documents/Documents'));
@@ -19,16 +19,29 @@ const OrganizerDocumentPage = lazy(() =>
 
 // UnderConstruction
 
-export function DocumentsRoute() {
+export function DocumentsRoute({ isOrganizer, isAdmin }) {
   return (
     <>
       <Route path="/documents" element={<DocumentsPage />} />
-      <Route path="/documents/development" element={<DevelopmentDocumentsPage />} />
-      <Route path="/documents/development/:urlSlug" element={<DevelopmentDocument />} />
       <Route path="/documents/public" element={<PublicDocumentsPage />} />
       <Route path="/documents/public/:urlSlug" element={<PublicDocumentPage />} />
-      <Route path="/documents/organizer" element={<OrganizerDocumentsPage />} />
-      <Route path="/documents/organizer/:urlSlug" element={<OrganizerDocumentPage />} />
+      {isOrganizer || isAdmin ? (
+        <>
+          <Route path="/documents/organizer/:urlSlug" element={<OrganizerDocumentPage />} />
+          <Route path="/documents/organizer" element={<OrganizerDocumentsPage />} />
+        </>
+      ) : (
+        <Route path="/documents/organizer" element={<Navigate to="/403" replace />} />
+      )}
+
+      {isAdmin ? (
+        <>
+          <Route path="/documents/development" element={<DevelopmentDocumentsPage />} />
+          <Route path="/documents/development/:urlSlug" element={<DevelopmentDocument />} />
+        </>
+      ) : (
+        <Route path="/documents/development" element={<Navigate to="/403" replace />} />
+      )}
     </>
   );
 }
