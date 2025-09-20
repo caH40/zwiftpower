@@ -33,4 +33,30 @@ export class MarkdownDocumentsServiceController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Получение документа.
+   */
+  public get = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const params = req.params as {
+        type: 'development' | 'public' | 'organizer';
+        fileName: string;
+      };
+
+      if (!params?.type || !params?.fileName) {
+        return res
+          .status(400)
+          .json({ message: 'В запросе не получен type, fileName документа!' });
+      }
+
+      // Вызов сервиса.
+      const response = await this.documentsService.get(params);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

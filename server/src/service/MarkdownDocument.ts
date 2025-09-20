@@ -35,4 +35,43 @@ export class MarkdownDocumentsService {
       message: `Список документов для ${type}`,
     };
   }
+
+  /**
+   * Получение документа.
+   */
+  async get({
+    type,
+    fileName,
+  }: {
+    type: 'development' | 'public' | 'organizer';
+    fileName: string;
+  }): Promise<{ data: { fileName: string; content: string }; message: string }> {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    // Корень проекта — на два уровня выше build/service
+    const projectRoot = path.resolve(__dirname, '../../..');
+
+    const fileDir = path.join(projectRoot, 'doc', type, fileName);
+
+    await this.fileAccess(fileDir, fileName);
+
+    const content = await fs.readFile(fileDir, 'utf-8');
+
+    return {
+      data: { fileName, content },
+      message: `Содержание файла ${fileName}`,
+    };
+  }
+
+  /**
+   * Проверка существования (доступности) файла.
+   */
+  private async fileAccess(filePath: string, fileName: string) {
+    try {
+      await fs.access(filePath);
+    } catch (error) {
+      throw new Error(`Файл не найден: ${fileName}!`);
+    }
+  }
 }
