@@ -11,13 +11,19 @@ import styles from './Index.module.css';
  */
 export default function DocumentsPage() {
   useTitle('Документация и справочные материалы');
-  useUserRole();
+  const { isAdmin, isOrganizer } = useUserRole();
+
+  const roles = getRoles({ isAdmin, isOrganizer });
+
+  const availableChapters = documentChapters.filter(({ permissions }) =>
+    permissions.some((p) => roles.includes(p))
+  );
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.headerIcon}>📚</div>
-        <h1 className={styles.title}>Документация платформы</h1>
+        <h1 className={styles.title}>Документация сервисов</h1>
         <p className={styles.subtitle}>
           Полное руководство по использованию всех возможностей системы
         </p>
@@ -31,7 +37,7 @@ export default function DocumentsPage() {
           </p>
 
           <div className={styles.grid}>
-            {documentChapters.map(({ type, label, icon, description }) => (
+            {availableChapters.map(({ type, label, icon, description }) => (
               <article key={type} className={styles.card}>
                 <Link to={`/documents/${type}`} className={styles.cardLink}>
                   <div className={styles.cardHeader}>
@@ -48,25 +54,14 @@ export default function DocumentsPage() {
             ))}
           </div>
         </div>
-
-        {/* <div className={styles.quickActions}>
-          <h3 className={styles.quickActionsTitle}>Быстрый доступ</h3>
-          <div className={styles.actionButtons}>
-            <Link to="/documents/faq" className={styles.actionButton}>
-              <span className={styles.actionButtonIcon}>❓</span>
-              FAQ
-            </Link>
-            <Link to="/documents/api" className={styles.actionButton}>
-              <span className={styles.actionButtonIcon}>🔌</span>
-              API Docs
-            </Link>
-            <Link to="/documents/tutorials" className={styles.actionButton}>
-              <span className={styles.actionButtonIcon}>🎓</span>
-              Tutorials
-            </Link>
-          </div>
-        </div> */}
       </div>
     </div>
   );
+}
+
+function getRoles({ isAdmin, isOrganizer }) {
+  const roles = ['all'];
+  if (isAdmin) roles.push('admin');
+  if (isOrganizer) roles.push('organizer');
+  return roles;
 }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import useTitle from '../../hook/useTitle';
 import { setBackground } from '../../redux/features/backgroundSlice';
 
-import styles from './403Forbidden.module.css';
+import styles from './Page403Forbidden.module.css';
 
 const ForbiddenPage = ({ message = 'Доступ запрещен', showHomeButton = true }) => {
   useTitle('Forbidden 403');

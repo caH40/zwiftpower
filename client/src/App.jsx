@@ -29,7 +29,7 @@ import { LegalRoute } from './Route/Legal.jsx';
 import { OrganizersPublicRoute } from './Route/OrganizersPublic.jsx';
 import { TeamsRoute } from './Route/Teams.jsx';
 import './css/App.css';
-import ForbiddenPage from './Pages/403Forbidden/403Forbidden.jsx';
+import ForbiddenPage from './Pages/Page403Forbidden/Page403Forbidden.jsx';
 import { useUserRole } from './hook/useUserRole.js';
 
 function App() {
