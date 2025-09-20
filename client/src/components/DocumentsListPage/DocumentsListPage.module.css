@@ -77,6 +77,10 @@
   transition: all 0.2s ease;
   overflow: hidden;
 }
+.card:focus-within {
+  border-color: #0366d6;
+  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+}
 
 .card:hover {
   transform: translateY(-4px);
@@ -91,7 +95,9 @@
   color: inherit;
   height: 100%;
 }
-
+.cardLink:focus {
+  outline: none;
+}
 .cardHeader {
   display: flex;
   align-items: center;
