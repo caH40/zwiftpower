@@ -22,6 +22,7 @@ export default function DevelopmentDocumentsPage() {
   return (
     <DocumentsListPage
       documents={documents}
+      icon={'💻'}
       title={'Техническая документация'}
       subtitle={'Архитектура системы, API reference и руководства для разработчиков'}
       sectionTitle={'Технические документы'}

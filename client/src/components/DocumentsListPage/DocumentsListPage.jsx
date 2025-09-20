@@ -7,6 +7,7 @@ import styles from './DocumentsListPage.module.css';
 /**
  * @param {Object} props - Пропсы.
  * @param {{fileName:string,extension:string}[]} props.documents - Массив данных по документам.
+ * @param {string} props.icon - Иконка.
  * @param {string} props.title - Заголовок.
  * @param {string} props.subtitle - Подзаголовок.
  * @param {string} props.sectionTitle
@@ -17,6 +18,7 @@ import styles from './DocumentsListPage.module.css';
  */
 export default function DocumentsListPage({
   documents,
+  icon,
   title,
   subtitle,
   sectionTitle,
@@ -27,7 +29,7 @@ export default function DocumentsListPage({
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.headerIcon}>💻</div>
+        <div className={styles.headerIcon}>{icon}</div>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
