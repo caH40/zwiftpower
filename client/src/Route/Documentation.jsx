@@ -20,6 +20,7 @@ const OrganizerDocumentationList = lazy(() =>
 const OrganizerDocumentation = lazy(() =>
   import('../Pages/Documentation/Organizer/OrganizerDocumentation')
 );
+const Faq = lazy(() => import('../Pages/Faq/Faq'));
 
 // UnderConstruction
 
@@ -27,6 +28,7 @@ export function DocumentationRoute({ isOrganizer, isAdmin }) {
   return (
     <>
       <Route path="/documentation" element={<Documentation />} />
+      <Route path="/documentation/faq" element={<Faq />} />
       <Route path="/documentation/public" element={<PublicDocumentationList />} />
       <Route path="/documentation/public/:urlSlug" element={<PublicDocumentation />} />
       {isOrganizer || isAdmin ? (

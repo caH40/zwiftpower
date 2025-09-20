@@ -6,13 +6,13 @@ export const documentChapters = [
     description: 'Руководство по использованию платформы для участников заездов',
     permissions: ['all'],
   },
-  // {
-  //   type: 'faq',
-  //   label: 'Часто задаваемые вопросы',
-  //   icon: '❓',
-  //   description: 'Ответы на популярные вопросы пользователей',
-  //   permissions: ['all'],
-  // },
+  {
+    type: 'faq',
+    label: 'Часто задаваемые вопросы',
+    icon: '❓',
+    description: 'Ответы на популярные вопросы пользователей',
+    permissions: ['all'],
+  },
   {
     type: 'organizer',
     label: 'Документация организатора',

@@ -21,5 +21,5 @@ export const sidebarMainMenuItems = [
   { id: 7, to: '/riders', icon: IconRider2, label: 'Райдеры' },
   { id: 8, to: '/profile', icon: IconProfile, label: 'Профиль' },
   { id: 9, to: '/streams', icon: IconStream, label: 'Трансляции' },
-  { id: 10, to: '/faq', icon: IconFaq, label: 'ЧЗВ' },
+  { id: 10, to: '/documentation', icon: IconFaq, label: 'Справочник' },
 ];

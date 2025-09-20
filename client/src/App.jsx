@@ -45,7 +45,6 @@ function App() {
       <Route path="/" element={<MainLayer />}>
         <Route index element={<MainPage />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
-        <Route path="/faq" element={<Faq />} />
         <Route path="/riders" element={<Riders />} />
         <Route path="/streams" element={<Streams />} />
         <Route path="/site-services" element={<SiteServices />} />
