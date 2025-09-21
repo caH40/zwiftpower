@@ -1,5 +1,8 @@
 import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
+import { useSelector } from 'react-redux';
+
+import { LoadingPage } from '../Pages/LoadingPage/LoadingPage';
 
 const Documentation = lazy(() => import('../Pages/Documentation/Documentation'));
 const DevelopmentDocumentationList = lazy(() =>
@@ -22,9 +25,13 @@ const OrganizerDocumentation = lazy(() =>
 );
 const Faq = lazy(() => import('../Pages/Faq/Faq'));
 
-// UnderConstruction
-
 export function DocumentationRoute({ isOrganizer, isAdmin }) {
+  const { status } = useSelector((state) => state.checkAuth);
+
+  if (status === 'loading' || status === 'idle') {
+    return <Route path="*" element={<LoadingPage />} />;
+  }
+
   return (
     <>
       <Route path="/documentation" element={<Documentation />} />

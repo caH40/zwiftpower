@@ -31,9 +31,11 @@ import { TeamsRoute } from './Route/Teams.jsx';
 import './css/App.css';
 import ForbiddenPage from './Pages/Page403Forbidden/Page403Forbidden.jsx';
 import { useUserRole } from './hook/useUserRole.js';
+import { LoadingPage } from './Pages/LoadingPage/LoadingPage.jsx';
 
 function App() {
   useFirstAuth();
+  const { status } = useSelector((state) => state.checkAuth);
   const { isAdmin, isClubModerator, isOrganizer } = useUserRole();
   const user = useSelector((state) => state.checkAuth.value.user);
 
@@ -42,6 +44,11 @@ function App() {
 
   return (
     <Routes>
+      {/* Пока не получен ответ от сервера авторизации (положительный или отрицательный) отображается загрузка */}
+      {(status === 'loading' || status === 'idle') && (
+        <Route path="*" element={<LoadingPage />} />
+      )}
+
       <Route path="/" element={<MainLayer />}>
         <Route index element={<MainPage />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
@@ -63,7 +70,7 @@ function App() {
         {LegalRoute()}
         {OrganizersPublicRoute()}
         {TeamsRoute()}
-        {DocumentationRoute({ isOrganizer, isAdmin })}
+        {DocumentationRoute({ isAdmin, isOrganizer })}
 
         <Route path="*" element={<Page404 />} />
       </Route>

@@ -21,7 +21,7 @@ export function useUserRole() {
 
   const isOrganizer = Boolean(user?.organizer);
   const isAdmin = user?.role === 'admin';
-  const isClubModerator = user.isModeratorClub;
+  const isClubModerator = !!user?.moderator?.clubs?.length;
 
   return {
     hasAuth: status,
