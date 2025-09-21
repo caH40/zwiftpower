@@ -129,6 +129,7 @@ export interface Profile {
   category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
   bio?: string;
   racingScore: number;
+  team?: { name: string; shortName: string; urlSlug: string };
 }
 
 export interface LoggingAdminArg {

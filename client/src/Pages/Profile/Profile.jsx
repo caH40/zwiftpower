@@ -27,7 +27,7 @@ const cx = cn.bind(styles);
  */
 function Profile() {
   useTitle('Профиль пользователя');
-  const { isScreenLg: isDesktop } = useResize();
+  // const { isScreenLg: isDesktop } = useResize();
   const {
     profile,
     quantityRace,

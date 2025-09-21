@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames/bind';
 
-import IconEdit from '../icons/IconEdit';
-import { getWeightStr } from '../../utils/event';
-import LogoRider from '../LogoRider/LogoRider';
-import MyTooltip from '../../HOC/MyTooltip';
-import { getAgeCategory } from '../../utils/age';
-import CategoryMF from '../CategoryMF/CategoryMF';
 import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlice';
 import { fetchUserProfile } from '../../redux/features/api/userProfileSlice';
+import { getWeightStr } from '../../utils/event';
+import { getAgeCategory } from '../../utils/age';
+import LogoRider from '../LogoRider/LogoRider';
+import IconEdit from '../icons/IconEdit';
+import MyTooltip from '../../HOC/MyTooltip';
+import CategoryMF from '../CategoryMF/CategoryMF';
+import TeamLogoBox from '../TeamLogoBox/TeamLogoBox';
 
 import styles from './ProfileBlock.module.css';
 
@@ -81,6 +82,16 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
               className={styles.term__description}
             >{`${profile.firstName} ${profile.lastName}`}</dd>
           </div>
+
+          {/* Команда */}
+          {profile.team && (
+            <div className={styles.box__term}>
+              <dt className={styles.term}>Команда</dt>
+              <dd className={styles.term__description}>
+                <TeamLogoBox team={profile.team} />
+              </dd>
+            </div>
+          )}
 
           {profile.zCategory && (
             <div className={styles.box__term}>

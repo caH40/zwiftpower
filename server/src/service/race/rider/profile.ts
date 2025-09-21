@@ -5,6 +5,7 @@ import { Rider } from '../../../Model/Rider.js';
 
 // types
 import type { Profile } from '../../../types/types.interface.js';
+import { TeamMemberModel } from '../../../Model/TeamMember.js';
 
 /**
  * Формирование данных профайла райдера (анкета)
@@ -30,6 +31,15 @@ export async function getProfileService(zwiftId: number): Promise<Profile> {
     Rider.findOne({ zwiftId }),
   ]);
 
+  const teamMemberDB = await TeamMemberModel.findOne(
+    { user: userDB?._id },
+    { team: true, _id: false }
+  )
+    .populate({ path: 'team', select: ['name', 'shortName', 'urlSlug', '-_id'] })
+    .lean<{
+      team: { name: string; shortName: string; urlSlug: string };
+    }>();
+
   // Если оба найдены, формируем профиль из базы данных
   if (userDB && riderDB) {
     return {
@@ -47,6 +57,7 @@ export async function getProfileService(zwiftId: number): Promise<Profile> {
       category: userDB.category,
       bio: userDB.bio,
       racingScore: riderDB.competitionMetrics?.racingScore || 0,
+      team: teamMemberDB?.team,
     };
   }
 
@@ -72,5 +83,6 @@ export async function getProfileService(zwiftId: number): Promise<Profile> {
     zCategoryWomen: riderFromZwift.competitionMetrics?.categoryWomen,
     racingScore: riderFromZwift.competitionMetrics?.racingScore || 0,
     category: category,
+    team: teamMemberDB?.team,
   };
 }
