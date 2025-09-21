@@ -1,7 +1,7 @@
 import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
-import { useSelector } from 'react-redux';
 
+import { navigateTo403 } from '../utils/routeUtils';
 const TeamsPublic = lazy(() => import('../Pages/Teams/Teams'));
 const TeamCreatePage = lazy(() => import('../Pages/TeamCreate/TeamCreate'));
 const TeamPageLayout = lazy(() => import('../Pages/Team/TeamPageLayout'));
@@ -20,28 +20,27 @@ const TeamControlEditPage = lazy(() => import('../Pages/Team/ControlEdit/TeamCon
  * isCreator:boolean; Является ли пользователь создателем команды с team.id
  * }
  */
-export function TeamsRoute() {
-  const {
-    status,
-    user: { team: userInTeam },
-  } = useSelector((state) => state.checkAuth.value);
-
+export function TeamsRoute({ hasAuth, userInTeam }) {
   return (
     <>
       <Route path="/teams" element={<TeamsPublic />} />
-      {status && !userInTeam?.id && (
+      {hasAuth && !userInTeam?.id ? (
         <Route path="/moderation/teams/create" element={<TeamCreatePage />} />
+      ) : (
+        navigateTo403('/moderation/teams/create')
       )}
       <Route path="/teams/:urlSlug" element={<TeamPageLayout />}>
         <Route path="members" element={<TeamMembersPage />} />
         <Route path="results" element={<TeamResultsPage />} />
 
-        {status && userInTeam?.isCreator && (
+        {hasAuth && userInTeam?.isCreator ? (
           <Route path="control" element={<TeamControlLayout />}>
             <Route index element={<Navigate to="members" replace />} />
             <Route path="members" element={<TeamControlMembersPage />} />
             <Route path="edit" element={<TeamControlEditPage />} />
           </Route>
+        ) : (
+          navigateTo403('control/*')
         )}
       </Route>
     </>

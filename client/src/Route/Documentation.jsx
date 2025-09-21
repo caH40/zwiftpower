@@ -1,8 +1,7 @@
 import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
-import { useSelector } from 'react-redux';
 
-import { LoadingPage } from '../Pages/LoadingPage/LoadingPage';
+import { navigateTo403 } from '../utils/routeUtils';
 
 const Documentation = lazy(() => import('../Pages/Documentation/Documentation'));
 const DevelopmentDocumentationList = lazy(() =>
@@ -26,12 +25,6 @@ const OrganizerDocumentation = lazy(() =>
 const Faq = lazy(() => import('../Pages/Faq/Faq'));
 
 export function DocumentationRoute({ isOrganizer, isAdmin }) {
-  const { status } = useSelector((state) => state.checkAuth);
-
-  if (status === 'loading' || status === 'idle') {
-    return <Route path="*" element={<LoadingPage />} />;
-  }
-
   return (
     <>
       <Route path="/documentation" element={<Documentation />} />
@@ -47,7 +40,7 @@ export function DocumentationRoute({ isOrganizer, isAdmin }) {
           <Route path="/documentation/organizer" element={<OrganizerDocumentationList />} />
         </>
       ) : (
-        <Route path="/documentation/organizer" element={<Navigate to="/403" replace />} />
+        navigateTo403('/documentation/organizer/*')
       )}
 
       {isAdmin ? (
@@ -59,7 +52,7 @@ export function DocumentationRoute({ isOrganizer, isAdmin }) {
           />
         </>
       ) : (
-        <Route path="/documentation/development" element={<Navigate to="/403" replace />} />
+        navigateTo403('/documentation/development/*')
       )}
     </>
   );

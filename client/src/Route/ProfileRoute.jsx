@@ -1,6 +1,5 @@
 import { Navigate, Route } from 'react-router-dom';
 import { lazy } from 'react';
-import { useSelector } from 'react-redux';
 
 const Profile = lazy(() => import('../Pages/Profile/Profile'));
 const ProfileResults = lazy(() => import('../Pages/Profile/ProfileResults'));
@@ -22,19 +21,17 @@ const SettingsServicesAndFinances = lazy(() =>
   import('../Pages/Profile/SettingsServicesAndFinances/SettingsServicesAndFinances')
 );
 
-export function ProfileRoute() {
-  const { status, user } = useSelector((state) => state.checkAuth.value);
-
+export function ProfileRoute({ hasAuth, user }) {
   return (
     <>
       <Route
         path="/profile/"
-        element={<Navigate to={getRedirectPath(status, user)} replace />}
+        element={<Navigate to={getRedirectPath(hasAuth, user)} replace />}
       />
 
       <Route
         path="/profile/"
-        element={<Navigate to={getRedirectPath(status, user)} replace />}
+        element={<Navigate to={getRedirectPath(hasAuth, user)} replace />}
       />
 
       <Route path="/profile/:zwiftId" element={<Profile />}>
@@ -43,7 +40,7 @@ export function ProfileRoute() {
         <Route path="weight-and-height" element={<ProfileWeightAndHeight />} />
         <Route path="racing-score" element={<ProfileRacingScore />} />
 
-        {status && (
+        {hasAuth && (
           <Route path="settings" element={<ProfileSetting />}>
             <Route path="account" element={<SettingsAccount />} />
             <Route path="notifications" element={<SettingsNotifications />} />

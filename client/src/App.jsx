@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import useFirstAuth from './hook/useFirstAuth';
@@ -36,19 +36,23 @@ import { LoadingPage } from './Pages/LoadingPage/LoadingPage.jsx';
 function App() {
   useFirstAuth();
   const { status } = useSelector((state) => state.checkAuth);
-  const { isAdmin, isClubModerator, isOrganizer } = useUserRole();
+  const { hasAuth, isAdmin, isClubModerator, isOrganizer } = useUserRole();
   const user = useSelector((state) => state.checkAuth.value.user);
 
   const location = useLocation();
   sendMetrika('hit', location.pathname);
 
+  // Пока не получен ответ от сервера авторизации (положительный или отрицательный) отображается загрузка
+  if (status === 'loading' || status === 'idle') {
+    return <LoadingPage />;
+  }
+
+  const navigateTo403 = (path) => (
+    <Route path={path} element={<Navigate to="/403" replace />} />
+  );
+
   return (
     <Routes>
-      {/* Пока не получен ответ от сервера авторизации (положительный или отрицательный) отображается загрузка */}
-      {(status === 'loading' || status === 'idle') && (
-        <Route path="*" element={<LoadingPage />} />
-      )}
-
       <Route path="/" element={<MainLayer />}>
         <Route index element={<MainPage />} />
         <Route path="/message/:messageId/:additional" element={<Message />} />
@@ -57,19 +61,19 @@ function App() {
         <Route path="/site-services" element={<SiteServices />} />
         <Route path="/403" element={<ForbiddenPage />} />
 
-        {isAdmin ? AdminRoute(isAdmin) : ''}
-        {isClubModerator ? ModeratorClubRoute() : ''}
-        {user.organizer ? OrganizerRoute(user.organizer) : ''}
+        {isAdmin ? AdminRoute(isAdmin) : navigateTo403('/admin/*')}
+        {user.organizer ? OrganizerRoute(user.organizer) : navigateTo403('/organizer/*')}
 
+        {ModeratorClubRoute({ isClubModerator })}
         {ResultsRoute()}
         {ScheduleRouteRoute()}
-        {ProfileRoute()}
+        {ProfileRoute({ hasAuth, user })}
         {SeriesRoute()}
         {StatisticsRoute()}
         {AuthRoute()}
         {LegalRoute()}
         {OrganizersPublicRoute()}
-        {TeamsRoute()}
+        {TeamsRoute({ hasAuth, userInTeam: user.team })}
         {DocumentationRoute({ isAdmin, isOrganizer })}
 
         <Route path="*" element={<Page404 />} />
