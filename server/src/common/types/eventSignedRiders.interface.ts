@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { TTeamForProfile } from '../../types/types.interface';
 
 /**
  *  Event (описание) и зарегистрировавшиеся райдеры
@@ -64,13 +65,7 @@ export interface EventSignedRidersFetch {
   started: boolean;
   totalFinishedCount?: number;
   signedRiders: {
-    team?: {
-      _id: string;
-      name: string;
-      shortName: string;
-      urlSlug: string;
-      logoUrl?: Record<string, string>;
-    };
+    team?: TTeamForProfile;
     subgroup: Types.ObjectId;
     id: number;
     firstName: string;

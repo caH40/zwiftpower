@@ -85,7 +85,7 @@ async function getSignedRiders(subgroupIds: (Types.ObjectId | undefined)[]) {
   return await ZwiftSignedRiders.find({
     subgroup: subgroupIds,
   })
-    .populate({ path: 'team', select: ['urlSlug', 'name', 'shortName', 'logoFileInfo'] })
+    .populate({ path: 'team', select: ['urlSlug', 'name', 'shortName', '-_id'] })
     .lean<TSignedRidersWithTeam[]>();
 }
 

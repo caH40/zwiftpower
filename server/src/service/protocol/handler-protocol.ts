@@ -15,6 +15,7 @@ import {
 } from '../../types/types.interface.js';
 
 import { setDSQWithVirtualPower } from './virtual-power.js';
+import { addTeamInResults } from '../updates/results_event/team-add.js';
 
 /**
  * Формирование финишного протокола в зависимости от typeRaceCustom и сохранение в БД
@@ -41,8 +42,11 @@ export async function handlerProtocol({
   // добавление данных страны и возраста в результаты райдеров
   const resultsWithAgeAndFlag = await addAgeAndFlag(eventDB, resultsWithStartGap);
 
+  // Добавление информации о принадлежности райдера к команде.
+  const resultsWithTeams = await addTeamInResults(resultsWithAgeAndFlag);
+
   // добавление данных удельной мощности
-  const resultsWithWPK = addWattsPerKg(resultsWithAgeAndFlag);
+  const resultsWithWPK = addWattsPerKg(resultsWithTeams);
 
   // добавление данных основного профиля Zwift райдера в результат Эвента
   const resultsWithMainProfiles = await addMainProfileZwiftToRaw(resultsWithWPK);

@@ -6,6 +6,7 @@ import {
   TAuthService,
   TCategorySeries,
   TPricingPlan,
+  TTeamForProfile,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
@@ -425,6 +426,7 @@ export interface ProfileDataInResult {
   imageSrc: string | null;
   countryAlpha3: string;
   age: number;
+  team?: TTeamForProfile;
 }
 //
 //

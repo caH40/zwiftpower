@@ -47,7 +47,7 @@ function TableSignedRiders({ riders = [], event }) {
               getSweepers={getSweepers}
             />
 
-            {/* для "space-between" столбцов */}
+            {/* Принадлежность к команде */}
             <td>{rider.team && <TeamLogoBox team={rider.team} />}</td>
 
             <td>

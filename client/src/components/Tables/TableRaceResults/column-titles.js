@@ -2,13 +2,14 @@ export const raceResultsColumnsStartFull = [
   { name: 'Место', id: 1 },
   { name: 'Категория', id: 2 },
   { name: 'Райдер', id: 3 },
-  { name: 'Время', id: 4 },
-  { name: 'Отставание от лидера', id: 5 },
-  { name: 'Отставание от райдера впереди', id: 6 },
-  { name: 'Средняя скорость', id: 7 },
-  { name: 'Удельная средняя мощность за гонку', id: 8 },
-  { name: 'Средняя мощность за гонку', id: 9 },
-  { name: 'Нормализованная мощность', id: 10 },
+  { name: 'Команда', id: 4 },
+  { name: 'Время', id: 5 },
+  { name: 'Отставание от лидера', id: 6 },
+  { name: 'Отставание от райдера впереди', id: 7 },
+  { name: 'Средняя скорость', id: 8 },
+  { name: 'Удельная средняя мощность за гонку', id: 9 },
+  { name: 'Средняя мощность за гонку', id: 10 },
+  { name: 'Нормализованная мощность', id: 11 },
 ];
 export const raceResultsColumnsCP = [
   { name: '5с', id: 100 },
@@ -20,12 +21,12 @@ export const raceResultsColumnsCP = [
   { name: '40м', id: 106 },
 ];
 export const raceResultsColumnsEnd = [
-  { name: 'Рейтинговые очки', tooltip: 'Гоночные рейтинговые очки', id: 11 },
-  { name: 'Пульс', id: 12 },
-  { name: 'Вес', id: 13 },
-  { name: 'Рост', id: 14 },
-  { name: 'Возраст', id: 15 },
-  { name: 'Разное', id: 16 },
+  { name: 'Рейтинговые очки', tooltip: 'Гоночные рейтинговые очки', id: 21 },
+  { name: 'Пульс', id: 22 },
+  { name: 'Вес', id: 23 },
+  { name: 'Рост', id: 24 },
+  { name: 'Возраст', id: 25 },
+  { name: 'Разное', id: 26 },
 ];
 
 export const raceResultsColumns = (setShowIndex) => {

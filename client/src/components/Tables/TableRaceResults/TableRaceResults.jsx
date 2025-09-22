@@ -20,6 +20,7 @@ import TdDifferent from '../Td/TdDifferent';
 import TdSpeed from '../Td/TdSpeed';
 import NPandVIBox from '../../NPandVIBox/NPandVIBox';
 import TdWeight from '../Td/TdWeight';
+import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 
 import styles from '../Table.module.css';
 
@@ -85,6 +86,10 @@ function TableRaceResults({ results, event, forDNF }) {
                 getLeaders={getLeaders}
                 getSweepers={getSweepers}
               />
+
+              {/* Принадлежность к команде */}
+              <td>{profile.team && <TeamLogoBox team={profile.team} />}</td>
+
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
               <TdGap gap={result.gap} dsq={isDsq} />
               <TdGap gap={result.gapPrev} dsq={isDsq} />

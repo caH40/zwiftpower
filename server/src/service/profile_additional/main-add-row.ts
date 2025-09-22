@@ -6,7 +6,10 @@ import { ProfileZwiftAPI } from '../../types/zwiftAPI/profileFromZwift.interface
 import {
   ProfileDataInResultWithId,
   ResultEventAdditional,
+  TTeamForProfile,
 } from '../../types/types.interface.js';
+import { Types } from 'mongoose';
+import { TeamMemberModel } from '../../Model/TeamMember.js';
 
 /**
  * Добавление данных основного профиля Zwift райдера в результат Эвента,
@@ -21,10 +24,10 @@ export const addMainProfileZwiftToRaw = async (
 
   // поиск Основных пользователей (users), чьи дополнительные профили Звифт
   // участвовали в данном Эвенте (есть profileId в результатах)
-  const userMainOnlyIds: { zwiftId: number; zwiftIdAdditional: number[] }[] = await User.find(
+  const userMainOnlyIds = await User.find(
     { zwiftIdAdditional: { $in: profileIds } },
-    { zwiftId: true, zwiftIdAdditional: true, _id: false }
-  ).lean();
+    { zwiftId: true, zwiftIdAdditional: true }
+  ).lean<{ zwiftId: number; zwiftIdAdditional: number[]; _id: Types.ObjectId }[]>();
 
   for (const user of userMainOnlyIds) {
     // запрос данных основного профиля с сервера Zwift
@@ -37,6 +40,13 @@ export const addMainProfileZwiftToRaw = async (
       continue;
     }
 
+    const teamMemberDB = await TeamMemberModel.findOne(
+      { user: user._id },
+      { _id: false, team: true }
+    )
+      .populate({ path: 'team', select: ['-_id', 'name', 'shortName', 'urlSlug'] })
+      .lean<{ team: TTeamForProfile }>();
+
     const profileDataMain: ProfileDataInResultWithId = {
       profileIdMain: user.zwiftId,
       firstName: profileMainZwiftAPI.firstName,
@@ -47,6 +57,7 @@ export const addMainProfileZwiftToRaw = async (
       imageSrc: profileMainZwiftAPI.imageSrc,
       countryAlpha3: profileMainZwiftAPI.countryAlpha3,
       age: profileMainZwiftAPI.age,
+      team: teamMemberDB?.team,
     };
 
     for (const result of results) {

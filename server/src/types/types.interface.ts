@@ -182,7 +182,7 @@ export interface SignedRidersPowerCurves extends SignedRidersSchema {
   racingScore?: number;
 }
 export type TSignedRidersWithTeam = Omit<SignedRidersSchema, 'team'> & {
-  team: Pick<TTeam, '_id' | 'name' | 'shortName' | 'logoFileInfo' | 'urlSlug'>;
+  team: TTeamForProfile;
 };
 /**
  * Данные Event с зарегистрированными райдерами
@@ -190,13 +190,7 @@ export type TSignedRidersWithTeam = Omit<SignedRidersSchema, 'team'> & {
 export type EventWithSignedRiders = Omit<EventWithSubgroup, 'seriesId'> & {
   seriesId: { _id: Types.ObjectId; name: string; urlSlug: string };
   signedRiders: (SignedRidersPowerCurves & {
-    team?: {
-      _id: Types.ObjectId;
-      name: string;
-      shortName: string;
-      urlSlug: string;
-      logoFileInfo?: TFileMetadataForCloud;
-    };
+    team?: TTeamForProfile;
   })[];
 };
 /**
@@ -248,6 +242,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
     weightInGrams: number;
     age?: number;
     countryAlpha3?: string;
+    team?: TTeamForProfile;
   };
   speed?: number;
   wattsPerKg?: number;
@@ -260,6 +255,11 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   normalizedPower?: number;
   variabilityIndex?: number;
 }
+
+/**
+ * Данные о команде для профиля райдера.
+ */
+export type TTeamForProfile = Pick<TTeam, 'name' | 'shortName' | 'urlSlug'>;
 
 export interface CpBestEfforts {
   watts: null | number;

@@ -24,6 +24,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
           imageSrc: result.profileData.imageSrc,
           countryAlpha3: result.profileData.countryAlpha3,
           age: result.profileData.age,
+          team: result.profileData.team,
         },
 
         eventSubgroupId: result.eventSubgroupId,

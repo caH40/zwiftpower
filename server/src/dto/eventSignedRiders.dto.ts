@@ -5,7 +5,6 @@ import {
   EventWithSignedRiders,
   TSignedRidersWithTeam,
 } from '../types/types.interface.js';
-import { createUrlsToFileCloud } from '../utils/url.js';
 
 /**
  * DTO для отправки данных Event и зарегистрированных райдеров
@@ -28,8 +27,6 @@ export const eventSignedRidersDto = (
       name: r.team.name,
       shortName: r.team.shortName,
       urlSlug: r.team.urlSlug,
-      _id: r.team._id.toString(),
-      logoUrl: createUrlsToFileCloud(r.team.logoFileInfo),
     };
     return { ...r, team };
   });
