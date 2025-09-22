@@ -3,8 +3,9 @@ import { Transition } from 'react-transition-group';
 import cn from 'classnames/bind';
 
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
-import { createHtml } from '../../utils/html';
+
 import { useResize } from '../../hook/use-resize';
+import { createHtml } from '../../utils/html';
 import OpenBoxArrow from '../UI/OpenBoxArrow/OpenBoxArrow';
 import ButtonUrl from '../UI/ButtonUrl/ButtonUrl';
 import IconTelegram from '../icons/IconTelegram';

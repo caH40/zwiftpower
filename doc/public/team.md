@@ -14,9 +14,7 @@
 
 ### Просмотр всех команд
 
-```bash
-Перейдите на страницу: https://zwiftpower.ru/teams
-```
+Перейдите на страницу: [https://zwiftpower.ru/teams](https://zwiftpower.ru/teams)
 
 ### Создание новой команды
 

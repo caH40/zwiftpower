@@ -1,4 +1,4 @@
-import { renderTextWithLinks } from '../../utils/html-jsx';
+import { createHtml } from '../../utils/html';
 
 import styles from './Document.module.css';
 
@@ -28,7 +28,7 @@ export default function Document({ dataJson }) {
           {section.content.map((contentItem, indexContent) => (
             <div key={indexContent} className={styles.content__item}>
               <p className={styles.content__text}>
-                {contentItem.number} {renderTextWithLinks(contentItem.text)}
+                {contentItem.number} {createHtml.renderTextWithLinks(contentItem.text)}
               </p>
 
               {contentItem.term && (
@@ -36,7 +36,7 @@ export default function Document({ dataJson }) {
                   {contentItem.term.map((termItem, index) => (
                     <li key={index} className={styles.item}>
                       <strong className={styles.term}>{termItem.term}:</strong>{' '}
-                      {termItem.definition}
+                      {createHtml.renderTextWithLinks(termItem.definition)}
                     </li>
                   ))}
                 </ul>
@@ -55,7 +55,7 @@ export default function Document({ dataJson }) {
               {contentItem.contentSecond &&
                 contentItem.contentSecond.map((contentSecond, index) => (
                   <p className={styles.contentSecond__text} key={index}>
-                    {contentSecond.number}. {renderTextWithLinks(contentSecond.text)}
+                    {contentSecond.number}. {createHtml.renderTextWithLinks(contentSecond.text)}
                   </p>
                 ))}
             </div>

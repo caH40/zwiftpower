@@ -23,4 +23,19 @@ export const createHtml = {
       '<a class="link" target="_blank" rel="noreferrer" href="$1">$1</a>'
     );
   },
+
+  renderTextWithLinks: function (text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+
+    return parts.map((part, index) =>
+      urlRegex.test(part) ? (
+        <a key={index} href={part} className="link" target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      ) : (
+        part
+      )
+    );
+  },
 };
