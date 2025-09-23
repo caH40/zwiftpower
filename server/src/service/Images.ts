@@ -1,13 +1,17 @@
 import slugify from 'slugify';
 
+import { Cloud } from './cloud.js';
 import { parseAndGroupFileNames } from '../utils/parseAndGroupFileNames.js';
+import { handleAndLogError } from '../errors/error.js';
+import { convertMulterFileToWebFile } from '../utils/file.js';
+import { fileTypes } from '../assets/files.js';
+import { convertToWebP } from '../utils/image-resize.js';
+import { generateFileName } from '../utils/file-name.js';
+import { imageSizeMappingOnlyWidth } from '../assets/image-sizes.js';
 
 // types
-import { TFileMetadataForCloud } from '../types/model.interface.js';
-import { handleAndLogError } from '../errors/error.js';
-import { Cloud } from './cloud.js';
-import { uploadFileToCloudHandler } from './organizer/files/upload-handler.js';
-import { entityForFileSuffix } from '../types/types.interface.js';
+import { entityForFileSuffix, TSaveFileToCloud } from '../types/types.interface.js';
+import { TAvailableSizes, TFileMetadataForCloud } from '../types/model.interface.js';
 
 export class ImagesService {
   /**
@@ -33,7 +37,7 @@ export class ImagesService {
     logoFileInfo: TFileMetadataForCloud | null;
     posterFileInfo: TFileMetadataForCloud | null;
   }> => {
-    // Суффикс для названия файла в объектном хранилище в Облаке.
+    // Название для части суффикса файла в объектном хранилище в Облаке.
     const slugifyShortName = slugify(shortName || name, {
       lower: true,
       strict: true,
@@ -58,7 +62,7 @@ export class ImagesService {
   /**
    * Удаление файлов изображения из объектного хранилища.
    */
-  static delete = async (baseNames: (string | undefined)[]): Promise<void> => {
+  public delete = async (baseNames: (string | undefined)[]): Promise<void> => {
     // Удаление замещенных (старых) файлов изображений из облака.
     const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
 
@@ -105,7 +109,7 @@ export class ImagesService {
     // Если logoFile существует, значит его logo изменили на клиенте. Сохранение в Облаке и в БД.
     if (logoFile) {
       // Сохраняет новые файлы, удаляет старые, которые заменили на новые в облаке.
-      uploadedFileNames.logo = await uploadFileToCloudHandler({
+      uploadedFileNames.logo = await this.uploadFileToCloudHandler({
         entity: 'logo',
         shortName,
         imageFile: logoFile,
@@ -118,7 +122,7 @@ export class ImagesService {
     // Если posterFile существует, значит его poster изменили на клиенте. Сохранение в Облаке и в БД.
     if (posterFile) {
       // Сохраняет новые файлы, удаляет старые, которые заменили на новые в облаке.
-      uploadedFileNames.poster = await uploadFileToCloudHandler({
+      uploadedFileNames.poster = await this.uploadFileToCloudHandler({
         entity: 'poster',
         shortName,
         imageFile: posterFile,
@@ -132,5 +136,95 @@ export class ImagesService {
       uploadedFileNamesLogo: uploadedFileNames.logo,
       uploadedFileNamesPoster: uploadedFileNames.poster,
     };
+  }
+
+  async uploadFileToCloudHandler({
+    entity,
+    shortName,
+    imageFile,
+    baseNameOld,
+    needOptimizedImages,
+    entitySuffix,
+  }: {
+    entity: 'poster' | 'logo';
+    shortName: string;
+    imageFile: Express.Multer.File;
+    baseNameOld?: string;
+    needOptimizedImages: boolean;
+    entitySuffix?: string;
+  }): Promise<string[]> {
+    // Экземпляр класса Облака.
+    const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
+
+    const suffixImage = `${entitySuffix}-${shortName}-${entity}-`;
+
+    const uploadedFileNames = await this.saveFileToCloud({
+      file: convertMulterFileToWebFile({ file: imageFile }),
+      type: 'image',
+      suffix: suffixImage,
+      needOptimizedImages,
+    });
+
+    // Удаление замещенных (старых) файлов изображений из облака.
+    baseNameOld &&
+      (await cloud
+        .deleteFiles({
+          prefix: baseNameOld,
+        })
+        .catch((e) => handleAndLogError(e)));
+
+    return uploadedFileNames;
+  }
+
+  /**
+   * Сохраняет файл изображения и оптимизированные файлы изображений в облаке с уникальным суффиксом и возвращает массив имен сохраненных файлов.
+   */
+  async saveFileToCloud({
+    file,
+    type,
+    suffix,
+    needOptimizedImages,
+  }: TSaveFileToCloud): Promise<string[]> {
+    if (!file) {
+      throw new Error('Не получен файл для сохранения в облаке!');
+    }
+
+    const typeCurrent = fileTypes.find((elm) => elm.type === type);
+    if (!typeCurrent) {
+      throw new Error('Некорректно указан тип файла!');
+    }
+
+    if (!file.type.startsWith(typeCurrent.testString)) {
+      throw new Error(`Файл ${file.name} не является ${typeCurrent.description}`);
+    }
+
+    const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
+    const timeStump = Date.now(); // Время используется в именах файлов.
+    const fileNames: string[] = [];
+
+    // Оптимизация и сохранение на облаке.
+    const saveFile = async (inputFile: File, sizeKey?: TAvailableSizes): Promise<void> => {
+      // Не проводиться оптимизация если ключ размера не задан, или если это оригинальное изображение.
+      const optimizedFile =
+        sizeKey && sizeKey !== 'original' ? await convertToWebP(inputFile, sizeKey) : inputFile;
+      const fileName = generateFileName({ file: optimizedFile, suffix, timeStump, sizeKey });
+      fileNames.push(fileName);
+
+      const { data } = await cloud.postFile({ file: optimizedFile, fileName });
+      if (!data) {
+        throw new Error('Ошибка при получении данных URL файла!');
+      }
+    };
+
+    if (needOptimizedImages) {
+      const tasks = (Object.keys(imageSizeMappingOnlyWidth) as TAvailableSizes[]).map(
+        (sizeKey) => saveFile(file, sizeKey)
+      );
+      await Promise.all(tasks);
+    } else {
+      await saveFile(file);
+    }
+
+    return fileNames;
   }
 }

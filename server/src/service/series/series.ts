@@ -3,10 +3,11 @@ import slugify from 'slugify';
 
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { Organizer } from '../../Model/Organizer.js';
-import { imageStorageHandler } from '../organizer/files/imageStorage-handler.js';
-import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { organizerSeriesAllDto, organizerSeriesOneDto } from '../../dto/series.js';
+import { ImagesService } from '../Images.js';
+import { getDateSuffix, setEndOfDay } from '../../utils/date-local.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import {
@@ -14,19 +15,24 @@ import {
   TOrganizerSeriesOneResponseDB,
 } from '../../types/mongodb-response.types.js';
 import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
-import { TFileMetadataForCloud, TSeriesStage } from '../../types/model.interface.js';
+import { TSeriesStage } from '../../types/model.interface.js';
 import {
   SeriesDataFromClientForCreateFull,
   SeriesStagesFromClientForPatch,
   TResponseService,
-} from '../../types/http.interface';
-import { handleAndLogError } from '../../errors/error.js';
-import { Cloud } from '../cloud.js';
-import { TParamsSeriesServiceAddStage } from '../../types/types.interface.js';
-import { getDateSuffix, setEndOfDay } from '../../utils/date-local.js';
+} from '../../types/http.interface.js';
+import {
+  entityForFileSuffix,
+  TParamsSeriesServiceAddStage,
+} from '../../types/types.interface.js';
 
 export class SeriesService {
-  constructor() {}
+  private imagesService: ImagesService;
+  entityName: entityForFileSuffix;
+  constructor() {
+    this.imagesService = new ImagesService();
+    this.entityName = 'series';
+  }
 
   // Получение всех серий заездов.
   public async getAll(
@@ -114,7 +120,7 @@ export class SeriesService {
 
     // Удаление замещенных (старых) файлов изображений из облака.
     const baseNames = [seriesDB.posterFileInfo?.baseName, seriesDB.logoFileInfo?.baseName];
-    await this.deleteImagesFromCloud(baseNames);
+    await this.imagesService.delete(baseNames);
 
     return {
       data: null,
@@ -155,11 +161,12 @@ export class SeriesService {
     await this.checkUrlSlug({ urlSlug, name });
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await this.saveImages({
+    const { logoFileInfo, posterFileInfo } = await this.imagesService.save({
       name,
       shortName,
       logoFile,
       posterFile,
+      entity: this.entityName,
     });
 
     // // Итоговые данные для сохранения в БД.
@@ -219,13 +226,14 @@ export class SeriesService {
     }
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await this.saveImages({
+    const { logoFileInfo, posterFileInfo } = await this.imagesService.save({
       name,
       shortName,
       baseNameLogoOld: seriesDB.logoFileInfo?.baseName,
       baseNamePosterOld: seriesDB.posterFileInfo?.baseName,
       logoFile,
       posterFile,
+      entity: this.entityName,
     });
 
     // Итоговые данные для сохранения в БД.
@@ -464,62 +472,62 @@ export class SeriesService {
   /**
    * Метод работы с файлами изображений. Создание название для файлов и сохранение их в Облаке.
    */
-  private saveImages = async ({
-    name,
-    shortName,
-    baseNameLogoOld,
-    baseNamePosterOld,
-    logoFile,
-    posterFile,
-  }: {
-    name: string;
-    shortName: string;
-    baseNameLogoOld?: string; // Базовое название файла изображениям в облаке.
-    baseNamePosterOld?: string; // Базовое название файла изображениям в облаке.
-    logoFile: Express.Multer.File | undefined;
-    posterFile: Express.Multer.File | undefined;
-  }): Promise<{
-    logoFileInfo: TFileMetadataForCloud | null;
-    posterFileInfo: TFileMetadataForCloud | null;
-  }> => {
-    // Суффикс для названия файла в объектном хранилище в Облаке.
-    const entitySuffix = `series-${slugify(name, {
-      lower: true,
-      strict: true,
-    })}`;
+  // private saveImages = async ({
+  //   name,
+  //   shortName,
+  //   baseNameLogoOld,
+  //   baseNamePosterOld,
+  //   logoFile,
+  //   posterFile,
+  // }: {
+  //   name: string;
+  //   shortName: string;
+  //   baseNameLogoOld?: string; // Базовое название файла изображениям в облаке.
+  //   baseNamePosterOld?: string; // Базовое название файла изображениям в облаке.
+  //   logoFile: Express.Multer.File | undefined;
+  //   posterFile: Express.Multer.File | undefined;
+  // }): Promise<{
+  //   logoFileInfo: TFileMetadataForCloud | null;
+  //   posterFileInfo: TFileMetadataForCloud | null;
+  // }> => {
+  //   // Суффикс для названия файла в объектном хранилище в Облаке.
+  //   const entitySuffix = `series-${slugify(name, {
+  //     lower: true,
+  //     strict: true,
+  //   })}`;
 
-    // Создание название файла для изображения и сохранение файла в облачном хранилище Облака.
-    const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
-      shortName: shortName.toLowerCase(),
-      baseNameLogoOld,
-      baseNamePosterOld,
-      logoFile,
-      posterFile,
-      entitySuffix,
-    });
+  //   // Создание название файла для изображения и сохранение файла в облачном хранилище Облака.
+  //   const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
+  //     shortName: shortName.toLowerCase(),
+  //     baseNameLogoOld,
+  //     baseNamePosterOld,
+  //     logoFile,
+  //     posterFile,
+  //     entitySuffix,
+  //   });
 
-    const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
-    const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);
+  //   const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
+  //   const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);
 
-    return { logoFileInfo, posterFileInfo };
-  };
+  //   return { logoFileInfo, posterFileInfo };
+  // };
 
   /**
    * Удаление файлов из объектного хранилища при удалении Серии заездов.
    */
-  private deleteImagesFromCloud = async (baseNames: (string | undefined)[]): Promise<void> => {
-    // Удаление замещенных (старых) файлов изображений из облака.
-    const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
+  // private deleteImagesFromCloud = async (baseNames: (string | undefined)[]): Promise<void> => {
+  //   // Удаление замещенных (старых) файлов изображений из облака.
+  //   const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
 
-    for (const baseName of baseNames) {
-      if (!baseName) {
-        continue;
-      }
-      await cloud
-        .deleteFiles({
-          prefix: baseName,
-        })
-        .catch((e) => handleAndLogError(e));
-    }
-  };
+  //   for (const baseName of baseNames) {
+  //     if (!baseName) {
+  //       continue;
+  //     }
+  //     await cloud
+  //       .deleteFiles({
+  //         prefix: baseName,
+  //       })
+  //       .catch((e) => handleAndLogError(e));
+  //   }
+  // };
 }
