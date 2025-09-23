@@ -6,6 +6,7 @@ import {
   TAuthService,
   TCategorySeries,
   TPricingPlan,
+  TServiceMessageType,
   TTeamForProfile,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
@@ -937,3 +938,18 @@ export type TTeamMember = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+/**
+ * Внутренние сообщения (оповещения) о событиях на сайте.
+ */
+export interface TServiceMessage {
+  _id: Types.ObjectId;
+  recipientUser: Types.ObjectId;
+  initiatorUser?: Types.ObjectId;
+  type: TServiceMessageType;
+  templateKey: string;
+  text?: string;
+  metadata?: Record<string, string>;
+  isRead: boolean;
+  createdAt: Date;
+}

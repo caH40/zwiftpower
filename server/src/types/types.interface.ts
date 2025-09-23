@@ -32,6 +32,7 @@ import {
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
+import { SERVICE_MESSAGE_TYPE } from '../assets/constants/team.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -1014,3 +1015,8 @@ export type TPricingPlan = {
     unit: TPurchaseUnit;
   };
 };
+
+/**
+ * Типы сообщений внутри сайта.
+ */
+export type TServiceMessageType = (typeof SERVICE_MESSAGE_TYPE)[number];
