@@ -30,6 +30,7 @@ import { siteServicePriceRouter } from './routes/price.js';
 import { teamRouter } from './routes/team.js';
 import { teamMemberRouter } from './routes/team-member.js';
 import { markdownDocumentsRouter } from './routes/documents.js';
+import { serviceMessageRouter } from './routes/service-message.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -72,6 +73,7 @@ app.use('/api/site-services-price', siteServicePriceRouter);
 app.use('/api/teams', teamRouter);
 app.use('/api/team-members', teamMemberRouter);
 app.use('/api/md-documents', markdownDocumentsRouter);
+app.use('/api/service-messages', serviceMessageRouter);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })

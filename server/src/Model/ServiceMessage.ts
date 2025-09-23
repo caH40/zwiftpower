@@ -1,19 +1,19 @@
 import mongoose, { Document, model, Schema } from 'mongoose';
 
-import { SERVICE_MESSAGE_TYPE } from '../assets/constants/team';
+import { SERVICE_MESSAGE_TYPE } from '../assets/constants/team.js';
 
 // types
-import { TServiceMessage } from '../types/model.interface';
+import { TServiceMessage } from '../types/model.interface.js';
 
-type TServiceMessageDocument = TServiceMessage & Document;
+export type TServiceMessageDocument = TServiceMessage & Document;
 
 const ServiceMessageSchema = new Schema<TServiceMessageDocument>({
   recipientUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   initiatorUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   type: { type: String, enum: SERVICE_MESSAGE_TYPE, required: true },
-  templateKey: { type: String, required: true },
-  text: { type: String },
-  metadata: { type: Schema.Types.Mixed },
+  title: { type: String, required: true },
+  text: { type: String, required: true },
+  url: { type: String },
   isRead: { type: Boolean, default: false },
   createdAt: { type: Date, default: () => new Date() },
 });

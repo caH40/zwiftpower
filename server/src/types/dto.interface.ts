@@ -313,3 +313,11 @@ export type TEventForMailingPreviewDto = Omit<
     _id: string;
   };
 };
+
+export type TGetAllServiceMessagesForUserDto = {
+  _id: string;
+  title: string;
+  text: string;
+  url?: string;
+  createdAt: string;
+};

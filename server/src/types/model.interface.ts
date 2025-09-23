@@ -947,9 +947,9 @@ export interface TServiceMessage {
   recipientUser: Types.ObjectId;
   initiatorUser?: Types.ObjectId;
   type: TServiceMessageType;
-  templateKey: string;
-  text?: string;
-  metadata?: Record<string, string>;
+  title: string;
+  text: string;
+  url?: string;
   isRead: boolean;
   createdAt: Date;
 }
