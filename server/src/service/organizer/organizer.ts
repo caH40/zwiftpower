@@ -3,7 +3,6 @@ import { Types } from 'mongoose';
 import { Organizer } from '../../Model/Organizer.js';
 import { User } from '../../Model/User.js';
 import { Club } from '../../Model/Club.js';
-import { imageStorageHandler } from './files/imageStorage-handler.js';
 import { parseAndGroupFileNames } from '../../utils/parseAndGroupFileNames.js';
 import { createUrlsToFileCloud } from '../../utils/url.js';
 
@@ -12,6 +11,9 @@ import { TPutOrganizerMain, TResponseService } from '../../types/http.interface.
 import { ResponseOrganizerForModerator } from '../../types/types.interface.js';
 import { TOrganizer } from '../../types/model.interface.js';
 import { TOrganizerMainDto } from '../../types/dto.interface.js';
+import { ImagesService } from '../Images.js';
+
+const entityName = 'organizer';
 
 /**
  * Сервис получение данных Организатора по запросу модератора.
@@ -118,14 +120,17 @@ export async function putOrganizerMainService({
     throw new Error(`Организатор с ID ${organizerId} не найден`);
   }
 
-  const { uploadedFileNamesLogo, uploadedFileNamesPoster } = await imageStorageHandler({
-    shortName: organizerDB.shortName.toLowerCase(),
-    baseNameLogoOld: organizerDB.logoFileInfo?.baseName,
-    baseNamePosterOld: organizerDB.posterFileInfo?.baseName,
-    logoFile,
-    posterFile,
-    entitySuffix: 'organizers',
-  });
+  const imagesService = new ImagesService();
+
+  const { uploadedFileNamesLogo, uploadedFileNamesPoster } =
+    await imagesService.imageStorageHandler({
+      shortName: organizerDB.shortName.toLowerCase(),
+      baseNameLogoOld: organizerDB.logoFileInfo?.baseName,
+      baseNamePosterOld: organizerDB.posterFileInfo?.baseName,
+      logoFile,
+      posterFile,
+      entitySuffix: entityName,
+    });
 
   const logoFileInfo = parseAndGroupFileNames(uploadedFileNamesLogo);
   const posterFileInfo = parseAndGroupFileNames(uploadedFileNamesPoster);

@@ -82,7 +82,7 @@ export class ImagesService {
    * Обработчик файлов изображений logo и poster Организатора.
    * Сохранение в облаке, возвращение массивы имен файлов, сохраненных в облаке для logo, poster.
    */
-  private async imageStorageHandler({
+  public async imageStorageHandler({
     shortName,
     baseNameLogoOld,
     baseNamePosterOld,
@@ -95,7 +95,7 @@ export class ImagesService {
     baseNamePosterOld?: string; // Базовое название файла изображениям в облаке.
     logoFile?: Express.Multer.File;
     posterFile?: Express.Multer.File;
-    entitySuffix: string; // Суффикс для название (используется тип сущности: team, organizer,series...)
+    entitySuffix: entityForFileSuffix; // Суффикс для название (используется тип сущности: team, organizer,series...)
   }): Promise<{
     uploadedFileNamesLogo: string[] | null;
     uploadedFileNamesPoster: string[] | null;
@@ -151,7 +151,7 @@ export class ImagesService {
     imageFile: Express.Multer.File;
     baseNameOld?: string;
     needOptimizedImages: boolean;
-    entitySuffix?: string;
+    entitySuffix: entityForFileSuffix;
   }): Promise<string[]> {
     // Экземпляр класса Облака.
     const cloud = new Cloud({ cloudName: 'vk', maxSizeFileInMBytes: 5 });
