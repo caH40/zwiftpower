@@ -1,3 +1,4 @@
+import { FilterQuery } from 'mongoose';
 import mongoose, { Types } from 'mongoose';
 import slugify from 'slugify';
 
@@ -19,10 +20,15 @@ import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
-import { FilterQuery } from 'mongoose';
+import { entityForFileSuffix } from '../types/types.interface.js';
 
 export class TeamService {
-  constructor() {}
+  private imagesService: ImagesService;
+  entityName: entityForFileSuffix;
+  constructor() {
+    this.imagesService = new ImagesService();
+    this.entityName = 'team';
+  }
 
   /**
    * Получение данных команды с teamId.
@@ -86,11 +92,12 @@ export class TeamService {
     const urlSlug = this.createUrlSlug(team.name);
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await ImagesService.save({
+    const { logoFileInfo, posterFileInfo } = await this.imagesService.save({
       name: team.name,
       shortName: team.shortName,
       logoFile,
       posterFile,
+      entity: this.entityName,
     });
 
     const createdTeam = await TeamModel.create({
@@ -330,13 +337,14 @@ export class TeamService {
     await this.assertTeamFieldUnique('shortName', team.shortName, team._id);
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
-    const { logoFileInfo, posterFileInfo } = await ImagesService.save({
+    const { logoFileInfo, posterFileInfo } = await this.imagesService.save({
       name: team.name,
       shortName: team.shortName,
       baseNameLogoOld: teamDB.logoFileInfo?.baseName,
       baseNamePosterOld: teamDB.posterFileInfo?.baseName,
       logoFile,
       posterFile,
+      entity: this.entityName,
     });
 
     // Итоговые данные для сохранения в БД.

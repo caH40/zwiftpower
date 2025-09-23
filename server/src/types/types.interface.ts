@@ -858,6 +858,8 @@ export type TSaveFileToCloud = {
   needOptimizedImages?: boolean;
 };
 
+export type entityForFileSuffix = 'team' | 'organizer' | 'series';
+
 /**
  * Url файлов изображений logo, poster для сущности Организатор.
  */
