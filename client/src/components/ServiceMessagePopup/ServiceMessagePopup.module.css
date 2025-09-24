@@ -36,12 +36,13 @@
 .title {
   font-size: 14px;
   margin-bottom: 2px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .text {
   font-size: 13px;
   color: #374151;
+  font-weight: 400;
 }
 
 .date {

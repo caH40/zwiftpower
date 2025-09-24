@@ -10,7 +10,7 @@ export function getAllServiceMessageForUserDto({
   _id,
   isRead,
   createdAt,
-}: TServiceMessage): TGetAllServiceMessagesForUserDto {
+}: Omit<TServiceMessage, 'recipientUser' | 'initiatorUser'>): TGetAllServiceMessagesForUserDto {
   const _idStr = _id.toString();
   const createdAtStr = createdAt.toISOString();
 

@@ -19,12 +19,15 @@ export class ServiceMessage {
   async getAll(
     userId: string
   ): Promise<{ data: TGetAllServiceMessagesForUserDto[]; message: string }> {
-    const messagesDB = await ServiceMessageModel.find({
-      recipientUser: userId,
-      isRead: false,
-    })
+    const messagesDB = await ServiceMessageModel.find(
+      {
+        recipientUser: userId,
+      },
+      { initiatorUser: false, recipientUser: false }
+    )
       .sort({ createdAt: -1 })
-      .lean<TServiceMessage[]>();
+      .limit(20)
+      .lean<Omit<TServiceMessage, 'recipientUser' | 'initiatorUser'>[]>();
 
     const messagesAfterDto = messagesDB.map((m) => getAllServiceMessageForUserDto(m));
 
