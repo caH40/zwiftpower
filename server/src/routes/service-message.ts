@@ -8,3 +8,4 @@ export const serviceMessageRouter = Router();
 const controller = new ServiceMessageController();
 
 serviceMessageRouter.get('/', checkAuth, controller.getAll);
+serviceMessageRouter.put('/read', checkAuth, controller.markMessagesAsRead);

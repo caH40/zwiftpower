@@ -56,4 +56,21 @@ export class ServiceMessage {
       handleAndLogError(error);
     }
   }
+
+  /**
+   * Отмечает как прочитанные сообщения.
+   */
+  async markMessagesAsRead(messagesIds: string[]): Promise<{ data: null; message: string }> {
+    const result = await ServiceMessageModel.updateMany(
+      {
+        _id: { $in: messagesIds },
+      },
+      { $set: { isRead: true } }
+    );
+
+    return {
+      data: null,
+      message: `Сообщения отмечены как прочитанные (${result.modifiedCount})`,
+    };
+  }
 }
