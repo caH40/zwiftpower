@@ -10,28 +10,28 @@ export const teamMessageTemplates: {
   [K in TeamMessageType]: (params: TeamMessageParams[K]) => TeamMessageResult;
 } = {
   joinRequest: (params) => ({
-    text: `Пользователь ${params.applicantName} подал заявку в вашу команду ${params.teamName}`,
-    title: `Заявка в команду ${params.teamName}`,
+    text: `Пользователь ${params.applicantName} подал заявку в вашу команду "${params.teamName}"`,
+    title: 'Заявка в команду',
   }),
 
   requestApproved: (params) => ({
-    text: `Ваша заявка в команду ${params.teamName} одобрена`,
-    title: `Вступление в ${params.teamName}`,
+    text: `Ваша заявка в команду "${params.teamName}" одобрена`,
+    title: 'Вступление в команду',
   }),
 
   requestRejected: (params) => ({
-    text: `Ваша заявка в команду ${params.teamName} отклонена`,
-    title: `Заявка в ${params.teamName}`,
+    text: `Ваша заявка в команду "${params.teamName}" отклонена`,
+    title: 'Отклонение заявки',
   }),
 
   memberLeft: (params) => ({
-    text: `Участник ${params.memberName} вышел из вашей команды ${params.teamName}`,
-    title: `Изменения в команде ${params.teamName}`,
+    text: `Участник ${params.memberName} вышел из вашей команды "${params.teamName}"`,
+    title: 'Изменения в команде',
   }),
 
   youKickedMember: (params) => ({
-    text: `Вы исключили ${params.memberName} из команды ${params.teamName}`,
-    title: `Исключение из команды ${params.teamName}`,
+    text: `Вы исключили ${params.memberName} из команды "${params.teamName}"`,
+    title: 'Исключение из команды',
   }),
 
   youWereKicked: (params: { teamName: string }) => ({
@@ -40,7 +40,7 @@ export const teamMessageTemplates: {
   }),
 
   newMemberJoined: (params) => ({
-    text: `В команду ${params.teamName} принят новый участник ${params.memberName}`,
-    title: `Новый участник в ${params.teamName}`,
+    text: `В команду "${params.teamName}" принят новый участник ${params.memberName}`,
+    title: 'Новый участник',
   }),
 };
