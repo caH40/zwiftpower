@@ -6,6 +6,7 @@ import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { resetAuth } from '../../../redux/features/authSlice';
 import { lsAccessToken, lsPrefixDeviceId } from '../../../constants/localstorage';
 import UserAccount from '../UserAccount/UserAccount';
+import ServiceMessage from '../../ServiceMessage/ServiceMessage';
 
 import styles from './NavBar.module.css';
 
@@ -37,6 +38,11 @@ function NavBar() {
           </NavLink>
         )}
       </li>
+
+      <li className={styles.item}>
+        <ServiceMessage />
+      </li>
+
       <li className={styles.item}>
         <div className={styles.box__user}>
           <UserAccount userAuth={userAuth} />

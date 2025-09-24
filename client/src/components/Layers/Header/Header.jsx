@@ -1,7 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Hamburger from '../../UI/Hamburger/Hamburger';
+// import Hamburger from '../../UI/Hamburger/Hamburger';
 import NavBar from '../../UI/NavBar/NavBar';
 import PopupMenu from '../../UI/PopupMenu/PopupMenu';
 import LoaderZ from '../../LoaderZ/LoaderZ';
@@ -13,10 +12,9 @@ function Header() {
   const titlePage = useSelector((state) => state.titlePage.value.title);
   const { isVisible } = useSelector((state) => state.menuBurger);
   const { isLoading } = useLoader();
-  const { user } = useSelector((state) => state.checkAuth.value);
+  // const { user } = useSelector((state) => state.checkAuth.value);
 
-  const isAdmin = ['admin'].includes(user.role);
-
+  // const isAdmin = ['admin'].includes(user.role);
   return (
     <header className={styles.header}>
       {isVisible ? <PopupMenu /> : ''}
@@ -26,7 +24,8 @@ function Header() {
       </div>
       <div className={styles.header__right}>
         <NavBar />
-        {isAdmin && <Hamburger />}
+
+        {/* {isAdmin && <Hamburger />} */}
       </div>
     </header>
   );

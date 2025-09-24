@@ -319,5 +319,6 @@ export type TGetAllServiceMessagesForUserDto = {
   title: string;
   text: string;
   url?: string;
+  isRead: boolean;
   createdAt: string;
 };
