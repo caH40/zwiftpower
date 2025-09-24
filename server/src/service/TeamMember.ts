@@ -152,7 +152,7 @@ export class TeamMemberService {
       teamId: team._id.toString(),
     });
 
-    // Создание сервисного сообщения о заявки.
+    // Создание сервисного сообщения.
     await this.teamServiceMessage.requestApproved({
       candidateId: teamMemberId,
       teamId: team._id.toString(),
@@ -274,6 +274,12 @@ export class TeamMemberService {
     if (!res) {
       throw new Error(`Вы не числитесь в составе команды "${teamDB.name}"`);
     }
+
+    // Создание сервисного сообщения.
+    await this.teamServiceMessage.memberLeft({
+      teamMemberId,
+      teamId: teamDB._id.toString(),
+    });
 
     return { message: `Вы покинули команду "${teamDB.name}"` };
   }

@@ -37,14 +37,11 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [applicantName, team] = await Promise.all([
-        this.getUserName(candidateId),
-        this.getTeam(teamId),
-      ]);
+      const [user, team] = await Promise.all([this.getUser(candidateId), this.getTeam(teamId)]);
 
       const url = `${server}/teams/${team.urlSlug}/control/members`;
       const { text, title } = teamMessageTemplates.joinRequest({
-        applicantName,
+        applicantName: user.name,
         teamName: team.name,
       });
 
@@ -103,8 +100,6 @@ export class TeamServiceMessage {
 
   /**
    * Сервисное сообщение об отклонении заявки на вступление в команду.
-   * @param candidateId - id пользователя которому одобрили заявку и которому предназначается сообщение
-   * @param teamId
    * @returns
    */
   async requestRejected({
@@ -121,11 +116,14 @@ export class TeamServiceMessage {
         teamName: team.name,
       });
 
+      const url = `${server}/teams/${team.urlSlug}/members`;
+
       await this.serviceMessage.create({
         recipientUser: candidateId,
         initiatorUser: team.creator,
         type: this.type,
         text,
+        url,
         title,
       });
 
@@ -136,7 +134,47 @@ export class TeamServiceMessage {
     }
   }
 
-  private async getUserName(userId: string): Promise<string> {
+  /**
+   * Сервисное сообщение об выходе участника из команды.
+   * @returns
+   */
+  async memberLeft({
+    teamMemberId,
+    teamId,
+  }: {
+    teamMemberId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([
+        this.getUser(teamMemberId),
+        this.getTeam(teamId),
+      ]);
+
+      const { text, title } = teamMessageTemplates.memberLeft({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      const url = `${server}/profile/${user.zwiftId}/results`;
+
+      await this.serviceMessage.create({
+        recipientUser: team.creator,
+        initiatorUser: teamMemberId,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  private async getUser(userId: string): Promise<{ name: string; zwiftId: number }> {
     const userDB = await User.findById(userId, {
       zwiftId: true,
       _id: false,
@@ -159,7 +197,7 @@ export class TeamServiceMessage {
       throw new Error(`Не найден райдер с zwiftId: "${userDB.zwiftId}"`);
     }
 
-    return `${riderDB.firstName} ${riderDB.lastName}`;
+    return { name: `${riderDB.firstName} ${riderDB.lastName}`, zwiftId: userDB.zwiftId };
   }
 
   private async getTeam(
