@@ -5,7 +5,7 @@ import { ServiceMessageModel } from '../../Model/ServiceMessage.js';
 // types
 import { TGetAllServiceMessagesForUserDto } from '../../types/dto.interface.js';
 import { TServiceMessage } from '../../types/model.interface.js';
-import { TCreateMethodServiceMessageParams } from '../../types/types.interface.js';
+import { TCreateMethodServiceMessageParams } from '../../types/service-message.types.js';
 
 /**
  * Класс сервисные сообщения на сайте.

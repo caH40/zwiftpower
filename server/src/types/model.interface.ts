@@ -6,13 +6,13 @@ import {
   TAuthService,
   TCategorySeries,
   TPricingPlan,
-  TServiceMessageType,
   TTeamForProfile,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
 import { TTeamRole, TTeamSpecialization } from './team.types.js';
+import { TServiceMessageType } from './service-message.types.js';
 
 // типизация схемы и модели документов mongodb
 

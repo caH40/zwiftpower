@@ -1,20 +1,10 @@
-import { TeamMessageType } from '../types/types.interface';
+import {
+  TeamMessageParams,
+  TeamMessageResult,
+  TeamMessageType,
+} from '../types/service-message.types';
 
 export const SERVICE_MESSAGE_TYPE = ['team', 'race', 'system', 'incoming_message'] as const;
-
-type TeamMessageParams = {
-  joinRequest: { applicantName: string; teamName: string };
-  memberLeft: { memberName: string; teamName: string };
-  memberKicked: { memberName: string; teamName: string };
-  newMemberJoined: { memberName: string; teamName: string };
-  requestAccepted: { teamName: string };
-  requestRejected: { teamName: string };
-};
-
-type TeamMessageResult = {
-  text: string;
-  title: string;
-};
 
 export const teamMessageTemplates: {
   [K in TeamMessageType]: (params: TeamMessageParams[K]) => TeamMessageResult;
@@ -22,6 +12,11 @@ export const teamMessageTemplates: {
   joinRequest: (params) => ({
     text: `Пользователь ${params.applicantName} подал заявку в вашу команду ${params.teamName}`,
     title: `Заявка в команду ${params.teamName}`,
+  }),
+
+  requestApproved: (params) => ({
+    text: `Ваша заявка в команду ${params.teamName} одобрена`,
+    title: `Вступление в ${params.teamName}`,
   }),
 
   memberLeft: (params) => ({
@@ -37,11 +32,6 @@ export const teamMessageTemplates: {
   newMemberJoined: (params) => ({
     text: `В команду ${params.teamName} принят новый участник ${params.memberName}`,
     title: `Новый участник в ${params.teamName}`,
-  }),
-
-  requestAccepted: (params) => ({
-    text: `Ваша заявка в команду ${params.teamName} одобрена`,
-    title: `Вступление в ${params.teamName}`,
   }),
 
   requestRejected: (params) => ({

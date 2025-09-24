@@ -1,17 +1,23 @@
+import { Types } from 'mongoose';
+
 import { TeamMemberModel } from '../Model/TeamMember.js';
 import { Rider } from '../Model/Rider.js';
 import { teamMemberPublicDto } from '../dto/team-member.js';
+import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
+import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
+import { TeamModel } from '../Model/Team.js';
 
 // types
 import { TTeamMembersPublicDB } from '../types/mongodb-response.types.js';
 import { TControlMemberAction, TTeamMembersForDto, TTeamRole } from '../types/team.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
-import { TeamModel } from '../Model/Team.js';
-import { Types } from 'mongoose';
 import { TTeamMemberPublicDto } from '../types/dto.interface.js';
 
 export class TeamMemberService {
-  constructor() {}
+  private teamServiceMessage: TeamServiceMessage;
+  constructor() {
+    this.teamServiceMessage = new TeamServiceMessage(new ServiceMessage());
+  }
 
   /**
    * Получение данных всех участников команды.
@@ -141,10 +147,16 @@ export class TeamMemberService {
     // Удаление заявки от кандидата из массива заявок команды.
     await this.removePendingUser({ teamCreatorId, teamMemberId });
 
-    return await this.create({
+    const response = await this.create({
       userId: teamMemberId,
       teamId: team._id.toString(),
     });
+
+    // Создание сервисного сообщения о заявки.
+
+    await this.teamServiceMessage.requestApproved(teamMemberId, team._id.toString());
+
+    return response;
   }
 
   /**

@@ -11,7 +11,7 @@ import { handleAndLogError } from '../../errors/error.js';
 import {
   TCreateMethodServiceMessageParams,
   TServiceMessageType,
-} from '../../types/types.interface.js';
+} from '../../types/service-message.types.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
@@ -48,6 +48,40 @@ export class TeamServiceMessage {
       await this.serviceMessage.create({
         recipientUser: team.creator,
         initiatorUser: candidateId,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   *
+   * @param candidateId - id пользователя которому одобрили заявку и которому предназначается сообщение
+   * @param teamId
+   * @returns
+   */
+  async requestApproved(
+    candidateId: string,
+    teamId: string
+  ): Promise<{ data: null; message: string }> {
+    try {
+      const team = await this.getTeam(teamId);
+
+      const url = `${server}/teams/${team.urlSlug}/members`;
+      const { text, title } = teamMessageTemplates.requestApproved({
+        teamName: team.name,
+      });
+
+      await this.serviceMessage.create({
+        recipientUser: candidateId,
+        initiatorUser: team.creator,
         type: this.type,
         text,
         url,
