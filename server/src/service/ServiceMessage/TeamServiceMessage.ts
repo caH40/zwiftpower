@@ -29,10 +29,13 @@ export class TeamServiceMessage {
     this.type = 'team';
   }
 
-  async joinRequest(
-    candidateId: string,
-    teamId: string
-  ): Promise<{ data: null; message: string }> {
+  async joinRequest({
+    candidateId,
+    teamId,
+  }: {
+    candidateId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
     try {
       const [applicantName, team] = await Promise.all([
         this.getUserName(candidateId),
@@ -62,15 +65,18 @@ export class TeamServiceMessage {
   }
 
   /**
-   *
+   * Сервисное сообщение о одобрении заявки на вступление в команду.
    * @param candidateId - id пользователя которому одобрили заявку и которому предназначается сообщение
    * @param teamId
    * @returns
    */
-  async requestApproved(
-    candidateId: string,
-    teamId: string
-  ): Promise<{ data: null; message: string }> {
+  async requestApproved({
+    candidateId,
+    teamId,
+  }: {
+    candidateId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
     try {
       const team = await this.getTeam(teamId);
 
@@ -85,6 +91,41 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение об отклонении заявки на вступление в команду.
+   * @param candidateId - id пользователя которому одобрили заявку и которому предназначается сообщение
+   * @param teamId
+   * @returns
+   */
+  async requestRejected({
+    candidateId,
+    teamId,
+  }: {
+    candidateId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const team = await this.getTeam(teamId);
+
+      const { text, title } = teamMessageTemplates.requestRejected({
+        teamName: team.name,
+      });
+
+      await this.serviceMessage.create({
+        recipientUser: candidateId,
+        initiatorUser: team.creator,
+        type: this.type,
+        text,
         title,
       });
 

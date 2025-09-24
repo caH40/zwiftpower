@@ -169,7 +169,7 @@ export class TeamService {
 
     // Создание сервисного сообщения о заявки.
     const teamServiceMessage = new TeamServiceMessage(new ServiceMessage());
-    await teamServiceMessage.joinRequest(candidateId, teamDB._id.toString());
+    await teamServiceMessage.joinRequest({ candidateId, teamId: teamDB._id.toString() });
 
     return {
       message: 'Ваша заявка на вступление отправлена. Ожидайте подтверждения капитана команды.',

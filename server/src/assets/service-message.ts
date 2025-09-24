@@ -19,6 +19,11 @@ export const teamMessageTemplates: {
     title: `Вступление в ${params.teamName}`,
   }),
 
+  requestRejected: (params) => ({
+    text: `Ваша заявка в команду ${params.teamName} отклонена`,
+    title: `Заявка в ${params.teamName}`,
+  }),
+
   memberLeft: (params) => ({
     text: `Участник ${params.memberName} вышел из вашей команды ${params.teamName}`,
     title: `Изменения в команде ${params.teamName}`,
@@ -32,10 +37,5 @@ export const teamMessageTemplates: {
   newMemberJoined: (params) => ({
     text: `В команду ${params.teamName} принят новый участник ${params.memberName}`,
     title: `Новый участник в ${params.teamName}`,
-  }),
-
-  requestRejected: (params) => ({
-    text: `Ваша заявка в команду ${params.teamName} отклонена`,
-    title: `Заявка в ${params.teamName}`,
   }),
 };

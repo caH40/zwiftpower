@@ -153,8 +153,10 @@ export class TeamMemberService {
     });
 
     // Создание сервисного сообщения о заявки.
-
-    await this.teamServiceMessage.requestApproved(teamMemberId, team._id.toString());
+    await this.teamServiceMessage.requestApproved({
+      candidateId: teamMemberId,
+      teamId: team._id.toString(),
+    });
 
     return response;
   }
@@ -286,10 +288,20 @@ export class TeamMemberService {
     teamCreatorId: string;
     teamMemberId: string;
   }): Promise<{ message: string }> {
-    await TeamModel.findOneAndUpdate(
+    const teamDB = await TeamModel.findOneAndUpdate(
       { creator: teamCreatorId },
       { $pull: { pendingRiders: { user: teamMemberId } } }
-    );
+    ).lean();
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
+    }
+
+    // Создание сервисного сообщения о заявки.
+    await this.teamServiceMessage.requestRejected({
+      candidateId: teamMemberId,
+      teamId: teamDB._id.toString(),
+    });
 
     return { message: 'Заявка на присоединение к команде удалена из списка.' };
   }
