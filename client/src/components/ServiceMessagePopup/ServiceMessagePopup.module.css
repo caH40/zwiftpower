@@ -34,35 +34,26 @@
 }
 
 .title {
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 2px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .text {
-  font-size: 13px;
+  font-size: 12px;
   color: #374151;
   font-weight: 400;
 }
 
 .date {
-  font-size: 11px;
+  font-size: 10px;
   color: #6b7280;
   margin-top: 4px;
   font-weight: 400;
 }
 
-.unread .title {
-  font-weight: 700;
-  color: var(--error);
-}
-
-.unread .text {
-  font-weight: 700;
-}
-
-.unread .date {
-  font-weight: 700;
+.unread {
+  background-color: var(--color-yellow-5-transparent);
 }
 
 .empty {

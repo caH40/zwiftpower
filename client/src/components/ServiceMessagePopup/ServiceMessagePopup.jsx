@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 
+import { getTimerLocal } from '../../utils/date-local';
+
 import styles from './ServiceMessagePopup.module.css';
 
 const cx = cn.bind(styles);
@@ -61,7 +63,7 @@ export default function ServiceMessagePopup({
           >
             <div className={styles.title}>{msg.title}</div>
             <div className={styles.text}>{msg.text}</div>
-            <div className={styles.date}>{new Date(msg.createdAt).toLocaleString()}</div>
+            <div className={styles.date}>{getTimerLocal(msg.createdAt, 'DDMMYYHm')}</div>
           </a>
         ))
       )}
