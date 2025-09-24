@@ -113,7 +113,11 @@ export class TeamMemberService {
     if (action === 'approve') {
       response = await this.approveRequest({ team: teamDB, teamCreatorId, teamMemberId });
     } else if (action === 'cancel') {
-      response = await this.removePendingUser({ teamCreatorId, teamMemberId });
+      response = await this.removePendingUser({
+        teamCreatorId,
+        teamMemberId,
+        isCanceledRequest: true,
+      });
     } else if (action === 'exclude') {
       response = await this.delete({ teamCreatorId, teamMemberId });
     } else if (action === 'ban') {
@@ -147,6 +151,7 @@ export class TeamMemberService {
     // Удаление заявки от кандидата из массива заявок команды.
     await this.removePendingUser({ teamCreatorId, teamMemberId });
 
+    // Создание участника команды.
     const response = await this.create({
       userId: teamMemberId,
       teamId: team._id.toString(),
@@ -242,6 +247,18 @@ export class TeamMemberService {
       );
     }
 
+    // Создание сервисного сообщения для создателя команды.
+    await this.teamServiceMessage.youKickedMember({
+      userId: memberDB.user.toString(),
+      teamId: memberDB.team.toString(),
+    });
+
+    // Создание сервисного сообщения для бывшего участника команды.
+    await this.teamServiceMessage.youWereKicked({
+      userId: memberDB.user.toString(),
+      teamId: memberDB.team.toString(),
+    });
+
     return { message: 'Участник исключен из команды.' };
   }
 
@@ -290,9 +307,11 @@ export class TeamMemberService {
   private async removePendingUser({
     teamCreatorId,
     teamMemberId,
+    isCanceledRequest = false,
   }: {
     teamCreatorId: string;
     teamMemberId: string;
+    isCanceledRequest?: boolean; // Используется как отказ на вступление кандидата в команду.
   }): Promise<{ message: string }> {
     const teamDB = await TeamModel.findOneAndUpdate(
       { creator: teamCreatorId },
@@ -303,11 +322,13 @@ export class TeamMemberService {
       throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
     }
 
-    // Создание сервисного сообщения о заявки.
-    await this.teamServiceMessage.requestRejected({
-      candidateId: teamMemberId,
-      teamId: teamDB._id.toString(),
-    });
+    if (isCanceledRequest) {
+      // Создание сервисного сообщения о заявки.
+      await this.teamServiceMessage.requestRejected({
+        candidateId: teamMemberId,
+        teamId: teamDB._id.toString(),
+      });
+    }
 
     return { message: 'Заявка на присоединение к команде удалена из списка.' };
   }

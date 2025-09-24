@@ -17,7 +17,8 @@ export type TCreateMethodServiceMessageParams = {
 export type TeamMessageType =
   | 'joinRequest'
   | 'memberLeft'
-  | 'memberKicked'
+  | 'youKickedMember'
+  | 'youWereKicked'
   | 'newMemberJoined'
   | 'requestApproved'
   | 'requestRejected';
@@ -26,7 +27,8 @@ export type TeamMessageParams = {
   joinRequest: { applicantName: string; teamName: string };
   requestApproved: { teamName: string };
   memberLeft: { memberName: string; teamName: string };
-  memberKicked: { memberName: string; teamName: string };
+  youKickedMember: { memberName: string; teamName: string };
+  youWereKicked: { memberName: string; teamName: string };
   newMemberJoined: { memberName: string; teamName: string };
   requestRejected: { teamName: string };
 };

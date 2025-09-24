@@ -156,11 +156,87 @@ export class TeamServiceMessage {
         teamName: team.name,
       });
 
+      // Страница пользователя, который вышел из состава из команды.
       const url = `${server}/profile/${user.zwiftId}/results`;
 
       await this.serviceMessage.create({
         recipientUser: team.creator,
         initiatorUser: teamMemberId,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение об исключении участника из команды.
+   * @returns
+   */
+  async youKickedMember({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+
+      const { text, title } = teamMessageTemplates.youKickedMember({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница пользователя, исключенного из команды.
+      const url = `${server}/profile/${user.zwiftId}/results`;
+
+      await this.serviceMessage.create({
+        recipientUser: team.creator,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение об исключены вас из команды.
+   * @returns
+   */
+  async youWereKicked({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+
+      const { text, title } = teamMessageTemplates.youWereKicked({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница команды, из которой исключили userId.
+      const url = `${server}/teams/${team.urlSlug}/members`;
+
+      await this.serviceMessage.create({
+        recipientUser: userId,
+        initiatorUser: team.creator,
         type: this.type,
         text,
         url,

@@ -29,9 +29,14 @@ export const teamMessageTemplates: {
     title: `Изменения в команде ${params.teamName}`,
   }),
 
-  memberKicked: (params) => ({
+  youKickedMember: (params) => ({
     text: `Вы исключили ${params.memberName} из команды ${params.teamName}`,
     title: `Исключение из команды ${params.teamName}`,
+  }),
+
+  youWereKicked: (params: { teamName: string }) => ({
+    text: `Вы были исключены из команды "${params.teamName}"`,
+    title: `Исключение из команды`,
   }),
 
   newMemberJoined: (params) => ({
