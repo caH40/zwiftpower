@@ -12,9 +12,11 @@ import {
   TCreateMethodServiceMessageParams,
   TServiceMessageType,
 } from '../../types/service-message.types.js';
+import { TeamMemberModel } from '../../Model/TeamMember.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
+  createMany(params: TCreateMethodServiceMessageParams[]): Promise<void>;
 }
 
 /**
@@ -242,6 +244,56 @@ export class TeamServiceMessage {
         url,
         title,
       });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисные сообщения для всех участников о новом участнике.
+   * @returns
+   */
+  async newMemberJoined({
+    candidateId,
+    teamId,
+  }: {
+    candidateId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([this.getUser(candidateId), this.getTeam(teamId)]);
+
+      const { text, title } = teamMessageTemplates.newMemberJoined({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница пользователя, вступившего в команду.
+      const url = `${server}/profile/${user.zwiftId}/results`;
+
+      const teamMembersDB = await TeamMemberModel.find(
+        { team: teamId },
+        { _id: false, user: true }
+      ).lean();
+
+      // Создаем список всех участников команды, за исключением нового участника userId
+      const teamMembers = teamMembersDB
+        .map((m) => m.user.toString())
+        .filter((m) => m !== candidateId);
+
+      await this.serviceMessage.createMany(
+        teamMembers.map((memberId) => ({
+          recipientUser: memberId,
+          initiatorUser: team.creator,
+          type: this.type,
+          text,
+          url,
+          title,
+        }))
+      );
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {

@@ -43,4 +43,17 @@ export class ServiceMessage {
       handleAndLogError(error);
     }
   }
+
+  /**
+   * Массовое создание сервисных сообщений.
+   */
+  async createMany(messages: TCreateMethodServiceMessageParams[]): Promise<void> {
+    try {
+      if (!messages.length) return;
+
+      await ServiceMessageModel.insertMany(messages.map((m) => m));
+    } catch (error) {
+      handleAndLogError(error);
+    }
+  }
 }

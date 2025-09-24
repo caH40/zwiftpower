@@ -163,6 +163,12 @@ export class TeamMemberService {
       teamId: team._id.toString(),
     });
 
+    // Создание сервисных сообщений для всех участников.
+    await this.teamServiceMessage.newMemberJoined({
+      candidateId: teamMemberId,
+      teamId: team._id.toString(),
+    });
+
     return response;
   }
 
