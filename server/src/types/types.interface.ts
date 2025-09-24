@@ -32,10 +32,7 @@ import {
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
-import {
-  MESSAGE_TEMPLATE_METADATA_KEYS,
-  SERVICE_MESSAGE_TYPE,
-} from '../assets/constants/team.js';
+import { SERVICE_MESSAGE_TYPE } from '../assets/service-message.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -1025,4 +1022,20 @@ export type TPricingPlan = {
  * Типы сообщений внутри сайта.
  */
 export type TServiceMessageType = (typeof SERVICE_MESSAGE_TYPE)[number];
-export type TMessageTemplateMetadataKey = (typeof MESSAGE_TEMPLATE_METADATA_KEYS)[number];
+
+export type TCreateMethodServiceMessageParams = {
+  recipientUser: string;
+  initiatorUser?: string;
+  type: TServiceMessageType;
+  title: string;
+  text: string;
+  url?: string;
+};
+
+export type TeamMessageType =
+  | 'joinRequest'
+  | 'memberLeft'
+  | 'memberKicked'
+  | 'newMemberJoined'
+  | 'requestAccepted'
+  | 'requestRejected';

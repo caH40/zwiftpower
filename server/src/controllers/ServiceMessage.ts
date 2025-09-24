@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
-import { ServiceMessage } from '../service/ServiceMessage.js';
+import { ServiceMessage } from '../service/ServiceMessage/ServiceMessage.js';
 
 /**
  * Контроллер работы с сущностью "Команда".

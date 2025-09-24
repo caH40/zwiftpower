@@ -13,5 +13,5 @@ export function getAllServiceMessageForUserDto({
   const _idStr = _id.toString();
   const createdAtStr = createdAt.toISOString();
 
-  return { title, _id: _idStr, text, url, createdAt: createdAtStr };
+  return { _id: _idStr, title, text, url, createdAt: createdAtStr };
 }

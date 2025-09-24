@@ -21,6 +21,8 @@ import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.j
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
 import { entityForFileSuffix } from '../types/types.interface.js';
+import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
+import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 
 export class TeamService {
   private imagesService: ImagesService;
@@ -164,6 +166,10 @@ export class TeamService {
       requestedAt: new Date(),
     });
     await teamDB.save();
+
+    // Создание сервисного сообщения о заявки.
+    const teamServiceMessage = new TeamServiceMessage(new ServiceMessage());
+    await teamServiceMessage.joinRequest(candidateId, teamDB._id.toString());
 
     return {
       message: 'Ваша заявка на вступление отправлена. Ожидайте подтверждения капитана команды.',
