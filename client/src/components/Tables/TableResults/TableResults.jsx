@@ -8,7 +8,7 @@ import { getTimerLocal } from '../../../utils/date-local';
 import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
-// import TdRaceType from '../Td/TdRaceType';
+import { useUserRole } from '../../../hook/useUserRole';
 import TdSeries from '../Td/TdSeries';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
@@ -20,23 +20,20 @@ import Thead from './Thead';
 const cx = classnames.bind(styles);
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
-  const { role, isModeratorClub, moderator } = useSelector(
-    (state) => state.checkAuth.value.user
-  );
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  const { isClubModerator, isAdmin, role } = useUserRole();
   const dispatch = useDispatch();
 
   useEffect(() => {
     return () => dispatch(resetEventsResults());
   }, []);
 
-  const isAdmin = ['admin'].includes(role);
-
   return (
     <table className={cx('table')}>
       <caption className={cx('caption', 'hidden')}>
         Результаты заездов российского сообщества в Zwift (Звифт)
       </caption>
-      <Thead isModerator={isModeratorClub || isAdmin} />
+      <Thead isModerator={isClubModerator || isAdmin} />
       <tbody>
         {events.map((event) => {
           // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
@@ -88,7 +85,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
                   removeEvent={removeEvent}
                 />
               ) : (
-                (isModeratorClub || isAdmin) && <td></td>
+                (isClubModerator || isAdmin) && <td></td>
               )}
             </tr>
           );

@@ -5,6 +5,7 @@ import classnames from 'classnames/bind';
 
 import styles from '../Table.module.css';
 
+import { useUserRole } from '../../../hook/useUserRole';
 import { getToday } from '../../../utils/date-local';
 import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
@@ -20,11 +21,8 @@ import Thead from './Thead';
 const cx = classnames.bind(styles);
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
-  const { isModeratorClub, moderator, role } = useSelector(
-    (state) => state.checkAuth.value.user
-  );
-
-  const isAdmin = ['admin'].includes(role);
+  const { moderator } = useSelector((state) => state.checkAuth.value.user);
+  const { isClubModerator, isAdmin, role } = useUserRole();
 
   const dispatch = useDispatch();
 
@@ -37,7 +35,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
       <caption className={cx('caption', 'hidden')}>
         Расписание заездов российского сообщества в Zwift (Звифт)
       </caption>
-      <Thead isModerator={isModeratorClub || isAdmin} />
+      <Thead isModerator={isClubModerator || isAdmin} />
       <tbody>
         {events.map((event) => {
           // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
@@ -98,7 +96,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                   removeEvent={removeEvent}
                 />
               ) : (
-                (isModeratorClub || isAdmin) && <td></td>
+                (isClubModerator || isAdmin) && <td></td>
               )}
             </tr>
           );

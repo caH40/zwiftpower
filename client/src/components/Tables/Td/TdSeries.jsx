@@ -20,7 +20,6 @@ function TdSeries({ logoFileInfo, seriesName = '' }) {
               width={28}
               sources={logoFileInfo}
               fallbackSrc={'/images/transparent.png'}
-              alt={seriesName}
             />
           </div>
         </MyTooltip>
