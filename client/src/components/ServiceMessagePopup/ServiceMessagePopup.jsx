@@ -38,8 +38,13 @@ export default function ServiceMessagePopup({
 
   if (!isOpen) return null;
 
-  const handleHover = async (readId) => {
-    setReadIds((prev) => new Set(prev).add(readId));
+  const handleHover = async ({ isRead, _id }) => {
+    // Не добавляем уже прочитанные сообщения.
+    if (isRead) {
+      return;
+    }
+
+    setReadIds((prev) => new Set([...prev, _id]));
   };
 
   return (
@@ -52,7 +57,7 @@ export default function ServiceMessagePopup({
             key={msg._id}
             href={msg.url || '#'}
             className={cx('message', { unread: !msg.isRead && !readIds.has(msg._id) })}
-            onMouseOver={() => handleHover(msg._id)}
+            onMouseOver={() => handleHover({ isRead: msg.isRead, _id: msg._id })}
           >
             <div className={styles.title}>{msg.title}</div>
             <div className={styles.text}>{msg.text}</div>
