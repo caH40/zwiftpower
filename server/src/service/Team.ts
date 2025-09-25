@@ -23,6 +23,7 @@ import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
 import { entityForFileSuffix } from '../types/types.interface.js';
 import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
 import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
+import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
 
 export class TeamService {
   private imagesService: ImagesService;
@@ -118,6 +119,19 @@ export class TeamService {
     });
 
     await this.addFounderToTeam(team.creator, createdTeam._id.toString());
+
+    // Создание сервисного сообщения.
+    const systemServiceMessage = new SystemServiceMessage(new ServiceMessage());
+    await systemServiceMessage.newTeamCreated({
+      creatorId: createdTeam.creator.toString(),
+      teamId: createdTeam._id.toString(),
+    });
+
+    // Создание сервисного сообщения.
+    await systemServiceMessage.youWereCreatedNewTeam({
+      creatorId: createdTeam.creator.toString(),
+      teamId: createdTeam._id.toString(),
+    });
 
     return { message: 'Команда успешно создана.' };
   }

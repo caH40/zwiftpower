@@ -1,10 +1,7 @@
-import { Types } from 'mongoose';
-
-import { TeamModel } from '../../Model/Team.js';
-import { User } from '../../Model/User.js';
 import { server } from '../../config/environment.js';
+import { MessageDataProvider } from './MessageDataProvider.js';
+import { TeamMemberModel } from '../../Model/TeamMember.js';
 import { teamMessageTemplates } from '../../assets/service_message/team.js';
-import { Rider } from '../../Model/Rider.js';
 import { handleAndLogError } from '../../errors/error.js';
 
 // types
@@ -12,7 +9,6 @@ import {
   TCreateMethodServiceMessageParams,
   TServiceMessageType,
 } from '../../types/service-message.types.js';
-import { TeamMemberModel } from '../../Model/TeamMember.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
@@ -25,9 +21,11 @@ interface IServiceMessage {
 export class TeamServiceMessage {
   private serviceMessage: IServiceMessage;
   private readonly type: TServiceMessageType;
+  private dataProvider: MessageDataProvider;
 
   constructor(serviceMessage: IServiceMessage) {
     this.serviceMessage = serviceMessage;
+    this.dataProvider = new MessageDataProvider();
     this.type = 'team';
   }
 
@@ -39,7 +37,10 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(candidateId), this.getTeam(teamId)]);
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(candidateId),
+        this.dataProvider.getTeam(teamId),
+      ]);
 
       const url = `${server}/profile/${user.zwiftId}/results`;
       const { text, title } = teamMessageTemplates.joinRequest({
@@ -77,7 +78,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const url = `${server}/teams/${team.urlSlug}/members`;
       const { text, title } = teamMessageTemplates.requestApproved({
@@ -112,7 +113,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.requestRejected({
         teamName: team.name,
@@ -149,8 +150,8 @@ export class TeamServiceMessage {
   }): Promise<{ data: null; message: string }> {
     try {
       const [user, team] = await Promise.all([
-        this.getUser(teamMemberId),
-        this.getTeam(teamId),
+        this.dataProvider.getUser(teamMemberId),
+        this.dataProvider.getTeam(teamId),
       ]);
 
       const { text, title } = teamMessageTemplates.memberLeft({
@@ -189,7 +190,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.youLeftTeam({
         teamName: team.name,
@@ -225,7 +226,10 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(userId),
+        this.dataProvider.getTeam(teamId),
+      ]);
 
       const { text, title } = teamMessageTemplates.youKickedMember({
         memberName: user.name,
@@ -262,7 +266,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.youWereKicked({
         teamName: team.name,
@@ -299,7 +303,10 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(candidateId), this.getTeam(teamId)]);
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(candidateId),
+        this.dataProvider.getTeam(teamId),
+      ]);
 
       const { text, title } = teamMessageTemplates.newMemberJoined({
         memberName: user.name,
@@ -349,7 +356,10 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(userId),
+        this.dataProvider.getTeam(teamId),
+      ]);
 
       const { text, title } = teamMessageTemplates.youBannedMember({
         memberName: user.name,
@@ -386,7 +396,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.youWereBanned({
         teamName: team.name,
@@ -423,7 +433,10 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(userId),
+        this.dataProvider.getTeam(teamId),
+      ]);
 
       const { text, title } = teamMessageTemplates.youUnbannedMember({
         memberName: user.name,
@@ -460,7 +473,7 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.getTeam(teamId);
+      const team = await this.dataProvider.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.youWereUnbanned({
         teamName: team.name,
@@ -483,52 +496,5 @@ export class TeamServiceMessage {
       handleAndLogError(error);
       return { data: null, message: 'Ошибка при создании сервисного сообщения' };
     }
-  }
-
-  private async getUser(userId: string): Promise<{ name: string; zwiftId: number }> {
-    const userDB = await User.findById(userId, {
-      zwiftId: true,
-      _id: false,
-    }).lean<{ zwiftId: number }>();
-
-    if (!userDB) {
-      throw new Error(`Не найден пользователь с _id: "${userId}"`);
-    }
-
-    const riderDB = await Rider.findOne(
-      { zwiftId: userDB.zwiftId },
-      {
-        firstName: true,
-        lastName: true,
-        _id: false,
-      }
-    ).lean<{ lastName: string; firstName: string }>();
-
-    if (!riderDB) {
-      throw new Error(`Не найден райдер с zwiftId: "${userDB.zwiftId}"`);
-    }
-
-    return { name: `${riderDB.firstName} ${riderDB.lastName}`, zwiftId: userDB.zwiftId };
-  }
-
-  private async getTeam(
-    teamId: string
-  ): Promise<{ _id: string; name: string; creator: string; urlSlug: string }> {
-    const teamDB = await TeamModel.findById(teamId, {
-      name: true,
-      creator: true,
-      urlSlug: true,
-    }).lean<{ _id: Types.ObjectId; creator: Types.ObjectId; name: string; urlSlug: string }>();
-
-    if (!teamDB) {
-      throw new Error(`Не найдена команда с _id: "${teamId}"`);
-    }
-
-    return {
-      _id: teamDB._id.toString(),
-      name: teamDB.name,
-      creator: teamDB.creator.toString(),
-      urlSlug: teamDB.urlSlug,
-    };
   }
 }
