@@ -47,9 +47,7 @@ export default function TeamMembersPage() {
           status: fetchMembersStatus,
         })}
 
-        {teamMembers.map((m) => (
-          <CardTeamMember key={m._id} member={m} />
-        ))}
+        {teamMembers.map((m) => (m.rider ? <CardTeamMember key={m._id} member={m} /> : null))}
       </section>
 
       {status && userInTeam?.id && (
