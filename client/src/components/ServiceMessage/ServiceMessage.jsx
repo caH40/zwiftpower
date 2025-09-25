@@ -45,6 +45,7 @@ export default function ServiceMessage() {
         messages={serviceMessages}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        setIsHover={setIsHover}
       />
     </div>
   );

@@ -320,6 +320,12 @@ export class TeamMemberService {
       teamId: teamDB._id.toString(),
     });
 
+    // Создание сервисного сообщения.
+    await this.teamServiceMessage.youLeftTeam({
+      teamMemberId,
+      teamId: teamDB._id.toString(),
+    });
+
     return { message: `Вы покинули команду "${teamDB.name}"` };
   }
 

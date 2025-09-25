@@ -178,6 +178,42 @@ export class TeamServiceMessage {
   }
 
   /**
+   * Сервисное сообщение о вашем выходе из из команды.
+   * @returns
+   */
+  async youLeftTeam({
+    teamMemberId,
+    teamId,
+  }: {
+    teamMemberId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const team = await this.getTeam(teamId);
+
+      const { text, title } = teamMessageTemplates.youLeftTeam({
+        teamName: team.name,
+      });
+
+      // Страница команды из которой вышел пользователь.
+      const url = `${server}/teams/${team.urlSlug}/members`;
+
+      await this.serviceMessage.create({
+        recipientUser: teamMemberId,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
    * Сервисное сообщение об исключении участника из команды.
    * @returns
    */

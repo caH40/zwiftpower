@@ -23,8 +23,9 @@ const cx = cn.bind(styles);
  * @param {string} messages.createdAt
  * @param {boolean} isOpen - состояние открытия попапа
  * @param {Function} onClose - функция для закрытия попапа
+ * @param {Function} setIsHover - Функция контроля ховер эффекта на колоколе.
  */
-export default function ServiceMessagePopup({ messages, isOpen, onClose }) {
+export default function ServiceMessagePopup({ messages, isOpen, onClose, setIsHover }) {
   const popupRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ export default function ServiceMessagePopup({ messages, isOpen, onClose }) {
 
   const handleClick = async (_id) => {
     try {
+      setIsHover(false);
       await dispatch(fetchPutServiceMessages({ messageIds: [_id] })).unwrap();
 
       await dispatch(fetchServiceMessages()).unwrap();
