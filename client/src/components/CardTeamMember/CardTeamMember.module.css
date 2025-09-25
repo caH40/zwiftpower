@@ -25,7 +25,8 @@
 .gray {
   background-color: gray;
 }
-.imageLogo {
+.imageLogo,
+.placeholder {
   position: absolute;
   object-fit: cover;
   width: 116px;
@@ -35,6 +36,12 @@
   border: 5px solid rgba(255, 255, 255, 0.45);
   top: calc(50% - 58px);
   left: calc(50% - 58px);
+}
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
 }
 .role {
   position: absolute;

@@ -19,17 +19,17 @@ export default function MemberStatistics({ racingScore, medals }) {
       <div className={styles.medalsContainer}>
         <div className={styles.medalContainer}>
           <div className={styles.gold} />
-          <span className={styles.medals}>{medals.gold}</span>
+          <span className={styles.medals}>{medals?.gold || 0}</span>
         </div>
 
         <div className={styles.medalContainer}>
           <div className={styles.silver} />
-          <span className={styles.medals}>{medals.silver}</span>
+          <span className={styles.medals}>{medals?.silver || 0}</span>
         </div>
 
         <div className={styles.medalContainer}>
           <div className={styles.bronze} />
-          <span className={styles.medals}>{medals.bronze}</span>
+          <span className={styles.medals}>{medals?.bronze || 0}</span>
         </div>
       </div>
     </>

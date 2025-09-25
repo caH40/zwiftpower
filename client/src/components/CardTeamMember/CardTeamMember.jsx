@@ -12,6 +12,22 @@ import styles from './CardTeamMember.module.css';
  * Карточка участника команды.
  */
 export default function CardTeamMember({ member: { role, rider } }) {
+  // Объект-пустышка на случай если rider undefined
+  const riderData = rider || {
+    imageSrc: null,
+    firstName: 'Не подключен',
+    lastName: 'ZwiftId',
+    competitionMetrics: { category: 'E' },
+    countryAlpha3: 'ru',
+    age: null,
+    height: null,
+    weight: null,
+    medals: null,
+    totalEvents: 0,
+    specialization: '',
+    zwiftId: '',
+  };
+
   const {
     imageSrc,
     firstName,
@@ -25,7 +41,7 @@ export default function CardTeamMember({ member: { role, rider } }) {
     totalEvents,
     specialization,
     zwiftId,
-  } = rider;
+  } = riderData;
 
   const name = firstName || lastName ? `${firstName} ${lastName}` : 'Zwift Rider';
   const heightStr = height ? `${Math.trunc(height / 10)} см` : 'н/д';

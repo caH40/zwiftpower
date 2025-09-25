@@ -46,7 +46,9 @@ export default function TeamMembersPage() {
           status: fetchMembersStatus,
         })}
 
-        {teamMembers.map((m) => (m.rider ? <CardTeamMember key={m._id} member={m} /> : null))}
+        {teamMembers.map((m) => (
+          <CardTeamMember key={m._id} member={m} />
+        ))}
       </section>
       {/* Для отображения кнопки пользователь должен: */}
       {/* быть авторизован, должен состоять в данной команде, не должен быть создателем */}
