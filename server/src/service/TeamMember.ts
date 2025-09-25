@@ -182,10 +182,26 @@ export class TeamMemberService {
     teamCreatorId: string;
     bannedUserId: string;
   }): Promise<{ message: string }> {
-    await TeamModel.findOneAndUpdate(
+    const teamDB = await TeamModel.findOneAndUpdate(
       { creator: teamCreatorId },
       { $pull: { bannedRiders: { user: bannedUserId } } }
     );
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда с создателем _id:"${teamCreatorId}"!`);
+    }
+
+    // Создание сервисного сообщения для создателя команды.
+    await this.teamServiceMessage.youUnbannedMember({
+      userId: bannedUserId,
+      teamId: teamDB._id.toString(),
+    });
+
+    // Создание сервисного сообщения для создателя команды.
+    await this.teamServiceMessage.youWereUnbanned({
+      userId: bannedUserId,
+      teamId: teamDB._id.toString(),
+    });
 
     return { message: 'С пользователя снята блокировка.' };
   }

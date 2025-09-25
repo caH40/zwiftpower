@@ -49,4 +49,15 @@ export const teamMessageTemplates = {
     text: `Вы были заблокированы в команде "${params.teamName}"`,
     title: 'Блокировка в команде',
   }),
+
+  // unban
+  youUnbannedMember: (params: { memberName: string; teamName: string }) => ({
+    text: `Вы разблокировали ${params.memberName} в команде "${params.teamName}"`,
+    title: 'Разблокировка участника',
+  }),
+
+  youWereUnbanned: (params: { teamName: string }) => ({
+    text: `Вы были разблокированы в команде "${params.teamName}"`,
+    title: 'Разблокировка в команде',
+  }),
 };

@@ -411,6 +411,80 @@ export class TeamServiceMessage {
     }
   }
 
+  /**
+   * Сервисное сообщение о блокировке вас для команды.
+   * @returns
+   */
+  async youUnbannedMember({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+
+      const { text, title } = teamMessageTemplates.youUnbannedMember({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница пользователя с которого сняли блокировку для команды.
+      const url = `${server}/profile/${user.zwiftId}/results`;
+
+      await this.serviceMessage.create({
+        recipientUser: team.creator,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение о блокировке вас для команды.
+   * @returns
+   */
+  async youWereUnbanned({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const team = await this.getTeam(teamId);
+
+      const { text, title } = teamMessageTemplates.youWereUnbanned({
+        teamName: team.name,
+      });
+
+      // Страница команды, из которой исключили userId.
+      const url = `${server}/teams/${team.urlSlug}/members`;
+
+      await this.serviceMessage.create({
+        recipientUser: userId,
+        initiatorUser: team.creator,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
   private async getUser(userId: string): Promise<{ name: string; zwiftId: number }> {
     const userDB = await User.findById(userId, {
       zwiftId: true,
