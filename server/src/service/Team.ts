@@ -91,6 +91,14 @@ export class TeamService {
       );
     }
 
+    const hasLinkedZwiftId = await this.hasLinkedZwiftId(team.creator);
+
+    if (!hasLinkedZwiftId) {
+      throw new Error(
+        'Для создания команды, первоначально необходимо привязать ZwiftId к вашему аккаунту в Личном кабинете!'
+      );
+    }
+
     const urlSlug = this.createUrlSlug(team.name);
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
