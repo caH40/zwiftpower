@@ -1,6 +1,12 @@
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 
+import {
+  fetchPutServiceMessages,
+  fetchServiceMessages,
+} from '../../redux/features/api/service-message/fetchServiceMessage';
 import { getTimerLocal } from '../../utils/date-local';
 
 import styles from './ServiceMessagePopup.module.css';
@@ -18,14 +24,9 @@ const cx = cn.bind(styles);
  * @param {boolean} isOpen - состояние открытия попапа
  * @param {Function} onClose - функция для закрытия попапа
  */
-export default function ServiceMessagePopup({
-  messages,
-  isOpen,
-  onClose,
-  readIds,
-  setReadIds,
-}) {
+export default function ServiceMessagePopup({ messages, isOpen, onClose }) {
   const popupRef = useRef(null);
+  const dispatch = useDispatch();
 
   // Закрытие при клике вне попапа
   useEffect(() => {
@@ -40,13 +41,14 @@ export default function ServiceMessagePopup({
 
   if (!isOpen) return null;
 
-  const handleHover = async ({ isRead, _id }) => {
-    // Не добавляем уже прочитанные сообщения.
-    if (isRead) {
-      return;
-    }
+  const handleClick = async (_id) => {
+    try {
+      await dispatch(fetchPutServiceMessages({ messageIds: [_id] })).unwrap();
 
-    setReadIds((prev) => new Set([...prev, _id]));
+      await dispatch(fetchServiceMessages()).unwrap();
+    } catch (error) {
+      console.error(error); // eslint-disable-line
+    }
   };
 
   return (
@@ -55,16 +57,16 @@ export default function ServiceMessagePopup({
         <div className={styles.empty}>Нет сообщений</div>
       ) : (
         messages.map((msg) => (
-          <a
+          <Link
             key={msg._id}
-            href={msg.url || '#'}
-            className={cx('message', { unread: !msg.isRead && !readIds.has(msg._id) })}
-            onMouseOver={() => handleHover({ isRead: msg.isRead, _id: msg._id })}
+            to={msg.url || '#'}
+            className={cx('message', { unread: !msg.isRead })}
+            onClick={() => handleClick({ isRead: msg.isRead, _id: msg._id })}
           >
             <div className={styles.title}>{msg.title}</div>
             <div className={styles.text}>{msg.text}</div>
             <div className={styles.date}>{getTimerLocal(msg.createdAt, 'DDMMYYHm')}</div>
-          </a>
+          </Link>
         ))
       )}
     </div>
