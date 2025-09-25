@@ -288,11 +288,15 @@ export class TeamMemberService {
       throw new Error(`Не найдена команда с urlSlug:"${urlSlug}"!`);
     }
 
+    // Если состоит, то проверка не является ли он создателем данной команды.
     if (teamDB.creator.equals(teamMemberId)) {
       throw new Error('Невозможно выйти создателю команды из команды!');
     }
 
-    const res = await TeamMemberModel.findOneAndDelete({ user: teamMemberId });
+    const res = await TeamMemberModel.findOneAndDelete({
+      user: teamMemberId,
+      team: teamDB._id,
+    });
 
     if (!res) {
       throw new Error(`Вы не числитесь в составе команды "${teamDB.name}"`);
