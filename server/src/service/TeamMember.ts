@@ -228,6 +228,18 @@ export class TeamMemberService {
       });
     }
 
+    // Создание сервисного сообщения для создателя команды.
+    await this.teamServiceMessage.youBannedMember({
+      userId: teamMemberId,
+      teamId: teamDB._id.toString(),
+    });
+
+    // Создание сервисного сообщения для кандидата в участники команды.
+    await this.teamServiceMessage.youWereBanned({
+      userId: teamMemberId,
+      teamId: teamDB._id.toString(),
+    });
+
     return { message: 'Участник заблокирован в команде.' };
   }
 

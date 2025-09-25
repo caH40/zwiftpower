@@ -1,6 +1,6 @@
 import mongoose, { Document, model, Schema } from 'mongoose';
 
-import { SERVICE_MESSAGE_TYPE } from '../assets/service-message.js';
+import { SERVICE_MESSAGE_TYPE } from '../assets/service_message/constants.js';
 
 // types
 import { TServiceMessage } from '../types/model.interface.js';

@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import { TeamModel } from '../../Model/Team.js';
 import { User } from '../../Model/User.js';
 import { server } from '../../config/environment.js';
-import { teamMessageTemplates } from '../../assets/service-message.js';
+import { teamMessageTemplates } from '../../assets/service_message/team.js';
 import { Rider } from '../../Model/Rider.js';
 import { handleAndLogError } from '../../errors/error.js';
 
@@ -41,7 +41,7 @@ export class TeamServiceMessage {
     try {
       const [user, team] = await Promise.all([this.getUser(candidateId), this.getTeam(teamId)]);
 
-      const url = `${server}/teams/${team.urlSlug}/control/members`;
+      const url = `${server}/profile/${user.zwiftId}/results`;
       const { text, title } = teamMessageTemplates.joinRequest({
         applicantName: user.name,
         teamName: team.name,
@@ -226,10 +226,9 @@ export class TeamServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+      const team = await this.getTeam(teamId);
 
       const { text, title } = teamMessageTemplates.youWereKicked({
-        memberName: user.name,
         teamName: team.name,
       });
 
@@ -294,6 +293,80 @@ export class TeamServiceMessage {
           title,
         }))
       );
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение о блокировке участника для команды.
+   * @returns
+   */
+  async youBannedMember({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([this.getUser(userId), this.getTeam(teamId)]);
+
+      const { text, title } = teamMessageTemplates.youBannedMember({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница пользователя, исключенного из команды.
+      const url = `${server}/profile/${user.zwiftId}/results`;
+
+      await this.serviceMessage.create({
+        recipientUser: team.creator,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Сервисное сообщение о блокировке вас для команды.
+   * @returns
+   */
+  async youWereBanned({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const team = await this.getTeam(teamId);
+
+      const { text, title } = teamMessageTemplates.youWereBanned({
+        teamName: team.name,
+      });
+
+      // Страница команды, из которой исключили userId.
+      const url = `${server}/teams/${team.urlSlug}/members`;
+
+      await this.serviceMessage.create({
+        recipientUser: userId,
+        initiatorUser: team.creator,
+        type: this.type,
+        text,
+        url,
+        title,
+      });
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {

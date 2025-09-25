@@ -52,7 +52,7 @@ export default function TeamMembersPage() {
       </section>
       {/* Для отображения кнопки пользователь должен: */}
       {/* быть авторизован, должен состоять в данной команде, не должен быть создателем */}
-      {status && userInTeam?.id === team?._id && !userInTeam.isCreator && (
+      {status && userInTeam?.id === team?._id && !userInTeam?.isCreator && (
         <div className={styles.control}>
           <ButtonSimple onClick={leave} theme="orange">
             Выйти из команды
