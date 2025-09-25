@@ -39,7 +39,6 @@ export default function TeamMembersPage() {
           <ButtonSimple onClick={join}>Присоединиться</ButtonSimple>
         </div>
       )}
-
       <section className={styles.cards}>
         {renderSkeletonCards({
           count: 3,
@@ -49,8 +48,9 @@ export default function TeamMembersPage() {
 
         {teamMembers.map((m) => (m.rider ? <CardTeamMember key={m._id} member={m} /> : null))}
       </section>
-
-      {status && userInTeam?.id && (
+      {/* Для отображения кнопки пользователь должен: */}
+      {/* быть авторизован, должен состоять в данной команде, не должен быть создателем */}
+      {status && userInTeam?.id === team?._id && !userInTeam.isCreator && (
         <div className={styles.control}>
           <ButtonSimple onClick={leave} theme="orange">
             Выйти из команды
