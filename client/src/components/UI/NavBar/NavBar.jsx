@@ -39,9 +39,11 @@ function NavBar() {
         )}
       </li>
 
-      <li className={styles.item}>
-        <ServiceMessage />
-      </li>
+      {userAuth.status && (
+        <li className={styles.item}>
+          <ServiceMessage />
+        </li>
+      )}
 
       <li className={styles.item}>
         <div className={styles.box__user}>
