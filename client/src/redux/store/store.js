@@ -54,7 +54,6 @@ import { siteServicePriceReducers } from './site-service-price';
 import { teamReducers } from './team';
 import { teamMemberReducers } from './team-member';
 import { documentsReducers } from './documents';
-import { serviceMessageReducers } from './service-message';
 
 export default configureStore({
   reducer: {
@@ -110,6 +109,5 @@ export default configureStore({
     ...teamReducers,
     ...teamMemberReducers,
     ...documentsReducers,
-    ...serviceMessageReducers,
   },
 });

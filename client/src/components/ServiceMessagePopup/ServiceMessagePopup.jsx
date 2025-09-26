@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 
-import {
-  fetchPutServiceMessages,
-  fetchServiceMessages,
-} from '../../redux/features/api/service-message/fetchServiceMessage';
+import { fetchPutServiceMessages } from '../../redux/features/api/service-message/fetchServiceMessage';
 import { getTimerLocal } from '../../utils/date-local';
 
 import styles from './ServiceMessagePopup.module.css';
@@ -46,8 +43,6 @@ export default function ServiceMessagePopup({ messages, isOpen, onClose, setIsHo
     try {
       setIsHover(false);
       await dispatch(fetchPutServiceMessages({ messageId: _id })).unwrap();
-
-      await dispatch(fetchServiceMessages()).unwrap();
     } catch (error) {
       console.error(error); // eslint-disable-line
     }

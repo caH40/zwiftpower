@@ -16,27 +16,6 @@ export class ServiceMessageController {
   /**
    * Возвращает массив объектов с тексом сообщения и возможной ссылкой на сущность источника сообщения.
    */
-  public getAll = async (req: Request, res: Response): Promise<Response | void> => {
-    try {
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(400).json({ message: 'Не получен userId' });
-      }
-
-      // Вызов сервиса.
-      const response = await this.serviceMessage.getAll(userId);
-
-      // Возврат успешного ответа.
-      return res.status(200).json(response);
-    } catch (error) {
-      handleErrorInController(res, error);
-    }
-  };
-
-  /**
-   * Возвращает массив объектов с тексом сообщения и возможной ссылкой на сущность источника сообщения.
-   */
   public markMessagesAsRead = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       const userId = req.user?.id;
