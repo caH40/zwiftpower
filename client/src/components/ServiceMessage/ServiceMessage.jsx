@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { IconBell } from '../icons/IconBell';
+import { useWebSocket } from '../../hook/useWebSocket';
 import { fetchServiceMessages } from '../../redux/features/api/service-message/fetchServiceMessage';
 import ServiceMessagePopup from '../ServiceMessagePopup/ServiceMessagePopup';
 
@@ -10,16 +11,20 @@ import styles from './ServiceMessage.module.css';
 
 export default function ServiceMessage() {
   const { serviceMessages } = useSelector((state) => state.serviceMessage);
+  const [serverData, setServerData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const countNotReadMessages = serviceMessages.filter((m) => !m.isRead).length;
+  const countNotReadMessages = serverData.filter((m) => !m.isRead).length;
 
   useEffect(() => {
     dispatch(fetchServiceMessages());
   }, [location.pathname]);
+
+  // Работа с вебсокетом.
+  useWebSocket(setServerData);
 
   return (
     <div
@@ -42,7 +47,7 @@ export default function ServiceMessage() {
       )}
 
       <ServiceMessagePopup
-        messages={serviceMessages}
+        messages={serverData}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         setIsHover={setIsHover}

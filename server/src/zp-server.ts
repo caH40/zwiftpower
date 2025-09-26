@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import WebSocket, { WebSocketServer } from 'ws';
+import { createServer } from 'http';
 
 import { mongodb, serverFront, serverPort } from './config/environment.js';
 import { routerAuth } from './routes/authentication.js';
@@ -31,6 +33,7 @@ import { teamRouter } from './routes/team.js';
 import { teamMemberRouter } from './routes/team-member.js';
 import { markdownDocumentsRouter } from './routes/documents.js';
 import { serviceMessageRouter } from './routes/service-message.js';
+import { setupWebSocketWithAuth } from './ws-server.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -85,10 +88,23 @@ app.get('*', async (req, res) => {
   res.send(htmlContent);
 });
 
+export const wsConnections: Map<string, WebSocket> = new Map();
+
 // запуск сервера на express
 const start = async () => {
   try {
-    app.listen(PORT, () => console.log(`server started on PORT=${PORT}`)); // eslint-disable-line
+    // Создаем HTTP сервер из Express app
+    const server = createServer(app);
+
+    // Создаем WebSocket сервер на том же HTTP сервере
+    const wss = new WebSocketServer({
+      server,
+    });
+
+    setupWebSocketWithAuth(wss, wsConnections);
+
+    // Запускаем ОДИН сервер для HTTP и WebSocket
+    server.listen(PORT, () => console.log(`Server started on PORT=${PORT} (HTTP + WebSocket)`));
 
     // Первоначальная инициализация, чтобы сразу был после build.
     await createSitemap();

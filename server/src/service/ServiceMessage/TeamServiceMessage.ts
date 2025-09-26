@@ -3,6 +3,8 @@ import { MessageDataProvider } from './MessageDataProvider.js';
 import { TeamMemberModel } from '../../Model/TeamMember.js';
 import { teamMessageTemplates } from '../../assets/service_message/team.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { wsConnections } from '../../zp-server.js';
+import { ServiceMessageDispatcher } from '../websocket/ServiceMessageDispatcher.js';
 
 // types
 import {
@@ -48,14 +50,19 @@ export class TeamServiceMessage {
         teamName: team.name,
       });
 
+      const recipientUser = team.creator;
+
       await this.serviceMessage.create({
-        recipientUser: team.creator,
+        recipientUser,
         initiatorUser: candidateId,
         type: this.type,
         text,
         url,
         title,
       });
+
+      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+      await serviceMessageDispatcher.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -85,14 +92,19 @@ export class TeamServiceMessage {
         teamName: team.name,
       });
 
+      const recipientUser = candidateId;
+
       await this.serviceMessage.create({
-        recipientUser: candidateId,
+        recipientUser,
         initiatorUser: team.creator,
         type: this.type,
         text,
         url,
         title,
       });
+
+      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+      await serviceMessageDispatcher.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
