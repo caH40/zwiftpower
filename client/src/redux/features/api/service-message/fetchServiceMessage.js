@@ -30,12 +30,12 @@ export const fetchServiceMessages = createAsyncThunk(
  */
 export const fetchPutServiceMessages = createAsyncThunk(
   'serviceMessages/put',
-  async ({ messageIds }, thunkAPI) => {
+  async ({ messageId }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/service-messages/read`,
         method: 'put',
-        data: { messageIds },
+        data: { messageId },
       });
 
       return response.data;

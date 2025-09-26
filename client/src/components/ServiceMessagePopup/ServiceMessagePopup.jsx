@@ -45,7 +45,7 @@ export default function ServiceMessagePopup({ messages, isOpen, onClose, setIsHo
   const handleClick = async (_id) => {
     try {
       setIsHover(false);
-      await dispatch(fetchPutServiceMessages({ messageIds: [_id] })).unwrap();
+      await dispatch(fetchPutServiceMessages({ messageId: _id })).unwrap();
 
       await dispatch(fetchServiceMessages()).unwrap();
     } catch (error) {

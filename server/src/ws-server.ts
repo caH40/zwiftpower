@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
-import url from 'url';
 
 import { handleAuthMessage, handleRegularMessage } from './service/websocket/auth.js';
 import { ServiceMessage } from './service/ServiceMessage/ServiceMessage.js';
+import { handleAndLogError } from './errors/error.js';
 
 interface ConnectionState {
   isAuthenticated: boolean;
@@ -14,7 +14,7 @@ export function setupWebSocketWithAuth(
   wsConnections: Map<string, WebSocket>
 ) {
   wss.on('connection', (ws) => {
-    console.log('🔌 New WebSocket connection (waiting for auth)');
+    // console.log('🔌 New WebSocket connection (waiting for auth)');
 
     // Используем объект для сохранения состояния
     const state: ConnectionState = {
@@ -25,7 +25,7 @@ export function setupWebSocketWithAuth(
     // Таймаут на авторизацию
     const authTimeout = setTimeout(() => {
       if (!state.isAuthenticated) {
-        console.log('❌ Authentication timeout');
+        // console.log('❌ Authentication timeout');
         ws.close(1008, 'Authentication timeout');
         state.userId && wsConnections.delete(state.userId);
       }
@@ -44,12 +44,12 @@ export function setupWebSocketWithAuth(
     ws.on('close', () => {
       clearTimeout(authTimeout);
       state.userId && wsConnections.delete(state.userId);
-      console.log(`❌ Connection closed for user ${state.userId}`);
+      // console.log(`❌ Connection closed for user ${state.userId}`);
     });
 
     ws.on('error', (error) => {
       state.userId && wsConnections.delete(state.userId);
-      console.error(`💥 WebSocket error for user ${state.userId}:`, error);
+      handleAndLogError(error);
     });
   });
 }
@@ -87,7 +87,7 @@ async function handleMessage({
         wsConnections.set(authResult.userId, ws);
         clearTimeout(authTimeout);
 
-        console.log(`✅ User ${state.userId} authenticated`);
+        // console.log(`✅ User ${state.userId} authenticated`);
 
         // Отправляем подтверждение
         ws.send(
@@ -130,12 +130,12 @@ async function handleMessage({
       ws.close(1008, 'Authentication required');
     }
   } catch (error) {
-    console.error('Error handling message:', error);
     ws.send(
       JSON.stringify({
         type: 'ERROR',
         message: 'Invalid message format',
       })
     );
+    handleAndLogError(error);
   }
 }

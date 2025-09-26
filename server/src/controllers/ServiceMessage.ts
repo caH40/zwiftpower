@@ -40,17 +40,17 @@ export class ServiceMessageController {
   public markMessagesAsRead = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       const userId = req.user?.id;
-      const messageIds = req.body.messageIds;
+      const messageId = req.body.messageId;
 
       if (!userId) {
         return res.status(400).json({ message: 'Не получен userId' });
       }
-      if (!messageIds || messageIds.length === 0) {
+      if (!messageId) {
         return res.status(400).json({ message: 'Не получены messageIds' });
       }
 
       // Вызов сервиса.
-      const response = await this.serviceMessage.markMessagesAsRead(messageIds);
+      const response = await this.serviceMessage.markMessagesAsRead(messageId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
