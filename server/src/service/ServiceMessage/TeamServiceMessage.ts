@@ -61,8 +61,7 @@ export class TeamServiceMessage {
         title,
       });
 
-      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-      await serviceMessageDispatcher.notifyUser(recipientUser);
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -103,8 +102,7 @@ export class TeamServiceMessage {
         title,
       });
 
-      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-      await serviceMessageDispatcher.notifyUser(recipientUser);
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -133,14 +131,18 @@ export class TeamServiceMessage {
 
       const url = `${server}/teams/${team.urlSlug}/members`;
 
+      const recipientUser = candidateId;
+
       await this.serviceMessage.create({
-        recipientUser: candidateId,
+        recipientUser,
         initiatorUser: team.creator,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -174,14 +176,18 @@ export class TeamServiceMessage {
       // Страница пользователя, который вышел из состава из команды.
       const url = `${server}/profile/${user.zwiftId}/results`;
 
+      const recipientUser = team.creator;
+
       await this.serviceMessage.create({
-        recipientUser: team.creator,
+        recipientUser,
         initiatorUser: teamMemberId,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -211,13 +217,17 @@ export class TeamServiceMessage {
       // Страница команды из которой вышел пользователь.
       const url = `${server}/teams/${team.urlSlug}/members`;
 
+      const recipientUser = teamMemberId;
+
       await this.serviceMessage.create({
-        recipientUser: teamMemberId,
+        recipientUser,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -251,13 +261,17 @@ export class TeamServiceMessage {
       // Страница пользователя, исключенного из команды.
       const url = `${server}/profile/${user.zwiftId}/results`;
 
+      const recipientUser = team.creator;
+
       await this.serviceMessage.create({
-        recipientUser: team.creator,
+        recipientUser,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -287,14 +301,18 @@ export class TeamServiceMessage {
       // Страница команды, из которой исключили userId.
       const url = `${server}/teams/${team.urlSlug}/members`;
 
+      const recipientUser = userId;
+
       await this.serviceMessage.create({
-        recipientUser: userId,
+        recipientUser,
         initiatorUser: team.creator,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -349,6 +367,8 @@ export class TeamServiceMessage {
         }))
       );
 
+      await this.notifyUsers(teamMembers);
+
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
       handleAndLogError(error);
@@ -381,13 +401,17 @@ export class TeamServiceMessage {
       // Страница пользователя, исключенного из команды.
       const url = `${server}/profile/${user.zwiftId}/results`;
 
+      const recipientUser = team.creator;
+
       await this.serviceMessage.create({
-        recipientUser: team.creator,
+        recipientUser,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -417,14 +441,18 @@ export class TeamServiceMessage {
       // Страница команды, из которой исключили userId.
       const url = `${server}/teams/${team.urlSlug}/members`;
 
+      const recipientUser = userId;
+
       await this.serviceMessage.create({
-        recipientUser: userId,
+        recipientUser,
         initiatorUser: team.creator,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -458,13 +486,17 @@ export class TeamServiceMessage {
       // Страница пользователя с которого сняли блокировку для команды.
       const url = `${server}/profile/${user.zwiftId}/results`;
 
+      const recipientUser = team.creator;
+
       await this.serviceMessage.create({
-        recipientUser: team.creator,
+        recipientUser,
         type: this.type,
         text,
         url,
         title,
       });
+
+      await this.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -494,6 +526,8 @@ export class TeamServiceMessage {
       // Страница команды, из которой исключили userId.
       const url = `${server}/teams/${team.urlSlug}/members`;
 
+      const recipientUser = userId;
+
       await this.serviceMessage.create({
         recipientUser: userId,
         initiatorUser: team.creator,
@@ -503,10 +537,24 @@ export class TeamServiceMessage {
         title,
       });
 
+      await this.notifyUser(recipientUser);
+
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
       handleAndLogError(error);
       return { data: null, message: 'Ошибка при создании сервисного сообщения' };
     }
+  }
+
+  /** Отправка обновленных данных сервисных сообщений пользователю recipientUser. */
+  private async notifyUser(recipientUser: string): Promise<void> {
+    const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+    await serviceMessageDispatcher.notifyUser(recipientUser);
+  }
+
+  /** Отправка обновленных данных сервисных сообщений пользователю recipientUser. */
+  private async notifyUsers(recipientUsers: string[]): Promise<void> {
+    const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+    await serviceMessageDispatcher.notifyUsers(recipientUsers);
   }
 }

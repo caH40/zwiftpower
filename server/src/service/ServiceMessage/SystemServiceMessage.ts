@@ -8,6 +8,8 @@ import {
   TServiceMessageType,
 } from '../../types/service-message.types.js';
 import { systemMessageTemplates } from '../../assets/service_message/system.js';
+import { ServiceMessageDispatcher } from '../websocket/ServiceMessageDispatcher.js';
+import { wsConnections } from '../../zp-server.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
@@ -49,9 +51,11 @@ export class SystemServiceMessage {
         teamName: team.name,
       });
 
+      const recipientUsers = adminIds;
+
       await this.serviceMessage.createMany(
-        adminIds.map((adminId) => ({
-          recipientUser: adminId,
+        recipientUsers.map((recipientUser) => ({
+          recipientUser: recipientUser,
           initiatorUser: creatorId,
           type: this.type,
           text,
@@ -59,6 +63,10 @@ export class SystemServiceMessage {
           title,
         }))
       );
+
+      // Отправка обновленных данных сервисных сообщений пользователям recipientUsers.
+      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+      await serviceMessageDispatcher.notifyUsers(recipientUsers);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -83,13 +91,19 @@ export class SystemServiceMessage {
         teamName: team.name,
       });
 
+      const recipientUser = creatorId;
+
       await this.serviceMessage.create({
-        recipientUser: creatorId,
+        recipientUser,
         type: this.type,
         text,
         url,
         title,
       });
+
+      // Отправка обновленных данных сервисных сообщений пользователю recipientUser.
+      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+      await serviceMessageDispatcher.notifyUser(recipientUser);
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
