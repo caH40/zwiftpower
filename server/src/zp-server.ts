@@ -104,6 +104,7 @@ const start = async () => {
     setupWebSocketWithAuth(wss, wsConnections);
 
     // Запускаем ОДИН сервер для HTTP и WebSocket
+    // eslint-disable-next-line no-console
     server.listen(PORT, () => console.log(`Server started on PORT=${PORT} (HTTP + WebSocket)`));
 
     // Первоначальная инициализация, чтобы сразу был после build.

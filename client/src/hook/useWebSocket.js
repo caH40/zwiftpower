@@ -6,7 +6,7 @@ import { webSocketServer } from '../config/environment';
 export function useWebSocket(setServerData) {
   useEffect(() => {
     const token = localStorage.getItem('__zp_accessToken');
-    const ws = new WebSocket(`${webSocketServer}?username=Alex`);
+    const ws = new WebSocket(webSocketServer);
 
     ws.onerror = (error) => {
       console.error('Ошибка соединения WebSocket:', error);
