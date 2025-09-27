@@ -18,6 +18,8 @@ const ServiceMessageSchema = new Schema<TServiceMessageDocument>({
   createdAt: { type: Date, default: () => new Date() },
 });
 
+ServiceMessageSchema.index({ recipientUser: 1, createdAt: -1 });
+
 export const ServiceMessageModel = model<TServiceMessageDocument>(
   'ServiceMessage',
   ServiceMessageSchema
