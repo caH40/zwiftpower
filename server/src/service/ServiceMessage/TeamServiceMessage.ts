@@ -1,4 +1,3 @@
-import { server } from '../../config/environment.js';
 import { MessageDataProvider } from './MessageDataProvider.js';
 import { TeamMemberModel } from '../../Model/TeamMember.js';
 import { teamMessageTemplates } from '../../assets/service_message/team.js';
@@ -44,7 +43,7 @@ export class TeamServiceMessage {
         this.dataProvider.getTeam(teamId),
       ]);
 
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
       const { text, title } = teamMessageTemplates.joinRequest({
         applicantName: user.name,
         teamName: team.name,
@@ -86,7 +85,7 @@ export class TeamServiceMessage {
     try {
       const team = await this.dataProvider.getTeam(teamId);
 
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
       const { text, title } = teamMessageTemplates.requestApproved({
         teamName: team.name,
       });
@@ -129,7 +128,7 @@ export class TeamServiceMessage {
         teamName: team.name,
       });
 
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const recipientUser = candidateId;
 
@@ -174,7 +173,7 @@ export class TeamServiceMessage {
       });
 
       // Страница пользователя, который вышел из состава из команды.
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
 
       const recipientUser = team.creator;
 
@@ -215,7 +214,7 @@ export class TeamServiceMessage {
       });
 
       // Страница команды из которой вышел пользователь.
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const recipientUser = teamMemberId;
 
@@ -259,7 +258,7 @@ export class TeamServiceMessage {
       });
 
       // Страница пользователя, исключенного из команды.
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
 
       const recipientUser = team.creator;
 
@@ -299,7 +298,7 @@ export class TeamServiceMessage {
       });
 
       // Страница команды, из которой исключили userId.
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const recipientUser = userId;
 
@@ -344,7 +343,7 @@ export class TeamServiceMessage {
       });
 
       // Страница пользователя, вступившего в команду.
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
 
       const teamMembersDB = await TeamMemberModel.find(
         { team: teamId },
@@ -399,7 +398,7 @@ export class TeamServiceMessage {
       });
 
       // Страница пользователя, исключенного из команды.
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
 
       const recipientUser = team.creator;
 
@@ -439,7 +438,7 @@ export class TeamServiceMessage {
       });
 
       // Страница команды, из которой исключили userId.
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const recipientUser = userId;
 
@@ -484,7 +483,7 @@ export class TeamServiceMessage {
       });
 
       // Страница пользователя с которого сняли блокировку для команды.
-      const url = `${server}/profile/${user.zwiftId}/results`;
+      const url = `/profile/${user.zwiftId}/results`;
 
       const recipientUser = team.creator;
 
@@ -524,7 +523,7 @@ export class TeamServiceMessage {
       });
 
       // Страница команды, из которой исключили userId.
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const recipientUser = userId;
 

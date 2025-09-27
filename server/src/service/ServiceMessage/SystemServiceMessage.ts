@@ -1,4 +1,6 @@
-import { server } from '../../config/environment.js';
+import { systemMessageTemplates } from '../../assets/service_message/system.js';
+import { ServiceMessageDispatcher } from '../websocket/ServiceMessageDispatcher.js';
+import { wsConnections } from '../../zp-server.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { MessageDataProvider } from './MessageDataProvider.js';
 
@@ -7,9 +9,6 @@ import {
   TCreateMethodServiceMessageParams,
   TServiceMessageType,
 } from '../../types/service-message.types.js';
-import { systemMessageTemplates } from '../../assets/service_message/system.js';
-import { ServiceMessageDispatcher } from '../websocket/ServiceMessageDispatcher.js';
-import { wsConnections } from '../../zp-server.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
@@ -44,7 +43,7 @@ export class SystemServiceMessage {
         this.dataProvider.getAdminIds(),
       ]);
 
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const { text, title } = systemMessageTemplates.newTeamCreated({
         creatorName: user.name,
@@ -85,7 +84,7 @@ export class SystemServiceMessage {
     try {
       const team = await this.dataProvider.getTeam(teamId);
 
-      const url = `${server}/teams/${team.urlSlug}/members`;
+      const url = `/teams/${team.urlSlug}/members`;
 
       const { text, title } = systemMessageTemplates.youWereCreatedNewTeam({
         teamName: team.name,
