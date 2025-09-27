@@ -44,6 +44,7 @@ export class SystemServiceMessage {
       ]);
 
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const { text, title } = systemMessageTemplates.newTeamCreated({
         creatorName: user.name,
@@ -59,6 +60,7 @@ export class SystemServiceMessage {
           type: this.type,
           text,
           entityUrl,
+          entityLogo,
           title,
         }))
       );

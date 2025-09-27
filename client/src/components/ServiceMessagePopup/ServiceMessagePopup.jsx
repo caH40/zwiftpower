@@ -15,7 +15,8 @@ const cx = cn.bind(styles);
  * @param {string} messages._id
  * @param {string} messages.title
  * @param {string} messages.text
- * @param {string} [messages.url]
+ * @param {string} [messages.entityUrl]
+ * @param {string} [messages.entityLogo]
  * @param {boolean} messages.isRead
  * @param {string} messages.createdAt
  * @param {boolean} isOpen - состояние открытия попапа
@@ -56,13 +57,27 @@ export default function ServiceMessagePopup({ messages, isOpen, onClose, setIsHo
         messages.map((msg) => (
           <Link
             key={msg._id}
-            to={msg.url || '#'}
-            className={cx('message', { unread: !msg.isRead })}
+            to={msg.entityUrl || '#'}
+            className={cx('messageContainer', { unread: !msg.isRead })}
             onClick={() => handleClick({ isRead: msg.isRead, _id: msg._id })}
           >
-            <div className={styles.title}>{msg.title}</div>
-            <div className={styles.text}>{msg.text}</div>
-            <div className={styles.date}>{getTimerLocal(msg.createdAt, 'DDMMYYHm')}</div>
+            {msg.entityLogo ? (
+              <img
+                src={msg.entityLogo}
+                width={36}
+                height={36}
+                alt="Logo"
+                className={styles.entityLogo}
+              />
+            ) : (
+              <div className={styles.emptyLogo}>?</div>
+            )}
+
+            <div className={styles.message}>
+              <div className={styles.title}>{msg.title}</div>
+              <div className={styles.text}>{msg.text}</div>
+              <div className={styles.date}>{getTimerLocal(msg.createdAt, 'DDMMYYHm')}</div>
+            </div>
           </Link>
         ))
       )}
