@@ -44,6 +44,8 @@ export class TeamServiceMessage {
       ]);
 
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
+
       const { text, title } = teamMessageTemplates.joinRequest({
         applicantName: user.name,
         teamName: team.name,
@@ -57,6 +59,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -86,6 +89,8 @@ export class TeamServiceMessage {
       const team = await this.dataProvider.getTeam(teamId);
 
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
+
       const { text, title } = teamMessageTemplates.requestApproved({
         teamName: team.name,
       });
@@ -98,6 +103,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -129,6 +135,7 @@ export class TeamServiceMessage {
       });
 
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const recipientUser = candidateId;
 
@@ -138,6 +145,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -174,6 +182,7 @@ export class TeamServiceMessage {
 
       // Страница пользователя, который вышел из состава из команды.
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
 
       const recipientUser = team.creator;
 
@@ -183,6 +192,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -215,6 +225,7 @@ export class TeamServiceMessage {
 
       // Страница команды из которой вышел пользователь.
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const recipientUser = teamMemberId;
 
@@ -223,6 +234,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -259,6 +271,7 @@ export class TeamServiceMessage {
 
       // Страница пользователя, исключенного из команды.
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
 
       const recipientUser = team.creator;
 
@@ -267,6 +280,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -299,6 +313,7 @@ export class TeamServiceMessage {
 
       // Страница команды, из которой исключили userId.
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const recipientUser = userId;
 
@@ -308,6 +323,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -344,6 +360,7 @@ export class TeamServiceMessage {
 
       // Страница пользователя, вступившего в команду.
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
 
       const teamMembersDB = await TeamMemberModel.find(
         { team: teamId },
@@ -362,6 +379,7 @@ export class TeamServiceMessage {
           type: this.type,
           text,
           entityUrl,
+          entityLogo,
           title,
         }))
       );
@@ -399,6 +417,7 @@ export class TeamServiceMessage {
 
       // Страница пользователя, исключенного из команды.
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
 
       const recipientUser = team.creator;
 
@@ -407,6 +426,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -439,6 +459,7 @@ export class TeamServiceMessage {
 
       // Страница команды, из которой исключили userId.
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const recipientUser = userId;
 
@@ -448,6 +469,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -484,6 +506,7 @@ export class TeamServiceMessage {
 
       // Страница пользователя с которого сняли блокировку для команды.
       const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = user.imageSrc;
 
       const recipientUser = team.creator;
 
@@ -492,6 +515,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
@@ -524,6 +548,7 @@ export class TeamServiceMessage {
 
       // Страница команды, из которой исключили userId.
       const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityLogo = team.logoUrl;
 
       const recipientUser = userId;
 
@@ -533,6 +558,7 @@ export class TeamServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 

@@ -82,12 +82,12 @@ export class SystemServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const team = await this.dataProvider.getTeam(teamId);
+      const { urlSlug, name, logoUrl: entityLogo } = await this.dataProvider.getTeam(teamId);
 
-      const entityUrl = `/teams/${team.urlSlug}/members`;
+      const entityUrl = `/teams/${urlSlug}/members`;
 
       const { text, title } = systemMessageTemplates.youWereCreatedNewTeam({
-        teamName: team.name,
+        teamName: name,
       });
 
       const recipientUser = creatorId;
@@ -97,6 +97,7 @@ export class SystemServiceMessage {
         type: this.type,
         text,
         entityUrl,
+        entityLogo,
         title,
       });
 
