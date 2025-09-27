@@ -88,7 +88,7 @@ app.get('*', async (req, res) => {
   res.send(htmlContent);
 });
 
-export const wsConnections: Map<string, WebSocket> = new Map();
+export const wsConnections: Map<string, Set<WebSocket>> = new Map();
 
 // запуск сервера на express
 const start = async () => {

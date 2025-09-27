@@ -11,7 +11,7 @@ interface ConnectionState {
 
 export function setupWebSocketWithAuth(
   wss: WebSocket.Server,
-  wsConnections: Map<string, WebSocket>
+  wsConnections: Map<string, Set<WebSocket>>
 ) {
   wss.on('connection', (ws) => {
     // Используем объект для сохранения состояния.
@@ -24,7 +24,9 @@ export function setupWebSocketWithAuth(
     const authTimeout = setTimeout(() => {
       if (!state.isAuthenticated) {
         ws.close(1008, 'Authentication timeout');
-        state.userId && wsConnections.delete(state.userId);
+        if (state.userId) {
+          removeUserConnection(wsConnections, state.userId, ws);
+        }
       }
     }, 5000);
 
@@ -40,11 +42,15 @@ export function setupWebSocketWithAuth(
 
     ws.on('close', () => {
       clearTimeout(authTimeout);
-      state.userId && wsConnections.delete(state.userId);
+      if (state.userId) {
+        removeUserConnection(wsConnections, state.userId, ws);
+      }
     });
 
     ws.on('error', (error) => {
-      state.userId && wsConnections.delete(state.userId);
+      if (state.userId) {
+        removeUserConnection(wsConnections, state.userId, ws);
+      }
       handleAndLogError(error);
     });
   });
@@ -70,14 +76,14 @@ async function handleMessage({
   data: WebSocket.RawData;
   state: ConnectionState;
   authTimeout: NodeJS.Timeout;
-  wsConnections: Map<string, WebSocket>;
+  wsConnections: Map<string, Set<WebSocket>>;
 }) {
   try {
     const message = JSON.parse(data.toString());
 
     // Если уже авторизован, обрабатываем как обычное сообщение
     if (state.isAuthenticated) {
-      handleRegularMessage(ws, state.userId!, data);
+      handleRegularMessage(ws, data);
       return;
     }
 
@@ -89,7 +95,15 @@ async function handleMessage({
         // Успешная авторизация
         state.isAuthenticated = true;
         state.userId = authResult.userId;
-        wsConnections.set(authResult.userId, ws);
+
+        let connections = wsConnections.get(authResult.userId);
+
+        if (!connections) {
+          connections = new Set<WebSocket>();
+          wsConnections.set(authResult.userId, connections);
+        }
+        connections.add(ws);
+
         clearTimeout(authTimeout);
 
         // Отправляем подтверждение
@@ -140,5 +154,23 @@ async function handleMessage({
       })
     );
     handleAndLogError(error);
+  }
+}
+
+function removeUserConnection(
+  wsConnections: Map<string, Set<WebSocket>>,
+  userId: string,
+  wc: WebSocket
+): void {
+  const userConnections = wsConnections.get(userId);
+
+  if (!userConnections) {
+    return;
+  }
+
+  userConnections.delete(wc);
+
+  if (userConnections.size === 0) {
+    wsConnections.delete(userId);
   }
 }

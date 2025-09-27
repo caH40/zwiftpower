@@ -21,14 +21,9 @@ export function handleAuthMessage(token: string): { userId: string | null; error
 }
 
 // Обработка обычных сообщений после аутентификации
-export function handleRegularMessage(
-  ws: WebSocket,
-  userId: string | null,
-  data: WebSocket.RawData
-) {
+export function handleRegularMessage(ws: WebSocket, data: WebSocket.RawData) {
   try {
     const message = JSON.parse(data.toString());
-    console.log(`📨 Message from userId ${userId}:`, message);
 
     switch (message.type) {
       case 'PING':
