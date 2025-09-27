@@ -48,6 +48,15 @@ export function setupWebSocketWithAuth(
       handleAndLogError(error);
     });
   });
+
+  // Отправка пинга на клиент.
+  setInterval(() => {
+    wss.clients.forEach((ws) => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.ping();
+      }
+    });
+  }, 30000); // Пинг каждые 30 секунд.
 }
 
 async function handleMessage({
