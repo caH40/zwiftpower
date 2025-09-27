@@ -26,7 +26,7 @@ export function useWebSocket(setServerData) {
     };
 
     ws.onmessage = (event) => {
-      console.log('📨 Received message:', event.data);
+      console.log('📨 Received message:', event.data?.type);
 
       try {
         const data = JSON.parse(event.data);
@@ -65,11 +65,7 @@ export function useWebSocket(setServerData) {
 
       // 1006 - Abnormal Closure
       if (event.code === 1006) {
-        console.error('💥 Connection closed abnormally. Possible causes:');
-        console.error('- Network connectivity issues');
-        console.error('- Server crashed or restarted');
-        console.error('- Firewall/proxy blocking');
-        console.error('- SSL certificate problems');
+        console.error('💥 Connection closed abnormally');
       }
     };
 

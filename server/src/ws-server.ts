@@ -13,10 +13,7 @@ export function setupWebSocketWithAuth(
   wss: WebSocket.Server,
   wsConnections: Map<string, WebSocket>
 ) {
-  wss.on('connection', (ws, req) => {
-    const clientIP = req.socket.remoteAddress;
-    console.log(`🔌 New connection from: ${clientIP}`);
-
+  wss.on('connection', (ws) => {
     // Используем объект для сохранения состояния
     const state: ConnectionState = {
       isAuthenticated: false,
@@ -26,8 +23,6 @@ export function setupWebSocketWithAuth(
     // Таймаут на авторизацию
     const authTimeout = setTimeout(() => {
       if (!state.isAuthenticated) {
-        console.log(`⏰ Auth timeout for: ${clientIP}`);
-
         ws.close(1008, 'Authentication timeout');
         state.userId && wsConnections.delete(state.userId);
       }
@@ -41,14 +36,11 @@ export function setupWebSocketWithAuth(
       })
     );
 
-    ws.on('message', (data) =>
-      handleMessage({ ws, data, state, authTimeout, wsConnections, clientIP })
-    );
+    ws.on('message', (data) => handleMessage({ ws, data, state, authTimeout, wsConnections }));
 
-    ws.on('close', (code, reason) => {
+    ws.on('close', () => {
       clearTimeout(authTimeout);
       state.userId && wsConnections.delete(state.userId);
-      console.log(`🔌 Connection closed: ${clientIP}, code: ${code}, reason: ${reason}`);
     });
 
     ws.on('error', (error) => {
@@ -56,6 +48,16 @@ export function setupWebSocketWithAuth(
       handleAndLogError(error);
     });
   });
+
+  setInterval(() => {
+    wss.clients.forEach((ws) => {
+      console.log('ping', 'ws.readyState', ws.readyState, 'WebSocket.OPEN', WebSocket.OPEN);
+
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.ping();
+      }
+    });
+  }, 30000); // каждые 30 секунд
 }
 
 async function handleMessage({
@@ -64,19 +66,15 @@ async function handleMessage({
   state,
   authTimeout,
   wsConnections,
-  clientIP,
 }: {
   ws: WebSocket;
   data: WebSocket.RawData;
   state: ConnectionState;
   authTimeout: NodeJS.Timeout;
   wsConnections: Map<string, WebSocket>;
-  clientIP?: string;
 }) {
   try {
     const message = JSON.parse(data.toString());
-
-    console.log(`📨 Message from ${clientIP}:`, message.type);
 
     // Если уже авторизован, обрабатываем как обычное сообщение
     if (state.isAuthenticated) {
@@ -86,7 +84,6 @@ async function handleMessage({
 
     // Обрабатываем аутентификацию
     if (message.type === 'AUTH' && message.token) {
-      console.log(`🔑 Auth attempt from: ${clientIP}`);
       const authResult = handleAuthMessage(message.token);
 
       if (authResult.userId) {
@@ -95,8 +92,6 @@ async function handleMessage({
         state.userId = authResult.userId;
         wsConnections.set(authResult.userId, ws);
         clearTimeout(authTimeout);
-
-        console.log(`✅ User ${state.userId} authenticated`);
 
         // Отправляем подтверждение
         ws.send(
@@ -139,8 +134,6 @@ async function handleMessage({
       ws.close(1008, 'Authentication required');
     }
   } catch (error) {
-    console.error(`💥 Parse error from ${clientIP}:`, error);
-
     ws.send(
       JSON.stringify({
         type: 'ERROR',
