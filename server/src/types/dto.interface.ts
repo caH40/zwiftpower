@@ -318,7 +318,8 @@ export type TGetAllServiceMessagesForUserDto = {
   _id: string;
   title: string;
   text: string;
-  url?: string;
+  entityUrl?: string;
+  entityLogo?: string;
   isRead: boolean;
   createdAt: string;
 };

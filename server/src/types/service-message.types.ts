@@ -11,7 +11,8 @@ export type TCreateMethodServiceMessageParams = {
   type: TServiceMessageType;
   title: string;
   text: string;
-  url?: string;
+  entityUrl?: string;
+  entityLogo?: string;
 };
 
 export type TeamMessageResult = {

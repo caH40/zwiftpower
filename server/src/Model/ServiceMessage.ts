@@ -13,7 +13,8 @@ const ServiceMessageSchema = new Schema<TServiceMessageDocument>({
   type: { type: String, enum: SERVICE_MESSAGE_TYPE, required: true },
   title: { type: String, required: true },
   text: { type: String, required: true },
-  url: { type: String },
+  entityUrl: { type: String },
+  entityLogo: { type: String },
   isRead: { type: Boolean, default: false },
   createdAt: { type: Date, default: () => new Date() },
 });

@@ -43,7 +43,7 @@ export class SystemServiceMessage {
         this.dataProvider.getAdminIds(),
       ]);
 
-      const url = `/teams/${team.urlSlug}/members`;
+      const entityUrl = `/teams/${team.urlSlug}/members`;
 
       const { text, title } = systemMessageTemplates.newTeamCreated({
         creatorName: user.name,
@@ -58,7 +58,7 @@ export class SystemServiceMessage {
           initiatorUser: creatorId,
           type: this.type,
           text,
-          url,
+          entityUrl,
           title,
         }))
       );
@@ -84,7 +84,7 @@ export class SystemServiceMessage {
     try {
       const team = await this.dataProvider.getTeam(teamId);
 
-      const url = `/teams/${team.urlSlug}/members`;
+      const entityUrl = `/teams/${team.urlSlug}/members`;
 
       const { text, title } = systemMessageTemplates.youWereCreatedNewTeam({
         teamName: team.name,
@@ -96,7 +96,7 @@ export class SystemServiceMessage {
         recipientUser,
         type: this.type,
         text,
-        url,
+        entityUrl,
         title,
       });
 

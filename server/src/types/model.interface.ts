@@ -949,7 +949,8 @@ export interface TServiceMessage {
   type: TServiceMessageType;
   title: string;
   text: string;
-  url?: string;
+  entityUrl?: string;
+  entityLogo?: string;
   isRead: boolean;
   createdAt: Date;
 }
