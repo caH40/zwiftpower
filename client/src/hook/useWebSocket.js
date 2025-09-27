@@ -6,6 +6,9 @@ import { webSocketServer } from '../config/environment';
 export function useWebSocket(setServerData) {
   useEffect(() => {
     const token = localStorage.getItem('__zp_accessToken');
+
+    console.log('🕒 Starting WebSocket connection to:', webSocketServer);
+
     const ws = new WebSocket(webSocketServer);
 
     ws.onerror = (error) => {
@@ -23,6 +26,8 @@ export function useWebSocket(setServerData) {
     };
 
     ws.onmessage = (event) => {
+      console.log('📨 Received message:', event.data);
+
       try {
         const data = JSON.parse(event.data);
 
@@ -50,8 +55,28 @@ export function useWebSocket(setServerData) {
       }
     };
 
+    ws.onclose = (event) => {
+      console.log('🔌 WebSocket closed:', {
+        code: event.code,
+        reason: event.reason,
+        wasClean: event.wasClean,
+        timestamp: new Date().toISOString(),
+      });
+
+      // 1006 - Abnormal Closure
+      if (event.code === 1006) {
+        console.error('💥 Connection closed abnormally. Possible causes:');
+        console.error('- Network connectivity issues');
+        console.error('- Server crashed or restarted');
+        console.error('- Firewall/proxy blocking');
+        console.error('- SSL certificate problems');
+      }
+    };
+
     // 🧹 cleanup — закрыть соединение
     return () => {
+      console.log('WebSocket cleanup');
+
       ws.close();
       console.log('WebSocket closed');
     };
