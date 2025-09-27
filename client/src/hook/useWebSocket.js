@@ -1,10 +1,18 @@
 /* eslint-disable no-console */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { webSocketServer } from '../config/environment';
 
 export function useWebSocket(setServerData) {
+  const audioRef = useRef();
+
   useEffect(() => {
+    audioRef.current = { notification: new Audio('/audio/notification.mp3') };
+
+    if (audioRef.current.notification) {
+      audioRef.current.notification.volume = 0.2;
+    }
+
     const token = localStorage.getItem('__zp_accessToken');
 
     const ws = new WebSocket(webSocketServer);
@@ -37,6 +45,11 @@ export function useWebSocket(setServerData) {
             break;
           case 'SERVICE_MESSAGES':
             setServerData(data.data);
+
+            if (data.audioType === 'notification') {
+              audioRef.current.notification?.play().catch(() => {});
+            }
+
             break;
           case 'AUTH_ERROR':
             console.error('Auth failed:', data.message);

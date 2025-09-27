@@ -549,12 +549,12 @@ export class TeamServiceMessage {
   /** Отправка обновленных данных сервисных сообщений пользователю recipientUser. */
   private async notifyUser(recipientUser: string): Promise<void> {
     const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-    await serviceMessageDispatcher.notifyUser(recipientUser);
+    await serviceMessageDispatcher.notifyUser(recipientUser, 'notification');
   }
 
   /** Отправка обновленных данных сервисных сообщений пользователю recipientUser. */
   private async notifyUsers(recipientUsers: string[]): Promise<void> {
     const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-    await serviceMessageDispatcher.notifyUsers(recipientUsers);
+    await serviceMessageDispatcher.notifyUsers(recipientUsers, 'notification');
   }
 }

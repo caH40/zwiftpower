@@ -1016,3 +1016,5 @@ export type TPricingPlan = {
     unit: TPurchaseUnit;
   };
 };
+
+export type TAudioType = 'notification' | 'warning' | 'chat';

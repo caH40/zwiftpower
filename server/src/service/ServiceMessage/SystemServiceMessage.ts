@@ -66,7 +66,7 @@ export class SystemServiceMessage {
 
       // Отправка обновленных данных сервисных сообщений пользователям recipientUsers.
       const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-      await serviceMessageDispatcher.notifyUsers(recipientUsers);
+      await serviceMessageDispatcher.notifyUsers(recipientUsers, 'notification');
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
@@ -103,7 +103,7 @@ export class SystemServiceMessage {
 
       // Отправка обновленных данных сервисных сообщений пользователю recipientUser.
       const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
-      await serviceMessageDispatcher.notifyUser(recipientUser);
+      await serviceMessageDispatcher.notifyUser(recipientUser, 'notification');
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {
