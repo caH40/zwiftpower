@@ -14,13 +14,13 @@ export function setupWebSocketWithAuth(
   wsConnections: Map<string, WebSocket>
 ) {
   wss.on('connection', (ws) => {
-    // Используем объект для сохранения состояния
+    // Используем объект для сохранения состояния.
     const state: ConnectionState = {
       isAuthenticated: false,
       userId: null,
     };
 
-    // Таймаут на авторизацию
+    // Таймаут на авторизацию.
     const authTimeout = setTimeout(() => {
       if (!state.isAuthenticated) {
         ws.close(1008, 'Authentication timeout');
@@ -28,7 +28,7 @@ export function setupWebSocketWithAuth(
       }
     }, 5000);
 
-    // Отправляем запрос на аутентификацию
+    // Отправляем запрос на аутентификацию.
     ws.send(
       JSON.stringify({
         type: 'AUTH_REQUIRED',
@@ -48,16 +48,6 @@ export function setupWebSocketWithAuth(
       handleAndLogError(error);
     });
   });
-
-  setInterval(() => {
-    wss.clients.forEach((ws) => {
-      console.log('ping', 'ws.readyState', ws.readyState, 'WebSocket.OPEN', WebSocket.OPEN);
-
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.ping();
-      }
-    });
-  }, 30000); // каждые 30 секунд
 }
 
 async function handleMessage({

@@ -7,8 +7,6 @@ export function useWebSocket(setServerData) {
   useEffect(() => {
     const token = localStorage.getItem('__zp_accessToken');
 
-    console.log('🕒 Starting WebSocket connection to:', webSocketServer);
-
     const ws = new WebSocket(webSocketServer);
 
     ws.onerror = (error) => {
@@ -16,7 +14,6 @@ export function useWebSocket(setServerData) {
     };
 
     ws.onopen = () => {
-      console.log('WebSocket connected, sending auth...');
       ws.send(
         JSON.stringify({
           type: 'AUTH',
@@ -26,7 +23,7 @@ export function useWebSocket(setServerData) {
     };
 
     ws.onmessage = (event) => {
-      console.log('📨 Received message:', event.data?.type);
+      console.log(event.data?.type);
 
       try {
         const data = JSON.parse(event.data);
@@ -62,19 +59,12 @@ export function useWebSocket(setServerData) {
         wasClean: event.wasClean,
         timestamp: new Date().toISOString(),
       });
-
-      // 1006 - Abnormal Closure
-      if (event.code === 1006) {
-        console.error('💥 Connection closed abnormally');
-      }
     };
 
     // 🧹 cleanup — закрыть соединение
     return () => {
-      console.log('WebSocket cleanup');
-
       ws.close();
-      console.log('WebSocket closed');
+      // console.log('WebSocket closed');
     };
   }, [setServerData]);
 }
