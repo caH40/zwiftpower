@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .wrapper__block {
   border-radius: 5px;
   padding: 10px;

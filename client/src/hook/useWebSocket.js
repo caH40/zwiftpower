@@ -1,16 +1,19 @@
 /* eslint-disable no-console */
+import { useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 
 import { webSocketServer } from '../config/environment';
+import { audioTracks } from '../assets/audio';
 
 export function useWebSocket(setServerData) {
+  const { volume } = useSelector((state) => state.audio);
   const audioRef = useRef();
 
   useEffect(() => {
-    audioRef.current = { notification: new Audio('/audio/notification.mp3') };
+    audioRef.current = audioTracks.notification;
 
-    if (audioRef.current.notification) {
-      audioRef.current.notification.volume = 0.2;
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
     }
 
     const token = localStorage.getItem('__zp_accessToken');
@@ -47,7 +50,7 @@ export function useWebSocket(setServerData) {
             setServerData(data.data);
 
             if (data.audioType === 'notification') {
-              audioRef.current.notification?.play().catch(() => {});
+              audioRef.current?.play().catch(() => {});
             }
 
             break;

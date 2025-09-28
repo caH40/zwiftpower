@@ -38,6 +38,7 @@ import eventCreateSlice from '../features/api/event-create/eventCreateSlice';
 import filterRaceResultsPageSlice from '../features/filterRaceResultsPageSlice';
 import ridersSlice from '../features/api/riders/ridersSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
+import audioSlice from '../features/audioSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -93,6 +94,7 @@ export default configureStore({
     filterRaceResultsPage: filterRaceResultsPageSlice,
     riders: ridersSlice,
     menuOrganizerSeries: menuOrganizerSeriesSlice,
+    audio: audioSlice,
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,

@@ -29,3 +29,8 @@ export const lsPrefixScheduleList = `${prefixSite}scheduleList-`;
  * Суффикс для localStorage для ResultsListPage.
  */
 export const lsPrefixResultList = `${prefixSite}resultsList-`;
+
+/**
+ * Суффикс для localStorage для громкости звуковых уведомлений.
+ */
+export const lsNotificationVolume = `${prefixSite}notificationVolume-`;

@@ -1,0 +1,55 @@
+.input {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* Ползунок для Webkit браузеров (Chrome, Safari) */
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+/* Ползунок для Firefox */
+.input::-moz-range-thumb {
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+}
+.minimal {
+  height: 4px;
+  background: #e1e5e9;
+}
+.minimal::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4a90e2;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.minimal::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4a90e2;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.input:focus .minimal::-webkit-slider-thumb {
+  outline: none;
+  /* outline: 2px solid #3b82f6;
+  outline-offset: 8px; */
+}
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.input:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+}
+.input:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+}
