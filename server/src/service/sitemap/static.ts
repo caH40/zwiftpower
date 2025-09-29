@@ -70,4 +70,10 @@ export const urlsStatic = `
 <priority>0.3</priority>
 <changefreq>monthly</changefreq>
 </url>
+
+<url>
+<loc>https://zwiftpower.ru/teams</loc>
+<priority>0.3</priority>
+<changefreq>monthly</changefreq>
+</url>
 `;

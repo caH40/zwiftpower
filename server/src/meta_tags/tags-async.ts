@@ -3,15 +3,16 @@ import { raceTypes } from '../assets/race-type.js';
 import { serverWoWWW } from '../config/environment.js';
 import { getTimerLocal } from '../utils/date-local.js';
 import { getMetaOtherPages } from './tags.js';
-
-// types
-import { MetaTags } from '../types/types.interface.js';
+import { createUrlsToFileCloud } from '../utils/url.js';
+import { NSeriesModel } from '../Model/NSeries.js';
 import { millisecondsInWeekDays } from '../assets/date.js';
 import { Rider } from '../Model/Rider.js';
 import { Organizer } from '../Model/Organizer.js';
+import { TeamModel } from '../Model/Team.js';
+
+// types
+import { MetaTags } from '../types/types.interface.js';
 import { TFileMetadataForCloud } from '../types/model.interface.js';
-import { createUrlsToFileCloud } from '../utils/url.js';
-import { NSeriesModel } from '../Model/NSeries.js';
 import { TSeriesForMetaTagsResponseDB } from '../types/mongodb-response.types.js';
 
 /**
@@ -332,6 +333,94 @@ export const getSeriesResultsMeta = async (url: string): Promise<MetaTags> => {
       posterUrls?.original ||
       'https://zwiftpower.ru/images/open_graph/series.webp';
     const recommendationsTag = 'series';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы "Результаты участников команды"
+ */
+export const getTeamRiderResultsMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    const urlSlug = url.split('/')?.at(-2);
+
+    if (!urlSlug) {
+      return getMetaOtherPages(url);
+    }
+
+    const team = await TeamModel.findOne(
+      { urlSlug },
+      { name: true, logoFileInfo: true, posterFileInfo: true }
+    ).lean();
+
+    if (!team) {
+      return getMetaOtherPages(url);
+    }
+
+    const descriptionRaw = `История выступлений и результаты команды ${team.name} на Zwiftpower.ru. Итоги последних гонок, серий и туров, очки команды (ZP points) и позиция в рейтинге. 🏆📈`;
+    const titleRaw = `Результаты команды ${team.name} | История выступлений в заездах | Zwiftpower.ru`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const posterUrls = createUrlsToFileCloud(team.posterFileInfo);
+    const logoUrls = createUrlsToFileCloud(team.logoFileInfo);
+
+    const canonical = serverWoWWW + url;
+    const image =
+      logoUrls?.original ||
+      posterUrls?.medium ||
+      posterUrls?.original ||
+      'https://zwiftpower.ru/images/open_graph/teams.png';
+    const recommendationsTag = 'team';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы "Состав команды"
+ */
+export const getTeamMembersMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    const urlSlug = url.split('/')?.at(-2);
+
+    if (!urlSlug) {
+      return getMetaOtherPages(url);
+    }
+
+    const team = await TeamModel.findOne(
+      { urlSlug },
+      { name: true, logoFileInfo: true, posterFileInfo: true }
+    ).lean();
+
+    if (!team) {
+      return getMetaOtherPages(url);
+    }
+
+    const descriptionRaw = `Посмотрите полный состав команды ${team.name} на Zwiftpower.ru. Список всех гонщиков, их категории, активность и статистика выступлений. Найдите своих товарищей! 🚴‍♂️👥`;
+    const titleRaw = `Состав команды ${team.name} | Участники и статистика | Zwiftpower.ru`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const posterUrls = createUrlsToFileCloud(team.posterFileInfo);
+    const logoUrls = createUrlsToFileCloud(team.logoFileInfo);
+
+    const canonical = serverWoWWW + url;
+    const image =
+      logoUrls?.original ||
+      posterUrls?.medium ||
+      posterUrls?.original ||
+      'https://zwiftpower.ru/images/open_graph/teams.png';
+    const recommendationsTag = 'team';
 
     return { title, canonical, description, image, recommendationsTag };
   } catch (error) {
