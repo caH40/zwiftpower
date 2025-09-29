@@ -149,10 +149,16 @@ export const fetchGetBannedRiders = createAsyncThunk(
  */
 export const fetchGetRiderResults = createAsyncThunk(
   'teamRiderResults/get',
-  async ({ urlSlug }, thunkAPI) => {
+  async ({ urlSlug, docsOnPage, page }, thunkAPI) => {
     try {
+      const search = `docsOnPage=${docsOnPage}&page=${page}`;
+
+      const url = new URL(`${serverExpress}/api/teams/results/${urlSlug}`);
+      url.searchParams.append('page', page);
+      url.searchParams.append('docsOnPage', docsOnPage);
+
       const response = await myAxios({
-        url: `${serverExpress}/api/teams/results/${urlSlug}`,
+        url: url.toString(),
         method: 'get',
       });
 

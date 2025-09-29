@@ -203,7 +203,15 @@ export class TeamService {
   /**
    * Получение всех результатов заездов участников команды.
    */
-  async getTeamRiderResults(urlSlug: string): Promise<{ data: UserResult[]; message: string }> {
+  async getTeamRiderResults({
+    urlSlug,
+    page = 1,
+    docsOnPage = 20,
+  }: {
+    urlSlug: string;
+    page?: number;
+    docsOnPage?: number;
+  }): Promise<{ data: { results: UserResult[]; quantityPages: number }; message: string }> {
     const team = await this.getTeamInfo(urlSlug);
 
     const resultsDB = await ZwiftResult.find({
@@ -218,7 +226,16 @@ export class TeamService {
 
     const results = await handleRiderResults(resultsDB);
 
-    return { data: results, message: `Результаты заездов участников команды ${team.name}` };
+    // пагинация
+    const quantityPages = Math.ceil(results.length / docsOnPage);
+    const sliceStart = page * docsOnPage - docsOnPage;
+    const sliceEnd = docsOnPage * page;
+    const resultsSliced = results.slice(sliceStart, sliceEnd);
+
+    return {
+      data: { results: resultsSliced, quantityPages },
+      message: `Результаты заездов участников команды ${team.name}`,
+    };
   }
 
   /**

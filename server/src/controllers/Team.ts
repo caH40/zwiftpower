@@ -207,13 +207,18 @@ export class TeamController {
   ): Promise<Response | void> => {
     try {
       const urlSlug = req.params.urlSlug;
+      const query = req.query as { docsOnPage?: number; page?: number };
 
       if (!urlSlug) {
         return res.status(400).json({ message: 'В запросе не получен urlSlug команды!' });
       }
 
       // Вызов сервиса.
-      const response = await this.teamService.getTeamRiderResults(urlSlug);
+      const response = await this.teamService.getTeamRiderResults({
+        urlSlug,
+        docsOnPage: query.docsOnPage,
+        page: query.page,
+      });
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

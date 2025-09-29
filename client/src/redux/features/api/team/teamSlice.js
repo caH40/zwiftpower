@@ -13,6 +13,7 @@ import {
 const initialState = {
   teams: [],
   teamRiderResults: [],
+  quantityPages: 1,
   pendingRiders: [],
   bannedRiders: [],
   team: null,
@@ -45,6 +46,7 @@ const teamSlice = createSlice({
     },
     resetTeamRiderResults: (state) => {
       state.teamRiderResults = [];
+      state.quantityPages = 1;
     },
   },
 
@@ -122,7 +124,9 @@ const teamSlice = createSlice({
     });
 
     builder.addCase(fetchGetRiderResults.fulfilled, (state, action) => {
-      state.teamRiderResults = setValueMax(action.payload.data);
+      const { results, quantityPages } = action.payload.data;
+      state.teamRiderResults = setValueMax(results);
+      state.quantityPages = setValueMax(quantityPages);
       state.error = null;
       state.status = 'resolved';
     });
