@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { setValueMax } from '../../../../utils/value-max';
+
 import {
   fetchGetBannedRiders,
   fetchGetPendingRiders,
+  fetchGetRiderResults,
   fetchGetTeam,
   fetchGetTeams,
-  fetchPostJoinRequestInTeam,
 } from './fetchTeam';
 
 const initialState = {
   teams: [],
+  teamRiderResults: [],
   pendingRiders: [],
   bannedRiders: [],
   team: null,
@@ -39,6 +42,9 @@ const teamSlice = createSlice({
     },
     resetTeamMessage: (state) => {
       state.message = null;
+    },
+    resetTeamRiderResults: (state) => {
+      state.teamRiderResults = [];
     },
   },
 
@@ -91,6 +97,7 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
     // ============== заблокированные пользователи =================
     builder.addCase(fetchGetBannedRiders.pending, (state) => {
       state.error = null;
@@ -107,10 +114,32 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== результатов заездов райдеров =================
+    builder.addCase(fetchGetRiderResults.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetRiderResults.fulfilled, (state, action) => {
+      state.teamRiderResults = setValueMax(action.payload.data);
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetRiderResults.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetTeam, resetTeams, resetPendingRiders, resetBannedRiders } =
-  teamSlice.actions;
+export const {
+  resetTeam,
+  resetTeams,
+  resetPendingRiders,
+  resetBannedRiders,
+  resetTeamRiderResults,
+} = teamSlice.actions;
 
 export default teamSlice.reducer;

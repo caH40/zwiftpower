@@ -6,6 +6,7 @@ import { SkeletonTeamMemberCard } from '../../../components/SkeletonLoading/Skel
 import { renderSkeletonCards } from '../../../utils/skeleton-cards';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
 import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
+import useTitle from '../../../hook/useTitle';
 import useTeamMembers from '../../../hook/useTeamMembers';
 import ButtonSimple from '../../../components/UI/ButtonSimple/ButtonSimple';
 import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
@@ -14,8 +15,10 @@ import styles from './TeamMembers.module.css';
 
 export default function TeamMembersPage() {
   const { urlSlug } = useParams();
-  const { status: fetchMembersStatus, teamMembers } = useSelector((state) => state.teamMember);
   const { team } = useSelector((state) => state.team);
+
+  useTitle(`Состав ${team ? ' ' + team.name : ''}`);
+  const { status: fetchMembersStatus, teamMembers } = useSelector((state) => state.teamMember);
   const {
     status,
     user: { team: userInTeam },

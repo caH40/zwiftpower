@@ -143,3 +143,24 @@ export const fetchGetBannedRiders = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Получения результатов заездов райдеров.
+ */
+export const fetchGetRiderResults = createAsyncThunk(
+  'teamRiderResults/get',
+  async ({ urlSlug }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/teams/results/${urlSlug}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

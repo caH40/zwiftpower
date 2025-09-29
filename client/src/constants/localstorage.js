@@ -33,4 +33,6 @@ export const lsPrefixResultList = `${prefixSite}resultsList-`;
 /**
  * Суффикс для localStorage для громкости звуковых уведомлений.
  */
-export const lsNotificationVolume = `${prefixSite}notificationVolume-`;
+export const lsNotificationVolume = `${prefixSite}notificationVolume`;
+
+export const lsTeamRiderResults = `${prefixSite}teamRiderResults`;

@@ -14,9 +14,8 @@ import useTitle from '../../hook/useTitle';
 import styles from './TeamPageLayout.module.css';
 
 export default function TeamPage() {
-  useTitle();
-  const { urlSlug } = useParams();
   const { status: fetchTeamStatus, team } = useSelector((state) => state.team);
+  const { urlSlug } = useParams();
   useTitle(`Команда${team ? ' ' + team.name : ''}`);
   const {
     status,
