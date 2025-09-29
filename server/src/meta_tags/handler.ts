@@ -78,9 +78,9 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getTeamsMeta(url);
   } else if (url.includes('/moderation/teams/create')) {
     tags = getCreateTeamsMeta(url);
-  } else if (url.includes('/moderation/teams/results')) {
+  } else if (/\/teams\/[^/]+\/results/.test(url)) {
     tags = getTeamRiderResultsMeta(url);
-  } else if (url.includes('/moderation/teams/members')) {
+  } else if (/\/teams\/[^/]+\/members/.test(url)) {
     tags = getTeamMembersMeta(url);
   } else if (url.includes('/documentation/faq')) {
     tags = getFaqMeta(url);
