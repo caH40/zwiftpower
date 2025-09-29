@@ -10,6 +10,7 @@ import PaginationSelect from '../../../components/UI/PaginationSelect/Pagination
 import Pagination from '../../../components/UI/Pagination/Pagination';
 import TableTeamRiderResults from '../../../components/Tables/TableTeamRiderResults/TableTeamRiderResults';
 import useTitle from '../../../hook/useTitle';
+import { HelmetTeamRiderResults } from '../../../components/Helmets/HelmetTeamRiderResults';
 
 import styles from './TeamResults.module.css';
 
@@ -40,6 +41,12 @@ export default function TeamResultsPage() {
 
   return (
     <div className={styles.wrapper}>
+      <HelmetTeamRiderResults
+        teamName={team?.name}
+        urlSlug={urlSlug}
+        imageUrl={team?.logoUrls?.original}
+      />
+
       <div className={styles.control}>
         <PaginationSelect
           docsOnPage={docsOnPage}

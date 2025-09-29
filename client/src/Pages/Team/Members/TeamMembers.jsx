@@ -6,6 +6,7 @@ import { SkeletonTeamMemberCard } from '../../../components/SkeletonLoading/Skel
 import { renderSkeletonCards } from '../../../utils/skeleton-cards';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
 import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
+import { HelmetTeamRiderMembers } from '../../../components/Helmets/HelmetTeamRiderMembers';
 import useTitle from '../../../hook/useTitle';
 import useTeamMembers from '../../../hook/useTeamMembers';
 import ButtonSimple from '../../../components/UI/ButtonSimple/ButtonSimple';
@@ -36,6 +37,12 @@ export default function TeamMembersPage() {
 
   return (
     <div className={styles.wrapper}>
+      <HelmetTeamRiderMembers
+        teamName={team?.name}
+        urlSlug={urlSlug}
+        imageUrl={team?.logoUrls?.original}
+      />
+
       {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
       {status && !userInTeam?.id && (
         <div className={styles.control}>

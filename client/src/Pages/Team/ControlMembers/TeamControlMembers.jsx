@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { useControlTeamMember } from '../../../hook/useControlTeamMember';
 import { useMembersForControl } from '../../../hook/useMembersForControl';
+import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
+import { helmetProps } from '../../../assets/helmet-props';
 import TableTeamMembers from '../../../components/Tables/TableTeamMembers/TableTeamMembers';
 import BanUserControl from '../../../components/UI/BanUserControl/BanUserControl';
 import PendingUserControl from '../../../components/UI/PendingUserControl/PendingUserControl';
@@ -18,7 +20,7 @@ import styles from './TeamControlMembers.module.css';
  */
 export default function TeamControlMembersPage() {
   const { urlSlug } = useParams();
-  const { team, pendingRiders, bannedRiders } = useSelector((state) => state.team);
+  const { pendingRiders, bannedRiders } = useSelector((state) => state.team);
   const { teamMembers } = useSelector((state) => state.teamMember);
 
   // Скрыть панель управления у создателя команды.
@@ -32,6 +34,8 @@ export default function TeamControlMembersPage() {
 
   return (
     <section className={styles.wrapper}>
+      <HelmetComponent {...helmetProps.TEAM_CONTROL} />
+
       <div className={styles.tableContainer}>
         <TableTeamMembers
           riders={teamMembers.map((m) => ({ ...m.rider, _id: m._id, userId: m.userId }))}
