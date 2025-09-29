@@ -228,6 +228,8 @@ export class PublicSeriesService {
           'rulesSet',
           'tags',
           'started',
+          'cullingType',
+          'categoryEnforcement',
         ],
         populate: {
           path: 'eventSubgroups',
@@ -257,7 +259,6 @@ export class PublicSeriesService {
     const filteredStages = this.filterStages({ stages: seriesOneDB.stages, status });
 
     const stagesAfterDto = stagesPublicDto(filteredStages, seriesOneDB.organizer.logoFileInfo);
-
     // Сортировка этапов по дате старта в зависимости от status.
     const sortedStages = this.sortStages({ stages: stagesAfterDto, status });
     // console.log(sortedStages);

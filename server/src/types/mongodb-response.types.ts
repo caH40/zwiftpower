@@ -130,6 +130,8 @@ export type TStagesPublicResponseDB = {
       rulesSet: string[];
       tags: string[];
       started: boolean;
+      categoryEnforcement: boolean;
+      cullingType: string;
       eventSubgroups: ZwiftEventSubgroupSchema[];
     };
     order: number;

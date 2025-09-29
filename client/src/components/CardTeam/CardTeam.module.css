@@ -57,16 +57,18 @@
 }
 
 .logo {
-  width: 120px;
+  display: block;
+  min-width: 120px;
   height: 120px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   border-radius: 5px;
   border: 4px solid white;
+  font-size: 12px;
 }
 
 .logoPlaceholder {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);

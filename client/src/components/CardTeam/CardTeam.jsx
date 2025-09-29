@@ -36,7 +36,7 @@ export default function CardTeam({ name, shortName, urlSlug, logoUrls, posterUrl
       <div className={styles.contentWrapper}>
         <div className={styles.logoContainer}>
           {logoSrc ? (
-            <img src={logoSrc} alt={name} className={styles.logo} />
+            <img src={logoSrc} alt={name} className={styles.logo} width={120} height={120} />
           ) : (
             <div className={styles.logoPlaceholder}>
               <span className={styles.initials}>{shortName}</span>

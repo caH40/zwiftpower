@@ -175,6 +175,8 @@ export type TStagesPublicDto = {
   rulesSet: string[];
   tags: string[];
   started: boolean;
+  cullingType: string;
+  categoryEnforcement: boolean;
   logoFileInfo: Record<string, string> | undefined;
   order: number;
   eventSubgroups: Pick<

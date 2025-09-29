@@ -34,8 +34,6 @@ export function useWebSocket(setServerData) {
     };
 
     ws.onmessage = (event) => {
-      console.log(event.data?.type);
-
       try {
         const data = JSON.parse(event.data);
 
@@ -43,32 +41,31 @@ export function useWebSocket(setServerData) {
           case 'AUTH_REQUIRED':
             console.log(data.message);
             break;
+
           case 'AUTH_SUCCESS':
             console.log('Authenticated successfully');
             break;
+
           case 'SERVICE_MESSAGES':
             setServerData(data.data);
-
             if (data.audioType === 'notification') {
               audioRef.current?.play().catch(() => {});
             }
-
             break;
+
           case 'AUTH_ERROR':
-            console.error('Auth failed:', data.message);
-            break;
-          default:
-            // любые полезные данные от сервера
-            console.log(data);
+            throw new Error('Auth failed:', data.message);
 
-            break;
+          default:
         }
-      } catch (e) {
-        console.error('Ошибка парсинга сообщения:', e);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
       }
     };
 
     ws.onclose = (event) => {
+      // eslint-disable-next-line no-console
       console.log('🔌 WebSocket closed:', {
         code: event.code,
         reason: event.reason,
@@ -77,10 +74,6 @@ export function useWebSocket(setServerData) {
       });
     };
 
-    // 🧹 cleanup — закрыть соединение
-    return () => {
-      ws.close();
-      // console.log('WebSocket closed');
-    };
+    return () => ws.close();
   }, [setServerData]);
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cn from 'classnames/bind';
 
 import CategoriesBox from '../CategoriesBox/CategoriesBox';
@@ -17,6 +18,7 @@ import styles from './CardRacePreview.module.css';
  */
 function CardRacePreview({ event, getClick }) {
   const { isScreenSm: sm } = useResize();
+  const [logoError, setLogoError] = useState(false);
 
   const logoSrc = event?.logoFileInfo?.original;
 
@@ -76,10 +78,11 @@ function CardRacePreview({ event, getClick }) {
             {!!logoSrc && (
               <img
                 className={styles.logo__img}
-                src={logoSrc}
+                src={!logoError ? logoSrc : '/images/transparent.png'}
                 alt="Лого Организатора"
                 width={35}
                 height={35}
+                onError={() => setLogoError(true)}
               />
             )}
           </div>

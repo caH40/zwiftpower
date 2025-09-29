@@ -167,6 +167,8 @@ export function stagesPublicDto(
 
   const stages = filteredStages.map((stage) => ({
     eventStart: stage.event.eventStart,
+    cullingType: stage.event.cullingType,
+    categoryEnforcement: stage.event.categoryEnforcement,
     id: stage.event.id,
     _id: String(stage.event._id),
     name: stage.event.name,

@@ -37,6 +37,12 @@ function RulesBox({ event, squareSize = 24, addCls }) {
   // одновременно с другими категоризациями (по категориям, по мощности и т.д.).
   const hasRacingScore = event.accessExpression?.includes('scoring');
 
+  const cullingType = {
+    CULLING_EVENT_ONLY: <IconViewEvent squareSize={squareSize} />,
+    CULLING_SUBGROUP_ONLY: <IconViewGroup squareSize={squareSize} />,
+    CULLING_EVERYBODY: <IconViewWorld squareSize={squareSize} />,
+  };
+
   return (
     <div className={cn(styles.block, cns(styles, addCls))}>
       <>
@@ -59,15 +65,7 @@ function RulesBox({ event, squareSize = 24, addCls }) {
             <IconCategoryEnforced squareSize={squareSize} />
           ))}
 
-        {event.cullingType === 'CULLING_EVENT_ONLY' && (
-          <IconViewEvent squareSize={squareSize} />
-        )}
-
-        {event.cullingType === 'CULLING_SUBGROUP_ONLY' && (
-          <IconViewGroup squareSize={squareSize} />
-        )}
-
-        {event.cullingType === 'CULLING_EVERYBODY' && <IconViewWorld squareSize={squareSize} />}
+        {cullingType[event.cullingType]}
 
         {enabledRuleInTag(event, 'steering_disabled') && (
           <IconSteeringDisabled squareSize={squareSize} />
