@@ -1,0 +1,336 @@
+.header {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* Основная информация */
+.mainInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logoSection {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.logoPlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+}
+
+.flag {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.teamDetails {
+  flex: 1;
+}
+
+.teamName {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--color-text-primary);
+}
+
+.description {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.metaInfo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.established {
+  font-size: 14px;
+  color: var(--color-text-minor);
+}
+
+.category {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.rankingSection {
+  text-align: center;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.rankingLabel {
+  font-size: 12px;
+  color: var(--color-text-minor);
+  text-transform: uppercase;
+}
+
+.rankingValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Сетка статистики */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.statTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.statTotal {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Категории */
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.catDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.catLabel {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+.catCount {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Медали */
+.medals {
+  display: flex;
+  gap: 16px;
+  justify-content: space-around;
+}
+
+.medalItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.medal {
+  font-size: 24px;
+}
+
+.medalCount {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Заезды */
+.eventsStats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventLabel {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.eventValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Победы в сериях */
+.seriesWins {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seriesItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.seriesItem:last-child {
+  border-bottom: none;
+}
+
+.seriesName {
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.seriesPlace {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  color: white;
+}
+
+.place1 {
+  background-color: #ffd700;
+}
+.place2 {
+  background-color: #c0c0c0;
+}
+.place3 {
+  background-color: #cd7f32;
+}
+
+.moreSeries {
+  font-size: 12px;
+  color: var(--color-text-minor);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Действия */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.actionButton {
+  padding: 12px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actionButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Цвета категорий */
+.A {
+  background-color: var(--catA);
+}
+.B {
+  background-color: var(--catB);
+}
+.C {
+  background-color: var(--catC);
+}
+.D {
+  background-color: var(--catD);
+}
+.E {
+  background-color: var(--catE);
+}
+.gray {
+  background-color: gray;
+}
+
+.gold {
+  color: #ffd700;
+}
+.silver {
+  color: #c0c0c0;
+}
+.bronze {
+  color: #cd7f32;
+}

@@ -14,16 +14,18 @@ import {
 } from '../dto/teams.js';
 import { TeamMemberModel } from '../Model/TeamMember.js';
 import { User } from '../Model/User.js';
+import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
+import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
+import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
+import { ZwiftResult } from '../Model/ZwiftResult.js';
+import { handleRiderResults } from './race/rider/results.js';
 
 // types
 import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
-import { entityForFileSuffix } from '../types/types.interface.js';
-import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
-import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
-import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
+import { entityForFileSuffix, UserResult } from '../types/types.interface.js';
 
 export class TeamService {
   private imagesService: ImagesService;
@@ -196,6 +198,27 @@ export class TeamService {
     return {
       message: 'Ваша заявка на вступление отправлена. Ожидайте подтверждения капитана команды.',
     };
+  }
+
+  /**
+   * Получение всех результатов заездов участников команды.
+   */
+  async getTeamRiderResults(urlSlug: string): Promise<{ data: UserResult[]; message: string }> {
+    const team = await this.getTeamInfo(urlSlug);
+
+    const resultsDB = await ZwiftResult.find({
+      $or: [
+        { 'profileData.team.urlSlug': urlSlug },
+        {
+          profileDataMain: { $ne: null },
+          'profileDataMain.team.urlSlug': urlSlug,
+        },
+      ],
+    }).lean();
+
+    const results = await handleRiderResults(resultsDB);
+
+    return { data: results, message: `Результаты заездов участников команды ${team.name}` };
   }
 
   /**
@@ -455,6 +478,16 @@ export class TeamService {
       lower: true,
       strict: true,
     });
+  }
+
+  private async getTeamInfo(urlSlug: string): Promise<{ _id: Types.ObjectId; name: string }> {
+    const teamDB = await TeamModel.findOne({ urlSlug }, { name: true }).lean();
+
+    if (!teamDB) {
+      throw new Error(`Не найдена команда с urlSlug:'${urlSlug}'`);
+    }
+
+    return teamDB;
   }
 
   private static ALL_TEAMS_FOR_LIST_PROJECTION = {

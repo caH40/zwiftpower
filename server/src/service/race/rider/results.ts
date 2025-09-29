@@ -1,7 +1,8 @@
 import { User } from '../../../Model/User.js';
 import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
-import { userResultsDto } from '../../../dto/user-results.dto.js';
+import { ZwiftResultSchema } from '../../../types/model.interface.js';
+import { UserResult } from '../../../types/types.interface.js';
 import { secondesToTime } from '../../../utils/date-convert.js';
 import { addPropertyAddition } from '../../../utils/property-addition.js';
 import { changeProfileData } from '../../profile-main.js';
@@ -26,11 +27,31 @@ export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20
 
   const resultsDB = await ZwiftResult.find({
     profileId: [zwiftId, ...zwiftIdAdditional],
-  })
-  .lean();
+  }).lean();
 
+  const results = await handleRiderResults(resultsDB);
+
+  // пагинация
+  const quantityPages = Math.ceil(results.length / docsOnPage);
+  const sliceStart = page * docsOnPage - docsOnPage;
+  const sliceEnd = docsOnPage * page;
+  const resultsSliced = results.slice(sliceStart, sliceEnd);
+
+  return {
+    userResults: resultsSliced,
+    quantityPages,
+    message: 'Результаты райдера',
+  };
+}
+
+/**
+ * Обработка результатов, добавление необходимых полей.
+ */
+export async function handleRiderResults(
+  rawResults: ZwiftResultSchema[]
+): Promise<UserResult[]> {
   // подмена данных профиля на Основной, если результат был показан Дополнительным профилем
-  const results = changeProfileData(resultsDB);
+  const results = changeProfileData(rawResults);
 
   const resultsWithMaxValues = addPropertyAddition(results);
 
@@ -59,18 +80,12 @@ export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20
     return 0;
   });
 
-  // пагинация
-  const quantityPages = Math.ceil(results.length / docsOnPage);
-  const sliceStart = page * docsOnPage - docsOnPage;
-  const sliceEnd = docsOnPage * page;
-  const resultsSliced = resultsWithMaxValues.slice(sliceStart, sliceEnd);
-
   // добавление строки времени в addition durationInMilliseconds
-  for (const result of resultsSliced) {
+  for (const result of resultsWithMaxValues) {
     result.activityData.durationInMilliseconds.addition = secondesToTime(
       result.activityData.durationInMilliseconds.value
     );
   }
 
-  return userResultsDto({ userResults: resultsSliced, quantityPages });
+  return resultsWithMaxValues;
 }

@@ -197,4 +197,28 @@ export class TeamController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Контроллер получения всех результатов заездов участников команды.
+   */
+  public getTeamRiderResults = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
+    try {
+      const urlSlug = req.params.urlSlug;
+
+      if (!urlSlug) {
+        return res.status(400).json({ message: 'В запросе не получен urlSlug команды!' });
+      }
+
+      // Вызов сервиса.
+      const response = await this.teamService.getTeamRiderResults(urlSlug);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }
