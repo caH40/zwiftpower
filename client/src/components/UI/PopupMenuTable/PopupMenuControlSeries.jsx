@@ -34,6 +34,7 @@ function PopupMenuControlSeries({ seriesId, stages, setIsVisibleMenuControl, url
     setIsVisibleMenuControl(false);
     updateGeneralClassification({
       seriesId,
+      urlSlug,
     });
   };
 

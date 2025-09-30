@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 
 import { getAlert } from '../redux/features/alertMessageSlice';
 import {
+  fetchGeneralClassification,
   fetchGetStageResults,
   fetchPutStageResults,
   fetchUpdateGeneralClassification,
@@ -35,6 +36,7 @@ export function useSeriesOneFunctions() {
 
       // После ответа fetchPutStageResults выполняется обновление результатов для соответствующего этапа.
       dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
+      dispatch(fetchGeneralClassification({ urlSlug }));
     } catch (error) {
       dispatch(
         getAlert({
@@ -47,7 +49,7 @@ export function useSeriesOneFunctions() {
   };
 
   // Функция обновления генеральной классификации серии заездов.
-  const updateGeneralClassification = async ({ seriesId }) => {
+  const updateGeneralClassification = async ({ urlSlug, seriesId }) => {
     try {
       const isConfirm = window.confirm('Обновить Генеральную классификацию (ГК)?');
 
@@ -63,6 +65,7 @@ export function useSeriesOneFunctions() {
       }
 
       await dispatch(fetchUpdateGeneralClassification({ seriesId })).unwrap();
+      dispatch(fetchGeneralClassification({ urlSlug }));
     } catch (error) {
       dispatch(
         getAlert({
