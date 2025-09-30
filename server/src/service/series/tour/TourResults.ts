@@ -5,6 +5,7 @@ import { stageResultsDto } from '../../../dto/series.js';
 // types
 import { TStageResult } from '../../../types/model.interface.js';
 import { StageResultsDto } from '../../../types/dto.interface.js';
+import { NSeriesModel } from '../../../Model/NSeries.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour'
@@ -23,11 +24,18 @@ export class TourResults extends HandlerSeries {
       order: stageOrder,
     }).lean<TStageResult[]>();
 
-    const updatedAt = resultsDB[0]?.updatedAt;
+    const seriesDB = await NSeriesModel.findOne(
+      { _id: this.seriesId },
+      { stages: true }
+    ).lean();
+    // console.log(seriesDB);
+    const resultsUpdatedAt = seriesDB!.stages.find(
+      (s) => s.order === stageOrder
+    )?.resultsUpdatedAt;
 
     const sortedResults = this.sortAndFilterResultsToutGroups(resultsDB);
 
-    const resultsAfterDto = stageResultsDto(sortedResults, updatedAt);
+    const resultsAfterDto = stageResultsDto(sortedResults, resultsUpdatedAt);
 
     return resultsAfterDto;
   };

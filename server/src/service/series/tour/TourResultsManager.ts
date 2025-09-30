@@ -69,20 +69,19 @@ export class TourResultsManager extends HandlerSeries {
     // Сохранение результатов в БД.
     await StageResultModel.create(resultsWithRank);
 
-    // Изменение флага hasResults в данных этапа серии если имеется хоть один результат этапа.
+    // Изменение  hasResults и resultsUpdatedAt даты обновления результатов в данных этапа серии.
     await NSeriesModel.findOneAndUpdate(
       { _id: this.seriesId, 'stages.order': stageOrder },
       {
         $set: {
+          'stages.$.resultsUpdatedAt': new Date(),
           'stages.$.hasResults': resultsWithRank.length > 0,
         },
-      },
-      { new: true }
+      }
     );
 
     // Обновление генеральной классификации серии.
     const tourGC = new TourGCManager(this.seriesId);
-
     const res = await tourGC.update();
 
     return { data: null, message: `Созданы результаты этапа №${stageOrder}. ${res.message}` };

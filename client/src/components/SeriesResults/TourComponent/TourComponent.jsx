@@ -56,16 +56,16 @@ export default function TourComponent({ series }) {
             />
           </nav>
 
-          {generalClassification.results.length > 0 && (
-            <section className={styles.wrapper__wide}>
-              <TableGCTour
-                results={generalClassification.results}
-                stages={seriesPublicOne.orderedStages}
-              />
+          {/* {generalClassification.results.length > 0 && ( */}
+          <section className={styles.wrapper__wide}>
+            <TableGCTour
+              results={generalClassification.results}
+              stages={seriesPublicOne.orderedStages}
+            />
 
-              <ServiceBox updated={generalClassification.updatedAt} />
-            </section>
-          )}
+            <ServiceBox updated={generalClassification.resultsUpdatedAt} />
+          </section>
+          {/* )} */}
         </>
       )}
 

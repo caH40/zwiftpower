@@ -223,7 +223,7 @@ export type StageResultDto = Omit<
 };
 export type StageResultsDto = {
   results: StageResultDto[];
-  updatedAt?: string;
+  resultsUpdatedAt?: string;
 };
 
 /**

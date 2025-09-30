@@ -64,7 +64,7 @@ export default function StageResults() {
               stageStart={stageData.eventStart}
             />
 
-            <ServiceBox updated={stageResults.updatedAt} />
+            <ServiceBox updated={stageResults.resultsUpdatedAt} />
           </section>
         </>
       )}

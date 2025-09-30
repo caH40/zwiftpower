@@ -22,6 +22,7 @@ const SeriesStageSchema = new Schema<TSeriesStage>(
     order: { type: Number, default: 0 },
     label: { type: String },
     hasResults: { type: Boolean, default: false },
+    resultsUpdatedAt: { type: Date, default: () => new Date() },
     includeResults: { type: Boolean, default: true },
   },
   { _id: false }

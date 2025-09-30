@@ -689,6 +689,7 @@ export type TSeriesStage = {
   order: number; // Номер этапа в серии.
   label?: string; // Название этапа, если нет номера или равен 0.
   hasResults: boolean; // Есть хоть один результат этапа. Обновляется после запроса на создание результатов этапа.
+  resultsUpdatedAt?: Date;
   includeResults: boolean; // Учитывать результаты этапа в серии.
 };
 

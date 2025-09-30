@@ -209,11 +209,14 @@ export function stageResultDto({
 /**
  * DTO получения результатов этапа серии.
  */
-export function stageResultsDto(results: TStageResult[], updatedAt?: Date): StageResultsDto {
+export function stageResultsDto(
+  results: TStageResult[],
+  resultsUpdatedAt?: Date
+): StageResultsDto {
   const resultsAfterDto = results.map((r) => stageResultDto(r));
 
   return {
     results: resultsAfterDto,
-    updatedAt: updatedAt?.toISOString(),
+    resultsUpdatedAt: resultsUpdatedAt?.toISOString(),
   };
 }
