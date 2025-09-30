@@ -45,7 +45,7 @@ export async function createSitemap() {
   ${urlsParts.join('\n  ')}
 </urlset>`;
 
-    const buildPath = path.join(__dirname, '..', 'client', 'build', 'sitemap.xml');
+    const buildPath = path.join(__dirname, '..', '..', 'client', 'build', 'sitemap.xml');
 
     // Записываем файл
     await fs.promises.writeFile(buildPath, data);
