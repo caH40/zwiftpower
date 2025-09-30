@@ -1,4 +1,5 @@
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
+import { millisecondsIn3Days, millisecondsIn60Days } from '../../assets/date.js';
 import { handleAndLogError } from '../../errors/error.js';
 
 /**
@@ -6,19 +7,29 @@ import { handleAndLogError } from '../../errors/error.js';
  */
 export async function getUrlsResultsDescription() {
   try {
+    const now = Date.now();
+
     const eventDB = await ZwiftEvent.find(
       { started: true },
-      { id: true, updated: true, _id: false }
-    ).lean<{ id: number; updated: number }[]>();
+      { id: true, eventStart: true, updated: true, _id: false }
+    ).lean<{ id: number; eventStart: string; updated: Date }[]>();
 
-    const urlsResults = eventDB.map((event) => {
-      const lastModification = new Date(event.updated).toISOString();
+    const events = eventDB.filter((e) => {
+      const startTime = new Date(e.eventStart).getTime();
+      return startTime >= now - millisecondsIn60Days;
+    });
+
+    const urlsResults = events.map((event) => {
+      const lastModification = new Date(event.eventStart).toISOString();
+
+      const isFresh = now - millisecondsIn3Days <= new Date(event.eventStart).getTime();
+      const priority = isFresh ? 1 : 0.6;
 
       return `
 <url>
   <loc>https://zwiftpower.ru/race/results/${event.id}</loc>
   <lastmod>${lastModification}</lastmod>
-  <priority>0.8</priority>
+  <priority>${priority}</priority>
 </url>`;
     });
 
