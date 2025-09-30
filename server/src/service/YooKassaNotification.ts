@@ -22,8 +22,6 @@ export class YooKassaNotification {
    * Обработка уведомления от ЮKassa.
    */
   public async handleNotifications(notification: TYooKassaPaymentNotification): Promise<void> {
-    console.log(notification);
-
     // Сервисное сообщение.
     const serviceMessage = new SystemServiceMessage(new ServiceMessage());
     await serviceMessage.yooKassaNotification(notification);

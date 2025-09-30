@@ -63,7 +63,7 @@ export default function TourComponent({ series }) {
               stages={seriesPublicOne.orderedStages}
             />
 
-            <ServiceBox updated={generalClassification.resultsUpdatedAt} />
+            <ServiceBox updated={generalClassification.gcResultsUpdatedAt} />
           </section>
           {/* )} */}
         </>

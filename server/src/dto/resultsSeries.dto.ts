@@ -24,12 +24,12 @@ export const resultsSeriesDto = ({
  */
 export function generalClassificationDto(
   generalClassificationSeries: TGeneralClassificationDB[],
-  updatedAt: Date | undefined
+  gcResultsUpdatedAt: Date | undefined
 ): TGeneralClassificationDto {
   return {
     results: generalClassificationSeries.map(({ createdAt: _c, updatedAt: _u, ...gc }) => {
       return { ...gc, _id: String(gc._id) };
     }),
-    updatedAt: updatedAt && updatedAt.toISOString(),
+    gcResultsUpdatedAt: gcResultsUpdatedAt && gcResultsUpdatedAt.toISOString(),
   };
 }

@@ -22,7 +22,7 @@ const SeriesStageSchema = new Schema<TSeriesStage>(
     order: { type: Number, default: 0 },
     label: { type: String },
     hasResults: { type: Boolean, default: false },
-    resultsUpdatedAt: { type: Date, default: () => new Date() },
+    resultsUpdatedAt: { type: Date },
     includeResults: { type: Boolean, default: true },
   },
   { _id: false }
@@ -47,6 +47,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   stages: { type: [SeriesStageSchema] },
   type: { type: String, required: true },
   urlSlug: { type: String, required: true, unique: true },
+  gcResultsUpdatedAt: { type: Date },
 });
 
 export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);

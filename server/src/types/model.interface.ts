@@ -664,6 +664,7 @@ export type TSeries = {
   stages: TSeriesStage[]; // Список этапов с нумерацией.
   type: TSeriesType; // Тип серии.
   urlSlug: string; // Уникальный URL-идентификатор (например, для генерации ссылки "/series/my-series").
+  gcResultsUpdatedAt?: Date; // Обновление результатов генеральной классификации.
 };
 
 /**

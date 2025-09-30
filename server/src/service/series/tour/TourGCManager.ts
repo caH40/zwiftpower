@@ -60,6 +60,11 @@ export class TourGCManager {
     // Сохранение в БД.
     await SeriesClassificationModel.create(gc);
 
+    await NSeriesModel.findOneAndUpdate(
+      { _id: this.seriesId },
+      { $set: { gcResultsUpdatedAt: new Date() } }
+    );
+
     return {
       data: null,
       message: `Обновлена (создана) генеральная классификация серии заездов "${seriesDB.name}"`,

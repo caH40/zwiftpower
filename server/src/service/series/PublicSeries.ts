@@ -181,10 +181,11 @@ export class PublicSeriesService {
     // Данные по Серии заездов.
     const seriesOneDB = await NSeriesModel.findOne(
       { urlSlug },
-      { _id: true, name: true }
+      { _id: true, name: true, gcResultsUpdatedAt: true }
     ).lean<{
       _id: Types.ObjectId;
       name: string;
+      gcResultsUpdatedAt?: Date;
     }>();
 
     // Проверка, что данная серия существует в БД.
@@ -197,13 +198,13 @@ export class PublicSeriesService {
       seriesId: seriesOneDB._id,
     }).lean<TGeneralClassificationDB[]>();
 
-    const updatedAt = generalClassification[0]?.updatedAt;
+    const gcResultsUpdatedAt = seriesOneDB.gcResultsUpdatedAt;
 
     // Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
     const sortedGC = this.sortClassifications(generalClassification);
 
     return {
-      data: generalClassificationDto(sortedGC, updatedAt),
+      data: generalClassificationDto(sortedGC, gcResultsUpdatedAt),
       message: `Генеральная классификация серии "${seriesOneDB.name}"`,
     };
   };

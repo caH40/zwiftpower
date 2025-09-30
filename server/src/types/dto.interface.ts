@@ -233,7 +233,7 @@ export type TGeneralClassificationDto = {
   results: (Omit<TGeneralClassificationDB, '_id' | 'createdAt' | 'updatedAt'> & {
     _id: string;
   })[];
-  updatedAt?: string;
+  gcResultsUpdatedAt?: string;
 };
 
 export type TPaymentNotificationDto = Omit<
