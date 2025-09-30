@@ -321,6 +321,7 @@ export type TGetAllServiceMessagesForUserDto = {
   title: string;
   text: string;
   entityUrl?: string;
+  externalEntityUrl?: string;
   entityLogo?: string;
   isRead: boolean;
   createdAt: string;

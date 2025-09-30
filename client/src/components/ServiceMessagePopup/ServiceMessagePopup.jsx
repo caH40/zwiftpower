@@ -16,6 +16,7 @@ const cx = cn.bind(styles);
  * @param {string} messages.title
  * @param {string} messages.text
  * @param {string} [messages.entityUrl]
+ * @param {string} [messages.externalEntityUrl]
  * @param {string} [messages.entityLogo]
  * @param {boolean} messages.isRead
  * @param {string} messages.createdAt
@@ -57,7 +58,7 @@ export default function ServiceMessagePopup({ messages, isOpen, onClose, setIsHo
         messages.map((msg) => (
           <Link
             key={msg._id}
-            to={msg.entityUrl || '#'}
+            to={msg.entityUrl || msg.externalEntityUrl || '#'}
             className={cx('messageContainer', { unread: !msg.isRead })}
             onClick={() => handleClick({ isRead: msg.isRead, _id: msg._id })}
           >

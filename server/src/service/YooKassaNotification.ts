@@ -11,18 +11,22 @@ import { SiteServicesService } from './SiteServicesService.js';
 import { Types } from 'mongoose';
 import { TPaymentNotificationDto } from '../types/dto.interface.js';
 import { paymentNotificationDto } from '../dto/payment-notification.js';
+import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
+import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 
 /**
  * Сервис работы c эквайрингом.
  */
 export class YooKassaNotification {
-  constructor() {}
-
   /**
    * Обработка уведомления от ЮKassa.
    */
   public async handleNotifications(notification: TYooKassaPaymentNotification): Promise<void> {
     console.log(notification);
+
+    // Сервисное сообщение.
+    const serviceMessage = new SystemServiceMessage(new ServiceMessage());
+    await serviceMessage.yooKassaNotification(notification);
 
     try {
       switch (notification.event) {

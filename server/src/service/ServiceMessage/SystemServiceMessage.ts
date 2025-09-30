@@ -9,6 +9,7 @@ import {
   TCreateMethodServiceMessageParams,
   TServiceMessageType,
 } from '../../types/service-message.types.js';
+import { TYooKassaPaymentNotification } from '../../types/payment.types.js';
 
 interface IServiceMessage {
   create(params: TCreateMethodServiceMessageParams): Promise<void>;
@@ -106,6 +107,47 @@ export class SystemServiceMessage {
       // Отправка обновленных данных сервисных сообщений пользователю recipientUser.
       const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
       await serviceMessageDispatcher.notifyUser(recipientUser, 'notification');
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
+   * Создание и отправка сервисного сообщения по событию YooKassa.
+   */
+  async yooKassaNotification(
+    notification: TYooKassaPaymentNotification
+  ): Promise<{ data: null; message: string }> {
+    try {
+      const adminIds = await this.dataProvider.getAdminIds();
+
+      const { description, status, amount } = notification.object;
+
+      const title = 'Операции по ЮКассе';
+      const text = `${description} Сумма: ${amount.value} ${amount.currency}. Статус: ${status}`;
+
+      const externalEntityUrl = 'https://yookassa.ru/my/payments';
+      const entityLogo = '/images/yookassa.png';
+
+      const recipientUsers = adminIds;
+
+      await this.serviceMessage.createMany(
+        recipientUsers.map((recipientUser) => ({
+          recipientUser: recipientUser,
+          type: this.type,
+          text,
+          externalEntityUrl,
+          entityLogo,
+          title,
+        }))
+      );
+
+      // Отправка обновленных данных сервисных сообщений пользователям recipientUsers.
+      const serviceMessageDispatcher = new ServiceMessageDispatcher(wsConnections);
+      await serviceMessageDispatcher.notifyUsers(recipientUsers, 'notification');
 
       return { data: null, message: 'Создано сервисное сообщение' };
     } catch (error) {

@@ -14,6 +14,7 @@ const ServiceMessageSchema = new Schema<TServiceMessageDocument>({
   title: { type: String, required: true },
   text: { type: String, required: true },
   entityUrl: { type: String },
+  externalEntityUrl: { type: String },
   entityLogo: { type: String },
   isRead: { type: Boolean, default: false },
   createdAt: { type: Date, default: () => new Date() },

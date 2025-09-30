@@ -6,6 +6,7 @@ import { TServiceMessage } from '../types/model.interface';
 export function getAllServiceMessageForUserDto({
   text,
   entityUrl,
+  externalEntityUrl,
   entityLogo,
   title,
   _id,
@@ -15,5 +16,14 @@ export function getAllServiceMessageForUserDto({
   const _idStr = _id.toString();
   const createdAtStr = createdAt.toISOString();
 
-  return { _id: _idStr, title, text, entityUrl, entityLogo, createdAt: createdAtStr, isRead };
+  return {
+    _id: _idStr,
+    title,
+    text,
+    entityUrl,
+    externalEntityUrl,
+    entityLogo,
+    createdAt: createdAtStr,
+    isRead,
+  };
 }

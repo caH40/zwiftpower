@@ -12,6 +12,7 @@ export type TCreateMethodServiceMessageParams = {
   title: string;
   text: string;
   entityUrl?: string;
+  externalEntityUrl?: string;
   entityLogo?: string;
 };
 
