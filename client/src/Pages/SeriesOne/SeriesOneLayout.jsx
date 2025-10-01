@@ -53,6 +53,9 @@ export default function SeriesOneLayout() {
             // FIXME: не отображать иконку управления для не редактируемых серий
             showEditIcon={!['catchUp', 'series'].includes(seriesPublicOne.type)}
             organizerId={seriesPublicOne.organizer._id}
+            dateStart={seriesPublicOne.dateStart}
+            dateEnd={seriesPublicOne.dateEnd}
+            type={seriesPublicOne.type}
           />
         ) : (
           renderSkeletonCards({

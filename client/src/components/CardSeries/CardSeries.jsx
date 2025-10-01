@@ -15,8 +15,9 @@ import styles from './CardSeries.module.css';
  * @returns {JSX.Element} Карточка организатора
  */
 export default function CardSeries({ name, urlSlug, posterUrls, dateStart, dateEnd }) {
+  const currentPage = new Date(dateEnd).getTime() < Date.now() ? 'results' : 'schedule';
   return (
-    <Link to={`/series/${urlSlug?.toLowerCase()}/schedule`} className={styles.card}>
+    <Link to={`/series/${urlSlug?.toLowerCase()}/${currentPage}`} className={styles.card}>
       <div
         className={styles.background}
         // Для фонового изображения карточки достаточно small размера.

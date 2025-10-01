@@ -13,6 +13,7 @@
   min-height: 300px;
   border-radius: 10px;
   z-index: 1;
+  overflow: hidden;
 }
 .poster__placeholder {
   position: absolute;
@@ -71,6 +72,50 @@
   line-height: 1;
   color: var(--color-text-main);
   padding-right: 30px;
+  margin-bottom: 5px;
+}
+.dates {
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+.diagonalRibbon {
+  position: absolute;
+  top: -35px;
+  right: -105px;
+  z-index: 12;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  width: 260px;
+}
+.ribbonInner {
+  background: linear-gradient(45deg, #ff9800 0%, #f57c00 40%, #ef6c00 60%, #e65100 100%);
+  padding: 100px 0px 8px 0px;
+  transform: rotate(45deg);
+  position: relative;
+  text-align: center;
+}
+.ribbonInner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+}
+.ribbonText {
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* ====================================================================== */
@@ -106,6 +151,21 @@
 
   .mission__box {
     padding: 5px;
+  }
+  .dates {
+    font-size: 18px;
+  }
+  .diagonalRibbon {
+    width: 160px;
+    top: -15px;
+    right: -55px;
+  }
+  .ribbonInner {
+    padding: 60px 0px 6px 0px;
+  }
+  .ribbonText {
+    font-size: 10px;
+    letter-spacing: 0.5px;
   }
 }
 

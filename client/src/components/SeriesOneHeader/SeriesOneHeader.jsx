@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
 import PopupMenuControlSeries from '../UI/PopupMenuTable/PopupMenuControlSeries';
 import IconEdit from '../icons/IconEdit';
-import { useSeriesOneFunctions } from '../../hook/useSeriesOneFunctions';
+import { getTimerLocal } from '../../utils/date-local';
+import { getEventStatus } from '../../utils/status';
 
 import styles from './SeriesOneHeader.module.css';
 
@@ -18,10 +19,9 @@ import styles from './SeriesOneHeader.module.css';
  * @param {boolean} props.showEditIcon - Отображать ли иконку управления Серией.
  * @param {string} props.organizerId - Id Организатора заездов.
  * @param {Object.<string, string>} props.posterUrls - Объект с URL-адресами изображений разного размера.
- * @param {(params: {seriesId: string, stageOrder: number}) => Promise<void>} props.updateStageResults -
- *  Функция для обновления/создания результатов этапа серии.
- * @param {(params: {seriesId: string,}) => Promise<void>} props.updateGeneralClassification -
- *  Функция для обновления Генеральной классификации.
+ * @param {string} props.dateStart - Даты в формате ISO.
+ * @param {string} props.dateEnd - Даты в формате ISO.
+ * @param {'series' | 'tour' | 'catchUp'} props.type - Даты в формате ISO.
  * @returns {JSX.Element} Возвращает JSX-элемент шапки серии.
  */
 export default function SeriesOneHeader({
@@ -33,12 +33,21 @@ export default function SeriesOneHeader({
   showEditIcon,
   organizerId,
   urlSlug,
+  dateStart,
+  dateEnd,
+  type,
 }) {
   const [isVisibleMenuControl, setIsVisibleMenuControl] = useState(false);
   const { organizer, role } = useSelector((state) => state.checkAuth.value.user);
 
   // Отображается иконка управления серией только для организатора который создал серию и админа.
   const isSeriesCreator = (organizerId && organizerId === organizer) || role === 'admin';
+
+  const completedText = {
+    series: 'Серия завершена',
+    tour: 'Тур завершен',
+    catchUp: 'Серия завершена',
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -77,7 +86,12 @@ export default function SeriesOneHeader({
         {/* Блок с контентом */}
         <div className={styles.content}>
           {/* Блок с лого и названием Организатора */}
-          <h3 className={styles.title}>{name}</h3>
+          <div className={styles.titleContainer}>
+            <h3 className={styles.title}>{name}</h3>
+            <h4 className={styles.dates}>
+              {`${getTimerLocal(dateStart)} - ${getTimerLocal(dateEnd)}`}
+            </h4>
+          </div>
 
           {mission && (
             <div className={styles.mission__box}>
@@ -85,6 +99,14 @@ export default function SeriesOneHeader({
             </div>
           )}
         </div>
+
+        {getEventStatus(dateStart, dateEnd) === 'completed' && (
+          <div className={styles.diagonalRibbon}>
+            <div className={styles.ribbonInner}>
+              <span className={styles.ribbonText}>{completedText[type]}</span>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
