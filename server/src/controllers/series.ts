@@ -4,7 +4,7 @@ import mongoose, { Types } from 'mongoose';
 import { handleErrorInController } from '../errors/error.js';
 import { SeriesService } from '../service/series/series.js';
 import { Organizer } from '../Model/Organizer.js';
-import { SeriesDataZSchema } from '../utils/deserialization/series-data.js';
+import { SeriesDataZSchema } from '../utils/deserialization/series/series-data.js';
 
 // types
 import {

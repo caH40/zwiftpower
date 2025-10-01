@@ -131,3 +131,30 @@ export const groupTargetWattsPerKg: Record<number, number> = {
  * Корректировка времени финиша, дополнительное время для обновления результатов.
  */
 export const FINISH_TIME_ADJUSTMENT = 0.15;
+
+export const DISQUALIFICATION_LABELS = [
+  'DSQ',
+  'DNF',
+  'DNS',
+  'OUT',
+  'CUT',
+  'LAP',
+  'NP',
+  'MRS',
+  'MC',
+  'UNC',
+] as const;
+
+export const CATEGORIES_SERIES = [
+  'APlus',
+  'A',
+  'BPlus',
+  'B',
+  'C',
+  'D',
+  'E',
+  'WA',
+  'WB',
+  'WC',
+  'WD',
+] as const;

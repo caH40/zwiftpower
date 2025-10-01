@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { safeJsonParse } from './utils.js';
+import { safeJsonParse } from '../utils.js';
 
 // Основная схема для данных Серии.
 export const SeriesDataZSchema = z

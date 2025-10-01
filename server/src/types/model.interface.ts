@@ -13,6 +13,7 @@ import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
 import { TTeamRole, TTeamSpecialization } from './team.types.js';
 import { TServiceMessageType } from './service-message.types.js';
+import { DISQUALIFICATION_LABELS } from '../assets/constants.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -770,15 +771,16 @@ export type TStageResult = {
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
   };
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
-  category: TCategorySeries | null; // Категория райдера в текущем заезде Серии.
+  category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
+  modifiedCategory: {
+    value: TCategorySeries | null;
+    moderatorId?: Types.ObjectId;
+    modifiedAt: Date;
+    reason?: string;
+  };
   points: TPointsStageResult | null;
   disqualification: TDisqualification | null;
-  penalty:
-    | {
-        reason: string; // Причина штрафа.
-        timeInMilliseconds: number; // Время штрафа.
-      }[]
-    | null;
+  penalty: TStagePenalty[] | null;
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   sensorData: {
     avgWatts: number;
@@ -799,22 +801,34 @@ type TRank = {
 /**
  * Коды статусов дисквалификации / не-старт / не-финиш и т.п.
  */
-export type TDisqualificationLabel =
-  | 'DSQ' // Disqualified (Синоним) — Дисквалифицирован.
-  | 'DNF' // Did Not Finish — Не финишировал.
-  | 'DNS' // Did Not Start — Не стартовал.
-  | 'OUT' // Out of Classification — Вне зачёта / Не выполнены условия.
-  | 'CUT' // Time Cut — Превышен лимит времени.
-  | 'LAP' // Lapped — Обогнан на круг / Снят с гонки.
-  | 'NP' // No Placement / Not Placed — Без места / Не имеет итогового места.
-  | 'MRS' // Missing Required Stage — Не завершён обязательный этап серии.
-  | 'MC' // Mixed Categories — На этапах разные категории участия. Для зачёта необходимо проехать все обязательные этапы в одной категории.
-  | 'UNC'; // Undefined Category — Не определена категория в Серии.
+export type TDisqualificationLabel = (typeof DISQUALIFICATION_LABELS)[number];
+/**
+ * DSQ  Disqualified (Синоним) — Дисквалифицирован.
+ * DNF  Did Not Finish — Не финишировал.
+ * DNS  Did Not Start — Не стартовал.
+ * OUT  Out of Classification — Вне зачёта / Не выполнены условия.
+ * CUT  Time Cut — Превышен лимит времени.
+ * LAP  Lapped — Обогнан на круг / Снят с гонки.
+ * NP   No Placement / Not Placed — Без места / Не имеет итогового места.
+ * MRS  Missing Required Stage — Не завершён обязательный этап серии.
+ * MC   Mixed Categories — На этапах разные категории участия. Для зачёта необходимо проехать
+ *   все обязательные этапы в одной категории.
+ * UNC  Undefined Category — Не определена категория в Серии.
+ */
 
 export type TDisqualification = {
   status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте
   label?: TDisqualificationLabel; // Краткий код статуса (2–3 заглавные буквы).
   reason?: string; // Подробное описание причины
+  moderatorId?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
+  modifiedAt?: Date;
+};
+
+export type TStagePenalty = {
+  reason: string; // Причина штрафа.
+  timeInMilliseconds: number; // Время штрафа.
+  moderatorId?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
+  modifiedAt?: Date;
 };
 
 /**
@@ -836,7 +850,7 @@ export type TSeriesClassification = {
   seriesId: Types.ObjectId; // _id серии из БД.
   rank: TRank | null; // Итоговое место в классификации.
   profileId: number; // ZwiftId райдера.
-  finalCategory: TCategorySeries | null; // Категория, по которой райдер участвует в зачёте и рассчитывается rank.
+  finalCategory: TCategorySeries | null; // Категория, по которой райдер участвует в зачёте и рассчитывается rank. Выставляется автоматически согласно правилам серии.
   totalFinishPoints: number; // Суммарные очки (для серии с подсчётом очков).
   totalTimeInMilliseconds: number; // Общее время за все завершённые этапы (в миллисекундах).
   stagesCompleted: number; // Количество завершённых этапов.
@@ -844,7 +858,7 @@ export type TSeriesClassification = {
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   stages: {
-    category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
+    category: TCategorySeries | null; // Итоговая категория, после модерации (если была).
     stageOrder: number; // Порядковый номер этапа в туре.
     durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах). 0 - райдер не финишировал на данном этапе.
     finishPoints: number; // Заработанные финишные очки за этап.

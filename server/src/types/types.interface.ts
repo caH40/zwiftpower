@@ -32,6 +32,7 @@ import {
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
+import { CATEGORIES_SERIES } from '../assets/constants.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -729,18 +730,7 @@ export type TResponseStreamDto = {
 };
 
 export type TCategory = 'A' | 'B' | 'C' | 'D' | 'E';
-export type TCategorySeries =
-  | 'APlus'
-  | 'A'
-  | 'BPlus'
-  | 'B'
-  | 'C'
-  | 'D'
-  | 'E'
-  | 'WA'
-  | 'WB'
-  | 'WC'
-  | 'WD';
+export type TCategorySeries = (typeof CATEGORIES_SERIES)[number];
 /**
  * Лидеры по победам в каждой группе в Догонялках.
  */

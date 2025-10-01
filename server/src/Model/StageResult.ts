@@ -1,9 +1,12 @@
 import mongoose, { Document, Schema, Types, model } from 'mongoose';
 import {
   TCriticalPowerBestEfforts,
+  TDisqualification,
   TGapsInCategories,
+  TStagePenalty,
   TStageResult,
-} from '../types/model.interface';
+} from '../types/model.interface.js';
+import { DISQUALIFICATION_LABELS } from '../assets/constants.js';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -76,20 +79,24 @@ const pointsStageResultSchema = new Schema(
 );
 
 // Схема дисквалификации
-export const disqualificationSchema = new Schema(
+export const disqualificationSchema = new Schema<TDisqualification>(
   {
     status: { type: Boolean, default: false }, // Статус дисквалификации.
     reason: { type: String }, // Причина дисквалификации (опционально).
-    label: { type: String }, // Краткий код статуса (2–3 заглавные буквы).
+    label: { type: String, enum: DISQUALIFICATION_LABELS }, // Краткий код статуса .
+    moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    modifiedAt: { type: Date, required: true },
   },
   { _id: false }
 );
 
 // Схема штрафа.
-const penaltySchema = new Schema(
+const penaltySchema = new Schema<TStagePenalty>(
   {
     reason: { type: String, trim: true }, // Причина штрафа.
     timeInMilliseconds: { type: Number }, // Время штрафа.
+    moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    modifiedAt: { type: Date, required: true },
   },
   { _id: false }
 );
@@ -131,6 +138,12 @@ const stageResultSchema = new Schema<IStageResult>(
     category: {
       type: String,
       default: null,
+    },
+    modifiedCategory: {
+      value: { type: String },
+      moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      modifiedAt: { type: Date },
+      reason: { type: String },
     },
     rank: {
       category: { type: Number, default: 0 },

@@ -86,4 +86,9 @@ export class TourResultsManager extends HandlerSeries {
 
     return { data: null, message: `Созданы результаты этапа №${stageOrder}. ${res.message}` };
   }
+
+  /**
+   * Пересчёт протокола этапа после правок результатов модератором.
+   */
+  public async recalculateStageProtocol(): Promise<void> {}
 }

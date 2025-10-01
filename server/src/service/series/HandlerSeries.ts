@@ -18,6 +18,7 @@ import {
 import { StageResultModel } from '../../Model/StageResult.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { Types } from 'mongoose';
+import { TourGCManager } from './tour/TourGCManager.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -218,4 +219,59 @@ export class HandlerSeries {
       handleAndLogError(error);
     }
   }
+
+  /**
+   * Изменение категории у участника в результате заезда на этапа.
+   */
+  public async modifyCategory({
+    moderatorId,
+    value,
+    stageResultId,
+    reason,
+  }: {
+    stageResultId: string;
+    moderatorId?: string;
+    value: TCategorySeries | null;
+    reason?: string;
+  }): Promise<{ data: null; message: string }> {
+    const modifiedCategory = {
+      value,
+      moderatorId,
+      modifiedAt: new Date(),
+      reason,
+    };
+
+    const result = await StageResultModel.findByIdAndUpdate(
+      stageResultId,
+      {
+        $set: { modifiedCategory },
+      },
+      { new: true }
+    );
+
+    if (!result) {
+      throw new Error(
+        `Не найден результат для изменения категории resultId: ${stageResultId}!`
+      );
+    }
+
+    // Обновление генеральной классификации серии.
+    const tourGC = new TourGCManager(this.seriesId);
+    await tourGC.update();
+
+    return {
+      data: null,
+      message: `Обновлена категория участника ${result.profileData.firstName} ${result.profileData.lastName} с ${result.category} на ${value}`,
+    };
+  }
+
+  /**
+   * Изменение дисквалификации у участника в результате заезда на этапа.
+   */
+  public async modifyDisqualification(): Promise<void> {}
+
+  /**
+   * Изменение категории у участника в результате заезда на этапа.
+   */
+  public async modifyPenalty(): Promise<void> {}
 }
