@@ -39,6 +39,7 @@ import filterRaceResultsPageSlice from '../features/filterRaceResultsPageSlice';
 import ridersSlice from '../features/api/riders/ridersSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
 import audioSlice from '../features/audioSlice';
+import popupFormContainerSlice from '../features/popupFormContainerSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -95,6 +96,7 @@ export default configureStore({
     riders: ridersSlice,
     menuOrganizerSeries: menuOrganizerSeriesSlice,
     audio: audioSlice,
+    popupFormContainer: popupFormContainerSlice,
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,

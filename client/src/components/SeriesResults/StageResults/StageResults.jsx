@@ -17,6 +17,11 @@ import styles from './StageResults.module.css';
 export default function StageResults() {
   const { urlSlug, stageOrder } = useParams();
   const { stageResults, seriesPublicOne } = useSelector((state) => state.seriesPublic);
+  const { organizer } = useSelector((state) => state.checkAuth.value.user);
+
+  // Отображается иконка управления серией только для организатора который создал серию.
+  const isSeriesCreator =
+    seriesPublicOne?.organizer?._id && seriesPublicOne?.organizer?._id === organizer;
 
   // Может быть несколько этапов с одинаковым номером (order), но разными eventStart.
   // Необходимо выбирать наименьший eventStart и stageName в этапах с одним номером (order).
@@ -62,6 +67,7 @@ export default function StageResults() {
               stageOrder={stageOrder}
               stageName={stageData.name}
               stageStart={stageData.eventStart}
+              isSeriesCreator={isSeriesCreator}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />

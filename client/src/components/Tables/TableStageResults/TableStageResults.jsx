@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
@@ -8,7 +7,7 @@ import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdWatts } from '../utils/td';
 import FinishTime from '../../FinishTime/FinishTime';
 import { useFinishTime } from '../../../hook/useFinishTime';
-import IconEdit from '../../icons/IconEdit';
+import StageResultMenu from '../../StageResultMenu/StageResultMenu';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
@@ -43,10 +42,10 @@ function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, st
       <caption className={cx('caption')}>
         {getSeriesCaption({ stageName, stageOrder, stageStart })}
       </caption>
-      <Thead columnsCP={columnsCP} isAdmin={isSeriesCreator} />
+      <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} />
 
       <tbody>
-        {resultWithFinishTime?.map((result, index) => {
+        {resultWithFinishTime?.map((result) => {
           const profile = result.profileData;
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;
@@ -119,9 +118,7 @@ function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, st
               {/* Модерация данных райдера */}
               {isSeriesCreator && (
                 <td>
-                  <Link to={`/admin/riders/${result.profileId}/main`}>
-                    <IconEdit squareSize={20} />
-                  </Link>
+                  <StageResultMenu />
                 </td>
               )}
             </tr>
