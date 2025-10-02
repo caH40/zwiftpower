@@ -774,7 +774,7 @@ export type TStageResult = {
   category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
   modifiedCategory: {
     value: TCategorySeries | null;
-    moderatorId?: Types.ObjectId;
+    moderator?: Types.ObjectId;
     modifiedAt: Date;
     reason?: string;
   };
@@ -820,14 +820,14 @@ export type TDisqualification = {
   status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте
   label?: TDisqualificationLabel; // Краткий код статуса (2–3 заглавные буквы).
   reason?: string; // Подробное описание причины
-  moderatorId?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
+  moderator?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
   modifiedAt?: Date;
 };
 
 export type TStagePenalty = {
   reason: string; // Причина штрафа.
   timeInMilliseconds: number; // Время штрафа.
-  moderatorId?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
+  moderator?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам
   modifiedAt?: Date;
 };
 

@@ -224,19 +224,19 @@ export class HandlerSeries {
    * Изменение категории у участника в результате заезда на этапа.
    */
   public async modifyCategory({
-    moderatorId,
+    moderator,
     value,
     stageResultId,
     reason,
   }: {
     stageResultId: string;
-    moderatorId?: string;
+    moderator?: string;
     value: TCategorySeries | null;
     reason?: string;
   }): Promise<{ data: null; message: string }> {
     const modifiedCategory = {
       value,
-      moderatorId,
+      moderator,
       modifiedAt: new Date(),
       reason,
     };

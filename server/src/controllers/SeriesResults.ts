@@ -99,12 +99,12 @@ export class SeriesResultsController {
 
       // Проверка, что запрос происходит от Организатора.
       const seriesController = new SeriesController();
-      const moderatorId = await seriesController.checkOrganizer(parsedUserId);
+      const moderator = await seriesController.checkOrganizer(parsedUserId);
 
       // Вызов сервиса.
       const handlerSeries = new HandlerSeries(seriesId);
       const response = await handlerSeries.modifyCategory({
-        moderatorId: moderatorId.toString(),
+        moderator: moderator.toString(),
         stageResultId,
         value,
         reason,
