@@ -7,7 +7,17 @@ import styles from './PopupMenuTable.module.css';
 /**
  * popup меню для взаимодействия с выбранным Эвентом на странице Расписания Эвентов
  */
-function PopupMenuTableStageResult({ showMenu, setShowMenu }) {
+function PopupMenuTableStageResult({
+  showMenu,
+  setShowMenu,
+  category,
+  modifiedCategory,
+  disqualification,
+  penalty,
+  profile,
+  seriesId,
+  stageResultId,
+}) {
   const dispatch = useDispatch();
 
   return (
@@ -17,7 +27,14 @@ function PopupMenuTableStageResult({ showMenu, setShowMenu }) {
           <ul className={styles.list}>
             <li
               className={styles.item}
-              onClick={() => dispatch(openPopupFormContainer({ formType: 'setCategory' }))}
+              onClick={() =>
+                dispatch(
+                  openPopupFormContainer({
+                    formType: 'setCategory',
+                    formProps: { category, modifiedCategory, profile, seriesId, stageResultId },
+                  })
+                )
+              }
             >
               <span className={styles.label}>Изменение категории</span>
             </li>

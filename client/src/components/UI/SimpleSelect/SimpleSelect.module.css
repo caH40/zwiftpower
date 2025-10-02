@@ -65,7 +65,12 @@
   color: inherit;
   background: var(--color-bg-minor);
 }
-
+.label {
+  color: var(--color-text-minor);
+}
+.label::after {
+  content: ':';
+}
 .label__bold {
   font-size: 14px;
   font-weight: 700;

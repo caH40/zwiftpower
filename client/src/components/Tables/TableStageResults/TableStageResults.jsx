@@ -118,7 +118,15 @@ function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, st
               {/* Модерация данных райдера */}
               {isSeriesCreator && (
                 <td>
-                  <StageResultMenu />
+                  <StageResultMenu
+                    category={result.category}
+                    modifiedCategory={result.modifiedCategory}
+                    disqualification={result.disqualification}
+                    penalty={result.penalty}
+                    profile={profile}
+                    seriesId={result.series}
+                    stageResultId={result._id}
+                  />
                 </td>
               )}
             </tr>

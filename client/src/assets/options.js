@@ -63,3 +63,10 @@ export const siteServicesList = (services) =>
     name: s.id,
     id: s.id,
   }));
+
+export const seriesCategoryOptions = (categories) =>
+  categories.map((c) => ({
+    label: c,
+    name: c,
+    id: c,
+  }));
