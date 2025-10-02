@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux';
 
 import { openPopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
+import IconCategory from '../../icons/IconCategory';
+import DSQBox from '../../DSQBox/DSQBox';
 
 import styles from './PopupMenuTable.module.css';
 
@@ -46,6 +48,7 @@ function PopupMenuTableStageResult({
                 )
               }
             >
+              <IconCategory />
               <span className={styles.label}>Изменение категории</span>
             </li>
 
@@ -55,6 +58,7 @@ function PopupMenuTableStageResult({
                 dispatch(openPopupFormContainer({ formType: 'setDisqualification' }))
               }
             >
+              <DSQBox>DSQ</DSQBox>
               <span className={styles.label}>Дисквалификация</span>
             </li>
 
@@ -62,6 +66,7 @@ function PopupMenuTableStageResult({
               className={styles.item}
               onClick={() => dispatch(openPopupFormContainer({ formType: 'setPenalty' }))}
             >
+              <DSQBox>Pen</DSQBox>
               <span className={styles.label}>Установка штрафа</span>
             </li>
           </ul>
