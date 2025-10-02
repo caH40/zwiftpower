@@ -25,7 +25,14 @@ import { raceResultsColumnsCP } from './column-titles';
 
 const cx = classnames.bind(styles);
 
-function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, stageStart }) {
+function TableStageResults({
+  results,
+  isSeriesCreator,
+  stageOrder,
+  stageName,
+  stageStart,
+  urlSlug,
+}) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
 
@@ -126,6 +133,8 @@ function TableStageResults({ results, isSeriesCreator, stageOrder, stageName, st
                     profile={profile}
                     seriesId={result.series}
                     stageResultId={result._id}
+                    urlSlug={urlSlug}
+                    stageOrder={stageOrder}
                   />
                 </td>
               )}

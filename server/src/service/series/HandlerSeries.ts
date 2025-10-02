@@ -261,7 +261,7 @@ export class HandlerSeries {
 
     return {
       data: null,
-      message: `Обновлена категория участника ${result.profileData.firstName} ${result.profileData.lastName} с ${result.category} на ${value}`,
+      message: `Обновлена категория участника ${result.profileData.firstName} ${result.profileData.lastName} с "${result.category}" на "${value}"`,
     };
   }
 

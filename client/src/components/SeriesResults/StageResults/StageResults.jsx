@@ -68,6 +68,7 @@ export default function StageResults() {
               stageName={stageData.name}
               stageStart={stageData.eventStart}
               isSeriesCreator={isSeriesCreator}
+              urlSlug={urlSlug}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />

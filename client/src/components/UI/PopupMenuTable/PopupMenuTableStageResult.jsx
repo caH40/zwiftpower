@@ -17,6 +17,8 @@ function PopupMenuTableStageResult({
   profile,
   seriesId,
   stageResultId,
+  urlSlug,
+  stageOrder,
 }) {
   const dispatch = useDispatch();
 
@@ -31,7 +33,15 @@ function PopupMenuTableStageResult({
                 dispatch(
                   openPopupFormContainer({
                     formType: 'setCategory',
-                    formProps: { category, modifiedCategory, profile, seriesId, stageResultId },
+                    formProps: {
+                      category,
+                      modifiedCategory,
+                      profile,
+                      seriesId,
+                      stageResultId,
+                      urlSlug,
+                      stageOrder,
+                    },
                   })
                 )
               }

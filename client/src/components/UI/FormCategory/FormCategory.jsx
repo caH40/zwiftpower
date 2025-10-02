@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 import { fetchPatchCategoryInSeriesResult } from '../../../redux/features/api/series/fetchEditSeriesResults';
+import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getTimerLocal } from '../../../utils/date-local';
 import { seriesCategoryOptions } from '../../../assets/options';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
@@ -26,6 +27,8 @@ export default function FormCategory({
   seriesId,
   stageResultId,
   modifiedCategory,
+  urlSlug,
+  stageOrder,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -54,6 +57,7 @@ export default function FormCategory({
       ).unwrap();
       // Успешный результат.
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
+      dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
       dispatch(closePopupFormContainer());
     } catch (error) {
       console.error(error); // eslint-disable-line
