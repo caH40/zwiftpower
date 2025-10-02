@@ -95,11 +95,11 @@ export class SeriesResultsController {
         return res.status(400).json({ errors: result.error.format() });
       }
 
-      const { userId: parsedUserId, seriesId, stageResultId, value, reason } = result.data;
+      const { userId: moderator, seriesId, stageResultId, value, reason } = result.data;
 
       // Проверка, что запрос происходит от Организатора.
       const seriesController = new SeriesController();
-      const moderator = await seriesController.checkOrganizer(parsedUserId);
+      await seriesController.checkOrganizer(moderator);
 
       // Вызов сервиса.
       const handlerSeries = new HandlerSeries(seriesId);

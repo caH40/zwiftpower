@@ -96,7 +96,7 @@ export default function FormCategory({
           {modifiedCategory?.value && (
             <div className={styles.description}>
               <p>Установлена: {getTimerLocal(modifiedCategory.modifiedAt, 'DDMMYYHm')}</p>
-              <p>Модератор: {modifiedCategory.moderator || 'автоматически'}</p>
+              <p>Модератор: {modifiedCategory.moderator?.username || 'автоматически'}</p>
               {modifiedCategory.reason && <p>Причина: {modifiedCategory.reason}</p>}
             </div>
           )}

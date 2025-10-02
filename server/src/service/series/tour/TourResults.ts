@@ -3,9 +3,9 @@ import { HandlerSeries } from '../HandlerSeries.js';
 import { stageResultsDto } from '../../../dto/series.js';
 
 // types
-import { TStageResult } from '../../../types/model.interface.js';
 import { StageResultsDto } from '../../../types/dto.interface.js';
 import { NSeriesModel } from '../../../Model/NSeries.js';
+import { GetStageResultDB } from '../../../types/mongodb-response.types.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour'
@@ -22,13 +22,15 @@ export class TourResults extends HandlerSeries {
     const resultsDB = await StageResultModel.find({
       series: this.seriesId,
       order: stageOrder,
-    }).lean<TStageResult[]>();
+    })
+      .populate({ path: 'modifiedCategory.moderator', select: ['-_id', 'username'] })
+      .lean<GetStageResultDB[]>();
 
     const seriesDB = await NSeriesModel.findOne(
       { _id: this.seriesId },
       { stages: true }
     ).lean();
-    // console.log(seriesDB);
+
     const resultsUpdatedAt = seriesDB!.stages.find(
       (s) => s.order === stageOrder
     )?.resultsUpdatedAt;
@@ -44,7 +46,9 @@ export class TourResults extends HandlerSeries {
    * Разделяет результаты на нормальные и дисквалифицированные, сохраняя сортировку по времени.
    * Дисквалификация может быть из-за нарушений, отсутствия финиша или невыполнения условий тура.
    */
-  private sortAndFilterResultsToutGroups = (results: TStageResult[]): TStageResult[] => {
+  private sortAndFilterResultsToutGroups = (
+    results: GetStageResultDB[]
+  ): GetStageResultDB[] => {
     // Сортируем все результаты по времени.
     const sortedResults = results.toSorted(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds

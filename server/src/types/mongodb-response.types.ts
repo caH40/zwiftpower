@@ -16,6 +16,7 @@ import {
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
+import { TCategorySeries } from './types.interface';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;
@@ -210,4 +211,13 @@ export type TEventForMailingPreviewDB = Pick<
   >[];
 } & { seriesId?: Pick<TSeries, 'posterFileInfo' | 'name' | 'urlSlug' | '_id'> } & {
   organizerId: Pick<TOrganizer, 'logoFileInfo' | 'name' | 'urlSlug' | '_id'>;
+};
+
+export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory'> & {
+  modifiedCategory: {
+    value: TCategorySeries | null;
+    moderator?: { username: string };
+    modifiedAt: Date;
+    reason?: string;
+  };
 };

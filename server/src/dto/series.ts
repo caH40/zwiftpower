@@ -7,13 +7,14 @@ import {
   TSeriesOnePublicDto,
   TStagesPublicDto,
 } from '../types/dto.interface.js';
-import { TFileMetadataForCloud, TStageResult } from '../types/model.interface.js';
+import { TFileMetadataForCloud } from '../types/model.interface.js';
 import {
   TOrganizerSeriesAllResponseDB,
   TOrganizerSeriesOneResponseDB,
   TSeriesOnePublicResponseDB,
   TSeriesAllPublicResponseDB,
   TStagesPublicResponseDB,
+  GetStageResultDB,
 } from '../types/mongodb-response.types.js';
 import { createUrlsToFileCloud } from '../utils/url.js';
 
@@ -193,7 +194,7 @@ export function stageResultDto({
   updatedAt: _u,
   createdAt: _c,
   ...result
-}: TStageResult): StageResultDto {
+}: GetStageResultDB): StageResultDto {
   // Удельная мощность за весь заезд.
   const wattsPerKg = result.sensorData.avgWatts / (result.profileData.weightInGrams / 1000);
 
@@ -210,7 +211,7 @@ export function stageResultDto({
  * DTO получения результатов этапа серии.
  */
 export function stageResultsDto(
-  results: TStageResult[],
+  results: GetStageResultDB[],
   resultsUpdatedAt?: Date
 ): StageResultsDto {
   const resultsAfterDto = results.map((r) => stageResultDto(r));

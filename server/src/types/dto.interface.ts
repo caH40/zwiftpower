@@ -19,7 +19,7 @@ import {
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { TPaymentNotification } from './payment.types';
-import { EventWithSubgroup } from './types.interface';
+import { EventWithSubgroup, TCategorySeries } from './types.interface';
 
 /**
  * Данные Организатора основные и модерируемые клубы для клиента.
@@ -214,12 +214,18 @@ export type TFinishProtocolConfigDto = Omit<
  */
 export type StageResultDto = Omit<
   TStageResult,
-  '_id' | 'series' | 'teamSquadAtRace' | 'createdAt' | 'updatedAt'
+  '_id' | 'series' | 'teamSquadAtRace' | 'createdAt' | 'updatedAt' | 'modifiedCategory'
 > & {
   _id: string;
   series: string;
   teamSquadAtRace: string | null;
   wattsPerKg: number;
+  modifiedCategory: {
+    value: TCategorySeries | null;
+    moderator?: { username: string };
+    modifiedAt: Date;
+    reason?: string;
+  };
 };
 export type StageResultsDto = {
   results: StageResultDto[];
