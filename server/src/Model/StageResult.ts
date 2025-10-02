@@ -85,7 +85,7 @@ export const disqualificationSchema = new Schema<TDisqualification>(
     reason: { type: String }, // Причина дисквалификации (опционально).
     label: { type: String, enum: DISQUALIFICATION_LABELS }, // Краткий код статуса .
     moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifiedAt: { type: Date, required: true },
+    modifiedAt: { type: Date },
   },
   { _id: false }
 );
@@ -96,7 +96,7 @@ const penaltySchema = new Schema<TStagePenalty>(
     reason: { type: String, trim: true }, // Причина штрафа.
     timeInMilliseconds: { type: Number }, // Время штрафа.
     moderatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifiedAt: { type: Date, required: true },
+    modifiedAt: { type: Date },
   },
   { _id: false }
 );

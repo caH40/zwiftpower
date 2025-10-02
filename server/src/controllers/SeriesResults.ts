@@ -89,7 +89,6 @@ export class SeriesResultsController {
     try {
       // id авторизованного пользователя, который делает запрос.
       const userId = req.user?.id;
-
       const result = CategoryZSchema.safeParse({ ...req.body, userId });
 
       if (!result.success) {

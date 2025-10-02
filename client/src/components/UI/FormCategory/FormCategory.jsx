@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
+import { fetchPatchCategoryInSeriesResult } from '../../../redux/features/api/series/fetchEditSeriesResults';
 import { getTimerLocal } from '../../../utils/date-local';
 import { seriesCategoryOptions } from '../../../assets/options';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
@@ -19,12 +20,12 @@ import styles from './FormCategory.module.css';
  */
 
 export default function FormCategory({
-  lastName,
   category,
   seriesCategories = ['A', 'B', 'C', 'D', 'APlus'],
   profile,
   seriesId,
   stageResultId,
+  modifiedCategory,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -38,20 +39,19 @@ export default function FormCategory({
     defaultValues: { newCategory: null, reason: '' },
   });
 
-  const modifiedCategory = {
-    value: 'C',
-    reason: 'Не верная категория',
-    moderator: 'Alex',
-    modifiedAt: new Date(),
-  };
   // Обработчик отправки формы на сервер.
   const onSubmit = async (formData) => {
     setIsLoading(true);
 
-    console.log({ ...formData, seriesId, stageResultId });
-
     try {
-      const response = await dispatch().unwrap();
+      const response = await dispatch(
+        fetchPatchCategoryInSeriesResult({
+          value: formData.newCategory,
+          reason: formData.reason,
+          seriesId,
+          stageResultId,
+        })
+      ).unwrap();
       // Успешный результат.
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
       dispatch(closePopupFormContainer());
@@ -97,7 +97,7 @@ export default function FormCategory({
             <div className={styles.description}>
               <p>Установлена: {getTimerLocal(modifiedCategory.modifiedAt, 'DDMMYYHm')}</p>
               <p>Модератор: {modifiedCategory.moderator || 'автоматически'}</p>
-              <p>Причина: {modifiedCategory.reason}</p>
+              {modifiedCategory.reason && <p>Причина: {modifiedCategory.reason}</p>}
             </div>
           )}
         </div>
