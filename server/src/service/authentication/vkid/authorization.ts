@@ -58,7 +58,7 @@ export async function authorizationVKIDService({
 
   // Генерация токенов для пользователя, обновление/создание записи в базе данных, формирование необходимых данных о пользователе, отправляемых на клиент.
   const { dataForClient, tokensGenerated } = await generateAuthResponse({
-    user: userDB,
+    user: userDB.toObject(),
     device,
     location,
     authService: 'vk',
