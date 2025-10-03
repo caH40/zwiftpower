@@ -70,3 +70,29 @@ export const seriesCategoryOptions = (categories) =>
     name: c,
     id: c,
   }));
+
+/**
+ * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
+ */
+export const riderCategoryRuleOptions = [
+  {
+    id: 1,
+    value: 'recalculationAll',
+    name: 'Сквозное повышение (полный пересчёт)',
+  },
+  {
+    id: 2,
+    value: 'stepChange',
+    name: 'Локальное повышение (с текущего этапа)',
+  },
+  {
+    id: 3,
+    value: 'dsqRecalculation',
+    name: 'Дисквалификация с пересчётом',
+  },
+  {
+    id: 4,
+    value: 'dsqKeep',
+    name: 'Жёсткая дисквалификация (без пересчёта)',
+  },
+];

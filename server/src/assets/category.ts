@@ -37,21 +37,6 @@ export const eventSubGroups = new Map([
   [5, 'E'],
 ]);
 
-// Все возможные категории по мощностным показателям.
-export const allCategories: TCategorySeries[] = [
-  'APlus',
-  'A',
-  'BPlus',
-  'B',
-  'C',
-  'D',
-  'E',
-  'WA',
-  'WB',
-  'WC',
-  'WD',
-];
-
 // Объект для подсчета категорий в результатах заехда или серий.
 export const categoriesForRankings: Record<TCategorySeries | 'absolute', number> = {
   APlus: 1,
@@ -67,3 +52,21 @@ export const categoriesForRankings: Record<TCategorySeries | 'absolute', number>
   WD: 1,
   absolute: 1,
 };
+
+export const maleCategoryLabels: Map<number, TCategorySeries> = new Map([
+  [1, 'APlus'],
+  [2, 'A'],
+  [3, 'BPlus'],
+  [4, 'B'],
+  [5, 'C'],
+  [6, 'D'],
+  [7, 'E'],
+]);
+
+// Полная коллекция категорий женщин
+export const femaleCategoryLabels: Map<number, TCategorySeries> = new Map([
+  [1, 'WA'],
+  [2, 'WB'],
+  [3, 'WC'],
+  [4, 'WD'],
+]);

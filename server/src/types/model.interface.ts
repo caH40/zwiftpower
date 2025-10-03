@@ -14,6 +14,11 @@ import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
 import { TTeamRole, TTeamSpecialization } from './team.types.js';
 import { TServiceMessageType } from './service-message.types.js';
 import { DISQUALIFICATION_LABELS } from '../assets/constants.js';
+import {
+  TCategoriesWithRange,
+  TRacingScoreRange,
+  TRiderCategoryRuleType,
+} from './series.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -653,6 +658,9 @@ export type TSeries = {
   hasGeneral: boolean; // Есть ли общий зачет в серии.
   hasTeams: boolean; // Подсчет командного зачета.
   isFinished: boolean; // Флаг завершения серии.
+  riderCategoryRule?: TRiderCategoryRuleType; // Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
+  categoriesWithRange?: TCategoriesWithRange[]; // Если нет, то категории по Звифту.
+  racingScoreRange?: TRacingScoreRange[]; // Категоризация по рейтинговым очкам.
   logoFileInfo?: TFileMetadataForCloud; // Объект с URL логотипа (разные размеры).
   mission?: string; // Цель или миссия серии.
   name: string; // Название серии заездов.

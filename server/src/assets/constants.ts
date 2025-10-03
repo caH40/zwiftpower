@@ -158,3 +158,15 @@ export const CATEGORIES_SERIES = [
   'WC',
   'WD',
 ] as const;
+
+export const INTERVAL_IN_SECONDS = [15, 60, 300, 600, 1200, 3600] as const;
+
+/**
+ * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
+ */
+export const riderCategoryRuleTypes = [
+  'recalculationAll',
+  'stepChange',
+  'dsqRecalculation',
+  'dsqKeep',
+] as const;
