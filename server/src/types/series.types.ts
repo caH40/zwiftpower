@@ -12,36 +12,44 @@ export type TIntervalInSeconds = (typeof INTERVAL_IN_SECONDS)[number];
  * min включительно
  * max не включительно
  */
-export type TRange = {
-  min: number;
-  max: number;
-};
 
 /**
- * Данные райдера в заезде на определенном интервале
+ * CP райдера в заезде на интервале interval.
  */
-export type TRiderPowers = {
+export type TRiderCP = {
   interval: TIntervalInSeconds;
+  wattPerKg: number;
+};
+export type TFtpData = {
   watt: number;
   wattPerKg: number;
 };
 
-/**
- * Временной интервал с диапазонами мощности и логикой, как учитывать результаты watt и wattPerKg.
- */
-export type TCategoryRange = {
-  interval: TIntervalInSeconds; // Временной интервал.
-  watt?: TRange; // Абсолютные ватты на интервале.
-  wattPerKg?: TRange; // Удельные ватты на интервале.
-  logic?: 'AND' | 'OR';
+export type TRange = {
+  value: number;
+  operand: '>' | '<' | '>=' | '<='; // Выбирается диапазон относительно value
 };
 
 /**
- * Категоризация по ватт/кг и(или) ваттам на интервалах.
+ * Временной интервал с диапазонами мощности и логикой, как учитывать результаты  wattPerKg.
+ * }
+ */
+export type TCategoryRange = {
+  interval: TIntervalInSeconds; // Временной интервал.
+  wattPerKg: TRange;
+};
+
+/**
+ *
  */
 export type TCategoriesWithRange = {
   label: TCategorySeries;
-  ranges: TCategoryRange[]; // Массив элементов по interval
+  ftpRange: {
+    wattPerKg: TRange;
+    watt?: TRange;
+    wattLogic?: 'AND' | 'OR'; // Как учитывать абсолютные ватты FTP с удельными ваттами FTP и дополнительными интервалами.
+  };
+  ranges: TCategoryRange[]; // Массив элементов по interval. Достаточно совпадения любого интервала.
 };
 
 /**
@@ -49,5 +57,8 @@ export type TCategoriesWithRange = {
  */
 export type TRacingScoreRange = {
   label: TCategorySeries;
-  range: TRange;
+  range: {
+    min: number;
+    max: number;
+  };
 };

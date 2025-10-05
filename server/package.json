@@ -6,7 +6,7 @@
   "type": "module",
   "envFile": "./src",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "dev": "npx nodemon",
     "env": "cp .env ./build/.env",
     "build": "rimraf ./build && npx tsc && npm run env",
