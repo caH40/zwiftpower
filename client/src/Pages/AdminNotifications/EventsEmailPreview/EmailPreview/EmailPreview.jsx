@@ -36,125 +36,127 @@ export default function EmailPreview({
       </div>
 
       <div className={styles.eventsList}>
-        {events.map((event, index) => (
-          <div key={event._id || index} className={styles.eventCard}>
-            <button
-              className={styles.removeButton}
-              onClick={() => handleRemove(event.id || index)}
-              title="Удалить событие"
-            >
-              ×
-            </button>
-
-            <div className={styles.eventHeader}>
-              <img
-                src={event.seriesId ? event.seriesId?.posterUrls?.original : event.imageUrl}
-                alt={event.seriesId ? event.seriesId?.name : event.name}
-                className={styles.eventPoster}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-
-              <div className={styles.eventInfo}>
-                <h2 className={styles.eventTitle}>{event.name}</h2>
-                <p className={styles.eventDate}>
-                  📅 {getTimerLocal(event.eventStart, 'DDMMYYHm', 'long')}
-                </p>
-
-                {event.seriesId && (
-                  <p>
-                    <span>
-                      Серия:{' '}
-                      <a
-                        href={`https://zwiftpower.ru/series/${event.seriesId?.name}/schedule`}
-                        className={'link'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {event.seriesId?.name}
-                      </a>
-                    </span>
-                  </p>
-                )}
-
-                {event.organizerId && (
-                  <div className={styles.organizer}>
-                    <span>Организатор: </span>
-                    {event.organizerId.name}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.eventDetails}>
-              <div className={styles.subgroups}>
-                <span>Группы заезда:</span>
-                {event.eventSubgroups?.map((subgroup, idx) => (
-                  <CategoryBox
-                    label={subgroup.subgroupLabel}
-                    showLabel={true}
-                    circle={true}
-                    key={idx}
-                  />
-                ))}
-              </div>
-
-              {event.eventSubgroups && event.eventSubgroups.length > 0 && (
-                <div className={styles.routeInfo}>
-                  <p>
-                    <strong>Карта: </strong>
-                    {getMapName(event.eventSubgroups[0]?.mapId)}
-                  </p>
-                  <p>
-                    <strong>Маршрут: </strong>
-                    {getRouteName(event.eventSubgroups[0]?.routeId)}
-                  </p>
-                  <p>
-                    <strong>Круги: </strong>
-                    {event.eventSubgroups[0]?.laps}
-                  </p>
-
-                  {event.eventSubgroups[0]?.distanceSummary?.distanceInKilometers && (
-                    <p>
-                      <strong>Расстояние: </strong>
-                      {Math.round(
-                        event.eventSubgroups[0]?.distanceSummary?.distanceInKilometers
-                      )}{' '}
-                      км
-                    </p>
-                  )}
-
-                  {event.eventSubgroups[0]?.distanceSummary?.elevationGainInMeters && (
-                    <p>
-                      <strong>Набор высоты: </strong>
-                      {Math.round(
-                        event.eventSubgroups[0]?.distanceSummary?.elevationGainInMeters
-                      )}{' '}
-                      м
-                    </p>
-                  )}
-                  <div className={styles.noteContainer}>
-                    <span className={styles.note}>
-                      * Данные для группы "{event.eventSubgroups[0]?.subgroupLabel}"
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.eventActions}>
-              <a
-                href={`https://zwiftpower.ru/race/schedule/${event.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.ctaButton}
+        {events.map((event, index) => {
+          return (
+            <div key={event._id || index} className={styles.eventCard}>
+              <button
+                className={styles.removeButton}
+                onClick={() => handleRemove(event.id || index)}
+                title="Удалить событие"
               >
-                Присоединиться к заезду
-              </a>
+                ×
+              </button>
+
+              <div className={styles.eventHeader}>
+                <img
+                  src={event.seriesId ? event.seriesId?.posterUrls?.original : event.imageUrl}
+                  alt={event.seriesId ? event.seriesId?.name : event.name}
+                  className={styles.eventPoster}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+
+                <div className={styles.eventInfo}>
+                  <h2 className={styles.eventTitle}>{event.name}</h2>
+                  <p className={styles.eventDate}>
+                    📅 {getTimerLocal(event.eventStart, 'DDMMYYHm', 'long')}
+                  </p>
+
+                  {event.seriesId && (
+                    <p>
+                      <span>
+                        Серия:{' '}
+                        <a
+                          href={`https://zwiftpower.ru/series/${event.seriesId?.name}/schedule`}
+                          className={'link'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {event.seriesId?.name}
+                        </a>
+                      </span>
+                    </p>
+                  )}
+
+                  {event.organizerId && (
+                    <div className={styles.organizer}>
+                      <span>Организатор: </span>
+                      {event.organizerId.name}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.eventDetails}>
+                <div className={styles.subgroups}>
+                  <span>Группы заезда:</span>
+                  {event.eventSubgroups?.map((subgroup, idx) => (
+                    <CategoryBox
+                      label={subgroup.subgroupLabel}
+                      showLabel={true}
+                      circle={true}
+                      key={idx}
+                    />
+                  ))}
+                </div>
+
+                {event.eventSubgroups && event.eventSubgroups.length > 0 && (
+                  <div className={styles.routeInfo}>
+                    <p>
+                      <strong>Карта: </strong>
+                      {getMapName(event.eventSubgroups[0]?.mapId)}
+                    </p>
+                    <p>
+                      <strong>Маршрут: </strong>
+                      {getRouteName(event.eventSubgroups[0]?.routeId)}
+                    </p>
+                    <p>
+                      <strong>Круги: </strong>
+                      {event.eventSubgroups[0]?.laps}
+                    </p>
+
+                    {event.eventSubgroups[0]?.distanceSummary?.distanceInKilometers && (
+                      <p>
+                        <strong>Расстояние: </strong>
+                        {Math.round(
+                          event.eventSubgroups[0]?.distanceSummary?.distanceInKilometers
+                        )}{' '}
+                        км
+                      </p>
+                    )}
+
+                    {event.eventSubgroups[0]?.distanceSummary?.elevationGainInMeters && (
+                      <p>
+                        <strong>Набор высоты: </strong>
+                        {Math.round(
+                          event.eventSubgroups[0]?.distanceSummary?.elevationGainInMeters
+                        )}{' '}
+                        м
+                      </p>
+                    )}
+                    <div className={styles.noteContainer}>
+                      <span className={styles.note}>
+                        * Данные для группы "{event.eventSubgroups[0]?.subgroupLabel}"
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.eventActions}>
+                <a
+                  href={`https://zwiftpower.ru/race/schedule/${event.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.ctaButton}
+                >
+                  Присоединиться к заезду
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className={styles.footer}>

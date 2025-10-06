@@ -62,14 +62,15 @@ const eventPreviewSlice = createSlice({
       state.event = {};
     },
     resetEventsEmailPreview: (state) => {
-      state.eventsEmailPreview = { events: [] };
+      state.eventsEmailPreview = { events: [], startDate: null, endDate: null };
     },
     removeEventFromEmailPreview: (state, action) => {
       const eventId = action.payload.id;
 
-      state.eventsEmailPreview = state.eventsEmailPreview.events.filter(
-        (event) => event.id !== eventId
-      );
+      state.eventsEmailPreview = {
+        ...state.eventsEmailPreview,
+        events: state.eventsEmailPreview.events.filter((event) => event.id !== eventId),
+      };
     },
   },
   extraReducers: (builder) => {
