@@ -1,4 +1,4 @@
-import { helmetProps } from '../../assets/helmet-props';
+import { TEAM_HELMET_PROPS } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import FormCreateTeam from '../../components/UI/FormTeam/FormCreateTeam';
 
@@ -13,7 +13,7 @@ export default function TeamCreatePage() {
   useTitle('Создание команды');
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.TEAM_CREATE} />
+      <HelmetComponent {...TEAM_HELMET_PROPS.TEAM_CREATE} />
 
       <FormCreateTeam isCreating={true} />
     </div>

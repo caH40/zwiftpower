@@ -15,7 +15,8 @@ import ChartRidersTotalAge from '../../components/Charts/RidersTotalAge/ChartRid
 import NavBarRidersInEvent from '../../components/UI/NavBarRidersInEvent/NavBarRidersInEvent';
 import { fetchRidersTotalAge } from '../../redux/features/api/statistics_age/fetchRidersTotalAge';
 import { resetRidersTotalAge } from '../../redux/features/api/statistics_age/ridersTotalAgeSlice';
-import { HelmetStatisticsMain } from '../../components/Helmets/HelmetStatisticsMain';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { STATISTICS_HELMET_PROPS } from '../../assets/helmet-props';
 import SkeletonRidersDiagrams from '../../components/SkeletonLoading/SkeletonRidersDiagrams/SkeletonRidersDiagrams';
 
 import styles from './Statistics.module.css';
@@ -48,7 +49,7 @@ function RidersInEvents() {
 
   return (
     <section>
-      <HelmetStatisticsMain />
+      <HelmetComponent {...STATISTICS_HELMET_PROPS.MAIN} />
 
       <h2 className={cx('title')}>Количество участников</h2>
 

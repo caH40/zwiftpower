@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useTitle from '../../hook/useTitle';
 
-// import { useResize } from '../../hook/use-resize';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import TableResults from '../../components/Tables/TableResults/TableResults';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
@@ -13,17 +11,12 @@ import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { createResultListMenus } from '../../redux/features/popupTableResultsListSlice';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
-import { useAd } from '../../hook/useAd';
-import { HelmetResultsList } from '../../components/Helmets/HelmetResultsList';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { RESULTS_LIST_HELMET_PROPS } from '../../assets/helmet-props';
 import { lsPrefixResultList } from '../../constants/localstorage';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './ResultsList.module.css';
-
-// рекламные блоки на странице
-// const adOverFooter = 7;
-// const adUnderHeader = 11;
-// const adNumbers = [adUnderHeader, adOverFooter];
 
 const localStorageFilterKey = `${lsPrefixResultList}filter`;
 const localStoragePageSizeKey = `${lsPrefixResultList}pageSize`;
@@ -34,8 +27,6 @@ function ResultsListPage() {
 
   const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
   const [search, setSearch] = useState(initialFilterTable);
-
-  // const { isScreenLg: isDesktop } = useResize();
 
   const initialDocsOnPage = localStorage.getItem(localStoragePageSizeKey) || 20;
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
@@ -92,11 +83,9 @@ function ResultsListPage() {
     );
   };
 
-  // useAd(adNumbers);
-
   return (
     <>
-      <HelmetResultsList />
+      <HelmetComponent {...RESULTS_LIST_HELMET_PROPS} />
       <section className={styles.wrapper}>
         <div className={styles.align__right}>
           {/* Блок фильтров для таблицы */}
@@ -131,11 +120,6 @@ function ResultsListPage() {
           <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
       </section>
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }

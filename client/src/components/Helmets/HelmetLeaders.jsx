@@ -8,12 +8,11 @@ import { serverFront } from '../../config/environment';
  */
 export const HelmetLeaders = ({ gender }) => {
   const genderStr = gender === 'female' ? 'женщин' : 'мужчин';
-  const imageNumber = gender === 'female' ? '8' : '9';
 
   const title = `Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`;
   const canonical = `${serverFront}/race/statistics/leaders/${gender}`;
   const description = `Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. Интервалы 15 секунд, минута, 5 минут и 20 минут.`;
-  const image = `https://zwiftpower.ru/images/open_graph/${imageNumber}.jpg`;
+  const image = 'https://zwiftpower.ru/images/open_graph/statistics.png';
   const recommendationsTag = 'leaders';
 
   return (

@@ -9,7 +9,7 @@ export const getHomeMeta = (): MetaTags => {
   const canonical = serverWoWWW;
   const description =
     'Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/main.png';
   const recommendationsTag = 'main';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -23,7 +23,7 @@ export const getScheduleListMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Расписание групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/schedule.png';
   const recommendationsTag = 'schedule_list';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -37,7 +37,7 @@ export const getResultListMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Результаты групповых заездов, соревнований в виртуальном мире Zwift (Звифт) на велотренажерах.';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/results-list.png';
   const recommendationsTag = 'results_list';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -65,7 +65,7 @@ export const getStatisticsMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Общая статистика российского сообщества в Zwift (Звифт). Диаграммы по количеству участников в гонках, по возрастным категориям, по типам заездов.';
-  const image = 'https://zwiftpower.ru/images/open_graph/5.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/statistics.png';
   const recommendationsTag = 'statistics';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -77,12 +77,11 @@ export const getStatisticsMeta = (url: string): MetaTags => {
 export const getLeadersMeta = (url: string): MetaTags => {
   const gender = url.replace('/race/statistics/leaders/', '');
   const genderStr = gender === 'female' ? 'женщин' : 'мужчин';
-  const imageNumber = gender === 'female' ? '8' : '9';
 
   const title = `Рейтинг райдеров ${genderStr} по мощности в Zwift (Звифт)`;
   const canonical = serverWoWWW + url;
   const description = `Лидеры по абсолютным и удельным ваттам среди ${genderStr} за последние 90 дней. Интервалы 15 секунд, минута, 5 минут и 20 минут.`;
-  const image = `https://zwiftpower.ru/images/open_graph/${imageNumber}.jpg`;
+  const image = `https://zwiftpower.ru/images/open_graph/statistics.png`;
   const recommendationsTag = 'leaders';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -96,7 +95,7 @@ export const getFTPMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Диаграммы распределения райдеров по FTP (Functional Threshold Power). Диаграммы распределения райдеров по категориям (группам).';
-  const image = 'https://zwiftpower.ru/images/open_graph/3.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/statistics3.png';
   const recommendationsTag = 'ftp';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -110,7 +109,7 @@ export const getRacingScoreMeta = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Диаграммы распределения райдеров по Racing Score (Рейтинговые очки). Диаграммы распределения райдеров по категориям (базовые настройки Звифта).';
-  const image = 'https://zwiftpower.ru/images/open_graph/4.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/statistics2.png';
   const recommendationsTag = 'ftp';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -124,7 +123,7 @@ export const getMetaOtherPages = (url: string): MetaTags => {
   const canonical = serverWoWWW + url;
   const description =
     'Анонсы, расписание, результаты заездов российского сообщества в Zwift (Звифт).';
-  const image = 'https://zwiftpower.ru/images/main.jpg';
+  const image = 'https://zwiftpower.ru/images/open_graph/other.png';
   const recommendationsTag = 'ban';
 
   return { title, canonical, description, image, recommendationsTag };
@@ -148,11 +147,11 @@ export const getFaqMeta = (url: string): MetaTags => {
  * Формирование Мета тегов для страницы "Участники заездов (поиск райдеров)"
  */
 export const getRidersMeta = (url: string): MetaTags => {
-  const title = 'Участники заездов в Zwift';
+  const title = 'Участники заездов Zwift | Поиск по списку гонщиков на ZwiftPower.ru';
   const canonical = serverWoWWW + url;
   const description =
-    'Поиск райдеров, которые участвовали в гонках Звифт, опубликованных на сайте zwiftpower.ru';
-  const image = 'https://zwiftpower.ru/images/open_graph/11.jpg';
+    '🔍 Полный список всех райдеров и участников заездов в Zwift. Найдите гонщика, посмотрите его результаты, статистику и рейтинг на ZwiftPower.ru. Анализируйте своих соперников!';
+  const image = 'https://zwiftpower.ru/images/open_graph/riders.png';
   const recommendationsTag = 'riders';
 
   return { title, canonical, description, image, recommendationsTag };

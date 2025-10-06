@@ -7,11 +7,12 @@ import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
 // import { useAd } from '../../hook/useAd';
-import { HelmetSchedule } from '../../components/Helmets/HelmetSchedule';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import Pagination from '../../components/UI/Pagination/Pagination';
 // import AdContainer from '../../components/AdContainer/AdContainer';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { SCHEDULE_HELMET_PROPS } from '../../assets/helmet-props';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import FilterBoxForTable from '../../components/UI/FilterBoxForTable/FilterBoxForTable';
 import { lsPrefixScheduleList } from '../../constants/localstorage';
@@ -90,7 +91,7 @@ function ScheduleList() {
 
   return (
     <>
-      <HelmetSchedule />
+      <HelmetComponent {...SCHEDULE_HELMET_PROPS} />
       <section className={styles.wrapper}>
         <div className={styles.align__right}>
           {/* Блок фильтров для таблицы */}

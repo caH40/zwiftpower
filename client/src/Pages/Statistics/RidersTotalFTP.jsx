@@ -7,7 +7,8 @@ import { fetchRidersTotalFTP } from '../../redux/features/api/statistics-ftp/fet
 import { resetRidersTotalFTP } from '../../redux/features/api/statistics-ftp/ridersTotalFTPSlice';
 import ChartRidersTotalFTPPie from '../../components/Charts/RidersTotalPie/ChartRidersTotalFTPPie';
 import IconQuestion from '../../components/icons/IconQuestion';
-import { HelmetFTP } from '../../components/Helmets/HelmetFTP';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { STATISTICS_HELMET_PROPS } from '../../assets/helmet-props';
 import SkeletonRidersDiagrams from '../../components/SkeletonLoading/SkeletonRidersDiagrams/SkeletonRidersDiagrams';
 
 import styles from './Statistics.module.css';
@@ -29,7 +30,7 @@ function RidersTotalFTP() {
 
   return (
     <section>
-      <HelmetFTP />
+      <HelmetComponent {...STATISTICS_HELMET_PROPS.FTP} />
       <h2 className={styles.title}>
         Распределение райдеров по FTP{' '}
         <span>

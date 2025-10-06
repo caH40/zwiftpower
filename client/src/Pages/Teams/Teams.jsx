@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { SkeletonTeamCard } from '../../components/SkeletonLoading/SkeletonTeamCard/SkeletonTeamCard';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
-import { helmetProps } from '../../assets/helmet-props';
+import { TEAM_HELMET_PROPS } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
 import { fetchGetTeams } from '../../redux/features/api/team/fetchTeam';
@@ -43,7 +43,7 @@ export default function TeamsPublic() {
 
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.TEAMS_PUBLIC} />
+      <HelmetComponent {...TEAM_HELMET_PROPS.TEAMS_PUBLIC} />
 
       {/* Для отображения кнопки пользователь должен */}
       {/* быть авторизован,не должен состоять ни в одной команде, к профилю должен быть привязан ZwiftId */}

@@ -7,7 +7,6 @@ import { millisecondsIn90Days } from '../../assets/dates';
 import { useResize } from '../../hook/use-resize';
 // import { useAd } from '../../hook/useAd';
 import { lsPrefixStreams } from '../../constants/localstorage';
-import { HelmetMain } from '../../components/Helmets/HelmetMain';
 import useBannerVisibility from '../../hook/useBannerVisibility';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
@@ -17,6 +16,8 @@ import AdContainer from '../../components/AdContainer/AdContainer';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 // import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
 import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 
@@ -69,7 +70,8 @@ function MainPage() {
   return (
     <>
       <div className={styles.wrapper}>
-        <HelmetMain />
+        <HelmetComponent {...MAIN_HELMET_PROPS.MAIN} />
+
         <section className={styles.wrapper__preview}>
           {/* Информационный (рекламный по сайту) баннер */}
           <BannerInformation

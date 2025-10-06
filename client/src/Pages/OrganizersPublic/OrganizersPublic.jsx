@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import { useAd } from '../../hook/useAd';
-import { helmetProps } from '../../assets/helmet-props';
+import { ORGANIZERS_HELMET_PROPS } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
 import { useResize } from '../../hook/use-resize';
@@ -47,7 +47,7 @@ function OrganizersPublic() {
   // useAd(adNumbers);
   return (
     <>
-      <HelmetComponent {...helmetProps.ORGANIZERS_PUBLIC} />
+      <HelmetComponent {...ORGANIZERS_HELMET_PROPS.ORGANIZERS_PUBLIC} />
       <div className={styles.wrapper}>
         {!!shuffledOrganizers?.length && (
           <section className={styles.cards}>

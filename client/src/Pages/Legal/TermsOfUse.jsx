@@ -1,4 +1,4 @@
-import { helmetProps } from '../../assets/helmet-props.js';
+import { LEGAL_HELMET_PROPS } from '../../assets/helmet-props.js';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent.jsx';
 import { termsOfUse } from '../../locales/terms-of-use.json';
 import Document from '../../components/Document/Document.jsx';
@@ -13,7 +13,7 @@ export default function TermsOfUse() {
   useTitle('Пользовательское соглашение');
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.PRIVATE_POLICE} />
+      <HelmetComponent {...LEGAL_HELMET_PROPS.PRIVATE_POLICE} />
 
       <Document dataJson={termsOfUse} />
     </div>

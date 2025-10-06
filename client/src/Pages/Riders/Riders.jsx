@@ -7,7 +7,8 @@ import Pagination from '../../components/UI/Pagination/Pagination';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import NavBarRidersTable from '../../components/UI/NavBarRidersTable/NavBarRidersTable';
-import { HelmetRiders } from '../../components/Helmets/HelmetRiders';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { RIDERS_LIST_HELMET_PROPS } from '../../assets/helmet-props';
 import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
@@ -93,7 +94,7 @@ function Riders() {
 
   return (
     <>
-      <HelmetRiders />
+      <HelmetComponent {...RIDERS_LIST_HELMET_PROPS} />
       <section className={styles.wrapper}>
         <div className={styles.align__right}>
           <NavBarRidersTable

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useControlTeamMember } from '../../../hook/useControlTeamMember';
 import { useMembersForControl } from '../../../hook/useMembersForControl';
 import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
-import { helmetProps } from '../../../assets/helmet-props';
+import { TEAM_HELMET_PROPS } from '../../../assets/helmet-props';
 import TableTeamMembers from '../../../components/Tables/TableTeamMembers/TableTeamMembers';
 import BanUserControl from '../../../components/UI/BanUserControl/BanUserControl';
 import PendingUserControl from '../../../components/UI/PendingUserControl/PendingUserControl';
@@ -34,7 +34,7 @@ export default function TeamControlMembersPage() {
 
   return (
     <section className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.TEAM_CONTROL} />
+      <HelmetComponent {...TEAM_HELMET_PROPS.TEAM_CONTROL} />
 
       <div className={styles.tableContainer}>
         <TableTeamMembers

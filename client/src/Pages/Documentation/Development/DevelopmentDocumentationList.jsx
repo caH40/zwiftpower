@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchDocuments } from '../../../redux/features/api/documents/fetchDocuments';
 import { resetDocuments } from '../../../redux/features/api/documents/documentsSlice';
 import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
-import { helmetProps } from '../../../assets/helmet-props';
+import { DOCUMENTATION_HELMET_PROPS } from '../../../assets/helmet-props';
 import useTitle from '../../../hook/useTitle';
 import DocumentsListPage from '../../../components/DocumentsListPage/DocumentsListPage';
 
@@ -21,7 +21,7 @@ export default function DevelopmentDocumentationListPage() {
 
   return (
     <>
-      <HelmetComponent {...helmetProps.DEVELOPER_DOCS} />
+      <HelmetComponent {...DOCUMENTATION_HELMET_PROPS.DEVELOPER_DOCS} />
 
       <DocumentsListPage
         documents={documents}

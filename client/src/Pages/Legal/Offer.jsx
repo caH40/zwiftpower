@@ -1,4 +1,4 @@
-import { helmetProps } from '../../assets/helmet-props.js';
+import { LEGAL_HELMET_PROPS } from '../../assets/helmet-props.js';
 import Document from '../../components/Document/Document.jsx';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent.jsx';
 import useTitle from '../../hook/useTitle.js';
@@ -13,7 +13,7 @@ export default function Offer() {
   useTitle('Публичная оферта на оказание платных услуг');
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.OFFER} />
+      <HelmetComponent {...LEGAL_HELMET_PROPS.OFFER} />
 
       <Document dataJson={offer} />
     </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { documentChapters } from '../../assets/documents';
 import { useUserRole } from '../../hook/useUserRole';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
-import { helmetProps } from '../../assets/helmet-props';
+import { DOCUMENTATION_HELMET_PROPS } from '../../assets/helmet-props';
 import useTitle from '../../hook/useTitle';
 
 import styles from './Index.module.css';
@@ -23,7 +23,7 @@ export default function DocumentationPage() {
 
   return (
     <>
-      <HelmetComponent {...helmetProps.DOCUMENTATION} />
+      <HelmetComponent {...DOCUMENTATION_HELMET_PROPS.DOCUMENTATION} />
 
       <div className={styles.wrapper}>
         <div className={styles.header}>

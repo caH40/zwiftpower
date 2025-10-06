@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { fetchDocument } from '../../../redux/features/api/documents/fetchDocuments';
 import { resetDocument } from '../../../redux/features/api/documents/documentsSlice';
 import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
-import { helmetProps } from '../../../assets/helmet-props';
+import { DOCUMENTATION_HELMET_PROPS } from '../../../assets/helmet-props';
 import useTitle from '../../../hook/useTitle';
 import GithubButtonUrl from '../../../components/UI/GithubButtonUrl/GithubButtonUrl';
 import DocumentContent from '../../../components/DocumentContent/DocumentContent';
@@ -30,7 +30,7 @@ export default function PublicDocumentationPage() {
 
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...helmetProps.USER_DOCS} />
+      <HelmetComponent {...DOCUMENTATION_HELMET_PROPS.USER_DOCS} />
 
       {document?.content && <DocumentContent content={document.content} />}
 
