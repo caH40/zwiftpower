@@ -2,11 +2,11 @@ import { PowerCurve } from '../../../Model/PowerCurve.js';
 import { ZwiftResult } from '../../../Model/ZwiftResult.js';
 import { userPowerDto } from '../../../dto/user-power.dto.js';
 import { getProfileService } from './profile.js';
+import { userProfileDto } from '../../../dto/user-profile.dto.js';
+import { User } from '../../../Model/User.js';
 
 // types
 import { ResultWithEvent } from '../../../types/types.interface.js';
-import { userProfileDto } from '../../../dto/user-profile.dto.js';
-import { User } from '../../../Model/User.js';
 import { TUserStreams } from '../../../types/model.interface.js';
 
 /**

@@ -6,6 +6,7 @@ import { Rider } from '../../../Model/Rider.js';
 // types
 import type { Profile } from '../../../types/types.interface.js';
 import { TeamMemberModel } from '../../../Model/TeamMember.js';
+import { checkZwiftId } from '../../zwift/invalid_zwift_id/check.js';
 
 /**
  * Формирование данных профайла райдера (анкета)
@@ -58,6 +59,15 @@ export async function getProfileService(zwiftId: number): Promise<Profile> {
       bio: userDB.bio,
       racingScore: riderDB.competitionMetrics?.racingScore || 0,
       team: teamMemberDB?.team,
+    };
+  }
+
+  // Проверка на удаление аккаунта(zwiftId) в звифте.
+  const isInvalidZwiftId = await checkZwiftId(zwiftId);
+
+  if (isInvalidZwiftId) {
+    return {
+      ...baseProfile,
     };
   }
 
