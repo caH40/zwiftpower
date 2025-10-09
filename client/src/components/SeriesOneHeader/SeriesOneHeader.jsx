@@ -36,6 +36,7 @@ export default function SeriesOneHeader({
   dateStart,
   dateEnd,
   type,
+  currentStageOrder,
 }) {
   const [isVisibleMenuControl, setIsVisibleMenuControl] = useState(false);
   const { organizer, role } = useSelector((state) => state.checkAuth.value.user);
@@ -67,6 +68,7 @@ export default function SeriesOneHeader({
                 stages={stages}
                 setIsVisibleMenuControl={setIsVisibleMenuControl}
                 urlSlug={urlSlug}
+                currentStageOrder={currentStageOrder}
               />
             )}
           </>

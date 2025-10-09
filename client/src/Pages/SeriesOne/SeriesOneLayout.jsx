@@ -23,7 +23,8 @@ import styles from './SeriesOneLayout.module.css';
  * Макетная страница Серии заездов для вложенных страниц. Описание, итоговые таблицы.
  */
 export default function SeriesOneLayout() {
-  const { urlSlug } = useParams();
+  const { urlSlug, stageOrder: currentStageOrder } = useParams();
+
   // const { isScreenLg: isDesktop } = useResize();
   const { status: fetchSeriesStatus, seriesPublicOne } = useSelector(
     (state) => state.seriesPublic
@@ -56,6 +57,7 @@ export default function SeriesOneLayout() {
             dateStart={seriesPublicOne.dateStart}
             dateEnd={seriesPublicOne.dateEnd}
             type={seriesPublicOne.type}
+            currentStageOrder={currentStageOrder}
           />
         ) : (
           renderSkeletonCards({

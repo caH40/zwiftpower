@@ -11,7 +11,13 @@ import styles from './PopupMenuTable.module.css';
  * Обновление итоговых таблиц.
  * Обновление/создание результатов этапов серии.
  */
-function PopupMenuControlSeries({ seriesId, stages, setIsVisibleMenuControl, urlSlug }) {
+function PopupMenuControlSeries({
+  seriesId,
+  stages,
+  setIsVisibleMenuControl,
+  urlSlug,
+  currentStageOrder,
+}) {
   // Функция updateStageResults обновляет результаты этапа (order) серии заездов (seriesId).
   const { updateStageResults, updateGeneralClassification } = useSeriesOneFunctions();
 
@@ -25,6 +31,7 @@ function PopupMenuControlSeries({ seriesId, stages, setIsVisibleMenuControl, url
       seriesId,
       stageOrder,
       urlSlug,
+      currentStageOrder,
     });
   };
 

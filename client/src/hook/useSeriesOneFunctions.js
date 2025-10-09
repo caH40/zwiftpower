@@ -15,7 +15,7 @@ export function useSeriesOneFunctions() {
   const dispatch = useDispatch();
 
   // Функция обновления результатов этапа (order) серии заездов (seriesId).
-  const updateStageResults = async ({ seriesId, stageOrder, urlSlug }) => {
+  const updateStageResults = async ({ seriesId, stageOrder, currentStageOrder, urlSlug }) => {
     try {
       const isConfirm = window.confirm(
         `При обновлении результатов этапа №${stageOrder} сбросятся все изменения, внесённые в финишный протокол модераторами Серии. Вы действительно хотите обновить результаты этапа?`
@@ -34,8 +34,10 @@ export function useSeriesOneFunctions() {
 
       await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();
 
-      // После ответа fetchPutStageResults выполняется обновление результатов для соответствующего этапа.
-      dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
+      // После ответа fetchPutStageResults выполняется обновление результатов этапа открытой страницы.
+      if (currentStageOrder === stageOrder) {
+        dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
+      }
       dispatch(fetchGeneralClassification({ urlSlug }));
     } catch (error) {
       dispatch(
