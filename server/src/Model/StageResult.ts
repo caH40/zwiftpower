@@ -6,7 +6,11 @@ import {
   TStagePenalty,
   TStageResult,
 } from '../types/model.interface.js';
-import { DISQUALIFICATION_LABELS } from '../assets/constants.js';
+import {
+  DISQUALIFICATION_LABELS,
+  RACE_SERIES_CATEGORIES,
+  ZWIFT_CATEGORIES,
+} from '../assets/constants.js';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -131,14 +135,16 @@ const stageResultSchema = new Schema<IStageResult>(
     cpBestEfforts: [cpBestEffortsSchema],
     activityData: {
       durationInMilliseconds: { type: Number },
-      label: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
-      subgroupLabel: { type: String, enum: ['A', 'B', 'C', 'D', 'E'] },
+      // labels: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
+      subgroupLabel: { type: String, enum: ZWIFT_CATEGORIES },
     },
     sensorData: sensorDataSchema,
     category: {
       type: String,
+      enum: RACE_SERIES_CATEGORIES,
       default: null,
     },
+    categoryBySeriesRule: { type: String, enum: RACE_SERIES_CATEGORIES },
     modifiedCategory: {
       value: { type: String },
       moderator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

@@ -780,7 +780,8 @@ export type TStageResult = {
   };
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   category: TRaceSeriesCategories | null; // Категория, которая присвоена на предыдущем этапе.
-  modifiedCategory: {
+  categoryBySeriesRule?: TRaceSeriesCategories; // Рассчитанная категория согласно правилам категоризации в серии.
+  modifiedCategory?: {
     value: TRaceSeriesCategories | null;
     moderator?: Types.ObjectId;
     modifiedAt: Date;

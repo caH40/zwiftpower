@@ -6,6 +6,7 @@ import { NSeriesModel } from '../../Model/NSeries.js';
 import { TSeriesType } from '../../types/model.interface.js';
 import { TourGCManager } from './tour/TourGCManager.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { SeriesCategoryService } from './SeriesCategory.js';
 
 // types
 
@@ -89,8 +90,9 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       protocolsStageFromZwift
     );
 
-    // Установка категорий райдерам.
-    const resultsWithCategories = await this.setCategories({
+    // Автоматическое определение и установка категорий райдерам в заезде.
+    const categoryService = new SeriesCategoryService(this.seriesId);
+    const resultsWithCategories = await categoryService.autoAssignRiderCategories({
       stageResults: resultsWithAgeAndFlag,
       stageOrder,
     });

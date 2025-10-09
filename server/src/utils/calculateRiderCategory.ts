@@ -1,20 +1,7 @@
 // types
-import {
-  TCategoriesWithRange,
-  TCategoryRange,
-  TFtpData,
-  TRiderCP,
-} from '../types/series.types';
+import { TCriticalPowerBestEfforts } from '../types/model.interface';
+import { TCategoriesWithRange, TCategoryRange, TFtpData } from '../types/series.types';
 import { TRaceSeriesCategories } from '../types/types.interface';
-
-/**
- * Райдер проехал дистанцию и у него посчитаны ватты и удельные ватты на
- * стандартных интервалах: 15, 60, 300, 1200 и FTP.
- *
- * Получить интервалы по которым определяется категория в Серии заездов.
- *
- *
- */
 
 /**
  * Функция определения категории.
@@ -51,7 +38,7 @@ export function calculateRiderCategory({
   riderFtp,
   categoriesWithRange,
 }: {
-  riderCPs: TRiderCP[];
+  riderCPs: TCriticalPowerBestEfforts[];
   riderFtp: TFtpData;
   categoriesWithRange: TCategoriesWithRange[];
 }): TRaceSeriesCategories | null {
@@ -91,14 +78,17 @@ export function calculateRiderCategory({
   return null;
 }
 
-function checkCPMatch(riderCPs: TRiderCP[], ranges: TCategoryRange[]): boolean {
+function checkCPMatch(
+  riderCPs: TCriticalPowerBestEfforts[],
+  ranges: TCategoryRange[]
+): boolean {
   if (ranges.length === 0) {
     return true;
   } // если диапазонов нет, то считаем что CP подходит
 
   return ranges.some((range) => {
-    const riderCP = riderCPs.find((r) => r.interval === range.interval);
+    const riderCP = riderCPs.find((r) => r.duration === range.interval);
     if (!riderCP) return false;
-    return compare(riderCP.wattPerKg, range.wattPerKg.value, range.wattPerKg.operand);
+    return compare(riderCP.wattsKg, range.wattPerKg.value, range.wattPerKg.operand);
   });
 }

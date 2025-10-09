@@ -1,10 +1,10 @@
-import { INTERVAL_IN_SECONDS, riderCategoryRuleTypes } from '../assets/constants';
+import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
 import { TRaceSeriesCategories } from './types.interface';
 
 /**
  * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
  */
-export type TRiderCategoryRuleType = (typeof riderCategoryRuleTypes)[number];
+export type TRiderCategoryRuleType = (typeof RIDER_CATEGORIES_RULE_TYPES)[number];
 
 export type TIntervalInSeconds = (typeof INTERVAL_IN_SECONDS)[number];
 
@@ -16,10 +16,6 @@ export type TIntervalInSeconds = (typeof INTERVAL_IN_SECONDS)[number];
 /**
  * CP райдера в заезде на интервале interval.
  */
-export type TRiderCP = {
-  interval: TIntervalInSeconds;
-  wattPerKg: number;
-};
 export type TFtpData = {
   watt: number;
   wattPerKg: number;

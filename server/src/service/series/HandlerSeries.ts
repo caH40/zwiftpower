@@ -1,8 +1,13 @@
+import { Types } from 'mongoose';
+
+import { TourGCManager } from './tour/TourGCManager.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsFromZwift } from '../updates/results_event/resultsFromZwift.js';
 import { getCPFromResult } from '../power/empty-cp.js';
 import { MongooseUtils } from '../../utils/MongooseUtils.js';
+import { StageResultModel } from '../../Model/StageResult.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import {
@@ -13,12 +18,7 @@ import {
 import {
   TRaceSeriesCategories,
   TGetProtocolsStageFromZwiftParams,
-  TSetCategoriesStageParams,
 } from '../../types/types.interface.js';
-import { StageResultModel } from '../../Model/StageResult.js';
-import { handleAndLogError } from '../../errors/error.js';
-import { Types } from 'mongoose';
-import { TourGCManager } from './tour/TourGCManager.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -115,52 +115,6 @@ export class HandlerSeries {
     });
 
     return { stageResults, subgroupIdsInEvents };
-  }
-
-  /**
-   * Установка категорий райдерам в финишном протоколе этапа серии заездов.
-   */
-  protected async setCategories({
-    stageResults,
-    stageOrder,
-  }: TSetCategoriesStageParams): Promise<TStageResult[]> {
-    // FIXME: в дальнейшем продумать более детально логику определения категорий, например на основе диапазонов категорий принятых в текущей серии заездов.
-
-    const seriesDB = await this.getSeriesData();
-
-    // Проверка, если этапы перед текущим stageOrder, то есть является ли stageOrder самым первым в серии заездов (нулевым или первым).
-    // FIXME: Присваивать категорию на основе той группы в которой выступал райдер.
-    // FIXME: Или указывать, что категория не определена. Выбор данных настроек можно вынести в определенный параметр Серии заездов.
-    if (stageOrder === Math.min(...seriesDB.stages.map(({ order }) => order))) {
-      return stageResults.map((stage) => {
-        stage.category = stage.activityData.subgroupLabel;
-        return stage;
-      });
-    }
-
-    // Если этап не первый в серии:
-    // Получить данные по категориям райдеров из прошлого заезда и присвоить соответствующую категорию в данном этапе.
-
-    // Результаты прошлого этапа.
-    const previousStagesResults = await StageResultModel.find(
-      {
-        seriesId: this.seriesId,
-        order: stageOrder - 1,
-      },
-      { _id: false, profileId: true, category: true }
-    ).lean<{ profileId: number; category: TRaceSeriesCategories | null }[]>();
-
-    // Создание коллекции Map для боле быстрого доступа к данным.
-    const previousStagesResultsMap = new Map(
-      previousStagesResults.map((res) => [res.profileId, res.category])
-    );
-
-    return stageResults.map((stage) => {
-      // Если райдер profileId не участвовал в предыдущем заезде, то категория берется на основании группы в которой участвовал райдер.
-      stage.category =
-        previousStagesResultsMap.get(stage.profileId) || stage.activityData.subgroupLabel;
-      return stage;
-    });
   }
 
   /**
