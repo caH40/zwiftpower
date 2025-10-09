@@ -4,6 +4,8 @@ import { putSignedRidersService } from '../signed-riders.js';
 import { checkUnique } from './unique.js';
 import { saveEventToDB } from './save.js';
 import { Club } from '../../../Model/Club.js';
+import { NSeriesModel } from '../../../Model/NSeries.js';
+import { SeriesOrganizerService } from '../../series/SeriesOrganizer.js';
 
 // types
 import {
@@ -13,8 +15,6 @@ import {
   ZwiftEventSchema,
 } from '../../../types/model.interface.js';
 import { EventWithSubgroup } from '../../../types/types.interface.js';
-import { NSeriesModel } from '../../../Model/NSeries.js';
-import { SeriesService } from '../../series/series.js';
 
 type ClubWithOrganizer = Omit<ClubSchema, 'organizer'> & {
   organizer: OrganizerSchema;
@@ -54,7 +54,7 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
     ).lean<{ stages: TSeriesStage[]; name: string }>();
 
     if (seriesDB) {
-      const seriesService = new SeriesService();
+      const seriesService = new SeriesOrganizerService();
       await seriesService.addStage({
         stage: {
           event: String(eventSaved._id),

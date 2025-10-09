@@ -17,14 +17,14 @@ import {
   putOrganizerMain,
 } from '../controllers/organizer.js';
 import { fileMiddleware } from '../middleware/file.js';
-import { SeriesController } from '../controllers/series.js';
+import { SeriesOrganizerController } from '../controllers/SeriesOrganizer.js';
 import { getEventsForSeries } from '../controllers/race.js';
 
 import { SeriesResultsController } from '../controllers/SeriesResults.js';
 
 export const routerOrganizer = Router();
 
-const seriesController = new SeriesController();
+const seriesController = new SeriesOrganizerController();
 const seriesResultsController = new SeriesResultsController();
 
 routerOrganizer.put('/bots', authOrganizer, putOrganizerBotZwift);

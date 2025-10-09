@@ -26,7 +26,10 @@ import {
   TParamsSeriesServiceAddStage,
 } from '../../types/types.interface.js';
 
-export class SeriesService {
+/**
+ * Класс работы с Серией заездов для Организаторов.
+ */
+export class SeriesOrganizerService {
   private imagesService: ImagesService;
   entityName: entityForFileSuffix;
   constructor() {
@@ -40,7 +43,7 @@ export class SeriesService {
   ): Promise<TResponseService<TOrganizerSeriesAllDto[]>> {
     const seriesDB = await NSeriesModel.find(
       { organizer: organizerId },
-      SeriesService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
+      SeriesOrganizerService.SERIES_ALL_FOR_ORGANIZER_PROJECTION
     )
       .populate({ path: 'stages.event', select: ['name', 'eventStart'] })
       .lean<TOrganizerSeriesAllResponseDB[]>();

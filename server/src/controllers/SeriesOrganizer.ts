@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import mongoose, { Types } from 'mongoose';
 
 import { handleErrorInController } from '../errors/error.js';
-import { SeriesService } from '../service/series/series.js';
+import { SeriesOrganizerService } from '../service/series/SeriesOrganizer.js';
 import { Organizer } from '../Model/Organizer.js';
 import { SeriesDataZSchema } from '../utils/deserialization/series/series-data.js';
 
@@ -16,11 +16,11 @@ import { NSeriesModel } from '../Model/NSeries.js';
 /**
  * Контроллер работы с сущностью "Серия заездов".
  */
-export class SeriesController {
-  seriesService: SeriesService;
+export class SeriesOrganizerController {
+  seriesService: SeriesOrganizerService;
 
   constructor() {
-    this.seriesService = new SeriesService();
+    this.seriesService = new SeriesOrganizerService();
   }
 
   /**

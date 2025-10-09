@@ -10,7 +10,7 @@ import { TourGCManager } from '../service/series/tour/TourGCManager.js';
 import { TSeriesType } from '../types/model.interface.js';
 import { NSeriesModel } from '../Model/NSeries.js';
 import { CategoryZSchema } from '../utils/deserialization/series/category.js';
-import { SeriesController } from './series.js';
+import { SeriesOrganizerController } from './SeriesOrganizer.js';
 import { HandlerSeries } from '../service/series/HandlerSeries.js';
 
 /**
@@ -98,7 +98,7 @@ export class SeriesResultsController {
       const { userId: moderator, seriesId, stageResultId, value, reason } = result.data;
 
       // Проверка, что запрос происходит от Организатора.
-      const seriesController = new SeriesController();
+      const seriesController = new SeriesOrganizerController();
       await seriesController.checkOrganizer(moderator);
 
       // Вызов сервиса.

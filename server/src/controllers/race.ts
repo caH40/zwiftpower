@@ -14,7 +14,7 @@ import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 import { checkModeratorClub } from '../service/moderator-club.js';
 import { eventParamsDto } from '../dto/eventParams.dto.js';
 import { getNextWeekRacesService } from '../service/race/events_list/next-week.js';
-import { SeriesController } from './series.js';
+import { SeriesOrganizerController } from './SeriesOrganizer.js';
 
 // types
 import { GetEvents, PostEvent } from '../types/http.interface.js';
@@ -183,7 +183,7 @@ export async function getEventsForSeries(req: Request, res: Response) {
     const { userId } = req.params;
 
     // Проверка, что запрос происходит от Организатора.
-    const seriesController = new SeriesController();
+    const seriesController = new SeriesOrganizerController();
     const organizerId = await seriesController.checkOrganizer(userId);
 
     // Вызов сервиса.
