@@ -5,15 +5,11 @@ import {
   UpdateSeriesGCSchema,
   UpdateStageResultsSchema,
 } from '../utils/deserialization/seriesResultsController.js';
-import { TourGCManager } from '../service/series/tour/TourGCManager.js';
-import { NSeriesModel } from '../Model/NSeries.js';
 import { CategoryZSchema } from '../utils/deserialization/series/category.js';
 import { SeriesOrganizerController } from './SeriesOrganizer.js';
 import { HandlerSeries } from '../service/series/HandlerSeries.js';
 import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtocolManager.js';
-
-// types
-import { TSeriesType } from '../types/model.interface.js';
+import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
 
 /**
  * Класс управления результатами серий.
@@ -55,24 +51,8 @@ export class SeriesStageProtocolManagerController {
       // Десериализация и валидация входных данных.
       const { seriesId } = UpdateSeriesGCSchema.parse(req.body);
 
-      // Получем тип серии заездов.
-      const typeFromSeries = await NSeriesModel.findOne(
-        { _id: seriesId },
-        { _id: false, type: true }
-      ).lean<{ type: TSeriesType }>();
-
-      if (!typeFromSeries) {
-        throw new Error(`Не найдена серия с _id:${seriesId}`);
-      }
-
-      let response = { data: null, message: 'Инициализация объекта responseService' };
-      if (typeFromSeries.type === 'tour') {
-        const tourGCService = new TourGCManager(seriesId);
-        // Вызов сервиса.
-        response = await tourGCService.update();
-      } else {
-        throw new Error(`Нет обработчика для типа серии: ${typeFromSeries.type}!`);
-      }
+      const gCManager = new SeriesGCManager(seriesId);
+      const response = await gCManager.update();
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

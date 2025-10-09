@@ -5,6 +5,7 @@ import { StageResultModel } from '../../Model/StageResult.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { TSeriesType } from '../../types/model.interface.js';
 import { TourGCManager } from './tour/TourGCManager.js';
+import { TResponseService } from '../../types/http.interface.js';
 
 // types
 
@@ -18,15 +19,18 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     super(seriesId);
   }
 
-  async updateStageProtocolAndGC(stageOrder: number) {
+  async updateStageProtocolAndGC(stageOrder: number): Promise<TResponseService<null>> {
     // Удаление старого и создание нового финишного протокола этапа stageOrder серии seriesId.
     const { seriesType } = await this.buildStageProtocol(stageOrder);
 
+    const initialResponse = {
+      data: null,
+      message: `📝 Тип '${seriesType}' будет реализован в ближайшем обновлении`,
+    };
+
     switch (seriesType) {
       case 'series':
-        // eslint-disable-next-line no-console
-        console.warn(`⚠️ Функционал для типа '${seriesType}' находится в разработке`);
-        break;
+        return initialResponse;
 
       case 'tour': {
         // Обновление генеральной классификации серии.
@@ -40,14 +44,10 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       }
 
       case 'catchUp':
-        // eslint-disable-next-line no-console
-        console.log(`📝 Тип '${seriesType}' будет реализован в ближайшем обновлении`);
-        break;
+        return initialResponse;
 
       case 'criterium':
-        // eslint-disable-next-line no-console
-        console.log(`👨‍💻 Обработчик для критериума в разработке`);
-        break;
+        return initialResponse;
 
       default:
         throw new Error(`❌ Неподдерживаемый тип серии: ${seriesType}`);
