@@ -9,7 +9,7 @@ import { TDisqualification, TSeries, TSeriesStage } from '../../../types/model.i
 import { TStagesResultsForGC } from '../../../types/mongodb-response.types.js';
 import {
   TAllStageOrders,
-  TCategorySeries,
+  TRaceSeriesCategories,
   TGCForSave,
 } from '../../../types/types.interface.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
@@ -262,12 +262,12 @@ export class TourGCManager {
    */
   private getCommonCategory = (
     stages: {
-      category: TCategorySeries | null;
+      category: TRaceSeriesCategories | null;
       stageOrder: number;
       durationInMilliseconds: number;
       finishPoints: number;
     }[]
-  ): TCategorySeries | null => {
+  ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
     if (stages.length === 0) {
       return null;

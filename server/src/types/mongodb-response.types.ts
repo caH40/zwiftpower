@@ -16,7 +16,7 @@ import {
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
 } from './model.interface';
-import { TCategorySeries } from './types.interface';
+import { TRaceSeriesCategories } from './types.interface';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;
@@ -215,7 +215,7 @@ export type TEventForMailingPreviewDB = Pick<
 
 export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory'> & {
   modifiedCategory: {
-    value: TCategorySeries | null;
+    value: TRaceSeriesCategories | null;
     moderator?: { username: string };
     modifiedAt: Date;
     reason?: string;

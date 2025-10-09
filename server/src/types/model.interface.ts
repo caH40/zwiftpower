@@ -4,7 +4,7 @@ import {
   PowerFitFiles,
   ProfileDataInResultWithId,
   TAuthService,
-  TCategorySeries,
+  TRaceSeriesCategories,
   TPricingPlan,
   TTeamForProfile,
 } from './types.interface.js';
@@ -659,7 +659,7 @@ export type TSeries = {
   hasTeams: boolean; // Подсчет командного зачета.
   isFinished: boolean; // Флаг завершения серии.
   riderCategoryRule?: TRiderCategoryRuleType; // Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
-  categoriesWithRange?: TCategoriesWithRange[]; // Если нет, то категории по Звифту.
+  categoriesWithRange?: TCategoriesWithRange[]; // Категории в серии и правила их присвоения. Если нет, то категории по Звифту.
   racingScoreRange?: TRacingScoreRange[]; // Категоризация по рейтинговым очкам.
   logoFileInfo?: TFileMetadataForCloud; // Объект с URL логотипа (разные размеры).
   mission?: string; // Цель или миссия серии.
@@ -779,9 +779,9 @@ export type TStageResult = {
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
   };
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
-  category: TCategorySeries | null; // Категория, в которой ехал райдер на этапе.
+  category: TRaceSeriesCategories | null; // Категория, которая присвоена на предыдущем этапе.
   modifiedCategory: {
-    value: TCategorySeries | null;
+    value: TRaceSeriesCategories | null;
     moderator?: Types.ObjectId;
     modifiedAt: Date;
     reason?: string;
@@ -858,7 +858,7 @@ export type TSeriesClassification = {
   seriesId: Types.ObjectId; // _id серии из БД.
   rank: TRank | null; // Итоговое место в классификации.
   profileId: number; // ZwiftId райдера.
-  finalCategory: TCategorySeries | null; // Категория, по которой райдер участвует в зачёте и рассчитывается rank. Выставляется автоматически согласно правилам серии.
+  finalCategory: TRaceSeriesCategories | null; // Категория, по которой райдер участвует в зачёте и рассчитывается rank. Выставляется автоматически согласно правилам серии.
   totalFinishPoints: number; // Суммарные очки (для серии с подсчётом очков).
   totalTimeInMilliseconds: number; // Общее время за все завершённые этапы (в миллисекундах).
   stagesCompleted: number; // Количество завершённых этапов.
@@ -866,7 +866,7 @@ export type TSeriesClassification = {
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   stages: {
-    category: TCategorySeries | null; // Итоговая категория, после модерации (если была).
+    category: TRaceSeriesCategories | null; // Итоговая категория, после модерации (если была).
     stageOrder: number; // Порядковый номер этапа в туре.
     durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах). 0 - райдер не финишировал на данном этапе.
     finishPoints: number; // Заработанные финишные очки за этап.

@@ -11,7 +11,7 @@ import {
   ZwiftEventSubgroupSchema,
 } from '../../types/model.interface.js';
 import {
-  TCategorySeries,
+  TRaceSeriesCategories,
   TGetProtocolsStageFromZwiftParams,
   TSetCategoriesStageParams,
 } from '../../types/types.interface.js';
@@ -148,7 +148,7 @@ export class HandlerSeries {
         order: stageOrder - 1,
       },
       { _id: false, profileId: true, category: true }
-    ).lean<{ profileId: number; category: TCategorySeries | null }[]>();
+    ).lean<{ profileId: number; category: TRaceSeriesCategories | null }[]>();
 
     // Создание коллекции Map для боле быстрого доступа к данным.
     const previousStagesResultsMap = new Map(
@@ -173,7 +173,7 @@ export class HandlerSeries {
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
-    const categories: Record<TCategorySeries | 'absolute', number> = {
+    const categories: Record<TRaceSeriesCategories | 'absolute', number> = {
       APlus: 1,
       A: 1,
       BPlus: 1,
@@ -231,7 +231,7 @@ export class HandlerSeries {
   }: {
     stageResultId: string;
     moderator?: string;
-    value: TCategorySeries | null;
+    value: TRaceSeriesCategories | null;
     reason?: string;
   }): Promise<{ data: null; message: string }> {
     const modifiedCategory = {

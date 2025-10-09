@@ -19,7 +19,7 @@ import {
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { TPaymentNotification } from './payment.types';
-import { EventWithSubgroup, TCategorySeries } from './types.interface';
+import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface';
 
 /**
  * Данные Организатора основные и модерируемые клубы для клиента.
@@ -221,7 +221,7 @@ export type StageResultDto = Omit<
   teamSquadAtRace: string | null;
   wattsPerKg: number;
   modifiedCategory: {
-    value: TCategorySeries | null;
+    value: TRaceSeriesCategories | null;
     moderator?: { username: string };
     modifiedAt: Date;
     reason?: string;

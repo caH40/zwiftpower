@@ -1,6 +1,6 @@
 // types
 import { TGapsInCategories } from '../types/model.interface';
-import { TCategorySeries, TFinishGapsGetters } from '../types/types.interface';
+import { TRaceSeriesCategories, TFinishGapsGetters } from '../types/types.interface';
 
 /**
  * Класс расчета временных отставаний (гэпов) в абсолютном и категорийном зачётах.
@@ -15,7 +15,7 @@ export class FinishGaps {
    */
   setGaps = <T>(results: T[], getters: TFinishGapsGetters<T>) => {
     // Множество категорий, по которым будем считать гэпы.
-    const categoriesInResults = new Set<TCategorySeries | 'absolute'>(['absolute']);
+    const categoriesInResults = new Set<TRaceSeriesCategories | 'absolute'>(['absolute']);
 
     // Сбор уникальных категорий из результатов
     for (const result of results) {
@@ -25,7 +25,7 @@ export class FinishGaps {
 
     // Инициализация структуры для хранения индексов лидера и предыдущего райдера в каждой категории
     const indexesInCategories: Partial<
-      Record<TCategorySeries | 'absolute', { leader: number | null; prev: number }>
+      Record<TRaceSeriesCategories | 'absolute', { leader: number | null; prev: number }>
     > = {};
     for (const key of categoriesInResults) {
       indexesInCategories[key] = { leader: null, prev: 0 };
@@ -96,81 +96,3 @@ export class FinishGaps {
     return { toLeader, toPrev };
   };
 }
-
-// /**
-//    * Мутирует элементы массива расчетными временными финишными гэпами между райдерами для различных категорий.
-//    * @param results Массив отсортированных по времени результатов заезда.
-//    */
-// setGaps = (results: TStageResult[]) => {
-//   const categoriesInResults = new Set<TCategorySeries | 'absolute'>(['absolute']);
-
-//   // Коллекция всех категорий которые есть в результатах.
-//   for (const result of results) {
-//     if (result.category) {
-//       categoriesInResults.add(result.category);
-//     }
-//   }
-
-//   // Инициализация пустого объекта для счетчиков.
-//   const indexesInCategories: Partial<
-//     Record<TCategorySeries | 'absolute', { leader: number | null; prev: number }>
-//   > = {};
-
-//   // Инициализация счетчиков лидеров и предыдущих участников для всех категорий.
-//   // leader - индекс лидера в соответствующей категории или абсолюте.
-//   // prev - индекс предыдущего результата в соответствующей категории или абсолюте.
-//   for (const key of categoriesInResults) {
-//     indexesInCategories[key] = { leader: null, prev: 0 };
-//   }
-
-//   // Итерация по всем результатам с расчетом соответствующих гэпов.
-//   for (let resultIndex = 0; resultIndex < results.length; resultIndex++) {
-//     const result = results[resultIndex];
-//     const categoryInResult = result.category;
-
-//     // Инициализация полей gapsInCategories.
-//     result.gapsInCategories = {
-//       absolute: null,
-//       category: null,
-//     };
-
-//     // 1. Расчет гэпов для категорий.
-//     if (categoryInResult) {
-//       // Данные, какие индексы в текущей категории (categoryInResult) у лидера и предыдущего участника.
-//       const categoryEntry = indexesInCategories[categoryInResult];
-
-//       // Явная проверка, что categoryEntry не undefined или null.
-//       if (categoryEntry) {
-//         const indexLeaderCategory = categoryEntry.leader;
-
-//         // Если indexLeaderCategory === null, значит этот результат является лидеров в текущей категории (categoryInResult).
-//         if (indexLeaderCategory === null) {
-//           categoryEntry.leader = resultIndex;
-//           categoryEntry.prev = resultIndex;
-//         } else {
-//           result.gapsInCategories.category = this.calculateGaps(
-//             results,
-//             resultIndex,
-//             indexLeaderCategory,
-//             categoryEntry.prev
-//           );
-//           categoryEntry.prev = resultIndex;
-//         }
-//       }
-//     }
-
-//     // 2. Расчет гэпов для абсолютного зачета.
-//     if (indexesInCategories['absolute']) {
-//       if (resultIndex === 0) {
-//         indexesInCategories['absolute'].leader = 0;
-//       } else {
-//         result.gapsInCategories.absolute = this.calculateGaps(
-//           results,
-//           resultIndex,
-//           0,
-//           resultIndex - 1
-//         );
-//       }
-//     }
-//   }
-// };

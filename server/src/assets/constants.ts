@@ -145,7 +145,7 @@ export const DISQUALIFICATION_LABELS = [
   'UNC',
 ] as const;
 
-export const CATEGORIES_SERIES = [
+export const RACE_SERIES_CATEGORIES = [
   'APlus',
   'A',
   'BPlus',
@@ -158,6 +158,8 @@ export const CATEGORIES_SERIES = [
   'WC',
   'WD',
 ] as const;
+
+export const ZWIFT_CATEGORIES = ['A', 'B', 'C', 'D', 'E'] as const;
 
 export const INTERVAL_IN_SECONDS = [15, 60, 300, 600, 1200, 3600] as const;
 

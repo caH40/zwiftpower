@@ -1,4 +1,4 @@
-import { TCategorySeries } from '../types/types.interface';
+import { TRaceSeriesCategories } from '../types/types.interface';
 
 /**
  * Правила категорий по zwiftpower
@@ -38,7 +38,7 @@ export const eventSubGroups = new Map([
 ]);
 
 // Объект для подсчета категорий в результатах заехда или серий.
-export const categoriesForRankings: Record<TCategorySeries | 'absolute', number> = {
+export const categoriesForRankings: Record<TRaceSeriesCategories | 'absolute', number> = {
   APlus: 1,
   A: 1,
   BPlus: 1,
@@ -53,7 +53,7 @@ export const categoriesForRankings: Record<TCategorySeries | 'absolute', number>
   absolute: 1,
 };
 
-export const maleCategoryLabels: Map<number, TCategorySeries> = new Map([
+export const maleCategoryLabels: Map<number, TRaceSeriesCategories> = new Map([
   [1, 'APlus'],
   [2, 'A'],
   [3, 'BPlus'],
@@ -64,7 +64,7 @@ export const maleCategoryLabels: Map<number, TCategorySeries> = new Map([
 ]);
 
 // Полная коллекция категорий женщин
-export const femaleCategoryLabels: Map<number, TCategorySeries> = new Map([
+export const femaleCategoryLabels: Map<number, TRaceSeriesCategories> = new Map([
   [1, 'WA'],
   [2, 'WB'],
   [3, 'WC'],

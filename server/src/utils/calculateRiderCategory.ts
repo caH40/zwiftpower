@@ -5,7 +5,7 @@ import {
   TFtpData,
   TRiderCP,
 } from '../types/series.types';
-import { TCategorySeries } from '../types/types.interface';
+import { TRaceSeriesCategories } from '../types/types.interface';
 
 /**
  * Райдер проехал дистанцию и у него посчитаны ватты и удельные ватты на
@@ -54,7 +54,7 @@ export function calculateRiderCategory({
   riderCPs: TRiderCP[];
   riderFtp: TFtpData;
   categoriesWithRange: TCategoriesWithRange[];
-}): TCategorySeries | null {
+}): TRaceSeriesCategories | null {
   // проверяем категории по порядку (старшие → младшие)
   for (const { ftpRange, ranges, label } of categoriesWithRange) {
     // 1) совпадение по CP-интервалам (OR между интервалами)

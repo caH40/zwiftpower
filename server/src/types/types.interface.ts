@@ -32,7 +32,7 @@ import {
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
-import { CATEGORIES_SERIES } from '../assets/constants.js';
+import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../assets/constants.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -729,13 +729,13 @@ export type TResponseStreamDto = {
   };
 };
 
-export type TCategory = 'A' | 'B' | 'C' | 'D' | 'E';
-export type TCategorySeries = (typeof CATEGORIES_SERIES)[number];
+export type TZwiftCategory = (typeof ZWIFT_CATEGORIES)[number];
+export type TRaceSeriesCategories = (typeof RACE_SERIES_CATEGORIES)[number];
 /**
  * Лидеры по победам в каждой группе в Догонялках.
  */
 export type TLeaderboardsCatchupDto = {
-  category: TCategory;
+  category: TZwiftCategory;
   leaders: TCatchupLeader[]; // Три лидера в каждой категории.
 };
 export type TCatchupLeader = {
@@ -956,7 +956,7 @@ export type TGCForSave = Omit<TSeriesClassification, 'seriesId' | 'createdAt' | 
  */
 export type TFinishGapsGetters<T> = {
   getDuration: (result: T) => number; // Функция получения продолжительности (в мс) из результата.
-  getCategory: (result: T) => TCategorySeries | null; // Функция получения категории результата.
+  getCategory: (result: T) => TRaceSeriesCategories | null; // Функция получения категории результата.
   setGaps: (result: T, gaps: { category: TGap | null; absolute: TGap | null }) => void; // Функция записи рассчитанных гэпов обратно в результат.
 };
 

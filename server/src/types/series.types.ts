@@ -1,5 +1,5 @@
 import { INTERVAL_IN_SECONDS, riderCategoryRuleTypes } from '../assets/constants';
-import { TCategorySeries } from './types.interface';
+import { TRaceSeriesCategories } from './types.interface';
 
 /**
  * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
@@ -43,7 +43,7 @@ export type TCategoryRange = {
  *
  */
 export type TCategoriesWithRange = {
-  label: TCategorySeries;
+  label: TRaceSeriesCategories;
   ftpRange: {
     wattPerKg: TRange;
     watt?: TRange;
@@ -56,7 +56,7 @@ export type TCategoriesWithRange = {
  * Категоризация по рейтинговым очкам.
  */
 export type TRacingScoreRange = {
-  label: TCategorySeries;
+  label: TRaceSeriesCategories;
   range: {
     min: number;
     max: number;

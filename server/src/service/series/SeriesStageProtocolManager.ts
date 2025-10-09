@@ -19,6 +19,9 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     super(seriesId);
   }
 
+  /**
+   * Запуск создания(обновления) протокола этапа stageOrder с последующим пересчетом таблиц ГС.
+   */
   async updateStageProtocolAndGC(stageOrder: number): Promise<TResponseService<null>> {
     // Удаление старого и создание нового финишного протокола этапа stageOrder серии seriesId.
     const { seriesType } = await this.buildStageProtocol(stageOrder);
