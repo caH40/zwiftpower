@@ -1,26 +1,68 @@
-import { NSeriesModel } from '../../../Model/NSeries.js';
-import { StageResultModel } from '../../../Model/StageResult.js';
-import { TResponseService } from '../../../types/http.interface.js';
-import { FinishGaps } from '../../../utils/FinishGaps.js';
-import { addAgeAndFlagNew } from '../../protocol/age-and-flag.js';
-import { HandlerSeries } from '../HandlerSeries.js';
-import { TourGCManager } from './TourGCManager.js';
+import { HandlerSeries } from './HandlerSeries.js';
+import { addAgeAndFlagNew } from '../protocol/age-and-flag.js';
+import { FinishGaps } from '../../utils/FinishGaps.js';
+import { StageResultModel } from '../../Model/StageResult.js';
+import { NSeriesModel } from '../../Model/NSeries.js';
+import { TSeriesType } from '../../types/model.interface.js';
+import { TourGCManager } from './tour/TourGCManager.js';
+
+// types
 
 /**
- * Класс работы с результатами Тура TSeriesType = 'tour'
+ * Класс создания (обновления) протоколов серий и туров.
+ * -добавление недостающих данных;
+ * -перерасчет всех протоколов серии(тура) в зависимости от соответствующих настроек;
  */
-export class TourResultsManager extends HandlerSeries {
+export class SeriesStageProtocolManager extends HandlerSeries {
   constructor(public seriesId: string) {
-    super(seriesId); // Вызов конструктора базового класса.
+    super(seriesId);
+  }
+
+  async updateStageProtocolAndGC(stageOrder: number) {
+    // Удаление старого и создание нового финишного протокола этапа stageOrder серии seriesId.
+    const { seriesType } = await this.buildStageProtocol(stageOrder);
+
+    switch (seriesType) {
+      case 'series':
+        // eslint-disable-next-line no-console
+        console.warn(`⚠️ Функционал для типа '${seriesType}' находится в разработке`);
+        break;
+
+      case 'tour': {
+        // Обновление генеральной классификации серии.
+        const tourGC = new TourGCManager(this.seriesId);
+        const res = await tourGC.update();
+
+        return {
+          data: null,
+          message: `Созданы результаты этапа №${stageOrder}. ${res.message}`,
+        };
+      }
+
+      case 'catchUp':
+        // eslint-disable-next-line no-console
+        console.log(`📝 Тип '${seriesType}' будет реализован в ближайшем обновлении`);
+        break;
+
+      case 'criterium':
+        // eslint-disable-next-line no-console
+        console.log(`👨‍💻 Обработчик для критериума в разработке`);
+        break;
+
+      default:
+        throw new Error(`❌ Неподдерживаемый тип серии: ${seriesType}`);
+    }
   }
 
   /**
-   * Создание финишного протокола Этапа тура на основе данных протокола с ZwiftAPI.
+   * Создание финишного протокола Этапа серии или тура на основе данных протокола с ZwiftAPI.
+   * Добавление дополнительных данных в результаты райдеров.
+   * Запрос приходит от организатора или автоматически по расписанию обновлений результатов этапов.
    *
    * @param {number} stageOrder - Номер этапа (order) в серии заездов.
    */
-  public async buildStageProtocol(stageOrder: number): Promise<TResponseService<null>> {
-    const { stages: stagesFromSeries } = await this.getSeriesData();
+  public async buildStageProtocol(stageOrder: number): Promise<{ seriesType: TSeriesType }> {
+    const { stages: stagesFromSeries, type } = await this.getSeriesData();
 
     // Создание массива заездов, если в этапе несколько заездов.
     const stages = stagesFromSeries
@@ -80,11 +122,7 @@ export class TourResultsManager extends HandlerSeries {
       }
     );
 
-    // Обновление генеральной классификации серии.
-    const tourGC = new TourGCManager(this.seriesId);
-    const res = await tourGC.update();
-
-    return { data: null, message: `Созданы результаты этапа №${stageOrder}. ${res.message}` };
+    return { seriesType: type };
   }
 
   /**

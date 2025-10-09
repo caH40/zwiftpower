@@ -1,22 +1,24 @@
 import { Request, Response } from 'express';
 
-import { TourResultsManager } from '../service/series/tour/TourResultsManager.js';
 import { handleErrorInController } from '../errors/error.js';
 import {
   UpdateSeriesGCSchema,
   UpdateStageResultsSchema,
 } from '../utils/deserialization/seriesResultsController.js';
 import { TourGCManager } from '../service/series/tour/TourGCManager.js';
-import { TSeriesType } from '../types/model.interface.js';
 import { NSeriesModel } from '../Model/NSeries.js';
 import { CategoryZSchema } from '../utils/deserialization/series/category.js';
 import { SeriesOrganizerController } from './SeriesOrganizer.js';
 import { HandlerSeries } from '../service/series/HandlerSeries.js';
+import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtocolManager.js';
+
+// types
+import { TSeriesType } from '../types/model.interface.js';
 
 /**
  * Класс управления результатами серий.
  */
-export class SeriesResultsController {
+export class SeriesStageProtocolManagerController {
   constructor() {}
 
   /**
@@ -33,10 +35,10 @@ export class SeriesResultsController {
       // Десериализация и валидация входных данных.
       const { seriesId, stageOrder } = UpdateStageResultsSchema.parse(req.body);
 
-      const tourResultsManager = new TourResultsManager(seriesId);
+      const protocolManager = new SeriesStageProtocolManager(seriesId);
 
       // Вызов сервиса.
-      const response = await tourResultsManager.buildStageProtocol(stageOrder);
+      const response = await protocolManager.updateStageProtocolAndGC(stageOrder);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
@@ -46,7 +48,7 @@ export class SeriesResultsController {
   };
 
   /**
-   * Обновление генеральной классификации Тура.
+   * Обновление генеральной классификации.
    */
   public updateGC = async (req: Request, res: Response): Promise<Response | void> => {
     try {

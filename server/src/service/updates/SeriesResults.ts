@@ -3,7 +3,7 @@ import { routes } from '../../assets/zwift/lib/cjs/routes.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { cyclingTimeInMilliseconds } from '../../utils/cycling-time.js';
-import { TourResultsManager } from '../series/tour/TourResultsManager.js';
+import { SeriesStageProtocolManager } from '../series/SeriesStageProtocolManager.js';
 
 /**
  * Решает когда запускать обновление результатов  этапа серии.
@@ -15,8 +15,6 @@ export class SeriesResultsUpdater {
   // Обновление (создание протокола) результатов этап происходит по seriesId и stageOrder.
   async update() {
     try {
-      const tour = new TourResultsManager(this.seriesId);
-
       const stages = await this.getStageOrdersForUpdate();
 
       const stageOrders = stages.reduce<number[]>((acc, cur) => {
@@ -24,9 +22,16 @@ export class SeriesResultsUpdater {
         return acc;
       }, []);
 
-      if (stageOrders.length > 0) {
-        await Promise.all(stageOrders.map((stageOrder) => tour.buildStageProtocol(stageOrder)));
+      if (stageOrders.length === 0) {
+        return;
       }
+
+      const protocolManager = new SeriesStageProtocolManager(this.seriesId);
+
+      // Обновляем протоколы каждого этапа и ГС.
+      await Promise.all(
+        stageOrders.map((stageOrder) => protocolManager.updateStageProtocolAndGC(stageOrder))
+      );
     } catch (e) {
       handleAndLogError(e);
     }

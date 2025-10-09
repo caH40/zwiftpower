@@ -20,12 +20,12 @@ import { fileMiddleware } from '../middleware/file.js';
 import { SeriesOrganizerController } from '../controllers/SeriesOrganizer.js';
 import { getEventsForSeries } from '../controllers/race.js';
 
-import { SeriesResultsController } from '../controllers/SeriesResults.js';
+import { SeriesStageProtocolManagerController } from '../controllers/SeriesStageProtocolManager.js';
 
 export const routerOrganizer = Router();
 
 const seriesController = new SeriesOrganizerController();
-const seriesResultsController = new SeriesResultsController();
+const seriesResultsController = new SeriesStageProtocolManagerController();
 
 routerOrganizer.put('/bots', authOrganizer, putOrganizerBotZwift);
 routerOrganizer.get('/bots', authOrganizer, getOrganizerBotZwift);

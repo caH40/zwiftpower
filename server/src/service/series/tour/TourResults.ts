@@ -1,14 +1,15 @@
 import { StageResultModel } from '../../../Model/StageResult.js';
 import { HandlerSeries } from '../HandlerSeries.js';
 import { stageResultsDto } from '../../../dto/series.js';
+import { NSeriesModel } from '../../../Model/NSeries.js';
 
 // types
 import { StageResultsDto } from '../../../types/dto.interface.js';
-import { NSeriesModel } from '../../../Model/NSeries.js';
 import { GetStageResultDB } from '../../../types/mongodb-response.types.js';
 
 /**
- * Класс работы с результатами Тура TSeriesType = 'tour'
+ * Класс работы с результатами Тура TSeriesType = 'tour' для запросов от пользователей
+ * при отображении таблиц протоколов.
  */
 export class TourResults extends HandlerSeries {
   constructor(public seriesId: string) {
