@@ -1,6 +1,5 @@
 import { Types } from 'mongoose';
 
-import { TourGCManager } from './tour/TourGCManager.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsFromZwift } from '../updates/results_event/resultsFromZwift.js';
@@ -175,51 +174,6 @@ export class HandlerSeries {
     } catch (error) {
       handleAndLogError(error);
     }
-  }
-
-  /**
-   * Изменение категории у участника в результате заезда на этапа.
-   */
-  public async modifyCategory({
-    moderator,
-    value,
-    stageResultId,
-    reason,
-  }: {
-    stageResultId: string;
-    moderator?: string;
-    value: TRaceSeriesCategories | null;
-    reason?: string;
-  }): Promise<{ data: null; message: string }> {
-    const modifiedCategory = {
-      value,
-      moderator,
-      modifiedAt: new Date(),
-      reason,
-    };
-
-    const result = await StageResultModel.findByIdAndUpdate(
-      stageResultId,
-      {
-        $set: { modifiedCategory },
-      },
-      { new: true }
-    );
-
-    if (!result) {
-      throw new Error(
-        `Не найден результат для изменения категории resultId: ${stageResultId}!`
-      );
-    }
-
-    // Обновление генеральной классификации серии.
-    const tourGC = new TourGCManager(this.seriesId);
-    await tourGC.update();
-
-    return {
-      data: null,
-      message: `Обновлена категория участника ${result.profileData.firstName} ${result.profileData.lastName} с "${result.category}" на "${value}"`,
-    };
   }
 
   /**

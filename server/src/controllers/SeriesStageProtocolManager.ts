@@ -7,9 +7,9 @@ import {
 } from '../utils/deserialization/seriesResultsController.js';
 import { CategoryZSchema } from '../utils/deserialization/series/category.js';
 import { SeriesOrganizerController } from './SeriesOrganizer.js';
-import { HandlerSeries } from '../service/series/HandlerSeries.js';
 import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtocolManager.js';
 import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
+import { SeriesCategoryService } from '../service/series/SeriesCategory.js';
 
 /**
  * Класс управления результатами серий.
@@ -84,8 +84,8 @@ export class SeriesStageProtocolManagerController {
       await seriesController.checkOrganizer(moderator);
 
       // Вызов сервиса.
-      const handlerSeries = new HandlerSeries(seriesId);
-      const response = await handlerSeries.modifyCategory({
+      const categoryService = new SeriesCategoryService(seriesId);
+      const response = await categoryService.modifyCategory({
         moderator: moderator.toString(),
         stageResultId,
         value,
