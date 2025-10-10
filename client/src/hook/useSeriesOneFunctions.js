@@ -35,7 +35,7 @@ export function useSeriesOneFunctions() {
       await dispatch(fetchPutStageResults({ seriesId, stageOrder })).unwrap();
 
       // После ответа fetchPutStageResults выполняется обновление результатов этапа открытой страницы.
-      if (currentStageOrder === stageOrder) {
+      if (+currentStageOrder === +stageOrder) {
         dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
       }
       dispatch(fetchGeneralClassification({ urlSlug }));

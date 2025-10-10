@@ -57,6 +57,7 @@ function TableStageResults({
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;
           const dsqDescription = result.disqualificationDescription;
+          const category = result.modifiedCategory?.value ?? result.category;
 
           return (
             <tr
@@ -74,7 +75,7 @@ function TableStageResults({
                 />
               </td>
               <td>
-                <CategoryBox showLabel={true} label={result.category} circle={true} />
+                <CategoryBox showLabel={true} label={category} circle={true} />
               </td>
               <TdRider profile={profile} profileId={result.profileId} />
               <td>

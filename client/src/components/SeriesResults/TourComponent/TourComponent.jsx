@@ -56,7 +56,6 @@ export default function TourComponent({ series }) {
             />
           </nav>
 
-          {/* {generalClassification.results.length > 0 && ( */}
           <section className={styles.wrapper__wide}>
             <TableGCTour
               results={generalClassification.results}
@@ -65,7 +64,6 @@ export default function TourComponent({ series }) {
 
             <ServiceBox updated={generalClassification.gcResultsUpdatedAt} />
           </section>
-          {/* )} */}
         </>
       )}
 
