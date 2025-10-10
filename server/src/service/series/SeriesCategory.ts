@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 
@@ -36,25 +37,36 @@ export class SeriesCategoryService {
     // Определение категории из прошлого этапа данной серии.
     // Получить данные по категориям райдеров из прошлого заезда и присвоить соответствующую категорию в данном этапе.
 
-    // Результаты прошлого этапа.
-    const previousStagesResults = await StageResultModel.find(
-      {
-        seriesId: series._id,
-        order: stageOrder - 1,
-      },
-      { _id: false, profileId: true, category: true }
-    ).lean<{ profileId: number; category: TRaceSeriesCategories | null }[]>();
+    return await this.assignCategory(stageResults, stageOrder, series.categoriesWithRange);
+  }
 
-    // Создание коллекции Map для боле быстрого доступа к данным.
-    const previousStagesResultsMap = new Map(
-      previousStagesResults.map((res) => [res.profileId, res.category])
-    );
+  /**
+   * Расчет и присвоение категорий райдерам в результатах этапа, кроме первого в серии.
+   */
+  private async assignCategory(
+    stageResults: TStageResult[],
+    stageOrder: number,
+    categoriesWithRange?: TCategoriesWithRange[]
+  ): Promise<TStageResult[]> {
+    // Время обновления.
+    const now = new Date();
 
-    return stageResults.map((stage) => {
-      // Если райдер profileId не участвовал в предыдущем заезде, то категория берется на основании группы в которой участвовал райдер.
-      stage.category =
-        previousStagesResultsMap.get(stage.profileId) || stage.activityData.subgroupLabel;
-      return stage;
+    // Результаты райдера предыдущего этапа для каждого райдера.
+    const previousStagesResults = await this.getPreviousStagesResults(stageOrder);
+
+    return stageResults.map((result) => {
+      const prev = previousStagesResults.get(result.profileId);
+
+      // Если у райдера уже участвовал в серии заездов (есть предыдущий результат).
+      if (prev) {
+        result.category = prev.modifiedCategoryValue ?? prev.category;
+        // FIXME: если по какой то причине result.category = null, продумать обработку.
+      } else {
+        // если это первый этап для райдера, то рассчитываем категорию для modifiedCategory
+        this.assignModifiedCategoryToResult(result, now, categoriesWithRange);
+      }
+
+      return result;
     });
   }
 
@@ -71,35 +83,9 @@ export class SeriesCategoryService {
     return stageResults.map((result) => {
       result.category = null;
 
-      // FTP рассчитывается на результатах текущего этапа.
-      const cp20 = result.cpBestEfforts.find((cp) => cp.duration === 1200);
-      const riderFtp = cp20
-        ? { watt: cp20.watts * 0.95, wattPerKg: cp20.wattsKg * 0.95 }
-        : null;
+      // Изменение поля modifiedCategory.
+      this.assignModifiedCategoryToResult(result, now, categoriesWithRange);
 
-      // Расчет категории.
-      let newCategory: TRaceSeriesCategories | null = result.activityData.subgroupLabel;
-      if (categoriesWithRange && riderFtp) {
-        newCategory = calculateRiderCategory({
-          riderCPs: result.cpBestEfforts,
-          riderFtp,
-          categoriesWithRange,
-        });
-      }
-
-      let reason = 'Категория присвоена согласно группе заезда.';
-
-      if (categoriesWithRange && !riderFtp) {
-        reason = 'Категория не присвоена, нет данных по FTP.';
-      } else if (categoriesWithRange && riderFtp) {
-        reason = 'Категория присвоена, согласно правилам категоризации в серии.';
-      }
-
-      result.modifiedCategory = {
-        value: newCategory,
-        modifiedAt: now,
-        reason,
-      };
       return result;
     });
   }
@@ -115,5 +101,119 @@ export class SeriesCategoryService {
     }
 
     return seriesDB;
+  }
+
+  /**
+   * Присваивает modifiedCategory одному результату.
+   */
+  private assignModifiedCategoryToResult(
+    result: TStageResult,
+    now: Date,
+    categoriesWithRange?: TCategoriesWithRange[]
+  ): void {
+    // FTP рассчитывается на результатах текущего этапа.
+    const cp20 = result.cpBestEfforts.find((cp) => cp.duration === 1200);
+    const riderFtp = cp20 ? { watt: cp20.watts * 0.95, wattPerKg: cp20.wattsKg * 0.95 } : null;
+
+    // Определение новой категории.
+    let newCategory: TRaceSeriesCategories | null = result.activityData.subgroupLabel;
+
+    if (categoriesWithRange && riderFtp) {
+      newCategory = calculateRiderCategory({
+        riderCPs: result.cpBestEfforts,
+        riderFtp,
+        categoriesWithRange,
+      });
+    }
+
+    // Причина назначения категории.
+    let reason = 'Категория присвоена согласно группе заезда.';
+
+    if (categoriesWithRange && !riderFtp) {
+      reason = 'Категория не присвоена, нет данных по FTP.';
+      newCategory = null;
+    } else if (categoriesWithRange && riderFtp) {
+      reason = 'Категория присвоена, согласно правилам категоризации в серии.';
+    }
+
+    // Обновление результата.
+    result.modifiedCategory = {
+      value: newCategory,
+      modifiedAt: now,
+      reason,
+    };
+  }
+
+  /**
+   * -запросить результаты всех этапов серии;
+   * -сделать группировку по каждому райдеру;
+   * -сделать сортировку по убыванию номеров этапов;
+   *
+   */
+  private async getPreviousStagesResults(stageOrder: number): Promise<
+    Map<
+      number,
+      {
+        category: TRaceSeriesCategories | null;
+        modifiedCategoryValue?: TRaceSeriesCategories | null;
+      }
+    >
+  > {
+    const resultsDB = await StageResultModel.find(
+      { seriesId: this.seriesId },
+      { _id: false, order: true, profileId: true, category: true, modifiedCategory: true }
+    ).lean<
+      {
+        profileId: number;
+        category: TRaceSeriesCategories | null;
+        modifiedCategory?: {
+          value: TRaceSeriesCategories | null;
+          moderator?: Types.ObjectId;
+          modifiedAt: Date;
+          reason?: string;
+        };
+        order: number;
+      }[]
+    >();
+
+    const resultsMap: Map<
+      number,
+      {
+        category: TRaceSeriesCategories | null;
+        modifiedCategoryValue?: TRaceSeriesCategories | null;
+        order: number;
+      }[]
+    > = new Map();
+
+    for (const { profileId, category, modifiedCategory, order } of resultsDB) {
+      const modifiedCategoryValue = modifiedCategory?.value;
+
+      const arr = resultsMap.get(profileId) ?? [];
+      arr.push({ category, modifiedCategoryValue, order });
+      resultsMap.set(profileId, arr);
+    }
+
+    const prevResultsMap: Map<
+      number,
+      {
+        category: TRaceSeriesCategories | null;
+        modifiedCategoryValue?: TRaceSeriesCategories | null;
+      }
+    > = new Map();
+
+    for (const [profileId, arr] of resultsMap.entries()) {
+      const previousStages = arr.filter((r) => r.order < stageOrder);
+      if (previousStages.length === 0) {
+        continue;
+      }
+
+      const { category, modifiedCategoryValue } = previousStages.sort(
+        (a, b) => b.order - a.order
+      )[0];
+
+      prevResultsMap.set(profileId, { category, modifiedCategoryValue });
+    }
+
+    return prevResultsMap;
   }
 }
