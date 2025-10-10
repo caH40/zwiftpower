@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 import slugify from 'slugify';
 
 import { NSeriesModel } from '../../Model/NSeries.js';
@@ -15,7 +15,7 @@ import {
   TOrganizerSeriesOneResponseDB,
 } from '../../types/mongodb-response.types.js';
 import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
-import { TSeriesStage } from '../../types/model.interface.js';
+import { TSeries, TSeriesStage } from '../../types/model.interface.js';
 import {
   SeriesDataFromClientForCreateFull,
   SeriesStagesFromClientForPatch,
@@ -151,6 +151,7 @@ export class SeriesOrganizerService {
     organizerId,
     logoFile,
     posterFile,
+    riderCategoryRule,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -173,7 +174,7 @@ export class SeriesOrganizerService {
     });
 
     // // Итоговые данные для сохранения в БД.
-    const query = {
+    const query: FilterQuery<TSeries> = {
       urlSlug,
       organizer: organizerId,
       hasGeneral,
@@ -181,6 +182,7 @@ export class SeriesOrganizerService {
       isFinished,
       dateStart,
       dateEnd: setEndOfDay(dateEnd),
+      riderCategoryRule,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
@@ -217,6 +219,7 @@ export class SeriesOrganizerService {
     logoFile,
     posterFile,
     seriesId,
+    riderCategoryRule,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -240,13 +243,14 @@ export class SeriesOrganizerService {
     });
 
     // Итоговые данные для сохранения в БД.
-    const updateFields = {
+    const updateFields: FilterQuery<TSeries> = {
       organizer: organizerId,
       hasGeneral,
       hasTeams,
       isFinished,
       dateStart,
       dateEnd: setEndOfDay(dateEnd),
+      riderCategoryRule,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
@@ -466,6 +470,7 @@ export class SeriesOrganizerService {
     isFinished: true,
     logoFileInfo: true,
     stages: true,
+    riderCategoryRule: true,
     name: true,
     posterFileInfo: true,
     urlSlug: true,

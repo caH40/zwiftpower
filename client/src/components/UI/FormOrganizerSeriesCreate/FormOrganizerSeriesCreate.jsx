@@ -10,7 +10,7 @@ import {
 } from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
-import { seriesTypes } from '../../../assets/options';
+import { riderCategoryRuleOptions, seriesTypes } from '../../../assets/options';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
@@ -42,6 +42,7 @@ export default function FormOrganizerSeriesCreate({
     hasGeneral,
     hasTeams,
     isFinished,
+    riderCategoryRule,
     type,
     _id: seriesId,
   },
@@ -83,6 +84,7 @@ export default function FormOrganizerSeriesCreate({
       hasTeams,
       isFinished,
       type,
+      riderCategoryRule,
     },
     defaultValues: { logoFile: null, posterFile: null },
   });
@@ -258,6 +260,19 @@ export default function FormOrganizerSeriesCreate({
               type: 'date',
               min: watchDateStart,
             }}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <SelectWithRHF
+            label={'Правила пересчета ГК при изменении категории*'}
+            register={register('riderCategoryRule', {
+              required: 'Обязательное поле',
+            })}
+            validationText={errors.riderCategoryRule?.message || ''}
+            id={'riderCategoryRule-FormOrganizerSeriesCreate'}
+            options={riderCategoryRuleOptions}
             loading={loading || loadingForm}
           />
         </div>

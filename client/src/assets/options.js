@@ -85,14 +85,14 @@ export const riderCategoryRuleOptions = [
     value: 'stepChange',
     name: 'Локальное повышение (с текущего этапа)',
   },
-  {
-    id: 3,
-    value: 'dsqRecalculation',
-    name: 'Дисквалификация с пересчётом',
-  },
-  {
-    id: 4,
-    value: 'dsqKeep',
-    name: 'Жёсткая дисквалификация (без пересчёта)',
-  },
+  // {
+  //   id: 3,
+  //   value: 'dsqRecalculation',
+  //   name: 'Дисквалификация с пересчётом',
+  // },
+  // {
+  //   id: 4,
+  //   value: 'dsqKeep',
+  //   name: 'Жёсткая дисквалификация (без пересчёта)',
+  // },
 ];

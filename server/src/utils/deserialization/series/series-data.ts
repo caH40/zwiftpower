@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { safeJsonParse } from '../utils.js';
+import { RIDER_CATEGORIES_RULE_TYPES } from '../../../assets/constants.js';
 
 // Основная схема для данных Серии.
 export const SeriesDataZSchema = z
@@ -39,6 +40,13 @@ export const SeriesDataZSchema = z
       })
       .transform((val) => new Date(val)) // Преобразуем строку в объект Date.
       .describe('Дата старта Серии заездов.'),
+
+    riderCategoryRule: z
+      .preprocess(
+        (val) => (val === '' ? null : val),
+        z.enum(RIDER_CATEGORIES_RULE_TYPES).nullable()
+      )
+      .describe('Новое значение категории'),
 
     dateEnd: z
       .string()

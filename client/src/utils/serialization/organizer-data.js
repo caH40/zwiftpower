@@ -29,12 +29,11 @@ export function serializeOrganizerSeriesCreate(data) {
   Object.entries(data)
     .filter(([_, value]) => value !== undefined && value !== null)
     .forEach(([key, value]) => {
-      if (['logoFile', 'posterFile'].includes(key)) {
-        // Добавляем файл как есть
-        formData.append(key, value);
-      } else {
-        // Преобразуем другие данные в строки
+      // Преобразуем выбранные данные в строки.
+      if (['hasGeneral', 'hasTeams', 'isFinished'].includes(key)) {
         formData.append(key, JSON.stringify(value));
+      } else {
+        formData.append(key, value);
       }
     });
 

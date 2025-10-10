@@ -57,6 +57,7 @@ export type TOrganizerSeriesAllResponseDB = Pick<
   | 'logoFileInfo'
   | 'name'
   | 'posterFileInfo'
+  | 'riderCategoryRule'
   | 'urlSlug'
   | 'type'
 > & { stages: TStage[] };
