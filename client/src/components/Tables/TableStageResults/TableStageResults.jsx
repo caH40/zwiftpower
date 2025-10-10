@@ -16,6 +16,7 @@ import TdRank from '../Td/TdRank';
 import TdDifferent from '../Td/TdDifferent';
 import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
+import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
 
 import styles from '../Table.module.css';
 
@@ -52,12 +53,13 @@ function TableStageResults({
       <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} />
 
       <tbody>
-        {resultWithFinishTime?.map((result) => {
+        {resultWithFinishTime?.map(({ category, ...result }) => {
           const profile = result.profileData;
           const isDsq = result.isDisqualification;
           const dsqType = result.disqualification;
           const dsqDescription = result.disqualificationDescription;
-          const category = result.modifiedCategory?.value ?? result.category;
+          const modifiedCategoryValue = result.modifiedCategory?.value;
+          const currentCategory = modifiedCategoryValue ?? category;
 
           return (
             <tr
@@ -75,7 +77,22 @@ function TableStageResults({
                 />
               </td>
               <td>
-                <CategoryBox showLabel={true} label={category} circle={true} />
+                {modifiedCategoryValue && category ? (
+                  <CategoryChangeBox
+                    PrevCategory={
+                      <CategoryBox showLabel={true} label={category} circle={true} />
+                    }
+                    Category={
+                      <CategoryBox
+                        showLabel={true}
+                        label={modifiedCategoryValue}
+                        circle={true}
+                      />
+                    }
+                  />
+                ) : (
+                  <CategoryBox showLabel={true} label={currentCategory} circle={true} />
+                )}
               </td>
               <TdRider profile={profile} profileId={result.profileId} />
               <td>

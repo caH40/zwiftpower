@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 
@@ -60,6 +59,16 @@ export class SeriesCategoryService {
       // Если у райдера уже участвовал в серии заездов (есть предыдущий результат).
       if (prev) {
         result.category = prev.modifiedCategoryValue ?? prev.category;
+
+        // FIXME: Если нет categoriesWithRange и райдер поменял группу по сравнению с предыдущим этапом,
+        // то устанавливается категория новой группы.
+        // if (result.category !== result.activityData.subgroupLabel && !categoriesWithRange) {
+        //   result.modifiedCategory = {
+        //     value: result.activityData.subgroupLabel,
+        //     modifiedAt: now,
+        //     reason: 'Райдер участвовал в другой группе относительно предыдущего этапа.',
+        //   };
+        // }
         // FIXME: если по какой то причине result.category = null, продумать обработку.
       } else {
         // если это первый этап для райдера, то рассчитываем категорию для modifiedCategory
@@ -159,23 +168,21 @@ export class SeriesCategoryService {
       }
     >
   > {
-    const resultsDB = await StageResultModel.find(
-      { seriesId: this.seriesId },
-      { _id: false, order: true, profileId: true, category: true, modifiedCategory: true }
-    ).lean<
-      {
-        profileId: number;
-        category: TRaceSeriesCategories | null;
-        modifiedCategory?: {
-          value: TRaceSeriesCategories | null;
-          moderator?: Types.ObjectId;
-          modifiedAt: Date;
-          reason?: string;
-        };
-        order: number;
-      }[]
-    >();
+    const orderNumber = Number(stageOrder);
+    if (isNaN(orderNumber)) {
+      throw new Error(`Invalid stageOrder: ${stageOrder}`);
+    }
 
+    // Все предыдущие этапы серии всех райдеров.
+    const resultsDB = await StageResultModel.find(
+      {
+        seriesId: this.seriesId,
+        order: { $lt: orderNumber },
+      },
+      { _id: false, order: true, profileId: true, category: true, modifiedCategory: true }
+    ).lean();
+
+    // Инициализация коллекции.
     const resultsMap: Map<
       number,
       {
@@ -201,15 +208,14 @@ export class SeriesCategoryService {
       }
     > = new Map();
 
+    // console.log(resultsMap);
+
     for (const [profileId, arr] of resultsMap.entries()) {
-      const previousStages = arr.filter((r) => r.order < stageOrder);
-      if (previousStages.length === 0) {
+      if (arr.length === 0) {
         continue;
       }
 
-      const { category, modifiedCategoryValue } = previousStages.sort(
-        (a, b) => b.order - a.order
-      )[0];
+      const { category, modifiedCategoryValue } = arr.sort((a, b) => b.order - a.order)[0];
 
       prevResultsMap.set(profileId, { category, modifiedCategoryValue });
     }

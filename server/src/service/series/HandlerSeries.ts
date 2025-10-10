@@ -121,7 +121,9 @@ export class HandlerSeries {
    * Сортировка результатов и установка ранкинга в результатах для каждой категории.
    */
   protected setCategoryRanks(stageResults: TStageResult[]): TStageResult[] {
-    if (!stageResults.length) return [];
+    if (!stageResults.length) {
+      return [];
+    }
 
     const resultsSorted = stageResults.toSorted(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
@@ -143,15 +145,16 @@ export class HandlerSeries {
     };
 
     return resultsSorted.map((result) => {
+      const currentCategory = result.modifiedCategory?.value ?? result.category;
       // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
-      if (!result.category || result.disqualification?.status) {
+      if (!currentCategory || result.disqualification?.status) {
         result.rank.category = 0;
         return result;
       }
 
       // Присвоение финишного места в категории и увеличение соответствующего счетчика.
-      result.rank.category = categories[result.category] ?? 0;
-      categories[result.category]++;
+      result.rank.category = categories[currentCategory] ?? 0;
+      categories[currentCategory]++;
 
       // Присвоение финишного места в абсолюте и увеличение соответствующего счетчика.
       result.rank.absolute = categories['absolute'] ?? 0;

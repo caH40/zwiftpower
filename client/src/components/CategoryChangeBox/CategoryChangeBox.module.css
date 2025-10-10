@@ -1,0 +1,19 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 35px;
+}
+
+.prev {
+  position: absolute;
+  left: 0px;
+  z-index: 1;
+}
+
+.current {
+  position: absolute;
+  left: 18px;
+  z-index: 2;
+}

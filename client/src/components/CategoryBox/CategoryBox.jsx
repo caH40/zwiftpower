@@ -8,10 +8,11 @@ const cx = cn.bind(styles);
 
 function CategoryBox({ label = '', showLabel, quantityRiders = '', circle, full }) {
   // Изменение названия для группы А+
-  const labelCurrent = label === 'APlus' ? 'A+' : label;
+  let labelCurrent = label === 'APlus' ? 'A+' : label;
+  labelCurrent = label === null ? '?' : labelCurrent;
 
   // Отображаемое значение.
-  const value = `${showLabel ? labelCurrent : ''} ${quantityRiders}`;
+  const value = `${showLabel ? labelCurrent : ''}${quantityRiders}`;
 
   // если circle:true то подсказка - только название категории
   const registered = circle ? '' : `. Зарегистрировалось: ${quantityRiders}`;
@@ -21,7 +22,7 @@ function CategoryBox({ label = '', showLabel, quantityRiders = '', circle, full 
 
   return (
     <MyTooltip tooltip={tooltip}>
-      <div className={cx('category', label, { circle, full })}>{value}</div>
+      <div className={cx('category', String(label), { circle, full })}>{value}</div>
     </MyTooltip>
   );
 }
