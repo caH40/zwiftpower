@@ -1,8 +1,9 @@
+import { Types } from 'mongoose';
 import { categoriesForRankings as rankings } from '../../../assets/category.js';
 import { NSeriesModel } from '../../../Model/NSeries.js';
 import { SeriesClassificationModel } from '../../../Model/SeriesClassification.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
-import { TResponseService } from '../../../types/http.interface.js';
+import { FinishGaps } from '../../../utils/FinishGaps.js';
 
 // types
 import { TDisqualification, TSeries, TSeriesStage } from '../../../types/model.interface.js';
@@ -12,7 +13,7 @@ import {
   TRaceSeriesCategories,
   TGCForSave,
 } from '../../../types/types.interface.js';
-import { FinishGaps } from '../../../utils/FinishGaps.js';
+import { TResponseService } from '../../../types/http.interface.js';
 
 // Тип: отображение riderId → список его результатов
 type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
@@ -89,6 +90,7 @@ export class TourGCManager {
         points: true,
         disqualification: true,
         teamSquadAtRace: true,
+        modifiedCategory: true,
       }
     ).lean<TStagesResultsForGC[]>();
 
@@ -266,6 +268,12 @@ export class TourGCManager {
       stageOrder: number;
       durationInMilliseconds: number;
       finishPoints: number;
+      modifiedCategory?: {
+        value: TRaceSeriesCategories | null;
+        moderator?: Types.ObjectId;
+        modifiedAt: Date;
+        reason?: string;
+      };
     }[]
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
@@ -274,7 +282,10 @@ export class TourGCManager {
     }
 
     // Сохраняем категорию первого завершенного этапа как базовую для сравнения.
-    const firstCategory = stages.find((stage) => stage.durationInMilliseconds !== 0)?.category;
+    // В первом заезде всегда category=null, и устанавливается категория в modifiedCategory
+
+    const firstCategory = stages.sort((a, b) => a.stageOrder - b.stageOrder)[0]
+      ?.modifiedCategory?.value;
 
     // Нет ни одного результата на этапе Серии. FIXME: заранее фильтровать от райдеров, которые не проехали ни одного этапа. Для корректного отображения информации о дисквалификации. Проверка на firstCategory === null временная.
     if (!firstCategory) {
@@ -342,6 +353,7 @@ export class TourGCManager {
           stageOrder: stage.order,
           durationInMilliseconds: stage.activityData.durationInMilliseconds,
           finishPoints: stage.points?.finishPoints || 0,
+          modifiedCategory: stage.modifiedCategory,
         };
       } else {
         // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).

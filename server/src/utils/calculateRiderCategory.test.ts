@@ -1,4 +1,5 @@
-import { TRiderCP, TFtpData, TCategoriesWithRange } from '../types/series.types';
+import { TCriticalPowerBestEfforts } from '../types/model.interface';
+import { TFtpData, TCategoriesWithRange } from '../types/series.types';
 import { calculateRiderCategory } from './calculateRiderCategory';
 
 const categories: TCategoriesWithRange[] = [
@@ -43,7 +44,9 @@ const categories: TCategoriesWithRange[] = [
 describe('calculateRiderCategory', () => {
   it('назначает категорию A при высоких FTP и CP', () => {
     const riderFtp: TFtpData = { watt: 300, wattPerKg: 4.5 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 5.2 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 5.2, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -55,7 +58,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию A при низком FTP watt/kg но высоком  CP', () => {
     const riderFtp: TFtpData = { watt: 250, wattPerKg: 4.1 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 5.2 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 5.2, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -67,7 +72,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию B при низком FTP watt для A, но высоком FTP watt/kg', () => {
     const riderFtp: TFtpData = { watt: 249, wattPerKg: 4.3 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 5.2 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 5.2, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -79,7 +86,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию B при средних показателях', () => {
     const riderFtp: TFtpData = { watt: 220, wattPerKg: 3.5 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 4.0 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 4.0, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -91,7 +100,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию C при средне-низких показателях', () => {
     const riderFtp: TFtpData = { watt: 160, wattPerKg: 2.8 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 3.3 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 3.3, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -103,7 +114,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию C при низки абсолютных и высоких удельных ваттах FTP', () => {
     const riderFtp: TFtpData = { watt: 199, wattPerKg: 3.36 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 4.3 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 4.3, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -115,7 +128,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию D при низких FTP', () => {
     const riderFtp: TFtpData = { watt: 120, wattPerKg: 2.0 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 2.5 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 2.5, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -127,7 +142,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию D при высоких FTP ватт/гк, но низком FTP по ваттам ', () => {
     const riderFtp: TFtpData = { watt: 120, wattPerKg: 3.2 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 2.5 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 2.5, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,
@@ -139,7 +156,9 @@ describe('calculateRiderCategory', () => {
 
   it('назначает категорию D при высоких FTP ватт, но низком FTP по ватт/гк ', () => {
     const riderFtp: TFtpData = { watt: 200, wattPerKg: 2.2 };
-    const riderCPs: TRiderCP[] = [{ interval: 300, wattPerKg: 2.5 }];
+    const riderCPs: TCriticalPowerBestEfforts[] = [
+      { duration: 300, wattsKg: 2.5, watts: 0, cpLabel: '0' },
+    ];
 
     const result = calculateRiderCategory({
       riderCPs,

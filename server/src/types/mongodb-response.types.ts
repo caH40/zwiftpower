@@ -171,6 +171,7 @@ export type TStagesResultsForGC = Pick<
   | 'points'
   | 'disqualification'
   | 'teamSquadAtRace'
+  | 'modifiedCategory'
 >;
 
 /**
