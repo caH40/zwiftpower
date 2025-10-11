@@ -1,5 +1,8 @@
-import { Types } from 'mongoose';
+import { Types, UpdateQuery } from 'mongoose';
 import { StageResultModel } from '../Model/StageResult.js';
+import { FilterQuery } from 'mongoose';
+import { TStageResult } from '../types/model.interface.js';
+import { TRaceSeriesCategories } from '../types/types.interface.js';
 
 export class StageResultRepository {
   /**
@@ -26,5 +29,34 @@ export class StageResultRepository {
     return await StageResultModel.find({ profileId: zwiftId }, { _id: true, order: true })
       .sort({ order: 1 })
       .lean();
+  }
+
+  /**
+   * Запрос для RiderCategoryRuleProcessor.handleRecalculationAll
+   * Изменение категории у райдера во всех завершенных этапах серии.
+   */
+  async changeRiderCategoryInStages(
+    resultIds: string[],
+    modifiedCategory: {
+      value: TRaceSeriesCategories | null;
+      moderator: string | undefined;
+      modifiedAt: Date;
+      reason: string;
+    }
+  ): Promise<void> {
+    const query: FilterQuery<TStageResult> = {
+      _id: { $in: resultIds },
+    };
+
+    const updateQuery: UpdateQuery<TStageResult> = { $set: { modifiedCategory } };
+
+    await StageResultModel.updateMany(query, updateQuery);
+  }
+
+  /**
+   * Получение результата райдера на этапе серии по _id.
+   */
+  async getStageResultById(_id: string): Promise<TStageResult | null> {
+    return await StageResultModel.findById(_id).lean();
   }
 }

@@ -54,13 +54,23 @@ export class RiderCategoryRuleProcessor {
   private handleRecalculationAll = async (): Promise<void> => {
     const { results, modifiedStageOrder } = await this.getAllRiderResults();
 
-    console.log({ results, modifiedStageOrder });
-    console.log('This is handler for rule:RecalculationAll');
+    const reason = `Категория райдера была изменена на этапе №${modifiedStageOrder}. Согласно правилам серии, обновление категории распространено на все завершённые этапы.`;
+
+    const modifiedCategory = {
+      value: this.dataForModifyCategory.value,
+      moderator: this.dataForModifyCategory.moderator,
+      modifiedAt: new Date(),
+      reason: this.dataForModifyCategory.reason || reason,
+    };
+
+    // Изменение категории у райдера во всех завершенных этапах.
+    await this.stageResultRepository.changeRiderCategoryInStages(
+      results.map(({ id }) => id),
+      modifiedCategory
+    );
   };
 
-  private handleStepChange = async (): Promise<void> => {
-    console.log('This is handler for rule:StepChange');
-  };
+  private handleStepChange = async (): Promise<void> => {};
 
   /**
    * Получение всех результатов райдера, у которого изменяется категория.

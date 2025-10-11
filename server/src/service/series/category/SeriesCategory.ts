@@ -11,6 +11,7 @@ import {
   TSetCategoriesStageParams,
 } from '../../../types/types.interface.js';
 import { RiderCategoryRuleProcessor } from './RiderCategoryRuleProcessor.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
 
 /**
  * Сервис работы с категориями в результатах этапов серии (туров) (и ГС?)
@@ -19,7 +20,11 @@ import { RiderCategoryRuleProcessor } from './RiderCategoryRuleProcessor.js';
  * -присвоение райдерам в результатах этапов серий (туров).
  */
 export class SeriesCategoryService {
-  constructor(private seriesId: string) {}
+  private stageResultRepository: StageResultRepository;
+
+  constructor(private seriesId: string) {
+    this.stageResultRepository = new StageResultRepository();
+  }
 
   /**
    * Изменение категории у участника в результате заезда на этапа.
@@ -49,25 +54,16 @@ export class SeriesCategoryService {
       await categoryRuleProcessor.execute(riderCategoryRule);
     }
 
-    const result = await StageResultModel.findByIdAndUpdate(
-      stageResultId,
-      {},
-      { new: true }
-    ).lean();
-
-    if (!result) {
-      throw new Error(
-        `Не найден результат для изменения категории resultId: ${stageResultId}!`
-      );
-    }
-
     // Обновление генеральной классификации серии.
     const tourGC = new TourGCManager(this.seriesId);
     await tourGC.update();
 
+    // Данные для создание сообщения ответа.
+    const result = await this.stageResultRepository.getStageResultById(stageResultId);
+
     return {
       data: null,
-      message: `Обновлена категория участника ${result.profileData.firstName} ${result.profileData.lastName} с "${result.category}" на "${value}"`,
+      message: `Обновлена категория участника ${result?.profileData.firstName} ${result?.profileData.lastName} с "${result?.category}" на "${value}"`,
     };
   }
 
