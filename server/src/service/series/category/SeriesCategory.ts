@@ -1,15 +1,16 @@
-import { NSeriesModel } from '../../Model/NSeries.js';
-import { StageResultModel } from '../../Model/StageResult.js';
-import { calculateRiderCategory } from '../../utils/calculateRiderCategory.js';
-import { TourGCManager } from './tour/TourGCManager.js';
+import { NSeriesModel } from '../../../Model/NSeries.js';
+import { StageResultModel } from '../../../Model/StageResult.js';
+import { calculateRiderCategory } from '../../../utils/calculateRiderCategory.js';
+import { TourGCManager } from '../tour/TourGCManager.js';
 
 // types
-import { TSeries, TStageResult } from '../../types/model.interface.js';
-import { TCategoriesWithRange } from '../../types/series.types.js';
+import { TSeries, TStageResult } from '../../../types/model.interface.js';
+import { TCategoriesWithRange } from '../../../types/series.types.js';
 import {
   TRaceSeriesCategories,
   TSetCategoriesStageParams,
-} from '../../types/types.interface.js';
+} from '../../../types/types.interface.js';
+import { RiderCategoryRuleProcessor } from './RiderCategoryRuleProcessor.js';
 
 /**
  * Сервис работы с категориями в результатах этапов серии (туров) (и ГС?)
@@ -40,6 +41,16 @@ export class SeriesCategoryService {
       modifiedAt: new Date(),
       reason,
     };
+    const categoryRuleProcessor = new RiderCategoryRuleProcessor(
+      this.seriesId,
+      modifiedCategory
+    );
+
+    const { riderCategoryRule, ...series } = await this.getSeriesData();
+
+    if (riderCategoryRule) {
+      await categoryRuleProcessor.execute(riderCategoryRule);
+    }
 
     const result = await StageResultModel.findByIdAndUpdate(
       stageResultId,
@@ -47,7 +58,7 @@ export class SeriesCategoryService {
         $set: { modifiedCategory },
       },
       { new: true }
-    );
+    ).lean();
 
     if (!result) {
       throw new Error(

@@ -6,7 +6,7 @@ import { NSeriesModel } from '../../Model/NSeries.js';
 import { TSeriesType } from '../../types/model.interface.js';
 import { TourGCManager } from './tour/TourGCManager.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { SeriesCategoryService } from './SeriesCategory.js';
+import { SeriesCategoryService } from './category/SeriesCategory.js';
 
 // types
 

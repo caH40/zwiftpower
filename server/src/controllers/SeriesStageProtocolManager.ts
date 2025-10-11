@@ -9,7 +9,7 @@ import { CategoryZSchema } from '../utils/deserialization/series/category.js';
 import { SeriesOrganizerController } from './SeriesOrganizer.js';
 import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtocolManager.js';
 import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
-import { SeriesCategoryService } from '../service/series/SeriesCategory.js';
+import { SeriesCategoryService } from '../service/series/category/SeriesCategory.js';
 
 /**
  * Класс управления результатами серий.
