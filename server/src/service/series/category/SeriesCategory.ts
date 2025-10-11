@@ -35,28 +35,23 @@ export class SeriesCategoryService {
     value: TRaceSeriesCategories | null;
     reason?: string;
   }): Promise<{ data: null; message: string }> {
-    const modifiedCategory = {
-      value,
+    const categoryRuleProcessor = new RiderCategoryRuleProcessor(this.seriesId, {
       moderator,
-      modifiedAt: new Date(),
+      value,
+      stageResultId,
       reason,
-    };
-    const categoryRuleProcessor = new RiderCategoryRuleProcessor(
-      this.seriesId,
-      modifiedCategory
-    );
+    });
 
-    const { riderCategoryRule, ...series } = await this.getSeriesData();
+    const { riderCategoryRule } = await this.getSeriesData();
 
+    // Изменение таблиц в результате изменения категории у райдера, согласно правилу riderCategoryRule.
     if (riderCategoryRule) {
       await categoryRuleProcessor.execute(riderCategoryRule);
     }
 
     const result = await StageResultModel.findByIdAndUpdate(
       stageResultId,
-      {
-        $set: { modifiedCategory },
-      },
+      {},
       { new: true }
     ).lean();
 
