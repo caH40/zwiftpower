@@ -1,5 +1,4 @@
-import { Types } from 'mongoose';
-import { StageResultModel } from '../../../Model/StageResult.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
 
 // types
 import { TRiderCategoryRuleType } from '../../../types/series.types.js';
@@ -14,6 +13,7 @@ type Params = {
 
 export class RiderCategoryRuleProcessor {
   private handlers: Map<TRiderCategoryRuleType, () => Promise<void>>;
+  private stageResultRepository: StageResultRepository;
 
   constructor(
     private readonly seriesId: string,
@@ -21,6 +21,7 @@ export class RiderCategoryRuleProcessor {
   ) {
     this.handlers = new Map();
     this.initHandlers();
+    this.stageResultRepository = new StageResultRepository();
   }
 
   /**
@@ -73,11 +74,7 @@ export class RiderCategoryRuleProcessor {
     const stageResultId = this.dataForModifyCategory.stageResultId;
 
     // Получем zwiftId и номер этапа в котором производиться первоначальное изменение категории.
-    const resultDB = await StageResultModel.findById(stageResultId, {
-      order: true,
-      profileId: true,
-      _id: false,
-    }).lean<{ order: number; profileId: number }>();
+    const resultDB = await this.stageResultRepository.getZwiftIdAndStageOrder(stageResultId);
 
     if (!resultDB) {
       throw new Error(
@@ -85,12 +82,9 @@ export class RiderCategoryRuleProcessor {
       );
     }
 
-    const resultsDB = await StageResultModel.find(
-      { profileId: resultDB.profileId },
-      { _id: true, order: true }
-    )
-      .sort({ order: 1 })
-      .lean<{ _id: Types.ObjectId; order: number }[]>();
+    const resultsDB = await this.stageResultRepository.getIdAndStageOrderFromAllStages(
+      resultDB.profileId
+    );
 
     const results = resultsDB.map(({ _id, order }) => ({
       id: _id.toString(),
