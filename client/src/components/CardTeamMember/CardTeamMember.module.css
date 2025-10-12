@@ -68,13 +68,16 @@
   outline: 2px solid rgba(255, 255, 255, 0.45);
 }
 .infoContainer {
-  padding: 215px 15px 15px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 212px 15px 15px 15px;
+  height: 100%;
 }
 .nameContainer {
   display: flex;
   gap: 5px;
   align-items: flex-start;
-  margin-bottom: 10px;
 }
 .flagContainer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -84,7 +87,6 @@
   gap: 5px 20px;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 10px;
 }
 
 .specContainer,
@@ -94,7 +96,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  margin-bottom: 10px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }

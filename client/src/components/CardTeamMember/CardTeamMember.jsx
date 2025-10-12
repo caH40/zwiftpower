@@ -100,7 +100,7 @@ export default function CardTeamMember({ member: { role, rider } }) {
         </div>
 
         <div className={styles.eventsContainer}>
-          <span className={styles.label}>Всего заездов:</span>
+          <span className={styles.label}>Всего заездов</span>
           <span className={styles.eventValue}>{totalEvents}</span>
         </div>
       </div>
