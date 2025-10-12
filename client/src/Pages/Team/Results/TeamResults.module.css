@@ -2,3 +2,6 @@
   text-align: right;
   margin-bottom: 10px;
 }
+.block__results {
+  overflow-x: auto;
+}

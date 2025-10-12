@@ -16,5 +16,6 @@
 @media (max-width: 578px) {
   .cards {
     justify-content: center;
+    gap: 10px;
   }
 }

@@ -44,3 +44,51 @@
 .bronze {
   background-color: var(--color-bronze);
 }
+
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .scoreContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .scoreLabel {
+    text-transform: uppercase;
+    font-size: 9px;
+  }
+
+  .scoreValue {
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .medalsContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .medalContainer {
+    display: flex;
+    gap: 3px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .medals {
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .silver,
+  .bronze,
+  .gold {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+}

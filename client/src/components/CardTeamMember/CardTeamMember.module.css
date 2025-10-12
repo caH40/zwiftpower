@@ -129,3 +129,109 @@
 .E {
   background-color: var(--catE);
 }
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .card {
+    width: 100%;
+    max-width: 320px;
+    height: 190px;
+  }
+
+  .imageContainer {
+    border-radius: 10px 0 0 10px;
+    width: 120px;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .imageLogo,
+  .placeholder {
+    width: 90px;
+    height: 90px;
+    top: calc(50% - 45px);
+    left: calc(50% - 45px);
+  }
+
+  .placeholder {
+    font-size: 1.5rem;
+  }
+
+  .role {
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 10px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .category {
+    position: absolute;
+    border-radius: 6px;
+    height: 16px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 400;
+    bottom: 8px;
+    left: 8px;
+  }
+
+  .infoContainer {
+    padding: 10px 10px 10px 130px;
+    height: 100%;
+  }
+
+  .nameContainer {
+    margin-bottom: 5px;
+    justify-content: space-between;
+  }
+
+  .name {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .paramsContainer {
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .specContainer,
+  .statsContainer,
+  .eventsContainer {
+    padding: 6px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  .label {
+    font-size: 10px;
+  }
+
+  .eventValue,
+  .specValue {
+    font-size: 10px;
+  }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 360px) {
+  .imageContainer {
+    width: 110px;
+  }
+
+  .infoContainer {
+    padding-left: 120px;
+  }
+
+  .imageLogo,
+  .placeholder {
+    width: 70px;
+    height: 70px;
+    top: calc(50% - 36px);
+    left: calc(50% - 35px);
+  }
+
+  .paramsContainer {
+    gap: 5px;
+  }
+}
