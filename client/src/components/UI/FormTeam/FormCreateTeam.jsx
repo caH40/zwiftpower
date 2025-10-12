@@ -1,11 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { serializeTeamCreate } from '../../../utils/serialization/team-data';
 import { fetchPostTeam, fetchPutTeam } from '../../../redux/features/api/team/fetchTeam';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { checkAuth } from '../../../redux/features/authSlice';
 import Button from '../Button/Button';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
@@ -30,6 +32,8 @@ export default function FormCreateTeam({
   // Статус загрузки текущей формы на сервер.
   const [loadingForm, setLoadingForm] = useState(false);
 
+  const navigate = useNavigate();
+
   // Ссылка на лого Команды. Используется в форме редактирования, для отображения изображения с сервера.
   const [logoSrcState, setLogoSrcState] = useState(team?.logoUrls?.original);
 
@@ -43,8 +47,7 @@ export default function FormCreateTeam({
     handleSubmit,
     reset,
     control,
-    watch,
-    setValue,
+
     formState: { errors },
   } = useForm({
     mode: 'all',
@@ -67,13 +70,23 @@ export default function FormCreateTeam({
 
       // Успешный результат.
       dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
+
       if (isCreating) {
         // FIXME: не сбрасываются изображения
         // Очистка полей формы
+
         reset();
         setResetImage((p) => !p);
         setLogoSrcState(null);
         setPosterSrcState(null);
+
+        // Переход на страницу участников
+        navigate(`/teams/${data.data?.urlSlug}/members`);
+
+        // Обновление auth чуть позже (через микротаску или таймер)
+        setTimeout(() => {
+          dispatch(checkAuth());
+        }, 500);
       } else {
         // Получение обновленных данных команды.
         reset();

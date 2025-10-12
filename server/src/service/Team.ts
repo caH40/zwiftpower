@@ -26,6 +26,7 @@ import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.j
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
 import { entityForFileSuffix, UserResult } from '../types/types.interface.js';
+import { TResponseService } from '../types/http.interface.js';
 
 export class TeamService {
   private imagesService: ImagesService;
@@ -75,7 +76,7 @@ export class TeamService {
     team: TCreateTeamParams;
     logoFile?: Express.Multer.File;
     posterFile?: Express.Multer.File;
-  }): Promise<{ message: string }> {
+  }): Promise<TResponseService<{ urlSlug: string }>> {
     await this.assertTeamFieldUnique('name', team.name);
     await this.assertTeamFieldUnique('shortName', team.shortName);
 
@@ -135,7 +136,7 @@ export class TeamService {
       teamId: createdTeam._id.toString(),
     });
 
-    return { message: 'Команда успешно создана.' };
+    return { data: { urlSlug }, message: 'Команда успешно создана.' };
   }
 
   /**
