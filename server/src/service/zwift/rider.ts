@@ -16,9 +16,8 @@ export async function getZwiftRiderService(zwiftId: number): Promise<ProfileZwif
 
   // Если профиль не найден, то добавляем его в список невалидных zwiftId,
   // для исключения ошибочных запросов на api
-  await addInvalidZwiftId(zwiftId);
-
   if (!riderData) {
+    await addInvalidZwiftId(zwiftId);
     throw new Error('Не найден профиль на сервере Zwift');
   }
 

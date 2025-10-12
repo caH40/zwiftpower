@@ -9,6 +9,11 @@
   gap: 20px;
   margin-bottom: 20px;
 }
+.error {
+  font-size: 1.5rem;
+  color: var(--error);
+  margin-bottom: 1rem;
+}
 @media screen and (max-width: 1200px) {
   .wrapper__cards {
     gap: 15px;
