@@ -41,7 +41,7 @@ export default function SettingsZwift() {
     <section className={styles.wrapper}>
       <h3 className={styles.title}>Привязанные профили из Звифта к аккаунту zwiftpower.ru</h3>
 
-      {zwiftProfiles?.zwiftProfileMain ? (
+      {zwiftProfiles?.zwiftProfileMain && (
         <div className={styles.wrapper__cards}>
           <ProfileBlockZwift
             zwiftProfile={zwiftProfiles.zwiftProfileMain}
@@ -58,8 +58,6 @@ export default function SettingsZwift() {
             </div>
           ))}
         </div>
-      ) : (
-        <h3 className={styles.error}>Не получены данные по привязанным ZwiftId</h3>
       )}
 
       <FindZwiftProfile showAdditionalCheckbox={zwiftIdAuth} />
