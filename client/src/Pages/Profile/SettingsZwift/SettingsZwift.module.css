@@ -9,6 +9,9 @@
   gap: 20px;
   margin-bottom: 20px;
 }
+.loading {
+  margin-bottom: 1rem;
+}
 @media screen and (max-width: 1200px) {
   .wrapper__cards {
     gap: 15px;

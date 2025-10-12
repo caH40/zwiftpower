@@ -18,7 +18,9 @@ import styles from './SettingsZwift.module.css';
  */
 export default function SettingsZwift() {
   useTitle('Привязка аккаунтов из Zwift');
-  const { zwiftProfiles } = useSelector((state) => state.zwiftProfiles);
+  const { zwiftProfiles, status: zwiftProfilesStatus } = useSelector(
+    (state) => state.zwiftProfiles
+  );
   const { zwiftId: zwiftIdAuth } = useSelector((state) => state.checkAuth.value.user);
 
   const dispatch = useDispatch();
@@ -40,6 +42,8 @@ export default function SettingsZwift() {
   return (
     <section className={styles.wrapper}>
       <h3 className={styles.title}>Привязанные профили из Звифта к аккаунту zwiftpower.ru</h3>
+
+      {zwiftProfilesStatus === 'loading' && <div className={styles.loading}>Loading...</div>}
 
       {zwiftProfiles?.zwiftProfileMain && (
         <div className={styles.wrapper__cards}>
