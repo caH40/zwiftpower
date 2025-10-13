@@ -7,6 +7,7 @@ const TeamCreatePage = lazy(() => import('../Pages/TeamCreate/TeamCreate'));
 const TeamPageLayout = lazy(() => import('../Pages/Team/TeamPageLayout'));
 const TeamMembersPage = lazy(() => import('../Pages/Team/Members/TeamMembers'));
 const TeamResultsPage = lazy(() => import('../Pages/Team/Results/TeamResults'));
+const TeamAchievementsPage = lazy(() => import('../Pages/Team/Achievements/Achievements'));
 const TeamControlLayout = lazy(() => import('../Pages/Team/Control/TeamControlLayout'));
 const TeamControlMembersPage = lazy(() =>
   import('../Pages/Team/ControlMembers/TeamControlMembers')
@@ -32,6 +33,7 @@ export function TeamsRoute({ hasAuth, userInTeam }) {
       <Route path="/teams/:urlSlug" element={<TeamPageLayout />}>
         <Route path="members" element={<TeamMembersPage />} />
         <Route path="results" element={<TeamResultsPage />} />
+        <Route path="achievements" element={<TeamAchievementsPage />} />
 
         {hasAuth && userInTeam?.isCreator ? (
           <Route path="control" element={<TeamControlLayout />}>

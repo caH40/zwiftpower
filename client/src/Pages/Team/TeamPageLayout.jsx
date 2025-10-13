@@ -10,6 +10,7 @@ import { resetTeam } from '../../redux/features/api/team/teamSlice';
 import { NavBarTeamPublic } from '../../components/UI/NavBarTeamPublic/NavBarTeamPublic';
 import TeamHeader from '../../components/TeamHeader/TeamHeader';
 import useTitle from '../../hook/useTitle';
+import { NavBarTeamControl } from '../../components/UI/NavBarTeamPublic/NavBarTeamControl';
 
 import styles from './TeamPageLayout.module.css';
 
@@ -47,6 +48,12 @@ export default function TeamPage() {
       <div className={styles.box__navbar}>
         <NavBarTeamPublic urlSlug={team?.urlSlug} isCreator={isCreator} />
       </div>
+
+      {isCreator && (
+        <div className={styles.box__navbar}>
+          <NavBarTeamControl urlSlug={team?.urlSlug} />
+        </div>
+      )}
 
       <Suspense>
         <Outlet />

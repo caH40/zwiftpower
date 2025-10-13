@@ -7,6 +7,7 @@ import {
   getSeriesResultsMeta,
   getSeriesScheduleMeta,
   getSignedRidersMeta,
+  getTeamAchievementsMeta,
   getTeamMembersMeta,
   getTeamRiderResultsMeta,
 } from './tags-async.js';
@@ -82,6 +83,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getTeamRiderResultsMeta(url);
   } else if (/\/teams\/[^/]+\/members/.test(url)) {
     tags = getTeamMembersMeta(url);
+  } else if (/\/teams\/[^/]+\/achievements/.test(url)) {
+    tags = getTeamAchievementsMeta(url);
   } else if (url.includes('/documentation/faq')) {
     tags = getFaqMeta(url);
   } else if (url.includes('/documentation/public')) {
