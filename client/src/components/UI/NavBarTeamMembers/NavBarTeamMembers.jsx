@@ -5,15 +5,15 @@ import styles from './NavBarTeamMembers.module.css';
 
 export default function NavBarTeamMembers({ isRasing, setIsRasing }) {
   return (
-    <div className={styles.wrapper} onClick={setIsRasing}>
-      <ButtonSimple active="true">
+    <div className={styles.wrapper}>
+      <ButtonSimple active="true" getClick={setIsRasing}>
         <span>Сортировка</span>
       </ButtonSimple>
 
       <div className={styles.iconContainer}>
         <IconArrows
           columnName={'Сортировка по фамилии'}
-          getClick={() => {}}
+          getClick={setIsRasing}
           squareSize={16}
           activeDate={{
             isActive: true,
