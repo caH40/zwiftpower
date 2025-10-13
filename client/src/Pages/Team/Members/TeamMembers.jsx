@@ -7,10 +7,12 @@ import { renderSkeletonCards } from '../../../utils/skeleton-cards';
 import { resetTeamMembers } from '../../../redux/features/api/team-member/teamMemberSlice';
 import { fetchTeamMembers } from '../../../redux/features/api/team-member/fetchTeamMember';
 import { HelmetTeamRiderMembers } from '../../../components/Helmets/HelmetTeamRiderMembers';
+import { useSortTeamMembers } from '../../../hook/useSortTeamMembers';
 import useTitle from '../../../hook/useTitle';
 import useTeamMembers from '../../../hook/useTeamMembers';
 import ButtonSimple from '../../../components/UI/ButtonSimple/ButtonSimple';
 import CardTeamMember from '../../../components/CardTeamMember/CardTeamMember';
+import NavBarTeamMembers from '../../../components/UI/NavBarTeamMembers/NavBarTeamMembers';
 
 import styles from './TeamMembers.module.css';
 
@@ -24,6 +26,8 @@ export default function TeamMembersPage() {
     status,
     user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
+
+  const { isRasing, setIsRasing, sortedTeamMembers } = useSortTeamMembers(teamMembers);
 
   const dispatch = useDispatch();
 
@@ -43,6 +47,13 @@ export default function TeamMembersPage() {
         imageUrl={team?.logoUrls?.original}
       />
 
+      <div className={styles.control}>
+        <NavBarTeamMembers
+          isRasing={isRasing}
+          setIsRasing={() => setIsRasing((prev) => !prev)}
+        />
+      </div>
+
       {/* Для отображения кнопки пользователь должен быть авторизован и не должен состоять ни в одной команде */}
       {status && !userInTeam?.id && (
         <div className={styles.control}>
@@ -56,7 +67,7 @@ export default function TeamMembersPage() {
           status: fetchMembersStatus,
         })}
 
-        {teamMembers.map((m) => (
+        {sortedTeamMembers.map((m) => (
           <CardTeamMember key={m._id} member={m} />
         ))}
       </section>
