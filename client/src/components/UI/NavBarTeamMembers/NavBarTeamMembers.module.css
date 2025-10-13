@@ -6,3 +6,9 @@
   right: 8px;
   top: 7px;
 }
+@media screen and (max-width: 992px) {
+  .iconContainer {
+    right: 2px;
+    top: 4px;
+  }
+}
