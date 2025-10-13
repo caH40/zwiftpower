@@ -43,8 +43,8 @@ export class TeamServiceMessage {
         this.dataProvider.getTeam(teamId),
       ]);
 
-      const entityUrl = `/profile/${user.zwiftId}/results`;
-      const entityLogo = user.imageSrc;
+      const entityUrl = `/teams/${team.urlSlug}/control/members`;
+      const entityLogo = team.logoUrl;
 
       const { text, title } = teamMessageTemplates.joinRequest({
         applicantName: user.name,
