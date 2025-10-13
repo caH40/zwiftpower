@@ -60,7 +60,8 @@ export default function TeamsPublic() {
           status: fetchTeamsStatus,
         })}
 
-        {!!shuffledTeams?.length && teams.map((team) => <CardTeam key={team._id} {...team} />)}
+        {!!shuffledTeams?.length &&
+          shuffledTeams.map((team) => <CardTeam key={team._id} {...team} />)}
       </section>
     </div>
   );
