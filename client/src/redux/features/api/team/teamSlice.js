@@ -126,7 +126,7 @@ const teamSlice = createSlice({
     builder.addCase(fetchGetRiderResults.fulfilled, (state, action) => {
       const { results, quantityPages } = action.payload.data;
       state.teamRiderResults = setValueMax(results);
-      state.quantityPages = setValueMax(quantityPages);
+      state.quantityPages = quantityPages;
       state.error = null;
       state.status = 'resolved';
     });
