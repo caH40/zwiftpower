@@ -6,6 +6,8 @@ import { teamMemberPublicDto } from '../dto/team-member.js';
 import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
 import { TeamModel } from '../Model/Team.js';
+import { updateTeamInResultsService } from './race/results-update.js';
+import { DATE_FOR_ADD_TEAM_RESULTS } from '../assets/constants.js';
 
 // types
 import { TTeamMembersPublicDB } from '../types/mongodb-response.types.js';
@@ -15,8 +17,11 @@ import { TTeamMemberPublicDto } from '../types/dto.interface.js';
 
 export class TeamMemberService {
   private teamServiceMessage: TeamServiceMessage;
+  private actualDate: Date;
+
   constructor() {
     this.teamServiceMessage = new TeamServiceMessage(new ServiceMessage());
+    this.actualDate = new Date(DATE_FOR_ADD_TEAM_RESULTS);
   }
 
   /**
@@ -51,14 +56,6 @@ export class TeamMemberService {
     return { data: membersAfterDto, message: 'Участники команды' };
   }
 
-  // async get(urlSlug: string): Promise<unknown> {
-  // const teamDB = await TeamModel.findOne({ urlSlug }).lean<TTeam>();
-  // if (!teamDB) {
-  //   throw new Error(`Не найдена запрашиваемая команда с urlSlug: "${urlSlug}"!`);
-  // }
-  // return { data: teamDB };
-  // }
-
   /**
    * Создание участника команды.
    */
@@ -73,10 +70,11 @@ export class TeamMemberService {
   }): Promise<{ message: string }> {
     await TeamMemberModel.create({ user: userId, role: teamRole, team: teamId });
 
+    // Добавление информации о команде в результаты заездов с даты this.actualDate
+    await updateTeamInResultsService(userId, this.actualDate, 'add', teamId);
+
     return { message: 'Участник добавлен в команду' };
   }
-
-  // private static ALL_MEMBERS_PUBLIC_PROJECTION: { a: true };
 
   private async getTeamId(urlSlug: string): Promise<{ _id: Types.ObjectId }> {
     const teamDB = await TeamModel.exists({ urlSlug });
@@ -151,22 +149,24 @@ export class TeamMemberService {
     // Удаление заявки от кандидата из массива заявок команды.
     await this.removePendingUser({ teamCreatorId, teamMemberId });
 
+    const teamId = team._id.toString();
+
     // Создание участника команды.
     const response = await this.create({
       userId: teamMemberId,
-      teamId: team._id.toString(),
+      teamId,
     });
 
     // Создание сервисного сообщения.
     await this.teamServiceMessage.requestApproved({
       candidateId: teamMemberId,
-      teamId: team._id.toString(),
+      teamId,
     });
 
     // Создание сервисных сообщений для всех участников.
     await this.teamServiceMessage.newMemberJoined({
       candidateId: teamMemberId,
-      teamId: team._id.toString(),
+      teamId,
     });
 
     return response;
@@ -256,6 +256,9 @@ export class TeamMemberService {
       teamId: teamDB._id.toString(),
     });
 
+    // Добавление информации о команде в результаты заездов с даты this.actualDate
+    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
+
     return { message: 'Участник заблокирован в команде.' };
   }
 
@@ -281,17 +284,22 @@ export class TeamMemberService {
       );
     }
 
+    const teamId = memberDB.team._id.toString();
+
     // Создание сервисного сообщения для создателя команды.
     await this.teamServiceMessage.youKickedMember({
       userId: memberDB.user.toString(),
-      teamId: memberDB.team.toString(),
+      teamId,
     });
 
     // Создание сервисного сообщения для бывшего участника команды.
     await this.teamServiceMessage.youWereKicked({
       userId: memberDB.user.toString(),
-      teamId: memberDB.team.toString(),
+      teamId,
     });
+
+    // Добавление информации о команде в результаты заездов с даты this.actualDate
+    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
 
     return { message: 'Участник исключен из команды.' };
   }
@@ -341,6 +349,9 @@ export class TeamMemberService {
       teamMemberId,
       teamId: teamDB._id.toString(),
     });
+
+    // Добавление информации о команде в результаты заездов с даты this.actualDate
+    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
 
     return { message: `Вы покинули команду "${teamDB.name}"` };
   }

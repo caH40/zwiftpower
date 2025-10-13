@@ -177,3 +177,5 @@ export const RIDER_CATEGORIES_RULE_TYPES = [
   'dsqRecalculation',
   'dsqKeep',
 ] as const;
+
+export const DATE_FOR_ADD_TEAM_RESULTS = '2024-09-01';

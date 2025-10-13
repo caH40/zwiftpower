@@ -76,7 +76,7 @@ export function setEndOfDay(date: Date): Date {
 }
 export function setStartOfDay(date: Date): Date {
   // Создаем копию даты, чтобы не мутировать исходный объект
-  const endOfDay = new Date(date);
-  endOfDay.setHours(0, 0, 0, 0);
-  return endOfDay;
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+  return startOfDay;
 }
