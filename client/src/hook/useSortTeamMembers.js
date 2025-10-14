@@ -9,10 +9,12 @@ export function useSortTeamMembers(teamMembers) {
     }
 
     return teamMembers.toSorted((a, b) => {
-      const aLastName = a.rider.lastName.trim().toLowerCase();
-      const bLastName = b.rider.lastName.trim().toLowerCase();
+      const aFirstName = a.rider.firstName.trim().toLowerCase();
+      const bFirstName = b.rider.firstName.trim().toLowerCase();
 
-      return isRasing ? aLastName.localeCompare(bLastName) : bLastName.localeCompare(aLastName);
+      return isRasing
+        ? aFirstName.localeCompare(bFirstName)
+        : bFirstName.localeCompare(aFirstName);
     });
   }, [isRasing, teamMembers]);
 
