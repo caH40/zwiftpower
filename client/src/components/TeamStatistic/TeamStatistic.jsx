@@ -12,7 +12,9 @@ const seriesWins = [
 /**
  * Широкий хедер команды со сводной статистикой.
  */
-export default function TeamStatistic({ stats: { events, riderMetrics } }) {
+export default function TeamStatistic({
+  stats: { events, riderMetrics, registeredEventsCount },
+}) {
   const { categories, medals, totalMembers } = riderMetrics;
 
   // Статистика по категориям
@@ -91,8 +93,8 @@ export default function TeamStatistic({ stats: { events, riderMetrics } }) {
               <span className={styles.eventValue}>{events.resultsInActiveSeason}</span>
             </div>
             <div className={styles.eventStat}>
-              <span className={styles.eventLabel}>Зарегистрированы</span>
-              <span className={styles.eventValue}>{0}</span>
+              <span className={styles.eventLabel}>Регистрация</span>
+              <span className={styles.eventValue}>{registeredEventsCount}</span>
             </div>
           </div>
         </div>

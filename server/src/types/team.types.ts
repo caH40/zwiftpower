@@ -50,4 +50,5 @@ export type TStatistics = {
     };
   };
   events: { totalResults: number; resultsInActiveSeason: number };
+  registeredEventsCount: number;
 };

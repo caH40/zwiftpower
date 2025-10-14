@@ -8,18 +8,24 @@ import { getSeasonPeriod } from '../utils/season.js';
 import { TZwiftCategory } from '../types/types.interface.js';
 import { TResponseService } from '../types/http.interface.js';
 import { TStatistics } from '../types/team.types.js';
+import { SignedRidersRepository } from '../repositories/SignedRiders.js';
+import { EventRepository } from '../repositories/Event.js';
 
 export class TeamStatisticsService {
   private teamMemberRepository: TeamMemberRepository;
   private riderRepository: RiderRepository;
   private resultRepository: EventResultRepository;
   private teamRepository: TeamRepository;
+  private signedRidersRepository: SignedRidersRepository;
+  private eventRepository: EventRepository;
   constructor() {
     this.teamMemberRepository = new TeamMemberRepository();
     this.riderRepository = new RiderRepository();
     this.riderRepository = new RiderRepository();
     this.resultRepository = new EventResultRepository();
     this.teamRepository = new TeamRepository();
+    this.signedRidersRepository = new SignedRidersRepository();
+    this.eventRepository = new EventRepository();
   }
 
   /**
@@ -47,8 +53,10 @@ export class TeamStatisticsService {
     // Данные по заездам райдеров команды.
     const events = await this.events(urlSlug);
 
+    const registeredEventsCount = await this.getRegisteredEventsCount(team._id.toString());
+
     return {
-      data: { riderMetrics, events },
+      data: { riderMetrics, events, registeredEventsCount },
       message: `Данные статистики и метрики команды ${team.name}`,
     };
   }
@@ -141,7 +149,17 @@ export class TeamStatisticsService {
   /**
    * Количество заездов в которых зарегистрированы участники команды.
    */
-  private async registeredEvents(): Promise<number> {
-    return 0;
+  private async getRegisteredEventsCount(teamId: string): Promise<number> {
+    const subgroups = await this.signedRidersRepository.getSubgroupForTeamMembers(teamId);
+    const subgroupIds = subgroups.map(({ subgroup }) => subgroup);
+
+    const events = await this.eventRepository.getEventIds(subgroupIds);
+
+    const now = new Date();
+
+    // Эвенты которые еще не стартовали.
+    const actualEvents = events.filter((e) => new Date(e.eventStart) > now);
+
+    return actualEvents.length;
   }
 }
