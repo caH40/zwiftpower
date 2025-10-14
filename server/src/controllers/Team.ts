@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { handleErrorInController } from '../errors/error.js';
 import { TeamService } from '../service/Team.js';
 import { TeamZSchema } from '../utils/deserialization/team.js';
+import { TeamStatisticsService } from '../service/TeamStatistics.js';
 
 /**
  * Контроллер работы с сущностью "Команда".
@@ -219,6 +220,28 @@ export class TeamController {
         docsOnPage: query.docsOnPage,
         page: query.page,
       });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Контроллер получения всех результатов заездов участников команды.
+   */
+  public getTeamStatistics = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const urlSlug = req.params.urlSlug;
+
+      if (!urlSlug) {
+        return res.status(400).json({ message: 'В запросе не получен urlSlug команды!' });
+      }
+
+      const statisticsService = new TeamStatisticsService();
+      // Вызов сервиса.
+      const response = await statisticsService.get(urlSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

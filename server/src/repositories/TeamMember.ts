@@ -1,7 +1,7 @@
-import { TeamMemberModel } from '../Model/TeamMember';
+import { TeamMemberModel } from '../Model/TeamMember.js';
 
 // types
-import { TTeamSpecialization } from '../types/team.types';
+import { TTeamSpecialization } from '../types/team.types.js';
 
 type TPopulatedTeamMember = {
   specialization?: TTeamSpecialization;

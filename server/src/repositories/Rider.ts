@@ -1,6 +1,6 @@
 // types
 
-import { Rider } from '../Model/Rider';
+import { Rider } from '../Model/Rider.js';
 
 export class RiderRepository {
   /**

@@ -1,54 +1,62 @@
-import { RiderRepository } from '../repositories/Rider';
-import { TeamMemberRepository } from '../repositories/TeamMember';
+import { EventResultRepository } from '../repositories/EventResult.js';
+import { RiderRepository } from '../repositories/Rider.js';
+import { TeamRepository } from '../repositories/Team.js';
+import { TeamMemberRepository } from '../repositories/TeamMember.js';
+import { getSeasonPeriod } from '../utils/season.js';
 
 // types
-import { TZwiftCategory } from '../types/types.interface';
-
-type getRes = {
-  categories: { [K in TZwiftCategory]: number };
-  averageRacingScore: number;
-  medals: {
-    gold: number;
-    silver: number;
-    bronze: number;
-  };
-};
+import { TZwiftCategory } from '../types/types.interface.js';
+import { TResponseService } from '../types/http.interface.js';
+import { TStatistics } from '../types/team.types.js';
 
 export class TeamStatisticsService {
   private teamMemberRepository: TeamMemberRepository;
   private riderRepository: RiderRepository;
+  private resultRepository: EventResultRepository;
+  private teamRepository: TeamRepository;
   constructor() {
     this.teamMemberRepository = new TeamMemberRepository();
     this.riderRepository = new RiderRepository();
+    this.riderRepository = new RiderRepository();
+    this.resultRepository = new EventResultRepository();
+    this.teamRepository = new TeamRepository();
   }
 
   /**
    * Статистические данные команды.
    */
-  public async get(teamId: string): Promise<getRes | null> {
-    const teamMembers = await this.teamMemberRepository.getTeamMemberData(teamId);
+  public async get(urlSlug: string): Promise<TResponseService<TStatistics | null>> {
+    const team = await this.teamRepository.getByUrlSlug(urlSlug);
+
+    if (!team) {
+      throw new Error(`Не найдена команда с urlSlug: "${urlSlug}"`);
+    }
+
+    const teamMembers = await this.teamMemberRepository.getTeamMemberData(team._id.toString());
 
     const teamMembersTotal = teamMembers.length;
     if (teamMembersTotal === 0) {
-      return null;
+      return { data: null, message: `Не найдены участники команды ${team.name}!` };
     }
 
     const zwiftIds = teamMembers.map((m) => m.user.zwiftId);
 
-    const { categories, averageRacingScore, medals } = await this.riderMetrics(
-      zwiftIds,
-      teamMembersTotal
-    );
+    // Метрики по райдерам команды.
+    const riderMetrics = await this.getRiderMetrics(zwiftIds, teamMembersTotal);
 
-    console.log({ categories, averageRacingScore, medals });
+    // Данные по заездам райдеров команды.
+    const events = await this.events(urlSlug);
 
-    return { categories, averageRacingScore, medals };
+    return {
+      data: { riderMetrics, events },
+      message: `Данные статистики и метрики команды ${team.name}`,
+    };
   }
 
   /**
    * Метрики по райдерам команды.
    */
-  async riderMetrics(
+  async getRiderMetrics(
     zwiftIds: number[],
     teamMembersTotal: number
   ): Promise<{
@@ -94,9 +102,28 @@ export class TeamStatisticsService {
    * Данные по заездам:
    * -всего заездов;
    * -заездов в этом сезоне;
-   * -участники зарегистрированны в заезде.
+   * -участники зарегистрированы в заезде.
    */
-  async events(): Promise<unknown> {
-    return null;
+  async events(
+    urlSlug: string
+  ): Promise<{ totalResults: number; resultsInActiveSeason: number }> {
+    const results = await this.resultRepository.getStatistics(urlSlug);
+
+    const totalResults = results.length;
+
+    const currentSeason = getSeasonPeriod(new Date());
+    if (!currentSeason) {
+      return { totalResults, resultsInActiveSeason: 0 };
+    }
+
+    const resultsInActiveSeason = results.reduce<number>((acc, result) => {
+      const resultSeason = getSeasonPeriod(new Date(result.zwiftEventId.eventStart));
+      if (currentSeason?.label === resultSeason?.label) {
+        acc++;
+      }
+      return acc;
+    }, 0);
+
+    return { totalResults, resultsInActiveSeason };
   }
 }
