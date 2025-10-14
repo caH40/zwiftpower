@@ -60,6 +60,7 @@ export class TeamStatisticsService {
     zwiftIds: number[],
     teamMembersTotal: number
   ): Promise<{
+    totalMembers: number;
     categories: { [K in TZwiftCategory]: number };
     averageRacingScore: number;
     medals: {
@@ -68,7 +69,9 @@ export class TeamStatisticsService {
       bronze: number;
     };
   }> {
-    const ridersParams = await this.riderRepository.getRidersParams(zwiftIds);
+    const riderParams = await this.riderRepository.getRidersParams(zwiftIds);
+
+    const totalMembers = riderParams.length;
 
     const initialAccumulator = {
       categories: { A: 0, B: 0, C: 0, D: 0, E: 0 },
@@ -76,7 +79,7 @@ export class TeamStatisticsService {
       medals: { gold: 0, silver: 0, bronze: 0 },
     };
 
-    const { categories, racingScoreTotal, medals } = ridersParams.reduce<
+    const { categories, racingScoreTotal, medals } = riderParams.reduce<
       typeof initialAccumulator
     >((acc, rider) => {
       if (!rider.competitionMetrics) {
@@ -95,7 +98,7 @@ export class TeamStatisticsService {
 
     const averageRacingScore = racingScoreTotal / teamMembersTotal;
 
-    return { categories, averageRacingScore, medals };
+    return { totalMembers, categories, averageRacingScore, medals };
   }
 
   /**

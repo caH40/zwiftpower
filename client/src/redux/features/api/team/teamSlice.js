@@ -8,6 +8,7 @@ import {
   fetchGetRiderResults,
   fetchGetTeam,
   fetchGetTeams,
+  fetchGetTeamStatistics,
 } from './fetchTeam';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   quantityPages: 1,
   pendingRiders: [],
   bannedRiders: [],
+  statistics: null,
   team: null,
   message: null,
   status: null,
@@ -47,6 +49,9 @@ const teamSlice = createSlice({
     resetTeamRiderResults: (state) => {
       state.teamRiderResults = [];
       state.quantityPages = 1;
+    },
+    resetStatistics: (state) => {
+      state.statistics = null;
     },
   },
 
@@ -135,6 +140,23 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ============== статистика и метрика по команде и её участникам =================
+    builder.addCase(fetchGetTeamStatistics.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetTeamStatistics.fulfilled, (state, action) => {
+      state.statistics = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetTeamStatistics.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
@@ -144,6 +166,7 @@ export const {
   resetPendingRiders,
   resetBannedRiders,
   resetTeamRiderResults,
+  resetStatistics,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

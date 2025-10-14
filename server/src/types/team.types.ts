@@ -40,6 +40,7 @@ export type TControlMemberAction = 'approve' | 'cancel' | 'ban' | 'cancelBan' | 
 
 export type TStatistics = {
   riderMetrics: {
+    totalMembers: number;
     categories: { [K in TZwiftCategory]: number };
     averageRacingScore: number;
     medals: {

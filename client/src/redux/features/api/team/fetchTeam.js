@@ -170,3 +170,26 @@ export const fetchGetRiderResults = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Получения статистики и метрики по команде и её участникам.
+ */
+export const fetchGetTeamStatistics = createAsyncThunk(
+  'teamStatistics/get',
+  async ({ urlSlug }, thunkAPI) => {
+    try {
+      const url = new URL(`${serverExpress}/api/teams/statistics/${urlSlug}`);
+
+      const response = await myAxios({
+        url: url.toString(),
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
