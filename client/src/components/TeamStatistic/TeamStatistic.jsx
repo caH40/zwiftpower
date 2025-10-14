@@ -71,28 +71,6 @@ export default function TeamStatistic({
     <div className={styles.header}>
       {/* Основная информация команды */}
       <div className={styles.mainInfo}>
-        <div className={styles.logoSection}>
-          {imageSrc ? (
-            <img src={imageSrc} alt={name} className={styles.logo} />
-          ) : (
-            <div className={styles.logoPlaceholder}>{name?.[0]}</div>
-          )}
-          <div className={styles.flag}>
-            <Flag name={countryAlpha3} width={28} height={21} />
-          </div>
-        </div>
-
-        <div className={styles.teamDetails}>
-          <h1 className={styles.teamName}>{name}</h1>
-          {description && <p className={styles.description}>{description}</p>}
-          <div className={styles.metaInfo}>
-            {establishedYear && (
-              <span className={styles.established}>Основана в {establishedYear}</span>
-            )}
-            <span className={cn(styles.category, styles[catClass])}>Cat {category}</span>
-          </div>
-        </div>
-
         <div className={styles.rankingSection}>
           <div className={styles.ranking}>
             <span className={styles.rankingLabel}>Рейтинг</span>
