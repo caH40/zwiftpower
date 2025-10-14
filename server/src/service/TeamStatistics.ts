@@ -56,7 +56,7 @@ export class TeamStatisticsService {
   /**
    * Метрики по райдерам команды.
    */
-  async getRiderMetrics(
+  private async getRiderMetrics(
     zwiftIds: number[],
     teamMembersTotal: number
   ): Promise<{
@@ -107,26 +107,41 @@ export class TeamStatisticsService {
    * -заездов в этом сезоне;
    * -участники зарегистрированы в заезде.
    */
-  async events(
+  private async events(
     urlSlug: string
   ): Promise<{ totalResults: number; resultsInActiveSeason: number }> {
+    // Общее количество результатов всех участников команды.
     const results = await this.resultRepository.getStatistics(urlSlug);
 
-    const totalResults = results.length;
+    const uniqueEventsMap: Map<string, string> = new Map();
+
+    results.forEach((r) =>
+      uniqueEventsMap.set(r.zwiftEventId._id.toString(), r.zwiftEventId.eventStart)
+    );
+
+    const totalResults = uniqueEventsMap.size;
 
     const currentSeason = getSeasonPeriod(new Date());
     if (!currentSeason) {
       return { totalResults, resultsInActiveSeason: 0 };
     }
 
-    const resultsInActiveSeason = results.reduce<number>((acc, result) => {
-      const resultSeason = getSeasonPeriod(new Date(result.zwiftEventId.eventStart));
+    let resultsInActiveSeason = 0;
+
+    for (const eventStart of uniqueEventsMap.values()) {
+      const resultSeason = getSeasonPeriod(new Date(eventStart));
       if (currentSeason?.label === resultSeason?.label) {
-        acc++;
+        resultsInActiveSeason++;
       }
-      return acc;
-    }, 0);
+    }
 
     return { totalResults, resultsInActiveSeason };
+  }
+
+  /**
+   * Количество заездов в которых зарегистрированы участники команды.
+   */
+  private async registeredEvents(): Promise<number> {
+    return 0;
   }
 }

@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { ZwiftResult } from '../Model/ZwiftResult.js';
 
 export class EventResultRepository {
@@ -6,7 +7,9 @@ export class EventResultRepository {
   /**
    * Результаты заездов в которых участвовали райдеры и когда был заезд.
    */
-  async getStatistics(urlSlug: string): Promise<{ zwiftEventId: { eventStart: string } }[]> {
+  async getStatistics(
+    urlSlug: string
+  ): Promise<{ zwiftEventId: { eventStart: string; _id: Types.ObjectId } }[]> {
     return await ZwiftResult.find(
       {
         $or: [
@@ -16,7 +19,7 @@ export class EventResultRepository {
       },
       { _id: 0, zwiftEventId: 1 }
     )
-      .populate<{ zwiftEventId: { eventStart: string } }>({
+      .populate<{ zwiftEventId: { eventStart: string; _id: Types.ObjectId } }>({
         path: 'zwiftEventId',
         select: ['eventStart'],
       })
