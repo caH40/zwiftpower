@@ -79,7 +79,7 @@ export default function TeamHeader({
               )}
             </div>
 
-            {mission && isScreenMd && (
+            {mission && (
               <div className={styles.mission__box}>
                 <p className={styles.mission}>{mission}</p>
               </div>

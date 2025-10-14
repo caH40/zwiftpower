@@ -200,9 +200,9 @@
   .title__box {
     max-width: 600px;
   }
-  .content {
+  /* .content {
     grid-template-columns: auto;
-  }
+  } */
   .title {
     padding: 0;
   }
