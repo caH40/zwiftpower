@@ -37,7 +37,7 @@ export default function TeamResultsPage() {
     return () => {
       dispatch(resetTeamRiderResults());
     };
-  }, [page, urlSlug, docsOnPage]);
+  }, [page, urlSlug, docsOnPage, dispatch]);
 
   return (
     <div className={styles.wrapper}>

@@ -35,7 +35,7 @@ export default function TeamMembersPage() {
     dispatch(fetchTeamMembers({ urlSlug }));
 
     dispatch(resetTeamMembers());
-  }, []);
+  }, [urlSlug, dispatch]);
 
   const { join, leave } = useTeamMembers({ urlSlug, teamName: team?.name });
 

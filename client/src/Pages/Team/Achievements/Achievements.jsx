@@ -22,7 +22,7 @@ export default function TeamAchievementsPage() {
     dispatch(fetchGetTeamStatistics({ urlSlug }));
 
     return () => dispatch(resetStatistics());
-  }, []);
+  }, [urlSlug, dispatch]);
 
   return (
     stats && (

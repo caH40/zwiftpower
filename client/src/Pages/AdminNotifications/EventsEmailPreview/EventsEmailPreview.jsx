@@ -29,7 +29,7 @@ export default function EventsEmailPreviewPage() {
     return () => {
       dispatch(resetEventsEmailPreview());
     };
-  }, []);
+  }, [dispatch]);
 
   const onRemoveEvent = (id) => {
     dispatch(removeEventFromEmailPreview({ id }));

@@ -29,7 +29,7 @@ export default function TeamPage() {
     dispatch(fetchGetTeam({ urlSlug }));
 
     return () => dispatch(resetTeam());
-  }, []);
+  }, [urlSlug, dispatch]);
 
   const isCreator = allowForTeamCreator({ status, teamIdForPermission: team?._id, userInTeam });
   return (
