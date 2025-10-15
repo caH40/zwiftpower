@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SkeletonTeamCard } from '../../components/SkeletonLoading/SkeletonTeamCard/SkeletonTeamCard';
+import { useSortTeams } from '../../hook/useSeortTeams';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
 import { TEAM_HELMET_PROPS } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
-import { shuffleArray } from '../../utils/shuffle';
 import { fetchGetTeams } from '../../redux/features/api/team/fetchTeam';
 import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
@@ -29,17 +29,15 @@ export default function TeamsPublic() {
   const { status: fetchTeamsStatus, teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
 
-  // // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Teams.
-  const shuffledTeams = useMemo(() => {
-    return shuffleArray(teams);
-  }, [teams]);
-
   // Запрос на получение списка команд.
   useEffect(() => {
     dispatch(fetchGetTeams());
 
     return () => dispatch(resetTeams());
-  }, []);
+  }, [dispatch]);
+
+  // Сначала команда пользователя, затем отсортированные по названию.
+  const sortedTeams = useSortTeams(teams, userInTeam?.id);
 
   return (
     <div className={styles.wrapper}>
@@ -60,8 +58,8 @@ export default function TeamsPublic() {
           status: fetchTeamsStatus,
         })}
 
-        {!!shuffledTeams?.length &&
-          shuffledTeams.map((team) => <CardTeam key={team._id} {...team} />)}
+        {!!sortedTeams?.length &&
+          sortedTeams.map((team) => <CardTeam key={team._id} {...team} />)}
       </section>
     </div>
   );
