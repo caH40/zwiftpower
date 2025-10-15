@@ -1,3 +1,4 @@
+import TextareaAutosize from 'react-textarea-autosize';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -34,12 +35,13 @@ function RTextarea({ subgroupIndex, label, property, placeholder, disabled }) {
   return (
     <>
       <label className={styles.label}>{label || property}</label>
-      <textarea
+      <TextareaAutosize
         className={styles.textarea}
         value={localValue}
         placeholder={placeholder}
         onChange={(e) => setLocalValue(e.target.value)}
         disabled={disabled}
+        minRows={3}
       />
     </>
   );
