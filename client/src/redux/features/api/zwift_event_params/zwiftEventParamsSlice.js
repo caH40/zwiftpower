@@ -188,12 +188,26 @@ const zwiftEventParamsSlice = createSlice({
       if (params.laps) {
         params.distanceInMeters = 0;
         params.durationInSeconds = 0;
+
+        // При изменении в любой подгруппе distanceInMeters, durationInSeconds, laps
+        // также эти параметры изменяются в основных eventMainParams
+        state.eventMainParams.distanceInMeters = 0;
+        state.eventMainParams.durationInSeconds = 0;
+        state.eventMainParams.laps = params.laps;
       } else if (params.distanceInMeters) {
         params.laps = 0;
         params.durationInSeconds = 0;
+
+        state.eventMainParams.distanceInMeters = params.distanceInMeters;
+        state.eventMainParams.durationInSeconds = 0;
+        state.eventMainParams.laps = 0;
       } else if (params.durationInSeconds) {
         params.laps = 0;
         params.distanceInMeters = 0;
+
+        state.eventMainParams.distanceInMeters = 0;
+        state.eventMainParams.durationInSeconds = params.durationInSeconds;
+        state.eventMainParams.laps = 0;
       }
 
       state[property] = {
