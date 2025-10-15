@@ -6,9 +6,7 @@ const OrganizerPublicLayout = lazy(() =>
   import('../Pages/OrganizerPublic/OrganizerPublicLayout')
 );
 const OrganizerSeries = lazy(() => import('../Pages/OrganizerPublic/Series/OrganizerSeries'));
-// const OrganizerPublicResults = lazy(() =>
-//   import('../Pages/OrganizerPublic/OrganizerPublicResults')
-// );
+
 const OrganizerSchedule = lazy(() =>
   import('../Pages/OrganizerPublic/Schedule/OrganizerSchedule')
 );
@@ -21,7 +19,6 @@ export function OrganizersPublicRoute() {
         <Route path="/organizers/:urlSlug/schedule" element={<OrganizerSchedule />} />
         <Route path="/organizers/:urlSlug/series" element={<OrganizerSeries />} />
       </Route>
-      {/* <Route path="/organizers/:urlSlug/results" element={<OrganizerPublicResults />} /> */}
     </>
   );
 }
