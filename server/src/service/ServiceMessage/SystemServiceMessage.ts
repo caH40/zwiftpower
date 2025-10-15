@@ -38,10 +38,10 @@ export class SystemServiceMessage {
     teamId: string;
   }): Promise<{ data: null; message: string }> {
     try {
-      const [user, team, adminIds] = await Promise.all([
+      const [user, team, usersIds] = await Promise.all([
         this.dataProvider.getUser(creatorId),
         this.dataProvider.getTeam(teamId),
-        this.dataProvider.getAdminIds(),
+        this.dataProvider.getAllUserIds(),
       ]);
 
       const entityUrl = `/teams/${team.urlSlug}/members`;
@@ -52,7 +52,7 @@ export class SystemServiceMessage {
         teamName: team.name,
       });
 
-      const recipientUsers = adminIds;
+      const recipientUsers = usersIds.filter((id) => id !== creatorId);
 
       await this.serviceMessage.createMany(
         recipientUsers.map((recipientUser) => ({

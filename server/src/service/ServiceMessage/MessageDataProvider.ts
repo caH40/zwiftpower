@@ -91,4 +91,15 @@ export class MessageDataProvider {
 
     return usersDB.map((u) => u._id.toString());
   }
+
+  async getAllUserIds(): Promise<string[]> {
+    const usersDB = await User.find(
+      {},
+      {
+        _id: true,
+      }
+    ).lean<{ _id: Types.ObjectId }[]>();
+
+    return usersDB.map((u) => u._id.toString());
+  }
 }
