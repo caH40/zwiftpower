@@ -26,7 +26,7 @@ export default function DevelopmentDocumentationPage() {
     dispatch(fetchDocument({ type: 'development', fileName: `${urlSlug}.${extension}` }));
 
     return () => dispatch(resetDocument());
-  }, [dispatch]);
+  }, [dispatch, urlSlug, extension]);
 
   return (
     <div className={styles.wrapper}>

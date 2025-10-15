@@ -56,7 +56,7 @@ function RaceResults() {
     if (['classicGroup', 'newbies'].includes(eventData.typeRaceCustom)) {
       dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
     }
-  }, [eventData]);
+  }, [eventData, dispatch]);
 
   // useAd(adNumbers);
 

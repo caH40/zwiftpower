@@ -27,7 +27,7 @@ export default function SeriesOneSchedule() {
     dispatch(fetchGetStages({ urlSlug, status: 'upcoming' }));
 
     return () => dispatch(resetStages());
-  }, []);
+  }, [urlSlug, dispatch]);
 
   const toLink = (id) => navigate(`/race/schedule/${id}`);
 

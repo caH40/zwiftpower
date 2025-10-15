@@ -26,7 +26,7 @@ export default function PublicDocumentationPage() {
     dispatch(fetchDocument({ type: 'public', fileName: `${urlSlug}.${extension}` }));
 
     return () => dispatch(resetDocument());
-  }, [dispatch]);
+  }, [dispatch, urlSlug, extension]);
 
   return (
     <div className={styles.wrapper}>

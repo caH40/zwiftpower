@@ -26,5 +26,5 @@ export function useMembersForControl(urlSlug) {
     dispatch(resetTeamMembers());
     dispatch(resetPendingRiders());
     dispatch(resetBannedRiders());
-  }, []);
+  }, [urlSlug, dispatch]);
 }

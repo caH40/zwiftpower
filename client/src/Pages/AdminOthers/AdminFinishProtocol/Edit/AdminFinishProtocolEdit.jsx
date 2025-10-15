@@ -40,7 +40,7 @@ export default function AdminConfigFPEdit() {
       dispatch(resetOrganizersPublic());
       dispatch(resetConfigsFP());
     };
-  }, [trigger]);
+  }, [trigger, dispatch]);
 
   const { deleteConfigFP, editConfigFP } = useFPEditActions({
     configsFP,

@@ -11,7 +11,7 @@ function EditUsers() {
   useEffect(() => {
     dispatch(setBackground({ isActive: true, opacity: 0.7 }));
     return () => dispatch(setBackground({ isActive: false }));
-  }, []);
+  }, [dispatch]);
   return <h2>Редактирование аккаунтов пользователей</h2>;
 }
 

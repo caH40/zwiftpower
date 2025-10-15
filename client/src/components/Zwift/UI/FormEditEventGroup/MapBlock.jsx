@@ -74,7 +74,7 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
     const routeInitId = routes.find((route) => route.world === worldCurrent?.slug) || {};
 
     dispatch(inputHandler({ routeId: routeInitId.id, index: groupNumber }));
-  }, [worldCurrent?.id]);
+  }, [worldCurrent?.id, dispatch]);
 
   // При изменении маршрута изменять карманы.
   useEffect(() => {
@@ -86,7 +86,7 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
     if (eventPaddocks?.[0]?.name) {
       dispatch(inputHandler({ startLocation: eventPaddocks[0]?.name, index: groupNumber }));
     }
-  }, [routeId, showPaddocksFull]);
+  }, [routeId, showPaddocksFull, dispatch]);
 
   //
   useEffect(() => {

@@ -21,13 +21,12 @@ export function useOrganizerPurchase({ planId }) {
   const dispatch = useDispatch();
 
   // Запрос на получение данных для платежа (payload.)
+  const returnUrl = `${serverFront}${location.pathname}`;
   useEffect(() => {
-    dispatch(
-      fetchOrganizerPaymentPayload({ returnUrl: `${serverFront}${location.pathname}`, planId })
-    );
+    dispatch(fetchOrganizerPaymentPayload({ returnUrl, planId }));
 
     dispatch(resetOrganizerPaymentPayload());
-  }, [planId]);
+  }, [planId, returnUrl, dispatch]);
 
   const handleClickPurchase = async () => {
     // Исключение случайного второго клика по кнопке.

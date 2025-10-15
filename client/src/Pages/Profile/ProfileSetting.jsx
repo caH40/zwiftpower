@@ -23,7 +23,7 @@ function ProfileSetting() {
     return () => {
       dispatch(resetUserSettings());
     };
-  }, []);
+  }, [dispatch, zwiftIdAuth]);
 
   // Не отображать страницу настроек для чужого пользователя..
   const isOtherUser = +zwiftIdPage !== zwiftIdAuth && +zwiftIdPage !== 0;

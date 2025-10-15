@@ -30,7 +30,7 @@ function Authorization() {
   useEffect(() => {
     dispatch(setBackground({ isActive: true, opacity: 1 }));
     return () => dispatch(setBackground({ isActive: false }));
-  }, []);
+  }, [dispatch]);
 
   const {
     register,

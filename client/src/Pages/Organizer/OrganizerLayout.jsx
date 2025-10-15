@@ -29,7 +29,7 @@ export default function OrganizerLayout({ organizerId }) {
     dispatch(fetchGetOrganizerModerator({ organizerId }));
 
     return () => dispatch(resetOrganizerDataModerator());
-  }, []);
+  }, [dispatch, organizerId]);
 
   return (
     <section className={styles.wrapper}>

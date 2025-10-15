@@ -56,7 +56,7 @@ function LogsAdmin() {
     return () => {
       dispatch(resetLogsAdmins());
     };
-  }, []);
+  }, [dispatch]);
 
   const deleteLogError = () => {
     // если нет логов для удаления, то не выполнять функцию

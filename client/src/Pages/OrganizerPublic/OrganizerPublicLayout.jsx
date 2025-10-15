@@ -37,7 +37,7 @@ export default function OrganizerPublicLayout() {
     dispatch(fetchOrganizerPublic({ urlSlug }));
 
     return () => dispatch(resetOrganizerPublic());
-  }, []);
+  }, [dispatch, urlSlug]);
 
   // useAd(adNumbers);
   return (

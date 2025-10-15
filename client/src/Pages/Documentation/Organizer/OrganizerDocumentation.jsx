@@ -22,11 +22,13 @@ export default function OrganizerDocumentationPage() {
   const { document } = useSelector((state) => state.documents);
   const dispatch = useDispatch();
 
+  const fileName = `${urlSlug}.${extension}`;
+
   useEffect(() => {
-    dispatch(fetchDocument({ type: 'organizer', fileName: `${urlSlug}.${extension}` }));
+    dispatch(fetchDocument({ type: 'organizer', fileName }));
 
     return () => dispatch(resetDocument());
-  }, [dispatch]);
+  }, [dispatch, fileName]);
 
   return (
     <div className={styles.wrapper}>

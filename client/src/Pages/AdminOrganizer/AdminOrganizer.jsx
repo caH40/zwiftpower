@@ -26,7 +26,7 @@ function AdminOrganizer() {
   useEffect(() => {
     dispatch(fetchGetOrganizerAdmin());
     return () => dispatch(resetOrganizers());
-  }, []);
+  }, [dispatch]);
 
   const getForm = () => {
     setShowFrom((prev) => !prev);

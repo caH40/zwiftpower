@@ -25,5 +25,5 @@ export function useServicesAndFinances(userId) {
       dispatch(resetPurchasableSiteServices());
       dispatch(resetPaymentTransactions());
     };
-  }, []);
+  }, [userId, dispatch]);
 }

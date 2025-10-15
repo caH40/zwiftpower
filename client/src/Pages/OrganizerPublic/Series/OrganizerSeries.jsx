@@ -27,7 +27,7 @@ export default function OrganizerSeries() {
     dispatch(fetchGetSeries(urlSlug));
 
     return () => dispatch(resetSeriesPublicAll());
-  }, [dispatch]);
+  }, [dispatch, urlSlug]);
   return (
     <section className={styles.wrapper_}>
       <HelmetOrganizerPublic

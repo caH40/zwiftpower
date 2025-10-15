@@ -27,7 +27,7 @@ function NewPassword() {
   useEffect(() => {
     dispatch(setBackground({ isActive: true, opacity: 1 }));
     return () => dispatch(setBackground({ isActive: false }));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     checkRequestPassword(token).then((response) => {

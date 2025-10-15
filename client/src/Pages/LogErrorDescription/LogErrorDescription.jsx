@@ -23,7 +23,7 @@ function LogErrorDescription() {
     return () => {
       dispatch(resetLogError());
     };
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <>

@@ -36,7 +36,7 @@ export default function AdminConfigFPCreate() {
     return () => {
       dispatch(resetOrganizersPublic());
     };
-  }, []);
+  }, [dispatch]);
   return (
     <section>
       {/* Форма создания/редактирования конфигураций финишных протоколов */}
