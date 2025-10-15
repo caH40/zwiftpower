@@ -36,7 +36,7 @@
 .content {
   position: relative;
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
   padding: 20px;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -58,7 +58,6 @@
   flex: 0 0 auto;
 }
 .mission {
-  margin: 10px;
   font-size: 14px;
   font-style: italic;
   color: var(--color-text-main);
@@ -154,7 +153,8 @@
     max-width: 600px;
   }
 }
-@media (max-width: 600px) {
+/* @media (max-width: 700px) {} */
+@media (max-width: 700px) {
   .content {
     padding: 14px;
     height: auto;
@@ -180,7 +180,7 @@
     padding: 40px 14px 14px 14px;
   }
   .mission__box {
-    padding: 5px;
+    padding: 7px;
   }
   .logo {
     grid-column: auto;
@@ -200,9 +200,6 @@
   .title__box {
     max-width: 600px;
   }
-  /* .content {
-    grid-template-columns: auto;
-  } */
   .title {
     padding: 0;
   }
@@ -212,5 +209,8 @@
   }
   .poster {
     min-height: 188px;
+  }
+  .mission {
+    font-size: 13px;
   }
 }

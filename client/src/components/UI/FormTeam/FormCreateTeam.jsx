@@ -8,6 +8,7 @@ import { fetchPostTeam, fetchPutTeam } from '../../../redux/features/api/team/fe
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { checkAuth } from '../../../redux/features/authSlice';
+import { validateTelegram, validateWebsite } from '../../../utils/validatorService';
 import Button from '../Button/Button';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
@@ -129,6 +130,39 @@ export default function FormCreateTeam({
             input={{ id: 'shortName-FormTeamCreate', type: 'text' }}
             placeholder="Короткое название команды"
             loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Группа в телеграмм'}
+            register={validateTelegram({ property: 'telegram.group', register })}
+            validationText={errors.telegram?.group?.message || ''}
+            input={{ id: 'telegram.group-FormTeamCreate', type: 'text' }}
+            placeholder="Например: https://t.me/velo_zwift"
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Канал в телеграмм'}
+            register={validateTelegram({ property: 'telegram.channel', register })}
+            validationText={errors.telegram?.channel?.message || ''}
+            input={{ id: 'telegram.channel-FormTeamCreate', type: 'text' }}
+            placeholder="Например: https://t.me/channel_velo_zwift"
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Сайт'}
+            register={validateWebsite({ property: 'website', register })}
+            validationText={errors.website?.message || ''}
+            input={{ id: 'website-FormTeamCreate', type: 'text' }}
+            placeholder="https://example.com"
+            loading={loading}
           />
         </div>
 

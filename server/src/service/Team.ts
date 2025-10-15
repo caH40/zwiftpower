@@ -422,6 +422,8 @@ export class TeamService {
       shortName: team.shortName,
       mission: team.mission,
       description: team.description,
+      website: team.website,
+      telegram: team.telegram,
       ...(logoFileInfo && { logoFileInfo }),
       ...(posterFileInfo && { posterFileInfo }),
     };

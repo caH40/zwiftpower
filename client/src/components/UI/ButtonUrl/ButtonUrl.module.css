@@ -21,3 +21,11 @@
   color: var(--color-blue-main);
   border: 1px solid var(--color-blue-main);
 }
+/* ====================================================================== */
+@media (max-width: 578px) {
+  .btn {
+    font-size: 14px;
+    padding: 1px 8px 1px 4px;
+    gap: 6px;
+  }
+}
