@@ -24,5 +24,5 @@ export const useLocalStorageSetRiders = ({
     localStorage.setItem(`${lsPrefixRiders}category`, category);
     localStorage.setItem(`${lsPrefixRiders}male`, String(male));
     localStorage.setItem(`${lsPrefixRiders}pageSize`, docsOnPage);
-  }, [docsOnPage, activeSorting, category, male, search]);
+  }, [docsOnPage, activeSorting, category, male, search, isMounting]);
 };

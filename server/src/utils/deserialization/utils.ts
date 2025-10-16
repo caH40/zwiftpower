@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 /**
  * Функция для безопасного парсинга JSON с проверкой на undefined
  */
@@ -22,3 +24,5 @@ export function preprocessCB(val: unknown) {
   }
   return val;
 }
+// Вспомогательные валидаторы для переиспользования
+export const numericString = z.string().regex(/^\d+$/, 'Должно быть числом');

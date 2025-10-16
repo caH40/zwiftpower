@@ -32,6 +32,8 @@ function TableUserResults({ results }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
 
+  // const resultSortedAndFiltered = useSortUserResults(results);
+
   return (
     <table className={styles.table}>
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>

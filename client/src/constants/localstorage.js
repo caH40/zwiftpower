@@ -7,6 +7,10 @@ const prefixSite = '__zp_';
  */
 export const lsPrefixRiders = `${prefixSite}riders-`;
 /**
+ * Суффикс для localStorage для страницы /riders.
+ */
+export const lsPrefixUserResults = `${prefixSite}userResults-`;
+/**
  * Суффикс для localStorage для Трансляции /streams.
  */
 export const lsPrefixStreams = `${prefixSite}streams-`;

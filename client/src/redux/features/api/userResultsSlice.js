@@ -10,11 +10,17 @@ import { serverExpress } from '../../../config/environment';
  */
 export const fetchUserResults = createAsyncThunk(
   'userResultsGet/profile',
-  async function ({ zwiftId, page, docsOnPage }, thunkAPI) {
+  async function ({ zwiftId, page, docsOnPage, columnName, isRasing }, thunkAPI) {
     try {
-      const search = `zwiftId=${zwiftId}&page=${page}&docsOnPage=${docsOnPage}`;
+      const url = new URL(`${serverExpress}/api/race/profile/results`);
+      url.searchParams.append('zwiftId', zwiftId);
+      url.searchParams.append('page', page);
+      url.searchParams.append('docsOnPage', docsOnPage);
+      url.searchParams.append('columnName', columnName);
+      url.searchParams.append('isRasing', isRasing);
+
       const response = await axios({
-        url: `${serverExpress}/api/race/profile/results?${search}`,
+        url: url.toString(),
         method: 'get',
       });
 

@@ -18,22 +18,23 @@ import { TNotifications, TUserStreams } from '../types/model.interface.js';
 import { putUserStreamsService } from '../service/profile/streams.js';
 import { getUserSettingsService } from '../service/profile/settings.js';
 import { putUsernameService, updateProfileService } from '../service/profile/rider.js';
+import { userResultsZSchema } from '../utils/deserialization/userResults.js';
+import { handleZodError } from '../errors/handleZodError.js';
 
 /**
  * Контролер получения всех результатов райдера
  */
 export async function getUserResults(req: Request, res: Response) {
   try {
-    const { page, docsOnPage, zwiftId } = req.query;
+    const parsedResult = userResultsZSchema.safeParse(req.query);
 
-    const query = {
-      page: page ? +page : undefined,
-      docsOnPage: docsOnPage ? +docsOnPage : undefined,
-      zwiftId: zwiftId ? +zwiftId : undefined,
-    };
+    const parseError = handleZodError(parsedResult);
+    if (parseError || !parsedResult.success) {
+      return res.status(400).json({ message: `Ошибки валидации: ${parseError}` });
+    }
 
-    const userResults = await getUserResultsService(query);
-    res.status(200).json(userResults);
+    const userResults = await getUserResultsService(parsedResult.data);
+    return res.status(200).json(userResults);
   } catch (error) {
     handleAndLogError(error);
     if (error instanceof Error) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ import { HelmetProfile } from '../../components/Helmets/HelmetProfile';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import SkeletonProfileCPBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileCPBlock';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import { useInitialUserResultsSettings } from '../../hook/useInitialUserResultsSettings';
+import { useLocalStorageSetUserResults } from '../../hook/useLocalStorageSetUserResults';
 
 import styles from './Profile.module.css';
 
@@ -18,6 +20,9 @@ function ProfileResults() {
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
+  const isMounting = useRef(true);
+  const { activeSorting } = useSelector((state) => state.sortTable);
+  const wattsState = useSelector((state) => state.filterWatts.value);
 
   const {
     powerCurve,
@@ -30,16 +35,33 @@ function ProfileResults() {
     status: statusResults,
   } = useSelector((state) => state.fetchUserResults);
 
-  const initialDocsOnPage = localStorage.getItem('recordsOnPageProfileResults') || 20;
-  const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
+  // Инициализация данных из Локального хранилища.
+  const { docsOnPage, setDocsOnPage } = useInitialUserResultsSettings();
+
+  // Сохранение данных в Локальном хранилище.
+  useLocalStorageSetUserResults({ docsOnPage, activeSorting, isMounting });
 
   // получение результатов райдера
   useEffect(() => {
-    localStorage.setItem('recordsOnPageProfileResults', docsOnPage);
-    dispatch(fetchUserResults({ zwiftId, page, docsOnPage }));
+    if (!activeSorting) {
+      return undefined;
+    }
 
-    return () => dispatch(resetUserResults());
-  }, [dispatch, zwiftId, userAuth, page, docsOnPage]);
+    dispatch(
+      fetchUserResults({
+        zwiftId,
+        page,
+        docsOnPage,
+        columnName: `cp-${wattsState.column}-${activeSorting.columnName}`,
+        isRasing: activeSorting.isRasing,
+        additionalColumnName: wattsState.column,
+      })
+    );
+
+    return () => {
+      dispatch(resetUserResults());
+    };
+  }, [dispatch, zwiftId, userAuth, activeSorting, page, docsOnPage, wattsState]);
 
   return (
     <div>

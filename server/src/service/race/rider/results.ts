@@ -5,18 +5,27 @@ import { ZwiftResultSchema } from '../../../types/model.interface.js';
 import { UserResult } from '../../../types/types.interface.js';
 import { secondesToTime } from '../../../utils/date-convert.js';
 import { addPropertyAddition } from '../../../utils/property-addition.js';
+import { sortByCP } from '../../../utils/sortByCP.js';
 import { changeProfileData } from '../../profile-main.js';
 
 type Arg = {
   zwiftId?: number;
   page?: number;
   docsOnPage?: number;
+  isRasing: boolean;
+  columnName: string;
 };
 
 /**
  * Получение результатов райдера zwiftId и результатов с дополнительных профилей Звифт
  */
-export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20 }: Arg) {
+export async function getUserResultsService({
+  zwiftId,
+  isRasing,
+  columnName,
+  page = 1,
+  docsOnPage = 20,
+}: Arg) {
   if (zwiftId === undefined) {
     return null;
   }
@@ -30,6 +39,11 @@ export async function getUserResultsService({ zwiftId, page = 1, docsOnPage = 20
   }).lean();
 
   const results = await handleRiderResults(resultsDB);
+
+  // Сортировка по удельной мощности cp- префикс для названия колонок для Critical power.
+  if (columnName.startsWith('cp-')) {
+    sortByCP({ results, columnName, isRasing });
+  }
 
   // пагинация
   const quantityPages = Math.ceil(results.length / docsOnPage);

@@ -10,16 +10,6 @@ export const raceResultsColumnsStartFull = [
   { name: 'Нормализованная мощность', id: 8 },
 ];
 
-export const raceResultsColumnsCP = [
-  { name: '5с', id: 100 },
-  { name: '30с', id: 101 },
-  { name: '1м', id: 102 },
-  { name: '5м', id: 103 },
-  { name: '12м', id: 104 },
-  { name: '20м', id: 105 },
-  { name: '40м', id: 106 },
-];
-
 export const raceResultsColumnsEnd = [
   { name: 'Пульс', id: 9 },
   { name: 'Вес', id: 10 },
