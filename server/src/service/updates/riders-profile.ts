@@ -167,11 +167,20 @@ async function updateRidersProfilesWithoutResultsService(zwiftIds: number[]) {
       (profile) => profile !== null
     ) as ProfileZwiftAPI[];
 
+    const totalEvents = 0;
+    const medals = {
+      gold: 0,
+      silver: 0,
+      bronze: 0,
+    };
+
     // Теперь можно продолжить работу с успешными профилями.
     const updatePromises = profilesFiltered.map((profile) =>
-      Rider.findOneAndUpdate({ zwiftId: profile.id }, { ...profile }, { upsert: true }).catch(
-        (error) => handleAndLogError(error)
-      )
+      Rider.findOneAndUpdate(
+        { zwiftId: profile.id },
+        { ...profile, totalEvents, medals },
+        { upsert: true }
+      ).catch((error) => handleAndLogError(error))
     );
 
     // Необходимо дождаться завершения всех асинхронных функций.

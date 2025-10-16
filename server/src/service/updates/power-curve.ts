@@ -2,6 +2,7 @@ import { PowerCurve } from '../../Model/PowerCurve.js';
 import { createFitFiles } from '../zwift/fitfiles/fitfiles.js';
 import { updatePowerCurve } from '../zwift/power_curve/power-curve-update.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { updateRidersProfiles } from './riders-profile.js';
 
 /**
  * Создание/обновления (FitFiles) фитфалов активностей райдера и
@@ -39,6 +40,8 @@ export async function updateFitFileAndPowerCurve({
 
     // Создание новой кривой мощности для обновленных активностей.
     await updatePowerCurve(zwiftId);
+
+    await updateRidersProfiles([zwiftId]);
   } catch (error) {
     handleAndLogError(error);
   }

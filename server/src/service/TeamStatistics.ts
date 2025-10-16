@@ -97,9 +97,9 @@ export class TeamStatisticsService {
       const category = rider.competitionMetrics.category as TZwiftCategory;
       acc.categories[category]++;
       acc.racingScoreTotal += rider.competitionMetrics.racingScore;
-      acc.medals.gold += rider.medals.gold;
-      acc.medals.silver += rider.medals.silver;
-      acc.medals.bronze += rider.medals.bronze;
+      acc.medals.gold += rider.medals?.gold || 0;
+      acc.medals.silver += rider.medals?.silver || 0;
+      acc.medals.bronze += rider.medals?.bronze || 0;
 
       return acc;
     }, initialAccumulator);

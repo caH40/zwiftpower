@@ -59,6 +59,7 @@ export const updatePowerCurveRider = async ({
         pointsWatts: cpWattsUpdated,
         pointsWattsPerKg: cpWattsPerKgUpdated,
       },
-    }
+    },
+    { upsert: true }
   );
 };
