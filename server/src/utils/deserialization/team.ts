@@ -30,6 +30,7 @@ export const TeamZSchema = z.object({
   description: z.string().optional().describe('Описание'),
   country: z.string().optional().describe('Страна'),
   website: z.string().optional().describe('Вебсайт'),
+  zwiftClubId: z.string().optional().describe('id клуба в Звифте'),
 
   telegram: z.preprocess(preprocessCB, TelegramZSchema.optional()),
   contact: z.preprocess(preprocessCB, ContactZSchema.optional()),

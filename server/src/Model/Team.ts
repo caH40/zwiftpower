@@ -28,6 +28,7 @@ const teamSchema = new Schema<TTeamDocument>(
     description: { type: String, trim: true },
     telegram: { type: TelegramSchema },
     website: { type: String, trim: true },
+    zwiftClubId: { type: String, trim: true },
     contact: {
       email: { type: String },
       phone: { type: String },

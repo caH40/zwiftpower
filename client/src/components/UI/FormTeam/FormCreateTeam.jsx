@@ -166,6 +166,17 @@ export default function FormCreateTeam({
           />
         </div>
 
+        <div className={styles.wrapper__input}>
+          <InputAuth
+            label={'Id клуба в Звифте'}
+            register={register('zwiftClubId')}
+            validationText={errors.zwiftClubId?.message || ''}
+            input={{ id: 'zwiftClubId-FormTeamCreate', type: 'text' }}
+            placeholder="28297d70-2684-4348-b921-1e200a1c6ad1"
+            loading={loading}
+          />
+        </div>
+
         {/* Блок загрузки логотипа серии */}
         <div className={styles.wrapper__file}>
           <Controller

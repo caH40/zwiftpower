@@ -11,6 +11,7 @@ import ButtonUrl from '../UI/ButtonUrl/ButtonUrl';
 import IconTelegram from '../icons/IconTelegram';
 import IconWebsite from '../icons/IconWebsite';
 import IconVk from '../icons/IconVk';
+import IconZwift from '../icons/IconZwift';
 
 import styles from './TeamHeader.module.css';
 
@@ -20,11 +21,23 @@ const cx = cn.bind(styles);
  * Блок-шапка Команды с описанием и ссылками на внешние ресурсы.
  */
 export default function TeamHeader({
-  team: { posterUrls, logoUrls, name, telegram, website, socialLinks, mission, description },
+  team: {
+    posterUrls,
+    logoUrls,
+    name,
+    telegram,
+    zwiftClubId,
+    website,
+    socialLinks,
+    mission,
+    description,
+  },
 }) {
   const [isOpenDescription, setIsOpenDescription] = useState(false);
 
   const { isScreenMd } = useResize();
+
+  const zwiftClubJoinUrl = `https://www.zwift.com/eu/clubs/${zwiftClubId}/join`;
 
   return (
     <section className={styles.wrapper}>
@@ -60,7 +73,16 @@ export default function TeamHeader({
 
           <div className={styles.content__bottom}>
             <div className={styles.buttons__block}>
-              {/* Кнопка на переход в группу телеграм */}
+              {/* Кнопка на переход в клуб звифта */}
+              {zwiftClubId && (
+                <ButtonUrl
+                  name={'Клуб'}
+                  Icon={IconZwift}
+                  href={zwiftClubJoinUrl}
+                  isZwiftCompanionLink={true}
+                />
+              )}
+
               {telegram?.group && (
                 <ButtonUrl name={'Группа'} Icon={IconTelegram} href={telegram.group} />
               )}

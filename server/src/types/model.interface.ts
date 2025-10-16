@@ -938,6 +938,7 @@ export type TTeam = {
   };
   country?: string; // Страна организатора. RU, BY, KZ и т.д.
   socialLinks?: TSocialLinks;
+  zwiftClubId?: string;
   pendingRiders: {
     user: Types.ObjectId;
     requestedAt: Date; // Дата подачи заявки.

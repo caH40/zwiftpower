@@ -424,6 +424,7 @@ export class TeamService {
       description: team.description,
       website: team.website,
       telegram: team.telegram,
+      zwiftClubId: team.zwiftClubId,
       ...(logoFileInfo && { logoFileInfo }),
       ...(posterFileInfo && { posterFileInfo }),
     };
