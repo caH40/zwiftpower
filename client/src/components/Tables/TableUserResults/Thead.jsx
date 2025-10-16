@@ -8,6 +8,9 @@ import styles from '../Table.module.css';
 
 import { raceResultsColumns, raceResultsColumnsEnd } from './column-titles';
 
+// Дополнительные (кроме CP) столбцы для сортировки.
+const columnsWithSorting = ['Дата'];
+
 function Thead({ columnsCP }) {
   const dispatch = useDispatch();
 
@@ -22,7 +25,20 @@ function Thead({ columnsCP }) {
       <tr>
         {raceResultsColumns().map((column) => (
           <th key={column.id}>
-            <ColumnName columnName={column.name} />
+            <div className={styles.th__box}>
+              <ColumnName columnName={column.name} />
+              {columnsWithSorting.includes(column.name) && (
+                <IconArrows
+                  columnName={column.name}
+                  getClick={setSortTable}
+                  squareSize={16}
+                  activeDate={{
+                    isActive: column.name === activeSorting?.columnName,
+                    isRasing: activeSorting?.isRasing,
+                  }}
+                />
+              )}
+            </div>
           </th>
         ))}
 

@@ -46,13 +46,19 @@ function ProfileResults() {
     if (!activeSorting) {
       return undefined;
     }
+    let { columnName } = activeSorting;
+
+    // Если columnName является числом, значит это CP, добавляем префикс.
+    if (typeof columnName === 'number') {
+      columnName = `cp-${wattsState.column}-${activeSorting.columnName}`;
+    }
 
     dispatch(
       fetchUserResults({
         zwiftId,
         page,
         docsOnPage,
-        columnName: `cp-${wattsState.column}-${activeSorting.columnName}`,
+        columnName,
         isRasing: activeSorting.isRasing,
         additionalColumnName: wattsState.column,
       })

@@ -40,6 +40,18 @@ export async function getUserResultsService({
 
   const results = await handleRiderResults(resultsDB);
 
+  // сортировка по дате старта заезда
+  if (columnName === 'Дата') {
+    results.sort((a, b) => {
+      if (!a.eventStart || !b.eventStart) return 0;
+
+      const aTime = new Date(a.eventStart).getTime();
+      const bTime = new Date(b.eventStart).getTime();
+
+      return isRasing ? aTime - bTime : bTime - aTime;
+    });
+  }
+
   // Сортировка по удельной мощности cp- префикс для названия колонок для Critical power.
   if (columnName.startsWith('cp-')) {
     sortByCP({ results, columnName, isRasing });
@@ -85,14 +97,6 @@ export async function handleRiderResults(
     result.eventName = eventCurrent?.name;
     result.eventStart = new Date(eventCurrent.eventStart).getTime();
   }
-
-  // сортировка по дате старта заезда
-  resultsWithMaxValues.sort((a, b) => {
-    if (b.eventStart && a.eventStart) {
-      return b.eventStart - a.eventStart;
-    }
-    return 0;
-  });
 
   // добавление строки времени в addition durationInMilliseconds
   for (const result of resultsWithMaxValues) {

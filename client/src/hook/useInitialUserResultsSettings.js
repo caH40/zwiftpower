@@ -14,14 +14,13 @@ export const useInitialUserResultsSettings = () => {
   const dispatch = useDispatch();
 
   const getInitialSettings = () => {
-    const columnNameStored = localStorage.getItem(`${lsPrefixUserResults}columnName`);
+    const columnNameStored = localStorage.getItem(`${lsPrefixUserResults}columnName`) || 'Дата';
     const isRasingStored = localStorage.getItem(`${lsPrefixUserResults}isRasing`);
 
-    const columnName = columnNameStored
-      ? isNaN(Number(columnNameStored))
-        ? columnNameStored
-        : Number(columnNameStored)
-      : 1200;
+    const columnName = isNaN(Number(columnNameStored))
+      ? columnNameStored
+      : Number(columnNameStored);
+
     const isRasing = isRasingStored ? JSON.parse(isRasingStored) : false;
 
     return { columnName, isRasing };
