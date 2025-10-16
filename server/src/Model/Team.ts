@@ -33,6 +33,12 @@ const teamSchema = new Schema<TTeamDocument>(
       email: { type: String },
       phone: { type: String },
     },
+    appearance: {
+      badgeBackground: { type: String },
+      badgeTextColor: { type: String },
+      pageBackground: { type: String },
+      accentColor: { type: String },
+    },
     country: { type: String },
     socialLinks: { type: SocialLinksSchema },
     pendingRiders: { type: [PendingRiderSchema], default: [] },

@@ -13,6 +13,10 @@ export const TelegramZSchema = z.object({
   group: z.string().optional().describe('Группа в Telegram'),
   channel: z.string().optional().describe('Канал в Telegram'),
 });
+export const AppearanceZSchema = z.object({
+  badgeBackground: z.string().describe('Группа в Telegram'),
+  badgeTextColor: z.string().describe('Цвет текста бейджа'),
+});
 
 export const SocialLinksZSchema = z.object({
   vk: z.string().url().optional().describe('Ссылка на профиль или группу ВКонтакте'),
@@ -35,4 +39,5 @@ export const TeamZSchema = z.object({
   telegram: z.preprocess(preprocessCB, TelegramZSchema.optional()),
   contact: z.preprocess(preprocessCB, ContactZSchema.optional()),
   socialLinks: z.preprocess(preprocessCB, SocialLinksZSchema.optional()),
+  appearance: z.preprocess(preprocessCB, AppearanceZSchema.optional()),
 });

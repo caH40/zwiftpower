@@ -1,8 +1,13 @@
-import { FINISH_TIME_ADJUSTMENT, groupTargetWattsPerKg } from '../../assets/constants.js';
+import {
+  FINISH_TIME_ADDITIONAL_CONST,
+  FINISH_TIME_ADJUSTMENT,
+  groupTargetWattsPerKg,
+} from '../../assets/constants.js';
 import { routes } from '../../assets/zwift/lib/cjs/routes.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { cyclingTimeInMilliseconds } from '../../utils/cycling-time.js';
+import { getTimerLocal } from '../../utils/date-local.js';
 import { SeriesStageProtocolManager } from '../series/SeriesStageProtocolManager.js';
 
 /**
@@ -170,14 +175,17 @@ export class SeriesResultsUpdater {
     const maxFinishTime = finishTimes.at(-1)!.finish;
     const activeTime = finishTimes.at(-1)!.active;
 
+    // Дополнительное время для обновления для исключения расчета погрешности maxFinishTime
+    const additionalTime = activeTime * FINISH_TIME_ADJUSTMENT + FINISH_TIME_ADDITIONAL_CONST;
+
     console.log({
-      now,
-      minFinishTime,
-      maxFinishTime,
-      activeTimePlus: activeTime * FINISH_TIME_ADJUSTMENT,
+      now: getTimerLocal(now, 'DDMMYYHm'),
+      minFinishTime: getTimerLocal(minFinishTime, 'DDMMYYHm'),
+      maxFinishTime: getTimerLocal(maxFinishTime, 'DDMMYYHm'),
+      additionalTime: getTimerLocal(additionalTime, 'DDMMYYHm'),
     });
 
     // Обновляем от старта первой группы до финиша последней + дополнительное время
-    return now >= minFinishTime && now <= maxFinishTime + activeTime * FINISH_TIME_ADJUSTMENT;
+    return now >= minFinishTime && now <= maxFinishTime + additionalTime;
   }
 }

@@ -30,6 +30,7 @@ export type TCreateTeamParams = Pick<
   | 'socialLinks'
   | 'website'
   | 'zwiftClubId'
+  | 'appearance'
 > & { creator: string };
 
 export type TTeamMembersForDto = TTeamMembersPublicDB & {

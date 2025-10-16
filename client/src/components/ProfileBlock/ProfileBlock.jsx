@@ -89,6 +89,7 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
               <dt className={styles.term}>Команда</dt>
               <dd className={styles.term__description}>
                 <TeamLogoBox team={profile.team} />
+                {/* <TeamLogoBox team={profile.team} background={}  color={}/> */}
               </dd>
             </div>
           )}

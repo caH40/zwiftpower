@@ -1,0 +1,29 @@
+.wrapper {
+  width: 100%;
+}
+.input {
+  width: 100%;
+  height: 34px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  color: var(--color-text-minor);
+  outline: none;
+}
+.input:focus {
+  box-shadow: 0 0 2px 2px var(--color-blue-4);
+}
+.input.error {
+  box-shadow: 0 0 2px 2px var(--error);
+  border-color: var(--error);
+}
+.input:disabled {
+  background-color: var(--color-bg-minor);
+}
+
+.label {
+  color: var(--color-text-minor);
+}
+.label::after {
+  content: ':';
+}

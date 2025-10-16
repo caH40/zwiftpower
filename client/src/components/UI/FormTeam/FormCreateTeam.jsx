@@ -13,6 +13,9 @@ import Button from '../Button/Button';
 import BlockUploadImage from '../../BlockUploadImage/BlockUploadImage';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import InputAuth from '../InputAuth/InputAuth';
+import InputColor from '../InputColor/InputColor';
+import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
+import { generateConsistentDarkColor } from '../../../utils/generateDarkColor';
 
 import styles from './FormCreateTeam.module.css';
 
@@ -48,14 +51,26 @@ export default function FormCreateTeam({
     handleSubmit,
     reset,
     control,
-
+    watch,
     formState: { errors },
   } = useForm({
     mode: 'all',
     values: !isCreating && team ? team : {},
 
-    defaultValues: { logoFile: null, posterFile: null },
+    defaultValues: {
+      logoFile: null,
+      posterFile: null,
+      appearance: {
+        badgeBackground: generateConsistentDarkColor(team.shortName),
+        badgeTextColor: '#FFFFFF',
+      },
+    },
   });
+
+  const badgeBackground = watch('appearance.badgeBackground');
+  const badgeTextColor = watch('appearance.badgeTextColor');
+  const name = watch('name');
+  const shortName = watch('shortName');
 
   // Обработчик отправки формы на сервер.
   const onSubmit = async (formData) => {
@@ -173,6 +188,31 @@ export default function FormCreateTeam({
             validationText={errors.zwiftClubId?.message || ''}
             input={{ id: 'zwiftClubId-FormTeamCreate', type: 'text' }}
             placeholder="28297d70-2684-4348-b921-1e200a1c6ad1"
+            loading={loading}
+          />
+        </div>
+
+        <div className={styles.colorsContainer}>
+          <div className={styles.badge}>
+            <span>Бейдж:</span>
+            <TeamLogoBox
+              team={{ name, shortName, urlSlug: '#' }}
+              background={badgeBackground}
+              color={badgeTextColor}
+            />
+          </div>
+
+          <InputColor
+            label={'Фон бейджа'}
+            register={register('appearance.badgeBackground')}
+            id={'appearance-badgeBackground-FormTeamCreate'}
+            loading={loading}
+          />
+
+          <InputColor
+            label={'Текст бейджа'}
+            register={register('appearance.badgeTextColor')}
+            id={'appearance-badgeTextColor-FormTeamCreate'}
             loading={loading}
           />
         </div>

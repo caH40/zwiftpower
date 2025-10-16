@@ -41,6 +41,19 @@
 .wrapper__file:focus-within {
   background-color: var(--focus-within);
 }
+.colorsContainer {
+  display: flex;
+  max-width: 360px;
+  padding: 10px 10px 17px;
+  gap: 1.5rem;
+  align-items: flex-end;
+}
+.badge {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--color-text-minor);
+}
 .wrapper__stages {
   display: flex;
   flex-direction: column;

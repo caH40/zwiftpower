@@ -131,6 +131,7 @@ export const groupTargetWattsPerKg: Record<number, number> = {
  * Корректировка времени финиша, дополнительное время для обновления результатов.
  */
 export const FINISH_TIME_ADJUSTMENT = 0.15;
+export const FINISH_TIME_ADDITIONAL_CONST = 300000; // 5 минут дополнительные, равняется времени запросу на обновление.
 
 export const DISQUALIFICATION_LABELS = [
   'DSQ',
