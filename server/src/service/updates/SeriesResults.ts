@@ -18,6 +18,8 @@ export class SeriesResultsUpdater {
       const stages = await this.getStageOrdersForUpdate();
 
       const stageOrders = stages.reduce<number[]>((acc, cur) => {
+        console.log({ series: this.seriesId, stageOrder: cur.order });
+
         this.isTimeToUpdate(cur.eventSubgroups) && acc.push(cur.order);
         return acc;
       }, []);
@@ -167,6 +169,13 @@ export class SeriesResultsUpdater {
     const minFinishTime = finishTimes[0].finish;
     const maxFinishTime = finishTimes.at(-1)!.finish;
     const activeTime = finishTimes.at(-1)!.active;
+
+    console.log({
+      now,
+      minFinishTime,
+      maxFinishTime,
+      activeTimePlus: activeTime * FINISH_TIME_ADJUSTMENT,
+    });
 
     // Обновляем от старта первой группы до финиша последней + дополнительное время
     return now >= minFinishTime && now <= maxFinishTime + activeTime * FINISH_TIME_ADJUSTMENT;
