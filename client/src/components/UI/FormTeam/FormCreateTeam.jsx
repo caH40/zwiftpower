@@ -60,8 +60,11 @@ export default function FormCreateTeam({
     defaultValues: {
       logoFile: null,
       posterFile: null,
+      shortName: 'TeamName',
       appearance: {
-        badgeBackground: generateConsistentDarkColor(team.shortName),
+        badgeBackground: team?.shortName
+          ? generateConsistentDarkColor(team.shortName)
+          : '#000000',
         badgeTextColor: '#FFFFFF',
       },
     },
@@ -105,7 +108,6 @@ export default function FormCreateTeam({
         }, 500);
       } else {
         // Получение обновленных данных команды.
-        reset();
         onSuccessUpdate();
       }
     } catch (error) {
