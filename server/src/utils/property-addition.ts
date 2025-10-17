@@ -1,6 +1,7 @@
 // types
 import { ZwiftResultSchema } from '../types/model.interface.js';
 import { UserResult } from '../types/types.interface.js';
+import { setValueMax } from './value-max.js';
 
 export function addPropertyAddition(results: ZwiftResultSchema[]) {
   const resultsNew: UserResult[] = results.map((result) => {
@@ -65,5 +66,5 @@ export function addPropertyAddition(results: ZwiftResultSchema[]) {
     return { ...result, activityData, profileData, sensorData, wattsPerKg, cpBestEfforts };
   });
 
-  return resultsNew;
+  return setValueMax(resultsNew);
 }

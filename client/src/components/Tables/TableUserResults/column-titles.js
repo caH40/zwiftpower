@@ -1,5 +1,5 @@
 export const raceResultsColumnsStartFull = [
-  { name: '', id: 0 },
+  { name: 'Место', id: 0 },
   { name: 'Категория', id: 1 },
   { name: 'Дата', id: 2 },
   { name: 'Название', id: 3 },

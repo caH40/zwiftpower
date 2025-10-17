@@ -56,7 +56,7 @@ const userResultsSlice = createSlice({
     builder.addCase(fetchUserResults.fulfilled, (state, action) => {
       state.error = null;
       state.status = 'resolved';
-      state.results = setValueMax(action.payload.userResults);
+      state.results = action.payload.userResults;
       state.quantityPages = action.payload.quantityPages;
     });
     builder.addCase(fetchUserResults.rejected, (state, action) => {
