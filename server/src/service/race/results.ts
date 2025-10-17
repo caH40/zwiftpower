@@ -7,6 +7,7 @@ import { getResultsClassicGroups } from '../preparation/classic-groups.js';
 import { EventWithSubgroup } from '../../types/types.interface.js';
 import { eventResultsDto } from '../../dto/eventResults.dto.js';
 import { addRacingScores } from '../preparation/racingscore.js';
+import { addTeamAppearance } from '../preparation/teamAppearance.js';
 
 /**
  * Получение результатов райдеров в Эвенте из БД
@@ -39,5 +40,10 @@ export async function getResultsService(eventId: number) {
 
   await addRacingScores(eventPrepared);
 
-  return eventResultsDto({ event: eventPrepared, message: 'Эвент с результаты заезда' });
+  const resultsWithTeamAppearance = await addTeamAppearance(eventPrepared.results);
+
+  return eventResultsDto({
+    event: { ...eventPrepared, results: resultsWithTeamAppearance },
+    message: 'Эвент с результаты заезда',
+  });
 }

@@ -1,6 +1,7 @@
 // types
 import { UserProfileFetch } from '../common/types/userProfile.interface.js';
 import { PowerCurveSchema, TUserStreams } from '../types/model.interface.js';
+import { TTeamAppearance } from '../types/team.types.js';
 import { Profile, StreamEnabled } from '../types/types.interface.js';
 
 /**
@@ -11,20 +12,27 @@ export const userProfileDto = ({
   powerCurve,
   quantityRace,
   streams,
+  teamAppearance,
 }: {
   profile: Profile;
   powerCurve: PowerCurveSchema | null;
   quantityRace: number;
   streams?: TUserStreams;
+  teamAppearance?: TTeamAppearance;
 }) => {
   const powerCurveForResponse: PowerCurveSchema | null = powerCurve ? { ...powerCurve } : null;
 
   const profileForResponse: Profile = { ...profile };
 
+  const teamWithAppearance = profileForResponse.team && {
+    ...profileForResponse.team,
+    appearance: teamAppearance,
+  };
+
   const streamsEnabled = getStreamEnabled(streams);
 
   const userProfileFetch: UserProfileFetch = {
-    profile: profileForResponse,
+    profile: { ...profileForResponse, team: teamWithAppearance },
     powerCurve: powerCurveForResponse,
     quantityRace,
     streams: streamsEnabled,

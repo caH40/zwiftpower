@@ -88,7 +88,15 @@ function TableRaceResults({ results, event, forDNF }) {
               />
 
               {/* Принадлежность к команде */}
-              <td>{profile.team && <TeamLogoBox team={profile.team} />}</td>
+              <td>
+                {profile.team && (
+                  <TeamLogoBox
+                    team={profile.team}
+                    background={profile.team.appearance.badgeBackground}
+                    color={profile.team.appearance.badgeTextColor}
+                  />
+                )}
+              </td>
 
               <td>{tdTime(result.activityData.durationInMilliseconds.addition)}</td>
               <TdGap gap={result.gap} dsq={isDsq} />

@@ -8,6 +8,8 @@ import { User } from '../../../Model/User.js';
 // types
 import { ResultWithEvent } from '../../../types/types.interface.js';
 import { TUserStreams } from '../../../types/model.interface.js';
+import { TeamRepository } from '../../../repositories/Team.js';
+import { TTeamAppearance } from '../../../types/team.types.js';
 
 /**
  * Получение профайла райдера (анкеты), основных значений CriticalPower, всех результатов райдера
@@ -31,12 +33,20 @@ export async function getUserProfileService(zwiftId: number) {
     profileId: [zwiftId, ...zwiftIdAdditional],
   });
 
+  let teamAppearance: TTeamAppearance | undefined;
+  if (profile.team?.urlSlug) {
+    const teamRepository = new TeamRepository();
+    const team = await teamRepository.getByUrlSlug(profile.team?.urlSlug);
+    teamAppearance = team?.appearance;
+  }
+
   // подготовка данных для отправки при запросе API
   return userProfileDto({
     profile,
     powerCurve: powerCurveDB,
     quantityRace,
     streams: userDB?.streams,
+    teamAppearance,
   });
 }
 

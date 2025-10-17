@@ -1,3 +1,4 @@
+import { TTeamAppearance } from '../../types/team.types.js';
 import { StreamEnabled } from '../../types/types.interface.js';
 
 // общий тип, используемый на сервере и фронте, UserProfile отправляемый/получаемый через API
@@ -35,6 +36,7 @@ export interface UserProfileFetch {
     zCategoryWomen?: string;
     category?: 'E' | 'APlus' | 'A' | 'B' | 'C' | 'D';
     bio?: string;
+    team?: { name: string; shortName: string; urlSlug: string } & TTeamAppearance;
   };
   streams: StreamEnabled[] | null;
 

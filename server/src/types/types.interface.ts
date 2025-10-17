@@ -33,6 +33,7 @@ import {
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../assets/constants.js';
+import { TTeamAppearance } from './team.types.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
   eventSubgroups: ZwiftEventSubgroupSchema[];
@@ -97,6 +98,7 @@ export interface UserResult
     countryAlpha3: string;
     age: number;
     racingScore?: number;
+    team?: TTeamForProfile;
   };
   sensorData: {
     heartRateData: { avgHeartRate: Additional };
@@ -260,7 +262,9 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
 /**
  * Данные о команде для профиля райдера.
  */
-export type TTeamForProfile = Pick<TTeam, 'name' | 'shortName' | 'urlSlug'>;
+export type TTeamForProfile = Pick<TTeam, 'name' | 'shortName' | 'urlSlug'> & {
+  appearance?: TTeamAppearance;
+};
 
 export interface CpBestEfforts {
   watts: null | number;

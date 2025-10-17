@@ -54,3 +54,10 @@ export type TStatistics = {
   events: { totalResults: number; resultsInActiveSeason: number };
   registeredEventsCount: number;
 };
+
+export type TTeamAppearance = {
+  badgeBackground?: string; // фон плашки с названием (например, "#1E1E1E")
+  badgeTextColor?: string; // цвет текста на плашке
+  pageBackground?: string; // фон страницы команды
+  accentColor?: string; // акцентный цвет (кнопки, ссылки и т.д.)
+};
