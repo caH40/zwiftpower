@@ -39,9 +39,9 @@ export function validateTelegram({ property, register }) {
     ...register(property, {
       // Регулярное выражение для проверки URL группы Telegram
       pattern: {
-        value: /^https:\/\/t\.me\/[a-zA-Z0-9_]{5,32}$/,
+        value: /^https:\/\/t\.me\/[a-zA-Z0-9_+]{5,32}$/,
         message:
-          'URL должен начинаться с "https://t.me/" и содержать от 5 до 32 символов (буквы, цифры, _).',
+          'URL должен начинаться с "https://t.me/" и содержать от 5 до 32 символов (буквы, цифры, _,+).',
       },
       // Проверка максимальной длины
       maxLength: {
