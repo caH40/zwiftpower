@@ -48,7 +48,15 @@ function TableSignedRiders({ riders = [], event }) {
             />
 
             {/* Принадлежность к команде */}
-            <td>{rider.team && <TeamLogoBox team={rider.team} />}</td>
+            <td>
+              {rider.team && (
+                <TeamLogoBox
+                  team={rider.team}
+                  background={rider.team.appearance?.badgeBackground}
+                  color={rider.team.appearance?.badgeTextColor}
+                />
+              )}
+            </td>
 
             <td>
               <CategoryRSBox racingScore={rider.racingScore || 0} zwiftId={rider.id} />

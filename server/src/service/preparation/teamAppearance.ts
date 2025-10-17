@@ -1,5 +1,5 @@
 import { TeamRepository } from '../../repositories/Team.js';
-import { UserResult } from '../../types/types.interface.js';
+import { TSignedRidersWithTeam, UserResult } from '../../types/types.interface.js';
 
 /**
  * Добавление данных TTeamAppearance в каждый профиль в результатах.
@@ -39,4 +39,34 @@ export async function addTeamAppearance(results?: UserResult[]): Promise<UserRes
   });
 
   return updatedResults;
+}
+
+/**
+ * Добавление данных TTeamAppearance в документ зарегистрированного участника.
+ */
+export async function addTeamAppearanceToSignedRiders(
+  riders: TSignedRidersWithTeam[]
+): Promise<TSignedRidersWithTeam[]> {
+  const teamRepository = new TeamRepository();
+  const teamsAppearances = await teamRepository.getTeamsAppearance();
+
+  const teamsAppearancesMap = new Map(teamsAppearances.map((a) => [a.urlSlug, a.appearance]));
+
+  const updatedRiders = riders.map((rider) => {
+    const teamUrlSlug = rider.team?.urlSlug;
+    if (!teamUrlSlug) {
+      return rider;
+    }
+
+    const appearance = teamsAppearancesMap.get(teamUrlSlug);
+    if (!appearance) {
+      return rider;
+    }
+
+    rider.team.appearance = appearance;
+
+    return rider;
+  });
+
+  return updatedRiders;
 }

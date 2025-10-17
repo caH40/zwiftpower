@@ -92,8 +92,8 @@ function TableRaceResults({ results, event, forDNF }) {
                 {profile.team && (
                   <TeamLogoBox
                     team={profile.team}
-                    background={profile.team.appearance.badgeBackground}
-                    color={profile.team.appearance.badgeTextColor}
+                    background={profile.team?.appearance?.badgeBackground}
+                    color={profile.team?.appearance?.badgeTextColor}
                   />
                 )}
               </td>

@@ -185,7 +185,7 @@ export interface SignedRidersPowerCurves extends SignedRidersSchema {
   racingScore?: number;
 }
 export type TSignedRidersWithTeam = Omit<SignedRidersSchema, 'team'> & {
-  team: TTeamForProfile;
+  team: TTeamForProfile & { appearance?: TTeamAppearance };
 };
 /**
  * Данные Event с зарегистрированными райдерами

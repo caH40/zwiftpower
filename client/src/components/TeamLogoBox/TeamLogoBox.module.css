@@ -9,6 +9,7 @@
   text-align: center;
   color: #333;
   min-width: 70px;
+  max-width: 110px;
   padding: 3px 5px;
   background-color: var(--color-blue-main);
   border-radius: 4px;

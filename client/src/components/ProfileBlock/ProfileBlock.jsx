@@ -88,11 +88,10 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
             <div className={styles.box__term}>
               <dt className={styles.term}>Команда</dt>
               <dd className={styles.term__description}>
-                {/* <TeamLogoBox team={profile.team} /> */}
                 <TeamLogoBox
                   team={profile.team}
-                  background={profile.team.appearance.badgeBackground}
-                  color={profile.team.appearance.badgeTextColor}
+                  background={profile.team.appearance?.badgeBackground}
+                  color={profile.team.appearance?.badgeTextColor}
                 />
               </dd>
             </div>

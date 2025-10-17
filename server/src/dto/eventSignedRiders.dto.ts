@@ -27,6 +27,7 @@ export const eventSignedRidersDto = (
       name: r.team.name,
       shortName: r.team.shortName,
       urlSlug: r.team.urlSlug,
+      appearance: r.team.appearance,
     };
     return { ...r, team };
   });
