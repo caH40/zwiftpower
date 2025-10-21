@@ -3,10 +3,11 @@ import { addAgeAndFlagNew } from '../protocol/age-and-flag.js';
 import { FinishGaps } from '../../utils/FinishGaps.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
-import { TSeriesType } from '../../types/model.interface.js';
+import { TSeriesType, TStageResult } from '../../types/model.interface.js';
 import { TourGCManager } from './tour/TourGCManager.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { SeriesCategoryService } from './category/SeriesCategory.js';
+import { StageResultRepository } from '../../repositories/StageResult.js';
 
 // types
 
@@ -16,8 +17,11 @@ import { SeriesCategoryService } from './category/SeriesCategory.js';
  * -перерасчет всех протоколов серии(тура) в зависимости от соответствующих настроек;
  */
 export class SeriesStageProtocolManager extends HandlerSeries {
+  stageResultRepository: StageResultRepository;
+
   constructor(public seriesId: string) {
     super(seriesId);
+    this.stageResultRepository = new StageResultRepository();
   }
 
   /**
@@ -133,5 +137,33 @@ export class SeriesStageProtocolManager extends HandlerSeries {
   /**
    * Пересчёт протокола этапа после правок результатов модератором.
    */
-  public async recalculateStageProtocol(): Promise<void> {}
+  public async recalculateStageProtocol(seriesId: string): Promise<void> {
+    // Получение всех результатов этапов серии seriesId.
+    const allStageResults = await this.stageResultRepository.getAllStageResultsBySeriesId(
+      seriesId
+    );
+    // Группировка результатов по этапам.
+    const resultsByStageOrderMap: Map<number, TStageResult[]> = new Map();
+    for (const result of allStageResults) {
+      const resultsInMap = resultsByStageOrderMap.get(result.order) || [];
+      resultsInMap.push(result);
+      resultsByStageOrderMap.set(result.order, resultsInMap);
+    }
+    for (const [order, resultsInStage] of resultsByStageOrderMap.entries()) {
+      // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
+      const resultsWithRank = this.setCategoryRanks(resultsInStage);
+      // Установка финишных гэпов (разрывов между участниками).
+      const finishGaps = new FinishGaps();
+      finishGaps.setGaps(resultsWithRank, {
+        getDuration: (r) => r.activityData.durationInMilliseconds,
+        getCategory: (r) => r.category,
+        setGaps: (r, gaps) => {
+          r.gapsInCategories = gaps;
+        },
+      });
+
+      await StageResultModel.deleteMany({ series: seriesId, order });
+      await StageResultModel.insertMany(resultsWithRank);
+    }
+  }
 }

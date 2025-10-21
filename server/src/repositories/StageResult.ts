@@ -59,4 +59,10 @@ export class StageResultRepository {
   async getStageResultById(_id: string): Promise<TStageResult | null> {
     return await StageResultModel.findById(_id).lean();
   }
+  /**
+   * Получение результатов всех этапов серии по _id.
+   */
+  async getAllStageResultsBySeriesId(_id: string): Promise<TStageResult[]> {
+    return await StageResultModel.find({ series: _id }).lean();
+  }
 }

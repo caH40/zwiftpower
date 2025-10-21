@@ -4,9 +4,10 @@ import { NSeriesModel } from '../../../Model/NSeries.js';
 import { SeriesClassificationModel } from '../../../Model/SeriesClassification.js';
 import { StageResultModel } from '../../../Model/StageResult.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
+import { SeriesRepository } from '../../../repositories/Series.js';
 
 // types
-import { TDisqualification, TSeries, TSeriesStage } from '../../../types/model.interface.js';
+import { TDisqualification, TSeriesStage } from '../../../types/model.interface.js';
 import { TStagesResultsForGC } from '../../../types/mongodb-response.types.js';
 import {
   TAllStageOrders,
@@ -22,15 +23,17 @@ type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
  * Класс управления/создания генеральной классификации тура.
  */
 export class TourGCManager {
-  constructor(public seriesId: string) {}
+  private seriesRepository: SeriesRepository;
+
+  constructor(public seriesId: string) {
+    this.seriesRepository = new SeriesRepository();
+  }
+
   /**
    * Пересчет всех итоговых таблиц.
    */
   public update = async (): Promise<TResponseService<null>> => {
-    const seriesDB = await NSeriesModel.findOne(
-      { _id: this.seriesId },
-      { _id: false, name: true, stages: true }
-    ).lean<Pick<TSeries, 'name' | 'stages'>>();
+    const seriesDB = await this.seriesRepository.getStageIds(this.seriesId);
 
     if (!seriesDB) {
       throw new Error(`Серия с ID ${this.seriesId} не найдена.`);
@@ -165,17 +168,11 @@ export class TourGCManager {
         disqualification.label = 'MRS';
       }
 
-      // Определение категории. Категория во всех этапах должна быть одинаковой.
       // Если нет — это ошибка в расчётах, и райдеру присваивается дисквалификация для дальнейшего разбирательства.
       let finalCategory = this.getCommonCategory(stages);
 
-      // Если категории не совпадают, но дисквалификация ещё не выставлена — ставим её с соответствующей причиной.
-      if (!finalCategory && !disqualification.status) {
-        disqualification.status = true;
-        disqualification.reason = 'На этапах разные категории.';
-        disqualification.label = 'MC';
-      } else if (disqualification.status) {
-        // Если уже была дисквалификация по другой причине — не назначаем финальную категорию.
+      // Если уже была дисквалификация по другой причине — не назначаем финальную категорию.
+      if (disqualification.status) {
         finalCategory = null;
       }
 
@@ -258,9 +255,7 @@ export class TourGCManager {
   }
 
   /**
-   * Определяет, одинаковая ли категория у всех этапов в массиве stages.
-   * Если все этапы пройдены в одной категории — возвращает эту категорию.
-   * Если категории различаются или массив пуст — возвращает null.
+   * Определение категории в генеральной классификации происходит по категории в последнем этапе.
    */
   private getCommonCategory = (
     stages: {
@@ -284,21 +279,14 @@ export class TourGCManager {
     // Сохраняем категорию первого завершенного этапа как базовую для сравнения.
     // В первом заезде всегда category=null, и устанавливается категория в modifiedCategory
 
-    const firstCategory = stages.sort((a, b) => a.stageOrder - b.stageOrder)[0]
-      ?.modifiedCategory?.value;
+    const lastStage = stages.sort((a, b) => a.stageOrder - b.stageOrder).at(-1);
+
+    // Если было изменение категории, согласно правилам серии, то берется из modifiedCategory, иначе
+    // берется категория из category (категория автоматически назначается из прошлого этапа)
+    const category = lastStage?.modifiedCategory?.value || lastStage?.category || null;
 
     // Нет ни одного результата на этапе Серии. FIXME: заранее фильтровать от райдеров, которые не проехали ни одного этапа. Для корректного отображения информации о дисквалификации. Проверка на firstCategory === null временная.
-    if (!firstCategory) {
-      return null;
-    }
-
-    // Проверяем, что все этапы имеют ту же категорию.
-    const allSame = stages.every(
-      (stage) => stage.category === firstCategory || stage.category === null
-    );
-
-    // Если все категории совпадают — возвращаем её, иначе null.
-    return allSame ? firstCategory : null;
+    return category;
   };
 
   /**

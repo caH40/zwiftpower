@@ -46,10 +46,8 @@ export class RiderCategoryRuleProcessor {
   };
 
   /**
-   * Найти все результаты этапов данного райдера в текущей серии seriesId
-   * Изменить во всех результатах категорию на новую
-   * Пересчитать все финишные протоколы этапов из-за изменения категории у райдера
-   * Пересчитать ГК.
+   * Найти все результаты этапов данного райдера в текущей серии seriesId.
+   * Изменить во всех результатах категорию на новую.
    */
   private handleRecalculationAll = async (): Promise<void> => {
     const { results, modifiedStageOrder } = await this.getAllRiderResults();
@@ -77,7 +75,7 @@ export class RiderCategoryRuleProcessor {
    * Возвращает список всех этапов (с id результатов и их порядковыми номерами)
    * и номер этапа, в котором модератор вносит исходное изменение.
    */
-  private async getAllRiderResults(): Promise<{
+  public async getAllRiderResults(): Promise<{
     results: { id: string; stageOrder: number }[];
     modifiedStageOrder: number;
   }> {

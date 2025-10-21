@@ -117,7 +117,7 @@ export class HandlerSeries {
   }
 
   /**
-   * Сортировка результатов и установка ранкинга в результатах для каждой категории.
+   * Сортировка результатов и установка ранкинга в результатах этапа для каждой категории.
    */
   protected setCategoryRanks(stageResults: TStageResult[]): TStageResult[] {
     if (!stageResults.length) {

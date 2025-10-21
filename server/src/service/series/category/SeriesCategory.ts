@@ -12,6 +12,7 @@ import {
 } from '../../../types/types.interface.js';
 import { RiderCategoryRuleProcessor } from './RiderCategoryRuleProcessor.js';
 import { StageResultRepository } from '../../../repositories/StageResult.js';
+import { SeriesStageProtocolManager } from '../SeriesStageProtocolManager.js';
 
 /**
  * Сервис работы с категориями в результатах этапов серии (туров) (и ГС?)
@@ -49,10 +50,14 @@ export class SeriesCategoryService {
 
     const { riderCategoryRule } = await this.getSeriesData();
 
-    // Изменение таблиц в результате изменения категории у райдера, согласно правилу riderCategoryRule.
+    // Изменение категории согласно правилу в серии riderCategoryRule.
     if (riderCategoryRule) {
       await categoryRuleProcessor.execute(riderCategoryRule);
     }
+
+    // Пересчитать все финишные протоколы этапов из-за изменения категории у райдера.
+    const stageProtocolManager = new SeriesStageProtocolManager(this.seriesId);
+    await stageProtocolManager.recalculateStageProtocol(this.seriesId);
 
     // Обновление генеральной классификации серии.
     const tourGC = new TourGCManager(this.seriesId);
@@ -83,7 +88,6 @@ export class SeriesCategoryService {
 
     // Определение категории из прошлого этапа данной серии.
     // Получить данные по категориям райдеров из прошлого заезда и присвоить соответствующую категорию в данном этапе.
-
     return await this.assignCategory(stageResults, stageOrder, series.categoriesWithRange);
   }
 
@@ -224,7 +228,7 @@ export class SeriesCategoryService {
     // Все предыдущие этапы серии всех райдеров.
     const resultsDB = await StageResultModel.find(
       {
-        seriesId: this.seriesId,
+        series: this.seriesId,
         order: { $lt: orderNumber },
       },
       { _id: false, order: true, profileId: true, category: true, modifiedCategory: true }
