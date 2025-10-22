@@ -1,3 +1,4 @@
+import { createCategoryCaption } from '../../../utils/category-caption';
 import { getTimerLocal } from '../../../utils/date-local';
 
 /**
@@ -7,10 +8,10 @@ import { getTimerLocal } from '../../../utils/date-local';
  * @param {string} params.stageOrder - Номер этапа.
  * @param {string} params.eventStart - Время старта основного (первого) заезда этапа серии в формате toISOString.
  */
-export const getSeriesCaption = ({ stageName, stageOrder, stageStart }) => {
+export const getSeriesCaption = ({ stageName, stageOrder, stageStart, categoryLabel }) => {
   const eventStartStr = getTimerLocal(stageStart, 'DDMMYYHm');
 
   return `Результаты Этапа №${stageOrder}${
-    stageName ? '. ' + stageName : ''
-  }. Дата старта: ${eventStartStr}.`;
+    categoryLabel ? '. ' + createCategoryCaption(categoryLabel) : '.'
+  }${stageName ? '. ' + stageName : ''} Дата старта: ${eventStartStr}.`;
 };

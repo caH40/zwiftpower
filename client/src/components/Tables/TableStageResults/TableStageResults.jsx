@@ -48,7 +48,12 @@ function TableStageResults({
   return (
     <table className={cx('table')}>
       <caption className={cx('caption')}>
-        {getSeriesCaption({ stageName, stageOrder, stageStart })}
+        {getSeriesCaption({
+          stageName,
+          stageOrder,
+          stageStart,
+          categoryLabel: filterCategory.name,
+        })}
       </caption>
       <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} />
 

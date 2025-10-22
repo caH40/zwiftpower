@@ -48,7 +48,9 @@ export class StageResultRepository {
       _id: { $in: resultIds },
     };
 
-    const updateQuery: UpdateQuery<TStageResult> = { $set: { modifiedCategory } };
+    const updateQuery: UpdateQuery<TStageResult> = {
+      $set: { category: modifiedCategory.value, modifiedCategory },
+    };
 
     await StageResultModel.updateMany(query, updateQuery);
   }

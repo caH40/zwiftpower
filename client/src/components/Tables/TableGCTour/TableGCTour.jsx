@@ -10,6 +10,7 @@ import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import Rank from '../../Rank/Rank';
 import FinishTime from '../../FinishTime/FinishTime';
+import { createCategoryCaption } from '../../../utils/category-caption';
 
 import styles from '../Table.module.css';
 
@@ -27,7 +28,9 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
 
   return (
     <table className={cx('table')}>
-      <caption className={cx('caption')}>Генеральная классификация</caption>
+      <caption className={cx('caption')}>
+        Генеральная классификация. {createCategoryCaption(filterCategory.name)}
+      </caption>
       <Thead
         stages={stages.map((s) => ({ stageOrder: s }))}
         columnsCP={columnsCP}
