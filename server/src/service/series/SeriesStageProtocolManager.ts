@@ -83,7 +83,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
 
     // Получение финишных протоколов заездов Этапа серии из ZwiftAPI.
     const { stageResults: protocolsStageFromZwift, subgroupIdsInEvents } =
-      await this.getProtocolsStageFromZwift({
+      await this.createProtocolsStageFromZwift({
         stages,
         stageOrder,
       });

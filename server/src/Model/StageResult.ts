@@ -142,9 +142,12 @@ const stageResultSchema = new Schema<IStageResult>(
     category: {
       type: String,
       enum: RACE_SERIES_CATEGORIES,
+    },
+    categoryInRace: {
+      type: String,
+      enum: RACE_SERIES_CATEGORIES,
       default: null,
     },
-    categoryBySeriesRule: { type: String, enum: RACE_SERIES_CATEGORIES },
     modifiedCategory: {
       value: { type: String },
       moderator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

@@ -779,8 +779,8 @@ export type TStageResult = {
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
   };
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
-  category: TRaceSeriesCategories | null; // Категория, которая присвоена на предыдущем этапе.
-  categoryBySeriesRule?: TRaceSeriesCategories; // Рассчитанная категория согласно правилам категоризации в серии.
+  category: TRaceSeriesCategories | null; // Категория на этапе по которой идет классификация. null - не определена категория в случае собственных категорий в серии, а расчет не подходит под эти категории.
+  categoryInRace: TRaceSeriesCategories | null; // Категория в которой участвовал на этапе. null - первый заезд.
   modifiedCategory?: {
     value: TRaceSeriesCategories | null;
     moderator?: Types.ObjectId;

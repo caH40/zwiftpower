@@ -38,9 +38,9 @@ export class HandlerSeries {
   }
 
   /**
-   * Получение финишных протоколов заездов Этапа серии из ZwiftAPI и формирование структуры результатов для серии заездов.
+   * Получение и создание базовых финишных протоколов заездов Этапа серии из ZwiftAPI.
    */
-  protected async getProtocolsStageFromZwift({
+  protected async createProtocolsStageFromZwift({
     stages,
     stageOrder,
   }: TGetProtocolsStageFromZwiftParams): Promise<{
@@ -92,6 +92,7 @@ export class HandlerSeries {
         subgroupLabel: result.subgroupLabel,
       };
 
+      // Инициализация, а установка расчетных данных на следующих этапах.
       return {
         series: this.mongooseUtils.convertToObjectId(this.seriesId),
         order: stageOrder,
@@ -103,9 +104,10 @@ export class HandlerSeries {
         rank: {
           category: 0,
           absolute: 0,
-        }, // Инициализация, установка корректного места в протоколе на следующих этапах.
+        },
         activityData,
         category: null,
+        categoryInRace: null,
         points: null,
         disqualification: null,
         penalty: null,
