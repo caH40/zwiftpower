@@ -90,6 +90,7 @@ export class SeriesCategoryService {
     for (const result of stageResults) {
       const prevCategory = previousStagesResults.get(result.profileId);
 
+      // Если нет категории, то райдер проехал свой первый этап в серии.
       if (!prevCategory) {
         const r = this.assignCategoryFromFirstStage(result, series.categoriesWithRange);
         resultsWithCategories.push(r);
@@ -134,13 +135,12 @@ export class SeriesCategoryService {
 
     const result = { ...stageResult };
 
-    result.categoryInRace = null;
-
     // Изменение поля modifiedCategory.
     if (categoriesWithRange) {
       this.assignModifiedCategoryToResult(result, now, categoriesWithRange);
     } else {
       result.category = stageResult.activityData.subgroupLabel;
+      result.categoryInRace = stageResult.activityData.subgroupLabel;
     }
 
     return result;
@@ -174,6 +174,7 @@ export class SeriesCategoryService {
     // Если нет получен расчет FTP то:
     if (!riderFtp) {
       result.category = null;
+      result.categoryInRace = null;
       result.modifiedCategory = {
         value: null,
         modifiedAt: now,
@@ -191,6 +192,7 @@ export class SeriesCategoryService {
 
     // Обновление результата.
     result.category = newCategory;
+    result.categoryInRace = newCategory;
     result.modifiedCategory = {
       value: newCategory,
       modifiedAt: now,

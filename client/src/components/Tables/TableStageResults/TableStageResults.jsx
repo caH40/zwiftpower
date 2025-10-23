@@ -58,112 +58,107 @@ function TableStageResults({
       <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} />
 
       <tbody>
-        {resultWithFinishTime?.map(({ category, ...result }) => {
-          const profile = result.profileData;
-          const isDsq = result.isDisqualification;
-          const dsqType = result.disqualification;
-          const dsqDescription = result.disqualificationDescription;
-          const modifiedCategoryValue = result.modifiedCategory?.value;
-          const currentCategory = modifiedCategoryValue ?? category;
+        {resultWithFinishTime?.map(
+          ({ category, categoryInRace, modifiedCategory, ...result }) => {
+            const profile = result.profileData;
+            const isDsq = result.isDisqualification;
+            const dsqType = result.disqualification;
+            const dsqDescription = result.disqualificationDescription;
 
-          return (
-            <tr
-              className={cx('hover', { current: zwiftId === result.profileId })}
-              key={result._id}
-            >
-              <td className={styles.centerTd}>
-                <TdRank
-                  value={
-                    filterCategory.name === 'All' ? result.rank.absolute : result.rank.category
-                  }
-                  // isDsq={forDNF ? true : isDsq}
-                  // dsqType={forDNF ? 'DNF' : dsqType}
-                  dsqDescription={dsqDescription}
-                />
-              </td>
-              <td>
-                {modifiedCategoryValue && category ? (
-                  <CategoryChangeBox
-                    PrevCategory={
-                      <CategoryBox showLabel={true} label={category} circle={true} />
-                    }
-                    Category={
-                      <CategoryBox
-                        showLabel={true}
-                        label={modifiedCategoryValue}
-                        circle={true}
-                      />
-                    }
-                  />
-                ) : (
-                  <CategoryBox showLabel={true} label={currentCategory} circle={true} />
-                )}
-              </td>
-              <TdRider profile={profile} profileId={result.profileId} />
-              <td>
-                <FinishTime time={result.finishTime} />
-              </td>
-              <TdGap
-                gap={
-                  filterCategory.name === 'All'
-                    ? result.gapsInCategories.absolute?.toLeader
-                    : result.gapsInCategories.category?.toLeader
-                }
-                dsq={isDsq}
-              />
-              <TdGap
-                gap={
-                  filterCategory.name === 'All'
-                    ? result.gapsInCategories.absolute?.toPrev
-                    : result.gapsInCategories.category?.toPrev
-                }
-                dsq={isDsq}
-              />
-              <TdWattsPerKg valueAddition={result.wattsPerKg} />
-              <td>{tdWatts(result.sensorData.avgWatts)}</td>
+            const isAbsolute = filterCategory.name === 'All';
 
-              {/* Колонки с Critical POwer */}
-              {raceResultsColumnsCP.map((column, indexColumnCP) => {
-                const id = `TdCpWatts-${indexColumnCP}`;
-
-                return (
-                  <TdCpWattsNew
-                    cpBestEfforts={result.cpBestEfforts}
-                    interval={column.interval}
-                    key={column.id}
-                    id={id}
-                    onMouseEnter={() => setColumnActive(id)}
-                    onMouseLeave={() => setColumnActive(null)}
-                    hoverEnabled={columnActive === id}
-                  />
-                );
-              })}
-
-              <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate)}</td>
-              <TdWeight weight={profile.weightInGrams} zwiftId={result.profileId} />
-              <td>{tdHeight(profile.heightInCentimeters)}</td>
-              <td>{getAgeCategory(profile.age)}</td>
-              <TdDifferent isPairedSteeringDevice={result.sensorData.pairedSteeringDevice} />
-
-              {/* Модерация данных райдера */}
-              {isSeriesCreator && (
-                <td>
-                  <StageResultMenu
-                    category={result.category}
-                    modifiedCategory={result.modifiedCategory}
-                    disqualification={result.disqualification}
-                    penalty={result.penalty}
-                    profile={profile}
-                    seriesId={result.series}
-                    stageResultId={result._id}
-                    urlSlug={urlSlug}
-                    stageOrder={stageOrder}
+            return (
+              <tr
+                className={cx('hover', { current: zwiftId === result.profileId })}
+                key={result._id}
+              >
+                <td className={styles.centerTd}>
+                  <TdRank
+                    value={isAbsolute ? result.rank.absolute : result.rank.category}
+                    // isDsq={forDNF ? true : isDsq}
+                    // dsqType={forDNF ? 'DNF' : dsqType}
+                    dsqDescription={dsqDescription}
                   />
                 </td>
-              )}
-            </tr>
-          );
-        })}
+                <td>
+                  <CategoryBox showLabel={true} label={category} circle={true} />
+                </td>
+                <TdRider profile={profile} profileId={result.profileId} />
+                <td>
+                  <FinishTime time={result.finishTime} />
+                </td>
+                <TdGap
+                  gap={
+                    isAbsolute
+                      ? result.gapsInCategories.absolute?.toLeader
+                      : result.gapsInCategories.category?.toLeader
+                  }
+                  dsq={isDsq}
+                />
+                <TdGap
+                  gap={
+                    isAbsolute
+                      ? result.gapsInCategories.absolute?.toPrev
+                      : result.gapsInCategories.category?.toPrev
+                  }
+                  dsq={isDsq}
+                />
+                <TdWattsPerKg valueAddition={result.wattsPerKg} />
+                <td>{tdWatts(result.sensorData.avgWatts)}</td>
+
+                {/* Колонки с Critical POwer */}
+                {raceResultsColumnsCP.map((column, indexColumnCP) => {
+                  const id = `TdCpWatts-${indexColumnCP}`;
+
+                  return (
+                    <TdCpWattsNew
+                      cpBestEfforts={result.cpBestEfforts}
+                      interval={column.interval}
+                      key={column.id}
+                      id={id}
+                      onMouseEnter={() => setColumnActive(id)}
+                      onMouseLeave={() => setColumnActive(null)}
+                      hoverEnabled={columnActive === id}
+                    />
+                  );
+                })}
+
+                <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate)}</td>
+                <TdWeight weight={profile.weightInGrams} zwiftId={result.profileId} />
+                <td>{tdHeight(profile.heightInCentimeters)}</td>
+                <td>{getAgeCategory(profile.age)}</td>
+                <td>
+                  {category !== categoryInRace ? (
+                    <CategoryChangeBox
+                      PrevCategory={
+                        <CategoryBox showLabel={true} label={categoryInRace} circle={true} />
+                      }
+                      Category={<CategoryBox showLabel={true} label={category} circle={true} />}
+                      modifiedCategory={modifiedCategory}
+                    />
+                  ) : null}
+                </td>
+
+                {/* Модерация данных райдера */}
+                {isSeriesCreator && (
+                  <td>
+                    <StageResultMenu
+                      category={result.category}
+                      modifiedCategory={modifiedCategory}
+                      disqualification={result.disqualification}
+                      penalty={result.penalty}
+                      profile={profile}
+                      seriesId={result.series}
+                      stageResultId={result._id}
+                      urlSlug={urlSlug}
+                      stageOrder={stageOrder}
+                    />
+                  </td>
+                )}
+              </tr>
+            );
+          }
+        )}
       </tbody>
     </table>
   );
