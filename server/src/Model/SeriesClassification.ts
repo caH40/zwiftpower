@@ -54,6 +54,6 @@ seriesClassificationSchema.index({ profileId: 1 }); // Индекс для profi
 
 // Модель для работы с коллекцией TourGeneralClassification
 export const SeriesClassificationModel = model<ISeriesClassification>(
-  'SeriesClassificationSchema',
+  'SeriesClassification',
   seriesClassificationSchema
 );
