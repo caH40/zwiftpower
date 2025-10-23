@@ -132,10 +132,10 @@ export class TourGCManager {
       let stagesCompleted = 0;
       const disqualification: TDisqualification = { status: false };
 
-      // Коллекция обязательных этапов, которые нужно пройти.
-      const skippedStages = new Set(stageOrders.requiredStageOrders);
+      // Коллекция обязательных этапов, в которых необходимо финишировать.
+      const requiredStages = new Set(stageOrders.requiredStageOrders);
 
-      // Расчет данных totalFinishPoints, totalTimeInMilliseconds и определение пропущенных этапов: skippedStages.
+      // Расчет данных totalFinishPoints, totalTimeInMilliseconds и определение пропущенных этапов: requiredStages .
       for (const result of results) {
         // Суммируем очки за финиш.
         totalFinishPoints += result.points?.finishPoints || 0;
@@ -149,18 +149,18 @@ export class TourGCManager {
         }
 
         // Удаляем этап из обязательных, если он был пройден.
-        skippedStages.delete(result.order);
+        requiredStages.delete(result.order);
       }
 
       // Создание списка этапов из серии заездов в которых участвовал райдер.
-      const stages = this.createStagesForRider({
+      const riderParticipationStages = this.createStagesForRider({
         allStageOrders: stageOrders.allStageOrders,
         results,
       });
 
       // Если остались обязательные этапы, в которых не участвовали — дисквалификация.
-      if (skippedStages.size > 0) {
-        const sortedSkipped = [...skippedStages].sort((a, b) => a - b);
+      if (requiredStages.size > 0) {
+        const sortedSkipped = [...requiredStages].sort((a, b) => a - b);
         disqualification.status = true;
         disqualification.reason = `Не завершены обязательные этапы: ${sortedSkipped.join(
           ', '
@@ -168,8 +168,10 @@ export class TourGCManager {
         disqualification.label = 'MRS';
       }
 
+      const lastStageOrder = stageOrders.requiredStageOrders.sort((a, b) => b - a)[0];
+
       // Если нет — это ошибка в расчётах, и райдеру присваивается дисквалификация для дальнейшего разбирательства.
-      let finalCategory = this.getCommonCategory(stages);
+      let finalCategory = this.getFinalCategory(riderParticipationStages, lastStageOrder);
 
       // Если уже была дисквалификация по другой причине — не назначаем финальную категорию.
       if (disqualification.status) {
@@ -190,7 +192,7 @@ export class TourGCManager {
           category: null,
           absolute: null,
         },
-        stages,
+        stages: riderParticipationStages,
       };
     });
 
@@ -257,7 +259,7 @@ export class TourGCManager {
   /**
    * Определение категории в генеральной классификации происходит по категории в последнем этапе.
    */
-  private getCommonCategory = (
+  private getFinalCategory = (
     stages: {
       category: TRaceSeriesCategories | null;
       stageOrder: number;
@@ -269,21 +271,18 @@ export class TourGCManager {
         modifiedAt: Date;
         reason?: string;
       };
-    }[]
+    }[],
+    lastStageOrder: number
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
     if (stages.length === 0) {
       return null;
     }
 
-    // Сохраняем категорию первого завершенного этапа как базовую для сравнения.
-    // В первом заезде всегда category=null, и устанавливается категория в modifiedCategory
+    // Категория берется из последнего завершенного и обязательного этапа для райдера.
+    const lastStage = stages.find(({ stageOrder }) => stageOrder === lastStageOrder);
 
-    const lastStage = stages.sort((a, b) => a.stageOrder - b.stageOrder).at(-1);
-
-    // Если было изменение категории, согласно правилам серии, то берется из modifiedCategory, иначе
-    // берется категория из category (категория автоматически назначается из прошлого этапа)
-    const category = lastStage?.modifiedCategory?.value || lastStage?.category || null;
+    const category = lastStage?.category || null;
 
     // Нет ни одного результата на этапе Серии. FIXME: заранее фильтровать от райдеров, которые не проехали ни одного этапа. Для корректного отображения информации о дисквалификации. Проверка на firstCategory === null временная.
     return category;
