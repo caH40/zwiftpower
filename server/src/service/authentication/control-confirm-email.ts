@@ -2,7 +2,7 @@ import { User } from '../../Model/User.js';
 import { UserConfirm } from '../../Model/User-confirm.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { millisecondsIn3Days } from '../../assets/date.js';
-import { TeamMemberService } from '../TeamMember.js';
+import { TeamMemberModel } from '../../Model/TeamMember.js';
 
 /**
  * Проверка подтверждения e-mail (активация аккаунта).
@@ -23,8 +23,7 @@ export async function controlConfirmEmail() {
       if (expiration > activationPeriod) {
         const { userId } = usersForConfirmDB[i];
 
-        const teamMemberService = new TeamMemberService();
-        await teamMemberService.deleteBySystem(userId);
+        await deleteTeamMember(userId);
 
         await UserConfirm.findOneAndDelete({ userId });
         const userDeleted = await User.findOneAndDelete({ _id: userId });
@@ -37,4 +36,11 @@ export async function controlConfirmEmail() {
   } catch (error) {
     handleAndLogError(error);
   }
+}
+
+/**
+ * Удаление участника после удаления пользователя User из БД.
+ */
+async function deleteTeamMember(userId: string): Promise<void> {
+  await TeamMemberModel.findOneAndDelete({ user: userId });
 }

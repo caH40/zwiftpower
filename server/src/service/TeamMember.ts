@@ -386,25 +386,4 @@ export class TeamMemberService {
 
     return { message: 'Заявка на присоединение к команде удалена из списка.' };
   }
-
-  /**
-   * Удаление участника после удаления пользователя User из БД.
-   */
-  public async deleteBySystem(userId: string): Promise<{ message: string }> {
-    const memberDB = await TeamMemberModel.findOneAndDelete({ user: userId });
-
-    if (!memberDB) {
-      return { message: 'Пользователь не был участником команды.' };
-    }
-
-    const teamId = memberDB.team.toString();
-
-    // Создание сервисного сообщения для создателя команды.
-    await this.teamServiceMessage.deleteBySystem({
-      userId: memberDB.user.toString(),
-      teamId,
-    });
-
-    return { message: 'Участник исключен из команды.' };
-  }
 }

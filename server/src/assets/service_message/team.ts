@@ -29,11 +29,6 @@ export const teamMessageTemplates = {
     title: 'Исключение из команды',
   }),
 
-  deleteBySystem: (params: { memberName: string; teamName: string }) => ({
-    text: `Пользователь ${params.memberName} был исключен из команды "${params.teamName}", так как пользователь удалён с сайта.`,
-    title: 'Исключение из команды',
-  }),
-
   youWereKicked: (params: { teamName: string }) => ({
     text: `Вы были исключены из команды "${params.teamName}"`,
     title: `Исключение из команды`,
