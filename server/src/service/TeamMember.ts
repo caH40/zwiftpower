@@ -8,20 +8,22 @@ import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
 import { TeamModel } from '../Model/Team.js';
 import { updateTeamInResultsService } from './race/results-update.js';
 import { DATE_FOR_ADD_TEAM_RESULTS } from '../assets/constants.js';
+import { TeamMemberRepository } from '../repositories/TeamMember.js';
 
 // types
-import { TTeamMembersPublicDB } from '../types/mongodb-response.types.js';
 import { TControlMemberAction, TTeamMembersForDto, TTeamRole } from '../types/team.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TTeamMemberPublicDto } from '../types/dto.interface.js';
 
 export class TeamMemberService {
   private teamServiceMessage: TeamServiceMessage;
+  private teamMemberRepository: TeamMemberRepository;
   private actualDate: Date;
 
   constructor() {
     this.teamServiceMessage = new TeamServiceMessage(new ServiceMessage());
     this.actualDate = new Date(DATE_FOR_ADD_TEAM_RESULTS);
+    this.teamMemberRepository = new TeamMemberRepository();
   }
 
   /**
@@ -29,14 +31,11 @@ export class TeamMemberService {
    */
   async getAll(urlSlug: string): Promise<{ data: TTeamMemberPublicDto[]; message: string }> {
     const { _id } = await this.getTeamId(urlSlug);
-    const teamMembersDB = await TeamMemberModel.find(
-      { team: _id },
-      { role: true, specialization: true, createdAt: true }
-    )
-      .populate({ path: 'user', select: ['zwiftId'] })
-      .lean<TTeamMembersPublicDB[]>();
+    const teamMembersDB = await this.teamMemberRepository.getUserAndZwiftIds(_id.toString());
 
-    const zwiftIds = teamMembersDB
+    const filteredTeamMembers = teamMembersDB.filter((m) => m.user);
+
+    const zwiftIds = filteredTeamMembers
       .map(({ user }) => user.zwiftId)
       .filter((item): item is number => !!item);
 
@@ -44,7 +43,7 @@ export class TeamMemberService {
       RiderProfileSchema[]
     >();
 
-    const teamMembers = teamMembersDB.reduce<TTeamMembersForDto[]>((acc, cur) => {
+    const teamMembers = filteredTeamMembers.reduce<TTeamMembersForDto[]>((acc, cur) => {
       const rider = ridersDB.find((r) => r.zwiftId === cur.user.zwiftId);
 
       acc.push({ ...cur, rider, userId: cur.user._id });

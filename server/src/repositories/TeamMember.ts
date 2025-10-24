@@ -1,7 +1,8 @@
+import { Types } from 'mongoose';
 import { TeamMemberModel } from '../Model/TeamMember.js';
 
 // types
-import { TTeamSpecialization } from '../types/team.types.js';
+import { TTeamRole, TTeamSpecialization } from '../types/team.types.js';
 
 type TPopulatedTeamMember = {
   specialization?: TTeamSpecialization;
@@ -26,5 +27,28 @@ export class TeamMemberRepository {
     )
       .populate({ path: 'user', select: ['-_id', 'zwiftId'] })
       .lean<TPopulatedTeamMember[]>();
+  }
+
+  /**
+   * Получение массива данных участника команды {_id,zwiftId}
+   */
+  async getUserAndZwiftIds(teamId: string): Promise<
+    {
+      _id: Types.ObjectId;
+      user: { _id: Types.ObjectId; zwiftId: number };
+      createdAt: Date;
+      role?: TTeamRole;
+      specialization?: TTeamSpecialization;
+    }[]
+  > {
+    return await TeamMemberModel.find(
+      { team: teamId },
+      { role: 1, user: 1, specialization: 1, createdAt: 1 }
+    )
+      .populate<{ user: { _id: Types.ObjectId; zwiftId: number } }>({
+        path: 'user',
+        select: ['zwiftId'],
+      })
+      .lean();
   }
 }

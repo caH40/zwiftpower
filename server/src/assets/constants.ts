@@ -1,4 +1,4 @@
-import { millisecondsIn10Minutes } from './date';
+import { millisecondsIn10Minutes } from './date.js';
 
 /**
  * Префикс для переменных, используемых в localStorage и cookies в браузере.

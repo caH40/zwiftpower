@@ -82,13 +82,15 @@ export class SeriesCategoryService {
     const series = await this.getSeriesData();
 
     // Категории райдеров из предыдущих для них результата этапа серии.
-    const previousStagesResults = await this.getCategoriesFromPreviousStagesResults(stageOrder);
+    const previousCategoriesFrom = await this.getCategoriesFromPreviousStagesResults(
+      stageOrder
+    );
 
     // Инициализация итогового массива.
     const resultsWithCategories = [] as TStageResult[];
 
     for (const result of stageResults) {
-      const prevCategory = previousStagesResults.get(result.profileId);
+      const prevCategory = previousCategoriesFrom.get(result.profileId);
 
       // Если нет категории, то райдер проехал свой первый этап в серии.
       if (!prevCategory) {
@@ -113,12 +115,19 @@ export class SeriesCategoryService {
   ): Promise<TStageResult> {
     const result = { ...stageResult };
 
-    result.categoryInRace = prevCategory;
-    result.category = prevCategory;
-
     if (categoriesWithRange) {
       // FIXME: Сделать проверку превышения категории prevCategory в текущем результате result
+      // установка данных.
+      // return result
     }
+
+    // FIXME:
+    // Если группа в которой выступал райдер не соответствует категории из прошлого заезда categoryInRace
+    // Тогда сделать автоматическое изменение категории.
+    // Сделать настройку для серии: изменять автоматически категории райдера в этапах, при изменении
+    // группы (например на прошлом этапе был С, в этом проехал в B)
+    result.categoryInRace = prevCategory;
+    result.category = prevCategory;
 
     return result;
   }
