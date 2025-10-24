@@ -1,0 +1,15 @@
+{
+  "tsconfig": "tsconfig.json",
+  "entryPoints": ["src/repositories"],
+  "entryPointStrategy": "expand",
+  "out": "../doc/development-auto",
+  "plugin": ["typedoc-plugin-markdown"],
+  "theme": "markdown",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "includeVersion": false,
+  "hideGenerator": true,
+  "readme": "none",
+  "excludeExternals": false,
+  "exclude": ["**/assets/**"]
+}
