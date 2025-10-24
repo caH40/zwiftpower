@@ -54,11 +54,7 @@ export async function getUserProfileService(zwiftId: number) {
  * Сервис получения значений кривой CriticalPower за 90 дней
  * для райдера (zwiftId) и CriticalPower со всех Заездов
  */
-export async function getUserPowerService(zwiftId: string) {
-  if (zwiftId === 'undefined') {
-    return null;
-  }
-
+export async function getUserPowerService(zwiftId: number) {
   const powerCurveDB = await PowerCurve.findOne({ zwiftId }).lean();
 
   const resultsDB = await ZwiftResult.find(

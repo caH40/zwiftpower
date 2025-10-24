@@ -20,6 +20,7 @@ import { getUserSettingsService } from '../service/profile/settings.js';
 import { putUsernameService, updateProfileService } from '../service/profile/rider.js';
 import { userResultsZSchema } from '../utils/deserialization/userResults.js';
 import { handleZodError } from '../errors/handleZodError.js';
+import { ZwiftIdZSchema } from '../utils/deserialization/zwiftid.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -50,11 +51,13 @@ export async function getUserProfile(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
 
-    if (isNaN(+zwiftId) || +zwiftId === 0) {
-      throw new Error('Не получен zwiftId!');
+    const result = ZwiftIdZSchema.safeParse(zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    const userResults = await getUserProfileService(+zwiftId);
+    const userResults = await getUserProfileService(result.data);
     res.status(200).json(userResults);
   } catch (error) {
     handleAndLogError(error);
@@ -71,7 +74,14 @@ export async function getUserProfile(req: Request, res: Response) {
 export async function getUserPower(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
-    const userPower = await getUserPowerService(zwiftId);
+
+    const result = ZwiftIdZSchema.safeParse(zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
+    const userPower = await getUserPowerService(result.data);
     res.status(200).json(userPower);
   } catch (error) {
     handleAndLogError(error);
@@ -88,11 +98,13 @@ export async function getRiderMetric(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
 
-    if (!Number.isInteger(+zwiftId)) {
-      throw new Error('zwiftId должен быть целым числом!');
+    const result = ZwiftIdZSchema.safeParse(zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    const riderMetric = await getMetricService({ zwiftId: +zwiftId });
+    const riderMetric = await getMetricService({ zwiftId: result.data });
     res.status(200).json(riderMetric);
   } catch (error) {
     handleAndLogError(error);
@@ -109,7 +121,13 @@ export async function getZwiftProfiles(req: Request, res: Response) {
   try {
     const { zwiftId } = req.params;
 
-    const zwiftProfiles = await getZwiftProfilesService(+zwiftId);
+    const result = ZwiftIdZSchema.safeParse(zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
+    const zwiftProfiles = await getZwiftProfilesService(result.data);
     res.status(200).json(zwiftProfiles);
   } catch (error) {
     handleAndLogError(error);
@@ -126,9 +144,14 @@ export async function putUserZwiftId(req: Request, res: Response) {
   try {
     const { userId } = req.params;
 
-    const zwiftId: number = req.body.zwiftId;
+    const result = ZwiftIdZSchema.safeParse(req.body.zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
     const isAdditional: boolean = req.body.isAdditional;
-    const response = await updateZwiftIdService(userId, zwiftId, isAdditional);
+    const response = await updateZwiftIdService(userId, result.data, isAdditional);
 
     return res.status(200).json(response);
   } catch (error) {
@@ -146,8 +169,13 @@ export async function deleteUserZwiftId(req: Request, res: Response) {
   try {
     const { userId } = req.params;
 
-    const zwiftId: number = +req.body.zwiftId;
-    const user = await deleteUserZwiftIdService(userId, zwiftId);
+    const result = ZwiftIdZSchema.safeParse(req.body.zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
+    const user = await deleteUserZwiftIdService(userId, result.data);
 
     return res.status(200).json(user);
   } catch (error) {
@@ -180,13 +208,13 @@ export async function refreshProfile(req: Request, res: Response) {
  */
 export async function getNotifications(req: Request, res: Response) {
   try {
-    const { zwiftId } = req.params;
+    const result = ZwiftIdZSchema.safeParse(req.params.zwiftId);
 
-    if (isNaN(+zwiftId)) {
-      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    const response = await getNotificationsService({ zwiftId: +zwiftId });
+    const response = await getNotificationsService({ zwiftId: result.data });
 
     return res.status(200).json(response);
   } catch (error) {
@@ -201,13 +229,13 @@ export async function getNotifications(req: Request, res: Response) {
  */
 export async function getUserSettings(req: Request, res: Response) {
   try {
-    const { zwiftId } = req.params;
+    const result = ZwiftIdZSchema.safeParse(req.params.zwiftId);
 
-    if (isNaN(+zwiftId)) {
-      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    const response = await getUserSettingsService({ zwiftId: +zwiftId });
+    const response = await getUserSettingsService({ zwiftId: result.data });
 
     return res.status(200).json(response);
   } catch (error) {
@@ -289,22 +317,27 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
  */
 export async function putNotifications(req: Request, res: Response) {
   try {
-    const { zwiftId, notifications } = req.body;
-    const { userZwiftId } = req.params;
+    const { notifications } = req.body;
 
-    if (zwiftId !== userZwiftId) {
-      throw new Error('Можно изменять данные только своего профиля!');
+    const result = ZwiftIdZSchema.safeParse(req.body.zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    if (isNaN(+zwiftId)) {
-      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    const zwiftId = result.data;
+
+    const { userZwiftId } = req.params;
+
+    if (zwiftId !== +userZwiftId) {
+      throw new Error('Можно изменять данные только своего профиля!');
     }
 
     if (!isValidNotifications(notifications)) {
       throw new Error(`Некорректные данные notifications`);
     }
 
-    const response = await putNotificationsService({ zwiftId: +zwiftId, notifications });
+    const response = await putNotificationsService({ zwiftId, notifications });
 
     return res.status(200).json(response);
   } catch (error) {
@@ -319,15 +352,20 @@ export async function putNotifications(req: Request, res: Response) {
  */
 export async function putUserStreams(req: Request, res: Response) {
   try {
-    const { zwiftId, streams } = req.body;
-    const { userZwiftId } = req.params;
+    const { streams } = req.body;
 
-    if (zwiftId !== userZwiftId) {
-      throw new Error('Можно изменять данные только своего профиля!');
+    const result = ZwiftIdZSchema.safeParse(req.body.zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    if (isNaN(+zwiftId)) {
-      throw new Error(`Полученный zwiftId: ${zwiftId} некорректный`);
+    const zwiftId = result.data;
+
+    const { userZwiftId } = req.params;
+
+    if (zwiftId !== +userZwiftId) {
+      throw new Error('Можно изменять данные только своего профиля!');
     }
 
     // Изменение название свойств объекта с общих на корректные.
@@ -342,7 +380,7 @@ export async function putUserStreams(req: Request, res: Response) {
     };
 
     const response = await putUserStreamsService({
-      zwiftId: +zwiftId,
+      zwiftId,
       streamsParams: streamsCorrectProperties,
     });
 
