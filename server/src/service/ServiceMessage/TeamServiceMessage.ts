@@ -294,6 +294,52 @@ export class TeamServiceMessage {
   }
 
   /**
+   * Сервисное сообщение об исключении участника из-за удаления пользователя с сайта.
+   * @returns
+   */
+  async deleteBySystem({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: string;
+  }): Promise<{ data: null; message: string }> {
+    try {
+      const [user, team] = await Promise.all([
+        this.dataProvider.getUser(userId),
+        this.dataProvider.getTeam(teamId),
+      ]);
+
+      const { text, title } = teamMessageTemplates.deleteBySystem({
+        memberName: user.name,
+        teamName: team.name,
+      });
+
+      // Страница пользователя, исключенного из команды.
+      const entityUrl = `/profile/${user.zwiftId}/results`;
+      const entityLogo = '/images/background-road-blur.jpg';
+
+      const recipientUser = team.creator;
+
+      await this.serviceMessage.create({
+        recipientUser,
+        type: this.type,
+        text,
+        entityUrl,
+        entityLogo,
+        title,
+      });
+
+      await this.notifyUser(recipientUser);
+
+      return { data: null, message: 'Создано сервисное сообщение' };
+    } catch (error) {
+      handleAndLogError(error);
+      return { data: null, message: 'Ошибка при создании сервисного сообщения' };
+    }
+  }
+
+  /**
    * Сервисное сообщение об исключены вас из команды.
    * @returns
    */
