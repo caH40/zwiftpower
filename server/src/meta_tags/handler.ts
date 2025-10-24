@@ -28,6 +28,7 @@ import {
   getRidersMeta,
   getScheduleListMeta,
   getSeriesMeta,
+  getSiteServicesMeta,
   getStatisticsMeta,
   getStreamsMeta,
   getTeamsMeta,
@@ -93,6 +94,8 @@ export const getMetaTags = async (url: string): Promise<MetaTags> => {
     tags = getOrganizerDocumentationMeta(url);
   } else if (url.includes('/documentation/development')) {
     tags = getDevelopmentDocumentationMeta(url);
+  } else if (url.includes('/site-services')) {
+    tags = getSiteServicesMeta(url);
   } else if (url.includes('/documentation')) {
     tags = getDocumentationMeta(url);
   } else {

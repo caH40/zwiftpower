@@ -5,6 +5,8 @@ import { fetchSiteServicePrice } from '../../redux/features/api/site_service_pri
 import Price from '../../components/Price/Price';
 import useTitle from '../../hook/useTitle';
 import { resetSiteServicePrice } from '../../redux/features/api/site_service_price/siteServicePriceSlice';
+import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
+import { SERVICES_HELMET_PROPS } from '../../assets/helmet-props';
 
 import styles from './SiteServices.module.css';
 
@@ -21,10 +23,12 @@ export default function SiteServices() {
     dispatch(fetchSiteServicePrice());
 
     return () => dispatch(resetSiteServicePrice());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.wrapper}>
+      <HelmetComponent {...SERVICES_HELMET_PROPS.SERVICES} />
+
       <Price services={siteServicePrice} />
 
       <div className={styles.support}>

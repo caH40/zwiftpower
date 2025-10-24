@@ -268,3 +268,17 @@ export const getDevelopmentDocumentationMeta = (url: string): MetaTags => {
 
   return { title, canonical, description, image, recommendationsTag };
 };
+
+/**
+ * Формирование Мета тегов для страницы "Сервисы на сайте"
+ */
+export const getSiteServicesMeta = (url: string): MetaTags => {
+  const title = 'Платные услуги и подписки | Организатор заездов ZwiftPower.ru';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Тарифы на услуги организатора заездов в Zwift. Создание серий, туров с полной интеграцией. Расширенные настройки: категории, маршруты, лимиты мощности.';
+  const image = 'http://zwiftpower.ru/images/open_graph/price.png';
+  const recommendationsTag = 'price';
+
+  return { title, canonical, description, image, recommendationsTag };
+};

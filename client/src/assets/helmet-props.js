@@ -192,3 +192,15 @@ export const RIDERS_LIST_HELMET_PROPS = {
   imageAlt: 'Список участников заездов в Zwift на ZwiftPower',
   noindex: false,
 };
+
+export const SERVICES_HELMET_PROPS = {
+  SERVICES: {
+    title: 'Платные услуги и подписки | Организатор заездов ZwiftPower.ru',
+    canonical: '/site-services',
+    description:
+      'Тарифы на услуги организатора заездов в Zwift. Создание серий, туров с полной интеграцией. Расширенные настройки: категории, маршруты, лимиты мощности.',
+    image: '/images/open_graph/price.png',
+    imageAlt: 'Платные услуги ZwiftPower - тарифы для организаторов заездов',
+    noindex: false,
+  },
+};
