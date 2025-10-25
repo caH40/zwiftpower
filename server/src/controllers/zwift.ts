@@ -14,6 +14,7 @@ import { handleAndLogError, handleErrorInController } from '../errors/error.js';
 
 //types
 import { PostZwiftEvent, PutEvent } from '../types/http.interface.js';
+import { ZwiftIdZSchema } from '../utils/deserialization/zwiftid.js';
 
 /**
  * Получение данных Эвента для последующего редактирование параметров Эвента, просмотра параметров Эвента, или добавления в БД.
@@ -105,8 +106,13 @@ export async function putEventZwift(req: Request, res: Response) {
 
 export async function getZwiftRider(req: Request, res: Response) {
   try {
-    const { zwiftId } = req.params;
-    const rider = await getZwiftRiderService(+zwiftId);
+    const result = ZwiftIdZSchema.safeParse(req.params.zwiftId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
+    const rider = await getZwiftRiderService(result.data);
     res.status(200).json(rider);
   } catch (error) {
     handleAndLogError(error);

@@ -30,6 +30,7 @@ import {
   getFairRideBanService,
   updateFairRideBanService,
 } from '../service/riders/rider-ban.js';
+import { ZwiftIdZSchema } from '../utils/deserialization/zwiftid.js';
 
 /**
  * Получение всех зарегистрированных Users
@@ -321,15 +322,13 @@ export const putActivityInFitFile = async (req: Request, res: Response) => {
  */
 export const getActivityInFitFile = async (req: Request, res: Response) => {
   try {
-    const { zwiftId } = req.params;
+    const result = ZwiftIdZSchema.safeParse(req.params.zwiftId);
 
-    const parsedZwiftId = Number(zwiftId);
-
-    if (isNaN(parsedZwiftId) || !Number.isInteger(parsedZwiftId)) {
-      throw new Error(`Не верный формат zwiftId: ${zwiftId}`);
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
-    const response = await getActivityInFitFileService({ zwiftId: +zwiftId });
+    const response = await getActivityInFitFileService({ zwiftId: result.data });
 
     res.status(200).json(response);
   } catch (error) {
@@ -422,16 +421,14 @@ export const updateFairRideBan = async (req: Request, res: Response) => {
  */
 export const getFairRideBan = async (req: Request, res: Response) => {
   try {
-    const { zwiftId } = req.params;
+    const result = ZwiftIdZSchema.safeParse(req.params.zwiftId);
 
-    const parsedZwiftId = Number(zwiftId);
-
-    if (isNaN(parsedZwiftId) || !Number.isInteger(parsedZwiftId)) {
-      throw new Error(`Не верный формат входного параметра zwiftId: ${zwiftId}`);
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
     }
 
     const response = await getFairRideBanService({
-      zwiftId: parsedZwiftId,
+      zwiftId: result.data,
     });
 
     res.status(200).json(response);
