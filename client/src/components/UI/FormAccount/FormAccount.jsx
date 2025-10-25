@@ -60,7 +60,6 @@ function FormAccount({ role, username }) {
         validationText={errors.username?.message || ''}
         input={{ id: 'username', type: 'text' }}
       />
-      {/* <CommonInput name={'роль на сайте'} state={role} disabled={true} /> */}
 
       <div className={styles.button__right}>
         <Button type={'submit'} disabled={Boolean(errors.username)}>

@@ -7,7 +7,7 @@ export function validateUsername(register) {
         message: 'Разрешены a-Z 0-9 Символы . _ - @',
       },
       minLength: { value: 4, message: 'Больше 3х символов' },
-      maxLength: { value: 15, message: 'Не больше 15 символов' },
+      maxLength: { value: 20, message: 'Не больше 20 символов' },
     }),
   };
 }
