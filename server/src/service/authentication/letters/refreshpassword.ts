@@ -1,4 +1,4 @@
-import { server } from '../../../config/environment.js';
+import { serverFront } from '../../../config/environment.js';
 
 /**
  * Обновление пароля профиля
@@ -144,7 +144,7 @@ export function htmlRefreshPassword(date: string, username: string, password: st
                     <p style="margin: 0; padding: 0 0 20px 0">
                       Вы получили это письмо, так как ${date} было произведено обновление пароля
                       для сайта
-                      <a href="${server}" target="_blank">zwiftpower.ru</a>
+                      <a href="${serverFront}" target="_blank">zwiftpower.ru</a>
                     </p>
                     <p style="margin: 0; padding: 0 0 5px 0">Логин: ${username}</p>
                     <p style="margin: 0; padding: 0 0 20px 0">Новый пароль: ${password}</p>

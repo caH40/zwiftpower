@@ -1,7 +1,7 @@
 import { YooCheckout, IConfirmation, IReceipt } from '@a2seven/yoo-checkout';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getYooKassaConfig } from '../config/environment.js';
+import { YOO_SHOP_ID, YOO_SECRET_KEY } from '../config/environment.js';
 import { SiteServicePriceModel } from '../Model/SiteServicePrice.js';
 import { TSiteServicePrice } from '../types/model.interface.js';
 import { TSiteServiceForClient } from '../types/site-service.type.js';
@@ -19,9 +19,12 @@ export class PaymentService {
   private checkout: YooCheckout;
 
   constructor() {
-    const config = getYooKassaConfig();
+    const config = { YOO_SECRET_KEY, YOO_SHOP_ID };
 
-    this.checkout = new YooCheckout({ shopId: config.shopId, secretKey: config.secretKey });
+    this.checkout = new YooCheckout({
+      shopId: config.YOO_SHOP_ID,
+      secretKey: config.YOO_SECRET_KEY,
+    });
   }
 
   /**

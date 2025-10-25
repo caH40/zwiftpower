@@ -1,4 +1,4 @@
-import { server } from '../../../config/environment.js';
+import { serverFront } from '../../../config/environment.js';
 
 export function htmlRegistration(
   username: string,
@@ -144,7 +144,7 @@ export function htmlRegistration(
                     <p style="margin: 0; padding: 0 0 5px 0">
                       Вы получили это письмо, так как ${date} была произведена регистрация на
                       сайте
-                      <a href="${server}" target="_blank">zwiftpower.ru</a>, где был указан
+                      <a href="${serverFront}" target="_blank">zwiftpower.ru</a>, где был указан
                       данный e-mail:
                     </p>
                     <p style="margin: 0; padding: 0 0 20px 0">${email}</p>

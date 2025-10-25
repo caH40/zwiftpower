@@ -1,4 +1,4 @@
-import { server } from '../../../config/environment.js';
+import { serverFront } from '../../../config/environment.js';
 
 export function htmlResetPassword(
   username: string,
@@ -143,7 +143,7 @@ export function htmlResetPassword(
                     <p style="margin: 0; padding: 0 0 5px 0">
                       Вы получили это письмо, так как ${date} был произведен запрос на сброс
                       пароля для ${username} на сайте
-                      <a href="${server}" target="_blank">zwiftpower.ru</a>, и указан
+                      <a href="${serverFront}" target="_blank">zwiftpower.ru</a>, и указан
                       данный e-mail:
                     </p>
                     <p style="margin: 0; padding: 0 0 20px 0">${email}</p>
