@@ -227,6 +227,8 @@ export class TeamService {
 
     const results = await handleRiderResults(resultsDB);
 
+    results.sort((a, b) => (b.eventStart || 0) - (a.eventStart || 0));
+
     // пагинация
     const quantityPages = Math.ceil(results.length / docsOnPage);
     const sliceStart = page * docsOnPage - docsOnPage;
