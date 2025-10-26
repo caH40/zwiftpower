@@ -17,13 +17,12 @@ import { User } from '../Model/User.js';
 import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
 import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
-import { ZwiftResult } from '../Model/ZwiftResult.js';
 import { handleRiderResults } from './race/rider/results.js';
 import { TeamRepository } from '../repositories/Team.js';
+import { EventResultRepository } from '../repositories/EventResult.js';
 
 // types
 import { TCreateTeamParams } from '../types/team.types.js';
-import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto, TTeamForListDto } from '../types/dto.interface.js';
 import { entityForFileSuffix, UserResult } from '../types/types.interface.js';
@@ -33,10 +32,12 @@ export class TeamService {
   private imagesService: ImagesService;
   entityName: entityForFileSuffix;
   teamRepository: TeamRepository;
+  resultRepository: EventResultRepository;
 
   constructor() {
     this.imagesService = new ImagesService();
     this.teamRepository = new TeamRepository();
+    this.resultRepository = new EventResultRepository();
     this.entityName = 'team';
   }
 
@@ -44,10 +45,7 @@ export class TeamService {
    * Получение данных команды с teamId.
    */
   async get(urlSlug: string): Promise<unknown> {
-    const teamDB = await TeamModel.findOne(
-      { urlSlug },
-      TeamService.ALL_TEAM_PUBLIC_PROJECTION
-    ).lean<TTeamPublicDB>();
+    const teamDB = await this.teamRepository.getForClient(urlSlug);
 
     if (!teamDB) {
       throw new Error(`Не найдена запрашиваемая команда с urlSlug: "${urlSlug}"!`);
@@ -60,9 +58,7 @@ export class TeamService {
    * Получение всех команд.
    */
   async getAll(): Promise<{ data: TTeamForListDto[]; message: string }> {
-    const teamsDB = await TeamModel.find({}, TeamService.ALL_TEAMS_FOR_LIST_PROJECTION).lean<
-      TTeamForListDB[]
-    >();
+    const teamsDB = await this.teamRepository.getAllForClient();
 
     const teams = teamsDB.map((team) => teamForListDto(team));
 
@@ -217,21 +213,13 @@ export class TeamService {
     page?: number;
     docsOnPage?: number;
   }): Promise<{ data: { results: UserResult[]; quantityPages: number }; message: string }> {
-    const team = await this.teamRepository.getNameByUrlSlug(urlSlug);
+    const team = await this.teamRepository.getName(urlSlug);
 
     if (!team) {
       throw new Error(`Не найдена команда с urlSlug:'${urlSlug}'`);
     }
 
-    const resultsDB = await ZwiftResult.find({
-      $or: [
-        { 'profileData.team.urlSlug': urlSlug },
-        {
-          profileDataMain: { $ne: null },
-          'profileDataMain.team.urlSlug': urlSlug,
-        },
-      ],
-    }).lean();
+    const resultsDB = await this.resultRepository.getTeamRiderResults(urlSlug);
 
     const results = await handleRiderResults(resultsDB);
 
@@ -255,19 +243,7 @@ export class TeamService {
   async getPendingRiders(
     teamCreatorId: string
   ): Promise<{ data: TPendingRiderDto[]; message: string }> {
-    const teamDB = await TeamModel.findOne(
-      { creator: teamCreatorId },
-      { _id: false, pendingRiders: true, name: true }
-    )
-      .populate({ path: 'pendingRiders.user', select: ['zwiftId'] })
-      .lean<
-        Pick<TTeam, 'name'> & {
-          pendingRiders: {
-            user: { zwiftId?: number; _id: Types.ObjectId };
-            requestedAt: Date;
-          }[];
-        }
-      >();
+    const teamDB = await this.teamRepository.getPendingRiders(teamCreatorId);
 
     if (!teamDB) {
       throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
@@ -511,20 +487,4 @@ export class TeamService {
       strict: true,
     });
   }
-
-  private static ALL_TEAMS_FOR_LIST_PROJECTION = {
-    name: true,
-    shortName: true,
-    urlSlug: true,
-    logoFileInfo: true,
-    posterFileInfo: true,
-  };
-
-  private static ALL_TEAM_PUBLIC_PROJECTION = {
-    creator: false,
-    pendingRiders: false,
-    bannedRiders: false,
-    createdAt: false,
-    updatedAt: false,
-  };
 }

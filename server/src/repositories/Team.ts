@@ -1,7 +1,9 @@
+import { Types } from 'mongoose';
 import { TeamModel } from '../Model/Team.js';
 
 // types
 import { TTeam } from '../types/model.interface.js';
+import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { TTeamAppearance } from '../types/team.types.js';
 
 export class TeamRepository {
@@ -30,8 +32,56 @@ export class TeamRepository {
   /**
    * Возвращает имя команды по slug.
    */
-  async getNameByUrlSlug(urlSlug: string): Promise<{ name: string } | null> {
+  async getName(urlSlug: string): Promise<{ name: string } | null> {
     return this.getByUrlSlugAndProjection(urlSlug, { name: 1 });
+  }
+  /**
+   * Возвращает данные команды для клиента по slug.
+   */
+  async getForClient(urlSlug: string): Promise<TTeamPublicDB | null> {
+    return this.getByUrlSlugAndProjection(urlSlug, {
+      _id: 1,
+      creator: 0,
+      pendingRiders: 0,
+      bannedRiders: 0,
+      createdAt: 0,
+      updatedAt: 0,
+    });
+  }
+  /**
+   * Возвращает данные команд для клиента по slug.
+   */
+  async getAllForClient(): Promise<TTeamForListDB[]> {
+    return TeamModel.find(
+      {},
+      {
+        _id: 1,
+        name: 1,
+        shortName: 1,
+        urlSlug: 1,
+        logoFileInfo: 1,
+        posterFileInfo: 1,
+      }
+    ).lean<TTeamForListDB[]>();
+  }
+
+  /**
+   * Возвращает список пользователей, подавших заявки на вступление в команду.
+   */
+  async getPendingRiders(teamCreatorId: string) {
+    return TeamModel.findOne(
+      { creator: teamCreatorId },
+      { _id: false, pendingRiders: true, name: true }
+    )
+      .populate({ path: 'pendingRiders.user', select: ['zwiftId'] })
+      .lean<
+        Pick<TTeam, 'name'> & {
+          pendingRiders: {
+            user: { zwiftId?: number; _id: Types.ObjectId };
+            requestedAt: Date;
+          }[];
+        }
+      >();
   }
 
   /**
@@ -41,7 +91,7 @@ export class TeamRepository {
   private async getByUrlSlugAndProjection<K extends keyof TTeam>(
     urlSlug: string,
     paramsProjection?: Record<K, 1 | 0>
-  ): Promise<Pick<TTeam, K> | null> {
+  ) {
     const projection = paramsProjection ? { _id: 0, ...paramsProjection } : undefined;
 
     return TeamModel.findOne({ urlSlug }, projection).lean();

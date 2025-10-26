@@ -25,4 +25,19 @@ export class EventResultRepository {
       })
       .lean();
   }
+
+  /**
+   * Результаты заездов в которых участвовали райдеры и когда был заезд.
+   */
+  async getTeamRiderResults(urlSlug: string) {
+    return ZwiftResult.find({
+      $or: [
+        { 'profileData.team.urlSlug': urlSlug },
+        {
+          profileDataMain: { $ne: null },
+          'profileDataMain.team.urlSlug': urlSlug,
+        },
+      ],
+    }).lean();
+  }
 }
