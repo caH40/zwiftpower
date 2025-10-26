@@ -19,20 +19,24 @@ import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 import { SystemServiceMessage } from './ServiceMessage/SystemServiceMessage.js';
 import { ZwiftResult } from '../Model/ZwiftResult.js';
 import { handleRiderResults } from './race/rider/results.js';
+import { TeamRepository } from '../repositories/Team.js';
 
 // types
 import { TCreateTeamParams } from '../types/team.types.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
-import { TBannedRiderDto, TPendingRiderDto } from '../types/dto.interface.js';
+import { TBannedRiderDto, TPendingRiderDto, TTeamForListDto } from '../types/dto.interface.js';
 import { entityForFileSuffix, UserResult } from '../types/types.interface.js';
 import { TResponseService } from '../types/http.interface.js';
 
 export class TeamService {
   private imagesService: ImagesService;
   entityName: entityForFileSuffix;
+  teamRepository: TeamRepository;
+
   constructor() {
     this.imagesService = new ImagesService();
+    this.teamRepository = new TeamRepository();
     this.entityName = 'team';
   }
 
@@ -55,7 +59,7 @@ export class TeamService {
   /**
    * Получение всех команд.
    */
-  async getAll(): Promise<unknown> {
+  async getAll(): Promise<{ data: TTeamForListDto[]; message: string }> {
     const teamsDB = await TeamModel.find({}, TeamService.ALL_TEAMS_FOR_LIST_PROJECTION).lean<
       TTeamForListDB[]
     >();
@@ -213,7 +217,11 @@ export class TeamService {
     page?: number;
     docsOnPage?: number;
   }): Promise<{ data: { results: UserResult[]; quantityPages: number }; message: string }> {
-    const team = await this.getTeamInfo(urlSlug);
+    const team = await this.teamRepository.getNameByUrlSlug(urlSlug);
+
+    if (!team) {
+      throw new Error(`Не найдена команда с urlSlug:'${urlSlug}'`);
+    }
 
     const resultsDB = await ZwiftResult.find({
       $or: [
@@ -502,16 +510,6 @@ export class TeamService {
       lower: true,
       strict: true,
     });
-  }
-
-  private async getTeamInfo(urlSlug: string): Promise<{ _id: Types.ObjectId; name: string }> {
-    const teamDB = await TeamModel.findOne({ urlSlug }, { name: true }).lean();
-
-    if (!teamDB) {
-      throw new Error(`Не найдена команда с urlSlug:'${urlSlug}'`);
-    }
-
-    return teamDB;
   }
 
   private static ALL_TEAMS_FOR_LIST_PROJECTION = {
