@@ -34,73 +34,59 @@ import {
   getTeamsMeta,
 } from './tags.js';
 
-/**
- * Выбор Мета тэгов соответствующих url
- */
-export const getMetaTags = async (url: string): Promise<MetaTags> => {
-  let tags;
+const metaHandlers: Record<string, (url: string) => Promise<MetaTags> | MetaTags> = {
+  '/': getHomeMeta,
+  '/race/schedule': getScheduleListMeta,
+  '/race/results': getResultListMeta,
+  '/race/statistics/main': getStatisticsMeta,
+  '/race/statistics/riders-ftp': getFTPMeta,
+  '/race/statistics/riders-racing-score': getRacingScoreMeta,
+  '/series': getSeriesMeta,
+  '/teams': getTeamsMeta,
+  '/moderation/teams/create': getCreateTeamsMeta,
+  '/documentation/faq': getFaqMeta,
+  '/documentation/public': getPublicDocumentationMeta,
+  '/documentation/organizer': getOrganizerDocumentationMeta,
+  '/documentation/development': getDevelopmentDocumentationMeta,
+  '/site-services': getSiteServicesMeta,
+  '/documentation': getDocumentationMeta,
+};
 
-  if (url === '/') {
-    tags = getHomeMeta();
-  } else if (url === '/race/schedule') {
-    tags = getScheduleListMeta(url);
-  } else if (url === '/race/results') {
-    tags = getResultListMeta(url);
-  } else if (url === '/race/statistics/main') {
-    tags = getStatisticsMeta(url);
-  } else if (url.includes('/race/statistics/leaders/')) {
-    tags = getLeadersMeta(url);
-  } else if (url === '/race/statistics/riders-ftp') {
-    tags = getFTPMeta(url);
-  } else if (url === '/race/statistics/riders-racing-score') {
-    tags = getRacingScoreMeta(url);
-  } else if (url.includes('/riders')) {
-    tags = getRidersMeta(url);
-  } else if (url.includes('/race/results/')) {
-    tags = await getRaceResultsMeta(url);
-  } else if (url.includes('/race/schedule/')) {
-    tags = await getSignedRidersMeta(url);
-  } else if (url.includes('/profile/')) {
-    tags = await getProfileResultsMeta(url);
-  } else if (url.includes('/streams')) {
-    tags = getStreamsMeta(url);
-  } else if (url.includes('/organizers/')) {
-    tags = getOrganizerPublicMeta(url);
-  } else if (url.includes('/organizers')) {
-    tags = getOrganizersPublicMeta(url);
-  } else if (url.match(/^\/series\/([^/]+)\/(schedule)$/)) {
-    tags = getSeriesScheduleMeta(url);
-  } else if (url.match(/^\/series\/([^/]+)\/(regulations)$/)) {
-    tags = getSeriesRegulationsMeta(url);
-  } else if (url.match(/^\/series\/([^/]+)\/(results)$/)) {
-    tags = getSeriesResultsMeta(url);
-  } else if (url === '/series') {
-    tags = getSeriesMeta(url);
-  } else if (url === '/teams') {
-    tags = getTeamsMeta(url);
-  } else if (url.includes('/moderation/teams/create')) {
-    tags = getCreateTeamsMeta(url);
-  } else if (/\/teams\/[^/]+\/results/.test(url)) {
-    tags = getTeamRiderResultsMeta(url);
-  } else if (/\/teams\/[^/]+\/members/.test(url)) {
-    tags = getTeamMembersMeta(url);
-  } else if (/\/teams\/[^/]+\/achievements/.test(url)) {
-    tags = getTeamAchievementsMeta(url);
-  } else if (url.includes('/documentation/faq')) {
-    tags = getFaqMeta(url);
-  } else if (url.includes('/documentation/public')) {
-    tags = getPublicDocumentationMeta(url);
-  } else if (url.includes('/documentation/organizer')) {
-    tags = getOrganizerDocumentationMeta(url);
-  } else if (url.includes('/documentation/development')) {
-    tags = getDevelopmentDocumentationMeta(url);
-  } else if (url.includes('/site-services')) {
-    tags = getSiteServicesMeta(url);
-  } else if (url.includes('/documentation')) {
-    tags = getDocumentationMeta(url);
-  } else {
-    tags = getMetaOtherPages(url);
+const patternHandlers: Array<{
+  pattern: RegExp | ((url: string) => boolean);
+  handler: (url: string) => Promise<MetaTags> | MetaTags;
+}> = [
+  { pattern: (url) => url.includes('/race/statistics/leaders/'), handler: getLeadersMeta },
+  { pattern: (url) => url.includes('/riders'), handler: getRidersMeta },
+  { pattern: (url) => url.includes('/race/results/'), handler: getRaceResultsMeta },
+  { pattern: (url) => url.includes('/race/schedule/'), handler: getSignedRidersMeta },
+  { pattern: (url) => url.includes('/profile/'), handler: getProfileResultsMeta },
+  { pattern: (url) => url.includes('/streams'), handler: getStreamsMeta },
+  { pattern: (url) => url.includes('/organizers/'), handler: getOrganizerPublicMeta },
+  { pattern: (url) => url.includes('/organizers'), handler: getOrganizersPublicMeta },
+  { pattern: /^\/series\/([^/]+)\/(schedule)$/, handler: getSeriesScheduleMeta },
+  { pattern: /^\/series\/([^/]+)\/(regulations)$/, handler: getSeriesRegulationsMeta },
+  { pattern: /^\/series\/([^/]+)\/(results)$/, handler: getSeriesResultsMeta },
+  { pattern: /\/teams\/[^/]+\/results/, handler: getTeamRiderResultsMeta },
+  { pattern: /\/teams\/[^/]+\/members/, handler: getTeamMembersMeta },
+  { pattern: /\/teams\/[^/]+\/achievements/, handler: getTeamAchievementsMeta },
+];
+
+export const getMetaTags = async (url: string): Promise<MetaTags> => {
+  // Проверка точных совпадений.
+
+  if (metaHandlers[url]) {
+    return metaHandlers[url](url);
   }
 
-  return tags;
+  // Проверка паттернов.
+  for (const { pattern, handler } of patternHandlers) {
+    const matches = typeof pattern === 'function' ? pattern(url) : pattern.test(url);
+
+    if (matches) {
+      return handler(url);
+    }
+  }
+
+  return getMetaOtherPages(url);
 };
