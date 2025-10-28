@@ -34,7 +34,7 @@ import {
   getTeamsMeta,
 } from './tags.js';
 
-const metaHandlers: Record<string, (url: string) => Promise<MetaTags> | MetaTags> = {
+export const metaHandlers: Record<string, (url: string) => Promise<MetaTags> | MetaTags> = {
   '/': getHomeMeta,
   '/race/schedule': getScheduleListMeta,
   '/race/results': getResultListMeta,
@@ -67,9 +67,9 @@ const patternHandlers: Array<{
   { pattern: /^\/series\/([^/]+)\/(schedule)$/, handler: getSeriesScheduleMeta },
   { pattern: /^\/series\/([^/]+)\/(regulations)$/, handler: getSeriesRegulationsMeta },
   { pattern: /^\/series\/([^/]+)\/(results)$/, handler: getSeriesResultsMeta },
-  { pattern: /\/teams\/[^/]+\/results/, handler: getTeamRiderResultsMeta },
-  { pattern: /\/teams\/[^/]+\/members/, handler: getTeamMembersMeta },
-  { pattern: /\/teams\/[^/]+\/achievements/, handler: getTeamAchievementsMeta },
+  { pattern: /^\/teams\/[^/]+\/(results)/, handler: getTeamRiderResultsMeta },
+  { pattern: /^\/teams\/[^/]+\/members/, handler: getTeamMembersMeta },
+  { pattern: /^\/teams\/[^/]+\/achievements/, handler: getTeamAchievementsMeta },
 ];
 
 export const getMetaTags = async (url: string): Promise<MetaTags> => {
