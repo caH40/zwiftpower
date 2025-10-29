@@ -58,3 +58,8 @@
     letter-spacing: inherit;
   }
 }
+@media screen and (max-width: 360px) {
+  .button {
+    padding: 0.2em 0.45em;
+  }
+}
