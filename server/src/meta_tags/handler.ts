@@ -31,6 +31,7 @@ import {
   getSiteServicesMeta,
   getStatisticsMeta,
   getStreamsMeta,
+  getTeamRankingMeta,
   getTeamsMeta,
 } from './tags.js';
 
@@ -41,6 +42,7 @@ export const metaHandlers: Record<string, (url: string) => Promise<MetaTags> | M
   '/race/statistics/main': getStatisticsMeta,
   '/race/statistics/riders-ftp': getFTPMeta,
   '/race/statistics/riders-racing-score': getRacingScoreMeta,
+  '/race/statistics/teams': getTeamRankingMeta,
   '/series': getSeriesMeta,
   '/teams': getTeamsMeta,
   '/moderation/teams/create': getCreateTeamsMeta,

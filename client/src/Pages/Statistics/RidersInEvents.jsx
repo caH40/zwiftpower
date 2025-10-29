@@ -41,11 +41,11 @@ function RidersInEvents() {
       dispatch(resetRidersInEvents());
       dispatch(resetRidersTotalAge());
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getRidersInEventsPrepared(form.period));
-  }, [form]);
+  }, [form, dispatch]);
 
   return (
     <section>

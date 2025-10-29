@@ -13,7 +13,8 @@ export const getActivePage = (pathname, page, notNestedPath, nestedPath) => {
     page.includes(nestedPath) &&
     !pathname.includes(notNestedPath) &&
     !pathname.includes('ftp') &&
-    !pathname.includes('riders-racing-score')
+    !pathname.includes('riders-racing-score') &&
+    !pathname.includes('teams')
   ) {
     // если в pathname есть
     return true;

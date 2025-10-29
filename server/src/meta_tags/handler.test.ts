@@ -80,6 +80,7 @@ import {
   getRidersMeta,
   getOrganizersPublicMeta,
   getStreamsMeta,
+  getTeamRankingMeta,
 } from './tags';
 import {
   getOrganizerPublicMeta,
@@ -103,6 +104,7 @@ const metaHandlers: Record<string, (url: string) => Promise<MetaTags> | MetaTags
   '/race/statistics/main': getStatisticsMeta,
   '/race/statistics/riders-ftp': getFTPMeta,
   '/race/statistics/riders-racing-score': getRacingScoreMeta,
+  '/race/statistics/teams': getTeamRankingMeta,
   '/series': getSeriesMeta,
   '/teams': getTeamsMeta,
   '/moderation/teams/create': getCreateTeamsMeta,
@@ -137,7 +139,7 @@ function myIt(url: string, handler: (url: string) => MetaTags | Promise<MetaTags
     const result = await getMetaTags(url);
     const expected = await handler(url);
 
-    // if (url === '/teams/vegan-team/achievements') {
+    // if (url === '/race/statistics/teams') {
     //   console.log(result);
     //   console.log(expected);
     // }

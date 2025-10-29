@@ -6,6 +6,7 @@ const RidersInEvents = lazy(() => import('../Pages/Statistics/RidersInEvents'));
 const LeadersInIntervals = lazy(() => import('../Pages/Statistics/LeadersInIntervals'));
 const RidersTotalFTP = lazy(() => import('../Pages/Statistics/RidersTotalFTP'));
 const RidersTotalRacingScore = lazy(() => import('../Pages/Statistics/RidersTotalRacingScore'));
+const TeamsStatistics = lazy(() => import('../Pages/Statistics/Teams'));
 
 export function StatisticsRoute() {
   return (
@@ -16,6 +17,7 @@ export function StatisticsRoute() {
         <Route path="leaders/female" element={<LeadersInIntervals />} />
         <Route path="riders-ftp" element={<RidersTotalFTP />} />
         <Route path="riders-racing-score" element={<RidersTotalRacingScore />} />
+        <Route path="teams" element={<TeamsStatistics />} />
       </Route>
     </>
   );

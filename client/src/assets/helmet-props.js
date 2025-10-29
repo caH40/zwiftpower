@@ -142,6 +142,16 @@ export const STATISTICS_HELMET_PROPS = {
     noindex: false,
   },
 
+  TEAM_STATISTICS: {
+    title: 'Рейтинг и статистика команд Zwift | Топ команд по результатам заездов',
+    canonical: '/race/statistics/teams',
+    description:
+      'Полная статистика и рейтинг велокоманд в Zwift. Сравнение команд по результатам выступлений, активности участников и достижениям в заездах. Анализируйте лидеров и прогресс команд.',
+    image: '/images/open_graph/team-ranking.png',
+    imageAlt: 'Рейтинг и статистика команд Zwift - таблица результатов и сравнение',
+    noindex: false,
+  },
+
   FTP: {
     title: 'Статистика райдеров по FTP в Zwift (Звифт)',
     canonical: '/race/statistics/riders-ftp',

@@ -116,6 +116,20 @@ export const getRacingScoreMeta = (url: string): MetaTags => {
 };
 
 /**
+ * Формирование Мета тегов для страницы "Статистика райдеров по Racing Score"
+ */
+export const getTeamRankingMeta = (url: string): MetaTags => {
+  const title = 'Рейтинг и статистика команд Zwift | Топ команд по результатам заездов';
+  const canonical = serverWoWWW + url;
+  const description =
+    'Полная статистика и рейтинг велокоманд в Zwift. Сравнение команд по результатам выступлений, активности участников и достижениям в заездах. Анализируйте лидеров и прогресс команд.';
+  const image = 'https://zwiftpower.ru/images/open_graph/team-ranking.png';
+  const recommendationsTag = 'teamRanking';
+
+  return { title, canonical, description, image, recommendationsTag };
+};
+
+/**
  * Формирование Мета тегов для страниц, не учтенных в данном обработчике"
  */
 export const getMetaOtherPages = (url: string): MetaTags => {

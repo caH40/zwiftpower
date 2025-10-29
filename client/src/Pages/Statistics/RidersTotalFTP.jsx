@@ -26,7 +26,7 @@ function RidersTotalFTP() {
   useEffect(() => {
     dispatch(fetchRidersTotalFTP());
     return () => dispatch(resetRidersTotalFTP());
-  }, []);
+  }, [dispatch]);
 
   return (
     <section>
