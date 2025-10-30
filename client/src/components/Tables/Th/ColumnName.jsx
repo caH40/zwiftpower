@@ -33,131 +33,52 @@ import IconGapStart from '../../icons/IconGapStart';
 import IconRules from '../../icons/IconRules';
 import IconScoreBased from '../../icons/IconScoreBased';
 import IconSeriesWorld from '../../icons/IconSeriesWorld';
+import IconParticipants from '../../icons/IconParticipants';
 
-const ColumnName = ({ columnName, tooltip }) => {
-  /* eslint-disable */
-  switch (columnName) {
-    case 'Дата':
-      return <IconDateTime tooltip={tooltip || columnName} />;
+const columnNameMap = new Map([
+  ['Дата', IconDateTime],
+  ['Название', IconTitle],
+  ['Подъем', IconParamsAscent],
+  ['Расстояние', IconParamsDistance],
+  ['Длительность', IconParamsDuration],
+  ['Время', IconParamsDuration],
+  ['Круги', IconParamsLap],
+  ['Маршрут', IconParamsRoute],
+  ['Карта', IconParamsWorld],
+  ['Зарегистрировались', IconRegistered],
+  ['Формат заезда', IconRaceType],
+  ['Организатор', IconCreator],
+  ['Категория', IconCategory],
+  ['Райдер', IconRider],
+  ['Вес', IconWeight],
+  ['Рост', IconHeight],
+  ['Возраст', IconAge],
+  ['Пол', IconGender],
+  ['Пульс', IconPulse],
+  ['Команда', IconTeam],
+  ['Управление', IconAdmin],
+  ['Финиш', IconFinish],
+  ['Отставание от лидера', IconGap],
+  ['Отставание от райдера впереди', IconGapPrev],
+  ['Средняя мощность за гонку', IconPower],
+  ['Удельная средняя мощность за гонку', IconPowerKg],
+  ['Описание', IconDescription],
+  ['Победа', IconCupRank],
+  ['Место', IconCupRank],
+  ['Результаты', IconResultsSmall],
+  ['Разное', IconDifferent],
+  ['Средняя скорость', IconSpeed],
+  ['Нормализованная мощность', IconNP],
+  ['Стартовые гэпы (фора)', IconGapStart],
+  ['Средняя мощность за интервал', IconPower],
+  ['Удельная средняя мощность за интервал', IconPowerKg],
+  ['Правила', IconRules],
+  ['Рейтинговые очки', IconScoreBased],
+  ['Серия заездов', IconSeriesWorld],
+  ['Участники', IconParticipants],
+]);
 
-    case 'Название':
-      return <IconTitle tooltip={tooltip || columnName} />;
-
-    case 'Подъем':
-      return <IconParamsAscent tooltip={tooltip || columnName} />;
-
-    case 'Расстояние':
-      return <IconParamsDistance tooltip={tooltip || columnName} />;
-
-    case 'Длительность':
-      return <IconParamsDuration tooltip={tooltip || columnName} />;
-
-    case 'Время':
-      return <IconParamsDuration tooltip={tooltip || columnName} />;
-
-    case 'Круги':
-      return <IconParamsLap tooltip={tooltip || columnName} />;
-
-    case 'Маршрут':
-      return <IconParamsRoute tooltip={tooltip || columnName} />;
-
-    case 'Карта':
-      return <IconParamsWorld tooltip={tooltip || columnName} />;
-
-    case 'Зарегистрировались':
-      return <IconRegistered tooltip={tooltip || columnName} />;
-
-    case 'Формат заезда':
-      return <IconRaceType tooltip={tooltip || columnName} />;
-
-    case 'Организатор':
-      return <IconCreator tooltip={tooltip || columnName} />;
-
-    case 'Категория':
-      return <IconCategory tooltip={tooltip || columnName} />;
-
-    case 'Райдер':
-      return <IconRider tooltip={tooltip || columnName} />;
-
-    case 'Вес':
-      return <IconWeight tooltip={tooltip || columnName} />;
-
-    case 'Рост':
-      return <IconHeight tooltip={tooltip || columnName} />;
-
-    case 'Возраст':
-      return <IconAge tooltip={tooltip || columnName} />;
-
-    case 'Пол':
-      return <IconGender tooltip={tooltip || columnName} />;
-
-    case 'Пульс':
-      return <IconPulse tooltip={tooltip || columnName} />;
-
-    case 'Команда':
-      return <IconTeam tooltip={tooltip || columnName} />;
-
-    case 'Управление':
-      return <IconAdmin tooltip={tooltip || columnName} />;
-
-    case 'Финиш':
-      return <IconFinish tooltip={tooltip || columnName} />;
-
-    case 'Отставание от лидера':
-      return <IconGap tooltip={tooltip || columnName} />;
-
-    case 'Отставание от райдера впереди':
-      return <IconGapPrev tooltip={tooltip || columnName} />;
-
-    case 'Средняя мощность за гонку':
-      return <IconPower tooltip={tooltip || columnName} />;
-
-    case 'Удельная средняя мощность за гонку':
-      return <IconPowerKg tooltip={tooltip || columnName} />;
-
-    case 'Описание':
-      return <IconDescription tooltip={tooltip || columnName} />;
-
-    case 'Победа':
-      return <IconCupRank tooltip={tooltip || columnName} place={0} />;
-
-    case 'Место':
-      return <IconCupRank tooltip={tooltip || columnName} place={0} />;
-
-    case 'Результаты':
-      return <IconResultsSmall tooltip={tooltip || columnName} place={0} />;
-
-    case 'Разное':
-      return <IconDifferent tooltip={tooltip || columnName} place={0} />;
-
-    case 'Средняя скорость':
-      return <IconSpeed tooltip={tooltip || columnName} />;
-
-    case 'Нормализованная мощность':
-      return <IconNP tooltip={tooltip || columnName} />;
-
-    case 'Стартовые гэпы (фора)':
-      return <IconGapStart tooltip={tooltip || columnName} />;
-
-    case 'Средняя мощность за интервал':
-      return <IconPower tooltip={tooltip || columnName} />;
-
-    case 'Удельная средняя мощность за интервал':
-      return <IconPowerKg tooltip={tooltip || columnName} />;
-
-    case 'Правила':
-      return <IconRules tooltip={tooltip || columnName} />;
-
-    case 'Рейтинговые очки':
-      return <IconScoreBased tooltip={tooltip || columnName} />;
-
-    case 'Серия заездов':
-      return <IconSeriesWorld tooltip={tooltip || columnName} />;
-
-    default:
-      return columnName;
-  }
-  /* eslint-enable */
-};
-
-export default ColumnName;
+export default function ColumnName({ columnName, tooltip, ...props }) {
+  const Component = columnNameMap.get(columnName);
+  return Component ? <Component tooltip={tooltip || columnName} {...props} /> : columnName;
+}

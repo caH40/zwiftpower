@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useTitle from '../../hook/useTitle';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { STATISTICS_HELMET_PROPS } from '../../assets/helmet-props';
+import TableTeamRanking from '../../components/Tables/TableTeamRanking/TableTeamRanking';
 
 import styles from './Statistics.module.css';
 /**
@@ -21,7 +22,10 @@ export default function TeamsStatistics() {
   return (
     <section className={styles.wrapper}>
       <HelmetComponent {...STATISTICS_HELMET_PROPS.TEAM_STATISTICS} />
-      Teams
+
+      <article className={styles.block__table}>
+        <TableTeamRanking />
+      </article>
     </section>
   );
 }

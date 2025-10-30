@@ -31,7 +31,7 @@ function LeadersInIntervals() {
   useEffect(() => {
     dispatch(fetchLeadersInIntervals(gender));
     return () => dispatch(resetLeadersInIntervals());
-  }, [gender]);
+  }, [gender, dispatch]);
 
   return (
     <div>
