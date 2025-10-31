@@ -87,6 +87,8 @@ export class TeamLeaderboard {
         continue;
       }
 
+      team.totalResults++;
+
       const medal = {
         1: 'gold',
         2: 'silver',
@@ -98,7 +100,6 @@ export class TeamLeaderboard {
       }
 
       team.eventMedals[medal]++;
-      team.totalResults++;
 
       teamsWithMembers.set(urlSlug, team);
     }
