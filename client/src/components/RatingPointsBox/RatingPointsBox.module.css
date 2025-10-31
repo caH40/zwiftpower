@@ -1,0 +1,10 @@
+.wrapper {
+  display: inline-block;
+  width: 65px;
+  padding: 2px 1px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: #ffffff;
+  text-align: center;
+  background-color: var(--color-blue-2);
+}

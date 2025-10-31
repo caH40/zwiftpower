@@ -1,6 +1,7 @@
 import classnames from 'classnames/bind';
 
 import TeamRow from '../../TeamRow/TeamRow';
+import RatingPointsBox from '../../RatingPointsBox/RatingPointsBox';
 
 import styles from '../Table.module.css';
 
@@ -31,7 +32,9 @@ export default function TableTeamRanking({ teams = [] }) {
           }) => (
             <tr className={cx('hover')} key={_id}>
               <td className={styles.rank}>{rank}</td>
-              <td className={styles.rankPoints}>{rankPoints}</td>
+              <td className={styles.rankPoints}>
+                <RatingPointsBox points={rankPoints} />
+              </td>
               <td className={styles.members}>{totalMembers}</td>
               <td>
                 <TeamRow
