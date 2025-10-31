@@ -13,13 +13,29 @@ export default function TableTeamRanking({ teams = [] }) {
       <caption className={styles.hidden}>Рейтинг команд</caption>
       <Thead />
       <tbody>
-        {teams.map((rider, index) => (
-          <tr className={cx('hover')} key={rider._id}>
-            <td>{index + 1}</td>
+        {teams.map(
+          ({
+            _id,
+            urlSlug,
+            shortName,
+            logoFileInfo,
+            rank,
+            rankPoints,
+            totalMembers,
+            averageRacingScore,
+            totalResults,
+            eventMedals,
+          }) => (
+            <tr className={cx('hover')} key={_id}>
+              <td>{rank}</td>
 
-            <td></td>
-          </tr>
-        ))}
+              <td></td>
+              <td>{eventMedals.gold}</td>
+              <td>{eventMedals.silver}</td>
+              <td>{eventMedals.bronze}</td>
+            </tr>
+          )
+        )}
       </tbody>
     </table>
   );

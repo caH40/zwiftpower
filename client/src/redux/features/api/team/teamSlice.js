@@ -9,6 +9,7 @@ import {
   fetchGetTeam,
   fetchGetTeams,
   fetchGetTeamStatistics,
+  fetchTeamsLeaderboard,
 } from './fetchTeam';
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   quantityPages: 1,
   pendingRiders: [],
   bannedRiders: [],
+  teamsLeaderboard: [],
   statistics: null,
   team: null,
   message: null,
@@ -52,6 +54,9 @@ const teamSlice = createSlice({
     },
     resetStatistics: (state) => {
       state.statistics = null;
+    },
+    resetTeamsLeaderboard(state) {
+      state.teamsLeaderboard = [];
     },
   },
 
@@ -157,6 +162,23 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // =========================== Рейтинг команд  ===========================
+    builder.addCase(fetchTeamsLeaderboard.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchTeamsLeaderboard.fulfilled, (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+      state.teamsLeaderboard = action.payload.data;
+    });
+
+    builder.addCase(fetchTeamsLeaderboard.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
@@ -167,6 +189,7 @@ export const {
   resetBannedRiders,
   resetTeamRiderResults,
   resetStatistics,
+  resetTeamsLeaderboard,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;
