@@ -7,6 +7,7 @@ import { TeamMemberRepository } from '../repositories/TeamMember.js';
 import { TResponseService } from '../types/http.interface.js';
 import { TTeamLeaderboard } from '../types/team.types.js';
 import { TTeamLeaderboardDto } from '../types/dto.interface.js';
+import { teamLeaderboardDto } from '../dto/team-leaderboard.js';
 
 export class TeamLeaderboard {
   private teamRepository: TeamRepository;
@@ -29,7 +30,7 @@ export class TeamLeaderboard {
 
     const teamsWithRank = this.setRank(teamsWithMedals);
 
-    return { data: teamsWithRank, message: 'Рейтинг команд' };
+    return { data: teamLeaderboardDto(teamsWithRank), message: 'Рейтинг команд' };
   }
 
   /**

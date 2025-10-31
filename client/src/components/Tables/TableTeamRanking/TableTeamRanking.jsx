@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
+
+import TeamRow from '../../TeamRow/TeamRow';
 
 import styles from '../Table.module.css';
 
@@ -18,7 +19,9 @@ export default function TableTeamRanking({ teams = [] }) {
             _id,
             urlSlug,
             shortName,
-            logoFileInfo,
+            logoUrls,
+            posterUrls,
+            name,
             rank,
             rankPoints,
             totalMembers,
@@ -27,12 +30,21 @@ export default function TableTeamRanking({ teams = [] }) {
             eventMedals,
           }) => (
             <tr className={cx('hover')} key={_id}>
-              <td>{rank}</td>
-
-              <td></td>
+              <td className={styles.rank}>{rank}</td>
+              <td className={styles.rankPoints}>{rankPoints}</td>
+              <td className={styles.members}>{totalMembers}</td>
+              <td>
+                <TeamRow
+                  urlSlug={urlSlug}
+                  name={name}
+                  shortName={shortName}
+                  logoUrls={logoUrls}
+                />
+              </td>
               <td>{eventMedals.gold}</td>
               <td>{eventMedals.silver}</td>
               <td>{eventMedals.bronze}</td>
+              <td>{totalResults}</td>
             </tr>
           )
         )}

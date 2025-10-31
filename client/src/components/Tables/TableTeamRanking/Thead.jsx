@@ -13,7 +13,7 @@ function Thead() {
     <thead>
       <tr>
         {teamRankStartColumns.map((column) => (
-          <th rowSpan={2} key={column.id}>
+          <th key={column.id}>
             <ColumnName
               columnName={column.name}
               place={column.place}
@@ -22,27 +22,18 @@ function Thead() {
           </th>
         ))}
 
-        <th colSpan={3} className={styles.wins}>
-          Победы в заездах
-        </th>
+        {teamRankPlacesColumns.map((column) => (
+          <th key={column.id}>
+            <ColumnName
+              columnName={column.name}
+              place={column.place}
+              tooltip={column.tooltip}
+            />
+          </th>
+        ))}
 
         {teamRankEndColumns.map((column) => (
-          <th rowSpan={2} key={column.id}>
-            <ColumnName
-              columnName={column.name}
-              place={column.place}
-              tooltip={column.tooltip}
-            />
-          </th>
-        ))}
-      </tr>
-
-      <tr>
-        {teamRankPlacesColumns.map((column) => (
-          <th
-            key={column.id}
-            style={{ maxWidth: '50px', width: '50px', minWidth: '50px', textAlign: 'center' }}
-          >
+          <th key={column.id} style={{ textAlign: 'center' }}>
             <ColumnName
               columnName={column.name}
               place={column.place}

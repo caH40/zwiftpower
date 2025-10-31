@@ -92,6 +92,17 @@ tbody .current {
 .onlyContent {
   width: 1%;
 }
+.rank {
+  width: 50px;
+  text-align: center;
+}
+.rankPoints {
+  width: 60px;
+  font-weight: 500;
+}
+.members {
+  width: 60px;
+}
 .onlyContentSm {
   width: auto;
 }

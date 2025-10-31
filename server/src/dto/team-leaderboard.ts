@@ -1,4 +1,4 @@
-import { createUrlsToFileCloud } from '../utils/url';
+import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
 import { TTeamLeaderboard } from '../types/team.types';
