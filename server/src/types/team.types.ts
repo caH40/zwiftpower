@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants';
 
 // types
-import { RiderProfileSchema, TTeam } from './model.interface';
+import { RiderProfileSchema, TFileMetadataForCloud, TTeam } from './model.interface';
 import { TTeamMembersPublicDB } from './mongodb-response.types';
 import { TZwiftCategory } from './types.interface';
 
@@ -60,4 +60,23 @@ export type TTeamAppearance = {
   badgeTextColor?: string; // цвет текста на плашке
   pageBackground?: string; // фон страницы команды
   accentColor?: string; // акцентный цвет (кнопки, ссылки и т.д.)
+};
+
+export type TTeamLeaderboard = {
+  _id: string;
+  urlSlug: string;
+  name: string;
+  shortName: string;
+  logoFileInfo?: TFileMetadataForCloud | undefined;
+  posterFileInfo?: TFileMetadataForCloud | undefined;
+  rank: number;
+  rankPoints: number;
+  totalMembers: number;
+  averageRacingScore: number;
+  totalResults: number;
+  eventMedals: {
+    gold: number;
+    silver: number;
+    bronze: number;
+  };
 };

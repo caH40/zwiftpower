@@ -182,3 +182,9 @@ export const RIDER_CATEGORIES_RULE_TYPES = [
 ] as const;
 
 export const DATE_FOR_ADD_TEAM_RESULTS = '2024-09-01';
+
+export const MEDAL_RATES = {
+  GOLD: 9,
+  SILVER: 4,
+  BRONZE: 2,
+} as const;

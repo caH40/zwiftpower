@@ -8,13 +8,13 @@ export class EventResultRepository {
    * Результаты заездов в которых участвовали райдеры и когда был заезд.
    */
   async getStatistics(
-    urlSlug: string
+    teamUrlSlug: string
   ): Promise<{ zwiftEventId: { eventStart: string; _id: Types.ObjectId } }[]> {
     return await ZwiftResult.find(
       {
         $or: [
-          { 'profileData.team.urlSlug': urlSlug },
-          { 'profileDataMain.team.urlSlug': urlSlug },
+          { 'profileData.team.urlSlug': teamUrlSlug },
+          { 'profileDataMain.team.urlSlug': teamUrlSlug },
         ],
       },
       { _id: 0, zwiftEventId: 1 }
@@ -24,6 +24,32 @@ export class EventResultRepository {
         select: ['eventStart'],
       })
       .lean();
+  }
+
+  /**
+   * Результаты заездов в которых участвовали райдеры, являющиеся участниками команд.
+   */
+  async getForTeamLeaderBoards(): Promise<
+    {
+      rank: number;
+      profileData?: { team?: { urlSlug: string } };
+      profileDataMain?: { team?: { urlSlug: string } };
+    }[]
+  > {
+    return await ZwiftResult.find(
+      {
+        $or: [
+          { 'profileData.team.urlSlug': { $exists: true, $ne: null } },
+          { 'profileDataMain.team.urlSlug': { $exists: true, $ne: null } },
+        ],
+      },
+      {
+        _id: 0,
+        'profileData.team.urlSlug': 1,
+        'profileDataMain.team.urlSlug': 1,
+        rank: 1,
+      }
+    ).lean();
   }
 
   /**

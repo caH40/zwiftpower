@@ -4,6 +4,11 @@ import { handleAndLogError } from '../errors/error.js';
 import { getRidersInEventsService } from '../statistics/ridersInEvents.js';
 import { getLeadersInIntervalsService } from '../statistics/leadersInIntervals/leadersInIntervals.js';
 import { getRidersTotalService } from '../statistics/ridersTotal.js';
+import { getRidersTotalAgeService } from '../statistics/ridersAge.js';
+import { setCache } from '../cache/cache.js';
+import { secondsInHour } from '../assets/date.js';
+import { getRidersTotalRacingScoreService } from '../statistics/ridersTotalRacingScore.js';
+import { TeamLeaderboard } from '../service/TeamLeaderboard.js';
 
 // types
 import {
@@ -11,10 +16,6 @@ import {
   TotalRidersFTP,
   TRidersRacingScores,
 } from '../types/types.interface.js';
-import { getRidersTotalAgeService } from '../statistics/ridersAge.js';
-import { setCache } from '../cache/cache.js';
-import { secondsInHour } from '../assets/date.js';
-import { getRidersTotalRacingScoreService } from '../statistics/ridersTotalRacingScore.js';
 
 export const getRidersInEvents = async (req: Request, res: Response) => {
   try {
@@ -127,6 +128,26 @@ export const getRidersTotalAge = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     } else {
       res.status(400).json('Непредвиденная ошибка в ridersTotalAge');
+    }
+  }
+};
+
+/**
+ * Получение таблиц лидеров команд.
+ */
+export const getTeams = async (req: Request, res: Response) => {
+  try {
+    const teamLeaderboard = new TeamLeaderboard();
+
+    const response = await teamLeaderboard.get();
+
+    res.status(200).json(response);
+  } catch (error) {
+    handleAndLogError(error);
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json('Непредвиденная ошибка в getTeams');
     }
   }
 };

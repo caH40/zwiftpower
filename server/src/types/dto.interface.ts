@@ -19,6 +19,7 @@ import {
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { TPaymentNotification } from './payment.types';
+import { TTeamLeaderboard } from './team.types';
 import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface';
 
 /**
@@ -331,4 +332,9 @@ export type TGetAllServiceMessagesForUserDto = {
   entityLogo?: string;
   isRead: boolean;
   createdAt: string;
+};
+
+export type TTeamLeaderboardDto = Omit<TTeamLeaderboard, 'logoFileInfo' | 'posterFileInfo'> & {
+  logoUrls?: Record<string, string> | undefined;
+  posterUrls?: Record<string, string> | undefined;
 };

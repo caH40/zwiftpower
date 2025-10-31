@@ -51,4 +51,11 @@ export class TeamMemberRepository {
       })
       .lean();
   }
+
+  /**
+   * Получение всех участников всех команд.
+   */
+  getAll = async (): Promise<{ team: Types.ObjectId; user: Types.ObjectId }[]> => {
+    return TeamMemberModel.find({}, { _id: 0, team: 1, user: 1 }).lean();
+  };
 }
