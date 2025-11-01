@@ -90,13 +90,9 @@ export class TeamStatisticsService {
     const { categories, racingScoreTotal, medals } = riderParams.reduce<
       typeof initialAccumulator
     >((acc, rider) => {
-      if (!rider.competitionMetrics) {
-        return acc;
-      }
-
-      const category = rider.competitionMetrics.category as TZwiftCategory;
+      const category = (rider.competitionMetrics?.category || 'E') as TZwiftCategory;
       acc.categories[category]++;
-      acc.racingScoreTotal += rider.competitionMetrics.racingScore;
+      acc.racingScoreTotal += rider.competitionMetrics?.racingScore || 0;
       acc.medals.gold += rider.medals?.gold || 0;
       acc.medals.silver += rider.medals?.silver || 0;
       acc.medals.bronze += rider.medals?.bronze || 0;

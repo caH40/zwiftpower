@@ -28,26 +28,32 @@ export class EventResultRepository {
 
   /**
    * Результаты заездов в которых участвовали райдеры, являющиеся участниками команд.
+   * Исключены заезды в которых райдер дисквалифицирован.
    */
   async getForTeamLeaderBoards(): Promise<
     {
-      rank: number;
+      rankEvent: number;
       profileData?: { team?: { urlSlug: string } };
       profileDataMain?: { team?: { urlSlug: string } };
     }[]
   > {
     return await ZwiftResult.find(
       {
-        $or: [
-          { 'profileData.team.urlSlug': { $exists: true, $ne: null } },
-          { 'profileDataMain.team.urlSlug': { $exists: true, $ne: null } },
+        $and: [
+          {
+            $or: [
+              { 'profileData.team.urlSlug': { $exists: true, $ne: null } },
+              { 'profileDataMain.team.urlSlug': { $exists: true, $ne: null } },
+            ],
+          },
+          { $or: [{ isDisqualification: false }, { isDisqualification: null }] },
         ],
       },
       {
         _id: 0,
         'profileData.team.urlSlug': 1,
         'profileDataMain.team.urlSlug': 1,
-        rank: 1,
+        rankEvent: 1,
       }
     ).lean();
   }

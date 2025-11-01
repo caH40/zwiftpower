@@ -93,7 +93,7 @@ export class TeamLeaderboard {
         1: 'gold',
         2: 'silver',
         3: 'bronze',
-      }[result.rank] as 'gold' | 'silver' | 'bronze' | undefined;
+      }[result.rankEvent] as 'gold' | 'silver' | 'bronze' | undefined;
 
       if (!medal) {
         continue;

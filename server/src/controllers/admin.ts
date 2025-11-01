@@ -352,7 +352,7 @@ export const updateFitFileAndPowerCurve = async (req: Request, res: Response) =>
   try {
     const { zwiftId }: { zwiftId: number } = req.body;
 
-    const response = await updateFitFileAndPowerCurveService({ zwiftId });
+    const response = await updateFitFileAndPowerCurveService({ zwiftId: +zwiftId });
 
     res.status(200).json(response);
   } catch (error) {
