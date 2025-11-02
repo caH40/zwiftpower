@@ -1,5 +1,7 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { TourGCManager } from './tour/TourGCManager.js';
+import { SeriesClassificationRepository } from '../../repositories/SeriesClassification.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 // types
 import { TSeriesType } from '../../types/model.interface.js';
@@ -9,7 +11,11 @@ import { TResponseService } from '../../types/http.interface.js';
  * Класс работы с генеральными классификациями серий и туров.
  */
 export class SeriesGCManager {
-  constructor(public seriesId: string) {}
+  private seriesClassificationRepository: SeriesClassificationRepository;
+
+  constructor(public seriesId: string) {
+    this.seriesClassificationRepository = new SeriesClassificationRepository();
+  }
 
   async update(): Promise<TResponseService<null>> {
     // Получем тип серии заездов.
@@ -46,6 +52,18 @@ export class SeriesGCManager {
 
       default:
         throw new Error(`❌ Неподдерживаемый тип серии: ${seriesDB.type}`);
+    }
+  }
+
+  /**
+   * Удаление генеральной классификации для серии seriesId
+   * @param seriesId
+   */
+  async delete(): Promise<void> {
+    try {
+      await this.seriesClassificationRepository.deleteMany(this.seriesId);
+    } catch (error) {
+      handleAndLogError(error);
     }
   }
 }

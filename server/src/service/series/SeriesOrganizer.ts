@@ -8,6 +8,8 @@ import { organizerSeriesAllDto, organizerSeriesOneDto } from '../../dto/series.j
 import { ImagesService } from '../Images.js';
 import { getDateSuffix, setEndOfDay } from '../../utils/date-local.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { HandlerSeries } from './HandlerSeries.js';
+import { SeriesGCManager } from './SeriesGCManager.js';
 
 // types
 import {
@@ -25,13 +27,13 @@ import {
   entityForFileSuffix,
   TParamsSeriesServiceAddStage,
 } from '../../types/types.interface.js';
-import { HandlerSeries } from './HandlerSeries.js';
 
 /**
  * Класс работы с Серией заездов для Организаторов.
  */
 export class SeriesOrganizerService {
   private imagesService: ImagesService;
+
   entityName: entityForFileSuffix;
   constructor() {
     this.imagesService = new ImagesService();
@@ -109,7 +111,7 @@ export class SeriesOrganizerService {
     // Поиск и удаление серии с получением только name
     const seriesDB = await NSeriesModel.findOneAndDelete(
       { _id: seriesId },
-      { name: true, posterFileInfo: true, logoFileInfo: true }
+      { stages: 1, name: true, posterFileInfo: true, logoFileInfo: true }
     ).lean();
 
     if (!seriesDB) {
@@ -126,11 +128,21 @@ export class SeriesOrganizerService {
     const baseNames = [seriesDB.posterFileInfo?.baseName, seriesDB.logoFileInfo?.baseName];
     await this.imagesService.delete(baseNames);
 
+    // Удаление результатов этапов серии заездов.
+    const requestForDelete = seriesDB.stages.map(({ order }) =>
+      this.deleteOutdatedStageResults(seriesId, order)
+    );
+    await Promise.all(requestForDelete);
+
+    // Удаление Генеральной классификации серии заездов.
+    const seriesGCManager = new SeriesGCManager(seriesId);
+    await seriesGCManager.delete();
+
     return {
       data: null,
       message: `Удалена серия с названием "${
         seriesDB.name
-      }". Отвязаны эвенты (этапы) от удаленной серии в количестве: ${
+      }". Отвязаны эвенты от удаленной серии в количестве: ${
         eventsUpdated?.modifiedCount || 0
       }`,
     };
@@ -401,7 +413,7 @@ export class SeriesOrganizerService {
   };
 
   /**
-   * Приватный метод удаления этапа из Серию заездов.
+   * Приватный метод удаления этапа из Серии заездов.
    */
   private deleteStage = async ({
     stageId,
