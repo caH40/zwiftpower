@@ -1,4 +1,4 @@
-import { Schema, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import {
   CriticalPower,
   LogsAdminSchema,
@@ -911,7 +911,7 @@ export type TParamsSeriesServiceAddStage = {
  */
 export type TGetProtocolsStageFromZwiftParams = {
   stageOrder: number;
-  stages: Schema.Types.ObjectId[];
+  stages: Types.ObjectId[];
 };
 
 /**

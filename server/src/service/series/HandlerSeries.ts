@@ -167,7 +167,7 @@ export class HandlerSeries {
   /**
    * Удаление всех старых результатов текущего этапа серии.
    */
-  protected async deleteOutdatedStageResults(stageOrder: number): Promise<void> {
+  public async deleteOutdatedStageResults(stageOrder: number): Promise<void> {
     try {
       await StageResultModel.deleteMany({
         series: this.seriesId,

@@ -25,6 +25,7 @@ import {
   entityForFileSuffix,
   TParamsSeriesServiceAddStage,
 } from '../../types/types.interface.js';
+import { HandlerSeries } from './HandlerSeries.js';
 
 /**
  * Класс работы с Серией заездов для Организаторов.
@@ -293,6 +294,9 @@ export class SeriesOrganizerService {
     } else if (action === 'delete') {
       // Удаление Этапа из массива stages.
       await this.deleteStage({ stageId: stage.event, seriesId });
+
+      // Удаление результатов этапа (если они были).
+      await this.deleteOutdatedStageResults(seriesId, stage.order);
     } else {
       throw new Error('action имеет значение отличное от add или delete!');
     }
@@ -308,6 +312,8 @@ export class SeriesOrganizerService {
 
   /**
    * Изменение настроек этапа в Серии заездов.
+   * При изменении настроек удалять все результаты соответствующего этапа stageOrder.
+   * Если было изменение stageOrder, то удалять результаты прошлого и нового stageOrder.
    */
   public async patchStage({
     seriesId,
@@ -316,12 +322,23 @@ export class SeriesOrganizerService {
     const seriesDB = await NSeriesModel.findOneAndUpdate(
       { _id: seriesId, 'stages.event': stage.event },
       { $set: { 'stages.$': stage } },
-      { projection: { name: true }, new: true }
-    ).lean();
+      { projection: { name: 1, stages: 1 }, new: false }
+    ).lean<Pick<TSeries, '_id' | 'name' | 'stages'>>();
 
     // Если серия не найдена, выбрасываем ошибку.
     if (!seriesDB) {
       throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
+    }
+
+    await this.deleteOutdatedStageResults(seriesId, stage.order);
+
+    // Если было изменение stageOrder, то удалять результаты прошлого и нового stageOrder
+    const oldStageOrder = seriesDB.stages.find((stage) =>
+      stage.event.equals(stage.event)
+    )?.order;
+
+    if (oldStageOrder !== undefined && stage.order !== oldStageOrder) {
+      await this.deleteOutdatedStageResults(seriesId, oldStageOrder);
     }
 
     // Возвращаем успешный ответ.
@@ -460,6 +477,23 @@ export class SeriesOrganizerService {
       throw new Error(
         `Существует Серия с таким названием "${name}" у текущего Организатора. Измените название для Серии на уникальное!`
       );
+    }
+  };
+
+  /**
+   * Удаление результатов этапа stageOrder серии заездов seriesId
+   * @param seriesId
+   * @param stageOrder
+   */
+  private deleteOutdatedStageResults = async (
+    seriesId: string,
+    stageOrder: number
+  ): Promise<void> => {
+    try {
+      const handlerSeries = new HandlerSeries(seriesId);
+      await handlerSeries.deleteOutdatedStageResults(stageOrder);
+    } catch (error) {
+      handleAndLogError(error);
     }
   };
 
