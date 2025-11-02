@@ -27,17 +27,21 @@ import { RiderProfileSchema, TTeam } from '../types/model.interface.js';
 import { TBannedRiderDto, TPendingRiderDto, TTeamForListDto } from '../types/dto.interface.js';
 import { entityForFileSuffix, UserResult } from '../types/types.interface.js';
 import { TResponseService } from '../types/http.interface.js';
+import { UserRepository } from '../repositories/User.js';
+import { handleAndLogError } from '../errors/error.js';
 
 export class TeamService {
   private imagesService: ImagesService;
   entityName: entityForFileSuffix;
   teamRepository: TeamRepository;
   resultRepository: EventResultRepository;
+  userRepository: UserRepository;
 
   constructor() {
     this.imagesService = new ImagesService();
     this.teamRepository = new TeamRepository();
     this.resultRepository = new EventResultRepository();
+    this.userRepository = new UserRepository();
     this.entityName = 'team';
   }
 
@@ -243,13 +247,29 @@ export class TeamService {
   async getPendingRiders(
     teamCreatorId: string
   ): Promise<{ data: TPendingRiderDto[]; message: string }> {
+    // Очистка зависших пользователей, которые были удалены с сайта.
+    await this.cleanPendingUsers(teamCreatorId);
+
     const teamDB = await this.teamRepository.getPendingRiders(teamCreatorId);
 
     if (!teamDB) {
       throw new Error(`Не найдена команда созданная пользователем с _id: "${teamCreatorId}"`);
     }
 
-    const zwiftIds = teamDB.pendingRiders
+    // Фильтрация от райдеров у которых оказался {user:null}
+    const pendingRiders = teamDB.pendingRiders.filter(
+      (
+        r
+      ): r is {
+        user: {
+          zwiftId?: number;
+          _id: Types.ObjectId;
+        };
+        requestedAt: Date;
+      } => Boolean(r.user)
+    );
+
+    const zwiftIds = pendingRiders
       .map(({ user }) => user.zwiftId)
       .filter((item): item is number => !!item);
 
@@ -266,7 +286,7 @@ export class TeamService {
         requestedAt: Date;
       })[]
     >((acc, cur) => {
-      const pendingRider = teamDB.pendingRiders.find((p) => {
+      const pendingRider = pendingRiders.find((p) => {
         return p.user.zwiftId === cur.zwiftId;
       });
 
@@ -285,7 +305,7 @@ export class TeamService {
 
     return {
       data: pendingRiderAfterDto,
-      message: `Список райдеров, подавших заявки на вступление в команду "${teamDB?.name}"`,
+      message: `Список райдеров, подавших заявки на вступление в команду "${teamDB.name}"`,
     };
   }
 
@@ -487,4 +507,29 @@ export class TeamService {
       strict: true,
     });
   }
+
+  /**
+   * Очистка пользователей, подавших заявку на вступление в команду, у которых
+   * отсутствует поле user (не успели подтвердить email при регистрации и аккаунт был удалён)
+   * из массива pendingRiders команды.
+   */
+  private cleanPendingUsers = async (teamCreatorId: string): Promise<void> => {
+    try {
+      const allUsers = await this.teamRepository.getPendingRidersList(teamCreatorId);
+      if (!allUsers) {
+        return;
+      }
+
+      for (const elm of allUsers.pendingRiders) {
+        const userId = elm.user.toString();
+        const isExists = await this.userRepository.exists(userId);
+
+        if (!isExists) {
+          await this.teamRepository.removePendingUser(teamCreatorId, userId);
+        }
+      }
+    } catch (error) {
+      handleAndLogError(error);
+    }
+  };
 }

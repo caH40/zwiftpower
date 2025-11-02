@@ -68,6 +68,26 @@ export class TeamRepository {
   /**
    * Возвращает список пользователей, подавших заявки на вступление в команду.
    */
+  async getPendingRidersList(teamCreatorId: string) {
+    return TeamModel.findOne(
+      { creator: teamCreatorId },
+      { _id: false, 'pendingRiders.user': true }
+    ).lean<{ pendingRiders: { user: Types.ObjectId }[] }>();
+  }
+
+  /**
+   * Удаление заявки от кандидата из массива заявок команды.
+   */
+  removePendingUser = async (teamCreatorId: string, teamMemberId: string): Promise<void> => {
+    await TeamModel.findOneAndUpdate(
+      { creator: teamCreatorId },
+      { $pull: { pendingRiders: { user: teamMemberId } } }
+    ).lean();
+  };
+
+  /**
+   * Возвращает пользователей, подавших заявки на вступление в команду.
+   */
   async getPendingRiders(teamCreatorId: string) {
     return TeamModel.findOne(
       { creator: teamCreatorId },
@@ -77,7 +97,7 @@ export class TeamRepository {
       .lean<
         Pick<TTeam, 'name'> & {
           pendingRiders: {
-            user: { zwiftId?: number; _id: Types.ObjectId };
+            user: { zwiftId?: number; _id: Types.ObjectId } | null;
             requestedAt: Date;
           }[];
         }
