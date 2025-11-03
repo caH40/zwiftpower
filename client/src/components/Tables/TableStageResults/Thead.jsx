@@ -8,7 +8,7 @@ import {
   raceResultsColumnsStart,
 } from './column-titles';
 
-function Thead({ isSeriesCreator }) {
+function Thead({ isSeriesCreator, isAdmin }) {
   return (
     <thead>
       <tr>
@@ -33,7 +33,7 @@ function Thead({ isSeriesCreator }) {
           </th>
         ))}
 
-        {isSeriesCreator && (
+        {(isSeriesCreator || isAdmin) && (
           <th>
             <ColumnName columnName={'Управление'} />
           </th>

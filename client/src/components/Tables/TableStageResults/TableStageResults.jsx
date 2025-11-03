@@ -17,6 +17,7 @@ import TdDifferent from '../Td/TdDifferent';
 import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
+import { useUserRole } from '../../../hook/useUserRole';
 
 import styles from '../Table.module.css';
 
@@ -29,6 +30,7 @@ const cx = classnames.bind(styles);
 function TableStageResults({
   results,
   isSeriesCreator,
+
   stageOrder,
   stageName,
   stageStart,
@@ -37,7 +39,7 @@ function TableStageResults({
 }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
-
+  const { isAdmin } = useUserRole();
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
   const filterCategory = useSelector((state) => state.filterCategory.value);
@@ -56,7 +58,7 @@ function TableStageResults({
           categoryLabel: filterCategory.name,
         })}
       </caption>
-      <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} />
+      <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} isAdmin={isAdmin} />
 
       <tbody>
         {resultWithFinishTime?.map(
@@ -141,7 +143,7 @@ function TableStageResults({
                 </td>
 
                 {/* Модерация данных райдера */}
-                {isSeriesCreator && (
+                {(isSeriesCreator || isAdmin) && (
                   <td>
                     <StageResultMenu
                       seriesCategories={seriesCategories}
