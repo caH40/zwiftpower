@@ -15,32 +15,29 @@ import styles from './TourComponent.module.css';
 /**
  * Компонент отображения результатов серии заездов типа Tour.
  */
-export default function TourComponent({ series }) {
+export default function TourComponent({ series: { urlSlug, orderedStages } }) {
   const { generalClassification, seriesPublicOne } = useSelector((state) => state.seriesPublic);
 
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const isParentPath = location.pathname === `/series/${series.urlSlug}/results`;
+  const isParentPath = location.pathname === `/series/${urlSlug}/results`;
 
   // Запрос на получение данных для итоговых страниц серии.
   useEffect(() => {
     if (!isParentPath) {
       return undefined;
     }
-    dispatch(fetchGeneralClassification({ urlSlug: series.urlSlug }));
+    dispatch(fetchGeneralClassification({ urlSlug }));
 
     return () => dispatch(resetGeneralClassificationStages());
-  }, [isParentPath]);
+  }, [isParentPath, dispatch, urlSlug]);
 
   return (
     <div>
       {/* Кнопки навигации по страницам Серии заездов */}
       <div className={styles.box__navbar}>
-        <NavBarSeriesPublicResults
-          urlSlug={series.urlSlug}
-          orderedStages={series.orderedStages}
-        />
+        <NavBarSeriesPublicResults urlSlug={urlSlug} orderedStages={orderedStages} />
       </div>
 
       {isParentPath && seriesPublicOne && generalClassification && (

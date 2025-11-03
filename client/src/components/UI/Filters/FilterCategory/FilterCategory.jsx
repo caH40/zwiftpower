@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setFilterCategory } from '../../../../redux/features/filterCategorySlice';
+import { plusCategories } from '../../../../assets/rule-category';
 
 import styles from './FilterCategory.module.css';
 import { getCategoriesSortedDry } from './categoriesSort';
@@ -31,6 +32,7 @@ function FilterCategory({ results, categoriesFromFilters }) {
           })}
           active={categoryState.name === category}
           reducer={setFilterCategory}
+          label={plusCategories[category] ?? category}
         >
           {category}
         </ButtonForFilter>

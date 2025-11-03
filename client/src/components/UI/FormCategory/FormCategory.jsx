@@ -8,6 +8,7 @@ import { getTimerLocal } from '../../../utils/date-local';
 import { seriesCategoryOptions } from '../../../assets/options';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
+import { RACE_SERIES_CATEGORIES } from '../../../assets/rule-category';
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import LogoRider from '../../LogoRider/LogoRider';
@@ -22,7 +23,7 @@ import styles from './FormCategory.module.css';
 
 export default function FormCategory({
   category,
-  seriesCategories = ['A', 'B', 'C', 'D', 'APlus'],
+  seriesCategories = RACE_SERIES_CATEGORIES,
   profile,
   seriesId,
   stageResultId,

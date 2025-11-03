@@ -1,6 +1,7 @@
 import cn from 'classnames/bind';
 
 import MyTooltip from '../../HOC/MyTooltip';
+import { plusCategories } from '../../assets/rule-category';
 
 import styles from './CategoryBox.module.css';
 
@@ -8,7 +9,7 @@ const cx = cn.bind(styles);
 
 function CategoryBox({ label = '', showLabel, quantityRiders = '', circle, full }) {
   // Изменение названия для группы А+
-  let labelCurrent = label === 'APlus' ? 'A+' : label;
+  let labelCurrent = plusCategories[label] ?? label;
   labelCurrent = label === null ? '?' : labelCurrent;
 
   // Отображаемое значение.

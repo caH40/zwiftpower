@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import styles from './ButtonForFilter.module.css';
 
-function ButtonForFilter({ position, children, active, reducer }) {
+function ButtonForFilter({ position, children, active, reducer, label }) {
   const dispatch = useDispatch();
   return (
     <button
@@ -16,7 +16,7 @@ function ButtonForFilter({ position, children, active, reducer }) {
         [styles.active]: active,
       })}
     >
-      {children}
+      {label || children}
     </button>
   );
 }

@@ -27,7 +27,7 @@ export default function PopupFormContainer() {
     return () => {
       window.removeEventListener('keyup', handleEscKey);
     };
-  }, []);
+  }, [dispatch]);
 
   const Form = {
     setCategory: <FormCategory {...formProps} />,

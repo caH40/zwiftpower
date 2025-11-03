@@ -20,6 +20,9 @@
 .B {
   background-color: var(--catB);
 }
+.BPlus {
+  background-color: var(--catBPlus);
+}
 .C {
   background-color: var(--catC);
 }

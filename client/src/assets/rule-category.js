@@ -57,3 +57,18 @@ export const getColorCategory = (isMale, opacity = 1) => {
     return colors;
   }
 };
+
+export const RACE_SERIES_CATEGORIES = [
+  'APlus',
+  'A',
+  'BPlus',
+  'B',
+  'C',
+  'D',
+  'E',
+  'WA',
+  'WB',
+  'WC',
+  'WD',
+];
+export const plusCategories = { APlus: 'A+', BPlus: 'B+' };

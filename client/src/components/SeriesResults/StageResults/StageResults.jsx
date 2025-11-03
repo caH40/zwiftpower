@@ -41,7 +41,7 @@ export default function StageResults() {
     dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
 
     return () => dispatch(resetStageResults());
-  }, [urlSlug, stageOrder]);
+  }, [urlSlug, stageOrder, dispatch]);
 
   return (
     <section className={styles.wrapper}>

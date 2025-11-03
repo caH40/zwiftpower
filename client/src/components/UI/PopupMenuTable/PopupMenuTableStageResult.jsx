@@ -34,7 +34,7 @@ function PopupMenuTableStageResult({
               onClick={() =>
                 dispatch(
                   openPopupFormContainer({
-                    formType: 'setCategory',
+                    formType: 'setCategory', // мапинг в компоненте PopupFormContainer
                     formProps: {
                       category,
                       modifiedCategory,

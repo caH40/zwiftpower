@@ -32,6 +32,7 @@ function TableStageResults({
   stageOrder,
   stageName,
   stageStart,
+  seriesCategories,
   urlSlug,
 }) {
   // id ячеек столбца на который наведен курсор мышки.
@@ -143,6 +144,7 @@ function TableStageResults({
                 {isSeriesCreator && (
                   <td>
                     <StageResultMenu
+                      seriesCategories={seriesCategories}
                       category={result.category}
                       modifiedCategory={modifiedCategory}
                       disqualification={result.disqualification}

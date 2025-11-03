@@ -14,9 +14,12 @@ export const TableGCTourColumnsStart = [
  * @returns {Array<{name: string, id: number}>} Массив объектов колонок.
  */
 export const gCTourColumnsStages = (stages = []) =>
-  stages.map(({ stageOrder, name }) => {
+  stages.map(({ stageOrder, name }, index) => {
     if (stageOrder === 0 && name) {
-      return { name, id: 100 };
+      return { name, id: 1000 + index };
     }
-    return { name: `Этап №${stageOrder}${name ? ', name' : ''}`, id: 100 + stageOrder };
+    return {
+      name: `Этап №${stageOrder}${name ? ', name' : ''}`,
+      id: '100' + stageOrder + index,
+    };
   });
