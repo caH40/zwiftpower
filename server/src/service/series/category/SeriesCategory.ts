@@ -53,6 +53,10 @@ export class SeriesCategoryService {
     // Изменение категории согласно правилу в серии riderCategoryRule.
     if (riderCategoryRule) {
       await categoryRuleProcessor.execute(riderCategoryRule);
+    } else {
+      throw new Error(
+        'В Серии не установлено правило пересчета ГК при изменении категории райдера!'
+      );
     }
 
     // Пересчитать все финишные протоколы этапов из-за изменения категории у райдера.
