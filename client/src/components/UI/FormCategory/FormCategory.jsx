@@ -23,6 +23,7 @@ import styles from './FormCategory.module.css';
 
 export default function FormCategory({
   category,
+  categoryInRace,
   seriesCategories = RACE_SERIES_CATEGORIES,
   profile,
   seriesId,
@@ -85,17 +86,14 @@ export default function FormCategory({
 
       <div className={styles.categoriesContainer}>
         <div className={styles.catInRace}>
-          Категория в заезде: <CategoryBox showLabel={true} label={category} circle={true} />
+          Категория в заезде:{' '}
+          <CategoryBox showLabel={true} label={categoryInRace} circle={true} />
         </div>
 
         <div className={styles.catCurrentContainer}>
           <div className={styles.catCurrent}>
             Категория текущая:
-            <CategoryBox
-              showLabel={true}
-              label={modifiedCategory?.value || category}
-              circle={true}
-            />
+            <CategoryBox showLabel={true} label={category} circle={true} />
           </div>
 
           {modifiedCategory?.value && (

@@ -13,6 +13,7 @@ function PopupMenuTableStageResult({
   showMenu,
   setShowMenu,
   category,
+  categoryInRace,
   modifiedCategory,
   disqualification,
   penalty,
@@ -37,6 +38,7 @@ function PopupMenuTableStageResult({
                     formType: 'setCategory', // мапинг в компоненте PopupFormContainer
                     formProps: {
                       category,
+                      categoryInRace,
                       modifiedCategory,
                       profile,
                       seriesId,

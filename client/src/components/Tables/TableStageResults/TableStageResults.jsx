@@ -147,7 +147,8 @@ function TableStageResults({
                   <td>
                     <StageResultMenu
                       seriesCategories={seriesCategories}
-                      category={result.category}
+                      category={category}
+                      categoryInRace={categoryInRace}
                       modifiedCategory={modifiedCategory}
                       disqualification={result.disqualification}
                       penalty={result.penalty}
