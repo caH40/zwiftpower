@@ -1,11 +1,9 @@
-import { useResize } from '../../../hook/use-resize';
 import IconTelegram from '../../icons/IconTelegram';
 
 import styles from './Footer.module.css';
 import { documentsLegal, mapSite, usefulLinks, usefulLinksWithIcon } from './navigate-items';
 
 function Footer() {
-  const { isScreenLg: lg } = useResize();
   return (
     <footer className={styles.footer}>
       <div className={styles.block__links}>
@@ -40,19 +38,17 @@ function Footer() {
           </div>
         </div>
 
-        {lg && (
-          <div className={styles.block}>
-            <h3 className={styles.title}>Карта сайта:</h3>
+        <div className={styles.block}>
+          <h3 className={styles.title}>Карта сайта:</h3>
 
-            <div className={styles.column}>
-              {mapSite.map((page) => (
-                <a className={styles.link} href={page.href} key={page.id}>
-                  {page.name}
-                </a>
-              ))}
-            </div>
+          <div className={styles.column}>
+            {mapSite.map((page) => (
+              <a className={styles.link} href={page.href} key={page.id}>
+                {page.name}
+              </a>
+            ))}
           </div>
-        )}
+        </div>
 
         <div className={styles.block}>
           <h3 className={styles.title}>Тематические ссылки:</h3>
