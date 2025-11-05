@@ -168,15 +168,15 @@ export class TourGCManager {
         disqualification.label = 'MRS';
       }
 
-      const lastStageOrder = stageOrders.requiredStageOrders.sort((a, b) => b - a)[0];
+      // const lastStageOrder = stageOrders.requiredStageOrders.sort((a, b) => b - a)[0];
 
       // Если нет — это ошибка в расчётах, и райдеру присваивается дисквалификация для дальнейшего разбирательства.
-      let finalCategory = this.getFinalCategory(riderParticipationStages, lastStageOrder);
+      const finalCategory = this.getFinalCategory(riderParticipationStages);
 
       // Если уже была дисквалификация по другой причине — не назначаем финальную категорию.
-      if (disqualification.status) {
-        finalCategory = null;
-      }
+      // if (disqualification.status) {
+      //   finalCategory = null;
+      // }
 
       return {
         seriesId: this.seriesId,
@@ -257,7 +257,8 @@ export class TourGCManager {
   }
 
   /**
-   * Определение категории в генеральной классификации происходит по категории в последнем этапе.
+   * Происходит перебор завершенных этапов с конца и первая категория не null будет
+   * категорией в Главном зачете.
    */
   private getFinalCategory = (
     stages: {
@@ -271,8 +272,8 @@ export class TourGCManager {
         modifiedAt: Date;
         reason?: string;
       };
-    }[],
-    lastStageOrder: number
+    }[]
+    // lastStageOrder: number
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
     if (stages.length === 0) {
@@ -280,12 +281,18 @@ export class TourGCManager {
     }
 
     // Категория берется из последнего завершенного и обязательного этапа для райдера.
-    const lastStage = stages.find(({ stageOrder }) => stageOrder === lastStageOrder);
+    // const lastStage = stages.find(({ stageOrder }) => stageOrder === lastStageOrder);
 
-    const category = lastStage?.category || null;
+    const sortedStages = stages.toSorted((a, b) => b.stageOrder - a.stageOrder);
+
+    for (const stage of sortedStages) {
+      if (stage.category !== null) {
+        return stage.category;
+      }
+    }
 
     // Нет ни одного результата на этапе Серии. FIXME: заранее фильтровать от райдеров, которые не проехали ни одного этапа. Для корректного отображения информации о дисквалификации. Проверка на firstCategory === null временная.
-    return category;
+    return null;
   };
 
   /**

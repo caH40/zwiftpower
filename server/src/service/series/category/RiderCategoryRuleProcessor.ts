@@ -25,6 +25,14 @@ export class RiderCategoryRuleProcessor {
   }
 
   /**
+   * Инициализация обработчиков правил.
+   */
+  private initHandlers = (): void => {
+    this.handlers.set('recalculationAll', this.handleRecalculationAll);
+    this.handlers.set('stepChange', this.handleStepChange);
+  };
+
+  /**
    * Запуск обработчика по типу правила.
    */
   public async execute(ruleType: TRiderCategoryRuleType): Promise<void> {
@@ -36,14 +44,6 @@ export class RiderCategoryRuleProcessor {
 
     await handler();
   }
-
-  /**
-   * Инициализация обработчиков правил.
-   */
-  private initHandlers = (): void => {
-    this.handlers.set('recalculationAll', this.handleRecalculationAll);
-    this.handlers.set('stepChange', this.handleStepChange);
-  };
 
   /**
    * Найти все результаты этапов данного райдера в текущей серии seriesId.
