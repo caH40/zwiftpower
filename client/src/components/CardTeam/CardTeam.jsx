@@ -14,8 +14,9 @@ import styles from './CardTeam.module.css';
  */
 export default function CardTeam({ name, shortName, urlSlug, logoUrls, posterUrls }) {
   const navigate = useNavigate();
+
   const logoSrc = logoUrls?.original;
-  const posterSrc = posterUrls?.medium;
+  const posterSrc = posterUrls?.small || posterUrls?.original;
 
   const handleClick = () => {
     if (urlSlug) {
