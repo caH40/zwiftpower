@@ -2,7 +2,7 @@ import ColumnName from '../Th/ColumnName';
 
 import styles from '../Table.module.css';
 
-import { gCTourColumnsStages, TableGCTourColumnsStart } from './column-titles';
+import { gCTourStageColumns, TableGCTourColumnsStart } from './column-titles';
 
 function Thead({ isAdmin, stages }) {
   return (
@@ -16,8 +16,8 @@ function Thead({ isAdmin, stages }) {
           </th>
         ))}
 
-        {gCTourColumnsStages(stages).map((column) => (
-          <th key={column.id}>
+        {gCTourStageColumns(stages).map((column) => (
+          <th key={column.id} style={{ minWidth: 90 }}>
             <ColumnName columnName={column.name} />
           </th>
         ))}

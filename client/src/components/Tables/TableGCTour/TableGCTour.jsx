@@ -18,7 +18,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-function TableGCTour({ results, isSeriesCreator, stages }) {
+function TableGCTour({ results, isSeriesCreator, orderedStages }) {
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
   const filterCategory = useSelector((state) => state.filterCategory.value);
@@ -32,7 +32,7 @@ function TableGCTour({ results, isSeriesCreator, stages }) {
         Генеральная классификация. {createCategoryCaption(filterCategory.name)}
       </caption>
       <Thead
-        stages={stages.map((s) => ({ stageOrder: s }))}
+        stages={orderedStages.map((s) => ({ stageOrder: s }))}
         columnsCP={columnsCP}
         isAdmin={isSeriesCreator}
       />

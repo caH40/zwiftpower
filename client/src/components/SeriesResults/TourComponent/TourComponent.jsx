@@ -15,8 +15,13 @@ import styles from './TourComponent.module.css';
 /**
  * Компонент отображения результатов серии заездов типа Tour.
  */
-export default function TourComponent({ series: { urlSlug, orderedStages } }) {
-  const { generalClassification, seriesPublicOne } = useSelector((state) => state.seriesPublic);
+export default function TourComponent() {
+  const {
+    generalClassification,
+    seriesPublicOne: { urlSlug, orderedStages },
+  } = useSelector((state) => state.seriesPublic);
+
+  const filteredOrderedStages = [...new Set(orderedStages)];
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,10 +42,10 @@ export default function TourComponent({ series: { urlSlug, orderedStages } }) {
     <div>
       {/* Кнопки навигации по страницам Серии заездов */}
       <div className={styles.box__navbar}>
-        <NavBarSeriesPublicResults urlSlug={urlSlug} orderedStages={orderedStages} />
+        <NavBarSeriesPublicResults urlSlug={urlSlug} orderedStages={filteredOrderedStages} />
       </div>
 
-      {isParentPath && seriesPublicOne && generalClassification && (
+      {isParentPath && filteredOrderedStages && generalClassification && (
         <>
           <nav className={styles.block__nav}>
             <NavBarGCTable
@@ -56,7 +61,7 @@ export default function TourComponent({ series: { urlSlug, orderedStages } }) {
           <section className={styles.wrapper__wide}>
             <TableGCTour
               results={generalClassification.results}
-              stages={seriesPublicOne.orderedStages}
+              orderedStages={filteredOrderedStages}
             />
 
             <ServiceBox updated={generalClassification.gcResultsUpdatedAt} />

@@ -54,10 +54,7 @@ export default function SeriesOneResults() {
         />
 
         {/* Используем Suspense для отложенной загрузки компонентов. */}
-        <Suspense>
-          {seriesPublicOne?.type &&
-            componentsMap[seriesPublicOne.type]({ series: seriesPublicOne })}
-        </Suspense>
+        <Suspense>{seriesPublicOne?.type && componentsMap[seriesPublicOne.type]()}</Suspense>
       </div>
     )
   );
