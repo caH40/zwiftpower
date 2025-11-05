@@ -15,7 +15,7 @@ import styles from './SeriesOneHeader.module.css';
  * @param {string} props.name - Название серии.
  * @param {string} props.seriesId - Id серии в БД.
  * @param {string} props.mission - Цель (миссия) серии (опционально).
- * @param {{stageOrder:number}[]} props.stages - Массив с номерами этапов.
+ * @param {number[]} props.stageOrders - Массив с номерами этапов.
  * @param {boolean} props.showEditIcon - Отображать ли иконку управления Серией.
  * @param {string} props.organizerId - Id Организатора заездов.
  * @param {Object.<string, string>} props.posterUrls - Объект с URL-адресами изображений разного размера.
@@ -29,7 +29,7 @@ export default function SeriesOneHeader({
   seriesId,
   name,
   mission,
-  stages,
+  stageOrders,
   showEditIcon,
   organizerId,
   urlSlug,
@@ -65,7 +65,7 @@ export default function SeriesOneHeader({
             {isVisibleMenuControl && (
               <PopupMenuControlSeries
                 seriesId={seriesId}
-                stages={stages}
+                stageOrders={stageOrders}
                 setIsVisibleMenuControl={setIsVisibleMenuControl}
                 urlSlug={urlSlug}
                 currentStageOrder={currentStageOrder}

@@ -13,7 +13,7 @@ import styles from './PopupMenuTable.module.css';
  */
 function PopupMenuControlSeries({
   seriesId,
-  stages,
+  stageOrders,
   setIsVisibleMenuControl,
   urlSlug,
   currentStageOrder,
@@ -61,14 +61,14 @@ function PopupMenuControlSeries({
           <span className={styles.label}>Обновить ГС</span>
         </li>
 
-        {stages.map(({ stageOrder }) => (
+        {stageOrders.map((order) => (
           <li
             className={styles.item}
-            onClick={(e) => handleBtnUpdateStageResults(e, seriesId, stageOrder)}
-            key={stageOrder}
+            onClick={(e) => handleBtnUpdateStageResults(e, seriesId, order)}
+            key={order}
           >
             <IconRefresh squareSize={20} />
-            <span className={styles.label}>Обновить этап №{stageOrder}</span>
+            <span className={styles.label}>Обновить этап №{order}</span>
           </li>
         ))}
       </ul>

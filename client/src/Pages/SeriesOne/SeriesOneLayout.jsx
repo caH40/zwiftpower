@@ -38,6 +38,10 @@ export default function SeriesOneLayout() {
     return () => dispatch(resetSeriesPublicOne());
   }, [dispatch, urlSlug]);
 
+  const stageOrders = seriesPublicOne
+    ? [...new Set(seriesPublicOne.stages.map((stage) => stage.order))]
+    : [];
+
   // useAd(adNumbers);
   return (
     <>
@@ -50,7 +54,7 @@ export default function SeriesOneLayout() {
             name={seriesPublicOne.name}
             mission={seriesPublicOne.mission}
             urlSlug={seriesPublicOne.urlSlug}
-            stages={seriesPublicOne.stages.map((stage) => ({ stageOrder: stage.order }))}
+            stageOrders={stageOrders}
             // FIXME: не отображать иконку управления для не редактируемых серий
             showEditIcon={!['catchUp', 'series'].includes(seriesPublicOne.type)}
             organizerId={seriesPublicOne.organizer._id}
