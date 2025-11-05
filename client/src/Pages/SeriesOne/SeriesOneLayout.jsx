@@ -36,7 +36,7 @@ export default function SeriesOneLayout() {
     dispatch(fetchGetSeriesOne({ urlSlug }));
 
     return () => dispatch(resetSeriesPublicOne());
-  }, []);
+  }, [dispatch, urlSlug]);
 
   // useAd(adNumbers);
   return (

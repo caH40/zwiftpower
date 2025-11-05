@@ -8,12 +8,12 @@ export const seriesPublicButtons = [
  * Кнопки для навигации между результатами Этапов серии и итоговыми таблицами.
  */
 export const createSeriesResultsButtons = (stageOrders) => {
-  const summaryButton = { id: 0, page: '', name: 'ГК' };
+  const summaryButton = { id: 0, page: '', name: 'Главный зачёт' };
 
   // Генерация кнопок для всех Этапов.
   const stageButtons = stageOrders.map((order, index) => ({
     id: index + 1,
-    page: `/stage/${index + 1}`,
+    page: `/stage/${order}`,
     name: `${order}`,
   }));
 
