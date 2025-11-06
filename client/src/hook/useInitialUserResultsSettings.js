@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setSortColumnTable } from '../redux/features/sortTableSlice';
+import { resetSortColumnTable, setSortColumnTable } from '../redux/features/sortTableSlice';
 import { lsPrefixUserResults } from '../constants/localstorage';
 
 /**
  * Инициализация данных для страницы профиля пользователя с результатами из локального хранилища.
  */
-export const useInitialUserResultsSettings = () => {
+export const useInitialUserResultsSettings = (componentId) => {
   const initialDocsOnPage = localStorage.getItem(`${lsPrefixUserResults}pageSize`) || '20';
 
   const [docsOnPage, setDocsOnPage] = useState(initialDocsOnPage);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSortColumnTable({ columnName: 'Дата', isRasing: false }));
-  }, [dispatch]);
+    dispatch(setSortColumnTable({ columnName: 'Дата', isRasing: false, componentId }));
+
+    return () => {
+      dispatch(resetSortColumnTable());
+    };
+  }, [dispatch, componentId]);
 
   return { docsOnPage, setDocsOnPage };
 };

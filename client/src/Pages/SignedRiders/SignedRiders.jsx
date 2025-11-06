@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-// import { useResize } from '../../hook/use-resize';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
 import { resetSortColumnTable, setSortColumnTable } from '../../redux/features/sortTableSlice';
 import {
@@ -15,7 +13,6 @@ import TableSignedRiders from '../../components/Tables/TableSignedRiders/TableSi
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSignedRiders';
-// import { useAd } from '../../hook/useAd';
 import SignedRidersLinks from '../../components/SignedRidersLinks/SignedRidersLinks';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
@@ -23,10 +20,8 @@ import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './SignedRiders.module.css';
 
-// рекламные блоки на странице
-// const adOverFooter = 6;
-// const adUnderHeader = 12;
-// const adNumbers = [adUnderHeader, adOverFooter];
+// Уникальный ключ для идентификации сортировки таблицы в данном компоненте.
+const COMPONENT_ID = 'SignedRiders';
 
 /**
  * Страница с описанием Эвента и таблицей зарегистрированных райдеров.
@@ -43,7 +38,9 @@ function SignedRiders() {
   const { eventId } = useParams();
 
   useEffect(() => {
-    dispatch(setSortColumnTable({ columnName: 'Категория', isRasing: true }));
+    dispatch(
+      setSortColumnTable({ columnName: 'Категория', isRasing: true, componentId: COMPONENT_ID })
+    );
     dispatch(fetchEventPreview(eventId));
 
     return () => {
@@ -57,8 +54,6 @@ function SignedRiders() {
       navigate(`/race/results/${eventId}`, { replace: true });
     }
   }, [event, navigate, eventId]);
-
-  // useAd(adNumbers);
 
   return (
     <>
@@ -109,12 +104,6 @@ function SignedRiders() {
           </>
         )}
       </div>
-
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }

@@ -2,9 +2,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { useResize } from '../../hook/use-resize';
-// import { useAd } from '../../hook/useAd';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import TableRaceResults from '../../components/Tables/TableRaceResults/TableRaceResults';
 import DescriptionEventZwift from '../../components/DescriptionEventZwift/DescriptionEventZwift';
@@ -22,10 +19,8 @@ import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './RaceResults.module.css';
 
-// рекламные блоки на странице
-// const adOverFooter = 8;
-// const adUnderHeader = 13;
-// const adNumbers = [adUnderHeader, adOverFooter];
+// Уникальный ключ для идентификации сортировки таблицы в данном компоненте.
+const COMPONENT_ID = 'RaceResults';
 
 function RaceResults() {
   const {
@@ -34,7 +29,6 @@ function RaceResults() {
     status: statusFetchResults,
   } = useSelector((state) => state.fetchEventResult);
   const { column: pageCurrent } = useSelector((state) => state.filterRaceResultsPage.value);
-  // const { isScreenLg: isDesktop } = useResize();
 
   useTitle('Результаты заезда');
 
@@ -42,7 +36,9 @@ function RaceResults() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSortColumnTable({ columnName: 'Время', isRasing: true }));
+    dispatch(
+      setSortColumnTable({ columnName: 'Время', isRasing: true, componentId: COMPONENT_ID })
+    );
     dispatch(fetchResultEvent(eventId));
 
     return () => {
@@ -55,7 +51,13 @@ function RaceResults() {
 
   useEffect(() => {
     if (['classicGroup', 'newbies'].includes(eventData.typeRaceCustom)) {
-      dispatch(setSortColumnTable({ columnName: 'Категория', isRasing: true }));
+      dispatch(
+        setSortColumnTable({
+          columnName: 'Категория',
+          isRasing: true,
+          componentId: COMPONENT_ID,
+        })
+      );
     }
   }, [eventData, dispatch]);
 

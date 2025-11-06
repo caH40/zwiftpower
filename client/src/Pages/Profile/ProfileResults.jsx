@@ -16,13 +16,16 @@ import { resetSortColumnTable } from '../../redux/features/sortTableSlice';
 
 import styles from './Profile.module.css';
 
+// Уникальный ключ для идентификации сортировки таблицы в данном компоненте.
+const COMPONENT_ID = 'ProfileResults';
+
 function ProfileResults() {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const { zwiftId } = useParams();
   const userAuth = useSelector((state) => state.checkAuth.value);
   const isMounting = useRef(true);
-  const { activeSorting } = useSelector((state) => state.sortTable);
+  const { activeSorting, componentId } = useSelector((state) => state.sortTable);
   const wattsState = useSelector((state) => state.filterWatts.value);
 
   const {
@@ -37,14 +40,15 @@ function ProfileResults() {
   } = useSelector((state) => state.fetchUserResults);
 
   // Инициализация данных из Локального хранилища.
-  const { docsOnPage, setDocsOnPage } = useInitialUserResultsSettings();
+  const { docsOnPage, setDocsOnPage } = useInitialUserResultsSettings(COMPONENT_ID);
 
   // Сохранение данных в Локальном хранилище.
   useLocalStorageSetUserResults({ docsOnPage, isMounting });
 
   // получение результатов райдера
   useEffect(() => {
-    if (!activeSorting) {
+    // Если сортировка не для COMPONENT_ID, то выход.
+    if (componentId !== COMPONENT_ID) {
       return undefined;
     }
 
@@ -69,7 +73,7 @@ function ProfileResults() {
     return () => {
       dispatch(resetUserResults());
     };
-  }, [dispatch, zwiftId, userAuth, activeSorting, page, docsOnPage, wattsState]);
+  }, [dispatch, zwiftId, userAuth, activeSorting, page, docsOnPage, wattsState, componentId]);
 
   useEffect(() => {
     return () => {

@@ -4,6 +4,7 @@ const sortTableSlice = createSlice({
   name: 'sortTable',
   initialState: {
     activeSorting: null,
+    componentId: null,
   },
 
   reducers: {
@@ -16,10 +17,13 @@ const sortTableSlice = createSlice({
       state.activeSorting = { columnName, isRasing: !isRasing };
     },
     setSortColumnTable(state, action) {
-      state.activeSorting = action.payload;
+      const { columnName, componentId, isRasing } = action.payload;
+      state.activeSorting = { columnName, isRasing };
+      state.componentId = componentId;
     },
     resetSortColumnTable(state) {
       state.activeSorting = null;
+      state.componentId = null;
     },
   },
 });

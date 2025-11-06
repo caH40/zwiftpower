@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import useTitle from '../../hook/useTitle';
 import TableRiders from '../../components/Tables/TableRiders/TableRiders';
 import Pagination from '../../components/UI/Pagination/Pagination';
-import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import NavBarRidersTable from '../../components/UI/NavBarRidersTable/NavBarRidersTable';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { RIDERS_LIST_HELMET_PROPS } from '../../assets/helmet-props';
-import { useAd } from '../../hook/useAd';
-import { useResize } from '../../hook/use-resize';
+
 import { fetchRiders } from '../../redux/features/api/riders/fetchRiders';
 import { resetRiders } from '../../redux/features/api/riders/ridersSlice';
 import { useInitialRidersSettings } from '../../hook/useInitialRidersSettings';
@@ -22,13 +20,11 @@ import { resetSortColumnTable } from '../../redux/features/sortTableSlice';
 
 import styles from './Riders.module.css';
 
-// рекламные блоки на странице
-const adOverFooter = 4;
-const adUnderHeader = 17;
-const adNumbers = [adUnderHeader, adOverFooter];
-
 const localStorageFilterKey = `${lsPrefixRiders}filter`;
 const localStoragePageSizeKey = `${lsPrefixRiders}pageSize`;
+
+// Уникальный ключ для идентификации сортировки таблицы в данном компоненте.
+const COMPONENT_ID = 'Riders';
 
 /**
  * Страница с таблицей райдеров, принимавших участие в заездах на сайте.
@@ -43,8 +39,7 @@ function Riders() {
   const initialFilterTable = localStorage.getItem(localStorageFilterKey) || '';
   const [search, setSearch] = useState(initialFilterTable);
 
-  const { isScreenLg: isDesktop } = useResize();
-  const { activeSorting } = useSelector((state) => state.sortTable);
+  const { activeSorting, componentId } = useSelector((state) => state.sortTable);
   const { name: category } = useSelector((state) => state.filterCategory.value);
   const { male } = useSelector((state) => state.filterGender.value);
   const isMounting = useRef(true);
@@ -59,7 +54,7 @@ function Riders() {
   const dispatch = useDispatch();
 
   // Инициализация данных из Локального хранилища.
-  useInitialRidersSettings();
+  useInitialRidersSettings(COMPONENT_ID);
 
   // Сохранение данных в Локальном хранилище.
   useLocalStorageSetRiders({
@@ -89,10 +84,13 @@ function Riders() {
       return;
     }
 
-    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category, male }));
-  }, [page, docsOnPage, search, activeSorting, category, male, dispatch]);
+    // Если сортировка не для COMPONENT_ID, то выход.
+    if (componentId !== COMPONENT_ID) {
+      return;
+    }
 
-  useAd(adNumbers);
+    dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category, male }));
+  }, [page, docsOnPage, search, activeSorting, category, male, dispatch, componentId]);
 
   return (
     <>
@@ -126,7 +124,7 @@ function Riders() {
         )}
       </section>
 
-      <AdContainer number={isDesktop ? adOverFooter : adUnderHeader} maxWidth={1105} />
+      {/* <AdContainer number={isDesktop ? adOverFooter : adUnderHeader} maxWidth={1105} /> */}
     </>
   );
 }

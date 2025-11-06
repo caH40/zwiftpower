@@ -9,7 +9,7 @@ import { setFilterGender } from '../redux/features/filterGenderSlice';
 /**
  * Инициализация данных для страницы Райдеры из локального хранилища.
  */
-export const useInitialRidersSettings = () => {
+export const useInitialRidersSettings = (COMPONENT_ID) => {
   const dispatch = useDispatch();
 
   const getInitialSettings = () => {
@@ -47,8 +47,8 @@ export const useInitialRidersSettings = () => {
   useEffect(() => {
     const { columnName, isRasing, categoryForLs, genderName } = getInitialSettings();
 
-    dispatch(setSortColumnTable({ columnName, isRasing }));
+    dispatch(setSortColumnTable({ columnName, isRasing, componentId: COMPONENT_ID }));
     dispatch(setFilterCategory({ name: categoryForLs, isActive: true }));
     dispatch(setFilterGender({ name: genderName, isActive: true }));
-  }, [dispatch]);
+  }, [dispatch, COMPONENT_ID]);
 };
