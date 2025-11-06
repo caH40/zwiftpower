@@ -7,8 +7,10 @@ import { handleAndLogError } from '../../errors/error.js';
 
 export async function resetPasswordService(email: string) {
   try {
-    const userDB = await User.findOne({ email });
-    if (!userDB) throw { message: 'e-mail не найден' };
+    const userDB = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+    if (!userDB) {
+      throw new Error(`${email} - e-mail не найден`);
+    }
 
     const tokenReset = uuidv4();
     await PasswordReset.create({
