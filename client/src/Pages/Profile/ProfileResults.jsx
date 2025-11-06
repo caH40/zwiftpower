@@ -40,7 +40,7 @@ function ProfileResults() {
   const { docsOnPage, setDocsOnPage } = useInitialUserResultsSettings();
 
   // Сохранение данных в Локальном хранилище.
-  useLocalStorageSetUserResults({ docsOnPage, activeSorting, isMounting });
+  useLocalStorageSetUserResults({ docsOnPage, isMounting });
 
   // получение результатов райдера
   useEffect(() => {
@@ -68,9 +68,14 @@ function ProfileResults() {
 
     return () => {
       dispatch(resetUserResults());
-      dispatch(resetSortColumnTable());
     };
   }, [dispatch, zwiftId, userAuth, activeSorting, page, docsOnPage, wattsState]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetSortColumnTable());
+    };
+  }, [dispatch]);
 
   return (
     <div>
