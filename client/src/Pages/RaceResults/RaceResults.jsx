@@ -11,7 +11,7 @@ import DescriptionEventZwift from '../../components/DescriptionEventZwift/Descri
 import NavBarResultsRaceTable from '../../components/UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
-import { initialSorting } from '../../redux/features/sortTableSlice';
+import { resetSortColumnTable, setSortColumnTable } from '../../redux/features/sortTableSlice';
 import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import { HelmetRaceResults } from '../../components/Helmets/HelmetRaceResults';
 import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResultsRace';
@@ -42,19 +42,20 @@ function RaceResults() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initialSorting({ columnName: 'Время', isRasing: true }));
+    dispatch(setSortColumnTable({ columnName: 'Время', isRasing: true }));
     dispatch(fetchResultEvent(eventId));
 
     return () => {
       dispatch(resetFilterCategory());
       dispatch(resetResults());
       dispatch(resetRaceResultsPage());
+      dispatch(resetSortColumnTable());
     };
   }, [eventId, dispatch]);
 
   useEffect(() => {
     if (['classicGroup', 'newbies'].includes(eventData.typeRaceCustom)) {
-      dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
+      dispatch(setSortColumnTable({ columnName: 'Категория', isRasing: true }));
     }
   }, [eventData, dispatch]);
 

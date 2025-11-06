@@ -9,7 +9,7 @@ import ServiceBox from '../../components/ServiceBox/ServiceBox';
 import { getTimerLocal } from '../../utils/date-local';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { fetchResultEvent, resetResults } from '../../redux/features/api/eventResultSlice';
-import { initialSorting } from '../../redux/features/sortTableSlice';
+import { setSortColumnTable } from '../../redux/features/sortTableSlice';
 import { fetchResultEdit } from '../../redux/features/api/result_edit/fetchResultEdit';
 
 import styles from './EditResults.module.css';
@@ -23,7 +23,7 @@ function EditResults() {
 
   useEffect(() => {
     dispatch(resetFilterCategory());
-    dispatch(initialSorting());
+    dispatch(setSortColumnTable());
     dispatch(fetchResultEvent(eventId));
 
     return () => dispatch(resetResults());

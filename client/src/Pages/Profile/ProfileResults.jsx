@@ -12,6 +12,7 @@ import SkeletonProfileCPBlock from '../../components/SkeletonLoading/SkeletonPro
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import { useInitialUserResultsSettings } from '../../hook/useInitialUserResultsSettings';
 import { useLocalStorageSetUserResults } from '../../hook/useLocalStorageSetUserResults';
+import { resetSortColumnTable } from '../../redux/features/sortTableSlice';
 
 import styles from './Profile.module.css';
 
@@ -46,6 +47,7 @@ function ProfileResults() {
     if (!activeSorting) {
       return undefined;
     }
+
     let { columnName } = activeSorting;
 
     // Если columnName является числом, значит это CP, добавляем префикс.
@@ -66,6 +68,7 @@ function ProfileResults() {
 
     return () => {
       dispatch(resetUserResults());
+      dispatch(resetSortColumnTable());
     };
   }, [dispatch, zwiftId, userAuth, activeSorting, page, docsOnPage, wattsState]);
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { initialSorting } from '../redux/features/sortTableSlice';
+import { setSortColumnTable } from '../redux/features/sortTableSlice';
 import { setFilterCategory } from '../redux/features/filterCategorySlice';
 import { lsPrefixRiders } from '../constants/localstorage';
 import { setFilterGender } from '../redux/features/filterGenderSlice';
@@ -47,7 +47,7 @@ export const useInitialRidersSettings = () => {
   useEffect(() => {
     const { columnName, isRasing, categoryForLs, genderName } = getInitialSettings();
 
-    dispatch(initialSorting({ columnName, isRasing }));
+    dispatch(setSortColumnTable({ columnName, isRasing }));
     dispatch(setFilterCategory({ name: categoryForLs, isActive: true }));
     dispatch(setFilterGender({ name: genderName, isActive: true }));
   }, [dispatch]);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { initialSorting } from '../redux/features/sortTableSlice';
+import { setSortColumnTable } from '../redux/features/sortTableSlice';
 import { lsPrefixUserResults } from '../constants/localstorage';
 
 /**
@@ -29,7 +29,7 @@ export const useInitialUserResultsSettings = () => {
   useEffect(() => {
     const { columnName, isRasing } = getInitialSettings();
 
-    dispatch(initialSorting({ columnName, isRasing }));
+    dispatch(setSortColumnTable({ columnName, isRasing }));
   }, [dispatch]);
 
   return { docsOnPage, setDocsOnPage };

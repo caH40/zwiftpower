@@ -18,6 +18,7 @@ import { useLocalStorageSetRiders } from '../../hook/useLocalStorageSetRiders';
 import { resetFilterCategory } from '../../redux/features/filterCategorySlice';
 import { resetFilterGender } from '../../redux/features/filterGenderSlice';
 import { lsPrefixRiders } from '../../constants/localstorage';
+import { resetSortColumnTable } from '../../redux/features/sortTableSlice';
 
 import styles from './Riders.module.css';
 
@@ -76,8 +77,9 @@ function Riders() {
       dispatch(resetRiders());
       dispatch(resetFilterCategory());
       dispatch(resetFilterGender());
+      dispatch(resetSortColumnTable());
     };
-  }, []);
+  }, [dispatch]);
 
   // Получение данных с БД.
   useEffect(() => {
@@ -88,7 +90,7 @@ function Riders() {
     }
 
     dispatch(fetchRiders({ page, docsOnPage, search, ...activeSorting, category, male }));
-  }, [page, docsOnPage, search, activeSorting, category, male]);
+  }, [page, docsOnPage, search, activeSorting, category, male, dispatch]);
 
   useAd(adNumbers);
 

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import { useResize } from '../../hook/use-resize';
 // import AdContainer from '../../components/AdContainer/AdContainer';
 import { HelmetSignedRiders } from '../../components/Helmets/HelmetSignedRiders';
-import { initialSorting } from '../../redux/features/sortTableSlice';
+import { resetSortColumnTable, setSortColumnTable } from '../../redux/features/sortTableSlice';
 import {
   fetchEventPreview,
   resetPreviewEventData,
@@ -43,11 +43,12 @@ function SignedRiders() {
   const { eventId } = useParams();
 
   useEffect(() => {
-    dispatch(initialSorting({ columnName: 'Категория', isRasing: true }));
+    dispatch(setSortColumnTable({ columnName: 'Категория', isRasing: true }));
     dispatch(fetchEventPreview(eventId));
 
     return () => {
       dispatch(resetPreviewEventData());
+      dispatch(resetSortColumnTable());
     };
   }, [eventId, dispatch]);
 
