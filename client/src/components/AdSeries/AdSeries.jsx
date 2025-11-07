@@ -42,6 +42,7 @@ export default function AdSeries({ urlSlug, isCard, pageType = 'schedule' }) {
             height={220}
             width={1920}
           />
+
           <div className={styles.box__titles}>
             <h3 className={styles.title}>{seriesPublicOne.name}</h3>
             <h4 className={styles.subtitle}>
@@ -49,6 +50,10 @@ export default function AdSeries({ urlSlug, isCard, pageType = 'schedule' }) {
                 seriesPublicOne.dateEnd
               )}`}
             </h4>
+          </div>
+
+          <div className={styles.description}>
+            <h3>Расписание, результаты, регламент</h3>
           </div>
         </div>
       )}
