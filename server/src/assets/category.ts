@@ -44,6 +44,7 @@ export const categoriesForRankings: Record<TRaceSeriesCategories | 'absolute', n
   BPlus: 1,
   B: 1,
   C: 1,
+  CPlus: 1,
   D: 1,
   E: 1,
   WA: 1,

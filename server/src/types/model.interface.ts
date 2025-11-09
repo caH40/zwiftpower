@@ -13,7 +13,7 @@ import { bans } from '../assets/ban.js';
 import { TEntityNameForSlot, TSiteService } from './site-service.type.js';
 import { TTeamRole, TTeamSpecialization } from './team.types.js';
 import { TServiceMessageType } from './service-message.types.js';
-import { DISQUALIFICATION_LABELS } from '../assets/constants.js';
+import { DISQUALIFICATION_LABELS, SERIES_TYPES } from '../assets/constants.js';
 import {
   TCategoriesWithRange,
   TRacingScoreRange,
@@ -689,7 +689,7 @@ export type TScoringAlgorithm = {
 /**
  * Возможные типы серии соревнований.
  */
-export type TSeriesType = 'series' | 'tour' | 'catchUp' | 'criterium';
+export type TSeriesType = (typeof SERIES_TYPES)[number];
 
 /**
  * Этап серии соревнований.

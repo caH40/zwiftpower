@@ -135,6 +135,7 @@ export class HandlerSeries {
       A: 1,
       BPlus: 1,
       B: 1,
+      CPlus: 1,
       C: 1,
       D: 1,
       E: 1,

@@ -5,7 +5,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
-import { RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants.js';
+import { RIDER_CATEGORIES_RULE_TYPES, SERIES_TYPES } from '../assets/constants.js';
 
 // types
 import {
@@ -50,7 +50,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   rules: { type: String },
   scoringAlgorithms: { type: mongoose.Schema.Types.ObjectId, ref: 'ScoringAlgorithm' },
   stages: { type: [SeriesStageSchema] },
-  type: { type: String, required: true },
+  type: { type: String, enum: SERIES_TYPES, required: true },
   urlSlug: { type: String, required: true, unique: true },
   gcResultsUpdatedAt: { type: Date },
 });

@@ -153,6 +153,7 @@ export const RACE_SERIES_CATEGORIES = [
   'A',
   'BPlus',
   'B',
+  'CPlus',
   'C',
   'D',
   'E',
@@ -188,3 +189,5 @@ export const MEDAL_RATES = {
   SILVER: 4,
   BRONZE: 2,
 } as const;
+
+export const SERIES_TYPES = ['series', 'tour', 'catchUp', 'criterium', 'endurance'] as const;
