@@ -1,19 +1,15 @@
 import { Types } from 'mongoose';
 
-import { NSeriesModel } from '../../Model/NSeries.js';
-import { ZwiftEvent } from '../../Model/ZwiftEvent.js';
 import { getResultsFromZwift } from '../updates/results_event/resultsFromZwift.js';
 import { getCPFromResult } from '../power/empty-cp.js';
 import { MongooseUtils } from '../../utils/MongooseUtils.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { SeriesRepository } from '../../repositories/Series.js';
+import { EventRepository } from '../../repositories/Event.js';
 
 // types
-import {
-  TSeries,
-  TStageResult,
-  ZwiftEventSubgroupSchema,
-} from '../../types/model.interface.js';
+import { TStageResult } from '../../types/model.interface.js';
 import {
   TRaceSeriesCategories,
   TGetProtocolsStageFromZwiftParams,
@@ -21,21 +17,10 @@ import {
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
+  private seriesRepository: SeriesRepository = new SeriesRepository();
+  private eventRepository: EventRepository = new EventRepository();
 
   constructor(public seriesId: string) {}
-
-  /**
-   * Получает данные серии из базы данных.
-   */
-  protected async getSeriesData() {
-    const seriesDB = await NSeriesModel.findOne({ _id: this.seriesId }).lean<TSeries>();
-
-    if (!seriesDB) {
-      throw new Error(`Серия с _id: ${this.seriesId} не найдена в базе данных.`);
-    }
-
-    return seriesDB;
-  }
 
   /**
    * Получение и создание базовых финишных протоколов заездов Этапа серии из ZwiftAPI.
@@ -47,40 +32,16 @@ export class HandlerSeries {
     stageResults: TStageResult[];
     subgroupIdsInEvents: Types.ObjectId[];
   }> {
-    // Запрос данных подгрупп заездов в этапе для последующего получения результатов подгрупп и объединения их в результаты заездов.
-    const requestEventsWithSubgroups = stages.map(
-      (eventId) =>
-        ZwiftEvent.findOne({ _id: eventId }, { _id: false })
-          .populate({ path: 'eventSubgroups', select: ['id', 'subgroupLabel'] })
-          .lean<{
-            eventSubgroups: ZwiftEventSubgroupSchema[];
-          }>()
-      // FIXME: изменить в модуле getResultsFromZwift типизацию.
-      // А во всех модулях, вызывающих getResultsFromZwift изменить передаваемый параметр
-      // на { subgroupLabel: string; id: number; _id: Types.ObjectId }[]
-      //
-      // .lean<{
-      //   eventSubgroups: { subgroupLabel: string; id: number; _id: Types.ObjectId }[];
-      // }>()
-    );
-
     // Получение данных всех подгрупп для последующего запроса результатов райдеров в подгруппах.
-    const eventsWithSubgroups = (await Promise.all(requestEventsWithSubgroups)).flatMap(
-      (event) => {
-        if (!event) {
-          throw new Error('Не найден ZwiftEvent из обновляемого Этапа!');
-        }
-        return event.eventSubgroups;
-      }
-    );
+    const eventSubgroups = await this.getEventSubgroups(stages);
 
     // _id всех подгрупп этапов в БД.
-    const subgroupIdsInEvents = eventsWithSubgroups
+    const subgroupIdsInEvents = eventSubgroups
       .map((subgroup) => subgroup._id)
       .filter((_id): _id is Types.ObjectId => _id !== undefined);
 
     // Получение финишных протокола(протоколов) этапа серии с ZwiftAPI.
-    const requestResults = await getResultsFromZwift(eventsWithSubgroups, null);
+    const requestResults = await getResultsFromZwift(eventSubgroups, null);
 
     // Формирования необходимой структуры результатов Этапа для Серии заездов.
     const stageResults = requestResults.map((result) => {
@@ -188,4 +149,48 @@ export class HandlerSeries {
    * Изменение категории у участника в результате заезда на этапа.
    */
   public async modifyPenalty(): Promise<void> {}
+
+  /**
+   * Получает данные серии из базы данных.
+   */
+  protected async getSeriesData() {
+    const seriesDB = await this.seriesRepository.getById(this.seriesId);
+
+    if (!seriesDB) {
+      throw new Error(`Серия с _id: ${this.seriesId} не найдена в базе данных.`);
+    }
+
+    return seriesDB;
+  }
+
+  /**
+   * Основные данные подгрупп этапов (если в этапе серии несколько эвентов, то запрашиваются
+   * все подгруппы данных эвентов)
+   */
+  private getEventSubgroups = async (
+    stages: Types.ObjectId[]
+  ): Promise<
+    {
+      _id: Types.ObjectId;
+      id: number;
+      subgroupLabel: string;
+    }[]
+  > => {
+    // Запрос данных подгрупп заездов в этапе для последующего получения результатов подгрупп и объединения их в результаты заездов.
+    const requestEventsWithSubgroups = stages.map((eventId) =>
+      this.eventRepository.getSubgroupsMainInfo(eventId._id.toString())
+    );
+
+    // Получение данных всех подгрупп для последующего запроса результатов райдеров в подгруппах.
+    const eventsWithSubgroups = (await Promise.all(requestEventsWithSubgroups)).flatMap(
+      (event) => {
+        if (!event) {
+          throw new Error('Не найден ZwiftEvent из обновляемого Этапа!');
+        }
+        return event.eventSubgroups;
+      }
+    );
+
+    return eventsWithSubgroups;
+  };
 }

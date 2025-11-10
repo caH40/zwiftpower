@@ -9,8 +9,12 @@ export class SeriesRepository {
    * По seriesId получение данных name,stages.
    */
   getStageIds = async (seriesId: string) => {
-    return await NSeriesModel.findOne({ _id: seriesId }, { _id: 0, name: 1, stages: 1 }).lean<
+    return NSeriesModel.findOne({ _id: seriesId }, { _id: 0, name: 1, stages: 1 }).lean<
       Pick<TSeries, 'name' | 'stages'>
     >();
+  };
+
+  getById = async (seriesId: string) => {
+    return NSeriesModel.findById(seriesId).lean<TSeries>();
   };
 }

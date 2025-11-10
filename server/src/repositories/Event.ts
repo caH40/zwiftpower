@@ -17,6 +17,28 @@ export class EventRepository {
       { _id: 1, eventStart: 1, id: 1 }
     ).lean();
   }
+
+  /**
+   * Запрос основных данных подгрупп эвента.
+   */
+  async getSubgroupsMainInfo(eventId: string): Promise<{
+    eventSubgroups:
+      | {
+          _id: Types.ObjectId;
+          id: number;
+          subgroupLabel: string;
+        }[];
+  } | null> {
+    return ZwiftEvent.findOne({ _id: eventId }, { _id: false, eventSubgroups: true })
+      .populate<{
+        eventSubgroups: {
+          _id: Types.ObjectId;
+          id: number;
+          subgroupLabel: string;
+        }[];
+      }>({ path: 'eventSubgroups', select: ['id', 'subgroupLabel'] })
+      .lean();
+  }
 }
 
 export type GetEventIdsReturn = { _id: Types.ObjectId; eventStart: string; id: number }[];
