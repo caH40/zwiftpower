@@ -10,6 +10,7 @@ import { GCProviderFactory } from './GCProviderFactory.js';
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { StageRanker } from './StageRanker.js';
 
 /**
  * Класс создания (обновления) протоколов серий и туров.
@@ -18,6 +19,7 @@ import { TResponseService } from '../../types/http.interface.js';
  */
 export class SeriesStageProtocolManager extends HandlerSeries {
   stageResultRepository: StageResultRepository;
+  stageRanker: StageRanker = new StageRanker();
 
   constructor(public seriesId: string) {
     super(seriesId);
@@ -77,7 +79,8 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     });
 
     // Сортировка результатов и проставления ранкинга в каждой категории.
-    const resultsWithRank = this.setCategoryRanks(resultsWithCategories);
+
+    const resultsWithRank = this.stageRanker.calculateRanking(resultsWithCategories, type);
 
     // Установка финишных гэпов (разрывов между участниками).
     const finishGaps = new FinishGaps();
@@ -113,20 +116,25 @@ export class SeriesStageProtocolManager extends HandlerSeries {
    * Пересчёт протокола этапа после правок результатов модератором.
    */
   public async recalculateStageProtocol(seriesId: string): Promise<void> {
+    const { type } = await this.getSeriesData();
+
     // Получение всех результатов этапов серии seriesId.
     const allStageResults = await this.stageResultRepository.getAllStageResultsBySeriesId(
       seriesId
     );
     // Группировка результатов по этапам.
     const resultsByStageOrderMap: Map<number, TStageResult[]> = new Map();
+
     for (const result of allStageResults) {
       const resultsInMap = resultsByStageOrderMap.get(result.order) || [];
       resultsInMap.push(result);
       resultsByStageOrderMap.set(result.order, resultsInMap);
     }
+
     for (const [order, resultsInStage] of resultsByStageOrderMap.entries()) {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
-      const resultsWithRank = this.setCategoryRanks(resultsInStage);
+      const resultsWithRank = this.stageRanker.calculateRanking(resultsInStage, type);
+
       // Установка финишных гэпов (разрывов между участниками).
       const finishGaps = new FinishGaps();
       finishGaps.setGaps(resultsWithRank, {

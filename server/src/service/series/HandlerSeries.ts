@@ -10,10 +10,7 @@ import { EventRepository } from '../../repositories/Event.js';
 
 // types
 import { TStageResult } from '../../types/model.interface.js';
-import {
-  TRaceSeriesCategories,
-  TGetProtocolsStageFromZwiftParams,
-} from '../../types/types.interface.js';
+import { TGetProtocolsStageFromZwiftParams } from '../../types/types.interface.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -82,53 +79,6 @@ export class HandlerSeries {
     });
 
     return { stageResults, subgroupIdsInEvents };
-  }
-
-  /**
-   * Сортировка результатов и установка ранкинга в результатах этапа для каждой категории.
-   */
-  protected setCategoryRanks(stageResults: TStageResult[]): TStageResult[] {
-    if (!stageResults.length) {
-      return [];
-    }
-
-    const resultsSorted = stageResults.toSorted(
-      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    );
-
-    const categories: Record<TRaceSeriesCategories | 'absolute', number> = {
-      APlus: 1,
-      A: 1,
-      BPlus: 1,
-      B: 1,
-      CPlus: 1,
-      C: 1,
-      D: 1,
-      E: 1,
-      WA: 1,
-      WB: 1,
-      WC: 1,
-      WD: 1,
-      absolute: 1,
-    };
-
-    return resultsSorted.map((result) => {
-      const currentCategory = result.modifiedCategory?.value ?? result.category;
-      // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
-      if (!currentCategory || result.disqualification?.status) {
-        result.rank.category = 0;
-        return result;
-      }
-
-      // Присвоение финишного места в категории и увеличение соответствующего счетчика.
-      result.rank.category = categories[currentCategory] ?? 0;
-      categories[currentCategory]++;
-
-      // Присвоение финишного места в абсолюте и увеличение соответствующего счетчика.
-      result.rank.absolute = categories['absolute'] ?? 0;
-      categories['absolute']++;
-      return result;
-    });
   }
 
   /**
