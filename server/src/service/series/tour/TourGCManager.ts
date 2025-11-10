@@ -131,6 +131,9 @@ export class TourGCManager extends AbstractBaseGCManager {
       // 1. Инициализация счетчиков.
       let totalFinishPoints = 0;
       let totalTimeInMilliseconds = 0;
+      let totalElevationInMeters = 0;
+      let totalDistanceInMeters = 0;
+      let totalCalories = 0;
       let stagesCompleted = 0;
       const disqualification: TDisqualification = { status: false };
 
@@ -144,6 +147,9 @@ export class TourGCManager extends AbstractBaseGCManager {
 
         // Суммируем общее время.
         totalTimeInMilliseconds += result.activityData.durationInMilliseconds || 0;
+        totalDistanceInMeters += result.activityData.segmentDistanceInMeters || 0;
+        totalElevationInMeters += result.activityData.elevationInMeters || 0;
+        totalCalories += result.activityData.calories || 0;
 
         // Учитываем только завершённые этапы.
         if (!result.disqualification?.status) {
@@ -188,7 +194,10 @@ export class TourGCManager extends AbstractBaseGCManager {
         totalFinishPoints,
         totalTimeInMilliseconds,
         stagesCompleted,
+        totalDistanceInMeters,
         disqualification,
+        totalElevationInMeters,
+        totalCalories,
         teamSquadAtRace: null,
         gapsInCategories: {
           category: null,
@@ -350,6 +359,9 @@ export class TourGCManager extends AbstractBaseGCManager {
           durationInMilliseconds: stage.activityData.durationInMilliseconds,
           finishPoints: stage.points?.finishPoints || 0,
           modifiedCategory: stage.modifiedCategory,
+          distanceInMeters: stage.activityData.segmentDistanceInMeters || 0,
+          elevationInMeters: stage.activityData.elevationInMeters || 0,
+          calories: stage.activityData.calories || 0,
         };
       } else {
         // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
@@ -359,6 +371,9 @@ export class TourGCManager extends AbstractBaseGCManager {
           stageOrder: stageOrder,
           durationInMilliseconds: 0,
           finishPoints: 0,
+          distanceInMeters: 0,
+          elevationInMeters: 0,
+          calories: 0,
         };
       }
     });

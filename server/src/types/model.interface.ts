@@ -881,10 +881,16 @@ export type TSeriesClassification = {
   disqualification: TDisqualification | null; // Статус дисквалификации.
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
+  totalDistanceInMeters: number; // Общее расстояние за все этапы.
+  totalElevationInMeters: number; // Общий набор высоты за все этапы.
+  totalCalories: number; // Общий набор калорий за все этапы.
   stages: {
     category: TRaceSeriesCategories | null; // Итоговая категория, после модерации (если была).
     stageOrder: number; // Порядковый номер этапа в туре.
     durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах). 0 - райдер не финишировал на данном этапе.
+    distanceInMeters: number; // Пройденное расстояние на этапе.
+    elevationInMeters: number; // Набор высоты за этап.
+    calories: number; // Калории за этап.
     finishPoints: number; // Заработанные финишные очки за этап.
     // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
   }[]; // Массив этапов, на которых участвовал райдер.

@@ -19,6 +19,9 @@ const stageSchema = new Schema(
     category: { type: String, default: null }, // Категория.
     stageOrder: { type: Number, required: true }, // Порядковый номер этапа.
     durationInMilliseconds: { type: Number, default: 0 }, // Время этапа.
+    distanceInMeters: { type: Number, default: 0 }, // Пройденное расстояние.
+    elevationInMeters: { type: Number, default: 0 }, // Набор высоты за этап.
+    calories: { type: Number, default: 0 }, // Калории за этап.
     // includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
     finishPoints: { type: Number, default: 0 }, // Очки за этап (если есть).
     profileData: { type: profileDataSchema, default: null },
@@ -38,6 +41,9 @@ const seriesClassificationSchema = new Schema(
     profileId: { type: Number, required: true }, // ZwiftId райдера.
     totalFinishPoints: { type: Number, default: 0 }, // Суммарные очки за серию.
     totalTimeInMilliseconds: { type: Number, default: 0 }, // Общее время за все этапы.
+    totalDistanceInMeters: { type: Number, default: 0 }, // Общее расстояние за все этапы.
+    totalElevationInMeters: { type: Number, default: 0 }, // Общий набор высоты за все этапы.
+    totalCalories: { type: Number, default: 0 }, // Общий набор калорий за все этапы.
     stagesCompleted: { type: Number, default: 0 }, // Количество завершённых этапов.
     disqualification: { type: disqualificationSchema }, // Статус дисквалификации.
     gapsInCategories: GapsInCategoriesSchema, // Отрывы между участником результата и лидером, предыдущим в категории и абсолюте.
