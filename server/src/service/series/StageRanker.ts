@@ -1,8 +1,7 @@
-import { SERIES_TYPES } from '../../assets/constants.js';
+import { RACE_SERIES_CATEGORIES, SERIES_TYPES } from '../../assets/constants.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
-import { TRaceSeriesCategories } from '../../types/types.interface.js';
 
 type THandler = (stageResults: TStageResult[]) => TStageResult[];
 
@@ -14,7 +13,7 @@ export class StageRanker {
 
   constructor() {
     this.handlers = new Map<TSeriesType, THandler>([
-      ['endurance', this.setByDistance],
+      ['endurance', this.setByTimeWithLateJoin],
       ['tour', this.setByTime],
       ['series', this.setByTime],
       ['catchUp', this.setByTime],
@@ -22,10 +21,10 @@ export class StageRanker {
     ]);
   }
 
-  public calculateRanking(
+  public calculateRanking = (
     stageResults: TStageResult[],
     seriesType: TSeriesType
-  ): TStageResult[] {
+  ): TStageResult[] => {
     const handler = this.handlers.get(seriesType);
 
     if (!handler) {
@@ -37,52 +36,59 @@ export class StageRanker {
     }
 
     return handler(stageResults);
-  }
+  };
 
   /**
    * Сортировка результатов и установка ранкинга в результатах этапа для каждой категории
-   * по максимальной пройденной дистанции.
+   * с учетом полной дистанции.
+   * FIXME: Необходима логика выявления участников заезда, которые ехали не из кармана,
+   * а присоединились позже.
    */
-  private setByDistance(stageResults: TStageResult[]): TStageResult[] {
-    return stageResults;
-  }
+  private setByTimeWithLateJoin = (stageResults: TStageResult[]): TStageResult[] => {
+    if (!stageResults.length) {
+      return [];
+    }
+
+    // Результаты в которых райдер проехал не полную дистанцию из-за позднего подключения
+    // ставятся ниже тех, кто проехал полную.
+    const sortedResults = stageResults.toSorted((a, b) => {
+      return a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds;
+    });
+
+    return this.setRank(sortedResults);
+  };
 
   /**
    * Сортировка результатов и установка ранкинга в результатах этапа для каждой категории
    * по наименьшему финишному времени.
    */
-  private setByTime(stageResults: TStageResult[]): TStageResult[] {
+  private setByTime = (stageResults: TStageResult[]): TStageResult[] => {
     if (!stageResults.length) {
       return [];
     }
 
-    const resultsSorted = stageResults.toSorted(
+    const sortedResults = stageResults.toSorted(
       (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
     );
 
-    const categories: Record<TRaceSeriesCategories | 'absolute', number> = {
-      APlus: 1,
-      A: 1,
-      BPlus: 1,
-      B: 1,
-      CPlus: 1,
-      C: 1,
-      D: 1,
-      E: 1,
-      WA: 1,
-      WB: 1,
-      WC: 1,
-      WD: 1,
-      absolute: 1,
-    };
+    return this.setRank(sortedResults);
+  };
 
-    return resultsSorted.map((result) => {
+  /**
+   * Непосредственный расчет ранкинга и его установка результату.
+   */
+  private setRank = (results: TStageResult[]): TStageResult[] => {
+    return results.map((result) => {
       const currentCategory = result.modifiedCategory?.value ?? result.category;
       // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
       if (!currentCategory || result.disqualification?.status) {
         result.rank.category = 0;
         return result;
       }
+
+      const categories = Object.fromEntries(
+        [...RACE_SERIES_CATEGORIES, 'absolute'].map((c) => [c, 1])
+      );
 
       // Присвоение финишного места в категории и увеличение соответствующего счетчика.
       result.rank.category = categories[currentCategory] ?? 0;
@@ -93,5 +99,5 @@ export class StageRanker {
       categories['absolute']++;
       return result;
     });
-  }
+  };
 }
