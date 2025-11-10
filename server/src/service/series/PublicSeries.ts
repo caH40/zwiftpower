@@ -105,6 +105,13 @@ export class PublicSeriesService {
         break;
       }
 
+      case 'endurance': {
+        seriesResults = {
+          message: 'Генеральная классификация отправляется отдельным запросом.',
+        };
+        break;
+      }
+
       case 'criterium':
         seriesResults = { message: 'В разработке...' };
         break;
@@ -150,11 +157,13 @@ export class PublicSeriesService {
         seriesResults = { message: 'В разработке...' };
         break;
 
+      case 'endurance':
+        seriesResults = { message: 'В разработке...' };
+        break;
+
       case 'tour': {
         const tourResults = new TourResults(String(seriesOneDB._id));
-
         seriesResults = await tourResults.getStageResults(stageOrder);
-
         break;
       }
 

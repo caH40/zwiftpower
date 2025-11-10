@@ -16,6 +16,9 @@ const CatchUpComponent = lazy(() =>
 const CriteriumComponent = lazy(() =>
   import('../../../components/SeriesResults/CriteriumComponent/CriteriumComponent')
 );
+const EnduranceComponent = lazy(() =>
+  import('../../../components/SeriesResults/EnduranceComponent/EnduranceComponent')
+);
 import { HelmetSeriesResults } from '../../../components/Helmets/HelmetSeriesResults';
 import { getTimerLocal } from '../../../utils/date-local';
 
@@ -38,6 +41,7 @@ export default function SeriesOneResults() {
     tour: (props) => <TourComponent {...props} />,
     catchUp: (props) => <CatchUpComponent {...props} />,
     criterium: (props) => <CriteriumComponent {...props} />,
+    endurance: (props) => <EnduranceComponent {...props} />,
   };
 
   return (

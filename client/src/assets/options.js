@@ -50,6 +50,11 @@ export const seriesTypes = [
     value: 'catchUp',
     name: 'Догонялки',
   },
+  {
+    id: 3,
+    value: 'endurance',
+    name: 'Эндуранс',
+  },
   // {
   //   id: 3,
   //   value: 'criterium',
