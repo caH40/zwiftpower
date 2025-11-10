@@ -5,6 +5,7 @@ import { SeriesClassificationModel } from '../../../Model/SeriesClassification.j
 import { StageResultModel } from '../../../Model/StageResult.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
 import { SeriesRepository } from '../../../repositories/Series.js';
+import { AbstractBaseGCManager } from '../AbstractBaseGC.js';
 
 // types
 import { TDisqualification, TSeriesStage } from '../../../types/model.interface.js';
@@ -22,10 +23,11 @@ type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
 /**
  * Класс управления/создания генеральной классификации тура.
  */
-export class TourGCManager {
+export class TourGCManager extends AbstractBaseGCManager {
   private seriesRepository: SeriesRepository;
 
   constructor(public seriesId: string) {
+    super(seriesId);
     this.seriesRepository = new SeriesRepository();
   }
 

@@ -1,5 +1,5 @@
 import { NSeriesModel } from '../../Model/NSeries.js';
-import { TourGCManager } from './tour/TourGCManager.js';
+import { GCProviderFactory } from './GCProviderFactory.js';
 import { SeriesClassificationRepository } from '../../repositories/SeriesClassification.js';
 import { handleAndLogError } from '../../errors/error.js';
 
@@ -28,31 +28,10 @@ export class SeriesGCManager {
       throw new Error(`Не найдена серия с _id:${this.seriesId}`);
     }
 
-    const response = {
-      data: null,
-      message: `⚠️ Функционал для типа '${seriesDB.type}' находится в разработке`,
-    };
+    const gcProvider = new GCProviderFactory(this.seriesId);
+    const gcHandler = gcProvider.getHandler(seriesDB.type);
 
-    switch (seriesDB.type) {
-      case 'series':
-        return response;
-
-      case 'tour': {
-        // Обновление генеральной классификации серии.
-        const tourGCService = new TourGCManager(this.seriesId);
-        // Вызов сервиса.
-        return await tourGCService.update();
-      }
-
-      case 'catchUp':
-        return response;
-
-      case 'criterium':
-        return response;
-
-      default:
-        throw new Error(`❌ Неподдерживаемый тип серии: ${seriesDB.type}`);
-    }
+    return await gcHandler.update();
   }
 
   /**
