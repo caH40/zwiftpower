@@ -135,8 +135,12 @@ const stageResultSchema = new Schema<IStageResult>(
     cpBestEfforts: [cpBestEffortsSchema],
     activityData: {
       durationInMilliseconds: { type: Number },
-      // labels: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
       subgroupLabel: { type: String, enum: ZWIFT_CATEGORIES },
+      segmentDistanceInCentimeters: { type: Number },
+      segmentDistanceInMeters: { type: Number },
+      elevationInMeters: { type: Number },
+      calories: { type: Number },
+      endDate: { type: String },
     },
     sensorData: sensorDataSchema,
     category: {

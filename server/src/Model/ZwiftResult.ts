@@ -30,14 +30,28 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     activityId: { type: String, default: null },
     sport: { type: String, default: null },
     durationInMilliseconds: { type: Number, default: null },
+    segmentDistanceInCentimeters: { type: Number, default: null },
     segmentDistanceInMeters: { type: Number, default: null },
+    elevationInMeters: { type: Number },
+    calories: { type: Number },
+    endDate: { type: String },
+  },
+
+  scoreHistory: {
+    newScore: { type: Number },
+    previousScore: { type: Number },
+    scoreChangeType: { type: String },
   },
 
   sensorData: {
-    heartRateData: { avgHeartRate: { type: Number, default: null } },
+    heartRateData: {
+      avgHeartRate: { type: Number, default: null },
+      heartRateMonitor: { type: Boolean },
+    },
     avgWatts: { type: Number, default: null },
-    powerType: { type: String, default: null },
     pairedSteeringDevice: { type: Boolean, default: false },
+    powerType: { type: String, default: null },
+    trainerDifficulty: { type: Number },
   },
   wattsPerKg: { type: Number, default: null },
   speed: { type: Number },

@@ -85,6 +85,7 @@ export async function getResultsDNFRiders({
           durationInMilliseconds: activity.movingTimeInMs,
           elevationInMeters: Math.round(activity.totalElevation),
           segmentDistanceInMeters: Math.round(activity.distanceInMeters),
+          segmentDistanceInCentimeters: Math.round(activity.distanceInMeters) * 100,
         },
         eventId: activity.eventInfo.id,
         eventSubgroupId: activity.eventInfo.eventSubGroupId,
@@ -103,7 +104,15 @@ export async function getResultsDNFRiders({
             avgHeartRate: Math.round(activity.avgHeartRate),
             heartRateMonitor: activity.avgHeartRate ? true : false,
           },
+          powerType: 'unknown', // Данных в активности нет, поэтому фикс.
         },
+
+        scoreHistory: {
+          newScore: 0,
+          previousScore: 0,
+          scoreChangeType: 'NO_CHANGE',
+        }, // Данных в активности нет, поэтому фикс.
+
         subgroupLabel: eventSubGroups.get(activity.eventInfo.subgroupEventLabel)!,
         speed: Math.round((activity.avgSpeedInMetersPerSecond * 360000) / 1000) / 100,
         isDisqualification: true,

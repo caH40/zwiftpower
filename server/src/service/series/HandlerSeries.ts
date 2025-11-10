@@ -51,6 +51,11 @@ export class HandlerSeries {
       const activityData = {
         durationInMilliseconds: result.activityData.durationInMilliseconds,
         subgroupLabel: result.subgroupLabel,
+        segmentDistanceInCentimeters: result.activityData.segmentDistanceInCentimeters,
+        segmentDistanceInMeters: result.activityData.segmentDistanceInMeters,
+        elevationInMeters: result.activityData.elevationInMeters,
+        calories: result.activityData.calories,
+        endDate: result.activityData.endDate,
       };
 
       // Инициализация, а установка расчетных данных на следующих этапах.

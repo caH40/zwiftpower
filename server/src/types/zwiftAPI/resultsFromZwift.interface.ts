@@ -17,10 +17,13 @@ export interface ResultEvent {
     endDate?: string;
     endWorldTime?: number;
     mapId?: number;
+    segmentDistanceInCentimeters: number;
     segmentDistanceInMeters: number;
     sport?: string;
+    timePenaltyMs?: number;
     worldId?: number;
   };
+
   bibNumber?: number;
   criticalP?: {
     criticalP15Seconds: number;
@@ -46,11 +49,17 @@ export interface ResultEvent {
   qualified?: boolean;
   rank: number;
   rankingValue?: number;
+  rankingValueWinnerDifference?: number;
+  scoreHistory: {
+    newScore: number;
+    previousScore: number;
+    scoreChangeType: 'NO_CHANGE' | string;
+  };
   sensorData: {
     avgWatts: number;
     heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
     pairedSteeringDevice?: boolean;
-    powerType?: string;
+    powerType: 'POWER_METER' | string;
     trainerDifficulty?: number;
   };
 }

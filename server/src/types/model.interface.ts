@@ -456,13 +456,23 @@ export interface ZwiftResultSchema {
     sport: string;
     durationInMilliseconds: number;
     segmentDistanceInMeters: number;
+    segmentDistanceInCentimeters: number;
+    elevationInMeters: number;
+    calories: number;
+  };
+
+  scoreHistory: {
+    newScore: number;
+    previousScore: number;
+    scoreChangeType: 'NO_CHANGE' | string;
   };
 
   sensorData: {
-    heartRateData: { avgHeartRate: number };
+    heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
     avgWatts: number;
-    powerType: string;
     pairedSteeringDevice: boolean;
+    powerType: 'POWER_METER' | string;
+    trainerDifficulty?: number;
   };
   wattsPerKg: number;
   speed?: number;
@@ -772,11 +782,16 @@ export type TStageResult = {
   profileId: number; // Zwift ID райдера.
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
+
   rank: TRank;
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
-    // label: 0 | 1 | 2 | 3 | 4 | 5;
     subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
+    segmentDistanceInCentimeters: number;
+    segmentDistanceInMeters: number;
+    elevationInMeters: number;
+    calories: number;
+    endDate: string;
   };
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   category: TRaceSeriesCategories | null; // Категория на этапе по которой идет классификация. null - не определена категория в случае собственных категорий в серии, а расчет не подходит под эти категории.
@@ -795,7 +810,7 @@ export type TStageResult = {
     avgWatts: number;
     heartRateData: { avgHeartRate: number; heartRateMonitor: boolean };
     pairedSteeringDevice?: boolean;
-    powerType?: string;
+    powerType?: 'POWER_METER' | string;
     trainerDifficulty?: number;
   };
   createdAt: Date;

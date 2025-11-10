@@ -103,7 +103,7 @@ export interface UserResult
   sensorData: {
     heartRateData: { avgHeartRate: Additional };
     avgWatts: Additional;
-    powerType: string;
+    powerType: 'POWER_METER' | string;
   };
   wattsPerKg: Additional;
   cpBestEfforts: CpBestEffortsAdditional[];
