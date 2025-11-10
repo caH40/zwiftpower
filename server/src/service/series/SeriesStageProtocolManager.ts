@@ -3,13 +3,13 @@ import { addAgeAndFlagNew } from '../protocol/age-and-flag.js';
 import { FinishGaps } from '../../utils/FinishGaps.js';
 import { StageResultModel } from '../../Model/StageResult.js';
 import { NSeriesModel } from '../../Model/NSeries.js';
-import { TSeriesType, TStageResult } from '../../types/model.interface.js';
-import { TourGCManager } from './tour/TourGCManager.js';
-import { TResponseService } from '../../types/http.interface.js';
 import { SeriesCategoryService } from './category/SeriesCategory.js';
 import { StageResultRepository } from '../../repositories/StageResult.js';
+import { GCProviderFactory } from './GCProviderFactory.js';
 
 // types
+import { TSeriesType, TStageResult } from '../../types/model.interface.js';
+import { TResponseService } from '../../types/http.interface.js';
 
 /**
  * Класс создания (обновления) протоколов серий и туров.
@@ -31,35 +31,10 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     // Удаление старого и создание нового финишного протокола этапа stageOrder серии seriesId.
     const { seriesType } = await this.buildStageProtocol(stageOrder);
 
-    const initialResponse = {
-      data: null,
-      message: `📝 Тип '${seriesType}' будет реализован в ближайшем обновлении`,
-    };
+    const gcProvider = new GCProviderFactory(this.seriesId);
+    const gcHandler = gcProvider.getHandler(seriesType);
 
-    switch (seriesType) {
-      case 'series':
-        return initialResponse;
-
-      case 'tour': {
-        // Обновление генеральной классификации серии.
-        const tourGC = new TourGCManager(this.seriesId);
-        const res = await tourGC.update();
-
-        return {
-          data: null,
-          message: `Созданы результаты этапа №${stageOrder}. ${res.message}`,
-        };
-      }
-
-      case 'catchUp':
-        return initialResponse;
-
-      case 'criterium':
-        return initialResponse;
-
-      default:
-        throw new Error(`❌ Неподдерживаемый тип серии: ${seriesType}`);
-    }
+    return await gcHandler.update();
   }
 
   /**
