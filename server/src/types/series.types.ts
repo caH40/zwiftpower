@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
 import { TStagesResultsForGC } from './mongodb-response.types';
 import { TRaceSeriesCategories } from './types.interface';
@@ -62,3 +63,16 @@ export type TRacingScoreRange = {
 
 // Тип: отображение riderId → список его результатов
 export type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
+
+export type TSimpleStage = {
+  category: TRaceSeriesCategories | null;
+  stageOrder: number;
+  durationInMilliseconds: number;
+  finishPoints: number;
+  modifiedCategory?: {
+    value: TRaceSeriesCategories | null;
+    moderator?: Types.ObjectId;
+    modifiedAt: Date;
+    reason?: string;
+  };
+};

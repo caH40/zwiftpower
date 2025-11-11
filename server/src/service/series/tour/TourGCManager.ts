@@ -1,23 +1,20 @@
-import { Types } from 'mongoose';
-
 import { categoriesForRankings as rankings } from '../../../assets/category.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
 import { SeriesRepository } from '../../../repositories/Series.js';
 import { AbstractBaseGCManager } from '../AbstractBaseGC.js';
-import { createRidersResults } from '../ridersResults.js';
+import { createRidersResults, createStagesForRider } from '../utils.js';
+import { getOrThrow } from '../../../utils/getOrThrow.js';
+import { SeriesClassificationRepository } from '../../../repositories/SeriesClassification.js';
 
 // types
 import { TDisqualification, TSeriesStage } from '../../../types/model.interface.js';
-import { TStagesResultsForGC } from '../../../types/mongodb-response.types.js';
 import {
   TAllStageOrders,
   TRaceSeriesCategories,
   TGCForSave,
 } from '../../../types/types.interface.js';
 import { TResponseService } from '../../../types/http.interface.js';
-import { TRidersResults } from '../../../types/series.types.js';
-import { SeriesClassificationRepository } from '../../../repositories/SeriesClassification.js';
-import { getOrThrow } from '../../../utils/getOrThrow.js';
+import { TRidersResults, TSimpleStage } from '../../../types/series.types.js';
 
 /**
  * Класс управления/создания генеральной классификации тура.
@@ -117,7 +114,7 @@ export class TourGCManager extends AbstractBaseGCManager {
       }
 
       // Создание списка этапов из серии заездов в которых участвовал райдер.
-      const riderParticipationStages = this.createStagesForRider({
+      const riderParticipationStages = createStagesForRider({
         allStageOrders: stageOrders.allStageOrders,
         results,
       });
@@ -228,18 +225,7 @@ export class TourGCManager extends AbstractBaseGCManager {
    * категорией в Главном зачете.
    */
   private getFinalCategory = (
-    stages: {
-      category: TRaceSeriesCategories | null;
-      stageOrder: number;
-      durationInMilliseconds: number;
-      finishPoints: number;
-      modifiedCategory?: {
-        value: TRaceSeriesCategories | null;
-        moderator?: Types.ObjectId;
-        modifiedAt: Date;
-        reason?: string;
-      };
-    }[]
+    stages: TSimpleStage[]
     // lastStageOrder: number
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
@@ -289,49 +275,5 @@ export class TourGCManager extends AbstractBaseGCManager {
     allStageOrders.sort((a, b) => a - b);
 
     return { requiredStageOrders, allStageOrders };
-  };
-
-  /**
-   * Создание списка этапов с необходимыми данными, в которых участвовал райдер.
-   * @param {Object} param0 - Входящий параметр.
-   * @param {TStagesResultsForGC[]} param0.results - Результаты текущего райдера в серии заездов.
-   * @param {TStagesResultsForGC[]} param0.allStageOrders - Номера всех этапов в серии заездов.
-   */
-  private createStagesForRider = ({
-    allStageOrders,
-    results,
-  }: {
-    allStageOrders: number[];
-    results: TStagesResultsForGC[];
-  }) => {
-    return allStageOrders.map((stageOrder) => {
-      const stage = results.find((s) => s.order === stageOrder);
-
-      if (stage) {
-        return {
-          category: stage.category,
-          profileData: stage.profileData,
-          stageOrder: stage.order,
-          durationInMilliseconds: stage.activityData.durationInMilliseconds,
-          finishPoints: stage.points?.finishPoints || 0,
-          modifiedCategory: stage.modifiedCategory,
-          distanceInMeters: stage.activityData.segmentDistanceInMeters || 0,
-          elevationInMeters: stage.activityData.elevationInMeters || 0,
-          calories: stage.activityData.calories || 0,
-        };
-      } else {
-        // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
-        return {
-          category: null,
-          profileData: null,
-          stageOrder: stageOrder,
-          durationInMilliseconds: 0,
-          finishPoints: 0,
-          distanceInMeters: 0,
-          elevationInMeters: 0,
-          calories: 0,
-        };
-      }
-    });
   };
 }
