@@ -13,7 +13,7 @@ import {
 } from '../../types/mongodb-response.types.js';
 import { TGeneralClassificationDto, TStagesPublicDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { TSeries } from '../../types/model.interface.js';
+import { TSeries, TSeriesType } from '../../types/model.interface.js';
 import {
   TPublicSeriesServiceFilterStagesParams,
   TPublicSeriesServiceGetStagesParams,
@@ -90,24 +90,21 @@ export class PublicSeriesGCService {
     urlSlug: string
   ): Promise<TResponseService<TGeneralClassificationDto>> => {
     // Данные по Серии заездов.
-    const seriesOneDB = await getOrThrow(
+    const { _id, gcResultsUpdatedAt, name, type } = await getOrThrow(
       this.seriesRepository.getResultsUpdateDate(urlSlug),
       `Не найдена Серия заездов с urlSlug: "${urlSlug}"`
     );
 
     // Получение генеральной классификации серии заездов.
     const generalClassification = await SeriesClassificationModel.find({
-      seriesId: seriesOneDB._id,
+      seriesId: _id,
     }).lean<TGeneralClassificationDB[]>();
 
-    const gcResultsUpdatedAt = seriesOneDB.gcResultsUpdatedAt;
-
-    // Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
-    const sortedGC = this.sortClassifications(generalClassification);
+    const sortedGC = this.sortDefaultClassifications(generalClassification, type);
 
     return {
       data: generalClassificationDto(sortedGC, gcResultsUpdatedAt),
-      message: `Генеральная классификация серии "${seriesOneDB.name}"`,
+      message: `Генеральная классификация серии "${name}"`,
     };
   };
 
@@ -181,8 +178,9 @@ export class PublicSeriesGCService {
   /**
    * Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
    */
-  private sortClassifications = (
-    classifications: TGeneralClassificationDB[]
+  private sortDefaultClassifications = (
+    classifications: TGeneralClassificationDB[],
+    seriesType: TSeriesType
   ): TGeneralClassificationDB[] => {
     const { valid, dsq } = classifications.reduce<{
       valid: TGeneralClassificationDB[];
@@ -190,7 +188,11 @@ export class PublicSeriesGCService {
     }>(
       (acc, cur) => {
         // Сортировка этапов внутри результата по возрастанию номера этапа в серии заездов.
-        cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
+        if (seriesType === 'endurance') {
+          cur.stages.sort((a, b) => b.distanceInMeters - a.distanceInMeters);
+        } else {
+          cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
+        }
 
         if (cur.disqualification?.status) {
           acc.dsq.push(cur);
@@ -206,4 +208,13 @@ export class PublicSeriesGCService {
 
     return [...valid, ...dsq];
   };
+
+  // /**
+  //  * Сортирует классификацию для типа Endurance.
+  //  */
+  // private sortEnduranceClassifications = (
+  //   classifications: TGeneralClassificationDB[]
+  // ): TGeneralClassificationDB[] => {
+  //   return classifications;
+  // };
 }
