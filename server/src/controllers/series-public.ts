@@ -6,12 +6,14 @@ import { handleErrorInController } from '../errors/error.js';
 
 import { PublicSeriesService } from '../service/series/PublicSeries.js';
 import { TEventStatus } from '../types/types.interface.js';
+import { PublicSeriesGCService } from '../service/series/PublicSeriesGC.js';
 
 /**
  * Контроллер работы с сущностью "Серия заездов"для публичных запросов.
  */
 export class SeriesPublicController {
-  publicSeriesService: PublicSeriesService;
+  private publicSeriesService: PublicSeriesService;
+  private publicSeriesGCService: PublicSeriesGCService = new PublicSeriesGCService();
 
   constructor() {
     this.publicSeriesService = new PublicSeriesService();
@@ -78,7 +80,7 @@ export class SeriesPublicController {
       }
 
       // Вызов сервиса.
-      const response = await this.publicSeriesService.getStages({ urlSlug, status });
+      const response = await this.publicSeriesGCService.getStages({ urlSlug, status });
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
@@ -100,7 +102,7 @@ export class SeriesPublicController {
       }
 
       // Вызов сервиса.
-      const response = await this.publicSeriesService.getStageResults({
+      const response = await this.publicSeriesGCService.getStageResults({
         urlSlug,
         stageOrder: +stageOrder,
       });
@@ -124,7 +126,7 @@ export class SeriesPublicController {
       }
 
       // Вызов сервиса.
-      const response = await this.publicSeriesService.getGeneralClassification(urlSlug);
+      const response = await this.publicSeriesGCService.getGeneralClassification(urlSlug);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
