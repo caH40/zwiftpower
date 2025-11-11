@@ -33,14 +33,10 @@ export class SeriesRepository {
 
   getResultsUpdateDate = async (
     urlSlug: string
-  ): Promise<{
-    _id: Types.ObjectId;
-    name: string;
-    gcResultsUpdatedAt?: Date;
-  } | null> => {
+  ): Promise<Pick<TSeries, '_id' | 'name' | 'gcResultsUpdatedAt' | 'type'> | null> => {
     return NSeriesModel.findOne(
       { urlSlug },
-      { _id: true, name: true, gcResultsUpdatedAt: true }
+      { _id: 1, name: 1, gcResultsUpdatedAt: 1, type: 1 }
     ).lean();
   };
 

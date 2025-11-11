@@ -661,7 +661,7 @@ export type TBanCode = (typeof banCodes)[number];
  * Тип, описывающий серию или тур соревнований.
  */
 export type TSeries = {
-  _id?: mongoose.Schema.Types.ObjectId; // Уникальный идентификатор серии.
+  _id?: Types.ObjectId; // Уникальный идентификатор серии.
   dateEnd: Date; // Дата окончания серии.
   dateStart: Date; // Дата начала серии.
   description?: string; // Полное описание серии.

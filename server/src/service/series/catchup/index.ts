@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 import { resultsSeriesDto } from '../../../dto/resultsSeries.dto.js';
 import { getCurrentEvents } from './events.js';
@@ -12,7 +12,7 @@ import { getLeaderboardCatchup } from './leaderboard.js';
  * Все победители Эвентов 'Догонялок' и сводные результаты
  * @param seriesId - _id серии заездов.
  */
-export async function getResultsSeriesCatchup(seriesId?: mongoose.Schema.Types.ObjectId) {
+export async function getResultsSeriesCatchup(seriesId?: Types.ObjectId) {
   if (!seriesId) {
     throw new Error('Не получен seriesId для догонялок!');
   }
