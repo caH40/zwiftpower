@@ -3,6 +3,7 @@ import { StageResultModel } from '../Model/StageResult.js';
 import { FilterQuery } from 'mongoose';
 import { TStageResult } from '../types/model.interface.js';
 import { TRaceSeriesCategories } from '../types/types.interface.js';
+import { TStagesResultsForGC } from '../types/mongodb-response.types.js';
 
 export class StageResultRepository {
   /**
@@ -66,5 +67,26 @@ export class StageResultRepository {
    */
   async getAllStageResultsBySeriesId(_id: string): Promise<TStageResult[]> {
     return await StageResultModel.find({ series: _id }).lean();
+  }
+
+  /**
+   * Все результаты текущей серии заездов.
+   */
+  async getAllStagesResults(seriesId: string): Promise<TStagesResultsForGC[]> {
+    return StageResultModel.find(
+      { series: seriesId },
+      {
+        order: true,
+        profileId: true,
+        profileData: true,
+        activityData: true,
+        category: true,
+        rank: true,
+        points: true,
+        disqualification: true,
+        teamSquadAtRace: true,
+        modifiedCategory: true,
+      }
+    ).lean<TStagesResultsForGC[]>();
   }
 }

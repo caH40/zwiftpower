@@ -1,4 +1,5 @@
 import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
+import { TStagesResultsForGC } from './mongodb-response.types';
 import { TRaceSeriesCategories } from './types.interface';
 
 /**
@@ -58,3 +59,6 @@ export type TRacingScoreRange = {
     max: number;
   };
 };
+
+// Тип: отображение riderId → список его результатов
+export type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;

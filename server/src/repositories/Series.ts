@@ -17,4 +17,11 @@ export class SeriesRepository {
   getById = async (seriesId: string) => {
     return NSeriesModel.findById(seriesId).lean<TSeries>();
   };
+
+  updateResultModificationDate = async (seriesId: string): Promise<void> => {
+    NSeriesModel.findOneAndUpdate(
+      { _id: seriesId },
+      { $set: { gcResultsUpdatedAt: new Date() } }
+    );
+  };
 }

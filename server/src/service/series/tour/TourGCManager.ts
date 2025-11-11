@@ -1,11 +1,10 @@
 import { Types } from 'mongoose';
+
 import { categoriesForRankings as rankings } from '../../../assets/category.js';
-import { NSeriesModel } from '../../../Model/NSeries.js';
-import { SeriesClassificationModel } from '../../../Model/SeriesClassification.js';
-import { StageResultModel } from '../../../Model/StageResult.js';
 import { FinishGaps } from '../../../utils/FinishGaps.js';
 import { SeriesRepository } from '../../../repositories/Series.js';
 import { AbstractBaseGCManager } from '../AbstractBaseGC.js';
+import { createRidersResults } from '../ridersResults.js';
 
 // types
 import { TDisqualification, TSeriesStage } from '../../../types/model.interface.js';
@@ -16,15 +15,15 @@ import {
   TGCForSave,
 } from '../../../types/types.interface.js';
 import { TResponseService } from '../../../types/http.interface.js';
-
-// Тип: отображение riderId → список его результатов
-type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
+import { TRidersResults } from '../../../types/series.types.js';
+import { SeriesClassificationRepository } from '../../../repositories/SeriesClassification.js';
 
 /**
  * Класс управления/создания генеральной классификации тура.
  */
 export class TourGCManager extends AbstractBaseGCManager {
   private seriesRepository: SeriesRepository;
+  private gcRepository: SeriesClassificationRepository = new SeriesClassificationRepository();
 
   constructor(public seriesId: string) {
     super(seriesId);
@@ -45,7 +44,7 @@ export class TourGCManager extends AbstractBaseGCManager {
     const stageOrders = this.getStageOrders(seriesDB.stages);
 
     // Группировка результатов по райдерам.
-    const riderResults = await this.createRidersResults();
+    const riderResults = await createRidersResults(this.seriesId);
 
     // Создание генеральной классификации серии заездов.
     const gc = this.createGC(riderResults, stageOrders);
@@ -61,61 +60,18 @@ export class TourGCManager extends AbstractBaseGCManager {
     });
 
     // Удаление предыдущих данных по этой серии.
-    await SeriesClassificationModel.deleteMany({ seriesId: this.seriesId });
+    await this.gcRepository.deleteMany(this.seriesId);
 
     // Сохранение в БД.
-    await SeriesClassificationModel.create(gc);
+    await this.gcRepository.create(gc);
 
-    await NSeriesModel.findOneAndUpdate(
-      { _id: this.seriesId },
-      { $set: { gcResultsUpdatedAt: new Date() } }
-    );
+    // Изменение даты когда обновлялись результаты серии.
+    await this.seriesRepository.getById(this.seriesId);
 
     return {
       data: null,
       message: `Обновлена (создана) генеральная классификация серии заездов "${seriesDB.name}"`,
     };
-  };
-
-  /**
-   * Приватный метод для группировки результатов по райдерам.
-   * Возвращает Map, где ключ — profileId райдера, а значение — массив его результатов.
-   */
-  private createRidersResults = async (): Promise<TRidersResults> => {
-    // Все результаты текущей серии заездов.
-    const allStagesResults = await StageResultModel.find(
-      { series: this.seriesId },
-      {
-        order: true,
-        profileId: true,
-        profileData: true,
-        activityData: true,
-        category: true,
-        rank: true,
-        points: true,
-        disqualification: true,
-        teamSquadAtRace: true,
-        modifiedCategory: true,
-      }
-    ).lean<TStagesResultsForGC[]>();
-
-    // Группируем все результаты этапов по riderId (profileId).
-    const riderResultsInMap = allStagesResults.reduce<TRidersResults>((acc, cur) => {
-      // Получаем текущие результаты райдера, если они есть.
-      const existing = acc.get(cur.profileId);
-
-      // Создаём новый массив результатов:
-      // если уже есть результаты — добавляем текущий к копии.
-      // если нет — создаём массив с одним элементом.
-      const updatedResults = existing ? [...existing.results, cur] : [cur];
-
-      // Обновляем Map: либо перезаписываем с новым массивом, либо добавляем новую запись.
-      acc.set(cur.profileId, { results: updatedResults });
-
-      return acc;
-    }, new Map());
-
-    return riderResultsInMap;
   };
 
   /**
