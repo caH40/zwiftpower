@@ -4,7 +4,12 @@ import { useLocation } from 'react-router-dom';
 
 import { fetchGeneralClassification } from '../../../redux/features/api/series/fetchSeries';
 import { resetGeneralClassificationStages } from '../../../redux/features/api/series/seriesPublicSlice';
-import JSONBlock from '../../JSONBlock/JSONBlock';
+import { getCategoriesSortedDry } from '../../UI/Filters/FilterCategory/categoriesSort';
+import NavBarGCTable from '../../UI/NavBarGCTable/NavBarGCTable';
+import TableGCEndurance from '../../Tables/TableGCEndurance/TableGCEndurance';
+import ServiceBox from '../../ServiceBox/ServiceBox';
+
+import styles from './EnduranceComponent.module.css';
 
 /**
  * Компонент отображения результатов серии заездов типа Endurance.
@@ -15,10 +20,13 @@ export default function EnduranceComponent() {
     seriesPublicOne: { urlSlug, orderedStages },
   } = useSelector((state) => state.seriesPublic);
 
+  const filteredOrderedStages = [...new Set(orderedStages)];
+
   const location = useLocation();
   const dispatch = useDispatch();
 
   const isParentPath = location.pathname === `/series/${urlSlug}/results`;
+
   // Запрос на получение данных для итоговых страниц серии.
   useEffect(() => {
     if (!isParentPath) {
@@ -29,11 +37,31 @@ export default function EnduranceComponent() {
     return () => dispatch(resetGeneralClassificationStages());
   }, [isParentPath, dispatch, urlSlug]);
 
-  console.log(generalClassification);
-
   return (
     <div>
-      <JSONBlock json={generalClassification} />{' '}
+      {isParentPath && filteredOrderedStages && generalClassification && (
+        <>
+          <nav className={styles.block__nav}>
+            <NavBarGCTable
+              results={generalClassification.results}
+              categoriesButton={getCategoriesSortedDry({
+                results: generalClassification.results,
+                getCategory: (r) => r.finalCategory,
+                needAbsolute: true,
+              })}
+            />
+          </nav>
+
+          <section className={styles.wrapper__wide}>
+            <TableGCEndurance
+              results={generalClassification.results}
+              orderedStages={filteredOrderedStages}
+            />
+
+            <ServiceBox updated={generalClassification.gcResultsUpdatedAt} />
+          </section>
+        </>
+      )}
     </div>
   );
 }

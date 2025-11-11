@@ -188,11 +188,7 @@ export class PublicSeriesGCService {
     }>(
       (acc, cur) => {
         // Сортировка этапов внутри результата по возрастанию номера этапа в серии заездов.
-        if (seriesType === 'endurance') {
-          cur.stages.sort((a, b) => b.distanceInMeters - a.distanceInMeters);
-        } else {
-          cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
-        }
+        cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
 
         if (cur.disqualification?.status) {
           acc.dsq.push(cur);
@@ -204,17 +200,21 @@ export class PublicSeriesGCService {
       { valid: [], dsq: [] }
     );
 
-    valid.sort((a, b) => a.totalTimeInMilliseconds - b.totalTimeInMilliseconds);
+    if (seriesType === 'endurance') {
+      valid.sort((a, b) => {
+        const rankA = a.rank?.absolute;
+        const rankB = b.rank?.absolute;
+
+        if (rankA == null || rankB == null) {
+          return 0;
+        }
+
+        return rankA - rankB;
+      });
+    } else {
+      valid.sort((a, b) => a.totalTimeInMilliseconds - b.totalTimeInMilliseconds);
+    }
 
     return [...valid, ...dsq];
   };
-
-  // /**
-  //  * Сортирует классификацию для типа Endurance.
-  //  */
-  // private sortEnduranceClassifications = (
-  //   classifications: TGeneralClassificationDB[]
-  // ): TGeneralClassificationDB[] => {
-  //   return classifications;
-  // };
 }

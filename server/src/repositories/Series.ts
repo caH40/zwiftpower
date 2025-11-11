@@ -25,7 +25,7 @@ export class SeriesRepository {
   };
 
   updateResultModificationDate = async (seriesId: string): Promise<void> => {
-    NSeriesModel.findOneAndUpdate(
+    await NSeriesModel.findOneAndUpdate(
       { _id: seriesId },
       { $set: { gcResultsUpdatedAt: new Date() } }
     );

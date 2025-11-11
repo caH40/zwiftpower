@@ -46,7 +46,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
     await this.gcRepository.create(gc);
 
     // Изменение даты когда обновлялись результаты серии.
-    await this.seriesRepository.getById(this.seriesId);
+    await this.seriesRepository.updateResultModificationDate(this.seriesId);
 
     return {
       data: null,
@@ -144,7 +144,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
     }
 
     const resultsSorted = results.toSorted(
-      (a, b) => b.totalDistanceInMeters - b.totalDistanceInMeters
+      (a, b) => b.totalDistanceInMeters - a.totalDistanceInMeters
     );
 
     const categoriesForRankings = { ...rankings };

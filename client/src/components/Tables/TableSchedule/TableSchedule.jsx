@@ -28,7 +28,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
 
   useEffect(() => {
     return () => dispatch(resetEventsSchedule());
-  }, []);
+  }, [dispatch]);
 
   return (
     <table className={cx('table')}>
