@@ -17,6 +17,7 @@ import {
 import { TResponseService } from '../../../types/http.interface.js';
 import { TRidersResults } from '../../../types/series.types.js';
 import { SeriesClassificationRepository } from '../../../repositories/SeriesClassification.js';
+import { getOrThrow } from '../../../utils/getOrThrow.js';
 
 /**
  * Класс управления/создания генеральной классификации тура.
@@ -34,11 +35,10 @@ export class TourGCManager extends AbstractBaseGCManager {
    * Пересчет всех итоговых таблиц.
    */
   public update = async (): Promise<TResponseService<null>> => {
-    const seriesDB = await this.seriesRepository.getStageIds(this.seriesId);
-
-    if (!seriesDB) {
-      throw new Error(`Серия с ID ${this.seriesId} не найдена.`);
-    }
+    const seriesDB = await getOrThrow(
+      this.seriesRepository.getStageIds(this.seriesId),
+      `Серия с ID ${this.seriesId} не найдена.`
+    );
 
     // Список обязательных этапов для расчета генеральной классификации, отфильтрованный от дублей.
     const stageOrders = this.getStageOrders(seriesDB.stages);

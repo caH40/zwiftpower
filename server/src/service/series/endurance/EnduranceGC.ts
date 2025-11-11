@@ -1,5 +1,6 @@
 import { SeriesRepository } from '../../../repositories/Series.js';
 import { SeriesClassificationRepository } from '../../../repositories/SeriesClassification.js';
+import { getOrThrow } from '../../../utils/getOrThrow.js';
 import { AbstractBaseGCManager } from '../AbstractBaseGC.js';
 import { createRidersResults } from '../ridersResults.js';
 
@@ -18,11 +19,10 @@ export class EnduranceGC extends AbstractBaseGCManager {
    * Пересчет всех итоговых таблиц.
    */
   update = async () => {
-    const seriesDB = await this.seriesRepository.getStageIds(this.seriesId);
-
-    if (!seriesDB) {
-      throw new Error(`Серия с ID ${this.seriesId} не найдена.`);
-    }
+    const seriesDB = await getOrThrow(
+      this.seriesRepository.getStageIds(this.seriesId),
+      `Серия с ID ${this.seriesId} не найдена.`
+    );
 
     // Группировка результатов по райдерам.
     const riderResults = await createRidersResults(this.seriesId);
@@ -41,7 +41,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
 
     return {
       data: null,
-      message: `Обновлена (создана) генеральная классификация серии заездов "${'seriesDB.name'}"`,
+      message: `Обновлена (создана) генеральная классификация серии заездов "${seriesDB.name}"`,
     };
   };
 
