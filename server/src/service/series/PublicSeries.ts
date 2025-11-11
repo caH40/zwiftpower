@@ -1,13 +1,17 @@
+import { Types } from 'mongoose';
+
 import { NSeriesModel } from '../../Model/NSeries.js';
 import { seriesAllPublicDto, seriesOnePublicDto, stagesPublicDto } from '../../dto/series.js';
 import { getResultsSeriesCatchup } from './catchup/index.js';
 import { TourResults } from './tour/TourResults.js';
 import { Organizer } from '../../Model/Organizer.js';
+import { SeriesClassificationModel } from '../../Model/SeriesClassification.js';
+import { generalClassificationDto } from '../../dto/resultsSeries.dto.js';
+import { getOrThrow } from '../../utils/getOrThrow.js';
+import { SeriesRepository } from '../../repositories/Series.js';
 
 // types
 import {
-  TSeriesOnePublicResponseDB,
-  TSeriesAllPublicResponseDB,
   TStagesPublicResponseDB,
   TGeneralClassificationDB,
 } from '../../types/mongodb-response.types.js';
@@ -25,14 +29,12 @@ import {
   TPublicSeriesServiceGetStagesParams,
   TPublicSeriesServiceSortStagesParams,
 } from '../../types/types.interface.js';
-import { SeriesClassificationModel } from '../../Model/SeriesClassification.js';
-import { Types } from 'mongoose';
-import { generalClassificationDto } from '../../dto/resultsSeries.dto.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
  */
 export class PublicSeriesService {
+  private seriesRepository: SeriesRepository = new SeriesRepository();
   constructor() {}
 
   /**
@@ -43,17 +45,16 @@ export class PublicSeriesService {
   ): Promise<TResponseService<TGroupedSeriesForClient>> {
     // Получение _id организатора если есть запрос по organizerSlug, для последующего поиска Series
     const organizer = organizerSlug
-      ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean()
+      ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean<{
+          _id: Types.ObjectId;
+        }>()
       : null;
 
     // Формирование строки поиска.
     const searchQuery = { ...(organizer && { organizer }) };
 
     // Получение всех Серий заезда, или только Серий заездов организатора, если есть organizerSlug.
-    const seriesDB = await NSeriesModel.find(searchQuery)
-      .populate({ path: 'organizer', select: ['name', 'shortName'] })
-      .populate({ path: 'stages.event', select: ['name', 'id', 'eventStart'] })
-      .lean<TSeriesAllPublicResponseDB[]>();
+    const seriesDB = await this.seriesRepository.getAllForPublicGC(searchQuery);
 
     const seriesAfterDto = seriesAllPublicDto(seriesDB);
 
@@ -68,17 +69,10 @@ export class PublicSeriesService {
    * FIXME: Может добавить options для сужения запроса,
    */
   public async get(urlSlug: string): Promise<TResponseService<TSeriesOnePublicDto>> {
-    const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
-      .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
-      .populate({
-        path: 'stages.event',
-        select: ['id', 'name', 'eventStart'],
-      })
-      .lean<TSeriesOnePublicResponseDB>();
-
-    if (!seriesOneDB) {
-      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
-    }
+    const seriesOneDB = await getOrThrow(
+      this.seriesRepository.getForPublicGC(urlSlug),
+      `Не найдена Серия заездов с urlSlug: "${urlSlug}"`
+    );
 
     // Фильтрация от этапов у которых нет id Эвента.
     const stagesFilteredAndSorted = seriesOneDB.stages
@@ -188,19 +182,10 @@ export class PublicSeriesService {
     urlSlug: string
   ): Promise<TResponseService<TGeneralClassificationDto>> => {
     // Данные по Серии заездов.
-    const seriesOneDB = await NSeriesModel.findOne(
-      { urlSlug },
-      { _id: true, name: true, gcResultsUpdatedAt: true }
-    ).lean<{
-      _id: Types.ObjectId;
-      name: string;
-      gcResultsUpdatedAt?: Date;
-    }>();
-
-    // Проверка, что данная серия существует в БД.
-    if (!seriesOneDB) {
-      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
-    }
+    const seriesOneDB = await getOrThrow(
+      this.seriesRepository.getResultsUpdateDate(urlSlug),
+      `Не найдена Серия заездов с urlSlug: "${urlSlug}"`
+    );
 
     // Получение генеральной классификации серии заездов.
     const generalClassification = await SeriesClassificationModel.find({
@@ -225,45 +210,10 @@ export class PublicSeriesService {
     urlSlug,
     status,
   }: TPublicSeriesServiceGetStagesParams): Promise<TResponseService<TStagesPublicDto[]>> => {
-    const seriesOneDB = await NSeriesModel.findOne({ urlSlug })
-      .populate({
-        path: 'stages.event',
-        select: [
-          'name',
-          'id',
-          'eventStart',
-          'imageUrl',
-          'typeRaceCustom',
-          'eventType',
-          'rulesSet',
-          'tags',
-          'started',
-          'cullingType',
-          'categoryEnforcement',
-        ],
-        populate: {
-          path: 'eventSubgroups',
-          select: [
-            'id',
-            'mapId',
-            'routeId',
-            'durationInSeconds',
-            'distanceInMeters',
-            'laps',
-            'distanceSummary',
-            'eventSubgroupStart',
-            'subgroupLabel',
-            'tags',
-            'totalEntrantCount',
-          ],
-        },
-      })
-      .populate({ path: 'organizer', select: ['logoFileInfo', '-_id'] })
-      .lean<TStagesPublicResponseDB>();
-
-    if (!seriesOneDB) {
-      throw new Error(`Не найдена Серия заездов с urlSlug: "${urlSlug}"`);
-    }
+    const seriesOneDB = await getOrThrow(
+      this.seriesRepository.getWithStageForGC(urlSlug),
+      `Не найдена Серия заездов с urlSlug: "${urlSlug}"`
+    );
 
     // Фильтрация этапов в зависимости от статуса с последующей сортировкой по дате старта.
     const filteredStages = this.filterStages({ stages: seriesOneDB.stages, status });

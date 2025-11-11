@@ -1,7 +1,13 @@
+import { Types } from 'mongoose';
 import { NSeriesModel } from '../Model/NSeries.js';
 
 // types
 import { TSeries } from '../types/model.interface.js';
+import {
+  TSeriesAllPublicResponseDB,
+  TSeriesOnePublicResponseDB,
+  TStagesPublicResponseDB,
+} from '../types/mongodb-response.types.js';
 
 export class SeriesRepository {
   /**
@@ -23,5 +29,75 @@ export class SeriesRepository {
       { _id: seriesId },
       { $set: { gcResultsUpdatedAt: new Date() } }
     );
+  };
+
+  getResultsUpdateDate = async (
+    urlSlug: string
+  ): Promise<{
+    _id: Types.ObjectId;
+    name: string;
+    gcResultsUpdatedAt?: Date;
+  } | null> => {
+    return NSeriesModel.findOne(
+      { urlSlug },
+      { _id: true, name: true, gcResultsUpdatedAt: true }
+    ).lean();
+  };
+
+  getWithStageForGC = async (urlSlug: string): Promise<TStagesPublicResponseDB | null> => {
+    return NSeriesModel.findOne({ urlSlug })
+      .populate({
+        path: 'stages.event',
+        select: [
+          'name',
+          'id',
+          'eventStart',
+          'imageUrl',
+          'typeRaceCustom',
+          'eventType',
+          'rulesSet',
+          'tags',
+          'started',
+          'cullingType',
+          'categoryEnforcement',
+        ],
+        populate: {
+          path: 'eventSubgroups',
+          select: [
+            'id',
+            'mapId',
+            'routeId',
+            'durationInSeconds',
+            'distanceInMeters',
+            'laps',
+            'distanceSummary',
+            'eventSubgroupStart',
+            'subgroupLabel',
+            'tags',
+            'totalEntrantCount',
+          ],
+        },
+      })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '-_id'] })
+      .lean<TStagesPublicResponseDB>();
+  };
+
+  getForPublicGC = async (urlSlug: string): Promise<TSeriesOnePublicResponseDB | null> => {
+    return NSeriesModel.findOne({ urlSlug })
+      .populate({ path: 'organizer', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
+      .populate({
+        path: 'stages.event',
+        select: ['id', 'name', 'eventStart'],
+      })
+      .lean<TSeriesOnePublicResponseDB>();
+  };
+
+  getAllForPublicGC = async (searchQuery: {
+    organizer?: { _id: Types.ObjectId };
+  }): Promise<TSeriesAllPublicResponseDB[]> => {
+    return NSeriesModel.find(searchQuery)
+      .populate({ path: 'organizer', select: ['name', 'shortName'] })
+      .populate({ path: 'stages.event', select: ['name', 'id', 'eventStart'] })
+      .lean<TSeriesAllPublicResponseDB[]>();
   };
 }
