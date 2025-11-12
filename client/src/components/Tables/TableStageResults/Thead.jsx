@@ -1,3 +1,4 @@
+import { filterColumn } from '../../../utils/table';
 import ColumnName from '../Th/ColumnName';
 
 import styles from '../Table.module.css';
@@ -8,11 +9,11 @@ import {
   raceResultsColumnsStart,
 } from './column-titles';
 
-function Thead({ isSeriesCreator, isAdmin }) {
+function Thead({ isSeriesCreator, isAdmin, hiddenColumns }) {
   return (
     <thead>
       <tr>
-        {raceResultsColumnsStart.map((column) => (
+        {filterColumn(raceResultsColumnsStart, hiddenColumns).map((column) => (
           <th key={column.id}>
             <div className={styles.th__box}>
               <ColumnName columnName={column.name} />

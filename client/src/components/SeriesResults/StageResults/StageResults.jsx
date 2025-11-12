@@ -43,6 +43,11 @@ export default function StageResults() {
     return () => dispatch(resetStageResults());
   }, [urlSlug, stageOrder, dispatch]);
 
+  const hiddenColumns =
+    seriesPublicOne?.type === 'endurance'
+      ? ['Место', 'Отставание от райдера впереди', 'Отставание от лидера']
+      : [];
+
   return (
     <section className={styles.wrapper}>
       {stageResults?.results && stageData && (
@@ -69,6 +74,7 @@ export default function StageResults() {
               stageStart={stageData.eventStart}
               isSeriesCreator={isSeriesCreator}
               urlSlug={urlSlug}
+              hiddenColumns={hiddenColumns}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />

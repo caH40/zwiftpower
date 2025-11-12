@@ -13,7 +13,7 @@ import TdRider from '../Td/TdRider';
 import TdGap from '../Td/TdGap';
 import TdWattsPerKg from '../Td/TdWattsPerKg';
 import TdRank from '../Td/TdRank';
-import TdDifferent from '../Td/TdDifferent';
+import ShowColumn from '../../../utils/table';
 import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
@@ -30,7 +30,7 @@ const cx = classnames.bind(styles);
 function TableStageResults({
   results,
   isSeriesCreator,
-
+  hiddenColumns,
   stageOrder,
   stageName,
   stageStart,
@@ -58,7 +58,12 @@ function TableStageResults({
           categoryLabel: filterCategory.name,
         })}
       </caption>
-      <Thead columnsCP={columnsCP} isSeriesCreator={isSeriesCreator} isAdmin={isAdmin} />
+      <Thead
+        hiddenColumns={hiddenColumns}
+        columnsCP={columnsCP}
+        isSeriesCreator={isSeriesCreator}
+        isAdmin={isAdmin}
+      />
 
       <tbody>
         {resultWithFinishTime?.map(
@@ -75,37 +80,57 @@ function TableStageResults({
                 className={cx('hover', { current: zwiftId === result.profileId })}
                 key={result._id}
               >
-                <td className={styles.centerTd}>
-                  <TdRank
-                    value={isAbsolute ? result.rank.absolute : result.rank.category}
-                    // isDsq={forDNF ? true : isDsq}
-                    // dsqType={forDNF ? 'DNF' : dsqType}
-                    dsqDescription={dsqDescription}
-                  />
-                </td>
+                {/* Столбец с названием Место */}
+                <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}>
+                  <td className={styles.centerTd}>
+                    <TdRank
+                      value={isAbsolute ? result.rank.absolute : result.rank.category}
+                      // isDsq={forDNF ? true : isDsq}
+                      // dsqType={forDNF ? 'DNF' : dsqType}
+                      dsqDescription={dsqDescription}
+                    />
+                  </td>
+                </ShowColumn>
+
                 <td>
                   <CategoryBox showLabel={true} label={category} circle={true} />
                 </td>
+
                 <TdRider profile={profile} profileId={result.profileId} />
+
+                {/* Столбец с названием Место */}
+                <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}></ShowColumn>
                 <td>
                   <FinishTime time={result.finishTime} />
                 </td>
-                <TdGap
-                  gap={
-                    isAbsolute
-                      ? result.gapsInCategories.absolute?.toLeader
-                      : result.gapsInCategories.category?.toLeader
-                  }
-                  dsq={isDsq}
-                />
-                <TdGap
-                  gap={
-                    isAbsolute
-                      ? result.gapsInCategories.absolute?.toPrev
-                      : result.gapsInCategories.category?.toPrev
-                  }
-                  dsq={isDsq}
-                />
+
+                {/* Столбец с названием Отставание от лидера */}
+                <ShowColumn columnName={'Отставание от лидера'} hiddenColumns={hiddenColumns}>
+                  <TdGap
+                    gap={
+                      isAbsolute
+                        ? result.gapsInCategories.absolute?.toLeader
+                        : result.gapsInCategories.category?.toLeader
+                    }
+                    dsq={isDsq}
+                  />
+                </ShowColumn>
+
+                {/* Столбец с названием Отставание от райдера впереди */}
+                <ShowColumn
+                  columnName={'Отставание от райдера впереди'}
+                  hiddenColumns={hiddenColumns}
+                >
+                  <TdGap
+                    gap={
+                      isAbsolute
+                        ? result.gapsInCategories.absolute?.toPrev
+                        : result.gapsInCategories.category?.toPrev
+                    }
+                    dsq={isDsq}
+                  />
+                </ShowColumn>
+
                 <TdWattsPerKg valueAddition={result.wattsPerKg} />
                 <td>{tdWatts(result.sensorData.avgWatts)}</td>
 
