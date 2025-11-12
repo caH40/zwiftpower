@@ -79,7 +79,6 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     });
 
     // Сортировка результатов и проставления ранкинга в каждой категории.
-
     const resultsWithRank = this.stageRanker.calculateRanking(resultsWithCategories, type);
 
     // Установка финишных гэпов (разрывов между участниками).

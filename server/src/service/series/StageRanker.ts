@@ -1,4 +1,5 @@
-import { RACE_SERIES_CATEGORIES, SERIES_TYPES } from '../../assets/constants.js';
+import { categoriesForRankings } from '../../assets/category.js';
+import { SERIES_TYPES } from '../../assets/constants.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
@@ -78,6 +79,8 @@ export class StageRanker {
    * Непосредственный расчет ранкинга и его установка результату.
    */
   private setRank = (results: TStageResult[]): TStageResult[] => {
+    const categories = { ...categoriesForRankings };
+
     return results.map((result) => {
       const currentCategory = result.modifiedCategory?.value ?? result.category;
       // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
@@ -85,10 +88,6 @@ export class StageRanker {
         result.rank.category = 0;
         return result;
       }
-
-      const categories = Object.fromEntries(
-        [...RACE_SERIES_CATEGORIES, 'absolute'].map((c) => [c, 1])
-      );
 
       // Присвоение финишного места в категории и увеличение соответствующего счетчика.
       result.rank.category = categories[currentCategory] ?? 0;
