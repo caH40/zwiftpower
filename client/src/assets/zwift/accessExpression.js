@@ -264,4 +264,29 @@ subgroup.label == 5`,
     },
     categoryEnforcement: true,
   },
+  {
+    id: 103,
+    name: 'EnduranceDefault',
+    label: 'Эндуренс. Стандарт.',
+    value: null,
+    paceValues: {
+      1: { from: 1, to: 6 },
+      2: { from: 1, to: 6 },
+      3: { from: 1, to: 6 },
+      4: { from: 1, to: 6 },
+      5: { from: 1, to: 6 },
+    },
+    description: JSON.stringify({
+      table: {
+        th: ['Группа', 'Описание'],
+        tds: [
+          ['C', 'Общая группа'],
+          ['E', 'Женская группа'],
+        ],
+        description: 'Группа E - женская, группа С - общая',
+      },
+    }),
+
+    categoryEnforcement: false,
+  },
 ];
