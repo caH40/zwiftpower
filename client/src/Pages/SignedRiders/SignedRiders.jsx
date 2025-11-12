@@ -16,7 +16,7 @@ import NavBarSignedRiders from '../../components/UI/NavBarSignedRiders/NavBarSig
 import SignedRidersLinks from '../../components/SignedRidersLinks/SignedRidersLinks';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
-import AdSeries from '../../components/AdSeries/AdSeries';
+import AdSeriesSolo from '../../components/AdSeries/AdSeriesSolo';
 
 import styles from './SignedRiders.module.css';
 
@@ -83,7 +83,7 @@ function SignedRiders() {
 
             {event?.seriesId?.urlSlug && (
               <div className={styles.wrapper__series}>
-                <AdSeries urlSlug={event.seriesId?.urlSlug} pageType="schedule" />
+                <AdSeriesSolo urlSlug={event.seriesId?.urlSlug} pageType="schedule" />
               </div>
             )}
 

@@ -15,7 +15,7 @@ import NavBarResultsRace from '../../components/UI/NavBarResultsRace/NavBarResul
 import { resetRaceResultsPage } from '../../redux/features/filterRaceResultsPageSlice';
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
-import AdSeries from '../../components/AdSeries/AdSeries';
+import AdSeriesSolo from '../../components/AdSeries/AdSeriesSolo';
 
 import styles from './RaceResults.module.css';
 
@@ -84,7 +84,7 @@ function RaceResults() {
 
         {eventData?.seriesId?.urlSlug && (
           <div className={styles.wrapper__series}>
-            <AdSeries urlSlug={eventData.seriesId?.urlSlug} pageType="results" />
+            <AdSeriesSolo urlSlug={eventData.seriesId?.urlSlug} pageType="results" />
           </div>
         )}
 
