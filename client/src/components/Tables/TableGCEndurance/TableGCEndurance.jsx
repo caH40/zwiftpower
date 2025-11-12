@@ -86,9 +86,10 @@ function TableGCEndurance({ results, isSeriesCreator, orderedStages }) {
               </td>
 
               <td>{secondesToTime(result.totalTimeInMilliseconds)}</td>
+              <td>{result.stagesCompleted}</td>
 
               {/* Столбцы с результатами этапов */}
-              {/* {result.stages.map((stage, index) => (
+              {result.stages.map((stage, index) => (
                 <td
                   key={stage.stageOrder}
                   className={cx({
@@ -96,14 +97,15 @@ function TableGCEndurance({ results, isSeriesCreator, orderedStages }) {
                   })}
                 >
                   <Link className={styles.link} to={`stage/${stage.stageOrder}`}>
-                    <FinishTime
-                      time={secondesToTimeThousandths(stage.durationInMilliseconds)}
-                      dsq={stage.disqualification}
-                      hideMs={true}
-                    />
+                    {stage.distanceInMeters ? (
+                      <>
+                        <span>{stage.distanceInMeters / 1000}</span>
+                        <span className={styles.small}>км</span>
+                      </>
+                    ) : null}
                   </Link>
                 </td>
-              ))} */}
+              ))}
             </tr>
           );
         })}

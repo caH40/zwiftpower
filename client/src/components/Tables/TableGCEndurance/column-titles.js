@@ -4,8 +4,9 @@ export const TableGCTourColumnsStart = [
   { name: 'Райдер', id: 3 },
   { name: 'Расстояние', id: 4, tooltip: 'Общее расстояние' },
   { name: 'Подъем', id: 5, tooltip: 'Общий набор высоты' },
-  { name: 'Огонь', id: 6, tooltip: 'Потраченные калории' },
+  { name: 'Огонь', id: 6, tooltip: 'Затраченные калории' },
   { name: 'Время', id: 7, tooltip: 'Общее время' },
+  { name: 'Финиш', id: 8, tooltip: 'Количество завершенных этапов' },
 ];
 
 /**

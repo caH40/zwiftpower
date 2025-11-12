@@ -16,11 +16,11 @@ function Thead({ isAdmin, stages }) {
           </th>
         ))}
 
-        {/* {gCTourStageColumns(stages).map((column) => (
+        {gCTourStageColumns(stages).map((column) => (
           <th key={column.id} style={{ minWidth: 90 }}>
             <ColumnName columnName={column.name} />
           </th>
-        ))} */}
+        ))}
 
         {isAdmin && (
           <th>
