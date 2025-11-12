@@ -119,11 +119,14 @@ export const fetchDeleteSeriesOrganizer = createAsyncThunk(
  */
 export const fetchGetSeries = createAsyncThunk(
   'nSeries/get',
-  async (organizerSlug, thunkAPI) => {
+  async ({ organizerSlug, seriesStatus } = {}, thunkAPI) => {
     try {
       const url = new URL('/api/series/organizers', serverExpress);
       if (organizerSlug) {
         url.pathname += `/${organizerSlug}`;
+      }
+      if (seriesStatus) {
+        url.searchParams.append('seriesStatus', seriesStatus);
       }
 
       const response = await myAxios({

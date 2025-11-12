@@ -128,9 +128,9 @@ export type TSeriesAllPublicDto = Omit<
 
 // Объявляем тип для группы
 export type TGroupedSeriesForClient = {
-  upcoming: TSeriesAllPublicDto[];
-  ongoing: TSeriesAllPublicDto[];
-  completed: TSeriesAllPublicDto[];
+  upcoming?: TSeriesAllPublicDto[];
+  ongoing?: TSeriesAllPublicDto[];
+  completed?: TSeriesAllPublicDto[];
 };
 
 /**

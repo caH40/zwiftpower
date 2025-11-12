@@ -7,6 +7,7 @@ import { handleErrorInController } from '../errors/error.js';
 import { PublicSeriesService } from '../service/series/PublicSeries.js';
 import { TEventStatus } from '../types/types.interface.js';
 import { PublicSeriesGCService } from '../service/series/PublicSeriesGC.js';
+import { SeriesZSchema } from '../utils/deserialization/series/all.js';
 
 /**
  * Контроллер работы с сущностью "Серия заездов"для публичных запросов.
@@ -29,8 +30,16 @@ export class SeriesPublicController {
     try {
       // Если передан organizerSlug, значит запрос только по сериям запрашиваемого организатора.
       const organizerSlug = req.params.organizerSlug;
+      const seriesStatus = req.query.seriesStatus;
+
+      const result = SeriesZSchema.safeParse({ organizerSlug, seriesStatus });
+
+      if (!result.success) {
+        return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+      }
+
       // Вызов сервиса.
-      const response = await this.publicSeriesService.getAll(organizerSlug);
+      const response = await this.publicSeriesService.getAll(result.data);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

@@ -24,7 +24,7 @@ export default function OrganizerSeries() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGetSeries(urlSlug));
+    dispatch(fetchGetSeries({ organizerSlug: urlSlug }));
 
     return () => dispatch(resetSeriesPublicAll());
   }, [dispatch, urlSlug]);

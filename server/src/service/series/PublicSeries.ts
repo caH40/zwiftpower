@@ -13,6 +13,7 @@ import {
   TSeriesOnePublicDto,
 } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { TSeriesStatus } from '../../types/types.interface.js';
 
 /**
  * Класс работы с Сериями заездов по запросам пользователей сайта.
@@ -24,9 +25,13 @@ export class PublicSeriesService {
   /**
    * Сервис получение всех Серий заездов.
    */
-  public async getAll(
-    organizerSlug?: string
-  ): Promise<TResponseService<TGroupedSeriesForClient>> {
+  public async getAll({
+    organizerSlug,
+    seriesStatus,
+  }: {
+    organizerSlug?: string;
+    seriesStatus?: TSeriesStatus;
+  }): Promise<TResponseService<TGroupedSeriesForClient>> {
     // Получение _id организатора если есть запрос по organizerSlug, для последующего поиска Series
     const organizer = organizerSlug
       ? await Organizer.findOne({ urlSlug: organizerSlug }, { _id: true }).lean<{
@@ -43,7 +48,7 @@ export class PublicSeriesService {
     const seriesAfterDto = seriesAllPublicDto(seriesDB);
 
     // Группировка карточек по статусам и сортировка внутри каждой группы.
-    const groupedSeries = this.groupByStatus(seriesAfterDto);
+    const groupedSeries = this.groupByStatus(seriesAfterDto, seriesStatus);
 
     return { data: groupedSeries, message: 'Серии заездов.' };
   }
@@ -108,7 +113,10 @@ export class PublicSeriesService {
    * @param series - Все события.
    * @returns - Группировка по статусам.
    */
-  private groupByStatus(series: TSeriesAllPublicDto[]) {
+  private groupByStatus(
+    series: TSeriesAllPublicDto[],
+    seriesStatus?: 'upcoming' | 'ongoing' | 'completed'
+  ) {
     const now = Date.now();
 
     // Объявляем тип для группировки
@@ -124,27 +132,27 @@ export class PublicSeriesService {
       const endDate = new Date(card.dateEnd).getTime();
 
       if (now < startDate) {
-        grouped.upcoming.push(card); // Событие еще не началось.
+        grouped.upcoming?.push(card); // Событие еще не началось.
       } else if (now >= startDate && now <= endDate) {
-        grouped.ongoing.push(card); // Событие проходит сейчас.
+        grouped.ongoing?.push(card); // Событие проходит сейчас.
       } else {
-        grouped.completed.push(card); // Событие завершилось.
+        grouped.completed?.push(card); // Событие завершилось.
       }
     });
 
     // Сортируем группу по дате начала.
-    grouped.upcoming.sort(
+    grouped.upcoming?.sort(
       (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
     );
     // Сортируем группу по дате начала.
-    grouped.ongoing.sort(
+    grouped.ongoing?.sort(
       (a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
     );
     // Завершенные серии сортируем по дате завершения.
-    grouped.completed.sort(
+    grouped.completed?.sort(
       (a, b) => new Date(b.dateEnd).getTime() - new Date(a.dateEnd).getTime()
     );
 
-    return grouped;
+    return seriesStatus ? { [seriesStatus]: grouped[seriesStatus] } : grouped;
   }
 }

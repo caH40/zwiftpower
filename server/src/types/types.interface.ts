@@ -32,7 +32,11 @@ import {
   TSubscriptionPeriodSlot,
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
-import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../assets/constants.js';
+import {
+  RACE_SERIES_CATEGORIES,
+  SERIES_STATUS,
+  ZWIFT_CATEGORIES,
+} from '../assets/constants.js';
 import { TTeamAppearance } from './team.types.js';
 
 interface ZwiftEventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroups'> {
@@ -931,6 +935,7 @@ export type TPublicSeriesServiceGetStagesParams = {
 };
 
 export type TEventStatus = 'all' | 'upcoming' | 'finished' | 'ongoing';
+export type TSeriesStatus = (typeof SERIES_STATUS)[number];
 
 /**
  * Тип данных параметров метода PublicSeriesService.filterStages
