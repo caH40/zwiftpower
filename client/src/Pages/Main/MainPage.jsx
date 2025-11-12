@@ -20,6 +20,7 @@ import BannerInformation from '../../components/BannerInformation/BannerInformat
 import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
 import styles from './MainPage.module.css';
 
@@ -29,7 +30,9 @@ function MainPage() {
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-  const { seriesPublic } = useSelector((state) => state.seriesPublic);
+  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
   const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const { isScreenLg: isDesktop } = useResize();
@@ -109,6 +112,8 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
+            <SkeletonSeriesAd status={fetchSeriesStatus} />
+            <SkeletonSeriesAd status={fetchSeriesStatus} />
             {/* Рекламный блок текущих Серий */}
             {seriesPublic?.ongoing.map((s) => (
               <AdSeries

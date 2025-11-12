@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchGetSeriesOne } from '../../redux/features/api/series/fetchSeries';
 import { getTimerLocal } from '../../utils/date-local';
 import { AdaptiveImage } from '../AdaptiveImage/AdaptiveImage';
-import { resetSeriesPublicOne } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './AdSeries.module.css';
 

@@ -11,6 +11,7 @@ import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
 import styles from './OrganizerPublicLayout.module.css';
 
@@ -19,7 +20,9 @@ import styles from './OrganizerPublicLayout.module.css';
  */
 export default function OrganizerPublicLayout() {
   const { isScreenXl: xl } = useResize();
-  const { seriesPublic } = useSelector((state) => state.seriesPublic);
+  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
@@ -70,6 +73,8 @@ export default function OrganizerPublicLayout() {
         {/* Боковая панель. */}
         {xl && (
           <aside className={styles.aside}>
+            <SkeletonSeriesAd status={fetchSeriesStatus} />
+            <SkeletonSeriesAd status={fetchSeriesStatus} />
             {/* Рекламный блок текущих Серий */}
             {seriesPublic?.ongoing.map((s) => (
               <AdSeries

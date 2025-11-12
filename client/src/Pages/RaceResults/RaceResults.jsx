@@ -16,6 +16,7 @@ import { resetRaceResultsPage } from '../../redux/features/filterRaceResultsPage
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import AdSeriesSolo from '../../components/AdSeries/AdSeriesSolo';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
 import styles from './RaceResults.module.css';
 
@@ -77,6 +78,7 @@ function RaceResults() {
       <section className={styles.wrapper}>
         {/* Скелетон загрузки для Постера */}
         <SkeletonDescEvent status={statusFetchResults} />
+        <SkeletonSeriesAd status={statusFetchResults} />
 
         {eventData?.id && statusFetchResults === 'resolved' && (
           <DescriptionEventZwift event={eventData} eventId={eventId} />

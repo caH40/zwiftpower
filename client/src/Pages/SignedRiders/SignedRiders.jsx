@@ -17,6 +17,7 @@ import SignedRidersLinks from '../../components/SignedRidersLinks/SignedRidersLi
 import SkeletonDescEvent from '../../components/SkeletonLoading/SkeletonDescEvent/SkeletonDescEvent';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 import AdSeriesSolo from '../../components/AdSeries/AdSeriesSolo';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
 import styles from './SignedRiders.module.css';
 
@@ -69,6 +70,7 @@ function SignedRiders() {
       <div className={styles.wrapper}>
         {/* Скелетон загрузки для Постера */}
         <SkeletonDescEvent status={statusFetchEventPreview} />
+        <SkeletonSeriesAd status={statusFetchEventPreview} />
 
         {event?.id && !event.started && statusFetchEventPreview === 'resolved' && (
           <>
