@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import { millisecondsIn90Days } from '../../assets/dates';
 import { useResize } from '../../hook/use-resize';
-// import { useAd } from '../../hook/useAd';
 import { lsPrefixStreams } from '../../constants/localstorage';
 import useBannerVisibility from '../../hook/useBannerVisibility';
 import useTitle from '../../hook/useTitle';
@@ -15,18 +14,14 @@ import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import AdContainer from '../../components/AdContainer/AdContainer';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
-// import GoprotectWidget from '../../components/AdPartner/GoprotectWidget/GoprotectWidget';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
 import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
+import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './MainPage.module.css';
-
-// рекламные блоки на странице
-// const inSideBar = 9;
-// const adOverFooter = 16;
-// const adNumbers = [inSideBar, adOverFooter];
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
@@ -34,11 +29,18 @@ function MainPage() {
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
+  const { seriesPublic } = useSelector((state) => state.seriesPublic);
   const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
   const isModerator = ['admin', 'moderator'].includes(role);
   const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+
+    return () => dispatch(resetSeriesPublicAll());
+  }, [dispatch]);
 
   // Хук установки заголовка h1 для страницы.
   useTitle('Ближайшие заезды Zwift');
@@ -57,8 +59,6 @@ function MainPage() {
 
     return () => dispatch(resetEventsPreview());
   }, [dispatch]);
-
-  // useAd(adNumbers);
 
   const shouldRenderCard = !!eventsPreview.length && statusFetchEvents === 'resolved';
 
@@ -109,18 +109,23 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
-            {/* Рекламный блок Серии догонялок */}
-            <AdSeries
-              urlSlug={'kom-on-komon-catch-up-race-202526'}
-              isCard={true}
-              pageType="schedule"
-            />
+            {/* Рекламный блок текущих Серий */}
+            {seriesPublic?.ongoing.map((s) => (
+              <AdSeries
+                key={s.urlSlug}
+                urlSlug={s.urlSlug}
+                posterUrls={s.posterUrls}
+                name={s.name}
+                dateStart={s.dateStart}
+                dateEnd={s.dateEnd}
+                isCard={true}
+                pageType="schedule"
+              />
+            ))}
 
             <div className={styles.spacer__donate}>
               <DonateBlock />
             </div>
-
-            {/* {isDesktop && <GoprotectWidget />} */}
 
             <MainInfo />
 
@@ -128,8 +133,6 @@ function MainPage() {
           </div>
         </aside>
       </div>
-
-      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }

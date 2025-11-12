@@ -2,29 +2,24 @@ import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
-// import { useAd } from '../../hook/useAd';
 import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
-
+import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 
 import styles from './OrganizerPublicLayout.module.css';
-
-// Рекламные блоки на странице.
-// const adOverFooter = 22;
-// const adUnderHeader = 23;
-// const adNumbers = [adOverFooter, adUnderHeader];
 
 /**
  * Страница Организатора заездов.
  */
 export default function OrganizerPublicLayout() {
-  const { isScreenXl: xl, isScreenLg: isDesktop } = useResize();
+  const { isScreenXl: xl } = useResize();
+  const { seriesPublic } = useSelector((state) => state.seriesPublic);
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
@@ -39,9 +34,16 @@ export default function OrganizerPublicLayout() {
     return () => dispatch(resetOrganizerPublic());
   }, [dispatch, urlSlug]);
 
-  // useAd(adNumbers);
+  useEffect(() => {
+    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+
+    return () => dispatch(resetSeriesPublicAll());
+  }, [dispatch]);
+
   return (
     <>
+      <HelmetOrganizerPublic />
+
       <div className={styles.wrapper}>
         {organizer?.posterUrls?.original ? (
           // Основная секция страницы
@@ -68,17 +70,22 @@ export default function OrganizerPublicLayout() {
         {/* Боковая панель. */}
         {xl && (
           <aside className={styles.aside}>
-            {/* Рекламный блок Серии догонялок */}
-            <AdSeries
-              urlSlug={'kom-on-komon-catch-up-race-202526'}
-              isCard={true}
-              pageType="schedule"
-            />
+            {/* Рекламный блок текущих Серий */}
+            {seriesPublic?.ongoing.map((s) => (
+              <AdSeries
+                key={s.urlSlug}
+                urlSlug={s.urlSlug}
+                posterUrls={s.posterUrls}
+                name={s.name}
+                dateStart={s.dateStart}
+                dateEnd={s.dateEnd}
+                isCard={true}
+                pageType="schedule"
+              />
+            ))}
           </aside>
         )}
       </div>
-
-      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }

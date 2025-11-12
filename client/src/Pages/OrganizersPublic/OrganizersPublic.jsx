@@ -1,29 +1,20 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { useAd } from '../../hook/useAd';
 import { ORGANIZERS_HELMET_PROPS } from '../../assets/helmet-props';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
-import { useResize } from '../../hook/use-resize';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 
 import styles from './OrganizersPublic.module.css';
 
-// Рекламные блоки на странице.
-// const adOverFooter = 22;
-// const adUnderHeader = 23;
-// const adNumbers = [adOverFooter, adUnderHeader];
-
 /**
  * Страница Организаторов заездов.
  */
 function OrganizersPublic() {
-  const { isScreenLg: isDesktop } = useResize();
   useTitle('Организаторы заездов');
 
   // Данные организаторов из хранилища редакс.
@@ -41,10 +32,9 @@ function OrganizersPublic() {
     dispatch(fetchOrganizersPublic());
 
     return () => dispatch(resetOrganizersPublic());
-  }, []);
+  }, [dispatch]);
 
   // Хук работы с рекламными блоками на странице.
-  // useAd(adNumbers);
   return (
     <>
       <HelmetComponent {...ORGANIZERS_HELMET_PROPS.ORGANIZERS_PUBLIC} />
@@ -63,8 +53,6 @@ function OrganizersPublic() {
           </section>
         )}
       </div>
-
-      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }
