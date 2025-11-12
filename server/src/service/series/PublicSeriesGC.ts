@@ -19,6 +19,7 @@ import {
   TPublicSeriesServiceGetStagesParams,
   TPublicSeriesServiceSortStagesParams,
 } from '../../types/types.interface.js';
+import { EnduranceResults } from './endurance/EnduranceResults.js';
 
 /**
  * Класс работы с данными для генеральной классификации серии заездов по запросам пользователей сайта.
@@ -59,9 +60,11 @@ export class PublicSeriesGCService {
         seriesResults = { message: 'В разработке...' };
         break;
 
-      case 'endurance':
-        seriesResults = { message: 'В разработке...' };
+      case 'endurance': {
+        const enduranceResults = new EnduranceResults(String(seriesOneDB._id));
+        seriesResults = await enduranceResults.getStageResults(stageOrder);
         break;
+      }
 
       case 'tour': {
         const tourResults = new TourResults(String(seriesOneDB._id));

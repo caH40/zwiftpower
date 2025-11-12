@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import { fetchGeneralClassification } from '../../../redux/features/api/series/fetchSeries';
 import { resetGeneralClassificationStages } from '../../../redux/features/api/series/seriesPublicSlice';
@@ -62,6 +62,8 @@ export default function EnduranceComponent() {
           </section>
         </>
       )}
+
+      <Outlet />
     </div>
   );
 }

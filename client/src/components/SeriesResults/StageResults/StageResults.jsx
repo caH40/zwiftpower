@@ -45,7 +45,7 @@ export default function StageResults() {
 
   return (
     <section className={styles.wrapper}>
-      {stageResults && stageData && (
+      {stageResults?.results && stageData && (
         <>
           <nav className={styles.block__nav}>
             {/* Фильтры данных в таблице */}
