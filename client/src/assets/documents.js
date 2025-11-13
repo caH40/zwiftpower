@@ -18,7 +18,7 @@ export const documentChapters = [
     label: 'Документация организатора',
     icon: '🎯',
     description: 'Инструкции по созданию и управлению событиями',
-    permissions: ['admin', 'organizer'],
+    permissions: ['all'],
   },
   {
     type: 'development',

@@ -31,17 +31,8 @@ export function DocumentationRoute({ isOrganizer, isAdmin }) {
       <Route path="/documentation/faq" element={<Faq />} />
       <Route path="/documentation/public" element={<PublicDocumentationList />} />
       <Route path="/documentation/public/:urlSlug" element={<PublicDocumentation />} />
-      {isOrganizer || isAdmin ? (
-        <>
-          <Route
-            path="/documentation/organizer/:urlSlug"
-            element={<OrganizerDocumentation />}
-          />
-          <Route path="/documentation/organizer" element={<OrganizerDocumentationList />} />
-        </>
-      ) : (
-        navigateTo403('/documentation/organizer/*')
-      )}
+      <Route path="/documentation/organizer/:urlSlug" element={<OrganizerDocumentation />} />
+      <Route path="/documentation/organizer" element={<OrganizerDocumentationList />} />
 
       {isAdmin ? (
         <>
