@@ -65,7 +65,7 @@ function ZwiftEditEvent() {
   // Сброс данных в хранилище при размонтировании компонента.
   useEffect(() => {
     return () => dispatch(resetParams());
-  }, []);
+  }, [dispatch]);
 
   const sendNewEventParams = () => {
     const eventForPost = prepareData(eventParams);

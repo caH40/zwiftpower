@@ -28,9 +28,14 @@ export const setCategoryEnforcementReducer = (state, action) => {
 
   const isZRacing = name.includes('racingScore');
 
+  // Включение/отключение строгой категоризации.
   state.eventMainParams.categoryEnforcement = categoryEnforcement;
-  state.eventMainParams.accessExpression = categoryEnforcement ? value : null;
-  state.eventMainParams.accessExpressionObj = categoryEnforcement ? accessExpressionObj : null;
+
+  // Настройки строгой категоризации, если включена categoryEnforcement, то устанавливать.
+  state.eventMainParams.accessExpression = categoryEnforcement === true ? value : null;
+
+  // Данные для сайта zwfitpower.ru
+  state.eventMainParams.accessExpressionObj = accessExpressionObj;
 
   // Установка диапазона рейтинга при включенном рейтинге.
   if (isZRacing) {
