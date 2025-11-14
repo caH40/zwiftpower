@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TPollOption } from '../../types/poll.types';
+import { TPollOption } from '../../types/poll.types.js';
 
 export const PollOptionSchema = new Schema<TPollOption>(
   {

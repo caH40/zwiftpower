@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
 
 // types
-import { TPollAnswer } from '../types/model.interface';
+import { TPollAnswer } from '../types/model.interface.js';
 
 type PollAnswerDocument = TPollAnswer & Document;
 

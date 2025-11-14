@@ -1,13 +1,15 @@
-import { Document, model, Schema } from 'mongoose';
+import mongoose, { Document, model, Schema } from 'mongoose';
+
+import { PollOptionSchema } from './Schema/PollOptions.js';
 
 // types
-import { TPoll } from '../types/model.interface';
-import { PollOptionSchema } from './Schema/PollOptions';
+import { TPoll } from '../types/model.interface.js';
 
 type PollDocument = TPoll & Document;
 
 const PollSchema = new Schema<PollDocument>(
   {
+    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Poll', required: true }, //ID создателя голосования.
     title: { type: String, trim: true, required: true }, // Заголовок опроса.
     options: { type: [PollOptionSchema], default: [], required: true }, // Варианты ответа.
     isAnonymous: { type: Boolean, default: false }, // Анонимное голосование.

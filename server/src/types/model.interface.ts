@@ -1015,6 +1015,7 @@ export interface TServiceMessage {
  */
 export type TPoll = {
   _id: Types.ObjectId; // ID опроса.
+  creator: Types.ObjectId; // ID создателя голосования.
   title: string; // Заголовок опроса.
   options: TPollOption[]; // Варианты ответа.
   isAnonymous: boolean; // Анонимное голосование.
