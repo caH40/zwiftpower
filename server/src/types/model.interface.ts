@@ -19,6 +19,7 @@ import {
   TRacingScoreRange,
   TRiderCategoryRuleType,
 } from './series.types.js';
+import { TPollOption } from './poll.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -1008,3 +1009,30 @@ export interface TServiceMessage {
   isRead: boolean;
   createdAt: Date;
 }
+
+/**
+ * Опрос/голосование.
+ */
+export type TPoll = {
+  _id: Types.ObjectId; // ID опроса.
+  title: string; // Заголовок опроса.
+  options: TPollOption[]; // Варианты ответа.
+  isAnonymous: boolean; // Анонимное голосование.
+  multipleAnswersAllowed: boolean; // Возможность выбрать несколько вариантов.
+  startDate: Date; // Дата начала опроса.
+  endDate: Date; // Дата окончания опроса.
+  createdAt: Date; // Дата создания записи.
+  updatedAt: Date; // Дата обновления записи.
+};
+
+/**
+ * Ответ конкретного пользователя в голосовании.
+ */
+export type TPollAnswer = {
+  _id: Types.ObjectId; // ID ответа.
+  poll: Types.ObjectId; // ID опроса.
+  user: Types.ObjectId; // ID пользователя.
+  selectedOptionIds: number[]; // Список выбранных вариантов (optionId).
+  createdAt: Date; // Дата создания записи.
+  updatedAt: Date; // Дата обновления записи.
+};
