@@ -3,6 +3,9 @@ import { Request, Response } from 'express';
 import { handleErrorInController } from '../errors/error.js';
 import { MarkdownDocumentsService } from '../service/MarkdownDocument.js';
 
+// types
+import { TDocumentationTypes } from '../types/types.interface.js';
+
 /**
  * Контроллер работы с сущностью "Команда".
  */
@@ -40,7 +43,7 @@ export class MarkdownDocumentsServiceController {
   public get = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       const params = req.params as {
-        type: 'development' | 'public' | 'organizer';
+        type: TDocumentationTypes;
         fileName: string;
       };
 

@@ -11,9 +11,11 @@ import { Organizer } from '../Model/Organizer.js';
 import { TeamModel } from '../Model/Team.js';
 
 // types
-import { MetaTags } from '../types/types.interface.js';
+import { MetaTags, TDocumentationTypes } from '../types/types.interface.js';
 import { TFileMetadataForCloud } from '../types/model.interface.js';
 import { TSeriesForMetaTagsResponseDB } from '../types/mongodb-response.types.js';
+import { MarkdownDocumentsService } from '../service/MarkdownDocument.js';
+import { DOCUMENTATION_TYPES } from '../assets/constants.js';
 
 /**
  * Формирование Мета тегов для страницы "Зарегистрированные участники"
@@ -465,6 +467,65 @@ export const getTeamAchievementsMeta = async (url: string): Promise<MetaTags> =>
       posterUrls?.original ||
       'https://zwiftpower.ru/images/open_graph/teams.png';
     const recommendationsTag = 'teamAchievements';
+
+    return { title, canonical, description, image, recommendationsTag };
+  } catch (error) {
+    return getMetaOtherPages(url);
+  }
+};
+
+/**
+ * Формирование Мета тегов для страницы с документом документации"
+ * формат url /^\/documentation\/[^/]+\/[^?]+\?extension=[^&]+$/
+ */
+export const getDocumentationItemMeta = async (url: string): Promise<MetaTags> => {
+  try {
+    const regex = /^\/documentation\/([^/?]+)\/([^/?]+)\?extension=([^&]+)$/;
+
+    const match = url.match(regex);
+
+    if (!match) {
+      return getMetaOtherPages(url);
+    }
+
+    const type = match[1] as TDocumentationTypes;
+    const fileName = match[2];
+    const extension = match[3]; // используется только расширение "md".
+
+    if (!DOCUMENTATION_TYPES.includes(type)) {
+      return getMetaOtherPages(url);
+    }
+
+    const typeObj: Record<TDocumentationTypes, string> = {
+      organizer: 'Организатора',
+      development: 'Разработчика',
+      public: 'Пользователя',
+    };
+
+    const typeLabels: Record<TDocumentationTypes, string> = {
+      organizer: 'для организаторов',
+      development: 'для разработчиков',
+      public: 'для пользователей',
+    };
+
+    // Вызов сервиса.
+    const documentsService = new MarkdownDocumentsService();
+    const response = await documentsService.get({ type, fileName: `${fileName}.${extension}` });
+
+    const contentTitle = response.data.content.match(/^#\s+(.*)/m)?.[1];
+
+    const titleRaw = `${contentTitle} - Документация ${typeObj[type]}: "${contentTitle}"`;
+
+    // Шаблонная строка для description
+    const descriptionRaw = `Изучите руководство "${contentTitle}" из документации ${typeLabels[type]}. Подробное описание, инструкции и примеры для эффективного использования.`;
+
+    // Запрещены двойные кавычки в мета тегах.
+    const description = descriptionRaw.replace(/"/g, '');
+    const title = titleRaw.replace(/"/g, '');
+
+    const canonical = serverWoWWW + url;
+    const image = 'http://zwiftpower.ru/images/open_graph/documentation.jpg';
+    const recommendationsTag = 'documentation';
 
     return { title, canonical, description, image, recommendationsTag };
   } catch (error) {

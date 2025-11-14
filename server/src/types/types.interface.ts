@@ -33,6 +33,7 @@ import {
 } from './site-service.type.js';
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 import {
+  DOCUMENTATION_TYPES,
   RACE_SERIES_CATEGORIES,
   SERIES_STATUS,
   ZWIFT_CATEGORIES,
@@ -1017,3 +1018,4 @@ export type TPricingPlan = {
 };
 
 export type TAudioType = 'notification' | 'warning' | 'chat';
+export type TDocumentationTypes = (typeof DOCUMENTATION_TYPES)[number];

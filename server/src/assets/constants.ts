@@ -193,3 +193,5 @@ export const MEDAL_RATES = {
 export const SERIES_TYPES = ['series', 'tour', 'catchUp', 'criterium', 'endurance'] as const;
 
 export const SERIES_STATUS = ['upcoming', 'ongoing', 'completed'] as const;
+
+export const DOCUMENTATION_TYPES = ['development', 'public', 'organizer'] as const;

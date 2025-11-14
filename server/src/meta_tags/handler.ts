@@ -72,6 +72,10 @@ const patternHandlers: Array<{
   { pattern: /^\/teams\/[^/]+\/(results)/, handler: getTeamRiderResultsMeta },
   { pattern: /^\/teams\/[^/]+\/members/, handler: getTeamMembersMeta },
   { pattern: /^\/teams\/[^/]+\/achievements/, handler: getTeamAchievementsMeta },
+  {
+    pattern: /^\/documentation\/[^/]+\/[^?]+\?extension=[^&]+$/,
+    handler: getTeamAchievementsMeta,
+  },
 ];
 
 export const getMetaTags = async (url: string): Promise<MetaTags> => {

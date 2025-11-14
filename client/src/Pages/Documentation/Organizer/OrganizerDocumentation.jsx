@@ -4,13 +4,14 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { fetchDocument } from '../../../redux/features/api/documents/fetchDocuments';
 import { resetDocument } from '../../../redux/features/api/documents/documentsSlice';
-import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
-import { DOCUMENTATION_HELMET_PROPS } from '../../../assets/helmet-props';
 import useTitle from '../../../hook/useTitle';
 import GithubButtonUrl from '../../../components/UI/GithubButtonUrl/GithubButtonUrl';
 import DocumentContent from '../../../components/DocumentContent/DocumentContent';
 
 import styles from '../Documentation.module.css';
+import { HelmetDocumentationItem } from '../../../components/Helmets/HelmetDocumentationItem';
+
+const type = 'organizer';
 
 export default function OrganizerDocumentationPage() {
   useTitle('Документация организатора');
@@ -25,16 +26,24 @@ export default function OrganizerDocumentationPage() {
   const fileName = `${urlSlug}.${extension}`;
 
   useEffect(() => {
-    dispatch(fetchDocument({ type: 'organizer', fileName }));
+    dispatch(fetchDocument({ type, fileName }));
 
     return () => dispatch(resetDocument());
   }, [dispatch, fileName]);
 
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...DOCUMENTATION_HELMET_PROPS.ORGANIZER_DOCS} />
+      {document?.content && (
+        <>
+          <HelmetDocumentationItem
+            type={type}
+            contentTitle={document?.content.match(/^#\s+(.*)/m)?.[1]}
+            url={`/${type}/${urlSlug}?extension=${extension}`}
+          />
 
-      {document?.content && <DocumentContent content={document.content} />}
+          <DocumentContent content={document.content} />
+        </>
+      )}
 
       <div className={styles.controlContainer}>
         <GithubButtonUrl href={'/documentation/organizer'}>

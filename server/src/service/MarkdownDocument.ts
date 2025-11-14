@@ -2,6 +2,9 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// types
+import { TDocumentationTypes } from '../types/types.interface';
+
 /**
  * Класс работы с файлами документов markdown.
  */
@@ -43,7 +46,7 @@ export class MarkdownDocumentsService {
     type,
     fileName,
   }: {
-    type: 'development' | 'public' | 'organizer';
+    type: TDocumentationTypes;
     fileName: string;
   }): Promise<{ data: { fileName: string; content: string }; message: string }> {
     const __filename = fileURLToPath(import.meta.url);

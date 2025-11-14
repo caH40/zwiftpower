@@ -4,13 +4,14 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { fetchDocument } from '../../../redux/features/api/documents/fetchDocuments';
 import { resetDocument } from '../../../redux/features/api/documents/documentsSlice';
-import { HelmetComponent } from '../../../components/Helmets/HelmetComponent';
-import { DOCUMENTATION_HELMET_PROPS } from '../../../assets/helmet-props';
 import useTitle from '../../../hook/useTitle';
 import GithubButtonUrl from '../../../components/UI/GithubButtonUrl/GithubButtonUrl';
 import DocumentContent from '../../../components/DocumentContent/DocumentContent';
 
 import styles from '../Documentation.module.css';
+import { HelmetDocumentationItem } from '../../../components/Helmets/HelmetDocumentationItem';
+
+const type = 'development';
 
 export default function DevelopmentDocumentationPage() {
   useTitle('Документация разработчика');
@@ -23,16 +24,24 @@ export default function DevelopmentDocumentationPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchDocument({ type: 'development', fileName: `${urlSlug}.${extension}` }));
+    dispatch(fetchDocument({ type, fileName: `${urlSlug}.${extension}` }));
 
     return () => dispatch(resetDocument());
   }, [dispatch, urlSlug, extension]);
 
   return (
     <div className={styles.wrapper}>
-      <HelmetComponent {...DOCUMENTATION_HELMET_PROPS.DEVELOPER_DOCS} />
+      {document?.content && (
+        <>
+          <HelmetDocumentationItem
+            type={type}
+            contentTitle={document?.content.match(/^#\s+(.*)/m)?.[1]}
+            url={`/${type}/${urlSlug}?extension=${extension}`}
+          />
 
-      {document?.content && <DocumentContent content={document.content} />}
+          <DocumentContent content={document.content} />
+        </>
+      )}
 
       <div className={styles.controlContainer}>
         <GithubButtonUrl href={'/documentation/development'}>
