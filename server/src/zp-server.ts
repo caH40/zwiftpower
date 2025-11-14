@@ -84,7 +84,7 @@ app.use(
 app.get('*', async (req, res) => {
   // console.log(req.path);
 
-  const htmlContent = await setMetaTags(req.path);
+  const htmlContent = await setMetaTags(req.originalUrl);
   res.send(htmlContent);
 });
 
