@@ -1,5 +1,6 @@
 import { MetaTags } from '../types/types.interface.js';
 import {
+  getDocumentationItemMeta,
   getOrganizerPublicMeta,
   getProfileResultsMeta,
   getRaceResultsMeta,
@@ -74,7 +75,7 @@ const patternHandlers: Array<{
   { pattern: /^\/teams\/[^/]+\/achievements/, handler: getTeamAchievementsMeta },
   {
     pattern: /^\/documentation\/[^/]+\/[^?]+\?extension=[^&]+$/,
-    handler: getTeamAchievementsMeta,
+    handler: getDocumentationItemMeta,
   },
 ];
 
