@@ -9,4 +9,8 @@ export class PollRepository {
   ): Promise<void> {
     await PollModel.create(poll);
   }
+
+  async getById(pollId: string): Promise<TPoll | null> {
+    return PollModel.findById(pollId).lean();
+  }
 }

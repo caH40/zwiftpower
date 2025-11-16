@@ -3,6 +3,7 @@ import {
   RiderProfileSchema,
   TFinishProtocolConfig,
   TOrganizer,
+  TPoll,
   TSeries,
   TSiteServicePrice,
   TStageResult,
@@ -19,6 +20,7 @@ import {
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { TPaymentNotification } from './payment.types';
+import { TUserWithFLLZ } from './poll.types';
 import { TTeamLeaderboard } from './team.types';
 import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface';
 
@@ -337,4 +339,14 @@ export type TGetAllServiceMessagesForUserDto = {
 export type TTeamLeaderboardDto = Omit<TTeamLeaderboard, 'logoFileInfo' | 'posterFileInfo'> & {
   logoUrls?: Record<string, string> | undefined;
   posterUrls?: Record<string, string> | undefined;
+};
+
+export type TPollWithAnswersDto = Omit<TPoll, '_id'> & {
+  _id: string;
+
+  pollAnswers: {
+    optionId: number;
+    total: number;
+    users: TUserWithFLLZ[] | null;
+  }[];
 };

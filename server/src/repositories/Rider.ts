@@ -34,4 +34,27 @@ export class RiderRepository {
       }
     ).lean();
   }
+
+  /**
+   * ФИО и лого райдеров по списку zwiftIds.
+   */
+  async getFLs(zwiftIds: number[]): Promise<
+    {
+      zwiftId: number;
+      firstName: string;
+      lastName: string;
+      imageSrc: string | null;
+    }[]
+  > {
+    return Rider.find(
+      { zwiftId: { $in: zwiftIds } },
+      {
+        zwiftId: 1,
+        firstName: 1,
+        lastName: 1,
+        imageSrc: 1,
+        _id: 0,
+      }
+    ).lean();
+  }
 }
