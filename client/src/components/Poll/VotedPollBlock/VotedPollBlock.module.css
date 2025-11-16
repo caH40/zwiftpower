@@ -1,0 +1,25 @@
+.textContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.percentages {
+  width: 36px;
+  text-align: right;
+}
+.checkboxContainer {
+  width: 36px;
+  height: 16px;
+  text-align: right;
+}
+.barsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bar {
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--color-blue-main);
+}

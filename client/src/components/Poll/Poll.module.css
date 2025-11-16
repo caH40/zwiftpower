@@ -1,0 +1,33 @@
+.wrapper {
+  width: 340px;
+  height: auto;
+  padding: 20px;
+  border: 1px solid var(--color-blue-main);
+  border-radius: 5px;
+  color: var(--color-text-dark);
+}
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.subtitleContainer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-minor);
+  margin-bottom: 17px;
+}
+.voteBlocksWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.results {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-blue-main);
+  text-align: center;
+}

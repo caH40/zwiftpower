@@ -23,6 +23,7 @@ import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPubl
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
 import styles from './MainPage.module.css';
+import Poll from '../../components/Poll/Poll';
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
@@ -112,6 +113,12 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
+            <Poll
+              title={'Тестируем'}
+              isAnonymous={true}
+              startDate={new Date('2025-10-20')}
+              endDate={new Date('2025-11-20')}
+            />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             {/* Рекламный блок текущих Серий */}

@@ -6,7 +6,7 @@ export type TPollOption = {
 };
 export type TPollAnswerWithUser = Pick<
   TPollAnswer,
-  '_id' | 'updatedAt' | 'selectedOptionIds'
+  '_id' | 'updatedAt' | 'selectedOptionIds' | 'createdAt'
 > & {
   user: TUserWithFLLZ;
 };

@@ -46,12 +46,28 @@ export class PollService {
     // Добавление ФИО и лого пользователя в ответ, если голосование не анонимное.
     const currentPollAnswers = await this.getCurrentPollAnswer(pollAnswers, poll.isAnonymous);
 
+    // Массив всех проголосовавших пользователей, отсортированных по дате голосования.
+    const allUsers = poll.isAnonymous ? null : this.getAllUsers(currentPollAnswers);
+
     const groupedAndSortedPollAnswers = this.groupAndSortPollAnswers(currentPollAnswers);
 
     // DTO;
-    const afterDto = pollWithAnswersDto(poll, groupedAndSortedPollAnswers);
+    const afterDto = pollWithAnswersDto(poll, groupedAndSortedPollAnswers, allUsers);
 
     return { data: afterDto, message: 'Голосование создано.' };
+  };
+
+  private getAllUsers = (
+    pollAnswers:
+      | TPollAnswerWithUser[]
+      | (Omit<TPollAnswerWithUser, 'user'> & {
+          user: null;
+        })[]
+  ): TUserWithFLLZ[] => {
+    const users = pollAnswers
+      .filter((a): a is TPollAnswerWithUser => a.user !== null)
+      .toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+    return [...new Map(users.map((a) => [a.user.zwiftId, a.user])).values()];
   };
 
   private groupAndSortPollAnswers = (
@@ -95,7 +111,7 @@ export class PollService {
 
   // Формирование ответа пользователя в зависимости анонимное голосование или нет.
   private getCurrentPollAnswer = async (
-    pollAnswers: (Pick<TPollAnswer, '_id' | 'updatedAt' | 'selectedOptionIds'> & {
+    pollAnswers: (Pick<TPollAnswer, '_id' | 'updatedAt' | 'createdAt' | 'selectedOptionIds'> & {
       user: {
         zwiftId: number;
       };

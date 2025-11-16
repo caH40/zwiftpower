@@ -341,12 +341,23 @@ export type TTeamLeaderboardDto = Omit<TTeamLeaderboard, 'logoFileInfo' | 'poste
   posterUrls?: Record<string, string> | undefined;
 };
 
-export type TPollWithAnswersDto = Omit<TPoll, '_id'> & {
+export type TPollWithAnswersDto = Omit<
+  TPoll,
+  '_id' | 'startDate' | 'endDate' | 'createdAt' | 'updatedAt' | 'creator'
+> & {
   _id: string;
+
+  creator: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
+
+  users: TUserWithFLLZ[] | null; // Все уникальные проголосовавшие пользователи.
 
   pollAnswers: {
     optionId: number;
     total: number;
-    users: TUserWithFLLZ[] | null;
+    users: TUserWithFLLZ[] | null; // Пользователи по опциям (один может быть в нескольких)
   }[];
 };
