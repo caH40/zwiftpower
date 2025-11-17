@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { User } from '../Model/User.js';
 
 export class UserRepository {
@@ -9,5 +10,11 @@ export class UserRepository {
   exists = async (userId: string): Promise<boolean> => {
     const result = await User.exists({ _id: userId });
     return result !== null;
+  };
+  // Проверка существования одного пользователя
+  getZwiftId = async (
+    userId: string
+  ): Promise<{ _id: Types.ObjectId; zwiftId: number } | null> => {
+    return User.findOne({ _id: userId }, { zwiftId: 1 }).lean();
   };
 }

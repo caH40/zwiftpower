@@ -7,8 +7,9 @@ import { getOrThrow } from '../utils/getOrThrow.js';
 // types
 import { TResponseService } from '../types/http.interface.js';
 import { TPoll, TPollAnswer } from '../types/model.interface.js';
-import { TPollAnswerWithUser, TUserWithFLLZ } from '../types/poll.types.js';
+import { TPollAnswerWithUser, TUserAnonymized, TUserWithFLLZ } from '../types/poll.types.js';
 import { TPollWithAnswersDto } from '../types/dto.interface.js';
+import { UserRepository } from '../repositories/User.js';
 
 /**
  * Класс сервиса голосование.
@@ -19,6 +20,7 @@ export class PollService {
   private pollRepository: PollRepository = new PollRepository();
   private pollAnswerRepository: PollAnswerRepository = new PollAnswerRepository();
   private riderRepository: RiderRepository = new RiderRepository();
+  private userRepository: UserRepository = new UserRepository();
   constructor() {}
 
   /**
@@ -34,7 +36,10 @@ export class PollService {
   /**
    * Получение голосования и голосов для него.
    */
-  public getById = async (pollId: string): Promise<TResponseService<TPollWithAnswersDto>> => {
+  public getById = async (
+    pollId: string,
+    userId?: string // _id пользователя, если запрос приходит от авторизованного.
+  ): Promise<TResponseService<TPollWithAnswersDto>> => {
     const poll = await getOrThrow(
       this.pollRepository.getById(pollId),
       `Не найдено голосование с _id: "${pollId}"`
@@ -44,15 +49,26 @@ export class PollService {
     const pollAnswers = await this.pollAnswerRepository.getAll(pollId);
 
     // Добавление ФИО и лого пользователя в ответ, если голосование не анонимное.
-    const currentPollAnswers = await this.getCurrentPollAnswer(pollAnswers, poll.isAnonymous);
-
-    // Массив всех проголосовавших пользователей, отсортированных по дате голосования.
-    const allUsers = poll.isAnonymous ? null : this.getAllUsers(currentPollAnswers);
+    const currentPollAnswers = await this.getPollAnswersWithUser(pollAnswers);
 
     const groupedAndSortedPollAnswers = this.groupAndSortPollAnswers(currentPollAnswers);
 
+    const isUserAnswered = userId ? await this.isUserAnswered(userId, pollAnswers) : false;
+
+    const { zwiftId } = userId
+      ? await getOrThrow(this.userRepository.getZwiftId(userId))
+      : { zwiftId: undefined };
+
+    // Обезличивание если голосование анонимное.
+    const finalPollAnswers = poll.isAnonymous
+      ? this.setAnonymous(groupedAndSortedPollAnswers, zwiftId)
+      : groupedAndSortedPollAnswers;
+
+    // Массив всех проголосовавших пользователей, отсортированных по дате голосования.
+    const allUsers = this.getAllUsers(currentPollAnswers, poll.isAnonymous, zwiftId);
+
     // DTO;
-    const afterDto = pollWithAnswersDto(poll, groupedAndSortedPollAnswers, allUsers);
+    const afterDto = pollWithAnswersDto(poll, finalPollAnswers, allUsers, isUserAnswered);
 
     return { data: afterDto, message: 'Запрашиваемое голосование' };
   };
@@ -71,9 +87,25 @@ export class PollService {
   }): Promise<TResponseService<TPollWithAnswersDto>> => {
     await this.pollAnswerRepository.update({ pollId, userId, selectedOptionIds });
 
-    const response = await this.getById(pollId);
+    const response = await this.getById(pollId, userId);
 
     return { data: response.data, message: 'Данные голосования успешно сохранены!' };
+  };
+
+  /**
+   * Проверяется проголосовал ли авторизованный пользователь нет.
+   */
+  private isUserAnswered = async (
+    userId: string,
+    pollAnswers: (Pick<TPollAnswer, '_id' | 'createdAt' | 'updatedAt' | 'selectedOptionIds'> & {
+      user: {
+        zwiftId: number;
+      };
+    })[]
+  ): Promise<boolean> => {
+    const { zwiftId } = await getOrThrow(this.userRepository.getZwiftId(userId));
+
+    return pollAnswers.some((a) => a.user.zwiftId === zwiftId);
   };
 
   private getAllUsers = (
@@ -81,27 +113,42 @@ export class PollService {
       | TPollAnswerWithUser[]
       | (Omit<TPollAnswerWithUser, 'user'> & {
           user: null;
-        })[]
-  ): TUserWithFLLZ[] => {
-    const users = pollAnswers
+        })[],
+    isAnonymous: boolean,
+    userZwiftId?: number
+  ): (TUserWithFLLZ | TUserAnonymized)[] => {
+    const usersFiltered = pollAnswers
       .filter((a): a is TPollAnswerWithUser => a.user !== null)
       .toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-    return [...new Map(users.map((a) => [a.user.zwiftId, a.user])).values()];
+
+    const users = [...new Map(usersFiltered.map((a) => [a.user.zwiftId, a.user])).values()];
+
+    if (isAnonymous) {
+      return users.map((u) => {
+        if (u.zwiftId === userZwiftId) {
+          return u;
+        } else {
+          return { zwiftId: null, firstName: null, lastName: null, imageSrc: null };
+        }
+      });
+    }
+
+    return users;
   };
 
   private groupAndSortPollAnswers = (
-    pollAnswers: TPollAnswerWithUser[] | (Omit<TPollAnswerWithUser, 'user'> & { user: null })[]
+    pollAnswers: TPollAnswerWithUser[]
   ): {
     optionId: number;
     total: number;
-    users: TUserWithFLLZ[] | null;
+    users: TUserWithFLLZ[];
   }[] => {
     const answers: Map<
       number,
       {
         optionId: number;
         total: number;
-        users: TUserWithFLLZ[] | null;
+        users: TUserWithFLLZ[];
       }
     > = new Map();
 
@@ -120,35 +167,12 @@ export class PollService {
           answers.set(selectedId, {
             optionId: selectedId,
             total: 1,
-            users: answer.user ? [answer.user] : null,
+            users: [answer.user],
           });
         }
       }
     }
     return [...answers.values()];
-  };
-
-  // Формирование ответа пользователя в зависимости анонимное голосование или нет.
-  private getCurrentPollAnswer = async (
-    pollAnswers: (Pick<TPollAnswer, '_id' | 'updatedAt' | 'createdAt' | 'selectedOptionIds'> & {
-      user: {
-        zwiftId: number;
-      };
-    })[],
-    isAnonymous: boolean
-  ): Promise<
-    TPollAnswerWithUser[] | (Omit<TPollAnswerWithUser, 'user'> & { user: null })[]
-  > => {
-    if (!isAnonymous && pollAnswers.length > 0) {
-      return await this.getPollAnswersWithUser(pollAnswers);
-    }
-
-    const res = pollAnswers.map((p) => ({
-      ...p,
-      user: null,
-    }));
-
-    return res;
   };
 
   private getPollAnswersWithUser = async (
@@ -169,5 +193,30 @@ export class PollService {
     }));
 
     return withUsers.filter((a): a is TPollAnswerWithUser => a.user !== undefined);
+  };
+
+  /**
+   * Обезличивание данных.
+   */
+  private setAnonymous = (
+    pollAnswers: {
+      optionId: number;
+      total: number;
+      users: TUserWithFLLZ[];
+    }[],
+    zwiftId?: number
+  ): {
+    optionId: number;
+    total: number;
+    users: (TUserWithFLLZ | TUserAnonymized)[];
+  }[] => {
+    return pollAnswers.map((a) => {
+      const users = a.users.map((u) =>
+        u.zwiftId === zwiftId
+          ? u
+          : { zwiftId: null, firstName: null, lastName: null, imageSrc: null }
+      );
+      return { ...a, users };
+    });
   };
 }

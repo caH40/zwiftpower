@@ -20,7 +20,7 @@ import {
   TSeriesOnePublicResponseDB,
 } from './mongodb-response.types';
 import { TPaymentNotification } from './payment.types';
-import { TUserWithFLLZ } from './poll.types';
+import { TUserAnonymized, TUserWithFLLZ } from './poll.types';
 import { TTeamLeaderboard } from './team.types';
 import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface';
 
@@ -346,18 +346,18 @@ export type TPollWithAnswersDto = Omit<
   '_id' | 'startDate' | 'endDate' | 'createdAt' | 'updatedAt' | 'creator'
 > & {
   _id: string;
-
+  isUserAnswered: boolean;
   creator: string;
   startDate: string;
   endDate: string;
   createdAt: string;
   updatedAt: string;
 
-  users: TUserWithFLLZ[] | null; // Все уникальные проголосовавшие пользователи.
+  users: (TUserWithFLLZ | TUserAnonymized)[]; // Все уникальные проголосовавшие пользователи.
 
   pollAnswers: {
     optionId: number;
     total: number;
-    users: TUserWithFLLZ[] | null; // Пользователи по опциям (один может быть в нескольких)
+    users: (TUserWithFLLZ | TUserAnonymized)[]; // Пользователи по опциям (один может быть в нескольких)
   }[];
 };

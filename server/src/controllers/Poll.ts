@@ -21,6 +21,7 @@ export class PollController {
    */
   public get = async (req: Request, res: Response): Promise<Response | void> => {
     try {
+      const userId = req.user?.id;
       const result = PollIdZSchema.safeParse(req.params);
 
       if (!result.success) {
@@ -33,7 +34,7 @@ export class PollController {
       }
 
       // Вызов сервиса.
-      const response = await this.teamService.getById(result.data);
+      const response = await this.teamService.getById(result.data, userId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

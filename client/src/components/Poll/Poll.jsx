@@ -56,13 +56,13 @@ export default function Poll({
   users,
   pollAnswers,
   isAnonymous,
+  isUserAnswered,
   startDate,
   endDate,
   multipleAnswersAllowed,
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
-  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.checkAuth.value.user);
 
@@ -70,7 +70,7 @@ export default function Poll({
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
 
   // Пользователь просматривающий голосование проголосовал?
-  const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
+  // const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
 
   const sendAnswers = usePoll({ selectedOptionIds, pollId: _id });
 
@@ -85,7 +85,7 @@ export default function Poll({
       </div>
 
       {/* Отображаются разные блоки если пользователь проголосовал или нет */}
-      {isUserVoted ? (
+      {isUserAnswered ? (
         <div className={styles.voteBlocksWrapper}>
           {options.map((option) => {
             const currentAnswers =
@@ -121,8 +121,8 @@ export default function Poll({
       <div className={styles.results}>
         <RenderActionPollBlock
           notAuth={user?._id}
-          isUserVoted={isUserVoted}
-          votes={users?.length}
+          isUserAnswered={isUserAnswered}
+          answers={users?.length}
           isAnonymous={isAnonymous}
           showResults={() => {
             console.log('Открыть модальное окно с результатами');
@@ -135,27 +135,27 @@ export default function Poll({
 }
 
 function isVoteMine(mineZwiftId, pollAnswers, currentOptionId) {
-  return pollAnswers.some(
+  return pollAnswers?.some(
     (ans) =>
-      ans.optionId === currentOptionId && ans.users.some((u) => u.zwiftId === mineZwiftId)
+      ans.optionId === currentOptionId && ans.users?.some((u) => u.zwiftId === mineZwiftId)
   );
 }
 
 function RenderActionPollBlock({
   notAuth,
-  isUserVoted,
+  isUserAnswered,
   isAnonymous,
   answers,
   showResults,
   sendAnswers,
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
-  if ((isUserVoted && isAnonymous) || notAuth) {
+  if ((isUserAnswered && isAnonymous) || notAuth) {
     return `${answers} проголосовало`;
   }
 
   // Авторизован и не проголосовал.
-  if (!notAuth && !isUserVoted) {
+  if (!notAuth && !isUserAnswered) {
     return (
       <span className={styles.link} onClick={sendAnswers}>
         Проголосовать

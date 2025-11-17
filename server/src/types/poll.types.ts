@@ -20,3 +20,10 @@ export type TUserWithFLLZ = {
   lastName: string;
   imageSrc: string | null;
 };
+// Для обезличенных данных
+export type TUserAnonymized = {
+  zwiftId: null;
+  firstName: null;
+  lastName: null;
+  imageSrc: null;
+};
