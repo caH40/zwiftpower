@@ -15,7 +15,10 @@ import styles from './Users.module.css';
  *
  */
 export default function Users({ users, quantity = 7 }) {
-  const currentUser = users.filter((u) => u.zwiftId !== null).slice(0, quantity);
+  const validUsers = users.filter((u) => u.zwiftId !== null);
+  const currentUser = validUsers.slice(0, quantity);
+  const hasMoreUsers = validUsers.length > quantity;
+  const remainingCount = validUsers.length - quantity;
 
   return (
     <div className={styles.wrapper}>
@@ -44,6 +47,12 @@ export default function Users({ users, quantity = 7 }) {
           );
         }
       })}
+
+      {hasMoreUsers && (
+        <div className={styles.dots} style={{ zIndex: 0 }}>
+          +{remainingCount}
+        </div>
+      )}
     </div>
   );
 }
