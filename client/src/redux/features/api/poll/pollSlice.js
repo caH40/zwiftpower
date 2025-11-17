@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGetPoll, fetchPostPollAnswers } from './fetchPoll';
+import { fetchDeletePollAnswers, fetchGetPoll, fetchPostPollAnswers } from './fetchPoll';
 
 const initialState = {
   poll: null,
@@ -39,7 +39,7 @@ const pollSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ============== получение всех команд =================
+    // ============== сохранение голоса пользователя в голосовании =================
     builder.addCase(fetchPostPollAnswers.pending, (state) => {
       state.error = null;
       state.status = 'loading';
@@ -53,6 +53,24 @@ const pollSlice = createSlice({
     });
 
     builder.addCase(fetchPostPollAnswers.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== удаление голоса пользователя в голосовании =================
+    builder.addCase(fetchDeletePollAnswers.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchDeletePollAnswers.fulfilled, (state, action) => {
+      state.message = action.payload.message;
+      state.poll = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchDeletePollAnswers.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

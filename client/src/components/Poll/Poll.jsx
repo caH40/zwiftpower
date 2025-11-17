@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { getDateStatusForPoll } from '../../utils/poll';
 import { usePoll } from '../../hook/usePoll';
 import Users from '../Users/Users';
+import IconEdit from '../icons/IconEdit';
+import PopupMenuPoll from '../UI/PopupMenuTable/PopupMenuPoll';
 
 import VotedPollBlock from './VotedPollBlock/VotedPollBlock';
 import VotePollBlock from './VotedPollBlock/VotePollBlock';
@@ -64,6 +66,7 @@ export default function Poll({
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
+  const [showMenu, setShowMenu] = useState(false);
 
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
@@ -74,6 +77,16 @@ export default function Poll({
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.editContainer}>
+        <IconEdit squareSize={18} getClick={() => setShowMenu((prev) => !prev)} />
+      </div>
+
+      {isAuth && showMenu && (
+        <div className={styles.popupContainer}>
+          <PopupMenuPoll pollId={_id} setShowMenu={setShowMenu} />
+        </div>
+      )}
+
       <h4 className={styles.title}>{title}</h4>
       <div className={styles.subtitleContainer}>
         <span className={styles.privateStatus}>
