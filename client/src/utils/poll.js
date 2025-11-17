@@ -10,7 +10,7 @@ export function getDateStatusForPoll(startDate, endDate) {
 
   const now = new Date();
   // Голосование еще не началось.
-  if (new Date(startDate) < now) {
+  if (new Date(startDate) > now) {
     return `Старт ${getTimerLocal(startDate, 'DDMMYYYY')}`;
   }
 

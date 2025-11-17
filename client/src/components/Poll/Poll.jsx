@@ -64,7 +64,6 @@ export default function Poll({
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
-  console.log(pollAnswers);
 
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
@@ -128,6 +127,8 @@ export default function Poll({
             console.log('Открыть модальное окно с результатами');
           }}
           sendAnswers={sendAnswers}
+          notStarted={new Date(startDate) > new Date()}
+          finished={new Date() > new Date(endDate)}
         />
       </div>
     </div>
@@ -148,6 +149,8 @@ function RenderActionPollBlock({
   answers,
   showResults,
   sendAnswers,
+  notStarted,
+  finished,
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
   if ((isUserAnswered && isAnonymous) || !isAuth) {
@@ -157,8 +160,14 @@ function RenderActionPollBlock({
   // Авторизован и не проголосовал.
   if (isAuth && !isUserAnswered) {
     return (
-      <span className={styles.link} onClick={sendAnswers}>
-        Проголосовать
+      <span>
+        {notStarted ? 'Не началось' : null}
+        {finished ? 'Завершено' : null}
+        {!notStarted && !finished ? (
+          <span className={styles.link} onClick={sendAnswers}>
+            Проголосовать
+          </span>
+        ) : null}
       </span>
     );
   }

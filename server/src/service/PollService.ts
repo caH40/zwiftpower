@@ -10,6 +10,7 @@ import { TPoll, TPollAnswer } from '../types/model.interface.js';
 import { TPollAnswerWithUser, TUserAnonymized, TUserWithFLLZ } from '../types/poll.types.js';
 import { TPollWithAnswersDto } from '../types/dto.interface.js';
 import { UserRepository } from '../repositories/User.js';
+import { getTimerLocal } from '../utils/date-local.js';
 
 /**
  * Класс сервиса голосование.
@@ -85,6 +86,21 @@ export class PollService {
     userId: string;
     selectedOptionIds: number[];
   }): Promise<TResponseService<TPollWithAnswersDto>> => {
+    const poll = await getOrThrow(
+      this.pollRepository.getById(pollId),
+      `Не найдено голосование с _id: "${pollId}"`
+    );
+    const now = new Date();
+    if (now < poll.startDate) {
+      throw new Error(
+        `Голосование начнется ${getTimerLocal(poll.startDate.toString(), 'DDMMYYYY')}`
+      );
+    }
+    if (poll.endDate < now) {
+      throw new Error(
+        `Голосование завершилось ${getTimerLocal(poll.endDate.toString(), 'DDMMYYYY')}`
+      );
+    }
     await this.pollAnswerRepository.update({ pollId, userId, selectedOptionIds });
 
     const response = await this.getById(pollId, userId);

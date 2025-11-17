@@ -1,5 +1,5 @@
 // формирование даты согласно локали 'ru'
-type TypeTimeFormat = 'HM' | 'HmS' | 'DDMMYYHm' | 'DDMMYY' | undefined;
+type TypeTimeFormat = 'HM' | 'HmS' | 'DDMMYYHm' | 'DDMMYY' | 'DDMMYYYY' | undefined;
 
 export function getTimerLocal(
   date: number | string,
@@ -50,6 +50,8 @@ export function getTimerLocal(
       return formatterDDMMYYHm.format(dateForFormat);
     case 'DDMMYY':
       return formatterDDMMYY.format(dateForFormat);
+    case 'DDMMYYYY':
+      return formatterDDMMYYYY.format(dateForFormat);
 
     default:
       return formatterDDMMYYYY.format(dateForFormat);
