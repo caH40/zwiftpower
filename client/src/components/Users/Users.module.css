@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+}
+
+.empty,
+.img {
+  flex: 0 0 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fff;
+  margin-left: -8px;
+}
+
+.img {
+  font-size: 8px;
+  text-align: center;
+}
+
+.empty:first-child,
+.img:first-child {
+  margin-left: 0;
+}
+
+.empty {
+  background-color: gray;
+  color: black;
+  font-size: 10px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

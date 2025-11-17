@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { getDateStatusForPoll } from '../../utils/poll';
 import { usePoll } from '../../hook/usePoll';
+import Users from '../Users/Users';
 
 import VotedPollBlock from './VotedPollBlock/VotedPollBlock';
 import VotePollBlock from './VotedPollBlock/VotePollBlock';
@@ -10,9 +11,9 @@ import styles from './Poll.module.css';
 
 /**
  * @typedef {Object} TUserWithFLLZ
- * @property {number} zwiftId
- * @property {string} firstName
- * @property {string} lastName
+ * @property {number|null} zwiftId
+ * @property {string|null} firstName
+ * @property {string|null} lastName
  * @property {string|null} imageSrc
  */
 
@@ -26,7 +27,7 @@ import styles from './Poll.module.css';
  * @typedef {Object} PollAnswer
  * @property {number} optionId - ID варианта ответа.
  * @property {number} total - Количество голосов за этот вариант.
- * @property {TUserWithFLLZ[]|null} users - Пользователи, проголосовавшие за вариант (null для анонимных опросов).
+ * @property {TUserWithFLLZ[]} users - Пользователи, проголосовавшие за вариант (null для анонимных опросов).
  */
 
 /**
@@ -63,6 +64,7 @@ export default function Poll({
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
+  console.log(pollAnswers);
 
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
@@ -76,7 +78,7 @@ export default function Poll({
       <h4 className={styles.title}>{title}</h4>
       <div className={styles.subtitleContainer}>
         <span className={styles.privateStatus}>
-          {isAnonymous ? 'Анонимное голосование' : 'Блок кто проголосовал:'}
+          {isAnonymous ? 'Анонимное голосование' : <Users users={users} />}
         </span>
         <span className={styles.dateStatus}>{dateStatus}</span>
       </div>
