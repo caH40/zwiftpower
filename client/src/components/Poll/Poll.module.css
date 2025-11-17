@@ -1,5 +1,5 @@
 .wrapper {
-  width: 340px;
+  max-width: 340px;
   height: auto;
   padding: 20px;
   border: 1px solid var(--color-blue-main);
@@ -34,4 +34,10 @@
 }
 .link {
   cursor: pointer;
+}
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .wrapper {
+    padding: 12px;
+  }
 }

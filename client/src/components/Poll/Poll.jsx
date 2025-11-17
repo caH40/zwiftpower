@@ -69,9 +69,6 @@ export default function Poll({
   const dateStatus = getDateStatusForPoll(startDate, endDate);
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
 
-  // Пользователь просматривающий голосование проголосовал?
-  // const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
-
   const sendAnswers = usePoll({ selectedOptionIds, pollId: _id });
 
   return (
@@ -99,6 +96,7 @@ export default function Poll({
                 }
                 percentages={Math.floor((currentAnswers * 100) / totalAnswers)}
                 title={option.title}
+                isUserAnswered={isUserAnswered}
               />
             );
           })}

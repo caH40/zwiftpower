@@ -5,7 +5,8 @@ import styles from './VotedPollBlock.module.css';
  * -название данного голоса;
  * -за данный блок проголосовал или нет пользователь, который видит данное голосование.
  */
-export default function VotedPollBlock({ title, percentages, isVoteMine }) {
+export default function VotedPollBlock({ title, percentages, isVoteMine, isUserAnswered }) {
+  const barWidth = percentages !== 0 ? percentages : 1;
   return (
     <div className={styles.wrapper}>
       <div className={styles.textContainer}>
@@ -15,17 +16,19 @@ export default function VotedPollBlock({ title, percentages, isVoteMine }) {
 
       <div className={styles.barsContainer}>
         <div className={styles.checkboxContainer}>
-          <img
-            src={`/images/icons/${
-              isVoteMine ? 'CheckedRoundedCheckbox.svg' : 'EmptyRoundedCheckbox.svg'
-            }`}
-            className={styles.icon}
-            width={16}
-            height={16}
-          />
+          {isUserAnswered && isVoteMine ? (
+            <img
+              src={`/images/icons/${
+                isVoteMine ? 'CheckedRoundedCheckbox.svg' : 'EmptyRoundedCheckbox.svg'
+              }`}
+              className={styles.icon}
+              width={16}
+              height={16}
+            />
+          ) : null}
         </div>
 
-        <div className={styles.bar} style={{ width: percentages + '%' }} />
+        <div className={styles.bar} style={{ width: barWidth + '%' }} />
       </div>
     </div>
   );
