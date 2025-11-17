@@ -43,13 +43,13 @@
     "prefer-const": "error",
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-double"],
-    "indent": [
-      "warn",
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
+    // "indent": [
+    //   "warn",
+    //   2,
+    //   {
+    //     "SwitchCase": 1
+    //   }
+    // ],
     "max-len": [
       "error",
       {

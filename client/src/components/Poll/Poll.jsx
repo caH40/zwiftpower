@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getDateStatusForPoll } from '../../utils/poll';
@@ -5,6 +6,7 @@ import { getDateStatusForPoll } from '../../utils/poll';
 import VotedPollBlock from './VotedPollBlock/VotedPollBlock';
 
 import styles from './Poll.module.css';
+import VotePollBlock from './VotedPollBlock/VotePollBlock';
 
 /**
  * @typedef {Object} TUserWithFLLZ
@@ -49,43 +51,21 @@ import styles from './Poll.module.css';
  */
 export default function Poll({
   title,
-  totalAnswers = 5,
-  pollAnswers = [
-    {
-      optionId: 1,
-      total: 2,
-      users: [
-        { zwiftId: 169979, firstName: 'Alex', lastName: 'vales' },
-        { zwiftId: 1699792, firstName: 'Vano', lastName: 'Dles' },
-      ],
-    },
-    {
-      optionId: 2,
-      total: 3,
-      users: [
-        { zwiftId: 16999, firstName: 'M', lastName: 'Doter' },
-        { zwiftId: 16499792, firstName: 'Uno', lastName: 'Boo' },
-        { zwiftId: 164939792, firstName: 'GsUno', lastName: 'FBoSo' },
-      ],
-    },
-  ],
-  users = [
-    { zwiftId: 16999, firstName: 'M', lastName: 'Doter' },
-    { zwiftId: 16499792, firstName: 'Uno', lastName: 'Boo' },
-    { zwiftId: 164939792, firstName: 'GsUno', lastName: 'FBoSo' },
-    { zwiftId: 169979, firstName: 'Alex', lastName: 'vales' },
-    { zwiftId: 1699792, firstName: 'Vano', lastName: 'Dles' },
-  ],
+  options,
+  users,
+  pollAnswers,
   isAnonymous,
   startDate,
   endDate,
 }) {
-  const userZwiftId = useSelector((state) => state.checkAuth.value.user?.zwiftId);
+  const [vote, setVote] = useState([]);
+  const user = useSelector((state) => state.checkAuth.value.user);
 
   const dateStatus = getDateStatusForPoll(startDate, endDate);
+  const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
 
   // Пользователь просматривающий голосование проголосовал?
-  const isUserVoted = userZwiftId && users.find((u) => u.zwiftId === userZwiftId);
+  const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
 
   return (
     <div className={styles.wrapper}>
@@ -97,24 +77,83 @@ export default function Poll({
         <span className={styles.dateStatus}>{dateStatus}</span>
       </div>
 
-      <div className={styles.voteBlocksWrapper}>
-        {pollAnswers.map((option) => (
-          <VotedPollBlock
-            key={option.optionId}
-            isVoteMine={userZwiftId && option.users.some((u) => u.zwiftId === userZwiftId)}
-            percentages={Math.floor((option.total * 100) / totalAnswers)}
-            title={'Участвую'}
-          />
-        ))}
-      </div>
+      {/* Отображаются разные блоки если пользователь проголосовал или нет */}
+      {isUserVoted ? (
+        <div className={styles.voteBlocksWrapper}>
+          {options.map((option) => {
+            const currentAnswers =
+              pollAnswers.find(({ optionId }) => option.optionId === optionId)?.total ?? 0;
+
+            return (
+              <VotedPollBlock
+                key={option.optionId}
+                isVoteMine={
+                  user.zwiftId && isVoteMine(user.zwiftId, pollAnswers, option.optionId)
+                }
+                percentages={Math.floor((currentAnswers * 100) / totalAnswers)}
+                title={option.title}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className={styles.voteBlocksWrapper}>
+          {options.map((option) => (
+            <VotePollBlock key={option.optionId} isVoteMine={false} title={option.title} />
+          ))}
+        </div>
+      )}
 
       <div className={styles.results}>
-        {isAnonymous
-          ? users.length + ' проголосовало'
-          : isUserVoted
-          ? 'Результаты'
-          : 'Проголосовать'}
+        <RenderActionPollBlock
+          notAuth={user?._id}
+          isUserVoted={isUserVoted}
+          votes={users?.length}
+          isAnonymous={isAnonymous}
+          showResults={() => {
+            console.log('Открыть модальное окно с результатами');
+          }}
+          toVote={() => {
+            console.log('Голосуем');
+          }}
+        />
       </div>
     </div>
+  );
+}
+
+function isVoteMine(mineZwiftId, pollAnswers, currentOptionId) {
+  return pollAnswers.some(
+    (ans) =>
+      ans.optionId === currentOptionId && ans.users.some((u) => u.zwiftId === mineZwiftId)
+  );
+}
+
+function RenderActionPollBlock({
+  notAuth,
+  isUserVoted,
+  isAnonymous,
+  votes,
+  showResults,
+  toVote,
+}) {
+  // Не авторизован, или уже проголосовал и голосование анонимное.
+  if ((isUserVoted && isAnonymous) || notAuth) {
+    return `${votes} проголосовало`;
+  }
+
+  // Авторизован и не проголосовал.
+  if (!notAuth && !isUserVoted) {
+    return (
+      <span className={styles.link} onClick={toVote}>
+        Проголосовать
+      </span>
+    );
+  }
+
+  return (
+    <span className={styles.link} onClick={showResults}>
+      Результаты
+    </span>
   );
 }

@@ -21,7 +21,3 @@ export function getDateStatusForPoll(startDate, endDate) {
 
   return `До ${getTimerLocal(endDate, 'DDMMYYYY')}`;
 }
-
-/**
- *
- */

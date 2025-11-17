@@ -21,9 +21,95 @@ import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
+import Poll from '../../components/Poll/Poll';
 
 import styles from './MainPage.module.css';
-import Poll from '../../components/Poll/Poll';
+
+export const pollWithAnswersMock = {
+  _id: '6790c1c4f3b29e001fe5b111',
+
+  creator: '678ff1c4f3b29e001fe5a999',
+  title: 'Какой формат гонок вам нравится больше всего?',
+  options: [
+    { optionId: 1, title: 'Крит (Crit)' },
+    { optionId: 2, title: 'Горная гонка (Climb)' },
+    { optionId: 3, title: 'Раздельный старт (TT)' },
+    { optionId: 4, title: 'Групповая гонка (Road Race)' },
+  ],
+  isAnonymous: false,
+  multipleAnswersAllowed: true,
+
+  startDate: '2025-01-10T10:00:00.000Z',
+  endDate: '2025-01-20T10:00:00.000Z',
+  createdAt: '2025-01-01T12:00:00.000Z',
+  updatedAt: '2025-01-02T15:30:00.000Z',
+
+  users: [
+    {
+      zwiftId: 1699793,
+      firstName: 'Alex',
+      lastName: 'Berezhnyev',
+      imageSrc: 'https://example.com/avatar1.jpg',
+    },
+    {
+      zwiftId: 789012,
+      firstName: 'Maria',
+      lastName: 'Ivanova',
+      imageSrc: null,
+    },
+    {
+      zwiftId: 345678,
+      firstName: 'John',
+      lastName: 'Smith',
+      imageSrc: 'https://example.com/avatar3.jpg',
+    },
+  ],
+
+  pollAnswers: [
+    {
+      optionId: 1,
+      total: 2,
+      users: [
+        {
+          zwiftId: 1699793,
+          firstName: 'Alex',
+          lastName: 'Berezhnyev',
+          imageSrc: 'https://example.com/avatar1.jpg',
+        },
+        {
+          zwiftId: 789012,
+          firstName: 'Maria',
+          lastName: 'Ivanova',
+          imageSrc: null,
+        },
+      ],
+    },
+    {
+      optionId: 2,
+      total: 1,
+      users: [
+        {
+          zwiftId: 345678,
+          firstName: 'John',
+          lastName: 'Smith',
+          imageSrc: 'https://example.com/avatar3.jpg',
+        },
+      ],
+    },
+    {
+      optionId: 3,
+      total: 1,
+      users: [
+        {
+          zwiftId: 123456,
+          firstName: 'Alex',
+          lastName: 'Berezhnyev',
+          imageSrc: 'https://example.com/avatar1.jpg',
+        },
+      ],
+    },
+  ],
+};
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
@@ -113,12 +199,7 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
-            <Poll
-              title={'Тестируем'}
-              isAnonymous={true}
-              startDate={new Date('2025-10-20')}
-              endDate={new Date('2025-11-20')}
-            />
+            <Poll {...pollWithAnswersMock} />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             {/* Рекламный блок текущих Серий */}

@@ -31,3 +31,6 @@
   color: var(--color-blue-main);
   text-align: center;
 }
+.link {
+  cursor: pointer;
+}
