@@ -7,7 +7,7 @@ import styles from './VotedPollBlock.module.css';
 export default function VotePollBlock({
   title,
   isVoteMine,
-  setAnswers,
+  setSelectedOptionIds,
   optionId,
   multipleAnswersAllowed,
 }) {
@@ -23,18 +23,13 @@ export default function VotePollBlock({
             width={16}
             height={16}
             onClick={() =>
-              setAnswers((prev) => {
+              setSelectedOptionIds((prev) => {
                 if (multipleAnswersAllowed) {
-                  return [...prev].map((p) =>
-                    p.optionId === optionId ? { optionId: p.optionId, checked: !p.checked } : p
-                  );
+                  return prev.includes(optionId)
+                    ? [...prev].filter((p) => p !== optionId)
+                    : [...prev, optionId];
                 } else {
-                  return [...prev].map(
-                    (p) =>
-                      p.optionId === optionId
-                        ? { optionId: p.optionId, checked: true }
-                        : { optionId: p.optionId, checked: false } // Может быть выбрано только одна опция.
-                  );
+                  return [optionId];
                 }
               })
             }

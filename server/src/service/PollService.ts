@@ -54,7 +54,26 @@ export class PollService {
     // DTO;
     const afterDto = pollWithAnswersDto(poll, groupedAndSortedPollAnswers, allUsers);
 
-    return { data: afterDto, message: 'Голосование создано.' };
+    return { data: afterDto, message: 'Запрашиваемое голосование' };
+  };
+
+  /**
+   * Сохранение данных как проголосовал пользователь.
+   */
+  public createUserPollAnswers = async ({
+    pollId,
+    userId,
+    selectedOptionIds,
+  }: {
+    pollId: string;
+    userId: string;
+    selectedOptionIds: number[];
+  }): Promise<TResponseService<TPollWithAnswersDto>> => {
+    await this.pollAnswerRepository.update({ pollId, userId, selectedOptionIds });
+
+    const response = await this.getById(pollId);
+
+    return { data: response.data, message: 'Данные голосования успешно сохранены!' };
   };
 
   private getAllUsers = (

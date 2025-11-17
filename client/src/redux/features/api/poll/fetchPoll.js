@@ -5,16 +5,33 @@ import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 
 /**
+ * Получение голосование по _id.
+ */
+export const fetchGetPoll = createAsyncThunk('poll/get', async ({ pollId }, thunkAPI) => {
+  try {
+    const response = await myAxios({
+      url: `${serverExpress}/api/poll/${pollId}`,
+      method: 'get',
+    });
+
+    return response.data;
+  } catch (error) {
+    const message = error.response.data.message || error.message;
+    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+/**
  * Отправка данных как проголосовал пользователь.
  */
 export const fetchPostPollAnswers = createAsyncThunk(
-  'poll/getAll',
-  async ({ answers }, thunkAPI) => {
+  'pollAnswers/post',
+  async ({ selectedOptionIds, pollId }, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/poll/answers`,
         method: 'post',
-        data: { answers },
+        data: { selectedOptionIds, pollId },
       });
 
       return response.data;

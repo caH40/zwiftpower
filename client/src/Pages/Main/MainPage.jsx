@@ -24,9 +24,11 @@ import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/
 import Poll from '../../components/Poll/Poll';
 
 import styles from './MainPage.module.css';
+import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
+import { resetPoll } from '../../redux/features/api/poll/pollSlice';
 
 export const pollWithAnswersMock = {
-  _id: '6790c1c4f3b29e001fe5b111',
+  _id: '69197b8ab97e330df53c296c',
 
   creator: '678ff1c4f3b29e001fe5a999',
   title: 'Какой формат гонок вам нравится больше всего?',
@@ -37,7 +39,7 @@ export const pollWithAnswersMock = {
     { optionId: 4, title: 'Групповая гонка (Road Race)' },
   ],
   isAnonymous: false,
-  multipleAnswersAllowed: false,
+  multipleAnswersAllowed: true,
 
   startDate: '2025-01-10T10:00:00.000Z',
   endDate: '2025-01-20T10:00:00.000Z',
@@ -114,6 +116,8 @@ export const pollWithAnswersMock = {
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
 function MainPage() {
+  const { poll } = useSelector((state) => state.poll);
+
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
@@ -130,6 +134,12 @@ function MainPage() {
     dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
 
     return () => dispatch(resetSeriesPublicAll());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchGetPoll({ pollId: '69197b8ab97e330df53c296c' }));
+
+    return () => dispatch(resetPoll());
   }, [dispatch]);
 
   // Хук установки заголовка h1 для страницы.
@@ -199,7 +209,7 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
-            <Poll {...pollWithAnswersMock} />
+            {poll && <Poll {...poll} />}
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             {/* Рекламный блок текущих Серий */}

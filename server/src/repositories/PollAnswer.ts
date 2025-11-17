@@ -16,4 +16,20 @@ export class PollAnswerRepository {
       .populate<{ user: { zwiftId: number } }>({ path: 'user', select: ['-_id', 'zwiftId'] })
       .lean();
   }
+
+  async update({
+    pollId,
+    userId,
+    selectedOptionIds,
+  }: {
+    pollId: string;
+    userId: string;
+    selectedOptionIds: number[];
+  }): Promise<void> {
+    await PollAnswerModel.findOneAndUpdate(
+      { user: userId, poll: pollId },
+      { $set: { selectedOptionIds } },
+      { upsert: true }
+    );
+  }
 }

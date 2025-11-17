@@ -28,3 +28,23 @@ export const PollZSchema = z.object({
     z.date()
   ),
 });
+
+export const PollAnswersZSchema = z.object({
+  pollId: z.string().refine((value) => mongooseUtils.checkValidObjectId(value), {
+    message: 'Некорректный ObjectId у значения pollId',
+  }),
+
+  userId: z.string().refine((value) => mongooseUtils.checkValidObjectId(value), {
+    message: 'Некорректный ObjectId у значения userId',
+  }),
+
+  selectedOptionIds: z.array(z.number()),
+});
+
+export const PollIdZSchema = z
+  .object({
+    pollId: z.string().refine((value) => mongooseUtils.checkValidObjectId(value), {
+      message: 'Некорректный ObjectId у значения pollId',
+    }),
+  })
+  .transform((val) => val.pollId);

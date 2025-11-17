@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getDateStatusForPoll } from '../../utils/poll';
-import { getAlert } from '../../redux/features/alertMessageSlice';
+import { usePoll } from '../../hook/usePoll';
 
 import VotedPollBlock from './VotedPollBlock/VotedPollBlock';
 import VotePollBlock from './VotedPollBlock/VotePollBlock';
 import styles from './Poll.module.css';
-import { fetchPostPollAnswers } from '../../redux/features/api/poll/fetchPoll';
-import { usePoll } from '../../hook/usePoll';
 
 /**
  * @typedef {Object} TUserWithFLLZ
@@ -52,6 +50,7 @@ import { usePoll } from '../../hook/usePoll';
  * @param {TPollWithAnswersDto} props - Данные опроса с результатами голосования.
  */
 export default function Poll({
+  _id,
   title,
   options,
   users,
@@ -62,9 +61,7 @@ export default function Poll({
   multipleAnswersAllowed,
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
-  const [answers, setAnswers] = useState(
-    options.map((o) => ({ optionId: o.optionId, checked: false }))
-  );
+  const [selectedOptionIds, setSelectedOptionIds] = useState([]);
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.checkAuth.value.user);
@@ -75,7 +72,7 @@ export default function Poll({
   // Пользователь просматривающий голосование проголосовал?
   const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
 
-  const sendAnswers = usePoll({ answers });
+  const sendAnswers = usePoll({ selectedOptionIds, pollId: _id });
 
   return (
     <div className={styles.wrapper}>
@@ -111,9 +108,9 @@ export default function Poll({
           {options.map(({ optionId, title }) => (
             <VotePollBlock
               key={optionId}
-              isVoteMine={answers.find((v) => v.optionId === optionId)?.checked}
+              isVoteMine={selectedOptionIds.includes(optionId)}
               title={title}
-              setAnswers={setAnswers}
+              setSelectedOptionIds={setSelectedOptionIds}
               optionId={optionId}
               multipleAnswersAllowed={multipleAnswersAllowed}
             />

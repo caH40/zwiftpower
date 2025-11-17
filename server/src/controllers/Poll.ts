@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
-import { PollZSchema } from '../utils/deserialization/poll.js';
+import {
+  PollAnswersZSchema,
+  PollIdZSchema,
+  PollZSchema,
+} from '../utils/deserialization/poll.js';
 import { PollService } from '../service/PollService.js';
 
 /**
@@ -13,7 +17,33 @@ export class PollController {
   constructor() {}
 
   /**
-   * Создание команды.
+   * Запрос голосования по _id.
+   */
+  public get = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const result = PollIdZSchema.safeParse(req.params);
+
+      if (!result.success) {
+        const { fieldErrors, formErrors } = result.error.flatten();
+
+        return res.status(400).json({
+          message: 'Ошибка валидации',
+          errors: { ...fieldErrors, formErrors },
+        });
+      }
+
+      // Вызов сервиса.
+      const response = await this.teamService.getById(result.data);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Создание голосования.
    */
   public post = async (req: Request, res: Response): Promise<Response | void> => {
     try {
@@ -46,24 +76,23 @@ export class PollController {
   public postAnswers = async (req: Request, res: Response): Promise<Response | void> => {
     try {
       const userId = req.user?.id;
-      console.log(req.body);
 
-      // const result = PollZSchema.safeParse({ ...req.body, creator: userId });
+      const result = PollAnswersZSchema.safeParse({ ...req.body, userId });
 
-      // if (!result.success) {
-      //   const { fieldErrors, formErrors } = result.error.flatten();
+      if (!result.success) {
+        const { fieldErrors, formErrors } = result.error.flatten();
 
-      //   return res.status(400).json({
-      //     message: 'Ошибка валидации',
-      //     errors: { ...fieldErrors, formErrors },
-      //   });
-      // }
+        return res.status(400).json({
+          message: 'Ошибка валидации',
+          errors: { ...fieldErrors, formErrors },
+        });
+      }
 
       // Вызов сервиса.
-      // const response = await this.teamService.create(result.data);
+      const response = await this.teamService.createUserPollAnswers(result.data);
 
       // Возврат успешного ответа.
-      return res.status(200).json('response');
+      return res.status(200).json(response);
     } catch (error) {
       handleErrorInController(res, error);
     }

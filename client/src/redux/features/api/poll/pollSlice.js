@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { fetchGetPoll, fetchPostPollAnswers } from './fetchPoll';
+
 const initialState = {
+  poll: null,
   message: null,
   status: null,
   error: null,
@@ -14,30 +17,48 @@ const pollSlice = createSlice({
   initialState,
   reducers: {
     resetPoll(state) {
-      state.teamsLeaderboard = [];
+      state.poll = null;
     },
   },
 
-  // extraReducers: (builder) => {
-  //   // ============== получение всех команд =================
-  //   builder.addCase(fetchPostPollAnswers.pending, (state) => {
-  //     state.error = null;
-  //     state.status = 'loading';
-  //   });
+  extraReducers: (builder) => {
+    // ============== получение голосования =================
+    builder.addCase(fetchGetPoll.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
 
-  //   builder.addCase(fetchPostPollAnswers.fulfilled, (state, action) => {
-  //     state.message = action.payload.data?.message;
-  //     state.error = null;
-  //     state.status = 'resolved';
-  //   });
+    builder.addCase(fetchGetPoll.fulfilled, (state, action) => {
+      state.poll = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
 
-  //   builder.addCase(fetchPostPollAnswers.rejected, (state, action) => {
-  //     state.status = 'rejected';
-  //     state.error = action.payload;
-  //   });
-  // },
+    builder.addCase(fetchGetPoll.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== получение всех команд =================
+    builder.addCase(fetchPostPollAnswers.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchPostPollAnswers.fulfilled, (state, action) => {
+      state.message = action.payload.message;
+      state.poll = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchPostPollAnswers.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+  },
 });
 
-// export const {} = pollSlice.actions;
+export const { resetPoll } = pollSlice.actions;
 
 export default pollSlice.reducer;
