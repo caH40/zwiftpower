@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { PollController } from '../controllers/Poll.js';
-import { checkAuth } from '../middleware/auth.js';
+import { checkAuth, getAuthData } from '../middleware/auth.js';
 
 export const pollRouter = Router();
 
 const pollController = new PollController();
 
-pollRouter.get('/:pollId', checkAuth, pollController.get);
+pollRouter.get('/:pollId', getAuthData, pollController.get);
 
 pollRouter.post('/', checkAuth, pollController.post);
-pollRouter.post('/answers', checkAuth, pollController.postAnswers);
+pollRouter.post('/answers', getAuthData, pollController.postAnswers);

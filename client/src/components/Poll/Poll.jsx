@@ -65,7 +65,7 @@ export default function Poll({
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
 
   const user = useSelector((state) => state.checkAuth.value.user);
-
+  const isAuth = !!user?.id;
   const dateStatus = getDateStatusForPoll(startDate, endDate);
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
 
@@ -85,7 +85,7 @@ export default function Poll({
       </div>
 
       {/* Отображаются разные блоки если пользователь проголосовал или нет */}
-      {isUserAnswered ? (
+      {!isAuth || isUserAnswered ? (
         <div className={styles.voteBlocksWrapper}>
           {options.map((option) => {
             const currentAnswers =
@@ -120,7 +120,7 @@ export default function Poll({
 
       <div className={styles.results}>
         <RenderActionPollBlock
-          notAuth={user?._id}
+          isAuth={isAuth}
           isUserAnswered={isUserAnswered}
           answers={users?.length}
           isAnonymous={isAnonymous}
@@ -142,7 +142,7 @@ function isVoteMine(mineZwiftId, pollAnswers, currentOptionId) {
 }
 
 function RenderActionPollBlock({
-  notAuth,
+  isAuth,
   isUserAnswered,
   isAnonymous,
   answers,
@@ -150,12 +150,12 @@ function RenderActionPollBlock({
   sendAnswers,
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
-  if ((isUserAnswered && isAnonymous) || notAuth) {
+  if ((isUserAnswered && isAnonymous) || !isAuth) {
     return `${answers} проголосовало`;
   }
 
   // Авторизован и не проголосовал.
-  if (!notAuth && !isUserAnswered) {
+  if (isAuth && !isUserAnswered) {
     return (
       <span className={styles.link} onClick={sendAnswers}>
         Проголосовать
