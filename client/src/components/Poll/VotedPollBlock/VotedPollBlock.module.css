@@ -13,6 +13,9 @@
   height: 16px;
   text-align: right;
 }
+.active {
+  cursor: pointer;
+}
 .barsContainer {
   display: flex;
   align-items: center;

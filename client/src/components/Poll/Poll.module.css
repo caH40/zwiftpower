@@ -3,8 +3,9 @@
   height: auto;
   padding: 20px;
   border: 1px solid var(--color-blue-main);
-  border-radius: 5px;
+  border-radius: 10px;
   color: var(--color-text-dark);
+  background-color: var(--color-bg-minor);
 }
 .title {
   font-size: 16px;

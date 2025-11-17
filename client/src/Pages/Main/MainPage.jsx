@@ -37,7 +37,7 @@ export const pollWithAnswersMock = {
     { optionId: 4, title: 'Групповая гонка (Road Race)' },
   ],
   isAnonymous: false,
-  multipleAnswersAllowed: true,
+  multipleAnswersAllowed: false,
 
   startDate: '2025-01-10T10:00:00.000Z',
   endDate: '2025-01-20T10:00:00.000Z',
