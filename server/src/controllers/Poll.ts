@@ -39,4 +39,33 @@ export class PollController {
       handleErrorInController(res, error);
     }
   };
+
+  /**
+   * Создание данных как проголосовал пользователь.
+   */
+  public postAnswers = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
+      console.log(req.body);
+
+      // const result = PollZSchema.safeParse({ ...req.body, creator: userId });
+
+      // if (!result.success) {
+      //   const { fieldErrors, formErrors } = result.error.flatten();
+
+      //   return res.status(400).json({
+      //     message: 'Ошибка валидации',
+      //     errors: { ...fieldErrors, formErrors },
+      //   });
+      // }
+
+      // Вызов сервиса.
+      // const response = await this.teamService.create(result.data);
+
+      // Возврат успешного ответа.
+      return res.status(200).json('response');
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

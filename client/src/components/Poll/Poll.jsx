@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getDateStatusForPoll } from '../../utils/poll';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import VotedPollBlock from './VotedPollBlock/VotedPollBlock';
-
-import styles from './Poll.module.css';
 import VotePollBlock from './VotedPollBlock/VotePollBlock';
-import { getAlert } from '../../redux/features/alertMessageSlice';
+import styles from './Poll.module.css';
+import { fetchPostPollAnswers } from '../../redux/features/api/poll/fetchPoll';
+import { usePoll } from '../../hook/usePoll';
 
 /**
  * @typedef {Object} TUserWithFLLZ
@@ -61,7 +62,7 @@ export default function Poll({
   multipleAnswersAllowed,
 }) {
   // При начале голосования, или сбросе для изменения голоса все поля сбрасываются.
-  const [vote, setVote] = useState(
+  const [answers, setAnswers] = useState(
     options.map((o) => ({ optionId: o.optionId, checked: false }))
   );
   const dispatch = useDispatch();
@@ -74,19 +75,7 @@ export default function Poll({
   // Пользователь просматривающий голосование проголосовал?
   const isUserVoted = user?.zwiftId && !!users.find((u) => u.zwiftId === user?.zwiftId);
 
-  const sendVote = () => {
-    if (vote.every((v) => v.checked === false)) {
-      dispatch(
-        getAlert({
-          message: 'Необходимо выбрать хотя бы один вариант!',
-          type: 'error',
-          isOpened: true,
-        })
-      );
-      return;
-    }
-    dispatch();
-  };
+  const sendAnswers = usePoll({ answers });
 
   return (
     <div className={styles.wrapper}>
@@ -122,9 +111,9 @@ export default function Poll({
           {options.map(({ optionId, title }) => (
             <VotePollBlock
               key={optionId}
-              isVoteMine={vote.find((v) => v.optionId === optionId)?.checked}
+              isVoteMine={answers.find((v) => v.optionId === optionId)?.checked}
               title={title}
-              setVote={setVote}
+              setAnswers={setAnswers}
               optionId={optionId}
               multipleAnswersAllowed={multipleAnswersAllowed}
             />
@@ -141,7 +130,7 @@ export default function Poll({
           showResults={() => {
             console.log('Открыть модальное окно с результатами');
           }}
-          sendVote={sendVote}
+          sendAnswers={sendAnswers}
         />
       </div>
     </div>
@@ -159,19 +148,19 @@ function RenderActionPollBlock({
   notAuth,
   isUserVoted,
   isAnonymous,
-  votes,
+  answers,
   showResults,
-  sendVote,
+  sendAnswers,
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
   if ((isUserVoted && isAnonymous) || notAuth) {
-    return `${votes} проголосовало`;
+    return `${answers} проголосовало`;
   }
 
   // Авторизован и не проголосовал.
   if (!notAuth && !isUserVoted) {
     return (
-      <span className={styles.link} onClick={sendVote}>
+      <span className={styles.link} onClick={sendAnswers}>
         Проголосовать
       </span>
     );

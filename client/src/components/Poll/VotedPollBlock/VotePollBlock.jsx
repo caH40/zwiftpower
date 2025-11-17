@@ -7,7 +7,7 @@ import styles from './VotedPollBlock.module.css';
 export default function VotePollBlock({
   title,
   isVoteMine,
-  setVote,
+  setAnswers,
   optionId,
   multipleAnswersAllowed,
 }) {
@@ -23,7 +23,7 @@ export default function VotePollBlock({
             width={16}
             height={16}
             onClick={() =>
-              setVote((prev) => {
+              setAnswers((prev) => {
                 if (multipleAnswersAllowed) {
                   return [...prev].map((p) =>
                     p.optionId === optionId ? { optionId: p.optionId, checked: !p.checked } : p
