@@ -32,4 +32,8 @@ export class PollAnswerRepository {
       { upsert: true }
     );
   }
+
+  async delete({ pollId, userId }: { pollId: string; userId: string }) {
+    return PollAnswerModel.findOneAndDelete({ user: userId, poll: pollId }).lean();
+  }
 }

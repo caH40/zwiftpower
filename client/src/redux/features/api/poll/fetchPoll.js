@@ -53,7 +53,7 @@ export const fetchDeletePollAnswers = createAsyncThunk(
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/poll/answers`,
-        method: 'post',
+        method: 'delete',
         data: { pollId },
       });
 

@@ -1,3 +1,6 @@
+import { useDispatch } from 'react-redux';
+
+import { fetchDeletePollAnswers } from '../../../redux/features/api/poll/fetchPoll';
 import IconDelete from '../../icons/IconDelete';
 
 import styles from './PopupMenuTable.module.css';
@@ -6,10 +9,11 @@ import styles from './PopupMenuTable.module.css';
  * Попап меню для управления голосованием.
  */
 function PopupMenuPoll({ pollId, setShowMenu }) {
+  const dispatch = useDispatch();
   // Обработчик нажатия на кнопку обновления результатов этапа серии.,
   const handleResetVote = (e) => {
     e.stopPropagation();
-
+    dispatch(fetchDeletePollAnswers({ pollId }));
     setShowMenu(false);
   };
 

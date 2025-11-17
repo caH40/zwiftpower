@@ -10,3 +10,4 @@ pollRouter.get('/:pollId', getAuthData, pollController.get);
 
 pollRouter.post('/', checkAuth, pollController.post);
 pollRouter.post('/answers', getAuthData, pollController.postAnswers);
+pollRouter.delete('/answers', getAuthData, pollController.deleteAnswers);

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
 import {
+  DeletePollAnswersZSchema,
   PollAnswersZSchema,
   PollIdZSchema,
   PollZSchema,
@@ -91,6 +92,34 @@ export class PollController {
 
       // Вызов сервиса.
       const response = await this.teamService.createUserPollAnswers(result.data);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Создание данных как проголосовал пользователь.
+   */
+  public deleteAnswers = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      const userId = req.user?.id;
+
+      const result = DeletePollAnswersZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        const { fieldErrors, formErrors } = result.error.flatten();
+
+        return res.status(400).json({
+          message: 'Ошибка валидации',
+          errors: { ...fieldErrors, formErrors },
+        });
+      }
+
+      // Вызов сервиса.
+      const response = await this.teamService.deleteUserPollAnswers(result.data);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

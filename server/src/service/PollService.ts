@@ -109,6 +109,39 @@ export class PollService {
   };
 
   /**
+   * Сохранение данных как проголосовал пользователь.
+   */
+  public deleteUserPollAnswers = async ({
+    pollId,
+    userId,
+  }: {
+    pollId: string;
+    userId: string;
+  }): Promise<TResponseService<TPollWithAnswersDto>> => {
+    const poll = await getOrThrow(
+      this.pollRepository.getById(pollId),
+      `Не найдено голосование с _id: "${pollId}"`
+    );
+    const now = new Date();
+    if (now < poll.startDate) {
+      throw new Error(
+        `Голосование начнется ${getTimerLocal(poll.startDate.toString(), 'DDMMYYYY')}`
+      );
+    }
+    if (poll.endDate < now) {
+      throw new Error(
+        `Голосование завершилось ${getTimerLocal(poll.endDate.toString(), 'DDMMYYYY')}`
+      );
+    }
+
+    await this.pollAnswerRepository.delete({ pollId, userId });
+
+    const response = await this.getById(pollId, userId);
+
+    return { data: response.data, message: 'Данные голосования сброшены!' };
+  };
+
+  /**
    * Проверяется проголосовал ли авторизованный пользователь нет.
    */
   private isUserAnswered = async (
