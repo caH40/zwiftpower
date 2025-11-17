@@ -33,7 +33,7 @@ export function usePoll({ selectedOptionIds, pollId }) {
     } catch (error) {
       dispatch(
         getAlert({
-          message: error?.response?.data?.message || error?.message || 'Непредвиденная ошибка!',
+          message: error || 'Непредвиденная ошибка!',
           type: 'error',
           isOpened: true,
         })
