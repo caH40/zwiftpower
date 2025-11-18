@@ -14,4 +14,7 @@ export const PollAnswerSchema = new Schema<PollAnswerDocument>(
   { timestamps: true }
 );
 
+// 🔐 Гарантированно один ответ на одного пользователя в одном опросе
+PollAnswerSchema.index({ poll: 1, user: 1 }, { unique: true });
+
 export const PollAnswerModel = model<PollAnswerDocument>('PollAnswer', PollAnswerSchema);
