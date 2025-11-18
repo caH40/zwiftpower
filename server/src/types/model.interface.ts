@@ -1022,6 +1022,7 @@ export type TPoll = {
   multipleAnswersAllowed: boolean; // Возможность выбрать несколько вариантов.
   startDate: Date; // Дата начала опроса.
   endDate: Date; // Дата окончания опроса.
+  entityId?: Types.ObjectId; // ID Сущности для которой создано голосование. Без ID общие голосования.
   createdAt: Date; // Дата создания записи.
   updatedAt: Date; // Дата обновления записи.
 };

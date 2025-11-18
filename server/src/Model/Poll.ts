@@ -10,6 +10,7 @@ type PollDocument = TPoll & Document;
 const PollSchema = new Schema<PollDocument>(
   {
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Poll', required: true }, //ID создателя голосования.
+    entityId: { type: mongoose.Schema.Types.ObjectId, required: false }, // ID Сущности для которой создано голосование. Без ID общие голосования.
     title: { type: String, trim: true, required: true }, // Заголовок опроса.
     options: { type: [PollOptionSchema], default: [], required: true }, // Варианты ответа.
     isAnonymous: { type: Boolean, default: false }, // Анонимное голосование.

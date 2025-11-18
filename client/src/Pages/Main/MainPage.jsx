@@ -22,96 +22,10 @@ import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
 import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import Poll from '../../components/Poll/Poll';
-
-import styles from './MainPage.module.css';
 import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
 import { resetPoll } from '../../redux/features/api/poll/pollSlice';
 
-export const pollWithAnswersMock = {
-  _id: '69197b8ab97e330df53c296c',
-
-  creator: '678ff1c4f3b29e001fe5a999',
-  title: 'Какой формат гонок вам нравится больше всего?',
-  options: [
-    { optionId: 1, title: 'Крит (Crit)' },
-    { optionId: 2, title: 'Горная гонка (Climb)' },
-    { optionId: 3, title: 'Раздельный старт (TT)' },
-    { optionId: 4, title: 'Групповая гонка (Road Race)' },
-  ],
-  isAnonymous: false,
-  multipleAnswersAllowed: true,
-
-  startDate: '2025-01-10T10:00:00.000Z',
-  endDate: '2025-01-20T10:00:00.000Z',
-  createdAt: '2025-01-01T12:00:00.000Z',
-  updatedAt: '2025-01-02T15:30:00.000Z',
-
-  users: [
-    {
-      zwiftId: 1699793,
-      firstName: 'Alex',
-      lastName: 'Berezhnyev',
-      imageSrc: 'https://example.com/avatar1.jpg',
-    },
-    {
-      zwiftId: 789012,
-      firstName: 'Maria',
-      lastName: 'Ivanova',
-      imageSrc: null,
-    },
-    {
-      zwiftId: 345678,
-      firstName: 'John',
-      lastName: 'Smith',
-      imageSrc: 'https://example.com/avatar3.jpg',
-    },
-  ],
-
-  pollAnswers: [
-    {
-      optionId: 1,
-      total: 2,
-      users: [
-        {
-          zwiftId: 1699793,
-          firstName: 'Alex',
-          lastName: 'Berezhnyev',
-          imageSrc: 'https://example.com/avatar1.jpg',
-        },
-        {
-          zwiftId: 789012,
-          firstName: 'Maria',
-          lastName: 'Ivanova',
-          imageSrc: null,
-        },
-      ],
-    },
-    {
-      optionId: 2,
-      total: 1,
-      users: [
-        {
-          zwiftId: 345678,
-          firstName: 'John',
-          lastName: 'Smith',
-          imageSrc: 'https://example.com/avatar3.jpg',
-        },
-      ],
-    },
-    {
-      optionId: 3,
-      total: 1,
-      users: [
-        {
-          zwiftId: 123456,
-          firstName: 'Alex',
-          lastName: 'Berezhnyev',
-          imageSrc: 'https://example.com/avatar1.jpg',
-        },
-      ],
-    },
-  ],
-};
+import styles from './MainPage.module.css';
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
@@ -137,7 +51,7 @@ function MainPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchGetPoll({ pollId: '69197b8ab97e330df53c296c' }));
+    dispatch(fetchGetPoll({ pollId: '691c9016c52f70c6bca2771f' }));
 
     return () => dispatch(resetPoll());
   }, [dispatch]);
