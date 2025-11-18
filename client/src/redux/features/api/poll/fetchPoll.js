@@ -17,7 +17,7 @@ export const fetchGetPoll = createAsyncThunk('poll/get', async ({ pollId }, thun
     return response.data;
   } catch (error) {
     const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+    // thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
     return thunkAPI.rejectWithValue(message);
   }
 });
