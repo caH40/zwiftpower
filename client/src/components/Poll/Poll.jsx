@@ -147,7 +147,7 @@ export default function Poll({
             dispatch(
               openPopupFormContainer({
                 formType: 'viewPollResults',
-                formProps: { pollAnswers, totalAnswers },
+                formProps: { pollAnswers, totalAnswers, options },
               })
             )
           }

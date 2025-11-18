@@ -2,19 +2,23 @@ import LogoRider from '../LogoRider/LogoRider';
 
 import styles from './PollResults.module.css';
 
-export default function PollResultsPopup({ pollAnswers, totalAnswers }) {
+export default function PollResultsPopup({ options, pollAnswers, totalAnswers }) {
   return (
     <div className={styles.wrapper}>
       <h3 className={styles.title}>Результаты голосования</h3>
 
-      {pollAnswers.map((ans, index) => {
+      {options.map((o, index) => {
+        const data = pollAnswers.find(({ optionId }) => o.optionId === optionId);
+        const currentAnswers = data?.total ?? 0;
+
         return (
           <OptionBlock
-            key={ans.optionId}
+            key={o.optionId}
             order={index + 1}
-            total={ans.total}
-            users={ans.users}
-            percentages={totalAnswers ? Math.floor((ans.total * 100) / totalAnswers) : 'н/д'}
+            total={currentAnswers}
+            title={o.title}
+            users={data?.users}
+            percentages={Math.floor((currentAnswers * 100) / totalAnswers)}
             totalAnswers={totalAnswers}
           />
         );
@@ -28,11 +32,13 @@ export default function PollResultsPopup({ pollAnswers, totalAnswers }) {
 }
 
 // Обновленный OptionBlock с progress bar
-function OptionBlock({ order, total, percentages, users }) {
+function OptionBlock({ order, title, total, percentages, users = [] }) {
   return (
     <section className={styles.optionBlock}>
       <div className={styles.titleContainer}>
-        <h4 className={styles.optionTitle}>Вариант {order}</h4>
+        <h4 className={styles.optionTitle}>
+          {order} - {title}
+        </h4>
         <div className={styles.stats}>
           {total} {getVoteText(total)} - {percentages}%
         </div>
