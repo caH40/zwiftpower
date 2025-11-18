@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ButtonClose from '../ButtonClose/ButtonClose';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 import FormCategory from '../FormCategory/FormCategory';
+import PollResults from '../../PollResults/PollResults';
 
 import styles from './PopupFormContainer.module.css';
 
@@ -33,6 +33,7 @@ export default function PopupFormContainer() {
     setCategory: <FormCategory {...formProps} />,
     setPenalty: <div>setPenalty</div>,
     setDisqualification: <div>setDisqualification</div>,
+    viewPollResults: <PollResults {...formProps} />,
   };
 
   return (
@@ -40,9 +41,12 @@ export default function PopupFormContainer() {
       {isVisible && (
         <div className={styles.wrapper}>
           <div className={styles.block} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.close}>
-              <ButtonClose getClick={() => dispatch(closePopupFormContainer())} />
-            </div>
+            <button
+              className={styles.closeButton}
+              onClick={() => dispatch(closePopupFormContainer())}
+            >
+              ×
+            </button>
 
             {formType && Form[formType]}
           </div>

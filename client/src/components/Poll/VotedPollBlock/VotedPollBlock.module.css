@@ -23,8 +23,14 @@
   align-items: center;
   gap: 10px;
 }
-.bar {
+.progressBar {
   height: 4px;
   border-radius: 2px;
-  background-color: var(--color-blue-main);
+  width: 100%;
+  background-color: var(--color-bg-minor-blur);
+}
+.progressBarFill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-blue-main), var(--color-blue-4));
 }

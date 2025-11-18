@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getDateStatusForPoll } from '../../utils/poll';
+import { openPopupFormContainer } from '../../redux/features/popupFormContainerSlice';
 import { usePoll } from '../../hook/usePoll';
 import Users from '../Users/Users';
 import IconEdit from '../icons/IconEdit';
@@ -68,6 +69,8 @@ export default function Poll({
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
 
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
   const dateStatus = getDateStatusForPoll(startDate, endDate);
@@ -77,15 +80,19 @@ export default function Poll({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.editContainer}>
-        <IconEdit squareSize={18} getClick={() => setShowMenu((prev) => !prev)} />
-      </div>
+      {isAuth ? (
+        <>
+          <div className={styles.editContainer}>
+            <IconEdit squareSize={18} getClick={() => setShowMenu((prev) => !prev)} />
+          </div>
 
-      {isAuth && showMenu && (
-        <div className={styles.popupContainer}>
-          <PopupMenuPoll pollId={_id} setShowMenu={setShowMenu} />
-        </div>
-      )}
+          {showMenu && (
+            <div className={styles.popupContainer}>
+              <PopupMenuPoll pollId={_id} setShowMenu={setShowMenu} />
+            </div>
+          )}
+        </>
+      ) : null}
 
       <h4 className={styles.title}>{title}</h4>
       <div className={styles.subtitleContainer}>
@@ -136,9 +143,14 @@ export default function Poll({
           isUserAnswered={isUserAnswered}
           answers={users?.length}
           isAnonymous={isAnonymous}
-          showResults={() => {
-            console.log('Открыть модальное окно с результатами');
-          }}
+          showResults={() =>
+            dispatch(
+              openPopupFormContainer({
+                formType: 'viewPollResults',
+                formProps: { pollAnswers, totalAnswers },
+              })
+            )
+          }
           sendAnswers={sendAnswers}
           notStarted={new Date(startDate) > new Date()}
           finished={new Date() > new Date(endDate)}

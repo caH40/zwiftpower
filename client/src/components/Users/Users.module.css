@@ -5,7 +5,7 @@
 .empty,
 .img {
   flex: 0 0 26px;
-  border-radius: 50%;
+  border-radius: 8px;
   overflow: hidden;
   object-fit: cover;
   width: 26px;

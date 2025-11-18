@@ -28,7 +28,9 @@ export default function VotedPollBlock({ title, percentages, isVoteMine, isUserA
           ) : null}
         </div>
 
-        <div className={styles.bar} style={{ width: barWidth + '%' }} />
+        <div className={styles.progressBar}>
+          <div className={styles.progressBarFill} style={{ width: barWidth + '%' }} />
+        </div>
       </div>
     </div>
   );
