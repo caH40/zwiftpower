@@ -76,6 +76,7 @@ export default function Poll({
   const isAuth = !!user?.id;
   const dateStatus = getDateStatusForPoll(startDate, endDate);
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
+  const votedUsers = users?.length;
 
   const sendAnswers = usePoll({ selectedOptionIds, pollId: _id });
 
@@ -142,13 +143,13 @@ export default function Poll({
         <RenderActionPollBlock
           isAuth={isAuth}
           isUserAnswered={isUserAnswered}
-          answers={users?.length}
+          votedUsers={votedUsers}
           isAnonymous={isAnonymous}
           showResults={() =>
             dispatch(
               openPopupFormContainer({
                 formType: 'viewPollResults',
-                formProps: { pollAnswers, totalAnswers, options },
+                formProps: { pollAnswers, votedUsers, options, totalAnswers },
               })
             )
           }
@@ -172,7 +173,7 @@ function RenderActionPollBlock({
   isAuth,
   isUserAnswered,
   isAnonymous,
-  answers,
+  votedUsers,
   showResults,
   sendAnswers,
   notStarted,
@@ -180,7 +181,7 @@ function RenderActionPollBlock({
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
   if ((isUserAnswered && isAnonymous) || !isAuth) {
-    return `Всего проголосовало: ${answers} ${getVoteText(answers)}`;
+    return `Всего проголосовало: ${votedUsers} ${getVoteText(votedUsers)}`;
   }
 
   // Авторизован и не проголосовал.

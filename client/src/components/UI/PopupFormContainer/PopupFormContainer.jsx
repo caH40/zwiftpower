@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 import FormCategory from '../FormCategory/FormCategory';
-import PollResults from '../../PollResults/PollResults';
+import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
 
 import styles from './PopupFormContainer.module.css';
 
@@ -33,7 +33,7 @@ export default function PopupFormContainer() {
     setCategory: <FormCategory {...formProps} />,
     setPenalty: <div>setPenalty</div>,
     setDisqualification: <div>setDisqualification</div>,
-    viewPollResults: <PollResults {...formProps} />,
+    viewPollResults: <PollResultsPopup {...formProps} />,
   };
 
   return (

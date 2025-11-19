@@ -1,9 +1,9 @@
 import { getVoteText } from '../../utils/text';
 import LogoRider from '../LogoRider/LogoRider';
 
-import styles from './PollResults.module.css';
+import styles from './PollResultsPopup.module.css';
 
-export default function PollResultsPopup({ options, pollAnswers, totalAnswers }) {
+export default function PollResultsPopup({ options, pollAnswers, totalAnswers, votedUsers }) {
   return (
     <div className={styles.wrapper}>
       <h3 className={styles.title}>Результаты голосования</h3>
@@ -15,7 +15,6 @@ export default function PollResultsPopup({ options, pollAnswers, totalAnswers })
         return (
           <OptionBlock
             key={o.optionId}
-            order={index + 1}
             total={currentAnswers}
             title={o.title}
             users={data?.users}
@@ -26,20 +25,18 @@ export default function PollResultsPopup({ options, pollAnswers, totalAnswers })
       })}
 
       <div className={styles.footer}>
-        Всего проголосовало: {totalAnswers} {getVoteText(totalAnswers)}
+        Всего проголосовало: {votedUsers} {getVoteText(votedUsers)}
       </div>
     </div>
   );
 }
 
 // Обновленный OptionBlock с progress bar
-function OptionBlock({ order, title, total, percentages, users = [] }) {
+function OptionBlock({ title, total, percentages, users = [] }) {
   return (
     <section className={styles.optionBlock}>
       <div className={styles.titleContainer}>
-        <h4 className={styles.optionTitle}>
-          {order} - {title}
-        </h4>
+        <h4 className={styles.optionTitle}>{title}</h4>
         <div className={styles.stats}>
           {total} {getVoteText(total)} - {percentages}%
         </div>
