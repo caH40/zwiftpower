@@ -1,0 +1,15 @@
+.eventGeneral {
+  margin-bottom: 1rem;
+}
+.eventGroup {
+  display: flex;
+  gap: 10px 20px;
+  flex-wrap: wrap;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+.img {
+  width: 280px;
+  height: 210px;
+  border-radius: 10px;
+}

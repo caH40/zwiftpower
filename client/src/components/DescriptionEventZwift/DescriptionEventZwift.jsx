@@ -17,7 +17,7 @@ import LinksRoute from '../LinksRoute/LinksRoute';
 import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 import AccessExpression from '../AccessExpression/AccessExpression';
 import { createHtml } from '../../utils/html';
-import { createDescription } from '../../Pages/ZwiftEditEvent/utils/description';
+import SubgroupsDescription from '../SubgroupsDescription/SubgroupsDescription';
 
 import styles from './DescriptionEventZwift.module.css';
 
@@ -67,6 +67,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
             <IconModify getClick={modifyResultsEvent} bgColor={'#ff7c00'} />
           </div>
         )}
+
         <div
           className={cn(styles.main__inner, {
             [styles.main__innerClosed]: !isOpened,
@@ -116,8 +117,9 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
       </div>
 
       {isOpened && (
-        <div className={styles.block__text}>
+        <section className={styles.block__text}>
           <RouteProfileAndMap routeId={event?.eventSubgroups[0].routeId} />
+
           <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
           <hr className={styles.hr} />
           <p
@@ -134,14 +136,17 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           )}
 
           <hr className={styles.hr} />
-          <p
+
+          {/* Подробное описание параметров эвента и подгрупп */}
+          <SubgroupsDescription eventParams={event} />
+          {/* <article
             className={styles.paragraph}
             dangerouslySetInnerHTML={{
-              __html: createHtml.description(createDescription(event)),
+              __html: createHtml.replaceWithBr(createDescription(event)),
             }}
-          ></p>
+          ></article> */}
           <hr className={styles.hr} />
-        </div>
+        </section>
       )}
     </section>
   );
