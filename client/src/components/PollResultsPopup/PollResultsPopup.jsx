@@ -1,4 +1,4 @@
-import { getVoteText } from '../../utils/text';
+import { getDeclensionText } from '../../utils/text';
 import LogoRider from '../LogoRider/LogoRider';
 
 import styles from './PollResultsPopup.module.css';
@@ -31,7 +31,7 @@ export default function PollResultsPopup({
       })}
 
       <div className={styles.footer}>
-        Всего проголосовало: {votedUsers} {getVoteText(votedUsers)}
+        Всего проголосовало: {votedUsers} {getDeclensionText(votedUsers, 'user')}
       </div>
     </div>
   );
@@ -46,7 +46,7 @@ function OptionBlock({ title, total, percentages, users = [] }) {
           {title} &mdash; <span className={styles.percentages}>{percentages}%</span>
         </h4>
         <div className={styles.stats}>
-          {total} {getVoteText(total)}
+          {total} {getDeclensionText(total, 'vote')}
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDateStatusForPoll } from '../../utils/poll';
 import { openPopupFormContainer } from '../../redux/features/popupFormContainerSlice';
 import { usePoll } from '../../hook/usePoll';
-import { getVoteText } from '../../utils/text';
+import { getDeclensionText } from '../../utils/text';
 import Users from '../Users/Users';
 import IconEdit from '../icons/IconEdit';
 import PopupMenuPoll from '../UI/PopupMenuTable/PopupMenuPoll';
@@ -181,7 +181,7 @@ function RenderActionPollBlock({
 }) {
   // Не авторизован, или уже проголосовал и голосование анонимное.
   if ((isUserAnswered && isAnonymous) || !isAuth) {
-    return `Всего проголосовало: ${votedUsers} ${getVoteText(votedUsers)}`;
+    return `Всего проголосовало: ${votedUsers} ${getDeclensionText(votedUsers, 'user')}`;
   }
 
   // Авторизован и не проголосовал.
