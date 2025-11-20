@@ -3,12 +3,18 @@ import LogoRider from '../LogoRider/LogoRider';
 
 import styles from './PollResultsPopup.module.css';
 
-export default function PollResultsPopup({ options, pollAnswers, totalAnswers, votedUsers }) {
+export default function PollResultsPopup({
+  title,
+  options,
+  pollAnswers,
+  totalAnswers,
+  votedUsers,
+}) {
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.title}>Результаты голосования</h3>
+      <h3 className={styles.title}>{title}</h3>
 
-      {options.map((o, index) => {
+      {options.map((o) => {
         const data = pollAnswers.find(({ optionId }) => o.optionId === optionId);
         const currentAnswers = data?.total ?? 0;
 
@@ -36,9 +42,11 @@ function OptionBlock({ title, total, percentages, users = [] }) {
   return (
     <section className={styles.optionBlock}>
       <div className={styles.titleContainer}>
-        <h4 className={styles.optionTitle}>{title}</h4>
+        <h4 className={styles.optionTitle}>
+          {title} &mdash; <span className={styles.percentages}>{percentages}%</span>
+        </h4>
         <div className={styles.stats}>
-          {total} {getVoteText(total)} - {percentages}%
+          {total} {getVoteText(total)}
         </div>
       </div>
 

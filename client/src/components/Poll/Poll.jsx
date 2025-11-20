@@ -74,7 +74,6 @@ export default function Poll({
 
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
-  const dateStatus = getDateStatusForPoll(startDate, endDate);
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
   const votedUsers = users?.length;
 
@@ -101,7 +100,8 @@ export default function Poll({
         <span className={styles.privateStatus}>
           {isAnonymous ? 'Анонимное голосование' : <Users users={users} />}
         </span>
-        <span className={styles.dateStatus}>{dateStatus}</span>
+
+        <span className={styles.dateStatus}>{getDateStatusForPoll(startDate, endDate)}</span>
       </div>
 
       {/* Отображаются разные блоки если пользователь проголосовал или нет */}
@@ -149,7 +149,7 @@ export default function Poll({
             dispatch(
               openPopupFormContainer({
                 formType: 'viewPollResults',
-                formProps: { pollAnswers, votedUsers, options, totalAnswers },
+                formProps: { pollAnswers, votedUsers, options, totalAnswers, title },
               })
             )
           }
