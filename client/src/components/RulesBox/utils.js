@@ -59,3 +59,58 @@ export const enabledCommonBikeSpecsTag = (tagsFromEvent, label) => {
 
   return valuesForCommonBike.every((value) => tagsFromEvent.includes(value));
 };
+
+/**
+ * Проверяет идентичность маршрутов и их параметров во всех подгруппах заезда
+ * @param {Array} subgroups - массив подгрупп заезда
+ * @returns {string | null} текст ошибки или null если все совпадает
+ */
+export const checkSubgroupsRoute = (subgroups) => {
+  if (!Array.isArray(subgroups) || subgroups.length === 0) {
+    return 'Нет ни одной подгруппы в заезде!';
+  }
+
+  if (subgroups.length === 1) {
+    return null;
+  }
+
+  const validations = [
+    { field: 'mapId', name: 'карта (мир)' },
+    { field: 'routeId', name: 'маршрут' },
+    { field: 'laps', name: 'количество кругов' },
+    { field: 'durationInSeconds', name: 'длительность заезда' },
+    { field: 'distanceInMeters', name: 'дистанция заезда' },
+  ];
+
+  for (let i = 1; i < subgroups.length; i++) {
+    const currentSubgroup = subgroups[i];
+
+    for (const validation of validations) {
+      const { field, name } = validation;
+      const firstValue = subgroups[0][field];
+      const currentValue = currentSubgroup[field];
+
+      if (firstValue !== currentValue) {
+        const formatValue = (value, fieldName) => {
+          if (fieldName === 'durationInSeconds') {
+            return `${value} сек.`;
+          }
+          if (fieldName === 'distanceInMeters') {
+            return `${value} м.`;
+          }
+          if (fieldName === 'laps') {
+            return `${value} кругов.`;
+          }
+          return value;
+        };
+
+        return `Несовпадение ${name}! Группа ${subgroups[0].subgroupLabel}: ${formatValue(
+          firstValue,
+          field
+        )}, Группа ${subgroups[i]?.subgroupLabel}: ${formatValue(currentValue, field)}`;
+      }
+    }
+  }
+
+  return null;
+};

@@ -93,7 +93,9 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
 
           {isOpened && (
             <div className={styles.box__right}>
+              {/* Блок с иконками правил и параметрами заезда. */}
               <RaceBoxDescription event={event} />
+
               <div className={styles.wrapper__categories}>
                 {event?.eventSubgroups?.map((subgroup) => (
                   <CategoryBoxDescription key={subgroup.id} subgroup={subgroup} gaps={gaps} />

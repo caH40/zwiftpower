@@ -18,8 +18,10 @@ import IconScoreBased from '../icons/IconScoreBased';
 import IconViewWorld from '../icons/IconViewWorld';
 import IconWomenOnly from '../icons/IconWomenOnly';
 import IconCommonBike from '../icons/IconCommonBike';
+import IconAttention from '../icons/IconAttention';
 
 import {
+  checkSubgroupsRoute,
   enabledCommonBikeSpecsTag,
   enabledRule,
   enabledRuleInSubgroups,
@@ -42,6 +44,8 @@ function RulesBox({ event, squareSize = 24, addCls }) {
     CULLING_SUBGROUP_ONLY: <IconViewGroup squareSize={squareSize} />,
     CULLING_EVERYBODY: <IconViewWorld squareSize={squareSize} />,
   };
+
+  const wrongSubgroupsRoute = checkSubgroupsRoute(event?.eventSubgroups);
 
   return (
     <div className={cn(styles.block, cns(styles, addCls))}>
@@ -77,6 +81,10 @@ function RulesBox({ event, squareSize = 24, addCls }) {
           event.eventSubgroups[0]?.tags,
           'Единые характеристики для всех велосипедов'
         ) && <IconCommonBike squareSize={squareSize} />}
+
+        {wrongSubgroupsRoute && (
+          <IconAttention squareSize={squareSize} tooltip={`Внимание! ${wrongSubgroupsRoute}`} />
+        )}
       </>
     </div>
   );
