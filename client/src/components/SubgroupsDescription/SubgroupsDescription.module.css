@@ -1,5 +1,5 @@
 .eventGeneral {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 .eventGroup {
   display: flex;
@@ -7,9 +7,39 @@
   flex-wrap: wrap;
   align-items: start;
   margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 10px;
+}
+.eventGroup:last-child {
+  margin-bottom: 0rem;
 }
 .img {
   width: 280px;
   height: 210px;
   border-radius: 10px;
+}
+.text {
+  flex: 0 0 500px;
+  flex-wrap: wrap;
+}
+.A {
+  background-color: #dc401920;
+}
+.B {
+  background-color: #58c34e20;
+}
+.C {
+  background-color: #3ec0e920;
+}
+.D {
+  background-color: #fccf0b20;
+}
+.E {
+  background-color: #943e5e20;
+}
+@media (max-width: 768px) {
+  .text {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
 }

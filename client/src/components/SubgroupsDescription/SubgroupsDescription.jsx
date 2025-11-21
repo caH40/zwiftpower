@@ -1,3 +1,5 @@
+import cn from 'classnames/bind';
+
 import {
   optionPrivate,
   optionsCulling,
@@ -11,6 +13,8 @@ import { getTimerLocal } from '../../utils/date-local';
 import { distanceObject, getMapName, getRouteName } from '../../utils/event';
 
 import styles from './SubgroupsDescription.module.css';
+
+const cx = cn.bind(styles);
 
 /**
  * Компонент для отображения подробного описания настроек эвента и каждой группы.
@@ -100,7 +104,7 @@ export default function SubgroupsDescription({ eventParams }) {
         const imageUrl = routes.find((route) => route.id === subgroup.routeId)?.imageUrl;
 
         return (
-          <section key={groupIndex} className={styles.eventGroup}>
+          <section key={groupIndex} className={cx('eventGroup', subgroup.subgroupLabel)}>
             <div className={styles.text}>
               <div>
                 <b>Группа:</b> {subgroup.subgroupLabel}

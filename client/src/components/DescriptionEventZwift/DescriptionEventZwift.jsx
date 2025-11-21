@@ -139,13 +139,6 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
 
           {/* Подробное описание параметров эвента и подгрупп */}
           <SubgroupsDescription eventParams={event} />
-          {/* <article
-            className={styles.paragraph}
-            dangerouslySetInnerHTML={{
-              __html: createHtml.replaceWithBr(createDescription(event)),
-            }}
-          ></article> */}
-          <hr className={styles.hr} />
         </section>
       )}
     </section>
