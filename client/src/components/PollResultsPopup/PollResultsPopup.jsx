@@ -39,7 +39,7 @@ export default function PollResultsPopup({
 
 // Обновленный OptionBlock с progress bar
 function OptionBlock({ title, total, percentages, users = [] }) {
-  return (
+  return percentages !== 0 ? (
     <section className={styles.optionBlock}>
       <div className={styles.titleContainer}>
         <h4 className={styles.optionTitle}>
@@ -48,10 +48,6 @@ function OptionBlock({ title, total, percentages, users = [] }) {
         <div className={styles.stats}>
           {total} {getDeclensionText(total, 'vote')}
         </div>
-      </div>
-
-      <div className={styles.progressBar}>
-        <div className={styles.progressFill} style={{ width: `${percentages}%` }} />
       </div>
 
       <div className={styles.usersContainer}>
@@ -65,5 +61,5 @@ function OptionBlock({ title, total, percentages, users = [] }) {
         ))}
       </div>
     </section>
-  );
+  ) : null;
 }

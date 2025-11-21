@@ -1,29 +1,15 @@
-.wrapper {
-  padding: 10px 0px;
-}
 .title {
   font-size: 1.4rem;
-  padding-bottom: 16px;
+  padding: 12px 0 16px;
   font-weight: 700;
-  margin-bottom: 24px;
   color: #1a202c;
   text-align: center;
-  position: relative;
 }
-.title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-blue-main), transparent);
-}
+
 .usersContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 5px;
-  margin-top: 12px;
 }
 
 .riderContainer {
@@ -45,25 +31,17 @@
 }
 
 .optionBlock {
-  padding: 16px 0;
-  position: relative;
+  margin-bottom: 22px;
 }
 
-.optionBlock:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #edf2f7;
-}
 .titleContainer {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
   gap: 16px;
+  background-color: var(--color-border-minor);
+  margin: 0px -20px 10px -20px;
+  padding: 5px 20px;
 }
 .optionTitle {
   font-weight: 600;
@@ -78,8 +56,7 @@
 }
 .footer {
   text-align: center;
-  padding-top: 16px;
-  margin-top: 16px;
+  margin: 17px 0;
   font-size: 1rem;
   color: #718096;
   font-weight: 500;
@@ -103,9 +80,11 @@
 }
 
 /* ====================================================================== */
-@media (max-width: 578px) {
+@media (max-width: 576px) {
   .title {
     font-size: 1.2rem;
-    margin-bottom: 1rem;
+  }
+  .titleContainer {
+    margin: 0px -15px 10px -15px;
   }
 }
