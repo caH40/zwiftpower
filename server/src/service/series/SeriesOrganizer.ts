@@ -387,7 +387,13 @@ export class SeriesOrganizerService {
    * Метод добавления (без дублирования по eventId) этапа в Серию заездов.
    */
   public addStage = async ({ stage, stages, seriesId }: TParamsSeriesServiceAddStage) => {
-    const stagesUpdated = [...stages.filter((elm) => String(elm.event) !== stage.event), stage];
+    const lastStageOrder = stages.reduce((acc, cur) => Math.max(acc, cur.order), 0) + 1;
+
+    const stageWithOrder = { ...stage, order: lastStageOrder };
+    const stagesUpdated = [
+      ...stages.filter((elm) => String(elm.event) !== stage.event),
+      stageWithOrder,
+    ];
 
     // Сохранение обновленного массива этапов stages. Не производится проверка найденного документа
     // так как проверялось на верхнем уровне.
