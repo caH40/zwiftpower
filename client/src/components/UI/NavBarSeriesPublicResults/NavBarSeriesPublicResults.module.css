@@ -1,12 +1,8 @@
-.wrapper {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 .wrapper__buttons {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px 0;
 }
 .button {
   display: flex;
@@ -24,6 +20,7 @@
   user-select: none;
   background-color: var(--color-text-main);
   text-decoration: none;
+  margin-left: -1px;
 }
 .button:not(.active) {
   color: var(--color-border-minor);
@@ -39,14 +36,12 @@
   transition: 0.2s;
 }
 .button__center {
-  border-left: none;
   border-radius: 0px;
 }
 .button__left {
   border-radius: 0.4em 0px 0px 0.4em;
 }
 .button__right {
-  border-left: none;
   border-radius: 0px 0.4em 0.4em 0px;
 }
 .button__solo {

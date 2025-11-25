@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { addClasses as cns } from '../../../utils/additional-classes';
 import { createSeriesResultsButtons } from '../../../assets/series-buttons';
+import { getButtonClasses } from '../../../utils/buttonClasses';
 
 import styles from './NavBarSeriesPublicResults.module.css';
 
@@ -12,29 +13,14 @@ import styles from './NavBarSeriesPublicResults.module.css';
 export default function NavBarSeriesPublicResults({ urlSlug, orderedStages, addCls }) {
   const buttons = createSeriesResultsButtons(orderedStages);
 
-  const getStyle = (isActive, index) => {
-    // в зависимости от относительного положения и количества кнопок применяются разные стили
-    const quantityBtn = buttons.length;
-
-    const positions = {
-      [styles.button__left]: index === 0 && quantityBtn !== 1,
-      [styles.button__center]: index !== 0 && quantityBtn > 2 && index + 1 !== quantityBtn,
-      [styles.button__right]: index !== 0 && index + 1 === quantityBtn,
-    };
-
-    if (isActive) {
-      return cn(styles.button, styles.active, positions);
-    } else {
-      return cn(styles.button, positions);
-    }
-  };
-
   return (
     <nav className={cn(styles.wrapper, cns(styles, addCls))}>
       <div className={styles.wrapper__buttons}>
         {buttons.map((buttonLink, index) => (
           <NavLink
-            className={({ isActive }) => getStyle(isActive, index)}
+            className={({ isActive }) =>
+              getButtonClasses({ isActive, index, styles, quantityBtn: buttons.length })
+            }
             to={`/series/${urlSlug}/results${buttonLink.page}`}
             key={buttonLink.id}
             end={true}
