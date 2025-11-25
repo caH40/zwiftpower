@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setCurrentMenuItem } from '../../../../redux/features/menuOrganizerSeriesSlice';
+import { getButtonPositionClassName } from '../../../../utils/buttonClasses';
 
 import styles from './MenuOrganizerSeries.module.css';
 
@@ -15,17 +15,14 @@ const menuItems = ['Главная', 'Этапы'];
 function MenuOrganizerSeries() {
   const { name } = useSelector((state) => state.menuOrganizerSeries.value);
 
-  const quantityButtons = menuItems.length;
-
   return (
     <div className={styles.box}>
       {menuItems.map((menuItem, index) => (
         <ButtonForFilter
           key={menuItem}
-          position={cn({
-            left: index === 0,
-            center: index !== 0 && quantityButtons > 2 && index + 1 !== quantityButtons,
-            right: index !== 0 && index + 1 === quantityButtons,
+          positionClassName={getButtonPositionClassName({
+            index,
+            quantityBtn: menuItems.length,
           })}
           active={name === menuItem}
           reducer={setCurrentMenuItem}

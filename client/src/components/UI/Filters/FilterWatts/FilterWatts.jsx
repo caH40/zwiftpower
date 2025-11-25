@@ -1,9 +1,8 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setWattsCategory } from '../../../../redux/features/filterWattsSlice';
+import { getButtonPositionClassName } from '../../../../utils/buttonClasses';
 
 import styles from './FilterWatts.module.css';
 
@@ -17,10 +16,9 @@ function FilterWatts() {
       {buttonsWatt.map((wattsName, index) => (
         <ButtonForFilter
           key={wattsName}
-          position={cn({
-            left: index === 0,
-            center: index !== 0 && quantityButtonsWatt > 2 && index + 1 !== quantityButtonsWatt,
-            right: index !== 0 && index + 1 === quantityButtonsWatt,
+          positionClassName={getButtonPositionClassName({
+            index,
+            quantityBtn: buttonsWatt.length,
           })}
           active={wattsState.name === wattsName}
           reducer={setWattsCategory}

@@ -1,5 +1,25 @@
 import cn from 'classnames';
 
+export function getButtonPositionClassName({ index, quantityBtn }) {
+  if (quantityBtn === 1) {
+    return 'button__solo';
+  }
+
+  if (index === 0) {
+    return 'button__left';
+  }
+
+  if (index === quantityBtn - 1) {
+    return 'button__right';
+  }
+
+  if (index > 0 && index < quantityBtn - 1) {
+    return 'button__center';
+  }
+
+  return '';
+}
+
 function getButtonPositionClass({ styles, index, quantityBtn }) {
   if (quantityBtn === 1) {
     return styles.button__solo;

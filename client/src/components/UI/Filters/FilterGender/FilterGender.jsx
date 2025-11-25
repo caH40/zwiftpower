@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setFilterGender } from '../../../../redux/features/filterGenderSlice';
+import { getButtonPositionClassName } from '../../../../utils/buttonClasses';
 
 import styles from './FilterGender.module.css';
 
@@ -19,10 +19,9 @@ function FilterGender() {
       {['All', 'М', 'Ж'].map((gender, index) => (
         <ButtonForFilter
           key={gender}
-          position={cn({
-            left: index === 0,
-            center: index !== 0 && quantityButtons > 2 && index + 1 !== quantityButtons,
-            right: index !== 0 && index + 1 === quantityButtons,
+          positionClassName={getButtonPositionClassName({
+            index,
+            quantityBtn: quantityButtons,
           })}
           active={genderState.name === gender}
           reducer={setFilterGender}

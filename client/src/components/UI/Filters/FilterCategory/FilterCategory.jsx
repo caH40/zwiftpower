@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setFilterCategory } from '../../../../redux/features/filterCategorySlice';
 import { plusCategories } from '../../../../assets/rule-category';
+import { getButtonPositionClassName } from '../../../../utils/buttonClasses';
 
 import styles from './FilterCategory.module.css';
 import { getCategoriesSortedDry } from './categoriesSort';
@@ -25,10 +25,9 @@ function FilterCategory({ results, categoriesFromFilters }) {
       {categories.map((category, index) => (
         <ButtonForFilter
           key={category}
-          position={cn({
-            left: index === 0,
-            center: index !== 0 && quantityCategories > 2 && index + 1 !== quantityCategories,
-            right: index !== 0 && index + 1 === quantityCategories,
+          positionClassName={getButtonPositionClassName({
+            index,
+            quantityBtn: quantityCategories,
           })}
           active={categoryState.name === category}
           reducer={setFilterCategory}

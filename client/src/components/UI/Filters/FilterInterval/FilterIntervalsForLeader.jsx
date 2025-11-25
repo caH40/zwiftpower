@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import ButtonForFilter from '../ButtonForFilter/ButtonForFilter';
 import { setIntervalsForLeaders } from '../../../../redux/features/filterIntervalsForLeaderSlice';
 import { intervalsForLeader } from '../../../../assets/filters';
+import { getButtonPositionClassName } from '../../../../utils/buttonClasses';
 
 import styles from './FilterIntervalsForLeader.module.css';
 
@@ -13,20 +13,15 @@ import styles from './FilterIntervalsForLeader.module.css';
 function FilterIntervalsForLeader() {
   const intervalState = useSelector((state) => state.filterIntervalsForLeader.value);
 
-  const quantityButtonsInterval = intervalsForLeader.length;
   return (
     <nav className={styles.box}>
       {intervalsForLeader.map((intervalName, index) => {
         return (
           <ButtonForFilter
             key={intervalName.name}
-            position={cn({
-              left: index === 0,
-              center:
-                index !== 0 &&
-                quantityButtonsInterval > 2 &&
-                index + 1 !== quantityButtonsInterval,
-              right: index !== 0 && index + 1 === quantityButtonsInterval,
+            positionClassName={getButtonPositionClassName({
+              index,
+              quantityBtn: intervalsForLeader.length,
             })}
             active={intervalState.name === intervalName.name}
             reducer={setIntervalsForLeaders}
