@@ -1,3 +1,5 @@
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames/bind';
 
 import {
@@ -5,12 +7,12 @@ import {
   optionsCulling,
   optionsEventType,
 } from '../../assets/select/event-edit';
-import { routes } from '../../assets/zwift/lib/esm/routes';
 import { jerseys } from '../../assets/zwift/raw/jerseys';
 import { rules } from '../../assets/zwift/rule';
 import { tags } from '../../assets/zwift/tags';
 import { getTimerLocal } from '../../utils/date-local';
 import { distanceObject, getMapName, getRouteName } from '../../utils/event';
+import { fetchAssetsRoute } from '../../redux/features/api/assets/fetchAssets';
 
 import styles from './SubgroupsDescription.module.css';
 
@@ -22,18 +24,19 @@ const cx = cn.bind(styles);
  * @returns {JSX.Element} - JSX элемент с описанием настроек.
  */
 export default function SubgroupsDescription({ eventParams }) {
-  /**
-   * Создание строки правил на основании Tags.
-   */
+  const { routes } = useSelector((state) => state.assets);
+  const dispatch = useDispatch();
 
-  //   const routeIds = useMemo(() => {
-  //   return [...new Set(eventParams.eventSubgroups.map(({ routeId }) => routeId))];
-  // }, [eventParams]);
+  // Список routeIds из подгрупп.
+  const routeIds = useMemo(() => {
+    return [...new Set(eventParams.eventSubgroups.map(({ routeId }) => routeId))];
+  }, [eventParams]);
 
-  // useEffect(() => {
-  //   dispatch(fetchAssetsRoute({ routeIds }));
-  // }, [routeIds, dispatch]);
+  useEffect(() => {
+    dispatch(fetchAssetsRoute({ routeIds }));
+  }, [routeIds, dispatch]);
 
+  // Создание строки правил на основании Tags.
   const createTagsSet = (tagsFromEvent) => {
     if (!tagsFromEvent || !Array.isArray(tagsFromEvent)) {
       return null;
@@ -108,9 +111,9 @@ export default function SubgroupsDescription({ eventParams }) {
         const isWomenOnly = subgroup.rulesSet?.includes('LADIES_ONLY');
         const distanceDesc = distanceObject(subgroup);
         const distance = distanceDesc?.distanceStr || distanceDesc?.distanceEstimated;
-        const route = routes.find((elm) => elm.id === subgroup.routeId);
+        const route = routes[subgroup.routeId];
         const jersey = jerseys.find((jersey) => jersey.id === subgroup.jerseyHash);
-        const imageUrl = routes.find((route) => route.id === subgroup.routeId)?.imageUrl;
+        const imageUrl = routes[subgroup.routeId]?.imageUrl;
 
         return (
           <section key={groupIndex} className={cx('eventGroup', subgroup.subgroupLabel)}>
