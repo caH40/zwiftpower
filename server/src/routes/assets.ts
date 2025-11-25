@@ -6,4 +6,4 @@ export const assetsRouter = Router();
 
 const assets = new AssetsController();
 
-assetsRouter.get('/routes/:id', assets.get);
+assetsRouter.get('/routes', assets.get);

@@ -25,6 +25,15 @@ export default function SubgroupsDescription({ eventParams }) {
   /**
    * Создание строки правил на основании Tags.
    */
+
+  //   const routeIds = useMemo(() => {
+  //   return [...new Set(eventParams.eventSubgroups.map(({ routeId }) => routeId))];
+  // }, [eventParams]);
+
+  // useEffect(() => {
+  //   dispatch(fetchAssetsRoute({ routeIds }));
+  // }, [routeIds, dispatch]);
+
   const createTagsSet = (tagsFromEvent) => {
     if (!tagsFromEvent || !Array.isArray(tagsFromEvent)) {
       return null;

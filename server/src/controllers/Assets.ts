@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { handleErrorInController } from '../errors/error.js';
 import { AssetsService } from '../service/Assets.js';
+import { RaceRouteIdsZSchema } from '../utils/deserialization/raceRoutes.js';
 
 // types
 
@@ -13,15 +14,19 @@ export class AssetsController {
 
   public get = async (req: Request, res: Response): Promise<Response | void> => {
     try {
-      const idFromParams = req.params.id;
+      const result = RaceRouteIdsZSchema.safeParse(req.query.ids);
 
-      const id = +idFromParams;
+      if (!result.success) {
+        const { fieldErrors, formErrors } = result.error.flatten();
 
-      if (!id || isNaN(id)) {
-        throw new Error('Не получен routeId');
+        return res.status(400).json({
+          message: 'Ошибка валидации',
+          errors: { ...fieldErrors, formErrors },
+        });
       }
+
       // Вызов сервиса.
-      const response = await this.assetsService.getRoute(id);
+      const response = await this.assetsService.getRoutes(result.data);
 
       return res.status(200).json(response);
     } catch (error) {

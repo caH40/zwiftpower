@@ -5,13 +5,13 @@ import { TResponseService } from '../types/http.interface.js';
  * Сервис получения данных из текстовых библиотек.
  */
 export class AssetsService {
-  getRoute = async (id: number): Promise<TResponseService<unknown>> => {
-    const route = routes.find((r) => r.id === id);
+  getRoutes = async (ids: number[]): Promise<TResponseService<unknown[]>> => {
+    const currentRoutes = routes.filter((r) => r.id && !isNaN(+r.id) && ids.includes(+r.id));
 
-    if (!route) {
-      throw new Error(`Маршрут с id: ${id} не найден!`);
+    if (currentRoutes.length === 0) {
+      throw new Error(`Маршруты с ids: ${ids} не найдены!`);
     }
 
-    return { data: route, message: `Данные маршрута с id: ${id}` };
+    return { data: currentRoutes, message: `Данные маршрутов с ids: ${ids}` };
   };
 }
