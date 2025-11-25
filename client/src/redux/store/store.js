@@ -40,6 +40,7 @@ import ridersSlice from '../features/api/riders/ridersSlice';
 import userResultsSlice from '../features/api/userResultsSlice';
 import audioSlice from '../features/audioSlice';
 import popupFormContainerSlice from '../features/popupFormContainerSlice';
+import assetsSlice from '../features/api/assets/assetsSlice';
 
 import { statisticsReducers } from './statistics';
 import { userReducers } from './user';
@@ -98,6 +99,7 @@ export default configureStore({
     menuOrganizerSeries: menuOrganizerSeriesSlice,
     audio: audioSlice,
     popupFormContainer: popupFormContainerSlice,
+    assets: assetsSlice,
     ...statisticsReducers,
     ...userReducers,
     ...adminReducers,
