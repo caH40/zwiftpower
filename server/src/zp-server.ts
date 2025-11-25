@@ -35,6 +35,7 @@ import { markdownDocumentsRouter } from './routes/documents.js';
 import { serviceMessageRouter } from './routes/service-message.js';
 import { setupWebSocketWithAuth } from './ws-server.js';
 import { pollRouter } from './routes/poll.js';
+import { assetsRouter } from './routes/assets.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -79,6 +80,7 @@ app.use('/api/team-members', teamMemberRouter);
 app.use('/api/md-documents', markdownDocumentsRouter);
 app.use('/api/service-messages', serviceMessageRouter);
 app.use('/api/poll', pollRouter);
+app.use('/api/assets', assetsRouter);
 
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
