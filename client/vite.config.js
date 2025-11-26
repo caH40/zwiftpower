@@ -9,15 +9,19 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      visualizer({
-        filename: `./visualizer/${new Date()
-          .toISOString()
-          .replace(/[:.]/g, '-')
-          .replace('T', '_')}.html`,
-        open: true,
-        gzipSize: true,
-        brotliSize: true,
-      }),
+      ...(isDevelopment
+        ? [
+            visualizer({
+              filename: `./visualizer/${new Date()
+                .toISOString()
+                .replace(/[:.]/g, '-')
+                .replace('T', '_')}.html`,
+              open: true,
+              gzipSize: true,
+              brotliSize: true,
+            }),
+          ]
+        : []),
     ],
 
     server: {
