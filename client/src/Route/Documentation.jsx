@@ -1,4 +1,4 @@
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 import { navigateTo403 } from '../utils/routeUtils';
@@ -24,7 +24,7 @@ const OrganizerDocumentation = lazy(() =>
 );
 const Faq = lazy(() => import('../Pages/Faq/Faq'));
 
-export function DocumentationRoute({ isOrganizer, isAdmin }) {
+export function DocumentationRoute({ isAdmin }) {
   return (
     <>
       <Route path="/documentation" element={<Documentation />} />

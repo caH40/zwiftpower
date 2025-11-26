@@ -59,10 +59,8 @@ function App() {
         <Route path="/streams" element={<Streams />} />
         <Route path="/site-services" element={<SiteServices />} />
         <Route path="/403" element={<ForbiddenPage />} />
-
         {isAdmin ? AdminRoute(isAdmin) : navigateTo403('/admin/*')}
         {user.organizer ? OrganizerRoute(user.organizer) : navigateTo403('/organizer/*')}
-
         {ModeratorClubRoute({ isClubModerator })}
         {ResultsRoute()}
         {ScheduleRouteRoute()}
@@ -74,7 +72,6 @@ function App() {
         {OrganizersPublicRoute()}
         {TeamsRoute({ hasAuth, userInTeam: user.team })}
         {DocumentationRoute({ isAdmin, isOrganizer })}
-
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

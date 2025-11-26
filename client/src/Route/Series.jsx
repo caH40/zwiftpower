@@ -1,8 +1,9 @@
 import { Route } from 'react-router-dom';
 import { lazy } from 'react';
 
-import StageResults from '../components/SeriesResults/StageResults/StageResults';
-
+const StageResults = lazy(() =>
+  import('../components/SeriesResults/StageResults/StageResults')
+);
 const Series = lazy(() => import('../Pages/Series/Series'));
 const SeriesOneLayout = lazy(() => import('../Pages/SeriesOne/SeriesOneLayout'));
 const SeriesOneResults = lazy(() =>
