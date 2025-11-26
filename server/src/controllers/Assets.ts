@@ -33,4 +33,15 @@ export class AssetsController {
       handleErrorInController(res, error);
     }
   };
+
+  public getAllRoutes = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // Вызов сервиса.
+      const response = await this.assetsService.getAllRoutes();
+
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchAssetsRoute } from '../redux/features/api/assets/fetchAssets';
+import { fetchAssetsRoutes } from '../redux/features/api/assets/fetchAssets';
 
 export function useRaceRoute(routeIds) {
   const { routes } = useSelector((state) => state.assets);
@@ -11,7 +11,7 @@ export function useRaceRoute(routeIds) {
 
   useEffect(() => {
     const ids = JSON.parse(routeIdsStr);
-    dispatch(fetchAssetsRoute({ routeIds: ids }));
+    dispatch(fetchAssetsRoutes({ routeIds: ids }));
   }, [routeIdsStr, dispatch]);
 
   return routes;

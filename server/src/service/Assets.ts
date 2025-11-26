@@ -14,4 +14,8 @@ export class AssetsService {
 
     return { data: currentRoutes, message: `Данные маршрутов с ids: ${ids}` };
   };
+
+  getAllRoutes = async (): Promise<TResponseService<typeof routes>> => {
+    return { data: routes, message: 'Данные всех маршрутов' };
+  };
 }

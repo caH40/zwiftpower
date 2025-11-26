@@ -7,7 +7,7 @@ import { serverExpress } from '../../../../config/environment';
 /**
  * Данные маршрута.
  */
-export const fetchAssetsRoute = createAsyncThunk(
+export const fetchAssetsRoutes = createAsyncThunk(
   'assets/getRoute',
   async ({ routeIds }, thunkAPI) => {
     try {
@@ -28,6 +28,24 @@ export const fetchAssetsRoute = createAsyncThunk(
 
       const response = await myAxios({
         url: `${serverExpress}/api/assets/routes?ids=${JSON.stringify(filteredRouteIds)}`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const fetchAssetsAllRoutes = createAsyncThunk(
+  'assets/getAllRoutes',
+  async (_, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/assets/routes/all`,
         method: 'get',
       });
 

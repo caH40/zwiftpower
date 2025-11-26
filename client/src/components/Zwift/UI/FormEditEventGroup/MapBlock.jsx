@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import cn from 'classnames/bind';
 
 import { worlds } from '../../../../assets/zwift/lib/esm/worlds';
-import { routes } from '../../../../assets/zwift/lib/esm/routes';
+import { fetchAssetsAllRoutes } from '../../../../redux/features/api/assets/fetchAssets';
+import { resetAllRoutes } from '../../../../redux/features/api/assets/assetsSlice';
 import useBlockParameters from '../../../../hook/useBlockParameters';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import IconParamsDistance from '../../../icons/Params/IconParamsDistance';
@@ -27,6 +28,8 @@ const eventPaddocksFull = Array.from({ length: 150 }, (_, i) => ({
  * Блок выбора маршрута и количества кругов (дистанции, времени заезда) для создания заезда
  */
 function MapBlock({ subGroup, groupNumber, isCreating }) {
+  const routes = useSelector((state) => state.assets.allRoutes);
+
   const [showPaddocksFull, setShowPaddocksFull] = useState(false);
   const [isWrongPaddock, setIsWrongPaddock] = useState(false);
   const [isMount, setIsMount] = useState(true);
@@ -38,7 +41,7 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
   // Стартовые карманы на карте.
   const eventPaddocks =
     routeCurrent?.eventPaddocks &&
-    routeCurrent.eventPaddocks.split(',').map((elm) => ({
+    routeCurrent?.eventPaddocks.split(',').map((elm) => ({
       id: elm,
       label: elm,
       name: elm,
@@ -62,6 +65,12 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
     { title: 'Lap', distance: distanceMap, elevation },
     { title: 'LeadIn', distance: distanceLeadIn, elevation: leadInElevation },
   ];
+
+  useEffect(() => {
+    dispatch(fetchAssetsAllRoutes());
+
+    return () => dispatch(resetAllRoutes());
+  }, [dispatch]);
 
   // При изменении карты выставляется маршрут с новой карты(world).
   useEffect(() => {
@@ -90,7 +99,7 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
 
   //
   useEffect(() => {
-    setIsWrongPaddock(!eventPaddocks.some((elm) => +elm.id === +subGroup.startLocation));
+    setIsWrongPaddock(!eventPaddocks?.some((elm) => +elm.id === +subGroup.startLocation));
   }, [eventPaddocks, subGroup.startLocation]);
 
   const changeDescription = () => {
@@ -102,14 +111,14 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
       <div className={styles.block__map}>
         <img
           className={styles.img__map}
-          src={routeCurrent.imageUrl}
-          alt={`Карта маршрута ${routeCurrent.name}`}
+          src={routeCurrent?.imageUrl}
+          alt={`Карта маршрута ${routeCurrent?.name}`}
         />
         <h4 className={cx('img__title', 'img__name')}>{routeName}</h4>
 
         {/* Блок отображения вида спорта для которого рассчитана карта */}
         <div className={cx('img__sports')}>
-          {routeCurrent.sports?.map((elm) => (
+          {routeCurrent?.sports?.map((elm) => (
             <h4 className={styles.img__title} key={elm}>
               {elm}
             </h4>

@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAssetsRoute } from './fetchAssets';
+import { fetchAssetsAllRoutes, fetchAssetsRoutes } from './fetchAssets';
 
 const initialState = {
   routes: {},
+  allRoutes: [],
   error: null,
   status: null,
 };
@@ -12,17 +13,17 @@ const assetsSlice = createSlice({
   name: 'assets',
   initialState,
   reducers: {
-    getRouter: (state, action) => {
-      return state.routes.get(action.payload);
+    resetAllRoutes: (state) => {
+      return (state.allRoutes = []);
     },
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchAssetsRoute.pending, (state) => {
+    builder.addCase(fetchAssetsRoutes.pending, (state) => {
       state.error = null;
       state.status = 'loading';
     });
-    builder.addCase(fetchAssetsRoute.fulfilled, (state, action) => {
+    builder.addCase(fetchAssetsRoutes.fulfilled, (state, action) => {
       const { data } = action.payload;
 
       // Нет данных — НО статус и error должны обновиться!
@@ -45,13 +46,28 @@ const assetsSlice = createSlice({
       state.error = null;
     });
 
-    builder.addCase(fetchAssetsRoute.rejected, (state, action) => {
+    // ============== получение всех маршрутов=================
+    builder.addCase(fetchAssetsAllRoutes.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+    builder.addCase(fetchAssetsAllRoutes.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+    builder.addCase(fetchAssetsAllRoutes.fulfilled, (state, action) => {
+      state.allRoutes = action.payload.data;
+      state.status = 'resolved';
+      state.error = null;
+    });
+
+    builder.addCase(fetchAssetsRoutes.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });
   },
 });
 
-export const { getRouter } = assetsSlice.actions;
+export const { resetAllRoutes } = assetsSlice.actions;
 
 export default assetsSlice.reducer;
