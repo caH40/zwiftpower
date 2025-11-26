@@ -1,10 +1,11 @@
+import { useRaceRoute } from '../../hook/useRaceRoute';
+import { distanceObject, getMapName } from '../../utils/event';
 import IconParamsWorld from '../icons/Params/IconParamsWorld';
 import IconParamsRoute from '../icons/Params/IconParamsRoute';
 import IconParamsDistance from '../icons/Params/IconParamsDistance';
 import IconParamsAscent from '../icons/Params/IconParamsAscent';
 import IconParamsDuration from '../icons/Params/IconParamsDuration';
 import IconParamsLap from '../icons/Params/IconParamsLap';
-import { distanceObject, getMapName, getRouteName } from '../../utils/event';
 
 import styles from './ParamsEvent.module.css';
 
@@ -30,6 +31,8 @@ function ParamsEvent({
   laps,
   distanceSummary,
 }) {
+  const routes = useRaceRoute([routeId]);
+
   // Получаем данные о расстоянии, наборе высоты, кругах и длительности
   const distanceData = distanceObject({
     durationInSeconds,
@@ -56,7 +59,7 @@ function ParamsEvent({
         <div className={styles.box}>
           <IconParamsRoute squareSize={30} />
           <div className={styles.description}>
-            <h4 className={styles.title}>{getRouteName(routeId)}</h4>
+            <h4 className={styles.title}>{routes[routeId]?.name}</h4>
             <p className={styles.title__sub}>МАРШРУТ</p>
           </div>
         </div>

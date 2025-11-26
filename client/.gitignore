@@ -11,6 +11,8 @@
 # production
 /build
 
+/visualizer
+
 # misc
 .DS_Store
 .env.local

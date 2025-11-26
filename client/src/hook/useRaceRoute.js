@@ -7,9 +7,12 @@ export function useRaceRoute(routeIds) {
   const { routes } = useSelector((state) => state.assets);
   const dispatch = useDispatch();
 
+  const routeIdsStr = JSON.stringify(routeIds);
+
   useEffect(() => {
-    dispatch(fetchAssetsRoute({ routeIds }));
-  }, [routeIds, dispatch]);
+    const ids = JSON.parse(routeIdsStr);
+    dispatch(fetchAssetsRoute({ routeIds: ids }));
+  }, [routeIdsStr, dispatch]);
 
   return routes;
 }

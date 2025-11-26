@@ -1,10 +1,9 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
-
 import { useSelector } from 'react-redux';
 
-import styles from '../Table.module.css';
-
+import { useRaceRoute } from '../../../hook/useRaceRoute';
 import { secondesToTime } from '../../../utils/date-convert';
 import { getTimerLocal } from '../../../utils/date-local';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -13,9 +12,10 @@ import GapStart from '../../GapStart/GapStart';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
 import TdSpeed from '../Td/TdSpeed';
-
 import { changeLabelCategoryInGaps } from '../../../utils/category';
-import { getLaps, getMapName, getRouteName } from '../../../utils/event';
+import { getLaps, getMapName } from '../../../utils/event';
+
+import styles from '../Table.module.css';
 
 import Thead from './Thead';
 
@@ -25,6 +25,12 @@ function TableCatchup({ catchups }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
 
   const isModerator = ['admin', 'moderator'].includes(role);
+
+  const routeIds = useMemo(() => {
+    return [...new Set(catchups.map(({ eventSubgroup }) => eventSubgroup.routeId))];
+  }, [catchups]);
+
+  const routes = useRaceRoute(routeIds);
 
   return (
     <table className={cx('table')}>
@@ -62,7 +68,7 @@ function TableCatchup({ catchups }) {
                 />
               </td>
               <td>{getMapName(eventSubgroup.mapId)}</td>
-              <td className={styles.td__nowrap}>{getRouteName(eventSubgroup.routeId)}</td>
+              <td className={styles.td__nowrap}>{routes[eventSubgroup.routeId]?.name}</td>
               <td>{getLaps(eventSubgroup.laps)}</td>
               {TdDistance(
                 eventSubgroup.durationInSeconds,

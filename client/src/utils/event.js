@@ -26,9 +26,9 @@ export const getEventType = (eventType) => {
 /**
  * Название маршрута по ID
  */
-export const getRouteName = (id) => {
-  return routes.find((route) => route.id === id)?.name;
-};
+// export const getRouteName = (id) => {
+//   return routes.find((route) => route.id === id)?.name;
+// };
 /**
  * Линки на описание маршрутов на сторонних маршрутах
  */

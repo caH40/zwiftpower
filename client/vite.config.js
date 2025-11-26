@@ -10,8 +10,11 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       visualizer({
-        filename: 'bundle-stats.html',
-        open: true, // Откроет график после сборки
+        filename: `./visualizer/${new Date()
+          .toISOString()
+          .replace(/[:.]/g, '-')
+          .replace('T', '_')}.html`,
+        open: true,
         gzipSize: true,
         brotliSize: true,
       }),

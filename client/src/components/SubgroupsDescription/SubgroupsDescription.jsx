@@ -10,7 +10,7 @@ import { jerseys } from '../../assets/zwift/raw/jerseys';
 import { rules } from '../../assets/zwift/rule';
 import { tags } from '../../assets/zwift/tags';
 import { getTimerLocal } from '../../utils/date-local';
-import { distanceObject, getMapName, getRouteName } from '../../utils/event';
+import { distanceObject, getMapName } from '../../utils/event';
 import { useRaceRoute } from '../../hook/useRaceRoute';
 
 import styles from './SubgroupsDescription.module.css';
@@ -123,7 +123,7 @@ export default function SubgroupsDescription({ eventParams }) {
                 <b>Карта:</b> {getMapName(subgroup.mapId)}
               </div>
               <div>
-                <b>Маршрут:</b> {getRouteName(subgroup.routeId)}
+                <b>Маршрут:</b> {routes[subgroup.routeId]?.name}
               </div>
 
               {subgroup.startLocation && (
