@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useMemo } from 'react';
 import cn from 'classnames/bind';
 
 import {
@@ -12,7 +11,7 @@ import { rules } from '../../assets/zwift/rule';
 import { tags } from '../../assets/zwift/tags';
 import { getTimerLocal } from '../../utils/date-local';
 import { distanceObject, getMapName, getRouteName } from '../../utils/event';
-import { fetchAssetsRoute } from '../../redux/features/api/assets/fetchAssets';
+import { useRaceRoute } from '../../hook/useRaceRoute';
 
 import styles from './SubgroupsDescription.module.css';
 
@@ -24,17 +23,12 @@ const cx = cn.bind(styles);
  * @returns {JSX.Element} - JSX элемент с описанием настроек.
  */
 export default function SubgroupsDescription({ eventParams }) {
-  const { routes } = useSelector((state) => state.assets);
-  const dispatch = useDispatch();
-
   // Список routeIds из подгрупп.
   const routeIds = useMemo(() => {
     return [...new Set(eventParams.eventSubgroups.map(({ routeId }) => routeId))];
   }, [eventParams]);
 
-  useEffect(() => {
-    dispatch(fetchAssetsRoute({ routeIds }));
-  }, [routeIds, dispatch]);
+  const routes = useRaceRoute(routeIds);
 
   // Создание строки правил на основании Tags.
   const createTagsSet = (tagsFromEvent) => {

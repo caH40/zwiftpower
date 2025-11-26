@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
-import { fetchAssetsRoute } from '../../redux/features/api/assets/fetchAssets';
+import { useRaceRoute } from '../../hook/useRaceRoute';
 
 import styles from './RouteProfileAndMap.module.css';
 
@@ -12,19 +11,13 @@ import styles from './RouteProfileAndMap.module.css';
  *
  */
 function RouteProfileAndMap({ routeId }) {
-  const { routes } = useSelector((state) => state.assets);
-
   const [hasImage, setHasImage] = useState(true);
-  const dispatch = useDispatch();
+  const routes = useRaceRoute([routeId]);
 
   const route = routes[routeId];
   const routeName = route?.name ?? '';
   const routeMapImageUrl = route?.imageUrl;
   const routeProfileImageUrl = `/images/zwift/routes/zwifthub/${routeId}.webp`;
-
-  useEffect(() => {
-    dispatch(fetchAssetsRoute({ routeIds: [routeId] }));
-  }, [routeId, dispatch]);
 
   return (
     <div className={styles.block}>
