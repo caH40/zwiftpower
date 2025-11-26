@@ -1,6 +1,9 @@
+import { useMemo } from 'react';
+
+import { useRaceRoute } from '../../../../hook/useRaceRoute';
 import CategoryBox from '../../../../components/CategoryBox/CategoryBox';
 import { getTimerLocal } from '../../../../utils/date-local';
-import { getMapName, getRouteName } from '../../../../utils/event';
+import { getMapName } from '../../../../utils/event';
 
 import styles from './EmailPreview.module.css';
 
@@ -8,6 +11,12 @@ export default function EmailPreview({
   eventsEmailPreview: { events, startDate, endDate, subject },
   onRemoveEvent,
 }) {
+  const routeIds = useMemo(() => {
+    return [...new Set(events.map(({ eventSubgroups }) => eventSubgroups[0]?.routeId))];
+  }, [events]);
+
+  const routes = useRaceRoute(routeIds);
+
   const handleRemove = (eventId) => {
     if (onRemoveEvent) {
       onRemoveEvent(eventId);
@@ -109,7 +118,7 @@ export default function EmailPreview({
                     </p>
                     <p>
                       <strong>Маршрут: </strong>
-                      {getRouteName(event.eventSubgroups[0]?.routeId)}
+                      {routes[event.eventSubgroups[0]?.routeId]?.name}
                     </p>
                     <p>
                       <strong>Круги: </strong>

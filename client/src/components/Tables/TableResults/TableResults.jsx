@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import { useRaceRoute } from '../../../hook/useRaceRoute';
 import { resetEventsResults } from '../../../redux/features/api/eventsSlice';
 import { getTimerLocal } from '../../../utils/date-local';
-import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
+import { getDuration, getLaps, getMapName } from '../../../utils/event';
 import TdScheduleMenuTableResultList from '../Td/TdScheduleMenuTableResultList';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import { useUserRole } from '../../../hook/useUserRole';
@@ -21,12 +22,18 @@ const cx = classnames.bind(styles);
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
   const { moderator } = useSelector((state) => state.checkAuth.value.user);
-  const { isClubModerator, isAdmin, role } = useUserRole();
+  const { isClubModerator, isAdmin } = useUserRole();
   const dispatch = useDispatch();
+
+  const routeIds = useMemo(() => {
+    return [...new Set(events.map(({ eventSubgroups }) => eventSubgroups[0]?.routeId))];
+  }, [events]);
+
+  const routes = useRaceRoute(routeIds);
 
   useEffect(() => {
     return () => dispatch(resetEventsResults());
-  }, []);
+  }, [dispatch]);
 
   return (
     <table className={cx('table')}>
@@ -56,13 +63,12 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               </td>
 
               <td className={cx('td__nowrap')}>{event.organizer}</td>
-              {/* <TdRaceType typeRaceCustom={event.typeRaceCustom} /> */}
               <td>
                 <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
               </td>
               <td>{getMapName(event.eventSubgroups[0]?.mapId)}</td>
               <td className={cx('min__w_150')}>
-                {getRouteName(event.eventSubgroups[0]?.routeId)}
+                {routes[event.eventSubgroups[0]?.routeId]?.name}
               </td>
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
               {TdDistance(

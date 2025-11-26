@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import styles from '../Table.module.css';
-
+import { useRaceRoute } from '../../../hook/useRaceRoute';
 import { useUserRole } from '../../../hook/useUserRole';
 import { getToday } from '../../../utils/date-local';
-import { getDuration, getLaps, getMapName, getRouteName } from '../../../utils/event';
+import { getDuration, getLaps, getMapName } from '../../../utils/event';
 import { resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import CategoriesBox from '../../CategoriesBox/CategoriesBox';
 import TdSeries from '../Td/TdSeries';
@@ -15,6 +14,7 @@ import TdScheduleMenuTableScheduleList from '../Td/TdScheduleMenuTableScheduleLi
 import RulesBox from '../../RulesBox/RulesBox';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
+import styles from '../Table.module.css';
 
 import Thead from './Thead';
 
@@ -22,9 +22,15 @@ const cx = classnames.bind(styles);
 
 function TableSchedule({ events, updateEvent, removeEvent }) {
   const { moderator } = useSelector((state) => state.checkAuth.value.user);
-  const { isClubModerator, isAdmin, role } = useUserRole();
+  const { isClubModerator, isAdmin } = useUserRole();
 
   const dispatch = useDispatch();
+
+  const routeIds = useMemo(() => {
+    return [...new Set(events.map(({ eventSubgroups }) => eventSubgroups[0]?.routeId))];
+  }, [events]);
+
+  const routes = useRaceRoute(routeIds);
 
   useEffect(() => {
     return () => dispatch(resetEventsSchedule());
@@ -73,7 +79,7 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
               <td>{getMapName(event.eventSubgroups[0]?.mapId)}</td>
 
               <td className={cx('min__w_150')}>
-                {getRouteName(event.eventSubgroups[0]?.routeId)}
+                {routes[event.eventSubgroups[0]?.routeId]?.name}
               </td>
 
               <td>{getLaps(event.eventSubgroups[0]?.laps)}</td>
