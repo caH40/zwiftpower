@@ -1,5 +1,4 @@
 import { optionsEventType } from '../assets/select/event-edit';
-import { routes } from '../assets/zwift/lib/esm/routes';
 import { worlds } from '../assets/zwift/lib/esm/worlds';
 
 import { secondesToMinutes, secondesToTime } from './date-convert';
@@ -21,22 +20,6 @@ export const getEventType = (eventType) => {
     return '';
   }
   return typeForTitle;
-};
-
-/**
- * Линки на описание маршрутов на сторонних маршрутах
- */
-export const getLinksRouteDescription = (routeId) => {
-  const route = routes.find((route) => route.id === routeId);
-  if (!route) {
-    return null;
-  }
-
-  const linkWhatsonzwift = route.whatsOnZwiftUrl;
-  const linkZwiftinsider = route.zwiftInsiderUrl;
-  const linkZwifterbikes = route.zwifterBikesUrl;
-  const linkStravaSegment = route.stravaSegmentUrl;
-  return { linkZwifterbikes, linkZwiftinsider, linkWhatsonzwift, linkStravaSegment };
 };
 
 /**
