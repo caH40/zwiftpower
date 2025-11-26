@@ -2,7 +2,12 @@ import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { sendMetrika } from './yandex/metrika.js';
+import { useUserRole } from './hook/useUserRole.js';
+import MainLayer from './components/Layers/MainLayer';
 import useFirstAuth from './hook/useFirstAuth';
+
+// Отдельные блоки маршрутов для страниц.
 import { ResultsRoute } from './Route/ResultsRoute';
 import { AuthRoute } from './Route/Auth.jsx';
 import { AdminRoute } from './Route/AdminRoute.jsx';
@@ -11,26 +16,20 @@ import { StatisticsRoute } from './Route/StatisticsRoute';
 import { ScheduleRouteRoute } from './Route/ScheduleRoute';
 import { SeriesRoute } from './Route/Series.jsx';
 import { DocumentationRoute } from './Route/Documentation.jsx';
-import MainLayer from './components/Layers/MainLayer';
-
-const Page404 = lazy(() => import('./Pages/Page404/Page404'));
-const Faq = lazy(() => import('./Pages/Faq/Faq'));
-const Riders = lazy(() => import('./Pages/Riders/Riders.jsx'));
-const MainPage = lazy(() => import('./Pages/Main/MainPage'));
-const Message = lazy(() => import('./Pages/Message/Message'));
-const Streams = lazy(() => import('./Pages/Streams/Streams'));
-const SiteServices = lazy(() => import('./Pages/SiteServices/SiteServices'));
-
-import { sendMetrika } from './yandex/metrika.js';
-
 import { OrganizerRoute } from './Route/OrganizerRoute.jsx';
 import { ModeratorClubRoute } from './Route/ModeratorClubRoute.jsx';
 import { LegalRoute } from './Route/Legal.jsx';
 import { OrganizersPublicRoute } from './Route/OrganizersPublic.jsx';
 import { TeamsRoute } from './Route/Teams.jsx';
 import './css/App.css';
-import ForbiddenPage from './Pages/Page403Forbidden/Page403Forbidden.jsx';
-import { useUserRole } from './hook/useUserRole.js';
+
+const Page404 = lazy(() => import('./Pages/Page404/Page404'));
+const Riders = lazy(() => import('./Pages/Riders/Riders.jsx'));
+const MainPage = lazy(() => import('./Pages/Main/MainPage'));
+const Message = lazy(() => import('./Pages/Message/Message'));
+const Streams = lazy(() => import('./Pages/Streams/Streams'));
+const SiteServices = lazy(() => import('./Pages/SiteServices/SiteServices'));
+const ForbiddenPage = lazy(() => import('./Pages/Page403Forbidden/Page403Forbidden.jsx'));
 import { LoadingPage } from './Pages/LoadingPage/LoadingPage.jsx';
 
 function App() {

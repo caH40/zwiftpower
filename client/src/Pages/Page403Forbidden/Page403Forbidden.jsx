@@ -13,7 +13,7 @@ const ForbiddenPage = ({ message = 'Доступ запрещен', showHomeButt
   useEffect(() => {
     dispatch(setBackground({ isActive: true, opacity: 0.7 }));
     return () => dispatch(setBackground({ isActive: false }));
-  }, []);
+  }, [dispatch]);
 
   const handleGoHome = () => {
     window.location.href = '/';
