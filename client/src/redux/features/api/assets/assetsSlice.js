@@ -14,7 +14,7 @@ const assetsSlice = createSlice({
   initialState,
   reducers: {
     resetAllRoutes: (state) => {
-      return (state.allRoutes = []);
+      state.allRoutes = [];
     },
   },
 
@@ -59,11 +59,6 @@ const assetsSlice = createSlice({
       state.allRoutes = action.payload.data;
       state.status = 'resolved';
       state.error = null;
-    });
-
-    builder.addCase(fetchAssetsRoutes.rejected, (state, action) => {
-      state.status = 'rejected';
-      state.error = action.payload;
     });
   },
 });
