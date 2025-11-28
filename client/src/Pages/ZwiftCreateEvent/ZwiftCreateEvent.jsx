@@ -40,7 +40,7 @@ function ZwiftCreateEvent() {
       dispatch(resetParams());
       dispatch(resetClub());
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
@@ -52,12 +52,12 @@ function ZwiftCreateEvent() {
         subgroups: [initialSubgroup],
       })
     );
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     // установка начальных настроек Эвента при создании Эвента
     dispatch(fetchGetClubsForModeratorZwiftModerator({ moderatorId: userAuth.id }));
-  }, []);
+  }, [dispatch, userAuth.id]);
 
   const sendCreateNewEvent = () => {
     if (!eventParams.eventMainParams.microserviceExternalResourceId) {

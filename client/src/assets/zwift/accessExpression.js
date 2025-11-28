@@ -192,7 +192,7 @@ export const accessExpressions = [
     id: 100,
     name: 'disabledVTR',
     label: 'Выключена. VTR',
-    value: 'disabled',
+    value: 'disabledVTR',
     description: 'Выключена. Отображение для VTR',
     paceValues: {
       1: { from: 4.2, to: 6 },
@@ -268,7 +268,7 @@ subgroup.label == 5`,
     id: 103,
     name: 'EnduranceDefault',
     label: 'Эндуренс. Стандарт.',
-    value: null,
+    value: 'disabled',
     paceValues: {
       1: { from: 1, to: 6 },
       2: { from: 1, to: 6 },

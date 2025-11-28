@@ -50,16 +50,16 @@ function ZwiftAddEvent() {
   // Получение массива options для select выбора конфигурации финишного протокола.
   const configsFinishProtocol = useConfigsFPOptions(organizerId);
 
-  // Сброс данных после размонтирования компонента.
   useEffect(() => {
     dispatch(fetchGetOrganizersForModerator({ userId }));
 
+    // Сброс данных после размонтирования компонента.
     return () => {
       dispatch(resetOrganizerDataModerator());
       dispatch(resetSeries());
       dispatch(resetParams());
     };
-  }, []);
+  }, [dispatch, userId]);
 
   // запрос параметров Эвента
   useEffect(() => {
@@ -84,9 +84,11 @@ function ZwiftAddEvent() {
   // добавление Эвента в БД
   const addEvent = () => {
     // Добавление названия пакета настроек строгой категоризации.
-    const { accessExpression } = eventMainParams;
+    // Если добавляется сразу после создания, то accessExpression:null, либо регистрация временно закрыта.
+    // Если добавляется в БД уже созданный заезд, то для правильного описания строгой категоризации
+    // необходимо заново установить строгую категоризацию в настройках эвента.
     const accessExpressionObj =
-      accessExpressions.find((elm) => elm.value === accessExpression) ||
+      accessExpressions.find((elm) => elm.value === eventMainParams?.accessExpression) ||
       accessExpressionsDisabled;
 
     // Удаления value,paceValues строки, так как она уже есть в сущности ZwiftEvent в которую вносятся данные изменения.
