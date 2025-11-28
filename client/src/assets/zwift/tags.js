@@ -37,3 +37,14 @@ export const tags = [
     checked: false,
   },
 ];
+
+export const booleanEventParams = [
+  {
+    id: 0,
+    value: true,
+    property: 'invisibleToNonParticipants',
+    label: 'Участники заезда не видны во внешнем мире',
+    translate: 'Участники заезда не видны во внешнем мире',
+    checked: true,
+  },
+];

@@ -60,6 +60,9 @@ export function prepareData({
   // для создания Эвента требуется указывать type, для редактирования eventType
   event.type = optionsEventType.find((type) => type.name === event.eventType)?.nameSecond;
 
+  // Участники заезда не видны во внешнем мире.
+  event.invisibleToNonParticipants = true;
+
   return {
     eventData: {
       ...event,
