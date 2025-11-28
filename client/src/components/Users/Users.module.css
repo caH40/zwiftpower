@@ -36,16 +36,17 @@
 
 .dots {
   flex: 0 0 26px;
-  border-radius: 50%;
+  border-radius: 8px;
   width: 26px;
   height: 26px;
   border: 2px solid #fff;
   margin-left: -8px;
   background-color: #666;
   color: white;
-  font-size: 10px;
+  font-size: 8px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 3px;
   font-weight: bold;
 }

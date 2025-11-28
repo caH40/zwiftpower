@@ -26,6 +26,7 @@
 .subtitleContainer {
   display: flex;
   justify-content: space-between;
+  gap: 5px;
   font-size: 12px;
   font-weight: 400;
   color: var(--color-text-minor);
