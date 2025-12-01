@@ -201,7 +201,8 @@ export function generateEmailHTML(
     endDate: string;
     subject: string;
   },
-  userZwiftId: number
+  userId: string,
+  userZwiftId?: number
 ) {
   if (!eventsEmailPreview || eventsEmailPreview.events.length === 0) {
     return `
@@ -276,9 +277,18 @@ export function generateEmailHTML(
                                 </p>
 
                                 <p style="margin: 0; text-align: center;">
-                                  <a href="${serverFront}/profile/${userZwiftId}/settings/notifications" style="color: #667eea; text-decoration: none; font-size: 12px; margin: 0; font-family: Arial, sans-serif;">
-                                    Управление оповещением
-                                  </a>
+                                  ${
+                                    userZwiftId
+                                      ? `<a href="${serverFront}/profile/${userZwiftId}/settings/notifications" style="color: #667eea; text-decoration: none; font-size: 12px; margin: 0; font-family: Arial, sans-serif;">
+                                        Управление оповещением
+                                      </a>
+                                    `
+                                      : `<a href="${serverFront}/notifications/unsubscribe/${userId}" style="color: #667eea; text-decoration: none; font-size: 12px; margin: 0; font-family: Arial, sans-serif;">
+                                        Отменить все оповещения
+                                      </a>
+                                    `
+                                  }
+                                  
                                 </p>
 
                                 <p style="color: #666666; font-size: 12px; margin: 5px 0 0; font-family: Arial, sans-serif;">

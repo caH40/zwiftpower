@@ -8,6 +8,7 @@ import { generateEmailHTML } from '../mail/letters/eventsPreview.js';
 import { TEventForMailingPreviewDto } from '../../types/dto.interface.js';
 import { TNotificationsPrefixedKeys, TResponseService } from '../../types/http.interface.js';
 import { TNotifications } from '../../types/model.interface.js';
+import { Types } from 'mongoose';
 
 type Params = {
   text: string;
@@ -31,10 +32,9 @@ export async function postNotificationService({
   const conditions = tags.map((tag) => ({ [`notifications.${tag}`]: true }));
 
   // Выполнение запроса с использованием динамического условия
-  const usersDB = await User.find(
-    { $or: conditions },
-    { email: true, zwiftId: true, _id: false }
-  ).lean<{ email: string; zwiftId: number }[]>();
+  const usersDB = await User.find({ $or: conditions }, { email: true, zwiftId: true }).lean<
+    { email: string; zwiftId: number; _id: Types.ObjectId }[]
+  >();
 
   const filteredUsers = filterEmails(usersDB);
 
@@ -44,6 +44,7 @@ export async function postNotificationService({
       title,
       tags,
       zwiftId: user.zwiftId,
+      userId: user._id.toString(),
     });
 
     return mailService({
@@ -74,15 +75,14 @@ export async function postEventsPreviewService(eventsEmailPreview: {
   const notificationType: TNotificationsPrefixedKeys = 'notifications.events';
 
   // Выполнение запроса с использованием динамического условия
-  const usersDB = await User.find(
-    { [notificationType]: true },
-    { email: true, zwiftId: true, _id: false }
-  ).lean<{ email: string; zwiftId: number }[]>();
+  const usersDB = await User.find({ [notificationType]: true }, { email: 1, zwiftId: 1 }).lean<
+    { email: string; zwiftId?: number; _id: Types.ObjectId }[]
+  >();
 
   const filteredUsers = filterEmails(usersDB);
 
   const sendAllEmails = filteredUsers.map((user) => {
-    const letter = generateEmailHTML(eventsEmailPreview, user.zwiftId);
+    const letter = generateEmailHTML(eventsEmailPreview, user._id.toString(), user.zwiftId);
 
     return mailService({
       email: user.email,
@@ -118,6 +118,7 @@ export async function createNotificationLetterService({
     title,
     tags,
     zwiftId: 7777777, // 7777777 - для примера
+    userId: '7777777', // 7777777 - для примера
   });
 
   return { data: letter, message: 'Оповещение отправлено пользователям на email!' };
@@ -127,9 +128,10 @@ export async function createNotificationLetterService({
  * Фильтрация email которые были созданы автоматически при отсутствии email у
  * пользователя при регистрации.
  */
-function filterEmails(users: { email: string; zwiftId: number }[]): {
+function filterEmails(users: { email: string; zwiftId?: number; _id: Types.ObjectId }[]): {
   email: string;
-  zwiftId: number;
+  zwiftId?: number;
+  _id: Types.ObjectId;
 }[] {
   return users.filter((e) => !e.email.startsWith('temp_email_'));
 }

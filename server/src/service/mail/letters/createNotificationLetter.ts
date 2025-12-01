@@ -6,9 +6,16 @@ type TLetterParams = {
   text: string;
   title: string;
   tags: string[];
-  zwiftId: number;
+  userId: string;
+  zwiftId?: number;
 };
-export function createNotificationLetter({ text, title, tags, zwiftId }: TLetterParams) {
+export function createNotificationLetter({
+  text,
+  title,
+  tags,
+  zwiftId,
+  userId,
+}: TLetterParams) {
   const date = getTimerLocal(Date.now(), 'DDMMYYHm');
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -170,9 +177,17 @@ export function createNotificationLetter({ text, title, tags, zwiftId }: TLetter
                   <td>
                     <br>
                     <p style="margin: 0; padding: 0 0 20px 0; text-align: center;">
-                      <a href="${serverFront}/profile/${zwiftId}/settings/notifications" style="color: blue; font-size: 12px;">
-                        Управление оповещениями
-                      </a>
+                             ${
+                               zwiftId
+                                 ? `<a href="${serverFront}/profile/${zwiftId}/settings/notifications" style="color: #667eea; text-decoration: none; font-size: 12px; margin: 0; font-family: Arial, sans-serif;">
+                                        Управление оповещением
+                                      </a>
+                                    `
+                                 : `<a href="${serverFront}/notifications/unsubscribe/${userId}" style="color: #667eea; text-decoration: none; font-size: 12px; margin: 0; font-family: Arial, sans-serif;">
+                                        Отменить все оповещения
+                                      </a>
+                                    `
+                             }
                     </p>
                   </td>
                 </tr>
