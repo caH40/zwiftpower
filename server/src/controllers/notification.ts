@@ -6,9 +6,11 @@ import {
   createNotificationLetterService,
   postEventsPreviewService,
   postNotificationService,
+  unsubscribeNotifications,
 } from '../service/notifications/notofocations.js';
 import { TQueryParamsNotifications } from '../types/http.interface.js';
 import { TEventForMailingPreviewDto } from '../types/dto.interface.js';
+import { ObjectIdStrZSchema } from '../utils/deserialization/objectId.js';
 
 /**
  * Контроллер отправки письма-оповещения пользователям сайта.
@@ -111,6 +113,26 @@ export async function postEventsPreviewController(req: Request, res: Response) {
     }
 
     const response = await postEventsPreviewService(eventsEmailPreview);
+
+    return res.status(200).json(response);
+  } catch (error) {
+    handleAndLogError(error);
+    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
+    return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер отписка от всех оповещений для пользователя у которого не привязан zwiftId.
+ */
+export async function unsubscribeNotificationsController(req: Request, res: Response) {
+  try {
+    const result = ObjectIdStrZSchema.safeParse(req.params.userId);
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.format()._errors.join(', ') });
+    }
+
+    const response = await unsubscribeNotifications(result.data);
 
     return res.status(200).json(response);
   } catch (error) {

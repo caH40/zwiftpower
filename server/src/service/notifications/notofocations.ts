@@ -133,3 +133,25 @@ function filterEmails(users: { email: string; zwiftId: number }[]): {
 }[] {
   return users.filter((e) => !e.email.startsWith('temp_email_'));
 }
+
+/**
+ * Отписка от всех оповещений для пользователя у которого не привязан zwiftId.
+ */
+export async function unsubscribeNotifications(
+  userId: string
+): Promise<TResponseService<null>> {
+  const res = await User.findOneAndUpdate(
+    { _id: userId },
+    { $set: { notifications: { development: false, events: false, news: false } } }
+  );
+
+  if (!res) {
+    throw new Error('Не найден пользователь в БД!');
+  }
+
+  return {
+    data: null,
+    message:
+      'Вы отписались от всех оповещений на email. Для дальнейшего управления подписками необходимо привязать zwiftId к аккаунту в личном кабинете.',
+  };
+}
