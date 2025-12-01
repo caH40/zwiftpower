@@ -16,6 +16,9 @@ const SettingsNotifications = lazy(() =>
   import('../Pages/Profile/SettingsNotifications/SettingsNotifications')
 );
 const SettingsZwift = lazy(() => import('../Pages/Profile/SettingsZwift/SettingsZwift'));
+const UnsubscribeNotifications = lazy(() =>
+  import('../Pages/UnsubscribeNotifications/UnsubscribeNotifications')
+);
 const SettingsStream = lazy(() => import('../Pages/Profile/SettingsStream/SettingsStream'));
 const SettingsServicesAndFinances = lazy(() =>
   import('../Pages/Profile/SettingsServicesAndFinances/SettingsServicesAndFinances')
@@ -50,6 +53,11 @@ export function ProfileRoute({ hasAuth, user }) {
           </Route>
         )}
       </Route>
+
+      <Route
+        path={'/notifications/unsubscribe/:userId'}
+        element={<UnsubscribeNotifications />}
+      />
     </>
   );
 }
