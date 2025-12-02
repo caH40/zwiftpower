@@ -44,3 +44,27 @@ export const purchaseUnits = new Map([
   ['day', { label: 'день', symbol: 'дн.', full: 'за день' }],
   ['piece', { label: 'штука', symbol: 'шт.', full: 'за штуку' }],
 ]);
+
+/**
+ * Коды стран для отображения флага, которые не соответствуют БД флагов при простой операции исключения последней буквы.
+ */
+export const COUNTRY_CODE_MAP = {
+  ukr: 'ua',
+  tur: 'tr',
+  dnk: 'dk',
+  swe: 'se',
+  kor: 'kr',
+  pol: 'pl',
+  and: 'ad',
+  blr: 'by',
+  ata: 'aq',
+  kaz: 'kz',
+  isr: 'il',
+  arm: 'am',
+  est: 'ee',
+  spm: 'pm',
+  srb: 'rs',
+  jam: 'jm',
+  prt: 'pt',
+  fsm: 'fm',
+};

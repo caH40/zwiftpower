@@ -1,83 +1,13 @@
+import { COUNTRY_CODE_MAP } from '../../assets/constants';
 import MyTooltip from '../../HOC/MyTooltip';
 
 import styles from './Flag.module.css';
 
+/**
+ * Отображение флага страны name.
+ */
 function Flag({ name = '', width, height }) {
-  let nameShort = '';
-
-  switch (name) {
-    case 'ukr':
-      nameShort = 'ua';
-      break;
-
-    case 'tur':
-      nameShort = 'tr';
-      break;
-
-    case 'dnk':
-      nameShort = 'dk';
-      break;
-
-    case 'swe':
-      nameShort = 'se';
-      break;
-
-    case 'kor':
-      nameShort = 'kr';
-      break;
-
-    case 'pol':
-      nameShort = 'pl';
-      break;
-
-    case 'and':
-      nameShort = 'ad';
-      break;
-
-    case 'blr':
-      nameShort = 'by';
-      break;
-
-    case 'ata':
-      nameShort = 'aq';
-      break;
-
-    case 'kaz':
-      nameShort = 'kz';
-      break;
-
-    case 'isr':
-      nameShort = 'il';
-      break;
-
-    case 'arm':
-      nameShort = 'am';
-      break;
-
-    case 'est':
-      nameShort = 'ee';
-      break;
-
-    case 'spm':
-      nameShort = 'pm';
-      break;
-
-    case 'srb':
-      nameShort = 'rs';
-      break;
-
-    case 'jam':
-      nameShort = 'jm';
-      break;
-
-    case 'prt':
-      nameShort = 'pt';
-      break;
-
-    default:
-      nameShort = name.slice(0, 2);
-      break;
-  }
+  const nameShort = COUNTRY_CODE_MAP[name] ?? name.slice(0, 2);
 
   return (
     <MyTooltip tooltip={name}>
