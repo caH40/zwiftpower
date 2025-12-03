@@ -489,11 +489,10 @@ export interface ZwiftResultSchema {
   isDidNotFinish: boolean;
   category: string;
   categoryCurrent: string;
-  pointsStage: number;
   isUnderChecking: boolean;
   addedManually: boolean;
   cpBestEfforts: TCriticalPowerBestEfforts[];
-
+  teamZpPoints?: number; // Командные очки за заезд в рейтинге zwiftpower.ru.
   profileDataMain?: ProfileDataInResultWithId;
 }
 
@@ -770,6 +769,7 @@ export type TPointsStageResult = {
   finishPoints: number; // Очки за финишное место в гонке.
   pointsSprint?: TPointsSprint[]; // Очки за спринтерские участки.
   pointsMountain?: TPointsMountain[]; // Очки за горные участки.
+  teamZpPoints?: number; // Командные очки за заезд в рейтинге zwiftpower.ru.
   bonus?: number; // Дополнительные очки за участие или активность.
 };
 
