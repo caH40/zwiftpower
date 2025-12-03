@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { TPointsStageResult } from '../../types/model.interface';
+import { TStageResultPoints } from '../../types/model.interface';
 
 // Схема очков сегментов
 const pointsResultSchema = new Schema(
@@ -14,14 +14,14 @@ const pointsResultSchema = new Schema(
 );
 
 // Схемы очков спринта и горного зачёта
-const pointsSprintSchema = new Schema(
+const sprintPointsSchema = new Schema(
   {
     ...pointsResultSchema.obj,
     sprint: { type: Number },
   },
   { _id: false }
 );
-const pointsMountainSchema = new Schema(
+const mountainPointsSchema = new Schema(
   {
     ...pointsResultSchema.obj,
     mountain: { type: Number },
@@ -32,11 +32,11 @@ const pointsMountainSchema = new Schema(
 /**
  * Схема очков за этап.
  */
-export const pointsStageResultSchema = new Schema<TPointsStageResult>(
+export const pointsStageResultSchema = new Schema<TStageResultPoints>(
   {
     finishPoints: { type: Number },
-    pointsSprint: [pointsSprintSchema],
-    pointsMountain: [pointsMountainSchema],
+    sprintPoints: [sprintPointsSchema],
+    mountainPoints: [mountainPointsSchema],
     teamZpPoints: { type: Number },
     bonus: { type: Number },
   },

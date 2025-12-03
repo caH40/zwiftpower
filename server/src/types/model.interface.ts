@@ -756,19 +756,19 @@ type TPointsResult = {
 };
 
 // Тип для спринтерского зачёта.
-export type TPointsSprint = TPointsResult & {
+export type TSprintPoints = TPointsResult & {
   sprint: number; // Идентификатор спринтерского участка.
 };
 
 // Тип для горного зачёта.
-export type TPointsMountain = TPointsResult & {
+export type TMountainPoints = TPointsResult & {
   mountain: number; // Идентификатор горного участка.
 };
 
-export type TPointsStageResult = {
+export type TStageResultPoints = {
   finishPoints: number; // Очки за финишное место в гонке.
-  pointsSprint?: TPointsSprint[]; // Очки за спринтерские участки.
-  pointsMountain?: TPointsMountain[]; // Очки за горные участки.
+  sprintPoints?: TSprintPoints[]; // Очки за спринтерские участки.
+  mountainPoints?: TMountainPoints[]; // Очки за горные участки.
   teamZpPoints?: number; // Командные очки за заезд в рейтинге zwiftpower.ru.
   bonus?: number; // Дополнительные очки за участие или активность.
 };
@@ -802,7 +802,7 @@ export type TStageResult = {
     modifiedAt: Date;
     reason?: string;
   };
-  points: TPointsStageResult | null;
+  points: TStageResultPoints | null;
   disqualification: TDisqualification | null;
   penalty: TStagePenalty[] | null;
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
