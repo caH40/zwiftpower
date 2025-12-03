@@ -68,7 +68,6 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   isDidNotFinish: { type: Boolean, default: false },
   category: { type: String, default: null },
   categoryCurrent: { type: String, default: null },
-  teamCurrent: { type: String, default: null },
   pointsStage: { type: Number, default: 0 },
   isUnderChecking: { type: Boolean, default: false },
   addedManually: { type: Boolean, default: false },

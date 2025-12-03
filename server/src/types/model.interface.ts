@@ -489,7 +489,6 @@ export interface ZwiftResultSchema {
   isDidNotFinish: boolean;
   category: string;
   categoryCurrent: string;
-  teamCurrent: string;
   pointsStage: number;
   isUnderChecking: boolean;
   addedManually: boolean;

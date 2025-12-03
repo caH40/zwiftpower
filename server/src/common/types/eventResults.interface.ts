@@ -127,7 +127,6 @@ export interface UserResultForFetch {
   isDidNotFinish: boolean;
   category: string;
   categoryCurrent: string;
-  teamCurrent: string;
   pointsStage: number;
   isUnderChecking: boolean;
   addedManually: boolean;
