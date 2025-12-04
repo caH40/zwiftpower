@@ -10,6 +10,7 @@ import { getDateSuffix, setEndOfDay } from '../../utils/date-local.js';
 import { handleAndLogError } from '../../errors/error.js';
 import { HandlerSeries } from './HandlerSeries.js';
 import { SeriesGCManager } from './SeriesGCManager.js';
+import { SERIES_WITH_STAGE_RESULTS } from '../../assets/constants.js';
 
 // types
 import {
@@ -17,7 +18,7 @@ import {
   TOrganizerSeriesOneResponseDB,
 } from '../../types/mongodb-response.types.js';
 import { TOrganizerSeriesAllDto, TOrganizerSeriesOneDto } from '../../types/dto.interface.js';
-import { TSeries, TSeriesStage } from '../../types/model.interface.js';
+import { TSeries, TSeriesStage, TSeriesType } from '../../types/model.interface.js';
 import {
   SeriesDataFromClientForCreateFull,
   SeriesStagesFromClientForPatch,
@@ -165,7 +166,6 @@ export class SeriesOrganizerService {
     logoFile,
     posterFile,
     riderCategoryRule,
-    useStageResults,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -187,7 +187,10 @@ export class SeriesOrganizerService {
       entity: this.entityName,
     });
 
-    // // Итоговые данные для сохранения в БД.
+    // Определение создания отдельных результатов для каждого этапа.
+    const useStageResults = this.getUseStageResults(type);
+
+    // Итоговые данные для сохранения в БД.
     const query: FilterQuery<TSeries> = {
       urlSlug,
       organizer: organizerId,
@@ -195,8 +198,8 @@ export class SeriesOrganizerService {
       hasTeams,
       isFinished,
       dateStart,
-      useStageResults,
       dateEnd: setEndOfDay(dateEnd),
+      useStageResults,
       riderCategoryRule,
       ...(description && { description }),
       ...(mission && { mission }),
@@ -235,7 +238,6 @@ export class SeriesOrganizerService {
     posterFile,
     seriesId,
     riderCategoryRule,
-    useStageResults,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -246,6 +248,9 @@ export class SeriesOrganizerService {
     if (!seriesDB) {
       throw new Error(`Не найдена изменяемая Серия с _id: "${seriesId}"`);
     }
+
+    // Определение создания отдельных результатов для каждого этапа.
+    const useStageResults = this.getUseStageResults(type);
 
     // Создание название файла для изображения и сохранение файла в объектом хранилище Облака.
     const { logoFileInfo, posterFileInfo } = await this.imagesService.save({
@@ -265,9 +270,9 @@ export class SeriesOrganizerService {
       hasTeams,
       isFinished,
       dateStart,
+      useStageResults,
       dateEnd: setEndOfDay(dateEnd),
       riderCategoryRule,
-      useStageResults,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
@@ -517,6 +522,14 @@ export class SeriesOrganizerService {
     } catch (error) {
       handleAndLogError(error);
     }
+  };
+
+  /**
+   * Определение значения параметра getUseStageResults.
+   * Ручная настройка данных. Изменения по мере появления сервисов для других type серий.
+   */
+  private getUseStageResults = (type: TSeriesType): boolean => {
+    return SERIES_WITH_STAGE_RESULTS[type] || false;
   };
 
   private static SERIES_ALL_FOR_ORGANIZER_PROJECTION = {

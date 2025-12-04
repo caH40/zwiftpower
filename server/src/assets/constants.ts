@@ -195,3 +195,15 @@ export const SERIES_TYPES = ['series', 'tour', 'catchUp', 'criterium', 'enduranc
 export const SERIES_STATUS = ['upcoming', 'ongoing', 'completed'] as const;
 
 export const DOCUMENTATION_TYPES = ['development', 'public', 'organizer'] as const;
+
+/**
+ * Типы сери у которых создаются отдельные результаты для каждого этапа
+ * (помимо стандартных результатов заезда).
+ */
+export const SERIES_WITH_STAGE_RESULTS = {
+  endurance: true,
+  tour: true,
+  catchUp: false,
+  criterium: false,
+  series: false,
+};

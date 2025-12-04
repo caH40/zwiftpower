@@ -24,15 +24,6 @@ export const SeriesDataZSchema = z
       .optional()
       .describe('Подсчет командного зачета.'),
 
-    useStageResults: z
-      .string()
-      .refine((val) => val === 'true' || val === 'false', {
-        message: 'useStageResults должно быть строкой "true" или "false".',
-      })
-      .transform((val) => val === 'true') // Преобразуем строку в булево значение.
-      .optional()
-      .describe('Подсчет командного зачета.'),
-
     isFinished: z
       .string()
       .refine((val) => val === 'true' || val === 'false', {
