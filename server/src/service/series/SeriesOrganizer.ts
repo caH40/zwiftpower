@@ -165,6 +165,7 @@ export class SeriesOrganizerService {
     logoFile,
     posterFile,
     riderCategoryRule,
+    useStageResults,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -194,6 +195,7 @@ export class SeriesOrganizerService {
       hasTeams,
       isFinished,
       dateStart,
+      useStageResults,
       dateEnd: setEndOfDay(dateEnd),
       riderCategoryRule,
       ...(description && { description }),
@@ -233,6 +235,7 @@ export class SeriesOrganizerService {
     posterFile,
     seriesId,
     riderCategoryRule,
+    useStageResults,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -264,6 +267,7 @@ export class SeriesOrganizerService {
       dateStart,
       dateEnd: setEndOfDay(dateEnd),
       riderCategoryRule,
+      useStageResults,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),

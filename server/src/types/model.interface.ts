@@ -661,6 +661,7 @@ export type TBanCode = (typeof banCodes)[number];
  */
 export type TSeries = {
   _id?: Types.ObjectId; // Уникальный идентификатор серии.
+  useStageResults: boolean; // Формируются дополнительные результаты для серий, по которым идет классификация.
   dateEnd: Date; // Дата окончания серии.
   dateStart: Date; // Дата начала серии.
   description?: string; // Полное описание серии.

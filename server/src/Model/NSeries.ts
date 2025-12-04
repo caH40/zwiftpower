@@ -33,6 +33,7 @@ const SeriesStageSchema = new Schema<TSeriesStage>(
 );
 
 const NSeriesSchema = new Schema<ISeriesDocument>({
+  useStageResults: { type: Boolean, default: false },
   dateEnd: { type: Date, required: true },
   dateStart: { type: Date, required: true },
   description: { type: String },
