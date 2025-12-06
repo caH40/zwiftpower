@@ -20,6 +20,7 @@ import {
   TRiderCategoryRuleType,
 } from './series.types.js';
 import { TPollOption } from './poll.types.js';
+import { TRacePointsRule } from './points.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -1038,3 +1039,31 @@ export type TPollAnswer = {
   createdAt: Date; // Дата создания записи.
   updatedAt: Date; // Дата обновления записи.
 };
+
+/**
+ * Таблица начисления очков для разных сущностей сайта.
+ */
+export type TGlobalPointsTable = {
+  _id: Types.ObjectId; // Уникальный идентификатор таблицы (автоматически создаётся Mongoose).
+  name: string; // Название таблицы (например, "Zwift Power Standard").
+  description?: string; // (Опционально) описание таблицы и принципов начисления очков.
+  rules: TRacePointsRule[]; // Массив правил начисления очков, в порядке мест.
+  fallbackPoints?: number; // Очки для всех мест, не указанных в rules
+  createdAt: Date; // Дата создания таблицы.
+  updatedAt: Date; // Дата последнего обновления таблицы.
+};
+
+// /**
+//  * Таблица начисления очков, используемая организаторами гонок.
+//  */
+// export type TRacePointsTable = {
+//   _id: Types.ObjectId; // Уникальный идентификатор таблицы (автоматически создаётся Mongoose).
+//   name: string; // Название таблицы (например, "Zwift Power Standard").
+//   organizer: Types.ObjectId; // Ссылка на _id организатора, который создал эту таблицу.
+//   description?: string; // (Опционально) описание таблицы и принципов начисления очков.
+//   rules: TRacePointsRule[]; // Массив правил начисления очков, в порядке мест.
+//   fallbackPoints?: number; // Очки для всех мест, не указанных в rules
+//   isDefault: boolean; // Если true — таблица доступна всем организаторам.
+//   createdAt: Date; // Дата создания таблицы.
+//   updatedAt: Date; // Дата последнего обновления таблицы.
+// };
