@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import cn from 'classnames/bind';
 
 import { worlds } from '../../../../assets/zwift/lib/esm/worlds';
-import { fetchAssetsAllRoutes } from '../../../../redux/features/api/assets/fetchAssets';
-import { resetAllRoutes } from '../../../../redux/features/api/assets/assetsSlice';
 import useBlockParameters from '../../../../hook/useBlockParameters';
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import IconParamsDistance from '../../../icons/Params/IconParamsDistance';
@@ -65,12 +63,6 @@ function MapBlock({ subGroup, groupNumber, isCreating }) {
     { title: 'Lap', distance: distanceMap, elevation },
     { title: 'LeadIn', distance: distanceLeadIn, elevation: leadInElevation },
   ];
-
-  useEffect(() => {
-    dispatch(fetchAssetsAllRoutes());
-
-    return () => dispatch(resetAllRoutes());
-  }, [dispatch]);
 
   // При изменении карты выставляется маршрут с новой карты(world).
   useEffect(() => {

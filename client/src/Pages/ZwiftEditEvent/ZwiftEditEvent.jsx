@@ -6,7 +6,8 @@ import useTitle from '../../hook/useTitle';
 import FormRequest from '../../components/Zwift/UI/FormRequest/FormRequest';
 import { changeZwiftEvents } from '../../api/zwift/events';
 import { getAlert } from '../../redux/features/alertMessageSlice';
-
+import { fetchAssetsAllRoutes } from '../../redux/features/api/assets/fetchAssets';
+import { resetAllRoutes } from '../../redux/features/api/assets/assetsSlice';
 import Button from '../../components/UI/Button/Button';
 import FormEditEvent from '../../components/Zwift/UI/FormEditEvent/FormEditEvent';
 import FormEditEventGroup from '../../components/Zwift/UI/FormEditEventGroup/FormEditEventGroup';
@@ -61,6 +62,12 @@ function ZwiftEditEvent() {
     dispatch(fetchZwiftEventParamsForModerator({ eventId }));
     dispatch(resetEventIdCreated());
   }, [eventId, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAssetsAllRoutes());
+
+    return () => dispatch(resetAllRoutes());
+  }, [dispatch]);
 
   // Сброс данных в хранилище при размонтировании компонента.
   useEffect(() => {

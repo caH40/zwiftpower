@@ -22,6 +22,8 @@ import {
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { resetClub } from '../../redux/features/api/zwift_club/zwiftClubSlice';
 import { fetchGetClubsForModeratorZwiftModerator } from '../../redux/features/api/organizer/fetchClubsModerator';
+import { fetchAssetsAllRoutes } from '../../redux/features/api/assets/fetchAssets';
+import { resetAllRoutes } from '../../redux/features/api/assets/assetsSlice';
 
 import styles from './ZwiftCreateEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -52,6 +54,12 @@ function ZwiftCreateEvent() {
         subgroups: [initialSubgroup],
       })
     );
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAssetsAllRoutes());
+
+    return () => dispatch(resetAllRoutes());
   }, [dispatch]);
 
   useEffect(() => {
