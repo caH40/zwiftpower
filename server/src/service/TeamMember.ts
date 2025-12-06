@@ -6,7 +6,6 @@ import { teamMemberPublicDto } from '../dto/team-member.js';
 import { ServiceMessage } from './ServiceMessage/ServiceMessage.js';
 import { TeamServiceMessage } from './ServiceMessage/TeamServiceMessage.js';
 import { TeamModel } from '../Model/Team.js';
-import { updateTeamInResultsService } from './race/results-update.js';
 import { DATE_FOR_ADD_TEAM_RESULTS } from '../assets/constants.js';
 import { TeamMemberRepository } from '../repositories/TeamMember.js';
 
@@ -68,9 +67,6 @@ export class TeamMemberService {
     teamRole?: TTeamRole;
   }): Promise<{ message: string }> {
     await TeamMemberModel.create({ user: userId, role: teamRole, team: teamId });
-
-    // Добавление информации о команде в результаты заездов с даты this.actualDate
-    await updateTeamInResultsService(userId, this.actualDate, 'add', teamId);
 
     return { message: 'Участник добавлен в команду' };
   }
@@ -255,9 +251,6 @@ export class TeamMemberService {
       teamId: teamDB._id.toString(),
     });
 
-    // Добавление информации о команде в результаты заездов с даты this.actualDate
-    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
-
     return { message: 'Участник заблокирован в команде.' };
   }
 
@@ -296,9 +289,6 @@ export class TeamMemberService {
       userId: memberDB.user.toString(),
       teamId,
     });
-
-    // Добавление информации о команде в результаты заездов с даты this.actualDate
-    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
 
     return { message: 'Участник исключен из команды.' };
   }
@@ -348,9 +338,6 @@ export class TeamMemberService {
       teamMemberId,
       teamId: teamDB._id.toString(),
     });
-
-    // Добавление информации о команде в результаты заездов с даты this.actualDate
-    await updateTeamInResultsService(teamMemberId, this.actualDate, 'remove');
 
     return { message: `Вы покинули команду "${teamDB.name}"` };
   }
