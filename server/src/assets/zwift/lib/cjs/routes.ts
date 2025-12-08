@@ -2641,7 +2641,7 @@ export const routes = [
     'https://zwiftinsider.com/route/avon-flyer',
     'https://whatsonzwift.com/world/new-york/route/avon-flyer',
     'https://zwifterbikes.web.app/route/avon-flyer',
-    'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Avon_Flyer_.png',
+    'https://cdn.zwift.com/static/zc/ROUTES/NEWYORK_Avon_Flyer.png',
     '11,12,13,14',
   ],
   [

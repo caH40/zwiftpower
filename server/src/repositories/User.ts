@@ -1,6 +1,9 @@
 import { Types } from 'mongoose';
 import { User } from '../Model/User.js';
 
+// type
+import { UserSchema } from '../types/model.interface.js';
+
 export class UserRepository {
   remove = async (userId: string): Promise<void> => {
     await User.findByIdAndDelete(userId);
@@ -16,5 +19,12 @@ export class UserRepository {
     userId: string
   ): Promise<{ _id: Types.ObjectId; zwiftId: number } | null> => {
     return User.findOne({ _id: userId }, { zwiftId: 1 }).lean();
+  };
+
+  /**
+   * Данные пользователя.
+   */
+  get = async (userId: string): Promise<UserSchema | null> => {
+    return User.findOne({ _id: userId }).lean();
   };
 }

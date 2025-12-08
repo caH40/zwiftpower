@@ -49,12 +49,17 @@ export class PollService {
     // Все ответы пользователей для данного голосования.
     const pollAnswers = await this.pollAnswerRepository.getAll(pollId);
 
+    // Исключение пользователей у которых не привязан zwiftId.
+    const pollAnswersFiltered = pollAnswers.filter((ans) => ans.user?.zwiftId);
+
     // Добавление ФИО и лого пользователя в ответ, если голосование не анонимное.
-    const currentPollAnswers = await this.getPollAnswersWithUser(pollAnswers);
+    const currentPollAnswers = await this.getPollAnswersWithUser(pollAnswersFiltered);
 
     const groupedAndSortedPollAnswers = this.groupAndSortPollAnswers(currentPollAnswers);
 
-    const isUserAnswered = userId ? await this.isUserAnswered(userId, pollAnswers) : false;
+    const isUserAnswered = userId
+      ? await this.isUserAnswered(userId, pollAnswersFiltered)
+      : false;
 
     const { zwiftId } = userId
       ? await getOrThrow(this.userRepository.getZwiftId(userId))
@@ -86,6 +91,9 @@ export class PollService {
     userId: string;
     selectedOptionIds: number[];
   }): Promise<TResponseService<TPollWithAnswersDto>> => {
+    // Проверка, есть пользователь в БД и привязан ли zwiftId к аккаунту.
+    await this.checkUserHasLinkedZwiftId(userId);
+
     const poll = await getOrThrow(
       this.pollRepository.getById(pollId),
       `Не найдено голосование с _id: "${pollId}"`
@@ -101,6 +109,7 @@ export class PollService {
         `Голосование завершилось ${getTimerLocal(poll.endDate.toString(), 'DDMMYYYY')}`
       );
     }
+
     await this.pollAnswerRepository.update({ pollId, userId, selectedOptionIds });
 
     const response = await this.getById(pollId, userId);
@@ -267,5 +276,20 @@ export class PollService {
       );
       return { ...a, users };
     });
+  };
+
+  /**
+   * Проверка, привязан ли zwiftid к аккаунту пользователя.
+   */
+  private checkUserHasLinkedZwiftId = async (userId: string): Promise<void> => {
+    const user = await this.userRepository.get(userId);
+
+    if (!user) {
+      throw new Error('Не найден пользователь в БД!');
+    }
+
+    if (!user.zwiftId) {
+      throw new Error('Для голосования необходимо привязать zwiftId к аккаунту!');
+    }
   };
 }
