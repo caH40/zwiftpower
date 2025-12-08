@@ -74,6 +74,8 @@ export default function Poll({
 
   const user = useSelector((state) => state.checkAuth.value.user);
   const isAuth = !!user?.id;
+  const userHadLinkedZwiftId = !!user?.zwiftId;
+
   const totalAnswers = pollAnswers.reduce((a, c) => a + c.total, 0);
   const votedUsers = users?.length;
 
@@ -81,7 +83,7 @@ export default function Poll({
 
   return (
     <div className={styles.wrapper}>
-      {isAuth ? (
+      {isAuth && userHadLinkedZwiftId ? (
         <>
           <div className={styles.editContainer}>
             <IconEdit squareSize={18} getClick={() => setShowMenu((prev) => !prev)} />
@@ -105,7 +107,7 @@ export default function Poll({
       </div>
 
       {/* Отображаются разные блоки если пользователь проголосовал или нет */}
-      {!isAuth || isUserAnswered ? (
+      {!isAuth || !userHadLinkedZwiftId || isUserAnswered ? (
         <div className={styles.voteBlocksWrapper}>
           {options.map((option) => {
             const currentAnswers =
@@ -142,6 +144,7 @@ export default function Poll({
       <div className={styles.results}>
         <RenderActionPollBlock
           isAuth={isAuth}
+          userHadLinkedZwiftId={userHadLinkedZwiftId}
           isUserAnswered={isUserAnswered}
           votedUsers={votedUsers}
           isAnonymous={isAnonymous}
@@ -171,6 +174,7 @@ function isVoteMine(mineZwiftId, pollAnswers, currentOptionId) {
 
 function RenderActionPollBlock({
   isAuth,
+  userHadLinkedZwiftId,
   isUserAnswered,
   isAnonymous,
   votedUsers,
@@ -185,7 +189,7 @@ function RenderActionPollBlock({
   }
 
   // Авторизован и не проголосовал.
-  if (isAuth && !isUserAnswered) {
+  if (isAuth && userHadLinkedZwiftId && !isUserAnswered) {
     return (
       <span>
         {notStarted ? 'Не началось' : null}
