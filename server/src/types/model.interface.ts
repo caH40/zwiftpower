@@ -20,7 +20,7 @@ import {
   TRiderCategoryRuleType,
 } from './series.types.js';
 import { TPollOption } from './poll.types.js';
-import { TRacePointsRule } from './points.types.js';
+import { TImportanceCoefficientsLevels } from './points.types.js';
 
 // типизация схемы и модели документов mongodb
 
@@ -386,6 +386,7 @@ export interface ZwiftEventSchema {
       action: { property: string; value: string; rider: string; message?: string };
     }[];
   };
+  importanceLevel?: TImportanceCoefficientsLevels;
 }
 export type TAccessExpressionObj = {
   name: string;
@@ -493,7 +494,7 @@ export interface ZwiftResultSchema {
   isUnderChecking: boolean;
   addedManually: boolean;
   cpBestEfforts: TCriticalPowerBestEfforts[];
-  teamZpPoints?: number; // Командные очки за заезд в рейтинге zwiftpower.ru.
+  points: TStageResultPoints | null;
   profileDataMain?: ProfileDataInResultWithId;
 }
 
@@ -768,10 +769,10 @@ export type TMountainPoints = TPointsResult & {
 };
 
 export type TStageResultPoints = {
-  finishPoints: number; // Очки за финишное место в гонке.
+  finishPoints?: number; // Очки за финишное место в гонке.
   sprintPoints?: TSprintPoints[]; // Очки за спринтерские участки.
   mountainPoints?: TMountainPoints[]; // Очки за горные участки.
-  teamZpPoints?: number; // Командные очки за заезд в рейтинге zwiftpower.ru.
+  zpruFinishPoints?: number; // Очки рейтинга сайта zwiftpower.ru за заезд.
   bonus?: number; // Дополнительные очки за участие или активность.
 };
 
@@ -1038,19 +1039,6 @@ export type TPollAnswer = {
   selectedOptionIds: number[]; // Список выбранных вариантов (optionId).
   createdAt: Date; // Дата создания записи.
   updatedAt: Date; // Дата обновления записи.
-};
-
-/**
- * Таблица начисления очков для разных сущностей сайта.
- */
-export type TGlobalPointsTable = {
-  _id: Types.ObjectId; // Уникальный идентификатор таблицы (автоматически создаётся Mongoose).
-  name: string; // Название таблицы (например, "Zwift Power Standard").
-  description?: string; // (Опционально) описание таблицы и принципов начисления очков.
-  rules: TRacePointsRule[]; // Массив правил начисления очков, в порядке мест.
-  fallbackPoints?: number; // Очки для всех мест, не указанных в rules
-  createdAt: Date; // Дата создания таблицы.
-  updatedAt: Date; // Дата последнего обновления таблицы.
 };
 
 // /**

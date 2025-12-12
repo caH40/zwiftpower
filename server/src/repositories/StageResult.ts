@@ -1,4 +1,4 @@
-import { Types, UpdateQuery } from 'mongoose';
+import { QueryOptions, Types, UpdateQuery } from 'mongoose';
 import { StageResultModel } from '../Model/StageResult.js';
 import { FilterQuery } from 'mongoose';
 import { TStageResult } from '../types/model.interface.js';
@@ -88,5 +88,29 @@ export class StageResultRepository {
         modifiedCategory: true,
       }
     ).lean<TStagesResultsForGC[]>();
+  }
+
+  /**
+   * Получение всех результатов этапа по eventId и stageOrder.
+   */
+  async getAllStageResultsByEventId(
+    seriesId: string,
+    stageOrder: number
+  ): Promise<TStageResult[]> {
+    return await StageResultModel.find({ series: seriesId, order: stageOrder }).lean();
+  }
+
+  /**
+   * Получение всех результатов этапа по eventId и stageOrder.
+   */
+  async updateMany(updates: { _id: string; query: QueryOptions<TStageResult> }[]) {
+    return StageResultModel.bulkWrite(
+      updates.map((u) => ({
+        updateOne: {
+          filter: { _id: u._id },
+          update: { $set: u.query },
+        },
+      }))
+    );
   }
 }

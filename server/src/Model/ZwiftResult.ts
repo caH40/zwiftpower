@@ -2,6 +2,7 @@ import mongoose, { Schema, model } from 'mongoose';
 
 import { ZwiftResultSchema } from '../types/model.interface.js';
 import { TeamForProfileSchema } from './Schema/TeamForProfileSchema.js';
+import { pointsStageResultSchema } from './Schema/Points.js';
 
 const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   zwiftEventId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent' },
@@ -91,6 +92,8 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
     age: Number,
     team: { type: TeamForProfileSchema },
   },
+
+  points: { type: pointsStageResultSchema, default: null },
 });
 
 export const ZwiftResult = model<ZwiftResultSchema>('ZwiftResult', zwiftResultSchema);

@@ -1,5 +1,8 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { IMPORTANCE_COEFFICIENTS_LEVELS } from '../assets/racePoints.js';
+
+// types
 import { ZwiftEventSchema } from '../types/model.interface.js';
 
 const accessExpressionObjSchema = new Schema(
@@ -44,6 +47,7 @@ const zwiftEventSchema = new Schema<ZwiftEventSchema>({
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   started: { type: Boolean, default: false },
   totalFinishedCount: { type: Number, default: 0 },
+  importanceLevel: { type: String, enum: IMPORTANCE_COEFFICIENTS_LEVELS },
   modifiedResults: {
     hasModified: { type: Boolean, default: false },
     moderators: [

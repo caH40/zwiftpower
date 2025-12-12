@@ -36,6 +36,7 @@ import { serviceMessageRouter } from './routes/service-message.js';
 import { setupWebSocketWithAuth } from './ws-server.js';
 import { pollRouter } from './routes/poll.js';
 import { assetsRouter } from './routes/assets.js';
+import { RacePoints } from './service/RacePoints.js';
 
 const __dirname = path.resolve();
 const PORT = serverPort || 5000;
@@ -106,6 +107,8 @@ const start = async () => {
     });
 
     setupWebSocketWithAuth(wss, wsConnections);
+    const racePoints = new RacePoints();
+    console.log(await racePoints.setPoints('692c53835b7ac28b58b29dde'));
 
     // Запускаем ОДИН сервер для HTTP и WebSocket
     // eslint-disable-next-line no-console

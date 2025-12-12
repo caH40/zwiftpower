@@ -35,9 +35,9 @@ const mountainPointsSchema = new Schema(
 export const pointsStageResultSchema = new Schema<TStageResultPoints>(
   {
     finishPoints: { type: Number },
-    sprintPoints: [sprintPointsSchema],
-    mountainPoints: [mountainPointsSchema],
-    teamZpPoints: { type: Number },
+    sprintPoints: { type: [sprintPointsSchema], default: undefined },
+    mountainPoints: { type: [mountainPointsSchema], default: undefined },
+    zpruFinishPoints: { type: Number },
     bonus: { type: Number },
   },
   { _id: false }
