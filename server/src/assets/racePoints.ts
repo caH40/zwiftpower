@@ -33,7 +33,7 @@ export const massCoefficients: TMassCoefficient[] = [
  * Названия для коэффициентов важности заезда для очков за занятое место в рейтинге zpru.
  */
 export const IMPORTANCE_COEFFICIENTS_LEVELS = [
-  'nonRating',
+  'unrated',
   'standard',
   'important',
   'championship',
@@ -45,7 +45,7 @@ export const IMPORTANCE_COEFFICIENTS_LEVELS = [
 export const importanceCoefficients: TImportanceLevel[] = [
   {
     levelRu: 'Не рейтинговый',
-    level: 'nonRating',
+    level: 'unrated',
     coefficient: 0.0,
     description: 'Коферайды, тренировки',
   },
