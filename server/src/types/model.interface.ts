@@ -1055,3 +1055,17 @@ export type TPollAnswer = {
 //   createdAt: Date; // Дата создания таблицы.
 //   updatedAt: Date; // Дата последнего обновления таблицы.
 // };
+
+/**
+ * Таблица сезонного рейтинга команд.
+ */
+export type TTeamSeasonRating = {
+  _id: Types.ObjectId;
+  team: Types.ObjectId; // Ссылка на команду.
+  season: string; // 2024-2025, 2025-2026 и.т.д.
+  rank: number; // Место команды в таблице рейтинга.
+  points: number; // Командные очки за сезон.
+  eventsIds: Types.ObjectId[]; // _id Эвентов в БД;
+  createdAt: Date; // Дата создания записи.
+  updatedAt: Date; // Дата обновления записи.
+};
