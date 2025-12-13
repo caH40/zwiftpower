@@ -1,5 +1,8 @@
-import { Types } from 'mongoose';
+import { QueryOptions, Types } from 'mongoose';
 import { ZwiftResult } from '../Model/ZwiftResult.js';
+
+// types
+import { ZwiftResultSchema } from '../types/model.interface.js';
 
 export class EventResultRepository {
   constructor() {}
@@ -71,5 +74,26 @@ export class EventResultRepository {
         },
       ],
     }).lean();
+  }
+
+  /**
+   * Результаты заездов Эвента.
+   */
+  async getByEventId(eventId: string): Promise<ZwiftResultSchema[]> {
+    return ZwiftResult.find({ zwiftEventId: eventId }).lean();
+  }
+
+  /**
+   * Обновление результатов заезда.
+   */
+  async updateMany(updates: { _id: string; query: QueryOptions<ZwiftResultSchema> }[]) {
+    return ZwiftResult.bulkWrite(
+      updates.map((u) => ({
+        updateOne: {
+          filter: { _id: u._id },
+          update: { $set: u.query },
+        },
+      }))
+    );
   }
 }

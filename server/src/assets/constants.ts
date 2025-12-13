@@ -207,3 +207,10 @@ export const SERIES_WITH_STAGE_RESULTS = {
   criterium: false,
   series: false,
 };
+
+export const RACE_CUSTOM_TYPES = [
+  'catchUp',
+  'classicGroup',
+  'classicCommon',
+  'newbies',
+] as const;

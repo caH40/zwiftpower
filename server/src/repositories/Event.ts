@@ -46,7 +46,10 @@ export class EventRepository {
    * Запрос данных серии по типу формирования результатов заездов.
    */
   async getSeriesInfo(eventId: string) {
-    return ZwiftEvent.findOne({ _id: eventId }, { seriesId: 1, importanceLevel: 1 })
+    return ZwiftEvent.findOne(
+      { _id: eventId },
+      { seriesId: 1, importanceLevel: 1, typeRaceCustom: 1 }
+    )
       .populate<{
         seriesId: TSeries | null;
       }>({ path: 'seriesId' })
@@ -54,6 +57,7 @@ export class EventRepository {
         seriesId: TSeries | null;
         _id: Types.ObjectId;
         importanceLevel?: TImportanceCoefficientsLevels;
+        typeRaceCustom: string;
       }>();
   }
 }

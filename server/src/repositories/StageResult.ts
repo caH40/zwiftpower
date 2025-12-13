@@ -101,7 +101,7 @@ export class StageResultRepository {
   }
 
   /**
-   * Получение всех результатов этапа по eventId и stageOrder.
+   * Обновление результатов этапа.
    */
   async updateMany(updates: { _id: string; query: QueryOptions<TStageResult> }[]) {
     return StageResultModel.bulkWrite(

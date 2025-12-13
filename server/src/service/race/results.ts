@@ -28,7 +28,7 @@ export async function getResultsService(eventId: number) {
     case 'catchUp':
       eventPrepared = await getResultsCatchup(eventDB);
       break;
-    case 'newbies':
+    case 'newbies': // FIXME: в настройках сейчас не используется, если не задействовано в бывших заездах, то убрать!
       eventPrepared = await getResultsClassicGroups(eventDB);
       break;
     case 'classicGroup':
