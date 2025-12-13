@@ -62,6 +62,48 @@ export class EventResultRepository {
   }
 
   /**
+   * Результаты заездов в которых участвовали райдеры, являющиеся участниками команд и которые
+   * заработали очки zpruFinishPoints
+   */
+  async getForTeamSeasonRating(eventIds: Types.ObjectId[]): Promise<
+    {
+      zwiftEventId: Types.ObjectId;
+      points: { zpruFinishPoints: number };
+      profileData?: { team?: { urlSlug: string } };
+      profileDataMain?: { team?: { urlSlug: string } };
+    }[]
+  > {
+    return ZwiftResult.find(
+      {
+        zwiftEventId: { $in: eventIds },
+        $and: [
+          {
+            $or: [
+              { 'profileData.team.urlSlug': { $exists: true, $ne: null } },
+              { 'profileDataMain.team.urlSlug': { $exists: true, $ne: null } },
+            ],
+          },
+          { 'points.zpruFinishPoints': { $gt: 0 } },
+        ],
+      },
+      {
+        _id: 0,
+        zwiftEventId: 1,
+        'profileData.team.urlSlug': 1,
+        'profileDataMain.team.urlSlug': 1,
+        'points.zpruFinishPoints': 1,
+      }
+    ).lean<
+      {
+        zwiftEventId: Types.ObjectId;
+        points: { zpruFinishPoints: number };
+        profileData?: { team?: { urlSlug: string } };
+        profileDataMain?: { team?: { urlSlug: string } };
+      }[]
+    >();
+  }
+
+  /**
    * Результаты заездов в которых участвовали райдеры и когда был заезд.
    */
   async getTeamRiderResults(urlSlug: string) {

@@ -2,11 +2,13 @@ import { Types } from 'mongoose';
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 import { TSeries } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
+import { MongooseUtils } from '../utils/MongooseUtils.js';
 
 /**
  * Класс работы с коллекцией ZwiftEvent в MongoDB.
  */
 export class EventRepository {
+  mongooseUtils: MongooseUtils = new MongooseUtils();
   /**
    * Все Эвенты в которых есть подгруппы subgroupsId
    * @param subgroupsIds - массив _id подгрупп эвента из БД.
@@ -59,6 +61,24 @@ export class EventRepository {
         importanceLevel?: TImportanceCoefficientsLevels;
         typeRaceCustom: string;
       }>();
+  }
+
+  /**
+   * Запрос на рейтинговые эвенты за определенный сезон. (!== unrated)
+   * @param start Дата старта сезона (с какой даты получать эвенты).
+   * @param end Дата финиша сезона (по какую дату получать эвенты).
+   */
+  async getRated(start: Date, end: Date): Promise<{ _id: Types.ObjectId }[]> {
+    return ZwiftEvent.find(
+      {
+        eventStart: {
+          $gte: this.mongooseUtils.toMongoEventString(start),
+          $lt: this.mongooseUtils.toMongoEventString(end),
+        },
+        importanceLevel: { $ne: 'unrated' },
+      },
+      { _id: 1 }
+    ).lean();
   }
 }
 

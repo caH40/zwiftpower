@@ -116,4 +116,14 @@ export class TeamRepository {
 
     return TeamModel.findOne({ urlSlug }, projection).lean();
   }
+
+  /**
+   * Получение _id команд по массиву urlSlug.
+   *
+   * @param urlSlugs Массив строковых идентификаторов команд (urlSlug)
+   * @returns Промис с массивом объектов, содержащих только поле _id команд
+   */
+  getIdsByUrlSlugs(urlSlugs: string[]): Promise<{ _id: Types.ObjectId; urlSlug: string }[]> {
+    return TeamModel.find({ urlSlug: { $in: urlSlugs } }, { _id: 1, urlSlug: 1 }).lean();
+  }
 }

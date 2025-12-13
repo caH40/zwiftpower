@@ -134,6 +134,7 @@ export class TeamStatisticsService {
 
     for (const eventStart of uniqueEventsMap.values()) {
       const resultSeason = getSeasonPeriod(new Date(eventStart));
+
       if (currentSeason?.label === resultSeason?.label) {
         resultsInActiveSeason++;
       }
