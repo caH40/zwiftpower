@@ -68,7 +68,10 @@ export class EventRepository {
    * @param start Дата старта сезона (с какой даты получать эвенты).
    * @param end Дата финиша сезона (по какую дату получать эвенты).
    */
-  async getRated(start: Date, end: Date): Promise<{ _id: Types.ObjectId }[]> {
+  async getRated(
+    start: Date,
+    end: Date
+  ): Promise<{ _id: Types.ObjectId; id: number; seriesId?: { useStageResults?: boolean } }[]> {
     return ZwiftEvent.find(
       {
         eventStart: {
@@ -77,8 +80,13 @@ export class EventRepository {
         },
         importanceLevel: { $ne: 'unrated' },
       },
-      { _id: 1 }
-    ).lean();
+      { _id: 1, seriesId: 1, id: 1 }
+    )
+      .populate<{ seriesId?: { useStageResults?: boolean } }>({
+        path: 'seriesId',
+        select: ['-_id', 'useStageResults'],
+      })
+      .lean();
   }
 }
 

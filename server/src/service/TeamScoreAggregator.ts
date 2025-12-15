@@ -5,12 +5,14 @@ import { EventResultRepository } from '../repositories/EventResult.js';
 import { parseSeasonLabel } from '../utils/season.js';
 import { TeamRepository } from '../repositories/Team.js';
 import { TeamSeasonRatingRepository } from '../repositories/TeamSeasonRating.js';
+import { StageResultRepository } from '../repositories/StageResult.js';
 
 export class TeamScoreAggregator {
   private eventRepository: EventRepository = new EventRepository();
   private eventResultRepository: EventResultRepository = new EventResultRepository();
   private teamRepository: TeamRepository = new TeamRepository();
   private ratingRepository: TeamSeasonRatingRepository = new TeamSeasonRatingRepository();
+  private stageResultRepository: StageResultRepository = new StageResultRepository();
 
   /**
    * Утилита расчета рейтинговых ZP очков команды по заработанным очкам в заездах.
@@ -30,13 +32,27 @@ export class TeamScoreAggregator {
       }
 
       // Рейтинговые эвенты за запрашиваемый сезон seasonLabel.
+      // FIXME: разделить эвенты со стандартными результатами и эвенты с отдельными результатами за этапы серии.
       const events = await this.eventRepository.getRated(dates.start, dates.end);
 
-      const eventIds = events.map(({ _id }) => _id);
+      const { eventsWithStageResults, eventsWithStandardResults } = this.separateEvents(events);
 
-      const results = await this.eventResultRepository.getForTeamSeasonRating(eventIds);
+      // _Id Эвентов из БД.
+      const eventWithStandardResultsIds = eventsWithStandardResults.map(({ _id }) => _id);
 
-      const resultsWithTeamId = await this.setTeamId(results);
+      // Id нумерация Эвентов из API Zwift.
+      const eventWithStageResultsIds = eventsWithStageResults.map(({ id }) => id);
+
+      const standardResults = await this.eventResultRepository.getForTeamSeasonRating(
+        eventWithStandardResultsIds
+      );
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const stageResults = await this.stageResultRepository.getForTeamSeasonRating(
+        eventWithStageResultsIds
+      );
+
+      const resultsWithTeamId = await this.setTeamId(standardResults);
 
       const resultsWithSum = this.getSum(resultsWithTeamId);
 
@@ -143,4 +159,31 @@ export class TeamScoreAggregator {
 
     return sorted.map((res, index) => ({ ...res, rank: index + 1 }));
   }
+
+  private separateEvents(events: EventIdAndSeriesId[]) {
+    return events.reduce<{
+      eventsWithStageResults: EventIdAndSeriesId[];
+      eventsWithStandardResults: EventIdAndSeriesId[];
+    }>(
+      (acc, cur) => {
+        cur.seriesId?.useStageResults
+          ? acc.eventsWithStageResults.push(cur)
+          : acc.eventsWithStandardResults.push(cur);
+
+        return acc;
+      },
+      {
+        eventsWithStageResults: [],
+        eventsWithStandardResults: [],
+      }
+    );
+  }
 }
+
+type EventIdAndSeriesId = {
+  _id: Types.ObjectId;
+  id: number;
+  seriesId?: {
+    useStageResults?: boolean;
+  };
+};

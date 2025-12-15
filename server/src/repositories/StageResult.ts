@@ -113,4 +113,38 @@ export class StageResultRepository {
       }))
     );
   }
+
+  /**
+   * Результаты заездов в которых участвовали райдеры, являющиеся участниками команд и которые
+   * заработали очки zpruFinishPoints
+   */
+  async getForTeamSeasonRating(eventIds: number[]): Promise<
+    {
+      zwiftEventId: Types.ObjectId;
+      points: { zpruFinishPoints: number };
+      profileData: { team?: { urlSlug: string } };
+    }[]
+  > {
+    return StageResultModel.find(
+      {
+        eventId: { $in: eventIds },
+        $and: [
+          { 'profileData.team.urlSlug': { $exists: true, $ne: null } },
+          { 'points.zpruFinishPoints': { $gt: 0 } },
+        ],
+      },
+      {
+        _id: 0,
+        zwiftEventId: 1,
+        'profileData.team.urlSlug': 1,
+        'points.zpruFinishPoints': 1,
+      }
+    ).lean<
+      {
+        zwiftEventId: Types.ObjectId;
+        points: { zpruFinishPoints: number };
+        profileData: { team?: { urlSlug: string } };
+      }[]
+    >();
+  }
 }
