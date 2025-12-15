@@ -199,10 +199,10 @@ export const fetchGetTeamStatistics = createAsyncThunk(
  */
 export const fetchTeamsLeaderboard = createAsyncThunk(
   'teamsLeaderboard/fetch',
-  async function (_, thunkAPI) {
+  async function ({ seasonLabel }, thunkAPI) {
     try {
       const response = await myAxios({
-        url: `${serverExpress}/api/statistics/teams`,
+        url: `${serverExpress}/api/statistics/teams/${seasonLabel}`,
         method: 'get',
       });
 

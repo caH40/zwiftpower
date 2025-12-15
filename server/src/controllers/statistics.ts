@@ -137,9 +137,11 @@ export const getRidersTotalAge = async (req: Request, res: Response) => {
  */
 export const getTeams = async (req: Request, res: Response) => {
   try {
+    const seasonLabel = req.params.seasonLabel;
+
     const teamLeaderboard = new TeamLeaderboard();
 
-    const response = await teamLeaderboard.get();
+    const response = await teamLeaderboard.get(seasonLabel);
 
     res.status(200).json(response);
   } catch (error) {

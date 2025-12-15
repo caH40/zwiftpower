@@ -1,18 +1,24 @@
-import { MEDAL_RATES } from '../assets/constants.js';
 import { EventResultRepository } from '../repositories/EventResult.js';
 import { TeamRepository } from '../repositories/Team.js';
 import { TeamMemberRepository } from '../repositories/TeamMember.js';
+import { teamLeaderboardDto } from '../dto/team-leaderboard.js';
+import { TeamSeasonRatingService } from './TeamSeasonRating.js';
+import { parseSeasonLabel } from '../utils/season.js';
 
 // types
 import { TResponseService } from '../types/http.interface.js';
 import { TTeamLeaderboard } from '../types/team.types.js';
 import { TTeamLeaderboardDto } from '../types/dto.interface.js';
-import { teamLeaderboardDto } from '../dto/team-leaderboard.js';
+import { TTeamSeasonRating } from '../types/model.interface.js';
 
+/**
+ * Класс формирования таблицы рейтинга команд.
+ */
 export class TeamLeaderboard {
   private teamRepository: TeamRepository;
   private eventResultRepository: EventResultRepository;
   private memberRepository: TeamMemberRepository;
+  private teamSeasonRatingService: TeamSeasonRatingService = new TeamSeasonRatingService();
 
   constructor() {
     this.teamRepository = new TeamRepository();
@@ -22,89 +28,46 @@ export class TeamLeaderboard {
   /**
    * Рейтинг команд с данными по медалям, количеству участников, количеству заездов.
    */
-  async get(): Promise<TResponseService<TTeamLeaderboardDto[]>> {
+  async get(seasonLabel: string): Promise<TResponseService<TTeamLeaderboardDto[]>> {
+    const dates = parseSeasonLabel(seasonLabel);
+
+    if (!dates) {
+      throw new Error(`Не корректное название сезона: ${seasonLabel}`);
+    }
+
+    const teamsRating = await this.teamSeasonRatingService.getAll(seasonLabel);
+
     // Получение всех команд с количеством участников.
     const teamsWithMembers = await this.getTeamsWithQuantityMembers();
 
-    const teamsWithMedals = await this.countEventMedals(teamsWithMembers);
-
-    const teamsWithRank = this.setRank(teamsWithMedals);
+    const teamsWithRank = this.setRank(teamsWithMembers, teamsRating);
 
     return { data: teamLeaderboardDto(teamsWithRank), message: 'Рейтинг команд' };
   }
 
   /**
-   * Расчет рейтинговых очков и установка рейтинга.
+   * Установка рейтинговых очков и установка рейтинга.
    */
-  private setRank = (teams: TTeamLeaderboard[]): TTeamLeaderboard[] => {
-    const teamsWithPoints = teams.map((team) => {
-      team.rankPoints = this.calculateRankPoints(team.eventMedals);
-      return team;
+  private setRank = (
+    teams: Map<string, TTeamLeaderboard>,
+    teamsRating: (Omit<TTeamSeasonRating, 'eventsIds' | 'team'> & {
+      team: { urlSlug: string };
+    })[]
+  ): TTeamLeaderboard[] => {
+    teamsRating.forEach((team) => {
+      const current = teams.get(team.team.urlSlug);
+
+      if (current) {
+        current.rank = team.rank;
+        current.rankPoints = team.points;
+      }
     });
 
-    // Сортировка по очкам.
-    teamsWithPoints.sort((a, b) => b.rankPoints - a.rankPoints);
+    const sortedTeams = [...teams.values()]
+      .toSorted((a, b) => b.rankPoints - a.rankPoints)
+      .map((team, index) => ({ ...team, rank: index + 1 }));
 
-    teamsWithPoints.forEach((team, index) => {
-      team.rank = index + 1;
-    });
-
-    return teamsWithPoints;
-  };
-
-  /**
-   * Утилита расчета рейтинговых очков команды.
-   */
-  private calculateRankPoints = (eventMedals: {
-    gold: number;
-    silver: number;
-    bronze: number;
-  }): number => {
-    return (
-      eventMedals.gold * MEDAL_RATES.GOLD +
-      eventMedals.silver * MEDAL_RATES.SILVER +
-      eventMedals.bronze * MEDAL_RATES.BRONZE
-    );
-  };
-
-  private countEventMedals = async (
-    teamsWithMembers: Map<string, TTeamLeaderboard>
-  ): Promise<TTeamLeaderboard[]> => {
-    // Все результаты райдеров, которые состоят в командах.
-    const allResultTeams = await this.eventResultRepository.getForTeamLeaderBoards();
-
-    for (const result of allResultTeams) {
-      const urlSlug =
-        result.profileDataMain?.team?.urlSlug || result.profileData?.team?.urlSlug;
-
-      if (!urlSlug) {
-        continue;
-      }
-
-      const team = teamsWithMembers.get(urlSlug);
-
-      if (!team) {
-        continue;
-      }
-
-      team.totalResults++;
-
-      const medal = {
-        1: 'gold',
-        2: 'silver',
-        3: 'bronze',
-      }[result.rankEvent] as 'gold' | 'silver' | 'bronze' | undefined;
-
-      if (!medal) {
-        continue;
-      }
-
-      team.eventMedals[medal]++;
-
-      teamsWithMembers.set(urlSlug, team);
-    }
-
-    return [...teamsWithMembers.values()];
+    return sortedTeams;
   };
 
   private getTeamsWithQuantityMembers = async (): Promise<Map<string, TTeamLeaderboard>> => {

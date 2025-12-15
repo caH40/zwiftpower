@@ -20,7 +20,7 @@ export default function TeamsStatistics() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTeamsLeaderboard());
+    dispatch(fetchTeamsLeaderboard({ seasonLabel: '2025-2026' }));
 
     return () => dispatch(resetTeamsLeaderboard());
   }, [dispatch]);

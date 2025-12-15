@@ -184,12 +184,6 @@ export const RIDER_CATEGORIES_RULE_TYPES = [
 
 export const DATE_FOR_ADD_TEAM_RESULTS = '2024-09-01';
 
-export const MEDAL_RATES = {
-  GOLD: 9,
-  SILVER: 4,
-  BRONZE: 2,
-} as const;
-
 export const SERIES_TYPES = ['series', 'tour', 'catchUp', 'criterium', 'endurance'] as const;
 
 export const SERIES_STATUS = ['upcoming', 'ongoing', 'completed'] as const;

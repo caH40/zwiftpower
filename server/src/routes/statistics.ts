@@ -16,4 +16,4 @@ statisticsRouter.get('/leaders-intervals/:male', getLeadersInIntervals);
 statisticsRouter.get('/riders-total', getRidersTotal);
 statisticsRouter.get('/riders-total-racing-score', getRidersTotalRacingScore);
 statisticsRouter.get('/riders-total-age', getRidersTotalAge);
-statisticsRouter.get('/teams', getTeams);
+statisticsRouter.get('/teams/:seasonLabel', getTeams);
