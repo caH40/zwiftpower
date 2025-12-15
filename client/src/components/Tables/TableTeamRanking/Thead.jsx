@@ -1,12 +1,6 @@
 import ColumnName from '../Th/ColumnName';
 
-import styles from '../Table.module.css';
-
-import {
-  teamRankStartColumns,
-  teamRankPlacesColumns,
-  teamRankEndColumns,
-} from './column-titles';
+import { teamRankStartColumns } from './column-titles';
 
 function Thead() {
   return (
@@ -22,7 +16,7 @@ function Thead() {
           </th>
         ))}
 
-        {teamRankPlacesColumns.map((column) => (
+        {/* {teamRankPlacesColumns.map((column) => (
           <th key={column.id}>
             <ColumnName
               columnName={column.name}
@@ -30,9 +24,9 @@ function Thead() {
               tooltip={column.tooltip}
             />
           </th>
-        ))}
+        ))} */}
 
-        {teamRankEndColumns.map((column) => (
+        {/* {teamRankEndColumns.map((column) => (
           <th key={column.id} style={{ textAlign: 'center' }}>
             <ColumnName
               columnName={column.name}
@@ -40,7 +34,7 @@ function Thead() {
               tooltip={column.tooltip}
             />
           </th>
-        ))}
+        ))} */}
       </tr>
     </thead>
   );

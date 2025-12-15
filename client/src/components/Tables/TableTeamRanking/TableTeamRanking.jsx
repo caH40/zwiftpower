@@ -44,10 +44,10 @@ export default function TableTeamRanking({ teams = [] }) {
                   logoUrls={logoUrls}
                 />
               </td>
-              <td>{eventMedals.gold}</td>
+              {/* <td>{eventMedals.gold}</td>
               <td>{eventMedals.silver}</td>
               <td>{eventMedals.bronze}</td>
-              <td>{totalResults}</td>
+              <td>{totalResults}</td> */}
             </tr>
           )
         )}
