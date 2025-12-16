@@ -4,6 +4,8 @@ import { handleErrorInController } from '../errors/error.js';
 import { TeamService } from '../service/Team.js';
 import { TeamZSchema } from '../utils/deserialization/team.js';
 import { TeamStatisticsService } from '../service/TeamStatistics.js';
+import { TeamParticipantRatingResult } from '../service/TeamParticipantRatingResult.js';
+import { TeamRatingResultsZSchema } from '../utils/deserialization/teamRatingResults.js';
 
 /**
  * Контроллер работы с сущностью "Команда".
@@ -242,6 +244,37 @@ export class TeamController {
       const statisticsService = new TeamStatisticsService();
       // Вызов сервиса.
       const response = await statisticsService.get(urlSlug);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Контроллер получения всех результатов участников команды за выбранный сезон, результаты
+   * которых учитываются в рейтинге среди команд.
+   */
+  public getTeamParticipantRatingResults = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
+    try {
+      const result = TeamRatingResultsZSchema.safeParse(req.params);
+
+      if (!result.success) {
+        const { fieldErrors, formErrors } = result.error.flatten();
+
+        return res.status(400).json({
+          message: 'Ошибка валидации',
+          errors: { ...fieldErrors, formErrors },
+        });
+      }
+      const service = new TeamParticipantRatingResult();
+
+      // Вызов сервиса.
+      const response = await service.getTeamAllResults(result.data);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

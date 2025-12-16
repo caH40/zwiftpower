@@ -44,4 +44,14 @@ export class TeamSeasonRatingRepository {
       { ordered: false }
     );
   }
+
+  /**
+   * Список эвентов, результаты которых учитываются в рейтинге команды.
+   */
+  getResultEvents({ seasonLabel, teamId }: { seasonLabel: string; teamId: string }) {
+    return TeamSeasonRatingModel.findOne(
+      { season: seasonLabel, team: teamId },
+      { eventsIds: 1, _id: 0 }
+    ).lean<{ eventsIds: Types.ObjectId[] }>();
+  }
 }

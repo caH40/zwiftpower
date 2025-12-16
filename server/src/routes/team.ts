@@ -11,6 +11,7 @@ const team = new TeamController();
 teamRouter.get('/pending-riders', checkAuth, team.getPendingRiders);
 teamRouter.get('/banned-riders', checkAuth, team.getBannedRiders);
 teamRouter.get('/results/:urlSlug', team.getTeamRiderResults);
+teamRouter.get('/rating-results/:teamId/:seasonLabel', team.getTeamParticipantRatingResults);
 teamRouter.get('/statistics/:urlSlug', team.getTeamStatistics);
 teamRouter.get('/:urlSlug', team.get);
 teamRouter.get('/', team.getAll);
