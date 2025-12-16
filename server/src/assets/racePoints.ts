@@ -22,11 +22,11 @@ export const baseRacePointsMap = new Map(baseRacePoints.map((e) => [e.place, e.p
  * Коэффициенты массовости заезда для очков за занятое место в рейтинге zpru.
  */
 export const massCoefficients: TMassCoefficient[] = [
-  { participants: { min: 1, max: 3 }, coefficient: 0.0, status: 'Не рейтинговый' },
-  { participants: { min: 4, max: 14 }, coefficient: 0.5, status: 'Малый' },
+  { participants: { min: 1, max: 5 }, coefficient: 0.0, status: 'Не рейтинговый' },
+  { participants: { min: 6, max: 14 }, coefficient: 0.7, status: 'Малый' },
   { participants: { min: 15, max: 39 }, coefficient: 1.0, status: 'Стандартный' },
-  { participants: { min: 40, max: 99 }, coefficient: 1.8, status: 'Крупный' },
-  { participants: { min: 100, max: null }, coefficient: 2.5, status: 'Гигантский' },
+  { participants: { min: 40, max: 99 }, coefficient: 1.2, status: 'Крупный' },
+  { participants: { min: 100, max: null }, coefficient: 1.5, status: 'Гигантский' },
 ];
 
 /**
