@@ -122,6 +122,23 @@ export class EventResultRepository {
   }
 
   /**
+   * Результаты заездов в которых участвовали райдеры в определенных эвентах.
+   */
+  async getTeamRiderResultsByEventIds(urlSlug: string, zwiftEventIds: Types.ObjectId[]) {
+    return ZwiftResult.find({
+      zwiftEventIds: { $in: zwiftEventIds },
+      $or: [
+        { 'profileData.team.urlSlug': urlSlug, 'points.zpruFinishPoints': { $gt: 0 } },
+        {
+          profileDataMain: { $ne: null },
+          'profileDataMain.team.urlSlug': urlSlug,
+          'points.zpruFinishPoints': { $gt: 0 },
+        },
+      ],
+    }).lean();
+  }
+
+  /**
    * Результаты заездов Эвента.
    */
   async getByEventId(eventId: string): Promise<ZwiftResultSchema[]> {

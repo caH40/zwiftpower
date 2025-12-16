@@ -26,8 +26,11 @@ export class TeamRepository {
   /**
    * Возвращает команду по slug.
    */
-  async getByUrlSlug(urlSlug: string): Promise<TTeam | null> {
-    return this.getByUrlSlugAndProjection(urlSlug);
+  async getByUrlSlug(
+    urlSlug: string,
+    paramsProjection?: Partial<Record<keyof TTeam, 0 | 1>>
+  ): Promise<TTeam | null> {
+    return this.getByUrlSlugAndProjection(urlSlug, paramsProjection);
   }
   /**
    * Возвращает имя команды по slug.
@@ -110,7 +113,7 @@ export class TeamRepository {
    */
   private async getByUrlSlugAndProjection<K extends keyof TTeam>(
     urlSlug: string,
-    paramsProjection?: Record<K, 1 | 0>
+    paramsProjection?: Partial<Record<K, 1 | 0>>
   ) {
     const projection = paramsProjection ? { _id: 0, ...paramsProjection } : undefined;
 

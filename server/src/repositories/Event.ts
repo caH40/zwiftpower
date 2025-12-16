@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
-import { TSeries } from '../types/model.interface.js';
+import { TSeries, TSeriesStage } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
 import { MongooseUtils } from '../utils/MongooseUtils.js';
 
@@ -85,6 +85,42 @@ export class EventRepository {
       .populate<{ seriesId?: { useStageResults?: boolean } }>({
         path: 'seriesId',
         select: ['-_id', 'useStageResults'],
+      })
+      .lean();
+  }
+
+  async getRatedForTeam(eventIds: Types.ObjectId[]): Promise<
+    {
+      _id: Types.ObjectId;
+      id: number;
+      name: string;
+      eventStart: string;
+      importanceLevel?: TImportanceCoefficientsLevels;
+      seriesId?: {
+        useStageResults?: boolean;
+        stages: TSeriesStage[];
+        name: string;
+        urlSlug: string;
+      };
+    }[]
+  > {
+    return ZwiftEvent.find(
+      {
+        _id: { $in: eventIds },
+        importanceLevel: { $ne: 'unrated' },
+      },
+      { _id: 1, seriesId: 1, id: 1, name: 1, eventStart: 1, importanceLevel: 1 }
+    )
+      .populate<{
+        seriesId?: {
+          useStageResults?: boolean;
+          stages: TSeriesStage[];
+          name: string;
+          urlSlug: string;
+        };
+      }>({
+        path: 'seriesId',
+        select: ['-_id', 'useStageResults', 'name', 'urlSlug', 'stages'],
       })
       .lean();
   }

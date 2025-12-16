@@ -40,6 +40,11 @@ export const IMPORTANCE_COEFFICIENTS_LEVELS = [
 ] as const;
 
 /**
+ * Количество первых мест, которым присваиваются рейтинговые очки zpru.
+ */
+export const FIRST_RATED_PLACES = baseRacePoints.length;
+
+/**
  * Коэффициенты важности заезда для очков за занятое место в рейтинге zpru.
  */
 export const importanceCoefficients: TImportanceLevel[] = [
