@@ -1022,3 +1022,11 @@ export type TAudioType = 'notification' | 'warning' | 'chat';
 export type TDocumentationTypes = (typeof DOCUMENTATION_TYPES)[number];
 
 export type TTypesRaceCustom = (typeof RACE_CUSTOM_TYPES)[number];
+
+/**
+ * Количество финишировавших райдеров в категории в которой состоит райдер.
+ */
+export type TFinishersCount = {
+  category: number;
+  absolute: number;
+};

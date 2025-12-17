@@ -7,6 +7,7 @@ import {
   TRaceSeriesCategories,
   TPricingPlan,
   TTeamForProfile,
+  TFinishersCount,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
@@ -496,6 +497,7 @@ export interface ZwiftResultSchema {
   cpBestEfforts: TCriticalPowerBestEfforts[];
   points: TStageResultPoints | null;
   profileDataMain?: ProfileDataInResultWithId;
+  finishersCount: TFinishersCount;
 }
 
 // CP на интервалах.
@@ -799,6 +801,7 @@ export type TStageResult = {
   gapsInCategories: TGapsInCategories; // Финишные гэпы для категорий и для абсолюта.
   category: TRaceSeriesCategories | null; // Категория на этапе по которой идет классификация. null - не определена категория в случае собственных категорий в серии, а расчет не подходит под эти категории.
   categoryInRace: TRaceSeriesCategories | null; // Категория в которой участвовал на этапе. null - первый заезд.
+  finishersCount: TFinishersCount;
   modifiedCategory?: {
     value: TRaceSeriesCategories | null;
     moderator?: Types.ObjectId;

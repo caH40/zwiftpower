@@ -12,6 +12,7 @@ import {
   ZWIFT_CATEGORIES,
 } from '../assets/constants.js';
 import { pointsStageResultSchema } from './Schema/Points.js';
+import { finishersCountSchema } from './Schema/FinishersCountSchema.js';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -129,6 +130,7 @@ const stageResultSchema = new Schema<IStageResult>(
     disqualification: { type: disqualificationSchema, default: null },
     penalty: { type: [penaltySchema], default: null },
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
+    finishersCount: { type: finishersCountSchema },
   },
   { timestamps: true }
 );
