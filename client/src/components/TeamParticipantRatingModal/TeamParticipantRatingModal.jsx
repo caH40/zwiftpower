@@ -1,4 +1,8 @@
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import LogoRider from '../LogoRider/LogoRider';
+import { closePopupFormContainer } from '../../redux/features/popupFormContainerSlice';
 
 import styles from './TeamParticipantRatingModal.module.css';
 
@@ -25,6 +29,8 @@ import styles from './TeamParticipantRatingModal.module.css';
  * }} props
  */
 export default function TeamParticipantRatingModal({ results }) {
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -63,7 +69,13 @@ export default function TeamParticipantRatingModal({ results }) {
             <div>{item.rank}</div>
 
             <div className={styles.event}>
-              <div className={styles.eventName}>{item.event.name}</div>
+              <Link
+                to={item.resultPath}
+                className={`${styles.eventName} link`}
+                onClick={() => dispatch(closePopupFormContainer())}
+              >
+                {item.event.name}
+              </Link>
               <div className={styles.eventDate}>
                 {new Date(item.event.start).toLocaleDateString()}
               </div>

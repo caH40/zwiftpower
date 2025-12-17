@@ -67,9 +67,11 @@ export default function TeamsStatistics() {
 
       <article className={styles.block__table}>
         {/* Скелетон загрузки для Таблицы */}
-        <SkeletonTable status={status} rows={10} height={70} />
+        {teamsLeaderboard.length === 0 ? (
+          <SkeletonTable status={status} rows={10} height={70} />
+        ) : null}
 
-        {status === 'resolved' ? (
+        {teamsLeaderboard.length > 0 ? (
           <TableTeamRanking
             teams={teamsLeaderboard}
             getParticipantRatingResults={getParticipantRatingResults}
