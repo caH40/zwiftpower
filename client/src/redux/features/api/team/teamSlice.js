@@ -180,6 +180,22 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // ===========================   ===========================
+    builder.addCase(fetchTeamParticipantRatingResults.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchTeamParticipantRatingResults.fulfilled, (state, action) => {
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchTeamParticipantRatingResults.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
