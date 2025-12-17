@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
@@ -11,8 +11,13 @@ import { resetTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
 import TableTeamRanking from '../../components/Tables/TableTeamRanking/TableTeamRanking';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import { openPopupFormContainer } from '../../redux/features/popupFormContainerSlice';
+import { getAlert } from '../../redux/features/alertMessageSlice';
 
 import styles from './Statistics.module.css';
+
+// Существует только один сезон.
+const seasonLabel = '2025-2026';
 
 /**
  * Страница статистики команд.
@@ -20,25 +25,40 @@ import styles from './Statistics.module.css';
 export default function TeamsStatistics() {
   useTitle('Рейтинг команд');
   const { status, teamsLeaderboard } = useSelector((state) => state.team);
-  const { participantRatingResults } = useSelector((state) => state.team);
   const dispatch = useDispatch();
 
-  const getParticipantRatingResults = useCallback(
-    ({ seasonLabel, teamUrlSlug }) => {
-      dispatch(
-        fetchTeamParticipantRatingResults({
-          seasonLabel,
-          teamUrlSlug,
-        })
-      );
-    },
-    [dispatch]
-  );
+  const showResults = (results) =>
+    dispatch(
+      openPopupFormContainer({
+        formType: 'teamParticipantRatingModal',
+        formProps: { results },
+      })
+    );
+
+  const getParticipantRatingResults = ({ seasonLabel, teamUrlSlug }) => {
+    async function start() {
+      try {
+        const res = await dispatch(
+          fetchTeamParticipantRatingResults({
+            seasonLabel,
+            teamUrlSlug,
+          })
+        ).unwrap();
+
+        showResults(res.data);
+      } catch (error) {
+        dispatch(getAlert({ message: error, type: 'error', isOpened: true }));
+      }
+    }
+    start();
+  };
 
   useEffect(() => {
-    dispatch(fetchTeamsLeaderboard({ seasonLabel: '2025-2026' }));
+    dispatch(fetchTeamsLeaderboard({ seasonLabel }));
 
-    return () => dispatch(resetTeamsLeaderboard());
+    return () => {
+      dispatch(resetTeamsLeaderboard());
+    };
   }, [dispatch]);
 
   return (
@@ -53,6 +73,7 @@ export default function TeamsStatistics() {
           <TableTeamRanking
             teams={teamsLeaderboard}
             getParticipantRatingResults={getParticipantRatingResults}
+            seasonLabel={seasonLabel}
           />
         ) : null}
       </article>

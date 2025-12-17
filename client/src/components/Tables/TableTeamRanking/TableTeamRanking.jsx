@@ -2,6 +2,7 @@ import classnames from 'classnames/bind';
 
 import TeamRow from '../../TeamRow/TeamRow';
 import RatingPointsBox from '../../RatingPointsBox/RatingPointsBox';
+import IconAdd from '../../icons/IconAdd';
 
 import styles from '../Table.module.css';
 
@@ -9,7 +10,11 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-export default function TableTeamRanking({ getParticipantRatingResults, teams = [] }) {
+export default function TableTeamRanking({
+  getParticipantRatingResults,
+  seasonLabel,
+  teams = [],
+}) {
   return (
     <table className={styles.table}>
       <caption className={styles.hidden}>Рейтинг команд</caption>
@@ -45,16 +50,16 @@ export default function TableTeamRanking({ getParticipantRatingResults, teams = 
                 />
               </td>
               <td>
-                <button
-                  onClick={() =>
+                <IconAdd
+                  getClick={() =>
                     getParticipantRatingResults({
-                      seasonLabel: '2025-2026',
+                      seasonLabel,
                       teamUrlSlug: urlSlug,
                     })
                   }
-                >
-                  Результаты
-                </button>
+                  squareSize={18}
+                  tooltip="Показать результаты"
+                />
               </td>
               {/* <td>{eventMedals.gold}</td>
               <td>{eventMedals.silver}</td>

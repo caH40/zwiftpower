@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+.table {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.row {
+  display: grid;
+  grid-template-columns: 30px minmax(220px, 1.5fr) 80px 80px minmax(295px, 2fr) 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-border-minor);
+  min-width: 720px;
+}
+.row:not(.head):hover {
+  background-color: var(--color-yellow-5-transparent);
+}
+.head {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text-minor);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.profileCell {
+  min-height: 32px;
+}
+.points {
+  padding-left: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+.event {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.eventName {
+  font-size: 14px;
+}
+.eventDate {
+  font-size: 12px;
+  color: var(--color-text-minor);
+}
+.riderContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.logoContainer {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+}

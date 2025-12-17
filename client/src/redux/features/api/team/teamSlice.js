@@ -20,7 +20,6 @@ const initialState = {
   pendingRiders: [],
   bannedRiders: [],
   teamsLeaderboard: [],
-  participantRatingResults: [],
   statistics: null,
   team: null,
   message: null,
@@ -59,9 +58,6 @@ const teamSlice = createSlice({
     },
     resetTeamsLeaderboard(state) {
       state.teamsLeaderboard = [];
-    },
-    resetParticipantRatingResults(state) {
-      state.participantRatingResults = [];
     },
   },
 
@@ -184,23 +180,6 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
-
-    // ============= Результаты участников команды которые пошли в рейтинг команд  =============
-    builder.addCase(fetchTeamParticipantRatingResults.pending, (state) => {
-      state.error = null;
-      state.status = 'loading';
-    });
-
-    builder.addCase(fetchTeamParticipantRatingResults.fulfilled, (state, action) => {
-      state.error = null;
-      state.status = 'resolved';
-      state.participantRatingResults = action.payload.data;
-    });
-
-    builder.addCase(fetchTeamParticipantRatingResults.rejected, (state, action) => {
-      state.status = 'rejected';
-      state.error = action.payload;
-    });
   },
 });
 
@@ -212,7 +191,6 @@ export const {
   resetTeamRiderResults,
   resetStatistics,
   resetTeamsLeaderboard,
-  resetParticipantRatingResults,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

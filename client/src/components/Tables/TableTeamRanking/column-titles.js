@@ -3,6 +3,7 @@ export const teamRankStartColumns = [
   { name: 'Рейтинговые очки', tooltip: 'Рейтинговые очки', id: 1 },
   { name: 'Участники', id: 2, tooltip: 'Количество участников' },
   { name: 'Команда', id: 3 },
+  { name: 'Результаты', id: 4, tooltip: 'Вклад участников в рейтинг команды' },
 ];
 export const teamRankPlacesColumns = [
   { name: 'Победа', place: 1, id: 0, tooltip: 'Первые места в заездах' },

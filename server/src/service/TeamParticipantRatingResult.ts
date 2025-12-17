@@ -85,6 +85,10 @@ export class TeamParticipantRatingResult {
 
     // console.log(teamParticipantRatingResult.reduce<number>((acc, cur) => acc + cur.points, 0));
 
+    teamParticipantRatingResult.sort(
+      (a, b) => new Date(b.event.start).getTime() - new Date(a.event.start).getTime()
+    );
+
     return {
       data: teamParticipantRatingResult,
       message: `Рейтинговые результаты участников команды за сезон ${seasonLabel}`,

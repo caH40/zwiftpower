@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 import FormCategory from '../FormCategory/FormCategory';
 import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
+import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamParticipantRatingModal';
 
 import styles from './PopupFormContainer.module.css';
 
@@ -34,6 +35,7 @@ export default function PopupFormContainer() {
     setPenalty: <div>setPenalty</div>,
     setDisqualification: <div>setDisqualification</div>,
     viewPollResults: <PollResultsPopup {...formProps} />,
+    teamParticipantRatingModal: <TeamParticipantRatingModal {...formProps} />,
   };
 
   return (
