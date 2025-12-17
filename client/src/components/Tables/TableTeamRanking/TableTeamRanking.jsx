@@ -9,7 +9,7 @@ import Thead from './Thead';
 
 const cx = classnames.bind(styles);
 
-export default function TableTeamRanking({ teams = [] }) {
+export default function TableTeamRanking({ getParticipantRatingResults, teams = [] }) {
   return (
     <table className={styles.table}>
       <caption className={styles.hidden}>Рейтинг команд</caption>
@@ -43,6 +43,18 @@ export default function TableTeamRanking({ teams = [] }) {
                   shortName={shortName}
                   logoUrls={logoUrls}
                 />
+              </td>
+              <td>
+                <button
+                  onClick={() =>
+                    getParticipantRatingResults({
+                      seasonLabel: '2025-2026',
+                      teamUrlSlug: urlSlug,
+                    })
+                  }
+                >
+                  Результаты
+                </button>
               </td>
               {/* <td>{eventMedals.gold}</td>
               <td>{eventMedals.silver}</td>
