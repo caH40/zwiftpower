@@ -29,6 +29,8 @@ import styles from './TeamParticipantRatingModal.module.css';
  * }} props
  */
 export default function TeamParticipantRatingModal({ results }) {
+  console.log(results[0]);
+
   const dispatch = useDispatch();
 
   return (

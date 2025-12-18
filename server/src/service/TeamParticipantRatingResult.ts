@@ -8,10 +8,11 @@ import { TeamSeasonRatingRepository } from '../repositories/TeamSeasonRating.js'
 import { EventRepository } from '../repositories/Event.js';
 
 // types
-import { TTeamParticipantRatingResult } from '../types/dto.interface.js';
+import { TTeamParticipantRatingResult } from '../types/types.interface.js';
 import { TSeriesStage, ZwiftResultSchema } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
 import { TResponseService } from '../types/http.interface.js';
+import { PointsCalculator } from './RacePoints/PointsCalculator.js';
 
 /**
  * Класс формирования таблицы результатов участников команды за выбранный сезон, результаты
@@ -22,6 +23,7 @@ export class TeamParticipantRatingResult {
   private eventResultRepository: EventResultRepository = new EventResultRepository();
   private ratingRepository: TeamSeasonRatingRepository = new TeamSeasonRatingRepository();
   private eventRepository: EventRepository = new EventRepository();
+  private pointsCalculator: PointsCalculator = new PointsCalculator();
 
   constructor() {}
 
@@ -102,6 +104,7 @@ export class TeamParticipantRatingResult {
       id: number;
       name: string;
       eventStart: string;
+      typeRaceCustom: string;
       importanceLevel?: TImportanceCoefficientsLevels;
       seriesId?: {
         useStageResults?: boolean;
@@ -145,10 +148,12 @@ export class TeamParticipantRatingResult {
         start: eventData.eventStart,
       };
 
-      // Формирование данных серии и номера этапа в серии в котором показан данный результат.
+      // Номер этапа в котором показан результат.
       const stageOrder = eventData.seriesId?.stages.find((st) =>
         st.event.equals(eventId)
       )?.order;
+
+      // Формирование данных серии и номера этапа в серии в котором показан данный результат.
       const series = eventData.seriesId
         ? {
             name: eventData.seriesId.name,
@@ -157,10 +162,24 @@ export class TeamParticipantRatingResult {
           }
         : null;
 
+      // Коэффициент важности заезда.
+      const importance =
+        importanceCoefficients.find((e) => e.level === eventData.importanceLevel)
+          ?.coefficient ?? 0;
+
+      // В эвенте деление по группам или абсолютный финишный протокол.
+      const isCategoryResult = ['classicGroup', 'newbies'].includes(eventData.typeRaceCustom);
+
+      const finishersCount = isCategoryResult
+        ? result.finishersCount.category
+        : result.finishersCount.absolute;
+
+      // Коэффициент массовости группы/заезда.
+      const mass = this.pointsCalculator.getMassCoefficient(finishersCount);
+
       const coefficients = {
-        importance:
-          importanceCoefficients.find((e) => e.level === eventData.importanceLevel)
-            ?.coefficient ?? 0,
+        importance,
+        mass,
       };
 
       const id = index++;

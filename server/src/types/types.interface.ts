@@ -1030,3 +1030,34 @@ export type TFinishersCount = {
   category: number;
   absolute: number;
 };
+
+/**
+ * Результат участника команды за выбранный сезон, учитываемый в командном рейтинге.
+ */
+export type TTeamParticipantRatingResult = {
+  id: number; // Внутренний идентификатор строки (используется для reconciliation списка).
+  points: number; // Количество очков, начисленных участнику и учтённых в командном рейтинге.
+
+  rank: number; // Занятое место участником в группе / этапе.
+  // finishersCount: number; // Количество финишировавших участников в группе.
+
+  coefficients: {
+    mass: number; // Коэффициент массовости заезда (K).
+    importance: number; // Коэффициент важности заезда (V).
+  };
+
+  event: {
+    id: number; // Идентификатор эвента в Zwift API.
+    name: string; // Название эвента.
+    start: string; // string ISO Date.
+  };
+
+  series: {
+    name: string; // Название серии заездов.
+    urlSlug: string; // URL-идентификатор серии (используется для формирования ссылок).
+    stageOrder?: number; // Порядковый номер этапа в серии (начиная с 1).
+  } | null;
+
+  resultPath: string | null; // Относительный путь к таблице результатов.
+  profileData: ProfileDataInResult; // Данные райдера, полученные из результатов заезда.
+};

@@ -34,6 +34,7 @@ export const massCoefficients: TMassCoefficient[] = [
  */
 export const IMPORTANCE_COEFFICIENTS_LEVELS = [
   'unrated',
+  'sprint',
   'standard',
   'important',
   'championship',
@@ -53,6 +54,12 @@ export const importanceCoefficients: TImportanceLevel[] = [
     level: 'unrated',
     coefficient: 0.0,
     description: 'Коферайды, тренировки',
+  },
+  {
+    levelRu: 'Спринт',
+    level: 'sprint',
+    coefficient: 0.6,
+    description: 'Короткие заезды, гонки на время, спринтерские дисциплины',
   },
   {
     levelRu: 'Базовый',

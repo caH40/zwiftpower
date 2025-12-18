@@ -95,6 +95,7 @@ export class EventRepository {
       id: number;
       name: string;
       eventStart: string;
+      typeRaceCustom: string;
       importanceLevel?: TImportanceCoefficientsLevels;
       seriesId?: {
         useStageResults?: boolean;
@@ -109,7 +110,15 @@ export class EventRepository {
         _id: { $in: eventIds },
         importanceLevel: { $ne: 'unrated' },
       },
-      { _id: 1, seriesId: 1, id: 1, name: 1, eventStart: 1, importanceLevel: 1 }
+      {
+        _id: 1,
+        seriesId: 1,
+        id: 1,
+        name: 1,
+        eventStart: 1,
+        importanceLevel: 1,
+        typeRaceCustom: 1,
+      }
     )
       .populate<{
         seriesId?: {
