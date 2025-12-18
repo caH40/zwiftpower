@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import LogoRider from '../LogoRider/LogoRider';
 import { closePopupFormContainer } from '../../redux/features/popupFormContainerSlice';
+import IconQuestion from '../icons/IconQuestion';
 
 import styles from './TeamParticipantRatingModal.module.css';
 
@@ -29,14 +30,23 @@ import styles from './TeamParticipantRatingModal.module.css';
  * }} props
  */
 export default function TeamParticipantRatingModal({ results }) {
-  console.log(results[0]);
-
   const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Вклад участников в рейтинг команды</h2>
+        <h2 className={styles.title}>
+          Вклад участников в рейтинг команды{' '}
+          <Link
+            to={'/documentation/public/team-ranking?extension=md'}
+            onClick={() => dispatch(closePopupFormContainer())}
+          >
+            <IconQuestion
+              squareSize={20}
+              tooltip={'Алгоритм начисления рейтинговых очков командам'}
+            />
+          </Link>
+        </h2>
       </div>
 
       <div className={styles.table}>
@@ -46,7 +56,8 @@ export default function TeamParticipantRatingModal({ results }) {
           <div>Очки</div>
           <div>Место</div>
           <div>Эвент</div>
-          <div>V</div>
+          <div>Коэф. важности (V)</div>
+          <div>Коэф. массовости (K)</div>
         </div>
 
         {results.map(({ profileData, ...item }, index) => (
@@ -84,6 +95,7 @@ export default function TeamParticipantRatingModal({ results }) {
             </div>
 
             <div>{item.coefficients.importance}</div>
+            <div>{item.coefficients.mass}</div>
           </div>
         ))}
       </div>

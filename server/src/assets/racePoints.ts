@@ -59,7 +59,7 @@ export const importanceCoefficients: TImportanceLevel[] = [
     levelRu: 'Спринт',
     level: 'sprint',
     coefficient: 0.6,
-    description: 'Короткие заезды, гонки на время, спринтерские дисциплины',
+    description: 'Короткие заезды, спринтерские дисциплины',
   },
   {
     levelRu: 'Базовый',
