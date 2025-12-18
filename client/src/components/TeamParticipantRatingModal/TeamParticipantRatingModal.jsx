@@ -14,7 +14,7 @@ import styles from './TeamParticipantRatingModal.module.css';
  * @property {number} id Внутренний идентификатор строки.
  * @property {number} points Количество очков участника.
  * @property {number} rank Занятое место.
- * @property {{ importance: number }} coefficients Коэффициенты заезда.
+ * @property {{ importance: number, mass: number }} coefficients Коэффициенты заезда.
  * @property {{ id: number, name: string, start: string }} event Данные эвента.
  * @property {{ name: string, urlSlug: string, stageOrder?: number } | null} series Серия заездов.
  * @property {string | null} resultPath Путь к результатам.
