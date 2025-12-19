@@ -9,11 +9,10 @@ import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
 import { addVariabilityIndex } from './variability-index.js';
 import { getResultsDNFRiders } from './result-events-dnf.js';
+import { updateRidersProfiles } from '../riders-profile.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
-import { updateRidersProfiles } from '../riders-profile.js';
-import { countFinishers } from '../../../utils/countFinishers.js';
 
 /**
  * Обновление результатов Эвента (event) по запросу или по автоматически после старта Эвента.
@@ -75,9 +74,6 @@ export async function updateResultsEvent(
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
-
-  // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
-  countFinishers(event.typeRaceCustom, resultsTotalWithCP);
 
   // добавление средней скорости в результаты (мутация свойства speed)
   resultsTotalWithCP = await addSpeed(resultsTotalWithCP, event);

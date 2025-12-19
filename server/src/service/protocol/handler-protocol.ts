@@ -16,6 +16,7 @@ import {
 
 import { setDSQWithVirtualPower } from './virtual-power.js';
 import { addTeamInResults } from '../updates/results_event/team-add.js';
+import { countFinishers } from '../../utils/countFinishers.js';
 
 /**
  * Формирование финишного протокола в зависимости от typeRaceCustom и сохранение в БД
@@ -56,6 +57,9 @@ export async function handlerProtocol({
 
   // установка ранкинга райдерам
   const resultsWithRank = await setRankResultTotal(resultsWithVP, typeRaceCustom);
+
+  // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
+  countFinishers(typeRaceCustom, resultsWithRank);
 
   // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);
