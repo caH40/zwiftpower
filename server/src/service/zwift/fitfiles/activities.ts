@@ -15,7 +15,7 @@ export async function getActivities(zwiftId: number, limit = 50) {
     return null;
   }
 
-  const url = `activity-feed/feed/?feedType=OTHER_PROFILE&profile_id=${zwiftId}&${limit}`;
+  const url = `activity-feed/feed/?feedType=OTHER_PROFILE&profile_id=${zwiftId}&limit=${limit}`;
   const response: activityFeedFromZwiftAPI[] = await getRequest({ url });
 
   // выход, если ошибка при получении активностей
