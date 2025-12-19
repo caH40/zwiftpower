@@ -231,14 +231,13 @@ export interface GetResultsArg {
     subgroup_id?: Types.ObjectId;
     subgroupId: number;
   };
-  subgroupLabel: string;
+  subgroupLabel: TZwiftCategory;
   token: string | null;
 }
 /**
  * Результат райдера в Event с дополнительными параметрами
  */
 export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> {
-  subgroupLabel?: string;
   subgroupId?: Types.ObjectId;
   cpBestEfforts?: CpBestEfforts[];
   profileData: {
@@ -263,6 +262,7 @@ export interface ResultEventAdditional extends Omit<ResultEvent, 'profileData'> 
   errorAccess?: boolean; // 403 ошибка при запросе с ZwiftAPI
   normalizedPower?: number;
   variabilityIndex?: number;
+  finishersCount: TFinishersCount;
 }
 
 /**

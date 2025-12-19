@@ -13,6 +13,7 @@ import { getResultsDNFRiders } from './result-events-dnf.js';
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../../types/types.interface.js';
 import { updateRidersProfiles } from '../riders-profile.js';
+import { countFinishers } from '../../../utils/countFinishers.js';
 
 /**
  * Обновление результатов Эвента (event) по запросу или по автоматически после старта Эвента.
@@ -74,6 +75,8 @@ export async function updateResultsEvent(
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
+
+  countFinishers(event, resultsTotalWithCP);
 
   // добавление средней скорости в результаты (мутация свойства speed)
   resultsTotalWithCP = await addSpeed(resultsTotalWithCP, event);

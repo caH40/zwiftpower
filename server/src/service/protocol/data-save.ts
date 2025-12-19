@@ -58,6 +58,7 @@ export async function saveDocument({ eventId, result, rankEvent }: SaveDocumentA
         disqualification: result.disqualification || null,
         disqualificationDescription: result.disqualificationDescription || null,
         profileDataMain: result.profileDataMain,
+        finishersCount: result.finishersCount,
       },
     },
     {

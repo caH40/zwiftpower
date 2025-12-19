@@ -10,7 +10,10 @@ import { EventRepository } from '../../repositories/Event.js';
 
 // types
 import { TStageResult } from '../../types/model.interface.js';
-import { TGetProtocolsStageFromZwiftParams } from '../../types/types.interface.js';
+import {
+  TGetProtocolsStageFromZwiftParams,
+  TZwiftCategory,
+} from '../../types/types.interface.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -128,7 +131,7 @@ export class HandlerSeries {
     {
       _id: Types.ObjectId;
       id: number;
-      subgroupLabel: string;
+      subgroupLabel: TZwiftCategory;
     }[]
   > => {
     // Запрос данных подгрупп заездов в этапе для последующего получения результатов подгрупп и объединения их в результаты заездов.

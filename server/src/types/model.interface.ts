@@ -8,6 +8,7 @@ import {
   TPricingPlan,
   TTeamForProfile,
   TFinishersCount,
+  TZwiftCategory,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
@@ -416,7 +417,7 @@ export interface ZwiftEventSubgroupSchema {
   name: string;
   routeId: number;
   rulesSet: string[];
-  subgroupLabel: string;
+  subgroupLabel: TZwiftCategory;
   startLocation?: number;
   tags: string[];
   timeTrialOptions: null;

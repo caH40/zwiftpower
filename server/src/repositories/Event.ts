@@ -3,6 +3,7 @@ import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 import { TSeries, TSeriesStage } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
 import { MongooseUtils } from '../utils/MongooseUtils.js';
+import { TZwiftCategory } from '../types/types.interface.js';
 
 /**
  * Класс работы с коллекцией ZwiftEvent в MongoDB.
@@ -30,7 +31,7 @@ export class EventRepository {
       | {
           _id: Types.ObjectId;
           id: number;
-          subgroupLabel: string;
+          subgroupLabel: TZwiftCategory;
         }[];
   } | null> {
     return ZwiftEvent.findOne({ _id: eventId }, { _id: false, eventSubgroups: true })
@@ -38,7 +39,7 @@ export class EventRepository {
         eventSubgroups: {
           _id: Types.ObjectId;
           id: number;
-          subgroupLabel: string;
+          subgroupLabel: TZwiftCategory;
         }[];
       }>({ path: 'eventSubgroups', select: ['id', 'subgroupLabel'] })
       .lean();

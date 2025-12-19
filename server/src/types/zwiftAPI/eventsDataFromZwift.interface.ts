@@ -1,3 +1,5 @@
+import { TZwiftCategory } from '../types.interface';
+
 /**
  * данные полученные с API Zwift по запросу `events/${eventId}?skip_cache=boolean`
  * параметры созданного Event(заезда)
@@ -70,7 +72,7 @@ export interface EventSubgroupFromZwiftAPI {
   name: string;
   description: string;
   label: number;
-  subgroupLabel: string;
+  subgroupLabel: TZwiftCategory;
   rulesId: number;
   mapId: number;
   routeId: number;

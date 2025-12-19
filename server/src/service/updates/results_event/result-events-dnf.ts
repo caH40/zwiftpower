@@ -119,6 +119,7 @@ export async function getResultsDNFRiders({
         disqualification: 'DNF',
         disqualificationDescription: null,
         rank: 0,
+        finishersCount: { absolute: ridersWithFinish.length, category: 0 },
       };
     });
 

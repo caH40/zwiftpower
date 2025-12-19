@@ -208,3 +208,5 @@ export const RACE_CUSTOM_TYPES = [
   'classicCommon',
   'newbies',
 ] as const;
+
+export const GROUP_PROTOCOL_EVENT_TYPES = ['classicGroup', 'newbies'];

@@ -1,3 +1,5 @@
+import { TZwiftCategory } from '../types.interface';
+
 /**
  * Данные по результатам райдеров в Event получаемы с API Zwift
  */
@@ -62,4 +64,6 @@ export interface ResultEvent {
     powerType: 'POWER_METER' | string;
     trainerDifficulty?: number;
   };
+  subgroupLabel: TZwiftCategory;
+  // subgroupId: string;
 }

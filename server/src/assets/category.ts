@@ -1,4 +1,4 @@
-import { TRaceSeriesCategories } from '../types/types.interface';
+import { TRaceSeriesCategories, TZwiftCategory } from '../types/types.interface';
 
 /**
  * Правила категорий по zwiftpower
@@ -29,7 +29,7 @@ export const categoryFemale = {
   C: { ftpWattsPerKg: 2.5 },
 };
 
-export const eventSubGroups = new Map([
+export const eventSubGroups: Map<number, TZwiftCategory> = new Map([
   [1, 'A'],
   [2, 'B'],
   [3, 'C'],
