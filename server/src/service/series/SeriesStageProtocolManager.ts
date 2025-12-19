@@ -6,11 +6,12 @@ import { NSeriesModel } from '../../Model/NSeries.js';
 import { SeriesCategoryService } from './category/SeriesCategory.js';
 import { StageResultRepository } from '../../repositories/StageResult.js';
 import { GCProviderFactory } from './GCProviderFactory.js';
+import { StageRanker } from './StageRanker.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { StageRanker } from './StageRanker.js';
+import { countFinishersForStageResults } from '../../utils/countFinishers.js';
 
 /**
  * Класс создания (обновления) протоколов серий и туров.
@@ -78,8 +79,12 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       stageOrder,
     });
 
+    countFinishersForStageResults(resultsWithCategories);
+
     // Сортировка результатов и проставления ранкинга в каждой категории.
     const resultsWithRank = this.stageRanker.calculateRanking(resultsWithCategories, type);
+
+    // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
 
     // Установка финишных гэпов (разрывов между участниками).
     const finishGaps = new FinishGaps();

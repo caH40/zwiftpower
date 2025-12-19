@@ -663,6 +663,10 @@ export type TBanCode = (typeof banCodes)[number];
 
 /**
  * Тип, описывающий серию или тур соревнований.
+ *
+ * По умолчанию в сериях с отдельными результатами этапов финишные протоколы только с
+ * делением на группы. При появлении новых типов серий добавить алгоритм или свойство определяющее
+ * это для расчета finishersCount в результатах этапа.
  */
 export type TSeries = {
   _id?: Types.ObjectId; // Уникальный идентификатор серии.
@@ -792,7 +796,7 @@ export type TStageResult = {
   rank: TRank;
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
-    subgroupLabel: 'A' | 'B' | 'C' | 'D' | 'E';
+    subgroupLabel: TZwiftCategory;
     segmentDistanceInCentimeters: number;
     segmentDistanceInMeters: number;
     elevationInMeters: number;

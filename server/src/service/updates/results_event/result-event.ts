@@ -76,7 +76,8 @@ export async function updateResultsEvent(
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }
 
-  countFinishers(event, resultsTotalWithCP);
+  // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
+  countFinishers(event.typeRaceCustom, resultsTotalWithCP);
 
   // добавление средней скорости в результаты (мутация свойства speed)
   resultsTotalWithCP = await addSpeed(resultsTotalWithCP, event);
