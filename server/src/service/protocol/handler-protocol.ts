@@ -17,6 +17,7 @@ import {
 import { setDSQWithVirtualPower } from './virtual-power.js';
 import { addTeamInResults } from '../updates/results_event/team-add.js';
 import { countFinishers } from '../../utils/countFinishers.js';
+import { RacePointsService } from '../RacePoints/RacePointsService.js';
 
 /**
  * Формирование финишного протокола в зависимости от typeRaceCustom и сохранение в БД
@@ -63,6 +64,10 @@ export async function handlerProtocol({
 
   // сохранение результатов в БД
   await saveResults(eventId, resultsWithRank);
+
+  // Подсчет и установка zpruPoints в результаты эвента.
+  const racePoints = new RacePointsService();
+  await racePoints.setPoints(eventId.toString());
 
   // обновление данных Event
   await setUpdatedToEvent(resultsWithRank, eventId);

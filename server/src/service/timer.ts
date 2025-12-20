@@ -3,7 +3,7 @@ import { CronJob } from 'cron';
 import { controlConfirmEmail } from './authentication/control-confirm-email.js';
 import { controlNewPasswords } from './authentication/control-newpassword.js';
 import { updateAllPowerCurve } from './updates/power-curve.js';
-import { updateResults } from './updates/results_event/results-events.js';
+import { scheduleResultsUpdate } from './updates/results_event/results-events.js';
 import { updateScheduleEvents } from './updates/schedule/events.js';
 import { updateStartInfo } from './updates/schedule/start.js';
 import { updateAccessToken } from './zwift/token.js';
@@ -53,7 +53,7 @@ export async function setTimers() {
   // обновление результатов Эвентов
   setInterval(async () => {
     try {
-      await updateResults();
+      await scheduleResultsUpdate();
     } catch (error) {
       handleAndLogError(error);
     }

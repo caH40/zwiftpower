@@ -7,11 +7,14 @@ import { getTokenForEvent } from '../../zwift/token.js';
 
 // types
 import { EventWithSubgroup } from '../../../types/types.interface.js';
+import { TeamScoreAggregator } from '../../TeamScoreAggregator.js';
+import { getSeasonPeriod } from '../../../utils/season.js';
 
 /**
  * Обновление всех результатов Эвентов которые не имеют результатов ( hasResults: false )
+ * по расписанию.
  */
-export async function updateResults() {
+export async function scheduleResultsUpdate() {
   try {
     // hasResults:true - прекращение обновлять результаты
     const eventsDB = await ZwiftEvent.find({
@@ -43,6 +46,15 @@ export async function updateResults() {
         const isFast = !isLastUpdate;
         await updateResultsEvent(event, token, isFast);
       }
+
+      const season = getSeasonPeriod(new Date(event.eventStart));
+      if (!season) {
+        continue;
+      }
+
+      // Обновление таблицы рейтинга команд.
+      const service = new TeamScoreAggregator();
+      await service.recalculateTeamSeasonRating(season.label);
     }
   } catch (error) {
     handleAndLogError(error);
