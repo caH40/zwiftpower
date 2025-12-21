@@ -24,6 +24,7 @@ import { resetClub } from '../../redux/features/api/zwift_club/zwiftClubSlice';
 import { fetchGetClubsForModeratorZwiftModerator } from '../../redux/features/api/organizer/fetchClubsModerator';
 import { fetchAssetsAllRoutes } from '../../redux/features/api/assets/fetchAssets';
 import { resetAllRoutes } from '../../redux/features/api/assets/assetsSlice';
+import Button from '../../components/UI/Button/Button';
 
 import styles from './ZwiftCreateEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -107,7 +108,11 @@ function ZwiftCreateEvent() {
             selectCategoryEnforcement={selectCategoryEnforcement}
           />
         </div>
-        <FormEditEventGroup isCreating={true} sendForm={sendCreateNewEvent} />
+        <FormEditEventGroup isCreating={true} />
+
+        <div className={styles.right}>
+          <Button getClick={sendCreateNewEvent}>сохранить</Button>
+        </div>
       </div>
     </section>
   );
