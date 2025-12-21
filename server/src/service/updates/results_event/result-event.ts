@@ -8,7 +8,7 @@ import { ZwiftEvent } from '../../../Model/ZwiftEvent.js';
 import { addSpeed } from './speed.js';
 import { addNormalizedPowers } from './normalized-power.js';
 import { addVariabilityIndex } from './variability-index.js';
-import { getResultsDNFRiders } from './result-events-dnf.js';
+import { getDNFRidersResults } from './result-events-dnf.js';
 import { updateRidersProfiles } from '../riders-profile.js';
 
 // types
@@ -45,9 +45,10 @@ export async function updateResultsEvent(
   if (isFast) {
     resultsTotalWithCP = addCriticalPowersFast(resultsTotal);
   } else {
-    // получение результатов райдеров которые не финишировали
     const ridersWithFinish = resultsTotal.map((result) => result.profileId);
-    const resultsRidersDNF = await getResultsDNFRiders({
+
+    // получение результатов райдеров которые не финишировали
+    const resultsRidersDNF = await getDNFRidersResults({
       ridersWithFinish,
       eventId: event.id,
       clubId: event.microserviceExternalResourceId,
@@ -56,7 +57,6 @@ export async function updateResultsEvent(
     // обновление документов в коллекции Rider.
     const zwiftIds = [...resultsTotal, ...resultsRidersDNF].map((result) => result.profileId);
     await updateRidersProfiles(zwiftIds);
-
     // добавление CP в результаты райдеров, сохранение FitFiles
     resultsTotalWithCP = await addCriticalPowers(
       [...resultsTotal, ...resultsRidersDNF],
@@ -65,12 +65,12 @@ export async function updateResultsEvent(
 
     // добавление NP нормализованной мощности
     await addNormalizedPowers(resultsTotalWithCP);
-
     // добавление Variability Index (VI) Индекс вариабельности
     await addVariabilityIndex(resultsTotalWithCP);
 
     // обновление CP райдеров в БД
     await updatePowerCurveResults(resultsTotalWithCP);
+
     // после полного обновления результатов остановить автоматическое быстрое обновление результатов
     await ZwiftEvent.findOneAndUpdate({ _id: event._id }, { $set: { hasResults: true } });
   }

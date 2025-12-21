@@ -10,7 +10,7 @@ import { eventSubGroups } from '../../../assets/category.js';
 /**
  * Получение результатов райдеров, которые не финишировали в Эвенте (сход)
  */
-export async function getResultsDNFRiders({
+export async function getDNFRidersResults({
   ridersWithFinish,
   eventId,
   clubId,
@@ -41,40 +41,53 @@ export async function getResultsDNFRiders({
       return [];
     }
 
-    // id активностей райдеров из текущего Эвента
-    const activityCurrentIds: string[] = [];
+    // Количество запрашиваемых последних активностей райдера, для поиска в них активности из
+    // текущего Эвента.
+    const lastActivitiesCount = 5;
+
+    // id последних lastActivitiesCount активностей райдеров, которые не финишировали в текущем Эвенте.
+    let allActivityIds: string[] = [];
+
     for (const rider of ridersWithoutFinish) {
-      const activities: ActivityFeedShort[] | null = await getActivities(rider.profileId, 10);
-
-      if (!activities) {
-        continue;
-      }
-
-      const activityFromCurrentEvent = activities.find(
-        (activity) => activity.eventId === eventId
+      const riderActivities: ActivityFeedShort[] | null = await getActivities(
+        rider.profileId,
+        lastActivitiesCount
       );
 
-      if (!activityFromCurrentEvent || !activityFromCurrentEvent.activityId) {
+      if (!riderActivities) {
         continue;
       }
-      activityCurrentIds.push(activityFromCurrentEvent.activityId);
+
+      // const activityFromCurrentEvent = activities.find(
+      //   (activity) => activity.eventId === eventId
+      // );
+
+      // if (!activityFromCurrentEvent || !activityFromCurrentEvent.activityId) {
+      //   continue;
+      // }
+
+      const riderAllActivityIds = riderActivities
+        .filter(({ activityId }) => activityId)
+        .map(({ activityId }) => activityId);
+
+      allActivityIds = [...allActivityIds, ...riderAllActivityIds];
     }
 
     // данные активностей райдеров из текущего Эвента
-    const activitiesCurrent: ActivitiesDataFromZwiftAPI[] = [];
-    for (const activityId of activityCurrentIds) {
+    const currentActivities: ActivitiesDataFromZwiftAPI[] = [];
+    for (const activityId of allActivityIds) {
       const activity = await getActivitiesFullData(activityId);
 
-      if (!activity) {
+      if (!activity || !activity.eventInfo?.id || activity.eventInfo.id !== eventId) {
         continue;
       }
 
-      activitiesCurrent.push(activity);
+      currentActivities.push(activity);
     }
 
-    // // формирование массива результатов райдеров из данных с найденных активностей
+    //формирование массива результатов райдеров из данных с найденных активностей
 
-    const results = activitiesCurrent.map((activity) => {
+    const results = currentActivities.map((activity) => {
       const rider = ridersWithoutFinish.find(
         (rider) => rider.profileId === activity.profileId
       )!;
