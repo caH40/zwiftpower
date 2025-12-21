@@ -28,7 +28,7 @@ import styles from './FormEditEvent.module.css';
  * Форма изменения настроек для Эвента
  * @param {{isCreating:boolean }} isCreating это форма для создание нового эвента?
  */
-function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishProtocol }) {
+function FormEditEvent({ isCreating, selectCategoryEnforcement }) {
   const { subgroupLabels } = useSelector((state) => state.eventParams);
   const dispatch = useDispatch();
 
@@ -183,24 +183,6 @@ function FormEditEvent({ isCreating, selectCategoryEnforcement, configsFinishPro
               </div>
               <div>maxRows - {eventMainParams.timeTrialOptions?.maxRows}</div>
               <div>maxRidersPerRow - {eventMainParams.timeTrialOptions?.maxRidersPerRow}</div>
-            </BoxParameter>
-          )}
-
-          {/* Настройка устанавливается только при редактировании Эвента, а не при создании */}
-          {!isCreating && (
-            <BoxParameter
-              title={'Конфигурация финишного протокола'}
-              pen={true}
-              inputParams={{
-                property: 'typeRaceCustom',
-                type: 'select',
-                options: configsFinishProtocol,
-              }}
-              description="Настройка сохраняется в БД и не передается в API Zwift"
-            >
-              {/* Если отображается идентификатор вместо displayName, значит в  */}
-              {/* массиве configsFinishProtocol нет элемента с таким идентификатором  */}
-              {getNameSelected(configsFinishProtocol, eventMainParams.typeRaceCustom)}
             </BoxParameter>
           )}
         </div>

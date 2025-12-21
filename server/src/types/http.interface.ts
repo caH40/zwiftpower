@@ -8,6 +8,7 @@ import {
   TSocialLinks,
   TTelegram,
 } from './model.interface.js';
+import { TImportanceCoefficientsLevels } from './points.types.js';
 
 // данные из query параметров url
 export interface GetLogsAdmins {
@@ -42,6 +43,7 @@ export interface PostEvent extends eventDataFromZwiftAPI {
   typeRaceCustom: string;
   accessExpressionObj: TAccessExpressionObj;
   seriesId?: Types.ObjectId;
+  importanceLevel: TImportanceCoefficientsLevels;
 }
 /**
  * данные получаемые с фронтэнда для изменения данных Event

@@ -101,3 +101,31 @@ export const riderCategoryRuleOptions = [
   //   name: 'Жёсткая дисквалификация (без пересчёта)',
   // },
 ];
+export const importanceCoefficients = [
+  {
+    translate: 'Не рейтинговый, 0.0. Коферайды, тренировки',
+    id: 'unrated',
+    name: 'unrated',
+    coefficient: 0.0,
+  },
+  {
+    translate: 'Спринт, 0.6. Короткие заезды, спринтерские дисциплины',
+    id: 'sprint',
+    name: 'sprint',
+  },
+  {
+    translate: 'Базовый, 1.0. Стандартные соревнования',
+    id: 'standard',
+    name: 'standard',
+  },
+  {
+    translate: 'Приоритетный, 1.2. Важные старты',
+    id: 'important',
+    name: 'important',
+  },
+  {
+    translate: 'Премиальный, 1.5. Финалы, чемпионаты',
+    id: 'championship',
+    name: 'championship',
+  },
+];

@@ -23,6 +23,7 @@ import {
   setEventId,
 } from '../../redux/features/api/event-create/eventCreateSlice';
 import IconQuestion from '../../components/icons/IconQuestion';
+import FormEditZpruEventParams from '../../components/Zwift/UI/FormEditEvent/FormEditZpruEventParams';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -97,6 +98,7 @@ function ZwiftEditEvent() {
   const selectCategoryEnforcement = (categoryEnforcementName) => {
     dispatch(setCategoryEnforcement(categoryEnforcementName));
   };
+  console.log();
 
   return (
     <section className={styles.block}>
@@ -108,14 +110,21 @@ function ZwiftEditEvent() {
       <div className={styles.group}>
         <FormRequest name={'Id изменяемого Event'} />
       </div>
+
       {eventParams?.eventMainParams.worldId ? (
         <>
-          {/* Форма для установки настроек Эвента */}
+          {/* Форма для установки настроек zpruEventParams*/}
           <div className={styles.group}>
-            <FormEditEvent
-              selectCategoryEnforcement={selectCategoryEnforcement}
+            <FormEditZpruEventParams
+              typeRaceCustom={eventParams?.eventMainParams?.typeRaceCustom}
+              importanceLevel={eventParams?.eventMainParams?.importanceLevel}
               configsFinishProtocol={configsFinishProtocol}
             />
+          </div>
+
+          {/* Форма для установки настроек Эвента */}
+          <div className={styles.group}>
+            <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
           </div>
 
           {/* Формы для установки настроек в группах Эвента */}

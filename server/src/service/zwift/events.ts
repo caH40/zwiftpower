@@ -120,44 +120,78 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
     importanceToken: 'main',
   });
 
-  const id = event.eventData.id;
+  const {
+    id,
+    importanceLevel,
+    typeRaceCustom,
+    accessExpressionObj,
+    eventType,
+    eventStart,
+    name,
+  } = event.eventData;
   const urlEventData = `events/${id}`;
-  const eventData = await putRequest({ url: urlEventData, data: event, tokenOrganizer });
 
-  const importanceLevel: TImportanceCoefficientsLevels = [
-    'GROUP_RIDE',
-    'EVENT_TYPE_GROUP_RIDE',
-  ].includes(event.eventData.eventType)
-    ? 'unrated'
-    : 'standard';
+  await setEventLocalParams({
+    id,
+    importanceLevel,
+    typeRaceCustom,
+    accessExpressionObj,
+    eventType,
+  });
+
+  // логирование действия
+  const dataForLog = { eventId: id, eventName: name, eventStart, userId };
+  await loggingAdmin({ ...dataForLog, description: 'putEventLocalParams' });
+
+  // Если заезд уже стартовал, то запрет нельзя изменять параметры эвента в zwiftAPI.
+  const startTime = new Date(eventStart).getTime();
+  if (startTime < Date.now()) {
+    return { message: 'Изменения сохранены' };
+  }
+
+  await putRequest({ url: urlEventData, data: event, tokenOrganizer });
+
+  // после внесения изменений на сервере Звифт => запрос новых данны и сохранения в БД
+  // задержка нужная, что бы на сервере Звифта данные Эвента успели обновиться
+  setTimeout(
+    async () => await putEventService(id, userId).catch((e) => handleAndLogError(e)),
+    1500
+  );
+
+  // логирование действия
+  await loggingAdmin({ ...dataForLog, description: 'putZwiftEventData' });
+
+  return { message: 'Изменения сохранены' };
+}
+
+async function setEventLocalParams({
+  id,
+  importanceLevel,
+  eventType,
+  typeRaceCustom,
+  accessExpressionObj,
+}: {
+  id: number;
+  importanceLevel: TImportanceCoefficientsLevels;
+  eventType: string;
+  typeRaceCustom: string;
+  accessExpressionObj: TAccessExpressionObj;
+}) {
+  // Важность заезда, для получения соответствующего коэффициента для расчета zpruPoints за место.
+  const currentImportanceLevel =
+    importanceLevel ||
+    (['GROUP_RIDE', 'EVENT_TYPE_GROUP_RIDE'].includes(eventType) ? 'unrated' : 'standard');
 
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(
     { id },
     {
       $set: {
-        typeRaceCustom: event.eventData.typeRaceCustom,
-        accessExpressionObj: event.eventData.accessExpressionObj,
-        importanceLevel,
+        typeRaceCustom,
+        accessExpressionObj,
+        importanceLevel: currentImportanceLevel,
       },
     },
     { new: true }
   );
-
-  // после внесения изменений на сервере Звифт => запрос новых данны и сохранения в БД
-  // задержка нужная, что бы на сервере Звифта данные Эвента успели обновиться
-  const eventId = event.eventData.id;
-  setTimeout(
-    async () => await putEventService(eventId, userId).catch((e) => handleAndLogError(e)),
-    1500
-  );
-
-  // логирование действия
-  if (userId) {
-    const description = 'putZwiftEventData';
-    const { id, name, eventStart } = event.eventData;
-    await loggingAdmin({ eventId: id, eventName: name, eventStart, userId, description });
-  }
-
-  return { eventData, message: 'Изменения сохранены' };
 }
