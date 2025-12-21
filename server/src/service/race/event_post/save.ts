@@ -84,6 +84,7 @@ export async function saveEventToDB(eventParams: EventWithSubgroup) {
     updated: Date.now(),
     creator: eventParams.creator,
     started: eventParams.started,
+    importanceLevel: eventParams.importanceLevel,
   });
 
   return eventDB;
