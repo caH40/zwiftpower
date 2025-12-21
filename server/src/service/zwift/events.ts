@@ -11,6 +11,7 @@ import { PutEvent } from '../../types/http.interface.js';
 import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.interface.js';
 import { TAccessExpressionObj } from '../../types/model.interface.js';
 import { Types } from 'mongoose';
+import { TImportanceCoefficientsLevels } from '../../types/points.types.js';
 
 // Запрос данных Эвента с сервера Zwift от модераторов клубов.
 // При clubId:undefined значит запрос на ZwiftAPI будет осуществляться по общему токену-доступа.
@@ -59,7 +60,9 @@ export async function getEventZwiftService({
  */
 export async function getEventZwiftForEditService({ eventId }: { eventId: number }) {
   // Для страницы "редактирование Эвента", Эвент уже есть в БД.
-  const eventDB = await ZwiftEvent.findOne(
+
+  // Параметры, используемые в сервисах zwiftpower.ru.
+  const zpruEventParams = await ZwiftEvent.findOne(
     { id: eventId },
     {
       organizer: true,
@@ -67,6 +70,7 @@ export async function getEventZwiftForEditService({ eventId }: { eventId: number
       typeRaceCustom: true,
       organizerLabel: true,
       accessExpressionObj: true,
+      importanceLevel: true,
       _id: false,
     }
   ).lean<{
@@ -74,17 +78,18 @@ export async function getEventZwiftForEditService({ eventId }: { eventId: number
     organizerId?: Types.ObjectId;
     typeRaceCustom: string;
     organizerLabel: string;
+    importanceLevel: TImportanceCoefficientsLevels;
     accessExpressionObj: TAccessExpressionObj;
   }>();
 
   // Проверка, что эвент для редактирования есть в БД.
-  if (!eventDB) {
+  if (!zpruEventParams) {
     throw new Error(
       `Не найден в БД Эвент для редактирования с id:${eventId} в модуле getEventZwiftForEditService`
     );
   }
 
-  const { organizer, organizerId } = eventDB;
+  const { organizer, organizerId } = zpruEventParams;
 
   // Получения токена доступа для соответствующего Организатора.
   const tokenOrganizer = await getTokenForEvent({
@@ -103,7 +108,7 @@ export async function getEventZwiftForEditService({ eventId }: { eventId: number
     throw new Error(`Не найден Эвент id:${eventId}`);
   }
 
-  return { ...eventData, ...eventDB };
+  return { ...eventData, ...zpruEventParams };
 }
 
 /**
@@ -119,6 +124,13 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
   const urlEventData = `events/${id}`;
   const eventData = await putRequest({ url: urlEventData, data: event, tokenOrganizer });
 
+  const importanceLevel: TImportanceCoefficientsLevels = [
+    'GROUP_RIDE',
+    'EVENT_TYPE_GROUP_RIDE',
+  ].includes(event.eventData.eventType)
+    ? 'unrated'
+    : 'standard';
+
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(
     { id },
@@ -126,6 +138,7 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
       $set: {
         typeRaceCustom: event.eventData.typeRaceCustom,
         accessExpressionObj: event.eventData.accessExpressionObj,
+        importanceLevel,
       },
     },
     { new: true }

@@ -15,6 +15,7 @@ import {
   ZwiftEventSchema,
 } from '../../../types/model.interface.js';
 import { EventWithSubgroup } from '../../../types/types.interface.js';
+import { TImportanceCoefficientsLevels } from '../../../types/points.types.js';
 
 type ClubWithOrganizer = Omit<ClubSchema, 'organizer'> & {
   organizer: OrganizerSchema;
@@ -43,6 +44,15 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   eventParams.clubName = clubDB.name;
   eventParams.organizer = clubDB.organizer.shortName;
   eventParams.organizerId = clubDB.organizer._id;
+
+  const importanceLevel: TImportanceCoefficientsLevels = [
+    'GROUP_RIDE',
+    'EVENT_TYPE_GROUP_RIDE',
+  ].includes(eventParams.eventType)
+    ? 'unrated'
+    : 'standard';
+
+  eventParams.importanceLevel = importanceLevel;
 
   const eventSaved: ZwiftEventSchema = await saveEventToDB(eventParams);
 
