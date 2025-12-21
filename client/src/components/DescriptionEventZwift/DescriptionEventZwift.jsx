@@ -61,7 +61,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           />
         </div>
 
-        {/* показывать только для страницы результатов */}
+        {/* Иконка модерации результатов */}
         {!forSchedule && isAllowedModerate && (
           <div className={styles.box__modify}>
             <IconModify getClick={modifyResultsEvent} bgColor={'#ff7c00'} />
@@ -76,7 +76,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           <div className={styles.box__left}>
             <div className={styles.box__title}>
               <h2 className={styles.title}>{event?.name}</h2>
-              {forSchedule && isAllowedModerate && (
+              {isAllowedModerate && (
                 <Link to={`/zwift/event/edit/${event?.id}`}>
                   <IconEdit
                     tooltip={'Редактирование параметров заезда в Звифте'}

@@ -98,7 +98,10 @@ function ZwiftEditEvent() {
   const selectCategoryEnforcement = (categoryEnforcementName) => {
     dispatch(setCategoryEnforcement(categoryEnforcementName));
   };
-  console.log();
+
+  const notStarted =
+    !!eventParams?.eventMainParams &&
+    new Date(eventParams.eventMainParams.eventStart).getTime() > Date.now();
 
   return (
     <section className={styles.block}>
@@ -122,13 +125,22 @@ function ZwiftEditEvent() {
             />
           </div>
 
-          {/* Форма для установки настроек Эвента */}
-          <div className={styles.group}>
-            <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
-          </div>
+          {/* Можно изменять параметры Эвента в zwiftAPI пока Эвент не стартовал */}
+          {notStarted ? (
+            <>
+              {/* Форма для установки настроек Эвента */}
+              <div className={styles.group}>
+                <FormEditEvent selectCategoryEnforcement={selectCategoryEnforcement} />
+              </div>
 
-          {/* Формы для установки настроек в группах Эвента */}
-          <FormEditEventGroup sendForm={sendNewEventParams} />
+              {/* Формы для установки настроек в группах Эвента */}
+              <FormEditEventGroup />
+            </>
+          ) : null}
+
+          <div className={styles.right}>
+            <Button getClick={sendNewEventParams}>сохранить</Button>
+          </div>
 
           <Button getClick={goBack}>назад</Button>
         </>

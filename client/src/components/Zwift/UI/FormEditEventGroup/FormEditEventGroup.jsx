@@ -1,11 +1,9 @@
 import { useSelector } from 'react-redux';
 
-import Button from '../../../UI/Button/Button';
-
 import SubGroup from './SubGroup';
 import styles from './FormEditEventGroup.module.css';
 
-function FormEditEventGroup({ isCreating, sendForm }) {
+function FormEditEventGroup({ isCreating }) {
   const {
     eventSubgroup_1: g_1,
     eventSubgroup_2: g_2,
@@ -21,9 +19,6 @@ function FormEditEventGroup({ isCreating, sendForm }) {
       {g_3 && <SubGroup subGroup={g_3} groupNumber={3} isCreating={isCreating} />}
       {g_4 && <SubGroup subGroup={g_4} groupNumber={4} isCreating={isCreating} />}
       {g_5 && <SubGroup subGroup={g_5} groupNumber={5} isCreating={isCreating} />}
-      <div className={styles.right}>
-        <Button getClick={sendForm}>сохранить</Button>
-      </div>
     </form>
   );
 }
