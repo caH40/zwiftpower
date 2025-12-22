@@ -23,7 +23,7 @@ import {
   setEventId,
 } from '../../redux/features/api/event-create/eventCreateSlice';
 import IconQuestion from '../../components/icons/IconQuestion';
-import FormEditZpruEventParams from '../../components/Zwift/UI/FormEditEvent/FormEditZpruEventParams';
+import FormEditLocalEventParams from '../../components/Zwift/UI/FormEditEvent/FormEditLocalEventParams';
 
 import styles from './ZwiftEditEvent.module.css';
 import { prepareData } from './utils/preparation';
@@ -75,8 +75,15 @@ function ZwiftEditEvent() {
     return () => dispatch(resetParams());
   }, [dispatch]);
 
+  // Функция отработки клика отправки данных формы ны сервер.
   const sendNewEventParams = () => {
     const eventForPost = prepareData(eventParams);
+
+    if (!eventForPost.eventData.importanceLevel) {
+      const message = 'Необходимо выбрать Коэффициент важности заезда!';
+      dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return false;
+    }
 
     changeZwiftEvents(eventForPost)
       .then((data) => {
@@ -92,6 +99,7 @@ function ZwiftEditEvent() {
           })
         );
       });
+
     return false;
   };
 
@@ -114,14 +122,15 @@ function ZwiftEditEvent() {
         <FormRequest name={'Id изменяемого Event'} />
       </div>
 
-      {eventParams?.eventMainParams.worldId ? (
+      {eventParams?.eventMainParams?.worldId ? (
         <>
           {/* Форма для установки настроек zpruEventParams*/}
           <div className={styles.group}>
-            <FormEditZpruEventParams
-              typeRaceCustom={eventParams?.eventMainParams?.typeRaceCustom}
-              importanceLevel={eventParams?.eventMainParams?.importanceLevel}
+            <FormEditLocalEventParams
+              typeRaceCustom={eventParams.eventMainParams.typeRaceCustom}
+              importanceLevel={eventParams.eventMainParams.importanceLevel}
               configsFinishProtocol={configsFinishProtocol}
+              eventType={eventParams.eventMainParams.eventType}
             />
           </div>
 

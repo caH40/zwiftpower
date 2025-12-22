@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-
 import BoxParameter from '../../../UI/ReduxUI/BoxParameter/BoxParameter';
 import { getNameSelected } from '../../../../utils/name-selected';
 import { importanceCoefficients } from '../../../../assets/options';
@@ -10,12 +8,13 @@ import styles from './FormEditEvent.module.css';
  * Форма изменения внутренних настроек для Эвента для сайта zpru.
  * Форма используется только при редактировании Эвента
  */
-export default function FormEditZpruEventParams({
+export default function FormEditLocalEventParams({
   importanceLevel,
   typeRaceCustom,
   configsFinishProtocol,
+  eventType,
 }) {
-  const dispatch = useDispatch();
+  const currentImportanceCoefficients = getCurrentImportanceCoefficients(eventType);
 
   return (
     <>
@@ -44,10 +43,10 @@ export default function FormEditZpruEventParams({
             inputParams={{
               property: 'importanceLevel',
               type: 'select',
-              options: importanceCoefficients,
+              options: currentImportanceCoefficients,
             }}
             description={
-              'Внимание! Для заездов типа Ride автоматически будет выбираться "Не рейтинговый" коэффициент'
+              'Внимание! Для заездов типа Ride автоматически будет выбираться "Не рейтинговый" коэффициент. Если Race и дистанция меньше 10км, тогда автоматически будет выбираться "Спринт" коэффициент!'
             }
           >
             {/* Если отображается идентификатор вместо displayName, значит в  */}
@@ -58,4 +57,12 @@ export default function FormEditZpruEventParams({
       </div>
     </>
   );
+}
+
+function getCurrentImportanceCoefficients(eventType) {
+  if (['GROUP_RIDE', 'EVENT_TYPE_GROUP_RIDE'].includes(eventType)) {
+    return importanceCoefficients.filter(({ name }) => name === 'unrated');
+  }
+
+  return importanceCoefficients;
 }
