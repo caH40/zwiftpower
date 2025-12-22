@@ -1,3 +1,5 @@
+import pLimit from 'p-limit';
+
 import { User } from '../../Model/User.js';
 import { createNotificationLetter } from '../mail/letters/createNotificationLetter.js';
 import { mailService } from '../mail/nodemailer.js';
@@ -9,6 +11,7 @@ import { TEventForMailingPreviewDto } from '../../types/dto.interface.js';
 import { TNotificationsPrefixedKeys, TResponseService } from '../../types/http.interface.js';
 import { TNotifications } from '../../types/model.interface.js';
 import { Types } from 'mongoose';
+import { handleAndLogError } from '../../errors/error.js';
 
 type Params = {
   text: string;
@@ -81,21 +84,36 @@ export async function postEventsPreviewService(eventsEmailPreview: {
 
   const filteredUsers = filterEmails(usersDB);
 
-  const sendAllEmails = filteredUsers.map((user) => {
-    const letter = generateEmailHTML(eventsEmailPreview, user._id.toString(), user.zwiftId);
+  const limit = pLimit(2);
 
-    return mailService({
-      email: user.email,
-      subject: eventsEmailPreview.subject,
-      letter,
-      auth: {
-        user: mailUserNotification,
-        pass: mailPassNotification,
-      },
-    });
+  const sendAllEmails = filteredUsers.map((user) =>
+    limit(async () => {
+      const letter = generateEmailHTML(eventsEmailPreview, user._id.toString(), user.zwiftId);
+
+      await mailService({
+        email: user.email,
+        subject: eventsEmailPreview.subject,
+        letter,
+        auth: {
+          user: mailUserNotification,
+          pass: mailPassNotification,
+        },
+      });
+    })
+  );
+
+  const results = await Promise.allSettled(sendAllEmails);
+
+  const failed = results.filter((r) => r.status === 'rejected');
+
+  handleAndLogError(new Error(`Emails: total=${results.length}, failed=${failed.length}`));
+  failed.forEach((f) => {
+    if (f.status === 'rejected') {
+      handleAndLogError(
+        f.reason instanceof Error ? f.reason : new Error(JSON.stringify(f.reason))
+      );
+    }
   });
-
-  await Promise.allSettled(sendAllEmails);
 
   return { data: null, message: 'Оповещение отправлено пользователям на email!' };
 }
