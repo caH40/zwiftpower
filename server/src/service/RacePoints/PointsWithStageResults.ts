@@ -48,7 +48,6 @@ export class PointsWithStageResults {
 
       updateQuery.push({ _id: result._id!.toString(), query: { points } });
     }
-    console.log(updateQuery);
 
     await this.stageResultRepository.updateMany(updateQuery);
   };
