@@ -14,6 +14,18 @@ export const baseRacePoints: TRacePointsRule[] = [
   { place: 8, points: 4 },
   { place: 9, points: 2 },
   { place: 10, points: 1 },
+
+  { place: 11, points: 1 },
+  { place: 12, points: 1 },
+  { place: 13, points: 1 },
+  { place: 14, points: 1 },
+  { place: 15, points: 1 },
+
+  { place: 16, points: 1 },
+  { place: 17, points: 1 },
+  { place: 18, points: 1 },
+  { place: 19, points: 1 },
+  { place: 20, points: 1 },
 ];
 
 export const baseRacePointsMap = new Map(baseRacePoints.map((e) => [e.place, e.points]));
