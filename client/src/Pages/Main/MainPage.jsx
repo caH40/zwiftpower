@@ -90,6 +90,13 @@ function MainPage() {
 
   const shouldRenderCard = !!eventsPreview.length && statusFetchEvents === 'resolved';
 
+  /**
+   * startIndex
+   * @param {*} events
+   * @param {*} startIndex Используется для вставки рекламных блоков.
+   * @param {*} endIndex Используется для вставки рекламных блоков.
+   * @returns
+   */
   const renderCards = (events, startIndex, endIndex) =>
     events
       .slice(startIndex, endIndex)

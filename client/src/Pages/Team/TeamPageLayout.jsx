@@ -11,6 +11,10 @@ import { NavBarTeamPublic } from '../../components/UI/NavBarTeamPublic/NavBarTea
 import TeamHeader from '../../components/TeamHeader/TeamHeader';
 import useTitle from '../../hook/useTitle';
 import { NavBarTeamControl } from '../../components/UI/NavBarTeamPublic/NavBarTeamControl';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
+import AdSeries from '../../components/AdSeries/AdSeries';
+import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './TeamPageLayout.module.css';
 
@@ -23,7 +27,17 @@ export default function TeamPage() {
     user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
+  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+
+    return () => dispatch(resetSeriesPublicAll());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchGetTeam({ urlSlug }));
@@ -34,30 +48,51 @@ export default function TeamPage() {
   const isCreator = allowForTeamCreator({ status, teamIdForPermission: team?._id, userInTeam });
   return (
     <div className={styles.wrapper}>
-      {team ? (
-        <TeamHeader team={team} />
-      ) : (
-        renderSkeletonCards({
-          count: 1,
-          SkeletonComponent: SkeletonTeamHeader,
-          status: fetchTeamStatus,
-        })
-      )}
+      <section className={styles.main}>
+        {team ? (
+          <TeamHeader team={team} />
+        ) : (
+          renderSkeletonCards({
+            count: 1,
+            SkeletonComponent: SkeletonTeamHeader,
+            status: fetchTeamStatus,
+          })
+        )}
 
-      {/* Кнопки навигации по страницам организатора */}
-      <div className={styles.box__navbar}>
-        <NavBarTeamPublic urlSlug={team?.urlSlug} isCreator={isCreator} />
-      </div>
-
-      {isCreator && (
+        {/* Кнопки навигации по страницам организатора */}
         <div className={styles.box__navbar}>
-          <NavBarTeamControl urlSlug={team?.urlSlug} />
+          <NavBarTeamPublic urlSlug={team?.urlSlug} isCreator={isCreator} />
         </div>
-      )}
 
-      <Suspense>
-        <Outlet />
-      </Suspense>
+        {isCreator && (
+          <div className={styles.box__navbar}>
+            <NavBarTeamControl urlSlug={team?.urlSlug} />
+          </div>
+        )}
+
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </section>
+
+      {/* Боковая панель. */}
+      <aside className={styles.aside}>
+        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        {/* Рекламный блок текущих Серий */}
+        {seriesPublic?.ongoing.map((s) => (
+          <AdSeries
+            key={s.urlSlug}
+            urlSlug={s.urlSlug}
+            posterUrls={s.posterUrls}
+            name={s.name}
+            dateStart={s.dateStart}
+            dateEnd={s.dateEnd}
+            isCard={true}
+            pageType="schedule"
+          />
+        ))}
+      </aside>
     </div>
   );
 }

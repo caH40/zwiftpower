@@ -28,8 +28,7 @@
   margin-bottom: 20px;
 }
 .wrapper__info {
-  flex: 1 1 300px;
-  min-width: 300px;
+  flex: 0 1 350px;
 }
 .sidebar {
   display: flex;
@@ -47,8 +46,11 @@
   .topTeamContainer {
     order: -2;
   }
+  .wrapper__info {
+    flex: 1 1 auto;
+  }
   .wrapper__preview {
     gap: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
 }

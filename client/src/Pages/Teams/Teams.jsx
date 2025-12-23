@@ -11,6 +11,10 @@ import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
 import CardTeam from '../../components/CardTeam/CardTeam';
 import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
+import AdSeries from '../../components/AdSeries/AdSeries';
+import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './Teams.module.css';
 
@@ -25,6 +29,10 @@ export default function TeamsPublic() {
     user: { team: userInTeam, zwiftId },
   } = useSelector((state) => state.checkAuth.value);
 
+  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
+
   // Данные организаторов из хранилища редакс.
   const { status: fetchTeamsStatus, teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
@@ -34,6 +42,12 @@ export default function TeamsPublic() {
     dispatch(fetchGetTeams());
 
     return () => dispatch(resetTeams());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+
+    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   // Сначала команда пользователя, затем отсортированные по названию.
@@ -61,6 +75,25 @@ export default function TeamsPublic() {
         {!!sortedTeams?.length &&
           sortedTeams.map((team) => <CardTeam key={team._id} {...team} />)}
       </section>
+
+      {/* Боковая панель. */}
+      <aside className={styles.aside}>
+        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        {/* Рекламный блок текущих Серий */}
+        {seriesPublic?.ongoing.map((s) => (
+          <AdSeries
+            key={s.urlSlug}
+            urlSlug={s.urlSlug}
+            posterUrls={s.posterUrls}
+            name={s.name}
+            dateStart={s.dateStart}
+            dateEnd={s.dateEnd}
+            isCard={true}
+            pageType="schedule"
+          />
+        ))}
+      </aside>
     </div>
   );
 }

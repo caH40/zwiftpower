@@ -1,8 +1,8 @@
 .cardParallax {
   position: relative;
-  height: 280px;
+  height: 270px;
   border-radius: 20px;
-  width: 280px;
+  width: 270px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
