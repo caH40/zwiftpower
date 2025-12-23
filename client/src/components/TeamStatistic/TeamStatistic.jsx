@@ -1,42 +1,31 @@
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
+
+import { getCategoryStats } from '../../assets/constants';
 
 import styles from './TeamStatistic.module.css';
-
-const seriesWins = [
-  { name: 'Test Racing League 2023', place: 1 },
-  { name: 'Test Championship', place: 2 },
-  { name: 'Test Summer Climb 2024', place: 1 },
-  { name: 'Test Winter Cup', place: 3 },
-];
 
 /**
  * Широкий хедер команды со сводной статистикой.
  */
 export default function TeamStatistic({
-  stats: { events, riderMetrics, registeredEventsCount },
+  stats: { events, riderMetrics, registeredEventsCount, seasonRating, seriesWins = [] },
 }) {
   const { categories, medals, totalMembers } = riderMetrics;
-
-  // Статистика по категориям
-  const categoryStats = [
-    { cat: 'A', count: categories.A || 0, label: 'Cat A' },
-    { cat: 'B', count: categories.B || 0, label: 'Cat B' },
-    { cat: 'C', count: categories.C || 0, label: 'Cat C' },
-    { cat: 'D', count: categories.D || 0, label: 'Cat D' },
-    { cat: 'E', count: categories.E || 0, label: 'Cat E' },
-  ];
 
   return (
     <div className={styles.header}>
       {/* Основная информация команды */}
-      {/* <div className={styles.mainInfo}>
-        <div className={styles.rankingSection}>
+      <div className={styles.mainInfo}>
+        <Link to={'/race/statistics/teams'} className={styles.rankingSection}>
           <div className={styles.ranking}>
-            <span className={styles.rankingLabel}>Рейтинг</span>
-            <span className={styles.rankingValue}>#{ranking || 'н/д'}</span>
+            <span className={styles.rankingLabel}>Рейтинг:</span>
+            <span className={styles.rankingValue}>
+              {seasonRating?.rank || <span>&mdash;</span>}
+            </span>
           </div>
-        </div>
-      </div> */}
+        </Link>
+      </div>
 
       {/* Статистика команды */}
       <div className={styles.statsGrid}>
@@ -47,7 +36,7 @@ export default function TeamStatistic({
             <span className={styles.statTotal}>{totalMembers}</span>
           </div>
           <div className={styles.categories}>
-            {categoryStats.map(({ cat, count, label }) => (
+            {getCategoryStats(categories).map(({ cat, count, label }) => (
               <div key={cat} className={styles.categoryItem}>
                 <span className={cn(styles.catDot, styles[cat])}></span>
                 <span className={styles.catLabel}>{label}</span>
@@ -100,7 +89,7 @@ export default function TeamStatistic({
         </div>
 
         {/* Победы в сериях */}
-        <div className={styles.statCard}>
+        {/* <div className={styles.statCard}>
           <div className={styles.statHeader}>
             <h3 className={styles.statTitle}>Победы в сериях</h3>
             <span className={styles.statTotal}>{seriesWins.length}</span>
@@ -118,7 +107,7 @@ export default function TeamStatistic({
               <div className={styles.moreSeries}>+{seriesWins.length - 3} ещё</div>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -68,3 +68,12 @@ export const COUNTRY_CODE_MAP = {
   prt: 'pt',
   fsm: 'fm',
 };
+
+// Статистика по категориям
+export const getCategoryStats = (categories) => [
+  { cat: 'A', count: categories.A || 0, label: 'Cat A' },
+  { cat: 'B', count: categories.B || 0, label: 'Cat B' },
+  { cat: 'C', count: categories.C || 0, label: 'Cat C' },
+  { cat: 'D', count: categories.D || 0, label: 'Cat D' },
+  { cat: 'E', count: categories.E || 0, label: 'Cat E' },
+];

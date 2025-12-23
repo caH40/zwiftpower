@@ -181,3 +181,70 @@
 .gray {
   background-color: gray;
 }
+.mainInfo {
+  margin-bottom: 20px;
+}
+
+.rankingSection {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  width: 150px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+.rankingSection:hover {
+  background: var(--color-yellow-5-transparent);
+  border: 1px solid var(--color-yellow-5);
+}
+.ranking {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rankingLabel {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+.rankingLabel:hover {
+  color: var(--color-primary);
+}
+
+/* Подчеркивание при наведении */
+.rankingLabel::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.rankingLabel:hover::after {
+  width: 100%;
+}
+
+.rankingValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.rankingLabel:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}

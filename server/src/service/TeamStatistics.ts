@@ -10,6 +10,7 @@ import { TResponseService } from '../types/http.interface.js';
 import { TStatistics } from '../types/team.types.js';
 import { SignedRidersRepository } from '../repositories/SignedRiders.js';
 import { EventRepository } from '../repositories/Event.js';
+import { TeamSeasonRatingRepository } from '../repositories/TeamSeasonRating.js';
 
 export class TeamStatisticsService {
   private teamMemberRepository: TeamMemberRepository;
@@ -55,10 +56,31 @@ export class TeamStatisticsService {
 
     const registeredEventsCount = await this.getRegisteredEventsCount(team._id.toString());
 
+    const seasonRating = await this.getSeasonRating(team._id.toString());
+
     return {
-      data: { riderMetrics, events, registeredEventsCount },
+      data: { riderMetrics, events, registeredEventsCount, seasonRating },
       message: `Данные статистики и метрики команды ${team.name}`,
     };
+  }
+
+  private async getSeasonRating(
+    teamId: string
+  ): Promise<{ rank: number; points: number } | null> {
+    const seasonLabel = getSeasonPeriod(new Date());
+
+    if (!seasonLabel) {
+      return null;
+    }
+
+    const teamSeasonRatingRepository = new TeamSeasonRatingRepository();
+    const seasonRating = await teamSeasonRatingRepository.get(teamId, seasonLabel?.label);
+
+    if (!seasonRating) {
+      return null;
+    }
+
+    return { rank: seasonRating.rank, points: seasonRating.points };
   }
 
   /**

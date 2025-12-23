@@ -53,6 +53,7 @@ export type TStatistics = {
   };
   events: { totalResults: number; resultsInActiveSeason: number };
   registeredEventsCount: number;
+  seasonRating: { rank: number; points: number } | null;
 };
 
 export type TTeamAppearance = {
