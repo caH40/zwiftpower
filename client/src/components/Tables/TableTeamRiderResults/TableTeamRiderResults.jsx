@@ -47,6 +47,8 @@ export default function TableTeamRiderResults({ results }) {
                 />
               </td>
 
+              <td className={styles.centerTd}>{result.points?.zpruFinishPoints || null}</td>
+
               <td>
                 <CategoryBox showLabel={true} label={result.subgroupLabel} circle={true} />
               </td>
