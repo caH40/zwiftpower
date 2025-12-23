@@ -24,6 +24,10 @@ import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/
 import Poll from '../../components/Poll/Poll';
 import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
 import { resetPoll } from '../../redux/features/api/poll/pollSlice';
+import { fetchTopTeamsLeaderboard } from '../../redux/features/api/team/fetchTeam';
+import { resetTopTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
+import TeamsRankingWidget from '../../components/TeamsRankingWidget/TeamsRankingWidget';
+import SkeletonTeamRankingWidget from '../../components/SkeletonLoading/SkeletonTeamRankingWidget/SkeletonTeamRankingWidget';
 
 import styles from './MainPage.module.css';
 
@@ -39,6 +43,9 @@ function MainPage() {
     (state) => state.seriesPublic
   );
   const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
+  const { topTeamsLeaderboard, status: statusTopTeamsLeaderboard } = useSelector(
+    (state) => state.team
+  );
   const isModerator = ['admin', 'moderator'].includes(role);
   const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
@@ -54,6 +61,13 @@ function MainPage() {
     dispatch(fetchGetPoll({ pollId: '691c9016c52f70c6bca2771f' }));
 
     return () => dispatch(resetPoll());
+  }, [dispatch]);
+
+  // top3 рейтинга команд
+  useEffect(() => {
+    dispatch(fetchTopTeamsLeaderboard());
+
+    return () => dispatch(resetTopTeamsLeaderboard());
   }, [dispatch]);
 
   // Хук установки заголовка h1 для страницы.
@@ -123,9 +137,19 @@ function MainPage() {
           <h2 className={styles.title__info}>Информационный блок</h2>
 
           <div className={styles.sidebar}>
+            <div className={styles.topTeamContainer}>
+              <SkeletonTeamRankingWidget status={statusTopTeamsLeaderboard} />
+              {topTeamsLeaderboard.length > 0 ? (
+                <TeamsRankingWidget teams={topTeamsLeaderboard} />
+              ) : null}
+            </div>
+
+            {/* Блок с голосованиями */}
             {poll && <Poll {...poll} />}
+
             <SkeletonSeriesAd status={fetchSeriesStatus} />
             <SkeletonSeriesAd status={fetchSeriesStatus} />
+
             {/* Рекламный блок текущих Серий */}
             {seriesPublic?.ongoing.map((s) => (
               <AdSeries

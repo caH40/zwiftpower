@@ -1,0 +1,143 @@
+.widgetSkeleton {
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--skeleton-light);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  height: 24px;
+  width: 120px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.viewAll {
+  height: 16px;
+  width: 80px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.teamCard {
+  background: var(--skeleton-light);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.placeBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.teamInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 36px;
+}
+
+.teamLogo {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.teamDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.teamName {
+  height: 20px;
+  width: 70%;
+  margin-bottom: 8px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.teamShortName {
+  height: 14px;
+  width: 40%;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.ratingLabel {
+  height: 12px;
+  width: 40px;
+  margin: 0 auto 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.ratingValue {
+  height: 20px;
+  width: 30px;
+  margin: 0 auto;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-color: var(--skeleton-light);
+  }
+  50% {
+    background-color: var(--skeleton-medium);
+  }
+  100% {
+    background-color: var(--skeleton-light);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .teamInfo {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .teamDetails {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .teamCard {
+    padding: 12px;
+  }
+
+  .teamName {
+    height: 18px;
+  }
+
+  .ratingValue {
+    height: 18px;
+  }
+}

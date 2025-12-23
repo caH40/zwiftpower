@@ -44,6 +44,9 @@
   .spacer__donate {
     order: -1;
   }
+  .topTeamContainer {
+    order: -2;
+  }
   .wrapper__preview {
     gap: 15px;
     margin-bottom: 15px;

@@ -1,7 +1,9 @@
 import { Types } from 'mongoose';
 
 import { TeamSeasonRatingModel } from '../Model/TeamSeasonRating.js';
-import { TTeamSeasonRating } from '../types/model.interface.js';
+
+// types
+import { TTeam, TTeamSeasonRating } from '../types/model.interface.js';
 
 export class TeamSeasonRatingRepository {
   async get(teamId: string, season: string) {
@@ -17,6 +19,19 @@ export class TeamSeasonRatingRepository {
       .lean<
         (Omit<TTeamSeasonRating, 'eventsIds' | 'team'> & { team: { urlSlug: string } })[]
       >();
+  }
+
+  /**
+   * Первые три команды в рейтинге.
+   */
+  async getTop(seasonLabel: string) {
+    return TeamSeasonRatingModel.find(
+      { season: seasonLabel, rank: { $in: [1, 2, 3] } },
+      { eventsIds: 0 }
+    )
+      .populate({ path: 'team' })
+      .sort({ rank: 1 })
+      .lean<(Omit<TTeamSeasonRating, 'team'> & { team: TTeam })[]>();
   }
 
   async upsertMany(

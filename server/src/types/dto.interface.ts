@@ -340,6 +340,12 @@ export type TTeamLeaderboardDto = Omit<TTeamLeaderboard, 'logoFileInfo' | 'poste
   logoUrls?: Record<string, string> | undefined;
   posterUrls?: Record<string, string> | undefined;
 };
+export type TTeamTopLeaderboardDto = Pick<TTeam, 'name' | 'urlSlug' | 'shortName'> & {
+  logoUrls?: Record<string, string> | undefined;
+  posterUrls?: Record<string, string> | undefined;
+  rank: number;
+  points: number;
+};
 
 export type TPollWithAnswersDto = Omit<
   TPoll,

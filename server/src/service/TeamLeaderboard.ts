@@ -1,14 +1,14 @@
-import { EventResultRepository } from '../repositories/EventResult.js';
 import { TeamRepository } from '../repositories/Team.js';
 import { TeamMemberRepository } from '../repositories/TeamMember.js';
-import { teamLeaderboardDto } from '../dto/team-leaderboard.js';
+import { teamLeaderboardDto, teamTopLeaderboardDto } from '../dto/team-leaderboard.js';
 import { TeamSeasonRatingService } from './TeamSeasonRating.js';
-import { parseSeasonLabel } from '../utils/season.js';
+import { getSeasonPeriod, parseSeasonLabel } from '../utils/season.js';
+import { TeamSeasonRatingRepository } from '../repositories/TeamSeasonRating.js';
 
 // types
 import { TResponseService } from '../types/http.interface.js';
 import { TTeamLeaderboard } from '../types/team.types.js';
-import { TTeamLeaderboardDto } from '../types/dto.interface.js';
+import { TTeamLeaderboardDto, TTeamTopLeaderboardDto } from '../types/dto.interface.js';
 import { TTeamSeasonRating } from '../types/model.interface.js';
 
 /**
@@ -16,13 +16,12 @@ import { TTeamSeasonRating } from '../types/model.interface.js';
  */
 export class TeamLeaderboard {
   private teamRepository: TeamRepository;
-  private eventResultRepository: EventResultRepository;
   private memberRepository: TeamMemberRepository;
   private teamSeasonRatingService: TeamSeasonRatingService = new TeamSeasonRatingService();
+  private ratingRepository: TeamSeasonRatingRepository = new TeamSeasonRatingRepository();
 
   constructor() {
     this.teamRepository = new TeamRepository();
-    this.eventResultRepository = new EventResultRepository();
     this.memberRepository = new TeamMemberRepository();
   }
   /**
@@ -43,6 +42,21 @@ export class TeamLeaderboard {
     const teamsWithRank = this.setRank(teamsWithMembers, teamsRating);
 
     return { data: teamLeaderboardDto(teamsWithRank), message: 'Рейтинг команд' };
+  }
+
+  /**
+   * Рейтинг команд с данными по медалям, количеству участников, количеству заездов.
+   */
+  async getTop(): Promise<TResponseService<TTeamTopLeaderboardDto[]>> {
+    const season = getSeasonPeriod(new Date());
+
+    if (!season) {
+      throw new Error('Ошибка при формировании seasonLabel');
+    }
+
+    const teamsRating = await this.ratingRepository.getTop(season.label);
+
+    return { data: teamTopLeaderboardDto(teamsRating), message: 'Рейтинг top3 команд' };
   }
 
   /**

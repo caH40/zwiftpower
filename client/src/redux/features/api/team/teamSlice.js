@@ -11,6 +11,7 @@ import {
   fetchGetTeamStatistics,
   fetchTeamParticipantRatingResults,
   fetchTeamsLeaderboard,
+  fetchTopTeamsLeaderboard,
 } from './fetchTeam';
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   pendingRiders: [],
   bannedRiders: [],
   teamsLeaderboard: [],
+  topTeamsLeaderboard: [],
   statistics: null,
   team: null,
   message: null,
@@ -58,6 +60,9 @@ const teamSlice = createSlice({
     },
     resetTeamsLeaderboard(state) {
       state.teamsLeaderboard = [];
+    },
+    resetTopTeamsLeaderboard(state) {
+      state.topTeamsLeaderboard = [];
     },
   },
 
@@ -196,6 +201,23 @@ const teamSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     });
+
+    // =========================== top3 рейтинга команд  ===========================
+    builder.addCase(fetchTopTeamsLeaderboard.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchTopTeamsLeaderboard.fulfilled, (state, action) => {
+      state.topTeamsLeaderboard = action.payload.data;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchTopTeamsLeaderboard.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
   },
 });
 
@@ -207,6 +229,7 @@ export const {
   resetTeamRiderResults,
   resetStatistics,
   resetTeamsLeaderboard,
+  resetTopTeamsLeaderboard,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

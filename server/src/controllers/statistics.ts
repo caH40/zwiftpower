@@ -153,3 +153,23 @@ export const getTeams = async (req: Request, res: Response) => {
     }
   }
 };
+
+/**
+ * Получение top3 лидеров команд.
+ */
+export const getTopTeams = async (req: Request, res: Response) => {
+  try {
+    const teamLeaderboard = new TeamLeaderboard();
+
+    const response = await teamLeaderboard.getTop();
+
+    res.status(200).json(response);
+  } catch (error) {
+    handleAndLogError(error);
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json('Непредвиденная ошибка в getTeams');
+    }
+  }
+};

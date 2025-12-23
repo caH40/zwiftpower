@@ -1,0 +1,229 @@
+.widget {
+  border-radius: 12px;
+  padding: 20px;
+  background-color: var(--color-bg-minor);
+  border: 1px solid var(--color-blue-main);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.viewAll {
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  color: inherit;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}
+
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.teamCard {
+  display: block;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--color-blue-4);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  color: inherit;
+}
+
+/* Ховер эффекты для разных мест */
+.teamCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.teamCard.place1:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.4) 0%, rgba(255, 237, 78, 0.8) 100%);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.teamCard.place2:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(192, 192, 192, 0.4) 0%,
+    rgba(224, 224, 224, 0.8) 100%
+  );
+  border-color: rgba(192, 192, 192, 0.3);
+}
+
+.teamCard.place3:hover {
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.4) 0%, rgba(227, 150, 78, 0.8) 100%);
+  border-color: rgba(205, 127, 50, 0.3);
+}
+
+/* Для команд без указанного места или с местом > 3 */
+.teamCard:not(.place1):not(.place2):not(.place3):hover {
+  background: var(--color-yellow-5-transparent);
+  border-color: var(--color-yellow-main);
+}
+
+.placeBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.placeNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 700;
+  color: rgb(29, 29, 29);
+}
+
+.place1 .placeNumber {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+}
+.place2 .placeNumber {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e0e0e0 100%);
+}
+.place3 .placeNumber {
+  background: linear-gradient(135deg, #cd7f32 0%, #e3964e 100%);
+}
+
+.teamInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 36px;
+}
+
+.teamLogo {
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.teamCard:hover .logo {
+  transform: scale(1.05);
+}
+
+.logoPlaceholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.teamCard:hover .logoPlaceholder {
+  transform: scale(1.05);
+}
+
+.teamDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.teamName {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.teamCard:hover .teamName {
+  color: inherit;
+}
+
+.teamShortName {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.teamRating {
+  text-align: center;
+  min-width: 70px;
+}
+
+.ratingLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 2px;
+}
+
+.ratingValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .teamInfo {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .teamDetails {
+    min-width: 150px;
+  }
+
+  .teamRating {
+    margin-left: auto;
+    text-align: right;
+  }
+}
+
+@media (max-width: 480px) {
+  .teamCard {
+    padding: 12px;
+  }
+
+  .teamName {
+    font-size: 14px;
+  }
+
+  .ratingValue {
+    font-size: 16px;
+  }
+}

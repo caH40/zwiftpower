@@ -235,3 +235,24 @@ export const fetchTeamParticipantRatingResults = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Рейтинг top3 команд.
+ */
+export const fetchTopTeamsLeaderboard = createAsyncThunk(
+  'topTeamsLeaderboard/fetch',
+  async function (_, thunkAPI) {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/statistics/teams/top`,
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      const message = error.response.data.message || error.message;
+      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
