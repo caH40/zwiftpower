@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 import { handlerErrorAsyncThunk } from '../utils/handler-error';
@@ -17,9 +16,7 @@ export const fetchGetTeams = createAsyncThunk('teams/getAll', async (_, thunkAPI
 
     return response.data;
   } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+    return handlerErrorAsyncThunk({ error, thunkAPI });
   }
 });
 
@@ -35,9 +32,7 @@ export const fetchGetTeam = createAsyncThunk('teams/get', async ({ urlSlug }, th
 
     return response.data;
   } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+    return handlerErrorAsyncThunk({ error, thunkAPI });
   }
 });
 
@@ -55,9 +50,7 @@ export const fetchPostTeam = createAsyncThunk('teams/post', async ({ team }, thu
 
     return response.data;
   } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+    return handlerErrorAsyncThunk({ error, thunkAPI });
   }
 });
 
@@ -75,9 +68,7 @@ export const fetchPutTeam = createAsyncThunk('teams/put', async ({ team }, thunk
 
     return response.data;
   } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+    return handlerErrorAsyncThunk({ error, thunkAPI });
   }
 });
 
@@ -96,9 +87,7 @@ export const fetchPostJoinRequestInTeam = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -117,9 +106,7 @@ export const fetchGetPendingRiders = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -138,9 +125,7 @@ export const fetchGetBannedRiders = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -165,9 +150,7 @@ export const fetchGetRiderResults = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -188,9 +171,7 @@ export const fetchGetTeamStatistics = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -209,9 +190,7 @@ export const fetchTeamsLeaderboard = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -250,9 +229,7 @@ export const fetchTopTeamsLeaderboard = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

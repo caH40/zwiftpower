@@ -4,6 +4,7 @@ import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 import { fetchGetZwiftClubs } from '../zwift_club/fetchZwiftClub';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Добавление модератора для клуба
@@ -30,9 +31,7 @@ export const fetchPutClubModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -62,9 +61,7 @@ export const fetchDeleteClubModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

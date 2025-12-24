@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Получение данных об Организаторе.
@@ -18,9 +18,7 @@ export const fetchGetOrganizerModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -38,9 +36,7 @@ export const fetchGetOrganizerBotsModerator = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -60,9 +56,7 @@ export const fetchPutOrganizerBotsModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -82,9 +76,7 @@ export const fetchDeleteOrganizerBotsModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -103,9 +95,7 @@ export const fetchGetOrganizersForModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -126,9 +116,7 @@ export const fetchPutOrganizersMainData = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

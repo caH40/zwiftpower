@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAlert } from '../../alertMessageSlice';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * запрос данных райдера Звифта с сервера ZwiftAPI по zwiftId
@@ -18,9 +18,7 @@ export const fetchZwiftProfile = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -39,9 +37,7 @@ export const fetchZwiftProfiles = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

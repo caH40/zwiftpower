@@ -7,6 +7,7 @@ import { checkAuth } from '../../../../api/auth-check';
 import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
 import { serverExpress } from '../../../../config/environment';
 import { lsAccessToken } from '../../../../constants/localstorage';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Привязка основного или дополнительного ZwiftId к аккаунту на сайте.
@@ -39,9 +40,7 @@ export const fetchUserPut = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -68,9 +67,7 @@ export const fetchUserDeleteZwiftId = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { getAlert } from '../../alertMessageSlice';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 export const fetchRidersTotalFTP = createAsyncThunk(
   'ridersTotalFTP/fetchRidersTotalFTP',
@@ -15,9 +15,7 @@ export const fetchRidersTotalFTP = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

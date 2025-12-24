@@ -2,8 +2,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { myAxios } from '../../../api/axios';
-
 import { getAlert } from '../alertMessageSlice';
+
+import { handlerErrorAsyncThunk } from './utils/handler-error';
 
 export const fetchUpdateResult = createAsyncThunk(
   'resultsUpdate/fetchUpdateResult',
@@ -19,9 +20,7 @@ export const fetchUpdateResult = createAsyncThunk(
       thunkAPI.dispatch(getAlert({ message, type: 'success', isOpened: true }));
       return message;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

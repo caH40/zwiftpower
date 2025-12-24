@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Изменение категории райдера в результатах заезда этапа серии.
@@ -19,9 +19,7 @@ export const fetchPatchCategoryInSeriesResult = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

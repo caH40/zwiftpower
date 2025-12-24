@@ -2,9 +2,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { getAlert } from '../alertMessageSlice';
 import { serverExpress } from '../../../config/environment';
 import { myAxios } from '../../../api/axios';
+
+import { handlerErrorAsyncThunk } from './utils/handler-error';
 
 export const fetchEventPreview = createAsyncThunk(
   'eventGetPreview/fetchEvent',
@@ -16,9 +17,7 @@ export const fetchEventPreview = createAsyncThunk(
       });
       return response.data.event;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue({ message });
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -42,9 +41,7 @@ export const fetchGetEventsForMailing = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

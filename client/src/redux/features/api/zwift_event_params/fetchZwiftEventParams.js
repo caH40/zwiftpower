@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 export const fetchZwiftEventParams = createAsyncThunk(
   'zwift/eventParams',
@@ -15,9 +15,7 @@ export const fetchZwiftEventParams = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -33,9 +31,7 @@ export const fetchZwiftEventParamsForModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );

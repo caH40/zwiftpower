@@ -4,6 +4,7 @@ import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { serverExpress } from '../../../../config/environment';
 import { fetchResultEvent } from '../eventResultSlice';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Запросы на изменение параметров результата Райдера
@@ -31,8 +32,6 @@ export const fetchResultEdit = createAsyncThunk('results/resultPut', async (data
 
     return response.data;
   } catch (error) {
-    const message = error.response.data.message || error.message;
-    thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-    return thunkAPI.rejectWithValue(message);
+    return handlerErrorAsyncThunk({ error, thunkAPI });
   }
 });

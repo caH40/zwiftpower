@@ -4,6 +4,7 @@ import { getAlert } from '../../alertMessageSlice';
 import { myAxios } from '../../../../api/axios';
 import { fetchZwiftProfiles } from '../zwiftProfiles/fetchZwiftProfile';
 import { serverExpress } from '../../../../config/environment';
+import { handlerErrorAsyncThunk } from '../utils/handler-error';
 
 /**
  * Получение зарегистрированных Users на сайте zwiftpower.ru
@@ -19,9 +20,7 @@ export const fetchUsersZwiftpower = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -41,9 +40,7 @@ export const fetchUsersZwiftpowerForModerator = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
@@ -70,9 +67,7 @@ export const fetchUserDeleteZwiftId = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || error.message;
-      thunkAPI.dispatch(getAlert({ message, type: 'error', isOpened: true }));
-      return thunkAPI.rejectWithValue(message);
+      return handlerErrorAsyncThunk({ error, thunkAPI });
     }
   }
 );
