@@ -74,11 +74,13 @@ export default function TeamPage() {
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
-        {renderSkeletonCards({
-          count: 4,
-          SkeletonComponent: SkeletonSeriesAd,
-          status: fetchSeriesStatus,
-        })}
+        {!seriesPublic?.ongoing.length
+          ? renderSkeletonCards({
+              count: 4,
+              SkeletonComponent: SkeletonSeriesAd,
+              status: fetchSeriesStatus,
+            })
+          : null}
 
         {/* Рекламный блок текущих Серий */}
         {seriesPublic?.ongoing.map((s) => (

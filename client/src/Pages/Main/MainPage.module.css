@@ -51,6 +51,6 @@
   }
   .wrapper__preview {
     gap: 15px;
-    margin-bottom: 0;
+    margin-bottom: 15px;
   }
 }
