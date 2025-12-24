@@ -60,9 +60,10 @@ export default function TeamMembersPage() {
           <ButtonSimple onClick={join}>Присоединиться</ButtonSimple>
         </div>
       )}
+
       <section className={styles.cards}>
         {renderSkeletonCards({
-          count: 3,
+          count: 5,
           SkeletonComponent: SkeletonTeamMemberCard,
           status: fetchMembersStatus,
         })}

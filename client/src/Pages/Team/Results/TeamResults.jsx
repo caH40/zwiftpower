@@ -11,6 +11,7 @@ import Pagination from '../../../components/UI/Pagination/Pagination';
 import TableTeamRiderResults from '../../../components/Tables/TableTeamRiderResults/TableTeamRiderResults';
 import useTitle from '../../../hook/useTitle';
 import { HelmetTeamRiderResults } from '../../../components/Helmets/HelmetTeamRiderResults';
+import SkeletonTable from '../../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
 
 import styles from './TeamResults.module.css';
 
@@ -56,17 +57,18 @@ export default function TeamResultsPage() {
         />
       </div>
 
-      {statusResults === 'resolved' && (
-        <>
-          <section className={styles.block__results}>
-            <TableTeamRiderResults results={results} />
-          </section>
+      <>
+        <section className={styles.block__results}>
+          {/* Скелетон загрузки для Таблицы */}
+          <SkeletonTable status={statusResults} rows={+docsOnPage} height={45} />
 
-          {quantityPages > 1 && (
-            <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
-          )}
-        </>
-      )}
+          {statusResults === 'resolved' && <TableTeamRiderResults results={results} />}
+        </section>
+
+        {quantityPages > 1 && (
+          <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
+        )}
+      </>
     </div>
   );
 }
