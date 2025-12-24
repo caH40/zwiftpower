@@ -42,6 +42,9 @@ const seriesPublicSlice = createSlice({
     resetGeneralClassificationStages: (state) => {
       state.generalClassification = null;
     },
+    resetPublicSeries: (state) => {
+      state.seriesPublic = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -186,6 +189,7 @@ export const {
   resetStageResults,
   resetStages,
   resetGeneralClassificationStages,
+  resetPublicSeries,
 } = seriesPublicSlice.actions;
 
 export default seriesPublicSlice.reducer;

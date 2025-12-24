@@ -49,19 +49,17 @@ function OrganizersPublic() {
     <>
       <HelmetComponent {...ORGANIZERS_HELMET_PROPS.ORGANIZERS_PUBLIC} />
       <div className={styles.wrapper}>
-        {!!shuffledOrganizers?.length && (
-          <section className={styles.cards}>
-            {shuffledOrganizers.map((organizer) => (
-              <CardOrganizer
-                name={organizer.name}
-                urlSlug={organizer.urlSlug}
-                logoUrls={organizer.logoUrls}
-                posterUrls={organizer.posterUrls}
-                key={organizer.id}
-              />
-            ))}
-          </section>
-        )}
+        <section className={styles.cards}>
+          {shuffledOrganizers?.map((organizer) => (
+            <CardOrganizer
+              name={organizer.name}
+              urlSlug={organizer.urlSlug}
+              logoUrls={organizer.logoUrls}
+              posterUrls={organizer.posterUrls}
+              key={organizer.id}
+            />
+          ))}
+        </section>
 
         {/* Боковая панель. */}
         <aside className={styles.aside}>
