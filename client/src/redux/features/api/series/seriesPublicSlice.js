@@ -28,9 +28,6 @@ const seriesPublicSlice = createSlice({
   name: 'seriesPublic',
   initialState,
   reducers: {
-    resetSeriesPublicAll: (state) => {
-      state.seriesPublic = null;
-    },
     resetSeriesPublicOne: (state) => {
       state.seriesPublicOne = null;
     },
@@ -166,7 +163,6 @@ const seriesPublicSlice = createSlice({
 });
 
 export const {
-  resetSeriesPublicAll,
   resetSeriesPublicOne,
   resetStageResults,
   resetStages,

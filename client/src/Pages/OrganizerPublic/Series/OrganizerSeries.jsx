@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { fetchGetSeries } from '../../../redux/features/api/series/fetchSeries';
-import { resetSeriesPublicAll } from '../../../redux/features/api/series/seriesPublicSlice';
 import { HelmetOrganizerPublic } from '../../../components/Helmets/HelmetOrganizerPublic';
 import useTitle from '../../../hook/useTitle';
 import SeriesSection from '../../../components/SeriesSection/SeriesSection';
@@ -25,8 +24,6 @@ export default function OrganizerSeries() {
 
   useEffect(() => {
     dispatch(fetchGetSeries({ organizerSlug: urlSlug }));
-
-    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch, urlSlug]);
   return (
     <section className={styles.wrapper_}>

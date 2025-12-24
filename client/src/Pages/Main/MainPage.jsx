@@ -19,7 +19,6 @@ import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
 import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
-import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import Poll from '../../components/Poll/Poll';
 import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
@@ -53,8 +52,6 @@ function MainPage() {
 
   useEffect(() => {
     dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
-
-    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   useEffect(() => {

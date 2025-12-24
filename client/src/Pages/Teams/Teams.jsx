@@ -14,7 +14,6 @@ import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
-import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './Teams.module.css';
 
@@ -46,8 +45,6 @@ export default function TeamsPublic() {
 
   useEffect(() => {
     dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
-
-    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   // Сначала команда пользователя, затем отсортированные по названию.

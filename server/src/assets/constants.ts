@@ -182,7 +182,7 @@ export const RIDER_CATEGORIES_RULE_TYPES = [
   'dsqKeep',
 ] as const;
 
-export const DATE_FOR_ADD_TEAM_RESULTS = '2024-09-01';
+export const DATE_FOR_ADD_TEAM_RESULTS = '2025-09-01';
 
 export const SERIES_TYPES = ['series', 'tour', 'catchUp', 'criterium', 'endurance'] as const;
 

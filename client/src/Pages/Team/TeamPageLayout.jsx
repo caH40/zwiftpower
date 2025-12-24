@@ -14,7 +14,6 @@ import { NavBarTeamControl } from '../../components/UI/NavBarTeamPublic/NavBarTe
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
-import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
 
 import styles from './TeamPageLayout.module.css';
 
@@ -35,8 +34,6 @@ export default function TeamPage() {
 
   useEffect(() => {
     dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
-
-    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   useEffect(() => {

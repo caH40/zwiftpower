@@ -9,7 +9,7 @@ import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/
 import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
-import { resetSeriesPublicAll } from '../../redux/features/api/series/seriesPublicSlice';
+
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 
@@ -39,8 +39,6 @@ export default function OrganizerPublicLayout() {
 
   useEffect(() => {
     dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
-
-    return () => dispatch(resetSeriesPublicAll());
   }, [dispatch]);
 
   return (
