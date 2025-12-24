@@ -74,8 +74,12 @@ export default function TeamPage() {
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
-        <SkeletonSeriesAd status={fetchSeriesStatus} />
-        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        {renderSkeletonCards({
+          count: 4,
+          SkeletonComponent: SkeletonSeriesAd,
+          status: fetchSeriesStatus,
+        })}
+
         {/* Рекламный блок текущих Серий */}
         {seriesPublic?.ongoing.map((s) => (
           <AdSeries

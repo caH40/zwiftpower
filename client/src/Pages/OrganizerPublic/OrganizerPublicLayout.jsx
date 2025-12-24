@@ -9,9 +9,9 @@ import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/
 import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
 import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
-
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
 
 import styles from './OrganizerPublicLayout.module.css';
 
@@ -71,8 +71,12 @@ export default function OrganizerPublicLayout() {
         {/* Боковая панель. */}
         {xl && (
           <aside className={styles.aside}>
-            <SkeletonSeriesAd status={fetchSeriesStatus} />
-            <SkeletonSeriesAd status={fetchSeriesStatus} />
+            {renderSkeletonCards({
+              count: 4,
+              SkeletonComponent: SkeletonSeriesAd,
+              status: fetchSeriesStatus,
+            })}
+
             {/* Рекламный блок текущих Серий */}
             {seriesPublic?.ongoing.map((s) => (
               <AdSeries

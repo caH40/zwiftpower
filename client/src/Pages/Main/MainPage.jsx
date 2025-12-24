@@ -27,6 +27,7 @@ import { fetchTopTeamsLeaderboard } from '../../redux/features/api/team/fetchTea
 import { resetTopTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
 import TeamsRankingWidget from '../../components/TeamsRankingWidget/TeamsRankingWidget';
 import SkeletonTeamRankingWidget from '../../components/SkeletonLoading/SkeletonTeamRankingWidget/SkeletonTeamRankingWidget';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
 
 import styles from './MainPage.module.css';
 
@@ -151,8 +152,11 @@ function MainPage() {
             {/* Блок с голосованиями */}
             {poll && <Poll {...poll} />}
 
-            <SkeletonSeriesAd status={fetchSeriesStatus} />
-            <SkeletonSeriesAd status={fetchSeriesStatus} />
+            {renderSkeletonCards({
+              count: 4,
+              SkeletonComponent: SkeletonSeriesAd,
+              status: fetchSeriesStatus,
+            })}
 
             {/* Рекламный блок текущих Серий */}
             {seriesPublic?.ongoing.map((s) => (

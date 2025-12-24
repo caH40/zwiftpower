@@ -64,7 +64,7 @@ export default function TeamsPublic() {
 
       <section className={styles.cards}>
         {renderSkeletonCards({
-          count: 3,
+          count: 10,
           SkeletonComponent: SkeletonTeamCard,
           status: fetchTeamsStatus,
         })}
@@ -75,8 +75,12 @@ export default function TeamsPublic() {
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
-        <SkeletonSeriesAd status={fetchSeriesStatus} />
-        <SkeletonSeriesAd status={fetchSeriesStatus} />
+        {renderSkeletonCards({
+          count: 4,
+          SkeletonComponent: SkeletonSeriesAd,
+          status: fetchSeriesStatus,
+        })}
+
         {/* Рекламный блок текущих Серий */}
         {seriesPublic?.ongoing.map((s) => (
           <AdSeries
