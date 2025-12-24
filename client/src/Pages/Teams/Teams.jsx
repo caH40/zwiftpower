@@ -13,7 +13,7 @@ import CardTeam from '../../components/CardTeam/CardTeam';
 import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import AdSeries from '../../components/AdSeries/AdSeries';
-import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 
 import styles from './Teams.module.css';
 
@@ -28,7 +28,7 @@ export default function TeamsPublic() {
     user: { team: userInTeam, zwiftId },
   } = useSelector((state) => state.checkAuth.value);
 
-  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
 
@@ -44,7 +44,7 @@ export default function TeamsPublic() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   // Сначала команда пользователя, затем отсортированные по названию.
@@ -75,7 +75,7 @@ export default function TeamsPublic() {
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
-        {!seriesPublic?.ongoing.length
+        {!ongoingSeriesPublic.length
           ? renderSkeletonCards({
               count: 4,
               SkeletonComponent: SkeletonSeriesAd,
@@ -84,7 +84,7 @@ export default function TeamsPublic() {
           : null}
 
         {/* Рекламный блок текущих Серий */}
-        {seriesPublic?.ongoing.map((s) => (
+        {ongoingSeriesPublic.map((s) => (
           <AdSeries
             key={s.urlSlug}
             urlSlug={s.urlSlug}

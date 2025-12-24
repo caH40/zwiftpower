@@ -18,7 +18,7 @@ import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
 import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
-import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import Poll from '../../components/Poll/Poll';
 import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
@@ -39,7 +39,7 @@ function MainPage() {
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
   const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
@@ -52,7 +52,7 @@ function MainPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   useEffect(() => {
@@ -152,7 +152,7 @@ function MainPage() {
             {/* Блок с голосованиями */}
             {poll && <Poll {...poll} />}
 
-            {!seriesPublic?.ongoing.length
+            {!ongoingSeriesPublic.length
               ? renderSkeletonCards({
                   count: 4,
                   SkeletonComponent: SkeletonSeriesAd,
@@ -161,7 +161,7 @@ function MainPage() {
               : null}
 
             {/* Рекламный блок текущих Серий */}
-            {seriesPublic?.ongoing.map((s) => (
+            {ongoingSeriesPublic.map((s) => (
               <AdSeries
                 key={s.urlSlug}
                 urlSlug={s.urlSlug}

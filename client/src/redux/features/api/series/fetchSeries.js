@@ -131,6 +131,27 @@ export const fetchGetSeries = createAsyncThunk(
     }
   }
 );
+/**
+ * Текущие серии для рекламных блоков.
+ */
+export const fetchGetOngoingSeries = createAsyncThunk(
+  'ongoingNSeries/get',
+  async (_, thunkAPI) => {
+    try {
+      const url = new URL('/api/series/organizers', serverExpress);
+      url.searchParams.append('seriesStatus', 'ongoing');
+
+      const response = await myAxios({
+        url: url.toString(),
+        method: 'get',
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);
 
 /**
  * Данные по серии заездов для публичных запросов.

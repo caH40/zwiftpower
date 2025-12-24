@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   fetchGeneralClassification,
+  fetchGetOngoingSeries,
   fetchGetSeries,
   fetchGetSeriesOne,
   fetchGetStageResults,
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
   seriesPublic: null, // Серии для пользователей.
+  ongoingSeriesPublic: [], // Текущие серии для рекламных блоков.
   seriesPublicOne: null,
   stageResults: null,
   generalClassification: null,
@@ -56,6 +58,23 @@ const seriesPublicSlice = createSlice({
     });
 
     builder.addCase(fetchGetSeries.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error = action.payload;
+    });
+
+    // ============== получение текущих серии для рекламных блоков =================
+    builder.addCase(fetchGetOngoingSeries.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+    });
+
+    builder.addCase(fetchGetOngoingSeries.fulfilled, (state, action) => {
+      state.ongoingSeriesPublic = action.payload.data.ongoing;
+      state.error = null;
+      state.status = 'resolved';
+    });
+
+    builder.addCase(fetchGetOngoingSeries.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = action.payload;
     });

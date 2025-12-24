@@ -13,7 +13,7 @@ import useTitle from '../../hook/useTitle';
 import { NavBarTeamControl } from '../../components/UI/NavBarTeamPublic/NavBarTeamControl';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import AdSeries from '../../components/AdSeries/AdSeries';
-import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 
 import styles from './TeamPageLayout.module.css';
 
@@ -26,14 +26,14 @@ export default function TeamPage() {
     user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
-  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function TeamPage() {
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
-        {!seriesPublic?.ongoing.length
+        {!ongoingSeriesPublic.length
           ? renderSkeletonCards({
               count: 4,
               SkeletonComponent: SkeletonSeriesAd,
@@ -83,7 +83,7 @@ export default function TeamPage() {
           : null}
 
         {/* Рекламный блок текущих Серий */}
-        {seriesPublic?.ongoing.map((s) => (
+        {ongoingSeriesPublic.map((s) => (
           <AdSeries
             key={s.urlSlug}
             urlSlug={s.urlSlug}

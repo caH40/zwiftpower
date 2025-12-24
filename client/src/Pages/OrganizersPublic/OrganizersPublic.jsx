@@ -8,6 +8,10 @@ import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import useTitle from '../../hook/useTitle';
 import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
+import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
+import { renderSkeletonCards } from '../../utils/skeleton-cards';
+import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
+import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './OrganizersPublic.module.css';
 
@@ -19,6 +23,9 @@ function OrganizersPublic() {
 
   // Данные организаторов из хранилища редакс.
   const { organizers } = useSelector((state) => state.organizersPublic);
+  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
 
   // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Организаторов.
   const shuffledOrganizers = useMemo(() => {
@@ -34,7 +41,10 @@ function OrganizersPublic() {
     return () => dispatch(resetOrganizersPublic());
   }, [dispatch]);
 
-  // Хук работы с рекламными блоками на странице.
+  useEffect(() => {
+    dispatch(fetchGetOngoingSeries());
+  }, [dispatch]);
+
   return (
     <>
       <HelmetComponent {...ORGANIZERS_HELMET_PROPS.ORGANIZERS_PUBLIC} />
@@ -52,6 +62,31 @@ function OrganizersPublic() {
             ))}
           </section>
         )}
+
+        {/* Боковая панель. */}
+        <aside className={styles.aside}>
+          {!ongoingSeriesPublic.length
+            ? renderSkeletonCards({
+                count: 4,
+                SkeletonComponent: SkeletonSeriesAd,
+                status: fetchSeriesStatus,
+              })
+            : null}
+
+          {/* Рекламный блок текущих Серий */}
+          {ongoingSeriesPublic.map((s) => (
+            <AdSeries
+              key={s.urlSlug}
+              urlSlug={s.urlSlug}
+              posterUrls={s.posterUrls}
+              name={s.name}
+              dateStart={s.dateStart}
+              dateEnd={s.dateEnd}
+              isCard={true}
+              pageType="schedule"
+            />
+          ))}
+        </aside>
       </div>
     </>
   );

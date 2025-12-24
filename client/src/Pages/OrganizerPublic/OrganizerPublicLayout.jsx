@@ -8,7 +8,7 @@ import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
-import { fetchGetSeries } from '../../redux/features/api/series/fetchSeries';
+import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
@@ -20,7 +20,7 @@ import styles from './OrganizerPublicLayout.module.css';
  */
 export default function OrganizerPublicLayout() {
   const { isScreenXl: xl } = useResize();
-  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
   const { urlSlug } = useParams();
@@ -38,7 +38,7 @@ export default function OrganizerPublicLayout() {
   }, [dispatch, urlSlug]);
 
   useEffect(() => {
-    dispatch(fetchGetSeries({ seriesStatus: 'ongoing' }));
+    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   return (
@@ -71,14 +71,16 @@ export default function OrganizerPublicLayout() {
         {/* Боковая панель. */}
         {xl && (
           <aside className={styles.aside}>
-            {renderSkeletonCards({
-              count: 4,
-              SkeletonComponent: SkeletonSeriesAd,
-              status: fetchSeriesStatus,
-            })}
+            {!ongoingSeriesPublic.length
+              ? renderSkeletonCards({
+                  count: 4,
+                  SkeletonComponent: SkeletonSeriesAd,
+                  status: fetchSeriesStatus,
+                })
+              : null}
 
             {/* Рекламный блок текущих Серий */}
-            {seriesPublic?.ongoing.map((s) => (
+            {ongoingSeriesPublic.map((s) => (
               <AdSeries
                 key={s.urlSlug}
                 urlSlug={s.urlSlug}
