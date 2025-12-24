@@ -7,12 +7,13 @@ import { fetchGetTeamStatistics } from '../../../redux/features/api/team/fetchTe
 import { resetStatistics } from '../../../redux/features/api/team/teamSlice';
 import useTitle from '../../../hook/useTitle';
 import TeamStatistic from '../../../components/TeamStatistic/TeamStatistic';
+import SkeletonTeamAchievements from '../../../components/SkeletonLoading/SkeletonTeamAchievements/SkeletonTeamAchievements';
 
 import styles from './Achievements.module.css';
 
 export default function TeamAchievementsPage() {
   const { urlSlug } = useParams();
-  const { team } = useSelector((state) => state.team);
+  const { team, status } = useSelector((state) => state.team);
   useTitle(`Достижения ${team ? ' ' + team.name : ''}`);
   const stats = useSelector((state) => state.team.statistics);
 
@@ -25,16 +26,14 @@ export default function TeamAchievementsPage() {
   }, [urlSlug, dispatch]);
 
   return (
-    stats && (
-      <div className={styles.wrapper}>
-        <HelmetTeamAchievements
-          teamName={team?.name}
-          urlSlug={urlSlug}
-          imageUrl={team?.logoUrls?.original}
-        />
-
-        <TeamStatistic stats={stats} />
-      </div>
-    )
+    <div className={styles.wrapper}>
+      <HelmetTeamAchievements
+        teamName={team?.name}
+        urlSlug={urlSlug}
+        imageUrl={team?.logoUrls?.original}
+      />
+      <SkeletonTeamAchievements status={status} />
+      {stats && <TeamStatistic stats={stats} />}
+    </div>
   );
 }

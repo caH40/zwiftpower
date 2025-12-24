@@ -1,0 +1,242 @@
+/* Основные стили скелетона */
+.header {
+  width: 100%;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Основная информация */
+.mainInfo {
+  margin-bottom: 20px;
+}
+
+.rankingSection {
+  display: block;
+  width: 150px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.ranking {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rankingLabel {
+  width: 80px;
+  height: 20px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.rankingValue {
+  width: 40px;
+  height: 24px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Заголовки карточек */
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.statTitle {
+  width: 120px;
+  height: 20px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  margin: 0;
+}
+
+.statTotal {
+  width: 40px;
+  height: 24px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Категории */
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skeletonDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--skeleton-medium);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.catLabel {
+  height: 16px;
+  flex: 1;
+  background: var(--skeleton-light);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.catCount {
+  width: 30px;
+  height: 16px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Медали */
+.medals {
+  display: flex;
+  gap: 16px;
+  justify-content: space-around;
+}
+
+.medalItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.skeletonMedal {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--skeleton-medium);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+.medalCount {
+  width: 20px;
+  height: 20px;
+  background: var(--skeleton-light);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Заезды */
+.eventsStats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventLabel {
+  width: 100px;
+  height: 16px;
+  background: var(--skeleton-light);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.eventValue {
+  width: 40px;
+  height: 20px;
+  background: var(--skeleton-medium);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Победы в сериях (если нужно) */
+.seriesWins {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seriesItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.seriesItem:last-child {
+  border-bottom: none;
+}
+
+.seriesName {
+  width: 120px;
+  height: 16px;
+  background: var(--skeleton-light);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.seriesPlace {
+  width: 60px;
+  height: 20px;
+  background: var(--skeleton-medium);
+  border-radius: 12px;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rankingSection {
+    width: 100%;
+    max-width: 200px;
+  }
+}
