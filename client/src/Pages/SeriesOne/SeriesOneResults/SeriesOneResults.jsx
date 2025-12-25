@@ -21,6 +21,7 @@ const EnduranceComponent = lazy(() =>
 );
 import { HelmetSeriesResults } from '../../../components/Helmets/HelmetSeriesResults';
 import { getTimerLocal } from '../../../utils/date-local';
+import { LoadingPage } from '../../LoadingPage/LoadingPage';
 
 import styles from './SeriesOneResults.module.css';
 
@@ -58,7 +59,7 @@ export default function SeriesOneResults() {
         />
 
         {/* Используем Suspense для отложенной загрузки компонентов. */}
-        <Suspense>
+        <Suspense fallback={<LoadingPage />}>
           {seriesPublicOne?.type &&
             componentsMap[seriesPublicOne.type]({ series: seriesPublicOne })}
         </Suspense>

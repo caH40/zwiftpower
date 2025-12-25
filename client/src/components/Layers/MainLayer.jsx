@@ -5,6 +5,7 @@ import CustomizedSnackbars from '../UI/Snackbars/CustomizedSnackbars';
 import PopupInput from '../UI/PopupInput/PopupInput';
 import PopupFormRelease from '../UI/PopupFormRelease/PopupFormRelease';
 import PopupFormContainer from '../UI/PopupFormContainer/PopupFormContainer';
+import { LoadingPage } from '../../Pages/LoadingPage/LoadingPage';
 
 import Body from './Body';
 import Footer from './Footer/Footer';
@@ -16,7 +17,7 @@ function MainLayer() {
       <CustomizedSnackbars>
         <Header />
         <Body>
-          <Suspense>
+          <Suspense fallback={<LoadingPage />}>
             <Outlet />
           </Suspense>
         </Body>

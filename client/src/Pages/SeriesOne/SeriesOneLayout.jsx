@@ -9,15 +9,9 @@ import NavBarSeriesPublic from '../../components/UI/NavBarSeriesPublic/NavBarSer
 import { resetSeriesPublicOne } from '../../redux/features/api/series/seriesPublicSlice';
 import SkeletonSeriesHeader from '../../components/SkeletonLoading/SkeletonSeriesHeader/SkeletonSeriesHeader';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
-// import { useAd } from '../../hook/useAd';
-// import AdContainer from '../../components/AdContainer/AdContainer';
+import { LoadingPage } from '../LoadingPage/LoadingPage';
 
 import styles from './SeriesOneLayout.module.css';
-
-// рекламные блоки на странице
-// const adOverFooter = 25;
-// const adUnderHeader = 26;
-// const adNumbers = [adUnderHeader, adOverFooter];
 
 /**
  * Макетная страница Серии заездов для вложенных страниц. Описание, итоговые таблицы.
@@ -42,7 +36,6 @@ export default function SeriesOneLayout() {
     ? [...new Set(seriesPublicOne.stages.map((stage) => stage.order))]
     : [];
 
-  // useAd(adNumbers);
   return (
     <>
       <section className={styles.wrapper}>
@@ -76,16 +69,10 @@ export default function SeriesOneLayout() {
           <NavBarSeriesPublic urlSlug={seriesPublicOne?.urlSlug} />
         </div>
 
-        <Suspense>
+        <Suspense fallback={<LoadingPage />}>
           <Outlet />
         </Suspense>
       </section>
-
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }

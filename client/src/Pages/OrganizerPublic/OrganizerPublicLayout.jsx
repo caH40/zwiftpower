@@ -11,6 +11,7 @@ import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeri
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
+import { LoadingPage } from '../LoadingPage/LoadingPage';
 
 import styles from './OrganizerPublicLayout.module.css';
 
@@ -58,7 +59,7 @@ export default function OrganizerPublicLayout() {
               <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
             </div>
 
-            <Suspense>
+            <Suspense fallback={<LoadingPage />}>
               <Outlet />
             </Suspense>
           </section>
