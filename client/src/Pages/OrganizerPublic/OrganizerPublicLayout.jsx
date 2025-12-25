@@ -2,7 +2,6 @@ import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { useResize } from '../../hook/use-resize';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
@@ -19,7 +18,6 @@ import styles from './OrganizerPublicLayout.module.css';
  * Страница Организатора заездов.
  */
 export default function OrganizerPublicLayout() {
-  const { isScreenXl: xl } = useResize();
   const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
@@ -69,31 +67,30 @@ export default function OrganizerPublicLayout() {
         )}
 
         {/* Боковая панель. */}
-        {xl && (
-          <aside className={styles.aside}>
-            {!ongoingSeriesPublic.length
-              ? renderSkeletonCards({
-                  count: 4,
-                  SkeletonComponent: SkeletonSeriesAd,
-                  status: fetchSeriesStatus,
-                })
-              : null}
 
-            {/* Рекламный блок текущих Серий */}
-            {ongoingSeriesPublic.map((s) => (
-              <AdSeries
-                key={s.urlSlug}
-                urlSlug={s.urlSlug}
-                posterUrls={s.posterUrls}
-                name={s.name}
-                dateStart={s.dateStart}
-                dateEnd={s.dateEnd}
-                isCard={true}
-                pageType="schedule"
-              />
-            ))}
-          </aside>
-        )}
+        <aside className={styles.aside}>
+          {!ongoingSeriesPublic.length
+            ? renderSkeletonCards({
+                count: 4,
+                SkeletonComponent: SkeletonSeriesAd,
+                status: fetchSeriesStatus,
+              })
+            : null}
+
+          {/* Рекламный блок текущих Серий */}
+          {ongoingSeriesPublic.map((s) => (
+            <AdSeries
+              key={s.urlSlug}
+              urlSlug={s.urlSlug}
+              posterUrls={s.posterUrls}
+              name={s.name}
+              dateStart={s.dateStart}
+              dateEnd={s.dateEnd}
+              isCard={true}
+              pageType="schedule"
+            />
+          ))}
+        </aside>
       </div>
     </>
   );

@@ -46,7 +46,7 @@ export class TeamStatisticsService {
       return { data: null, message: `Не найдены участники команды ${team.name}!` };
     }
 
-    const zwiftIds = teamMembers.map((m) => m.user.zwiftId);
+    const zwiftIds = teamMembers.map((m) => m.user?.zwiftId);
 
     // Метрики по райдерам команды.
     const riderMetrics = await this.getRiderMetrics(zwiftIds, teamMembersTotal);
