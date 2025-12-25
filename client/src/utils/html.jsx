@@ -38,4 +38,14 @@ export const createHtml = {
       )
     );
   },
+
+  /**
+   * Добавляет переносы строк вокруг амперсанда для мобильных устройств
+   */
+  addLineBreaksAroundAmpersand: function (text) {
+    if (!text || typeof text !== 'string') {
+      return text;
+    }
+    return text.replace(/&/g, '\n&\n');
+  },
 };

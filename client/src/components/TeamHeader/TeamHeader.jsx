@@ -69,7 +69,7 @@ export default function TeamHeader({
             />
           )}
 
-          <h3 className={styles.title}>{name}</h3>
+          <h3 className={styles.title}>{createHtml.addLineBreaksAroundAmpersand(name)}</h3>
 
           <div className={styles.content__bottom}>
             <div className={styles.buttons__block}>

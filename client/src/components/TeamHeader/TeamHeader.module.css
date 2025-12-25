@@ -146,6 +146,7 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
 /* ====================================================================== */
 @media (max-width: 1000px) {
   .title__box {
@@ -171,6 +172,8 @@
   .title {
     font-size: 30px;
     align-self: center;
+    white-space: pre-line; /* Сохраняет \n как переносы строк */
+    text-align: center;
   }
   .description__control {
     top: 14px;
@@ -201,7 +204,8 @@
     max-width: 600px;
   }
   .title {
-    padding: 0;
+    font-size: 26px;
+    padding: 30px 0 0 0;
   }
   .logo {
     width: 120px;
