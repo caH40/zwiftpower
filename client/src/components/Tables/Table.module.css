@@ -118,7 +118,7 @@ tbody .current {
 }
 
 .td__name {
-  min-width: 400px;
+  min-width: 350px;
 }
 .td__nowrap {
   white-space: nowrap;

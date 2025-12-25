@@ -13,6 +13,7 @@ import { useUserRole } from '../../../hook/useUserRole';
 import TdSeries from '../Td/TdSeries';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
+import SimpleLogo from '../../SimpleLogo/SimpleLogo';
 
 import styles from '../Table.module.css';
 
@@ -62,7 +63,16 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
                 </Link>
               </td>
 
-              <td className={cx('td__nowrap')}>{event.organizer}</td>
+              <td>
+                <div style={{ minWidth: 40 }}>
+                  <SimpleLogo
+                    squareSize={28}
+                    name={event.organizer}
+                    sources={event.logoFileInfo}
+                  />
+                </div>
+              </td>
+
               <td>
                 <CategoryBox label="T" quantityRiders={event.totalFinishedCount} />
               </td>

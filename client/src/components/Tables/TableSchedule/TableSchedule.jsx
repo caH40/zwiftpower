@@ -15,6 +15,7 @@ import RulesBox from '../../RulesBox/RulesBox';
 import TdDistance from '../Td/TdDistance';
 import TdElevation from '../Td/TdElevation';
 import styles from '../Table.module.css';
+import SimpleLogo from '../../SimpleLogo/SimpleLogo';
 
 import Thead from './Thead';
 
@@ -64,9 +65,15 @@ function TableSchedule({ events, updateEvent, removeEvent }) {
                 </Link>
               </td>
 
-              <td className={cx('td__nowrap')}>{event.organizer}</td>
-
-              {/* <TdRaceType typeRaceCustom={event.typeRaceCustom} /> */}
+              <td>
+                <div style={{ minWidth: 40 }}>
+                  <SimpleLogo
+                    squareSize={28}
+                    name={event.organizer}
+                    sources={event.logoFileInfo}
+                  />
+                </div>
+              </td>
 
               <td>
                 <CategoriesBox event={event} addCls={'nowrap'} />

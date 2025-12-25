@@ -1,11 +1,10 @@
-import React from 'react';
-
 import IconSummer from '../../icons/Seasons/IconSummer';
 import IconWinter from '../../icons/Seasons/IconWinter';
 import IconSpring from '../../icons/Seasons/IconSpring';
 import IconAutumn from '../../icons/Seasons/IconAutumn';
 import { AdaptiveImage } from '../../AdaptiveImage/AdaptiveImage';
 import MyTooltip from '../../../HOC/MyTooltip';
+import SimpleLogo from '../../SimpleLogo/SimpleLogo';
 
 const seasons = ['winter', 'spring', 'summer', 'autumn'];
 
@@ -13,16 +12,7 @@ function TdSeries({ logoFileInfo, seriesName = '' }) {
   if (logoFileInfo) {
     return (
       <td>
-        <MyTooltip tooltip={seriesName}>
-          <div>
-            <AdaptiveImage
-              height={28}
-              width={28}
-              sources={logoFileInfo}
-              fallbackSrc={'/images/transparent.png'}
-            />
-          </div>
-        </MyTooltip>
+        <SimpleLogo squareSize={28} name={seriesName} sources={logoFileInfo} />
       </td>
     );
   }
