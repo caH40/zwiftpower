@@ -3,13 +3,29 @@ import { ZwiftEvent } from '../Model/ZwiftEvent.js';
 import { TSeries, TSeriesStage } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
 import { MongooseUtils } from '../utils/MongooseUtils.js';
-import { TZwiftCategory } from '../types/types.interface.js';
+import { EventWithSubgroupAndSeries, TZwiftCategory } from '../types/types.interface.js';
 
 /**
  * Класс работы с коллекцией ZwiftEvent в MongoDB.
  */
 export class EventRepository {
   mongooseUtils: MongooseUtils = new MongooseUtils();
+  /**
+   * Все Эвенты для таблиц расписания или результатов заездов
+   */
+  async getEventsForResultsAndSchedule(query: {
+    organizerId?: string | undefined;
+    started: boolean;
+  }) {
+    return ZwiftEvent.find(query)
+      .populate('eventSubgroups')
+      .populate({ path: 'seriesId', select: ['logoFileInfo', 'name', 'urlSlug'] })
+      .populate({
+        path: 'organizerId',
+        select: ['logoFileInfo', '_id', 'name', 'shortName', 'urlSlug'],
+      })
+      .lean<EventWithSubgroupAndSeries[]>();
+  }
   /**
    * Все Эвенты в которых есть подгруппы subgroupsId
    * @param subgroupsIds - массив _id подгрупп эвента из БД.

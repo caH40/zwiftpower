@@ -52,9 +52,13 @@ export type TEventWithSubgroupDto = Omit<EventWithSubgroup, 'organizerId' | 'ser
   seriesId: Pick<TSeries, '_id' | 'name' | 'urlSlug'> & {
     logoFileInfo?: Record<string, string>;
   };
-  organizerId: string;
-  logoFileInfo?: Record<string, string>;
-  // [key: string]: unknown;
+  organizerId: {
+    logoUrls?: Record<string, string>;
+    _id: string;
+    name: string;
+    shortName: string;
+    urlSlug: string;
+  };
 };
 
 /**

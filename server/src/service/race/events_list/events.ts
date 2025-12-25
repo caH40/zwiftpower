@@ -4,11 +4,11 @@ import { getEventsFiltered } from './events-filter.js';
 
 // types
 import { GetEvents, TResponseService } from '../../../types/http.interface.js';
-import { EventWithSubgroupAndSeries } from '../../../types/types.interface.js';
 import { eventsForSeriesDto, eventsListDto } from '../../../dto/eventsList.dto.js';
 import { TEventsForSeriesResponseDB } from '../../../types/mongodb-response.types.js';
 import { TEventsForSeriesDto } from '../../../types/dto.interface.js';
 import { Types } from 'mongoose';
+import { EventRepository } from '../../../repositories/Event.js';
 
 /**
  * получение всех эвентов для расписания (started:false) или для списка эвентов с результатами
@@ -28,11 +28,8 @@ export async function getEventsService({
     ...(organizerId && { organizerId }),
   };
 
-  const eventsDB = await ZwiftEvent.find(query)
-    .populate('eventSubgroups')
-    .populate({ path: 'seriesId', select: ['logoFileInfo', 'name', 'urlSlug'] })
-    .populate({ path: 'organizerId', select: ['logoFileInfo', '_id', 'name', 'shortName'] })
-    .lean<EventWithSubgroupAndSeries[]>();
+  const eventRepository = new EventRepository();
+  const eventsDB = await eventRepository.getEventsForResultsAndSchedule(query);
 
   // Фильтрация по имени
   const eventsFiltered = getEventsFiltered(eventsDB, search);

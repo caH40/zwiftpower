@@ -17,7 +17,7 @@ import { addTeamAppearanceToSignedRiders } from '../../preparation/teamAppearanc
 /**
  * Сервис получение Event (описание) и зарегистрировавшихся райдеров
  */
-export async function getEventService(eventId: string) {
+export async function getEventAndSignedRidersService(eventId: string) {
   const eventDataDB = await getEventData(eventId);
 
   if (!eventDataDB) {

@@ -15,28 +15,30 @@ import {
 /**
  *  Массив Events для страниц расписания, анонса или результатов
  */
-export const eventsListDto = ({ events, quantityPages, message }: EventsListDtoArg) => {
-  const eventsForFetch: TEventWithSubgroupDto[] = events.map((event) => {
-    const currentEvent = {} as TEventWithSubgroupDto;
+export const eventsListDto = ({
+  events,
+  quantityPages,
+  message,
+}: EventsListDtoArg): {
+  events: TEventWithSubgroupDto[];
+  quantityPages: number | undefined;
+  message: string;
+} => {
+  const eventsForFetch = events.map((event) => {
+    const seriesId = {
+      ...event.seriesId,
+      logoFileInfo: createUrlsToFileCloud(event.seriesId?.logoFileInfo),
+    };
 
-    const logoFileInfo = createUrlsToFileCloud(event.seriesId?.logoFileInfo);
+    const organizerId = event.organizerId && {
+      logoUrls: createUrlsToFileCloud(event.organizerId.logoFileInfo),
+      _id: String(event.organizerId._id),
+      name: event.organizerId.name,
+      shortName: event.organizerId.shortName,
+      urlSlug: event.organizerId.urlSlug,
+    };
 
-    currentEvent.seriesId = { ...event.seriesId, logoFileInfo };
-
-    currentEvent.logoFileInfo = createUrlsToFileCloud(event.organizerId?.logoFileInfo);
-    currentEvent.organizerId = event.organizerId?._id && String(event.organizerId._id);
-
-    // return Object.entries(event).reduce((acc, [key, values]) => {
-    //   if (key === 'organizerId') {
-    //     acc.logoFileInfo = createUrlsToFileCloud(event.organizerId?.logoFileInfo);
-    //     acc.organizerId = event.organizerId?._id && String(event.organizerId._id);
-    //   } else if (key !== '__v') {
-    //     acc[key] = values;
-    //   }
-    //   return acc;
-    // }, {} as TEventWithSubgroupDto);
-
-    return { ...event, ...currentEvent };
+    return { ...event, seriesId, organizerId };
   });
 
   return { events: eventsForFetch, quantityPages, message };

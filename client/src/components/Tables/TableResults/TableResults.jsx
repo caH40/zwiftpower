@@ -43,7 +43,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
       </caption>
       <Thead isModerator={isClubModerator || isAdmin} />
       <tbody>
-        {events.map((event) => {
+        {events.map(({ organizerId, ...event }) => {
           // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
           const isAllowedModerate = moderator?.clubs.includes(
             event.microserviceExternalResourceId
@@ -64,13 +64,18 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               </td>
 
               <td>
-                <div style={{ minWidth: 40 }}>
-                  <SimpleLogo
-                    squareSize={28}
-                    name={event.organizer}
-                    sources={event.logoFileInfo}
-                  />
-                </div>
+                {organizerId ? (
+                  <Link
+                    to={`/organizers/${organizerId.urlSlug}/schedule`}
+                    style={{ minWidth: 40 }}
+                  >
+                    <SimpleLogo
+                      squareSize={28}
+                      name={organizerId.name}
+                      sources={organizerId.logoUrls}
+                    />
+                  </Link>
+                ) : null}
               </td>
 
               <td>

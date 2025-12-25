@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { deleteEventAndResultsService } from '../service/race/events-delete.js';
 import { postEventService } from '../service/race/event_post/events-post.js';
 import { putEventService } from '../service/race/events-put.js';
-import { getEventService } from '../service/race/event_get/event-get.js';
+import { getEventAndSignedRidersService } from '../service/race/eventAndSignedRiders/eventAndSignedRiders.js';
 import {
   getEventsForSeriesService,
   getEventsService,
@@ -25,7 +25,7 @@ import { GetEvents, PostEvent } from '../types/http.interface.js';
 export async function getEvent(req: Request, res: Response) {
   try {
     const { eventId } = req.params;
-    const event = await getEventService(eventId);
+    const event = await getEventAndSignedRidersService(eventId);
 
     res.status(200).json({ event });
   } catch (error) {

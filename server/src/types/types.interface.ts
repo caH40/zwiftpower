@@ -158,13 +158,14 @@ export interface EventWithSubgroup extends Omit<ZwiftEventSchema, 'eventSubgroup
 /**
  * Данные Event с подгруппами и параметрами Series
  */
-export type EventWithSubgroupAndSeries = Omit<EventWithSubgroup, 'seriesId'> & {
+export type EventWithSubgroupAndSeries = Omit<EventWithSubgroup, 'organizerId' | 'seriesId'> & {
   seriesId: Pick<TSeries, '_id' | 'logoFileInfo' | 'name' | 'urlSlug'>;
   organizerId: {
     logoFileInfo?: TFileMetadataForCloud;
     _id: Types.ObjectId;
     name: string;
     shortName: string;
+    urlSlug: string;
   };
 };
 /**
