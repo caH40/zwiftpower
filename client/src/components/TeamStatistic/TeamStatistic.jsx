@@ -17,7 +17,10 @@ export default function TeamStatistic({
     <div className={styles.header}>
       {/* Основная информация команды */}
       <div className={styles.mainInfo}>
-        <Link to={'/race/statistics/teams'} className={styles.rankingSection}>
+        <Link
+          to={'/race/statistics/teams'}
+          className={cn(styles.rankingSection, styles[`place${seasonRating?.rank}`])}
+        >
           <div className={styles.ranking}>
             <span className={styles.rankingLabel}>Рейтинг:</span>
             <span className={styles.rankingValue}>

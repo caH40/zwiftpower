@@ -197,8 +197,7 @@
   transition: all 0.3s;
 }
 .rankingSection:hover {
-  background: var(--color-yellow-5-transparent);
-  border: 1px solid var(--color-yellow-5);
+  border: 1px solid var(--color-orange-main);
 }
 .ranking {
   display: flex;
@@ -217,12 +216,9 @@
   position: relative;
   display: inline-block;
 }
-
 .rankingLabel:hover {
   color: var(--color-primary);
 }
-
-/* Подчеркивание при наведении */
 .rankingLabel::after {
   content: '';
   position: absolute;
@@ -247,4 +243,22 @@
 .rankingLabel:hover {
   color: var(--color-primary);
   text-decoration: underline;
+}
+.place1 {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.4) 0%, rgba(255, 237, 78, 0.8) 100%);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.place2 {
+  background: linear-gradient(
+    135deg,
+    rgba(192, 192, 192, 0.4) 0%,
+    rgba(224, 224, 224, 0.8) 100%
+  );
+  border-color: rgba(192, 192, 192, 0.3);
+}
+
+.place3 {
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.4) 0%, rgba(227, 150, 78, 0.8) 100%);
+  border-color: rgba(205, 127, 50, 0.3);
 }
