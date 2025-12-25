@@ -6,10 +6,11 @@ import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { shuffleArray } from '../../utils/shuffle';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-import useTitle from '../../hook/useTitle';
-import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
+import { SkeletonOrganizerCard } from '../../components/SkeletonLoading/SkeletonOrganizerCard/SkeletonOrganizerCard';
 import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
+import useTitle from '../../hook/useTitle';
+import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
 import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
 import AdSeries from '../../components/AdSeries/AdSeries';
 
@@ -22,7 +23,9 @@ function OrganizersPublic() {
   useTitle('Организаторы заездов');
 
   // Данные организаторов из хранилища редакс.
-  const { organizers } = useSelector((state) => state.organizersPublic);
+  const { organizers, status: fetchOrganizersStatus } = useSelector(
+    (state) => state.organizersPublic
+  );
   const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
     (state) => state.seriesPublic
   );
@@ -50,6 +53,12 @@ function OrganizersPublic() {
       <HelmetComponent {...ORGANIZERS_HELMET_PROPS.ORGANIZERS_PUBLIC} />
       <div className={styles.wrapper}>
         <section className={styles.cards}>
+          {renderSkeletonCards({
+            count: 5,
+            SkeletonComponent: SkeletonOrganizerCard,
+            status: fetchOrganizersStatus,
+          })}
+
           {shuffledOrganizers?.map((organizer) => (
             <CardOrganizer
               name={organizer.name}
