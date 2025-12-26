@@ -1,7 +1,6 @@
 import { TeamRepository } from '../repositories/Team.js';
 import { TeamMemberRepository } from '../repositories/TeamMember.js';
 import { teamLeaderboardDto, teamTopLeaderboardDto } from '../dto/team-leaderboard.js';
-import { TeamSeasonRatingService } from './TeamSeasonRating.js';
 import { getSeasonPeriod, parseSeasonLabel } from '../utils/season.js';
 import { TeamSeasonRatingRepository } from '../repositories/TeamSeasonRating.js';
 
@@ -17,7 +16,6 @@ import { TTeamSeasonRating } from '../types/model.interface.js';
 export class TeamLeaderboard {
   private teamRepository: TeamRepository;
   private memberRepository: TeamMemberRepository;
-  private teamSeasonRatingService: TeamSeasonRatingService = new TeamSeasonRatingService();
   private ratingRepository: TeamSeasonRatingRepository = new TeamSeasonRatingRepository();
 
   constructor() {
@@ -34,7 +32,7 @@ export class TeamLeaderboard {
       throw new Error(`Не корректное название сезона: ${seasonLabel}`);
     }
 
-    const teamsRating = await this.teamSeasonRatingService.getAll(seasonLabel);
+    const teamsRating = await this.ratingRepository.getAll(seasonLabel);
 
     // Получение всех команд с количеством участников.
     const teamsWithMembers = await this.getTeamsWithQuantityMembers();
