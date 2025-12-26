@@ -17,7 +17,9 @@ export default function OrganizerSeries() {
   const { urlSlug } = useParams();
   // Данные организатора из хранилища редакс.
   const { organizer } = useSelector((state) => state.organizersPublic);
-  const { seriesPublic } = useSelector((state) => state.seriesPublic);
+  const { seriesPublic, status: fetchSeriesStatus } = useSelector(
+    (state) => state.seriesPublic
+  );
 
   useTitle(organizer?.name && `Серии заездов от ${organizer?.name}`);
 
@@ -37,9 +39,21 @@ export default function OrganizerSeries() {
         pageType="series"
       />
 
-      <SeriesSection title="Текущие серии" series={seriesPublic?.ongoing || []} />
-      <SeriesSection title="Анонсированные серии" series={seriesPublic?.upcoming || []} />
-      <SeriesSection title="Завершенные серии" series={seriesPublic?.completed || []} />
+      <SeriesSection
+        title="Текущие серии"
+        fetchSeriesStatus={fetchSeriesStatus}
+        series={seriesPublic?.ongoing}
+      />
+      <SeriesSection
+        title="Анонсированные серии"
+        fetchSeriesStatus={fetchSeriesStatus}
+        series={seriesPublic?.upcoming}
+      />
+      <SeriesSection
+        title="Завершенные серии"
+        fetchSeriesStatus={fetchSeriesStatus}
+        series={seriesPublic?.completed}
+      />
     </section>
   );
 }
