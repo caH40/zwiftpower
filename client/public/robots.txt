@@ -1,14 +1,14 @@
 User-agent: * #указывает, для каких роботов установлены директивы
-Disallow: /zwift/
-Disallow: /bot/
-Disallow: /auth/
-Disallow: /images/background/
-Disallow: /message/
-Disallow: /admin/ # запрещает ссылки из панели администратора
-Disallow: /logs/ # запрещает ссылки из панели администратора
-Disallow: /profile/
-Disallow: /organizer/
-Disallow: /race/series/
+Disallow: /zwift*
+Disallow: /bot*
+Disallow: /auth*
+Disallow: /images/background*
+Disallow: /message*
+Disallow: /admin*
+Disallow: /logs*
+Disallow: /profile*
+Disallow: /organizer*
+Disallow: /race/series*
 Disallow: /legal/
 
 Allow: /profile/*/results$
