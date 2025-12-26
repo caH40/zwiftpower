@@ -30,7 +30,7 @@ export default function OrganizerHeader({
     socialLinks,
     mission,
     description,
-  },
+  } = {},
 }) {
   const [isOpenDescription, setIsOpenDescription] = useState(false);
 

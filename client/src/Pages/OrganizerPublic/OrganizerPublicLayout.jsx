@@ -45,27 +45,22 @@ export default function OrganizerPublicLayout() {
       <HelmetOrganizerPublic />
 
       <div className={styles.wrapper}>
-        {organizer?.posterUrls?.original ? (
-          // Основная секция страницы
-          <section className={styles.main}>
+        {/* Основная секция страницы */}
+        <section className={styles.main}>
+          <>
             {/* Блок-шапка с данными Организатора */}
             <div className={styles.spacer__header}>
               <OrganizerHeader organizer={organizer} />
             </div>
-
             {/* Кнопки навигации по страницам организатора */}
-
             <div className={styles.box__navbar}>
-              <NavBarOrganizerPublic urlSlug={organizer.urlSlug} />
+              <NavBarOrganizerPublic urlSlug={organizer?.urlSlug} />
             </div>
-
             <Suspense fallback={<LoadingPage />}>
               <Outlet />
             </Suspense>
-          </section>
-        ) : (
-          <div></div>
-        )}
+          </>
+        </section>
 
         {/* Боковая панель. */}
 

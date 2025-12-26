@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { renderSkeletonCards } from '../../../utils/skeleton-cards';
 import useTitle from '../../../hook/useTitle';
 import CardRacePreview from '../../../components/CardRacePreview/CardRacePreview';
 import { fetchEvents, resetEventsSchedule } from '../../../redux/features/api/eventsSlice';
 import { HelmetOrganizerPublic } from '../../../components/Helmets/HelmetOrganizerPublic';
+import SkeletonCardRacePreview from '../../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 
 import styles from './OrganizerSchedule.module.css';
 
@@ -46,13 +48,19 @@ export default function OrganizerSchedule() {
         pageType="schedule"
       />
 
-      {!!eventsSchedule.length &&
-        statusFetchEvents === 'resolved' &&
-        eventsSchedule.map((eventPreview) => {
-          return (
-            <CardRacePreview event={eventPreview} getClick={toLink} key={eventPreview.id} />
-          );
-        })}
+      {/* Скелетон загрузки */}
+
+      {!eventsSchedule.length
+        ? renderSkeletonCards({
+            count: 5,
+            SkeletonComponent: SkeletonCardRacePreview,
+            status: statusFetchEvents,
+          })
+        : null}
+
+      {eventsSchedule.map((eventPreview) => {
+        return <CardRacePreview event={eventPreview} getClick={toLink} key={eventPreview.id} />;
+      })}
     </section>
   );
 }
