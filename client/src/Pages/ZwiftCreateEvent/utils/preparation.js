@@ -32,7 +32,13 @@ export function prepareData({
 
   const timestamp = `timestamp=${Date.now()}`;
   // Стандартные по умолчанию настройки, изменяются в  ручную.
-  const tagsDefault = ['ranked', 'showplacements'];
+  const tagsDefault = [
+    'ranked',
+    'showplacements',
+    'completionprize1=4129467727',
+    'completionprize2=2684416694',
+    'completionprize3=3114121871',
+  ];
   const tags = [...tagsRules, timestamp, ...tagsDefault];
   // 'jerseyunlock',
   //   'bikealicious',
