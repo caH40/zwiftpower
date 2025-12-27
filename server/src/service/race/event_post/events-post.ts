@@ -6,6 +6,7 @@ import { saveEventToDB } from './save.js';
 import { Club } from '../../../Model/Club.js';
 import { NSeriesModel } from '../../../Model/NSeries.js';
 import { SeriesOrganizerService } from '../../series/SeriesOrganizer.js';
+import { calculateImportanceLevel } from '../../../utils/importanceLevel.js';
 
 // types
 import {
@@ -15,7 +16,7 @@ import {
   ZwiftEventSchema,
 } from '../../../types/model.interface.js';
 import { EventWithSubgroup } from '../../../types/types.interface.js';
-import { TImportanceCoefficientsLevels } from '../../../types/points.types.js';
+import { getShortestDistanceInMetersInEvent } from '../../../utils/distance.js';
 
 type ClubWithOrganizer = Omit<ClubSchema, 'organizer'> & {
   organizer: OrganizerSchema;
@@ -45,12 +46,11 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
   eventParams.organizer = clubDB.organizer.shortName;
   eventParams.organizerId = clubDB.organizer._id;
 
-  const importanceLevel: TImportanceCoefficientsLevels = [
-    'GROUP_RIDE',
-    'EVENT_TYPE_GROUP_RIDE',
-  ].includes(eventParams.eventType)
-    ? 'unrated'
-    : 'standard';
+  // Важность заезда, для получения соответствующего коэффициента для расчета zpruPoints за место.
+  const importanceLevel = calculateImportanceLevel({
+    eventType: eventParams.eventType,
+    distance: getShortestDistanceInMetersInEvent(eventParams.eventSubgroups),
+  });
 
   eventParams.importanceLevel = importanceLevel;
 

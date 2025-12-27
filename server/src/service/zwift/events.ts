@@ -12,6 +12,8 @@ import { eventDataFromZwiftAPI } from '../../types/zwiftAPI/eventsDataFromZwift.
 import { TAccessExpressionObj } from '../../types/model.interface.js';
 import { Types } from 'mongoose';
 import { TImportanceCoefficientsLevels } from '../../types/points.types.js';
+import { calculateImportanceLevel } from '../../utils/importanceLevel.js';
+import { getShortestDistanceInMetersInEvent } from '../../utils/distance.js';
 
 // Запрос данных Эвента с сервера Zwift от модераторов клубов.
 // При clubId:undefined значит запрос на ZwiftAPI будет осуществляться по общему токену-доступа.
@@ -137,6 +139,14 @@ export async function putEventZwiftService(event: PutEvent, userId: string) {
     typeRaceCustom,
     accessExpressionObj,
     eventType,
+    eventSubgroups: event.eventData.eventSubgroups.map(
+      ({ routeId, durationInSeconds, distanceInMeters, laps }) => ({
+        routeId,
+        durationInSeconds,
+        distanceInMeters,
+        laps,
+      })
+    ),
   });
 
   // логирование действия
@@ -170,17 +180,26 @@ async function setEventLocalParams({
   eventType,
   typeRaceCustom,
   accessExpressionObj,
+  eventSubgroups,
 }: {
   id: number;
   importanceLevel: TImportanceCoefficientsLevels;
   eventType: string;
   typeRaceCustom: string;
   accessExpressionObj: TAccessExpressionObj;
+  eventSubgroups: {
+    routeId: number;
+    durationInSeconds?: number;
+    distanceInMeters?: number;
+    laps?: number;
+  }[];
 }) {
   // Важность заезда, для получения соответствующего коэффициента для расчета zpruPoints за место.
-  const currentImportanceLevel =
-    importanceLevel ||
-    (['GROUP_RIDE', 'EVENT_TYPE_GROUP_RIDE'].includes(eventType) ? 'unrated' : 'standard');
+  const currentImportanceLevel = calculateImportanceLevel({
+    importanceLevel,
+    eventType,
+    distance: getShortestDistanceInMetersInEvent(eventSubgroups),
+  });
 
   // изменение в БД typeRaceCustom,categoryEnforcementName (в API Zwift не передается, локальный параметр)
   await ZwiftEvent.findOneAndUpdate(

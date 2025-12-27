@@ -105,7 +105,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
           )}
         </div>
 
-        {/* Подвал карточки */}
+        {/* Компонент для отображения основных параметров события.*/}
         <div className={styles.box__params}>
           <ParamsEvent
             mapId={mapId}
