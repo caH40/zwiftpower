@@ -14,6 +14,7 @@ import {
   TGetProtocolsStageFromZwiftParams,
   TZwiftCategory,
 } from '../../types/types.interface.js';
+import { addTeamInResults } from '../updates/results_event/team-add.js';
 
 export class HandlerSeries {
   mongooseUtils: MongooseUtils = new MongooseUtils();
@@ -43,8 +44,10 @@ export class HandlerSeries {
     // Получение финишных протокола(протоколов) этапа серии с ZwiftAPI.
     const requestResults = await getResultsFromZwift(eventSubgroups, null);
 
+    const resultsWithTeams = await addTeamInResults(requestResults);
+
     // Формирования необходимой структуры результатов Этапа для Серии заездов.
-    const stageResults = requestResults.map((result) => {
+    const stageResults = resultsWithTeams.map((result) => {
       // Формирование объекта Critical Power для разных интервалов.
       const cpBestEfforts = getCPFromResult(result, true);
 

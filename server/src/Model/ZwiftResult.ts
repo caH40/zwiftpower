@@ -1,26 +1,19 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { ZwiftResultSchema } from '../types/model.interface.js';
-import { TeamForProfileSchema } from './Schema/TeamForProfileSchema.js';
 import { pointsStageResultSchema } from './Schema/Points.js';
 import { finishersCountSchema } from './Schema/FinishersCountSchema.js';
+import { profileDataMainSchema, profileDataSchema } from './Schema/ProfileDataSchema.js';
+
+//types
+import { ZwiftResultSchema } from '../types/model.interface.js';
 
 const zwiftResultSchema = new Schema<ZwiftResultSchema>({
   zwiftEventId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent' },
   subgroupId: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEventSubgroup' }, // зачем?
   profileId: { type: Number, default: null },
 
-  profileData: {
-    firstName: { type: String, default: null },
-    lastName: { type: String, default: null },
-    gender: { type: String, default: null },
-    weightInGrams: { type: Number, default: null },
-    heightInCentimeters: { type: Number, default: null },
-    imageSrc: { type: String, default: null },
-    countryAlpha3: { type: String, default: null },
-    age: { type: Number, default: null },
-    team: { type: TeamForProfileSchema },
-  },
+  profileData: { type: profileDataSchema },
+  profileDataMain: { type: profileDataMainSchema },
 
   eventSubgroupId: { type: Number, default: null },
   subgroupLabel: { type: String, default: null },
@@ -80,19 +73,6 @@ const zwiftResultSchema = new Schema<ZwiftResultSchema>({
       duration: { type: Number, default: null },
     },
   ],
-
-  profileDataMain: {
-    profileIdMain: Number,
-    firstName: String,
-    lastName: String,
-    gender: String,
-    weightInGrams: Number,
-    heightInCentimeters: Number,
-    imageSrc: String,
-    countryAlpha3: String,
-    age: Number,
-    team: { type: TeamForProfileSchema },
-  },
 
   points: { type: pointsStageResultSchema, default: null },
   finishersCount: { type: finishersCountSchema },

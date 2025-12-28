@@ -31,15 +31,11 @@ export function prepareData({
   const tagsRules = [...checkboxTags].filter((tag) => tag.checked).flatMap((tag) => tag.value);
 
   const timestamp = `timestamp=${Date.now()}`;
+
   // Стандартные по умолчанию настройки, изменяются в  ручную.
   const tagsDefault = ['ranked', 'showplacements'];
   const tags = [...tagsRules, timestamp, ...tagsDefault];
-  // 'jerseyunlock',
-  //   'bikealicious',
-  //   'completionprize1=2684416694',
-  //   'rain_override=0',
-  // "mountainmassif",
-  //     "jerseyunlock",
+
   // Установка тэгов для общих настроек Эвента.
   event.tags = [...tags];
 
