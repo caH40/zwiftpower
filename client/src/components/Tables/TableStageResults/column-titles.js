@@ -1,12 +1,13 @@
 export const raceResultsColumnsStart = [
-  { name: 'Место', id: 1 },
-  { name: 'Категория', id: 2 },
-  { name: 'Райдер', id: 3 },
+  { name: 'Место', id: 0 },
+  { name: 'Категория', id: 1 },
+  { name: 'Райдер', id: 2 },
+  { name: 'Команда', id: 3 },
   { name: 'Время', id: 4 },
   { name: 'Отставание от лидера', id: 5 },
   { name: 'Отставание от райдера впереди', id: 6 },
-  { name: 'Удельная средняя мощность за гонку', id: 8 },
-  { name: 'Средняя мощность за гонку', id: 9 },
+  { name: 'Удельная средняя мощность за гонку', id: 7 },
+  { name: 'Средняя мощность за гонку', id: 8 },
 ];
 export const raceResultsColumnsCP = [
   { name: '5м', id: 103, interval: 300 },

@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { useSortStageResults } from '../../../hook/useSortResults';
+import { useUserRole } from '../../../hook/useUserRole';
 import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdWatts } from '../utils/td';
-import FinishTime from '../../FinishTime/FinishTime';
 import { useFinishTime } from '../../../hook/useFinishTime';
+import FinishTime from '../../FinishTime/FinishTime';
 import StageResultMenu from '../../StageResultMenu/StageResultMenu';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
@@ -17,7 +18,7 @@ import ShowColumn from '../../../utils/table';
 import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
-import { useUserRole } from '../../../hook/useUserRole';
+import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 
 import styles from '../Table.module.css';
 
@@ -97,6 +98,17 @@ function TableStageResults({
                 </td>
 
                 <TdRider profile={profile} profileId={result.profileId} />
+
+                {/* Принадлежность к команде */}
+                <td>
+                  {profile.team && (
+                    <TeamLogoBox
+                      team={profile.team}
+                      background={profile.team?.appearance?.badgeBackground}
+                      color={profile.team?.appearance?.badgeTextColor}
+                    />
+                  )}
+                </td>
 
                 {/* Столбец с названием Место */}
                 <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}></ShowColumn>

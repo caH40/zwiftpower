@@ -7,11 +7,11 @@ import { SeriesCategoryService } from './category/SeriesCategory.js';
 import { StageResultRepository } from '../../repositories/StageResult.js';
 import { GCProviderFactory } from './GCProviderFactory.js';
 import { StageRanker } from './StageRanker.js';
+import { countFinishersForStageResults } from '../../utils/countFinishers.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { countFinishersForStageResults } from '../../utils/countFinishers.js';
 
 /**
  * Класс создания (обновления) протоколов серий и туров.
