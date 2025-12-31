@@ -1,7 +1,8 @@
 export const TableGCTourColumnsStart = [
-  { name: 'Место', id: 1 },
-  { name: 'Категория', id: 2 },
-  { name: 'Райдер', id: 3 },
+  { name: 'Место', id: 0 },
+  { name: 'Категория', id: 1 },
+  { name: 'Райдер', id: 2 },
+  { name: 'Команда', id: 3 },
   { name: 'Время', id: 4 },
   { name: 'Отставание от лидера', id: 5 },
   { name: 'Отставание от райдера впереди', id: 6 },

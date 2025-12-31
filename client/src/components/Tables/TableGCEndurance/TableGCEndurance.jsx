@@ -43,10 +43,7 @@ function TableGCEndurance({ results, isSeriesCreator, orderedStages }) {
 
       <tbody>
         {filteredResult?.map((result) => {
-          const profileData = result.stages.findLast(
-            (stage) => stage?.profileData
-          )?.profileData;
-
+          const { profileData } = result;
           return (
             <tr
               className={cx('hover', { current: zwiftId === result.profileId })}

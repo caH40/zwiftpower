@@ -29,7 +29,7 @@ const stageSchema = new Schema(
 );
 
 // Основная схема для генеральной классификации
-const seriesClassificationSchema = new Schema(
+const seriesClassificationSchema = new Schema<ISeriesClassification>(
   {
     seriesId: { type: mongoose.Schema.Types.ObjectId, required: true }, // _id серии из БД.
     rank: {

@@ -1,5 +1,6 @@
 // types
 import {
+  ProfileDataInResult,
   RiderProfileSchema,
   TFinishProtocolConfig,
   TOrganizer,
@@ -243,11 +244,18 @@ export type StageResultsDto = {
  * DTO получения результатов этапа серии.
  */
 export type TGeneralClassificationDto = {
-  results: (Omit<TGeneralClassificationDB, '_id' | 'createdAt' | 'updatedAt'> & {
+  results: (Omit<TGeneralClassificationDB, '_id' | 'createdAt' | 'updatedAt' | 'stages'> & {
     _id: string;
+    stages: TStageWithoutProfileData[];
+    profileData: ProfileDataInResult;
   })[];
   gcResultsUpdatedAt?: string;
 };
+
+export type TStageWithoutProfileData = Omit<
+  TGeneralClassificationDB['stages'][number],
+  'profileData'
+>;
 
 export type TPaymentNotificationDto = Omit<
   TPaymentNotification,

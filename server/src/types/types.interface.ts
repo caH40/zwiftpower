@@ -175,6 +175,10 @@ export interface LogsAdminUsername extends Omit<LogsAdminSchema, 'userId'> {
   userId: { username: string };
 }
 
+export type TGeneralClassificationEdited = Omit<TSeriesClassification, 'profileData'> & {
+  profileData: ProfileDataInResult;
+};
+
 /**
  * Кривая мощности (за последние 90 дней с дополнительными свойствами
  */
@@ -961,6 +965,13 @@ export type TPublicSeriesServiceSortStagesParams = {
 export type TGCForSave = Omit<TSeriesClassification, 'seriesId' | 'createdAt' | 'updatedAt'> & {
   seriesId: string;
 };
+// export type TGCForSave = Omit<
+//   TSeriesClassification,
+//   'seriesId' | 'createdAt' | 'updatedAt' | 'stages'
+// > & {
+//   seriesId: string;
+//   stages: TStageWithoutProfileData[];
+// };
 
 /**
  * Тип адаптера для универсальной работы с разными типами результатов.

@@ -14,7 +14,7 @@ import {
   TGCForSave,
 } from '../../../types/types.interface.js';
 import { TResponseService } from '../../../types/http.interface.js';
-import { TRidersResults, TSimpleStage } from '../../../types/series.types.js';
+import { TGCRiderStage, TRidersResults } from '../../../types/series.types.js';
 
 /**
  * Класс управления/создания генеральной классификации тура.
@@ -225,7 +225,7 @@ export class TourGCManager extends AbstractBaseGCManager {
    * категорией в Главном зачете.
    */
   private getFinalCategory = (
-    stages: TSimpleStage[]
+    stages: TGCRiderStage[]
     // lastStageOrder: number
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.

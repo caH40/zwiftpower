@@ -13,13 +13,20 @@ import {
 } from '../../types/mongodb-response.types.js';
 import { TGeneralClassificationDto, TStagesPublicDto } from '../../types/dto.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
-import { TSeries, TSeriesType } from '../../types/model.interface.js';
 import {
+  ProfileDataInResult,
+  TSeries,
+  TSeriesClassification,
+  TSeriesType,
+} from '../../types/model.interface.js';
+import {
+  TGeneralClassificationEdited,
   TPublicSeriesServiceFilterStagesParams,
   TPublicSeriesServiceGetStagesParams,
   TPublicSeriesServiceSortStagesParams,
 } from '../../types/types.interface.js';
 import { EnduranceResults } from './endurance/EnduranceResults.js';
+import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Класс работы с данными для генеральной классификации серии заездов по запросам пользователей сайта.
@@ -103,7 +110,9 @@ export class PublicSeriesGCService {
       seriesId: _id,
     }).lean<TGeneralClassificationDB[]>();
 
-    const sortedGC = this.sortDefaultClassifications(generalClassification, type);
+    const gcWithRiderTeamSquadAtRace = this.setRiderTeamSquadAtRace(generalClassification);
+
+    const sortedGC = this.sortDefaultClassifications(gcWithRiderTeamSquadAtRace, type);
 
     return {
       data: generalClassificationDto(sortedGC, gcResultsUpdatedAt),
@@ -132,6 +141,43 @@ export class PublicSeriesGCService {
     // console.log(sortedStages);
     return { data: sortedStages, message: 'Данные по этапам серии заездов.' };
   };
+
+  /**
+   * Формирование принадлежности к команде каждого участника.
+   * По умолчанию берется принадлежность к команде из последнего результата райдера.
+   * Если для Тура формируются уникальные составы команды, то принадлежность берется от туда.
+   */
+  private setRiderTeamSquadAtRace(gc: TSeriesClassification[]): TGeneralClassificationEdited[] {
+    const gcWithProfileData = [] as (Omit<TSeriesClassification, 'profileData'> & {
+      profileData: ProfileDataInResult;
+    })[];
+
+    for (const g of gc) {
+      // Получение состава команды в которой состоит райдер.
+      // Составы команд в разработке.
+      const teamSquadAtRace = null;
+
+      // Профиль из последнего результата этапа.
+      const profileData = g.stages
+        .filter((c) => c.profileData)
+        .sort((a, b) => a.stageOrder - b.stageOrder)
+        .at(-1)?.profileData;
+
+      // Если есть результат райдера, то райдер точно проехал хоть один этап!
+      if (!profileData) {
+        handleAndLogError(
+          new Error(
+            `Не получены данные профиля райдера в результате генеральной классификации серии _id:${g.seriesId}, _id документа gc: ${g._id}`
+          )
+        );
+        continue;
+      }
+
+      gcWithProfileData.push({ ...g, profileData, teamSquadAtRace });
+    }
+
+    return gcWithProfileData;
+  }
 
   /**
    * Фильтрация этапов в зависимости от статуса.
@@ -182,12 +228,12 @@ export class PublicSeriesGCService {
    * Сортирует классификацию: сначала не дисквалифицированные по времени, затем дисквалифицированные.
    */
   private sortDefaultClassifications = (
-    classifications: TGeneralClassificationDB[],
+    classifications: TGeneralClassificationEdited[],
     seriesType: TSeriesType
-  ): TGeneralClassificationDB[] => {
+  ): TGeneralClassificationEdited[] => {
     const { valid, dsq } = classifications.reduce<{
-      valid: TGeneralClassificationDB[];
-      dsq: TGeneralClassificationDB[];
+      valid: TGeneralClassificationEdited[];
+      dsq: TGeneralClassificationEdited[];
     }>(
       (acc, cur) => {
         // Сортировка этапов внутри результата по возрастанию номера этапа в серии заездов.

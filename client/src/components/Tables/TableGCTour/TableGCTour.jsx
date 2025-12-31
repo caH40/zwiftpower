@@ -5,12 +5,13 @@ import classnames from 'classnames/bind';
 
 import { secondesToTimeThousandths } from '../../../utils/date-convert';
 import { useFilterGC } from '../../../hook/useSortResults';
+import { createCategoryCaption } from '../../../utils/category-caption';
 import TdGap from '../Td/TdGap';
 import CategoryBox from '../../CategoryBox/CategoryBox';
 import TdRider from '../Td/TdRider';
 import Rank from '../../Rank/Rank';
 import FinishTime from '../../FinishTime/FinishTime';
-import { createCategoryCaption } from '../../../utils/category-caption';
+import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 
 import styles from '../Table.module.css';
 
@@ -45,15 +46,7 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
               ? result.gapsInCategories.absolute
               : result.gapsInCategories.category;
 
-          /**
-           * берутся данные профиля из Этапа под нулевым индексом в массиве этапов, но если райдер
-           * не проезжал этот этап, то данных нет и выскакивает ошибка. Необходимо продумать как
-           *  получать данные профиля, с какого этапа брать данные. Теоретически профиля могут
-           * изменятся от этапа к этапу. Брать из последнего (самые свежие данные)
-           */
-          const profileData = result.stages.findLast(
-            (stage) => stage?.profileData
-          )?.profileData;
+          const { profileData } = result;
 
           return (
             <tr
@@ -79,6 +72,17 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
               ) : (
                 <span>Нет данных</span>
               )}
+
+              {/* Принадлежность к команде */}
+              <td>
+                {profileData.team && (
+                  <TeamLogoBox
+                    team={profileData.team}
+                    background={profileData.team?.appearance?.badgeBackground}
+                    color={profileData.team?.appearance?.badgeTextColor}
+                  />
+                )}
+              </td>
 
               <td>
                 <FinishTime time={secondesToTimeThousandths(result.totalTimeInMilliseconds)} />

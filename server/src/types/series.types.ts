@@ -1,7 +1,9 @@
-import { Types } from 'mongoose';
 import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
-import { TStagesResultsForGC } from './mongodb-response.types';
+import { ProfileDataInResult } from './model.interface';
+
+// types
 import { TRaceSeriesCategories } from './types.interface';
+import { TStagesResultsForGC } from './mongodb-response.types';
 
 /**
  * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.
@@ -64,15 +66,28 @@ export type TRacingScoreRange = {
 // Тип: отображение riderId → список его результатов
 export type TRidersResults = Map<number, { results: TStagesResultsForGC[] }>;
 
-export type TSimpleStage = {
-  category: TRaceSeriesCategories | null;
+/**
+ * Данные райдера в этапе серии соревнований в генеральной классификации.
+ * Если райдер не участвовал в этапе, то элемент всё равно создается с нулевыми данными и указанием stageOrder
+ */
+export type TGCRiderStage = {
+  category: TRaceSeriesCategories | null; // Итоговая категория, после модерации (если была).
+  stageOrder: number; // Порядковый номер этапа в туре.
+  durationInMilliseconds: number; // Время прохождения этапа (в миллисекундах). 0 - райдер не финишировал на данном этапе.
+  distanceInMeters: number; // Пройденное расстояние на этапе.
+  elevationInMeters: number; // Набор высоты за этап.
+  calories: number; // Калории за этап.
+  finishPoints: number; // Заработанные финишные очки за этап.
+  // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
+  profileData: ProfileDataInResult | null; // Данные профиля райдера на этапе. null - райдер не финишировал на данном этапе.
+};
+export type TEmptyGCRiderStage = {
+  category: null;
+  profileData: null;
   stageOrder: number;
   durationInMilliseconds: number;
   finishPoints: number;
-  modifiedCategory?: {
-    value: TRaceSeriesCategories | null;
-    moderator?: Types.ObjectId;
-    modifiedAt: Date;
-    reason?: string;
-  };
+  distanceInMeters: number;
+  elevationInMeters: number;
+  calories: number;
 };

@@ -1,7 +1,6 @@
 // types
-import { ResultsSeriesDtoArg } from '../types/types.interface.js';
+import { ResultsSeriesDtoArg, TGeneralClassificationEdited } from '../types/types.interface.js';
 import { ResultsSeriesFetch } from '../common/types/resultsSeries.interface.js';
-import { TGeneralClassificationDB } from '../types/mongodb-response.types.js';
 import { TGeneralClassificationDto } from '../types/dto.interface.js';
 
 export const resultsSeriesDto = ({
@@ -23,13 +22,27 @@ export const resultsSeriesDto = ({
  * DTO для генеральной классификации серии заездов.
  */
 export function generalClassificationDto(
-  generalClassificationSeries: TGeneralClassificationDB[],
+  generalClassificationSeries: TGeneralClassificationEdited[],
   gcResultsUpdatedAt: Date | undefined
 ): TGeneralClassificationDto {
+  const gcResults = generalClassificationSeries.map(
+    ({ createdAt: _c, updatedAt: _u, stages, ...gc }) => {
+      const stagesWithProfileData = stages.map((s) => ({
+        category: s.category,
+        stageOrder: s.stageOrder,
+        durationInMilliseconds: s.durationInMilliseconds,
+        distanceInMeters: s.distanceInMeters,
+        elevationInMeters: s.elevationInMeters,
+        calories: s.calories,
+        finishPoints: s.finishPoints,
+      }));
+
+      return { ...gc, _id: String(gc._id), stages: stagesWithProfileData };
+    }
+  );
+
   return {
-    results: generalClassificationSeries.map(({ createdAt: _c, updatedAt: _u, ...gc }) => {
-      return { ...gc, _id: String(gc._id) };
-    }),
+    results: gcResults,
     gcResultsUpdatedAt: gcResultsUpdatedAt && gcResultsUpdatedAt.toISOString(),
   };
 }

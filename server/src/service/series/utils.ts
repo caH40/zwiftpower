@@ -1,7 +1,7 @@
 // types
 import { StageResultRepository } from '../../repositories/StageResult.js';
 import { TStagesResultsForGC } from '../../types/mongodb-response.types.js';
-import { TRidersResults } from '../../types/series.types.js';
+import { TEmptyGCRiderStage, TGCRiderStage, TRidersResults } from '../../types/series.types.js';
 
 /**
  * Приватный метод для группировки результатов по райдерам.
@@ -43,7 +43,7 @@ export function createStagesForRider({
 }: {
   allStageOrders: number[];
   results: TStagesResultsForGC[];
-}) {
+}): (TGCRiderStage | TEmptyGCRiderStage)[] {
   return allStageOrders.map((stageOrder) => {
     const stage = results.find((s) => s.order === stageOrder);
 

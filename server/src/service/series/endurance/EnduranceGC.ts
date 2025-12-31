@@ -6,7 +6,7 @@ import { createRidersResults, createStagesForRider } from '../utils.js';
 import { categoriesForRankings as rankings } from '../../../assets/category.js';
 
 // types
-import { TRidersResults, TSimpleStage } from '../../../types/series.types.js';
+import { TGCRiderStage, TRidersResults } from '../../../types/series.types.js';
 import { TDisqualification } from '../../../types/model.interface.js';
 import { TGCForSave, TRaceSeriesCategories } from '../../../types/types.interface.js';
 
@@ -59,7 +59,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
     allStageOrders: number[]
   ): Promise<TGCForSave[]> => {
     // Преобразуем Map в массив и обрабатываем каждого райдера.
-    const gc = [...ridersResults].map(([profileId, { results }]) => {
+    const gc: TGCForSave[] = [...ridersResults].map(([profileId, { results }]) => {
       // Инициализация счетчиков.
       const counters = {
         totalFinishPoints: 0,
@@ -115,7 +115,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
   };
 
   private getFinalCategory = (
-    stages: TSimpleStage[]
+    stages: TGCRiderStage[]
     // lastStageOrder: number
   ): TRaceSeriesCategories | null => {
     // Если этапов нет, возвращаем null.
