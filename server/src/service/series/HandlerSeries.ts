@@ -79,7 +79,7 @@ export class HandlerSeries {
         categoryInRace: null,
         points: null,
         disqualification: null,
-        penalty: null,
+        timePenalty: null,
         teamSquadAtRace: null,
       } as TStageResult;
     });

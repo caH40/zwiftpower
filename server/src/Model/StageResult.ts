@@ -6,7 +6,7 @@ import { finishersCountSchema } from './Schema/FinishersCountSchema.js';
 import { profileDataSchema } from './Schema/ProfileDataSchema.js';
 import { disqualificationSchema } from './Schema/DisqualificationSchema.js';
 import { sensorDataSchema } from './Schema/sensorDataSchema.js';
-import { penaltySchema } from './Schema/PenaltySchema.js';
+import { timePenaltySchema } from './Schema/TimePenaltySchema.js';
 import { gapsInCategoriesSchema } from './Schema/GapsInCategoriesSchema.js';
 import { cpBestEffortsSchema } from './Schema/CpBestEffortsSchema.js';
 
@@ -58,7 +58,7 @@ const stageResultSchema = new Schema<IStageResult>(
     gapsInCategories: { type: gapsInCategoriesSchema },
     points: { type: pointsStageResultSchema, default: null },
     disqualification: { type: disqualificationSchema, default: null },
-    penalty: { type: [penaltySchema], default: null },
+    timePenalty: { type: [timePenaltySchema], default: null },
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
     finishersCount: { type: finishersCountSchema },
   },

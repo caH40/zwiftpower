@@ -818,7 +818,7 @@ export type TStageResult = {
   };
   points: TStageResultPoints | null;
   disqualification: TDisqualification | null;
-  penalty: TStagePenalty[] | null;
+  timePenalty: TStageTimePenalty[] | null;
   teamSquadAtRace: Types.ObjectId | null; // Опционально: состав команды в рамках серии.
   sensorData: {
     avgWatts: number;
@@ -862,7 +862,7 @@ export type TDisqualification = {
   modifiedAt?: Date;
 };
 
-export type TStagePenalty = {
+export type TStageTimePenalty = {
   reason: string; // Причина штрафа.
   timeInMilliseconds: number; // Время штрафа.
   moderator?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам

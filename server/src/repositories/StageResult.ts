@@ -3,7 +3,7 @@ import { StageResultModel } from '../Model/StageResult.js';
 import { FilterQuery } from 'mongoose';
 import { TStageResult } from '../types/model.interface.js';
 import { TRaceSeriesCategories } from '../types/types.interface.js';
-import { TStagesResultsForGC } from '../types/mongodb-response.types.js';
+import { GetStageResultDB, TStagesResultsForGC } from '../types/mongodb-response.types.js';
 
 export class StageResultRepository {
   /**
@@ -98,6 +98,19 @@ export class StageResultRepository {
     stageOrder: number
   ): Promise<TStageResult[]> {
     return await StageResultModel.find({ series: seriesId, order: stageOrder }).lean();
+  }
+
+  /**
+   * Получение всех результатов этапа по eventId и stageOrder.
+   */
+  async getAllStageResultsByEventIdFull(
+    seriesId: string,
+    stageOrder: number
+  ): Promise<GetStageResultDB[]> {
+    return StageResultModel.find({ series: seriesId, order: stageOrder })
+      .populate({ path: 'modifiedCategory.moderator', select: ['-_id', 'username'] })
+      .populate({ path: 'timePenalty.moderator', select: ['-_id', 'username'] })
+      .lean<GetStageResultDB[]>();
   }
 
   /**

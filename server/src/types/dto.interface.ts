@@ -222,7 +222,13 @@ export type TFinishProtocolConfigDto = Omit<
  */
 export type StageResultDto = Omit<
   TStageResult,
-  '_id' | 'series' | 'teamSquadAtRace' | 'createdAt' | 'updatedAt' | 'modifiedCategory'
+  | '_id'
+  | 'series'
+  | 'teamSquadAtRace'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'modifiedCategory'
+  | 'timePenalty'
 > & {
   _id: string;
   series: string;
@@ -234,7 +240,14 @@ export type StageResultDto = Omit<
     modifiedAt: Date;
     reason?: string;
   };
+  timePenalty: {
+    reason: string;
+    timeInMilliseconds: number;
+    moderator?: { username: string };
+    modifiedAt: Date;
+  } | null;
 };
+
 export type StageResultsDto = {
   results: StageResultDto[];
   resultsUpdatedAt?: string;

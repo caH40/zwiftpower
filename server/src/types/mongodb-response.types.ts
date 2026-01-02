@@ -215,11 +215,17 @@ export type TEventForMailingPreviewDB = Pick<
   organizerId: Pick<TOrganizer, 'logoFileInfo' | 'name' | 'urlSlug' | '_id'>;
 };
 
-export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory'> & {
+export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory' | 'timePenalty'> & {
   modifiedCategory: {
     value: TRaceSeriesCategories | null;
     moderator?: { username: string };
     modifiedAt: Date;
     reason?: string;
   };
+  timePenalty: {
+    reason: string;
+    timeInMilliseconds: number;
+    moderator?: { username: string };
+    modifiedAt: Date;
+  } | null;
 };
