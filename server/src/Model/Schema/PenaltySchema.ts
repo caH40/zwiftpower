@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose';
 import { TStagePenalty } from '../../types/model.interface';
 
 /**
- *  Схема штрафа.
+ *  Схема штрафа в виде добавления времени к результату этапа.
  */
 export const penaltySchema = new Schema<TStagePenalty>(
   {

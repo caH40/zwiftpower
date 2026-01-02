@@ -66,7 +66,21 @@ function PopupMenuTableStageResult({
 
             <li
               className={styles.item}
-              onClick={() => dispatch(openPopupFormContainer({ formType: 'setPenalty' }))}
+              onClick={() =>
+                dispatch(
+                  openPopupFormContainer({
+                    formType: 'setPenalty',
+                    formProps: {
+                      profile,
+                      seriesId,
+                      stageResultId,
+                      urlSlug,
+                      stageOrder,
+                      penalty,
+                    },
+                  })
+                )
+              }
             >
               <DSQBox>Pen</DSQBox>
               <span className={styles.label}>Установка штрафа</span>
