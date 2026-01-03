@@ -29,12 +29,12 @@ export const fetchPatchCategoryInSeriesResult = createAsyncThunk(
  */
 export const fetchPatchTimePenaltyInSeriesResult = createAsyncThunk(
   'timePenaltyInSeriesResult/patch',
-  async (timePenalty, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/series/stage/results/time-penalty`,
         method: 'patch',
-        data: timePenalty,
+        data,
       });
 
       return response.data;

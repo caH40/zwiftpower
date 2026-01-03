@@ -10,6 +10,8 @@ import { SeriesOrganizerController } from './SeriesOrganizer.js';
 import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtocolManager.js';
 import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
 import { SeriesCategoryService } from '../service/series/category/SeriesCategory.js';
+import { TimePenaltyZSchema } from '../utils/deserialization/series/timePenalty.js';
+import { SeriesTimePenalty } from '../service/series/SeriesTimePenalty.js';
 
 /**
  * Класс управления результатами серий.
@@ -62,7 +64,7 @@ export class SeriesStageProtocolManagerController {
   };
 
   /**
-   * Получает список всех серий заездов.
+   * Изменение категории райдера в заезде.
    * @param {Request} req - Запрос Express.
    * @param {Response} res - Ответ Express.
    * @returns {Promise<Response>} JSON-ответ с сериями.
@@ -90,6 +92,44 @@ export class SeriesStageProtocolManagerController {
         stageResultId,
         value,
         reason,
+      });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Изменение временного штрафа райдера в заезде.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public modifyTimePenalty = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const userId = req.user?.id;
+
+      const result = TimePenaltyZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        return res.status(400).json({ errors: result.error.format() });
+      }
+
+      const { userId: moderator, seriesId, stageResultId, timePenalty } = result.data;
+
+      // Проверка, что запрос происходит от Организатора.
+      const seriesController = new SeriesOrganizerController();
+      await seriesController.checkOrganizer(moderator);
+
+      // Вызов сервиса.
+      const timePenaltyService = new SeriesTimePenalty();
+      const response = await timePenaltyService.modify({
+        seriesId,
+        stageResultId,
+        timePenalty,
       });
 
       // Возврат успешного ответа.

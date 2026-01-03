@@ -107,11 +107,6 @@ export class HandlerSeries {
   public async modifyDisqualification(): Promise<void> {}
 
   /**
-   * Изменение категории у участника в результате заезда на этапа.
-   */
-  public async modifyPenalty(): Promise<void> {}
-
-  /**
    * Получает данные серии из базы данных.
    */
   protected async getSeriesData() {

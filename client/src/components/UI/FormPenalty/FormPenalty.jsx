@@ -57,7 +57,11 @@ export default function FormPenalty({
 
     try {
       const response = await dispatch(
-        fetchPatchTimePenaltyInSeriesResult(formData.timePenalty)
+        fetchPatchTimePenaltyInSeriesResult({
+          timePenalty: formData.timePenalty,
+          seriesId,
+          stageResultId,
+        })
       ).unwrap();
       // Успешный результат.
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));

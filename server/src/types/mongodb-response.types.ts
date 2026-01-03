@@ -226,7 +226,7 @@ export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory' | 'timePena
     | {
         reason: string;
         timeInMilliseconds: number;
-        moderator?: { username: string };
+        moderator?: { username: string; _id: Types.ObjectId };
         modifiedAt: Date;
       }[]
     | null;

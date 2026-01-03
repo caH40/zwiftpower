@@ -797,6 +797,7 @@ export type TStageResult = {
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
 
   rank: TRank;
+  durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     subgroupLabel: TZwiftCategory;

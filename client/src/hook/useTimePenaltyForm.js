@@ -10,7 +10,7 @@ import { getTimerLocal } from '../utils/date-local';
  * Обработчик добавления штрафа.
  */
 export function useTimePenaltyForm({ setError, getValues, setValue, control }) {
-  const username = useSelector((state) => state.checkAuth.value.user.username);
+  const user = useSelector((state) => state.checkAuth.value.user);
   const dispatch = useDispatch();
 
   const {
@@ -46,8 +46,8 @@ export function useTimePenaltyForm({ setError, getValues, setValue, control }) {
     appendTimePenalty({
       reason,
       timeInMilliseconds: Number(penaltySeconds) * 1000,
-      moderator: { username },
-      modifiedAt: getTimerLocal(new Date().toISOString(), 'DDMMYYHm'),
+      moderator: { username: user.username, _id: user.id },
+      modifiedAt: new Date(),
     });
 
     // Очищаем только поля.

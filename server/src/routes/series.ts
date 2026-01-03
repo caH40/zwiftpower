@@ -35,3 +35,8 @@ routerSeries.patch(
   checkAuth,
   protocolManagersController.modifyCategory
 );
+routerSeries.patch(
+  '/stage/results/time-penalty',
+  checkAuth,
+  protocolManagersController.modifyTimePenalty
+);

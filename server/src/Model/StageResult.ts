@@ -26,6 +26,7 @@ const stageResultSchema = new Schema<IStageResult>(
     profileId: { type: Number, required: true },
     profileData: { type: profileDataSchema },
     cpBestEfforts: [cpBestEffortsSchema],
+    durationInMillisecondsWithPenalties: { type: Number },
     activityData: {
       durationInMilliseconds: { type: Number },
       subgroupLabel: { type: String, enum: ZWIFT_CATEGORIES },

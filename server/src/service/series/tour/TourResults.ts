@@ -38,7 +38,6 @@ export class TourResults extends HandlerSeries {
     const sortedResults = this.sortAndFilterResultsToutGroups(resultsDB);
 
     const resultsAfterDto = stageResultsDto(sortedResults, resultsUpdatedAt);
-    console.log(resultsAfterDto.results[0]);
 
     return resultsAfterDto;
   };

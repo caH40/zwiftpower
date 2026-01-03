@@ -57,6 +57,38 @@ export class StageResultRepository {
   }
 
   /**
+   * Изменение временного штрафа.
+   */
+  async changeRiderTimePenalty(
+    stageResultId: string,
+    timePenalty: {
+      timeInMilliseconds: number;
+      reason: string;
+      modifiedAt: string;
+      moderatorId: string;
+    }[],
+    durationInMillisecondsWithPenalties: number,
+    removeTimePenalty: boolean
+  ) {
+    if (removeTimePenalty) {
+      return StageResultModel.findOneAndUpdate(
+        { _id: stageResultId },
+        {
+          $set: { timePenalty: null },
+          $unset: { durationInMillisecondsWithPenalties: '' },
+        },
+        { new: true }
+      );
+    } else {
+      return StageResultModel.findOneAndUpdate(
+        { _id: stageResultId },
+        { $set: { timePenalty, durationInMillisecondsWithPenalties } },
+        { new: true }
+      );
+    }
+  }
+
+  /**
    * Получение результата райдера на этапе серии по _id.
    */
   async getStageResultById(_id: string): Promise<TStageResult | null> {
@@ -109,7 +141,7 @@ export class StageResultRepository {
   ): Promise<GetStageResultDB[]> {
     return StageResultModel.find({ series: seriesId, order: stageOrder })
       .populate({ path: 'modifiedCategory.moderator', select: ['-_id', 'username'] })
-      .populate({ path: 'timePenalty.moderator', select: ['-_id', 'username'] })
+      .populate({ path: 'timePenalty.moderator', select: ['_id', 'username'] })
       .lean<GetStageResultDB[]>();
   }
 
