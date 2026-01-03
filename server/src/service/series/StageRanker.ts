@@ -68,9 +68,13 @@ export class StageRanker {
       return [];
     }
 
-    const sortedResults = stageResults.toSorted(
-      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    );
+    const sortedResults = stageResults.toSorted((a, b) => {
+      const aResult =
+        a.durationInMillisecondsWithPenalties || a.activityData.durationInMilliseconds;
+      const bResult =
+        b.durationInMillisecondsWithPenalties || b.activityData.durationInMilliseconds;
+      return aResult - bResult;
+    });
 
     return this.setRank(sortedResults);
   };

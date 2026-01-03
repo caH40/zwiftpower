@@ -142,7 +142,8 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       // Установка финишных гэпов (разрывов между участниками).
       const finishGaps = new FinishGaps();
       finishGaps.setGaps(resultsWithRank, {
-        getDuration: (r) => r.activityData.durationInMilliseconds,
+        getDuration: (r) =>
+          r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds,
         getCategory: (r) => r.category,
         setGaps: (r, gaps) => {
           r.gapsInCategories = gaps;
