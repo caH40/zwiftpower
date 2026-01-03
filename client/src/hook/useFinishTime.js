@@ -7,6 +7,8 @@ import { secondesToTimeThousandths } from '../utils/date-convert';
 export const useFinishTime = (results) => {
   return results.map((r) => ({
     ...r,
-    finishTime: secondesToTimeThousandths(r.activityData.durationInMilliseconds),
+    finishTime: secondesToTimeThousandths(
+      r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds
+    ),
   }));
 };

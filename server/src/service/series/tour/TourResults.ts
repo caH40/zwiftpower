@@ -50,9 +50,13 @@ export class TourResults extends HandlerSeries {
     results: GetStageResultDB[]
   ): GetStageResultDB[] => {
     // Сортируем все результаты по времени.
-    const sortedResults = results.toSorted(
-      (a, b) => a.activityData.durationInMilliseconds - b.activityData.durationInMilliseconds
-    );
+    const sortedResults = results.toSorted((a, b) => {
+      const aResult =
+        a.durationInMillisecondsWithPenalties || a.activityData.durationInMilliseconds;
+      const bResult =
+        b.durationInMillisecondsWithPenalties || b.activityData.durationInMilliseconds;
+      return aResult - bResult;
+    });
 
     // Разделяем на две группы.
     const validResults = sortedResults.filter((result) => !result.disqualification?.status);
