@@ -53,9 +53,13 @@
 .box__btn {
   text-align: right;
 }
-/* ====================================================================== */
-@media (max-width: 576px) {
-  .categoriesContainer {
-    flex-direction: column;
-  }
+.subTitle {
+  font-weight: 400;
+  color: var(--color-text-minor);
+}
+.subTitle::after {
+  content: ':';
+}
+.penaltyItem {
+  margin-bottom: 10px;
 }

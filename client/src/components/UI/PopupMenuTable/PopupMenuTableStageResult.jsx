@@ -16,7 +16,7 @@ function PopupMenuTableStageResult({
   categoryInRace,
   modifiedCategory,
   disqualification,
-  penalty,
+  timePenalty,
   profile,
   seriesId,
   stageResultId,
@@ -76,7 +76,7 @@ function PopupMenuTableStageResult({
                       stageResultId,
                       urlSlug,
                       stageOrder,
-                      penalty,
+                      timePenalty,
                     },
                   })
                 )

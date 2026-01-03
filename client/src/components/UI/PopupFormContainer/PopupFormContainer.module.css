@@ -30,23 +30,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: var(--color-yellow-5-transparent);
-  border: none;
-  font-size: 23px;
-  color: #6c757d;
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
   z-index: 2;
-}
-
-.closeButton:hover {
-  background: var(--color-orange-main);
 }
 
 @media screen and (max-width: 576px) {
@@ -57,6 +41,7 @@
 
   .block {
     max-width: 100%;
+    width: 100%;
     max-height: calc(100vh - 20px);
     padding: 20px 15px 10px 15px;
   }

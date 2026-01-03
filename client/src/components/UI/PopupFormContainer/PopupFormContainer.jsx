@@ -6,6 +6,7 @@ import FormCategory from '../FormCategory/FormCategory';
 import FormPenalty from '../FormPenalty/FormPenalty';
 import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
 import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamParticipantRatingModal';
+import CloseButton from '../Buttons/Close/CloseButton';
 
 import styles from './PopupFormContainer.module.css';
 
@@ -44,13 +45,9 @@ export default function PopupFormContainer() {
       {isVisible && (
         <div className={styles.wrapper}>
           <div className={styles.block} onClick={(e) => e.stopPropagation()}>
-            <button
-              className={styles.closeButton}
-              onClick={() => dispatch(closePopupFormContainer())}
-            >
-              ×
-            </button>
-
+            <div className={styles.closeButton}>
+              <CloseButton onClick={() => dispatch(closePopupFormContainer())} />
+            </div>
             {formType && Form[formType]}
           </div>
         </div>

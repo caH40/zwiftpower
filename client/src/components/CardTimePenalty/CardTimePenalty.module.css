@@ -1,0 +1,70 @@
+.wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border-minor);
+  border-radius: 6px;
+  background-color: white;
+  align-items: start;
+}
+
+.penaltiesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.term {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-minor);
+  margin: 0;
+}
+
+/* Специальные стили для поля времени */
+.list:nth-child(2) .description {
+  font-weight: 600;
+  color: var(--error, #dc3545);
+}
+
+.noPenalties {
+  text-align: center;
+  color: var(--text-secondary, #666);
+  font-style: italic;
+  padding: 1rem 0;
+}
+.closeButton {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+/* ====================================================================== */
+@media (max-width: 576px) {
+  .penaltyItem {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .penaltyItem {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

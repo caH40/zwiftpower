@@ -188,7 +188,7 @@ function TableStageResults({
                       categoryInRace={categoryInRace}
                       modifiedCategory={modifiedCategory}
                       disqualification={result.disqualification}
-                      penalty={result.penalty}
+                      timePenalty={result.timePenalty}
                       profile={profile}
                       seriesId={result.series}
                       stageResultId={result._id}

@@ -1,0 +1,21 @@
+.btn {
+  background: var(--color-yellow-5-transparent);
+  border: none;
+  font-size: 23px;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+.btn:hover {
+  background: var(--color-orange-main);
+}
+.icon {
+  width: 14px;
+  height: 14px;
+}

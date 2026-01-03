@@ -9,6 +9,7 @@ import { closePopupFormContainer } from '../../../redux/features/popupFormContai
 import Button from '../Button/Button';
 import InputAuth from '../InputAuth/InputAuth';
 import LogoRider from '../../LogoRider/LogoRider';
+import CardTimePenalty from '../../CardTimePenalty/CardTimePenalty';
 
 import styles from './FormPenalty.module.css';
 
@@ -17,10 +18,8 @@ import styles from './FormPenalty.module.css';
  *
  * @param {Object} props - Свойства компонента.
  * @param {Object} props.profile - Профиль райдера.
- * @param {string} props.penalty.reason - Причина штрафа.
- * @param {number} props.penalty.seconds - Количество штрафных секунд.
- * @param {Object} props.penalty.moderator - Модератор, установивший штраф.
- * @param {string} props.penalty.modifiedAt - Дата и время изменения штрафа.
+ * @param {Object[]} props.timePenalty - Массив временных штрафов.
+
  */
 
 export default function FormPenalty({
@@ -29,10 +28,11 @@ export default function FormPenalty({
   stageResultId,
   urlSlug,
   stageOrder,
-  penalty,
+  timePenalty,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  console.log(timePenalty);
 
   const {
     register,
@@ -70,7 +70,7 @@ export default function FormPenalty({
   const riderName = `${profile.firstName} ${profile.lastName}`;
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
-      <h3 className={styles.title}>Изменение категории</h3>
+      <h3 className={styles.title}>Временной штраф</h3>
 
       <div className={styles.riderContainer}>
         <div className={styles.logoContainer}>
@@ -81,6 +81,21 @@ export default function FormPenalty({
           />
         </div>
         <span>{riderName}</span>
+      </div>
+
+      <div className={styles.penaltiesContainer}>
+        <h4 className={styles.subTitle}>Текущие штрафы</h4>
+        {timePenalty && timePenalty.length > 0 ? (
+          <ul className={styles.penaltiesList}>
+            {timePenalty.map((penalty, index) => (
+              <li key={index} className={styles.penaltyItem}>
+                <CardTimePenalty key={index} timePenalty={penalty} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className={styles.noPenalties}>Нет штрафов</p>
+        )}
       </div>
 
       <div className={styles.wrapper__fields}>

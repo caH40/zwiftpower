@@ -11,5 +11,7 @@ Disallow: /organizer*
 Disallow: /race/series*
 Disallow: /legal/
 
+Allow: /organizers*
+
 Allow: /profile/*/results$
 Sitemap: https://zwiftpower.ru/sitemap.xml # указывает роботу на файл Sitemap для сайта

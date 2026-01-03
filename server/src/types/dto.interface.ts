@@ -240,12 +240,14 @@ export type StageResultDto = Omit<
     modifiedAt: Date;
     reason?: string;
   };
-  timePenalty: {
-    reason: string;
-    timeInMilliseconds: number;
-    moderator?: { username: string };
-    modifiedAt: Date;
-  } | null;
+  timePenalty:
+    | {
+        reason: string;
+        timeInMilliseconds: number;
+        moderator?: { username: string };
+        modifiedAt: Date;
+      }[]
+    | null;
 };
 
 export type StageResultsDto = {
