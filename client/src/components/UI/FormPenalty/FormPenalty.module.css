@@ -9,6 +9,9 @@
   text-align: center;
 }
 
+.penaltiesContainer {
+  margin-bottom: 10px;
+}
 .error {
   font-weight: 400;
   font-size: 12px;

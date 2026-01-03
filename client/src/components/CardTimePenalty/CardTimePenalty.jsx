@@ -17,8 +17,6 @@ export default function CardTimePenalty({
   index,
   handleRemovePenalty,
 }) {
-  console.log(moderator);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.closeButton}>

@@ -101,6 +101,8 @@ export default function FormPenalty({
 
       <div className={styles.penaltiesContainer}>
         <h4 className={styles.subTitle}>Текущие штрафы</h4>
+
+        {/* Список временных штрафов */}
         {timePenaltyFields && timePenaltyFields.length > 0 ? (
           <ul className={styles.penaltiesList}>
             {timePenaltyFields.map((penalty, index) => (
