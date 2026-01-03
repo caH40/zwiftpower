@@ -1,9 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 import { useTimePenaltyForm } from '../../../hook/useTimePenaltyForm';
-import { fetchPatchCategoryInSeriesResult } from '../../../redux/features/api/series/fetchEditSeriesResults';
+import {
+  fetchPatchCategoryInSeriesResult,
+  fetchPatchTimePenaltyInSeriesResult,
+} from '../../../redux/features/api/series/fetchEditSeriesResults';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
@@ -32,7 +35,7 @@ export default function FormPenalty({
   timePenalty,
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const dispatch = useDispatch();
 
   const {
@@ -45,7 +48,7 @@ export default function FormPenalty({
     setValue,
   } = useForm({
     mode: 'all',
-    defaultValues: { timePenalty, newCategory: null, reason: '' },
+    defaultValues: { timePenalty },
   });
 
   // Обработчик отправки формы на сервер.
@@ -54,12 +57,7 @@ export default function FormPenalty({
 
     try {
       const response = await dispatch(
-        fetchPatchCategoryInSeriesResult({
-          value: formData.newCategory,
-          reason: formData.reason,
-          seriesId,
-          stageResultId,
-        })
+        fetchPatchTimePenaltyInSeriesResult(formData.timePenalty)
       ).unwrap();
       // Успешный результат.
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));

@@ -23,3 +23,23 @@ export const fetchPatchCategoryInSeriesResult = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Изменение штрафов райдера в результатах заезда этапа серии.
+ */
+export const fetchPatchTimePenaltyInSeriesResult = createAsyncThunk(
+  'timePenaltyInSeriesResult/patch',
+  async (timePenalty, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stage/results/time-penalty`,
+        method: 'patch',
+        data: timePenalty,
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);
