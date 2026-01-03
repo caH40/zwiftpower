@@ -14,11 +14,13 @@ import styles from './CardTimePenalty.module.css';
 
 export default function CardTimePenalty({
   timePenalty: { reason, timeInMilliseconds, moderator, modifiedAt },
+  index,
+  handleRemovePenalty,
 }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.closeButton}>
-        <CloseButton onClick={''} />
+        <CloseButton onClick={() => handleRemovePenalty(index)} />
       </div>
 
       <dl className={styles.list}>

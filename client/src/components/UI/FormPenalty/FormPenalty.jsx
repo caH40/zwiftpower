@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
+import { useTimePenaltyForm } from '../../../hook/useTimePenaltyForm';
 import { fetchPatchCategoryInSeriesResult } from '../../../redux/features/api/series/fetchEditSeriesResults';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
@@ -31,16 +32,20 @@ export default function FormPenalty({
   timePenalty,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  
   const dispatch = useDispatch();
-  console.log(timePenalty);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
+    setError,
+    getValues,
+    setValue,
   } = useForm({
     mode: 'all',
-    defaultValues: { newCategory: null, reason: '' },
+    defaultValues: { timePenalty, newCategory: null, reason: '' },
   });
 
   // Обработчик отправки формы на сервер.
@@ -68,6 +73,15 @@ export default function FormPenalty({
   };
 
   const riderName = `${profile.firstName} ${profile.lastName}`;
+
+  // Массив штрафов. Удаление штрафа по индексу. Обработчик добавления штрафа.
+  const { timePenaltyFields, handleAddPenalty, handleRemovePenalty } = useTimePenaltyForm({
+    control,
+    setError,
+    getValues,
+    setValue,
+  });
+
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
       <h3 className={styles.title}>Временной штраф</h3>
@@ -85,11 +99,16 @@ export default function FormPenalty({
 
       <div className={styles.penaltiesContainer}>
         <h4 className={styles.subTitle}>Текущие штрафы</h4>
-        {timePenalty && timePenalty.length > 0 ? (
+        {timePenaltyFields && timePenaltyFields.length > 0 ? (
           <ul className={styles.penaltiesList}>
-            {timePenalty.map((penalty, index) => (
+            {timePenaltyFields.map((penalty, index) => (
               <li key={index} className={styles.penaltyItem}>
-                <CardTimePenalty key={index} timePenalty={penalty} />
+                <CardTimePenalty
+                  key={index}
+                  index={index}
+                  timePenalty={penalty}
+                  handleRemovePenalty={handleRemovePenalty}
+                />
               </li>
             ))}
           </ul>
@@ -101,13 +120,11 @@ export default function FormPenalty({
       <div className={styles.wrapper__fields}>
         <InputAuth
           label={'Добавление секунд к результату'}
-          register={register('penalty', {
-            maxLength: { value: 50, message: 'Не больше 50 символов' },
-          })}
-          validationText={errors.penalty?.message || ''}
-          input={{ id: 'penalty-FormPenalty', type: 'number' }}
+          register={register('penaltySeconds')}
+          validationText={errors.penaltySeconds?.message || ''}
+          input={{ id: 'penaltySeconds-FormPenalty', type: 'number' }}
           placeholder="Количество секунд"
-          id={'penalty-FormCategoryForm'}
+          id={'penaltySeconds-FormCategoryForm'}
           loading={isLoading}
         />
 
@@ -122,6 +139,10 @@ export default function FormPenalty({
           id={'reason-FormCategoryForm'}
           loading={isLoading}
         />
+      </div>
+
+      <div className={styles.box__btn}>
+        <Button getClick={handleAddPenalty}>Добавить штраф</Button>
       </div>
 
       <div className={styles.box__btn}>

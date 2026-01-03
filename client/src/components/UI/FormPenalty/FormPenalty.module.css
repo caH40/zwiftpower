@@ -53,6 +53,9 @@
 .box__btn {
   text-align: right;
 }
+.box__btn + .box__btn {
+  margin-top: 15px;
+}
 .subTitle {
   font-weight: 400;
   color: var(--color-text-minor);
