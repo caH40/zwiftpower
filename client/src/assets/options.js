@@ -85,11 +85,11 @@ export const riderCategoryRuleOptions = [
     value: 'recalculationAll',
     name: 'Сквозное повышение (полный пересчёт)',
   },
-  {
-    id: 2,
-    value: 'stepChange',
-    name: 'Локальное повышение (с текущего этапа)',
-  },
+  // {
+  //   id: 2,
+  //   value: 'stepChange',
+  //   name: 'Локальное повышение (с текущего этапа)',
+  // },
   // {
   //   id: 3,
   //   value: 'dsqRecalculation',
