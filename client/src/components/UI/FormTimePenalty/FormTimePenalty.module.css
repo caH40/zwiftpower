@@ -69,3 +69,8 @@
 .penaltyItem {
   margin-bottom: 10px;
 }
+.noPenalties {
+  font-size: small;
+  color: green;
+  font-style: italic;
+}

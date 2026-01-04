@@ -3,10 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 import { useTimePenaltyForm } from '../../../hook/useTimePenaltyForm';
-import {
-  fetchPatchCategoryInSeriesResult,
-  fetchPatchTimePenaltyInSeriesResult,
-} from '../../../redux/features/api/series/fetchEditSeriesResults';
+import { fetchPatchTimePenaltyInSeriesResult } from '../../../redux/features/api/series/fetchEditSeriesResults';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
@@ -15,7 +12,7 @@ import InputAuth from '../InputAuth/InputAuth';
 import LogoRider from '../../LogoRider/LogoRider';
 import CardTimePenalty from '../../CardTimePenalty/CardTimePenalty';
 
-import styles from './FormPenalty.module.css';
+import styles from './FormTimePenalty.module.css';
 
 /**
  * Форма изменения категории райдера в заезде.
@@ -26,7 +23,7 @@ import styles from './FormPenalty.module.css';
 
  */
 
-export default function FormPenalty({
+export default function FormTimePenalty({
   profile,
   seriesId,
   stageResultId,
@@ -124,12 +121,32 @@ export default function FormPenalty({
       <div className={styles.wrapper__fields}>
         <InputAuth
           label={'Добавление секунд к результату'}
-          register={register('penaltySeconds')}
+          register={register('penaltySeconds', {
+            pattern: {
+              value: /^\d+$/,
+              message: 'Только целые числа без точки',
+            },
+            min: {
+              value: 0,
+              message: 'Минимальное значение: 0',
+            },
+            validate: {
+              noDecimal: (value) => {
+                if (value && (value.includes('.') || value.includes(','))) {
+                  return 'Точки и запятые не допускаются';
+                }
+                return true;
+              },
+            },
+          })}
           validationText={errors.penaltySeconds?.message || ''}
           input={{ id: 'penaltySeconds-FormPenalty', type: 'number' }}
           placeholder="Количество секунд"
           id={'penaltySeconds-FormCategoryForm'}
           loading={isLoading}
+          step={1}
+          required={true}
+          min={0}
         />
 
         <InputAuth
@@ -139,7 +156,7 @@ export default function FormPenalty({
           })}
           validationText={errors.reason?.message || ''}
           input={{ id: 'reason-FormPenalty', type: 'text' }}
-          placeholder="Причина изменения категории"
+          placeholder="Причина временного штрафа"
           id={'reason-FormCategoryForm'}
           loading={isLoading}
         />

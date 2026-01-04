@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 import FormCategory from '../FormCategory/FormCategory';
-import FormPenalty from '../FormPenalty/FormPenalty';
+import FormPenalty from '../FormTimePenalty/FormTimePenalty';
 import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
 import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamParticipantRatingModal';
 import CloseButton from '../Buttons/Close/CloseButton';
