@@ -6,6 +6,7 @@ import { NSeriesModel } from '../../../Model/NSeries.js';
 import { StageResultsDto } from '../../../types/dto.interface.js';
 import { GetStageResultDB } from '../../../types/mongodb-response.types.js';
 import { StageResultRepository } from '../../../repositories/StageResult.js';
+import { addTeamAppearance } from '../../preparation/teamAppearance.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour' для запросов от пользователей
@@ -35,7 +36,10 @@ export class TourResults extends HandlerSeries {
       (s) => s.order === stageOrder
     )?.resultsUpdatedAt;
 
-    const sortedResults = this.sortAndFilterResultsToutGroups(resultsDB);
+    // Добавление данных стилизации иконки команды в результаты.
+    const resultsWithTeamAppearance = await addTeamAppearance(resultsDB);
+
+    const sortedResults = this.sortAndFilterResultsToutGroups(resultsWithTeamAppearance);
 
     const resultsAfterDto = stageResultsDto(sortedResults, resultsUpdatedAt);
 

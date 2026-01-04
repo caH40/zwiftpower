@@ -27,6 +27,7 @@ import {
 } from '../../types/types.interface.js';
 import { EnduranceResults } from './endurance/EnduranceResults.js';
 import { handleAndLogError } from '../../errors/error.js';
+import { addTeamAppearance } from '../preparation/teamAppearance.js';
 
 /**
  * Класс работы с данными для генеральной классификации серии заездов по запросам пользователей сайта.
@@ -112,7 +113,10 @@ export class PublicSeriesGCService {
 
     const gcWithRiderTeamSquadAtRace = this.setRiderTeamSquadAtRace(generalClassification);
 
-    const sortedGC = this.sortDefaultClassifications(gcWithRiderTeamSquadAtRace, type);
+    // Добавление данных стилизации иконки команды в результаты.
+    const resultsWithTeamAppearance = await addTeamAppearance(gcWithRiderTeamSquadAtRace);
+
+    const sortedGC = this.sortDefaultClassifications(resultsWithTeamAppearance, type);
 
     return {
       data: generalClassificationDto(sortedGC, gcResultsUpdatedAt),

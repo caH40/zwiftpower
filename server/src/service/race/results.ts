@@ -40,6 +40,7 @@ export async function getResultsService(eventId: number) {
 
   await addRacingScores(eventPrepared);
 
+  // Добавление данных стилизации иконки команды в результаты.
   const resultsWithTeamAppearance = await addTeamAppearance(eventPrepared.results);
 
   return eventResultsDto({

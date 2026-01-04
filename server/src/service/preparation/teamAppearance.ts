@@ -1,10 +1,21 @@
 import { TeamRepository } from '../../repositories/Team.js';
-import { TSignedRidersWithTeam, UserResult } from '../../types/types.interface.js';
+
+// types
+import { TSignedRidersWithTeam } from '../../types/types.interface.js';
+
+type WithTeam = {
+  team?: {
+    urlSlug?: string;
+    appearance?: unknown; // или TTeamAppearance
+  };
+};
 
 /**
  * Добавление данных TTeamAppearance в каждый профиль в результатах.
  */
-export async function addTeamAppearance(results?: UserResult[]): Promise<UserResult[]> {
+export async function addTeamAppearance<
+  T extends { profileDataMain?: WithTeam; profileData: WithTeam }
+>(results?: T[]): Promise<T[]> {
   if (!results) {
     return [];
   }
