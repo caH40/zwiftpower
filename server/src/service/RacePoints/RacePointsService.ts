@@ -1,9 +1,7 @@
 import { handleAndLogError } from '../../errors/error.js';
 import { EventRepository } from '../../repositories/Event.js';
 import { EventResultRepository } from '../../repositories/EventResult.js';
-import { StageResultRepository } from '../../repositories/StageResult.js';
 import { PointsWithOutStageResults } from './PointsWithoutStageResults.js';
-import { PointsWithStageResults } from './PointsWithStageResults.js';
 
 // types
 
@@ -14,8 +12,7 @@ import { PointsWithStageResults } from './PointsWithStageResults.js';
 export class RacePointsService {
   private eventRepository: EventRepository = new EventRepository();
   private eventResultRepository: EventResultRepository = new EventResultRepository();
-  private stageResultRepository: StageResultRepository = new StageResultRepository();
-  private pointsWithStageResults: PointsWithStageResults = new PointsWithStageResults();
+
   private pointsWithOutStageResults: PointsWithOutStageResults =
     new PointsWithOutStageResults();
 
@@ -36,31 +33,13 @@ export class RacePointsService {
       const seriesId = series?._id?.toString();
       const useStageResults = series && seriesId && !!series.useStageResults;
 
+      // Есть отдельные результаты по заездам(этапам).
+      // Обрабатывается при обновлении результатов этапов серии.
       if (useStageResults) {
-        // Есть отдельные результаты по заездам(этапам).
-        const stageOrder = event.seriesId?.stages.find((s) => s.event.equals(eventId))?.order;
-
-        if (stageOrder === undefined) {
-          throw new Error(
-            `Не найден этап с eventId: "${eventId}" в массиве этапов серии с _id: "${event.seriesId?._id}"`
-          );
-        }
-
-        // Результаты этапа.
-        const results = await this.stageResultRepository.getAllStageResultsByEventId(
-          seriesId,
-          stageOrder
-        );
-
-        await this.pointsWithStageResults.calculateAndSetRacePoints({
-          results,
-          importanceLevel: event.importanceLevel,
-        });
-
         return;
       }
 
-      //  Заезды не входящие в серию заездов, или где не создаются отдельные результаты для этапов серии.
+      // Заезды не входящие в серию заездов, или где не создаются отдельные результаты для этапов серии.
 
       // 1. Определение, общий зачет или деление по категориям. Зависит от типа Эвента.
       const hasGroupedResults = event.typeRaceCustom === 'classicGroup';

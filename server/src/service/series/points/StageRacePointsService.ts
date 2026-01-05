@@ -1,30 +1,34 @@
-import { PointsCalculator } from './PointsCalculator.js';
-import { baseRacePointsMap, importanceCoefficients } from '../../assets/racePoints.js';
-import { StageResultRepository } from '../../repositories/StageResult.js';
+import { baseRacePointsMap, importanceCoefficients } from '../../../assets/racePoints.js';
+import { EventRepository } from '../../../repositories/Event.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
+import { PointsCalculator } from '../../RacePoints/PointsCalculator.js';
 
 // types
-import { TStageResult, TStageResultPoints } from '../../types/model.interface.js';
-import { TImportanceCoefficientsLevels } from '../../types/points.types.js';
+import { TStageResult } from '../../../types/model.interface.js';
+import { TImportanceCoefficientsLevels } from '../../../types/points.types.js';
 
-export class PointsWithStageResults {
-  pointsCalculator: PointsCalculator = new PointsCalculator();
-  private stageResultRepository: StageResultRepository = new StageResultRepository();
+/**
+ * Класс работы с сущностью очки за место на этапе серии.
+ * @param results - Массив
+ */
+export class StageRacePointsService {
+  private eventRepository = new EventRepository();
+  private stageResultRepository = new StageResultRepository();
+  pointsCalculator = new PointsCalculator();
 
   /**
-   * Установка очков в заезде, где есть отдельные результаты за этапы.
+   * Расчет и установка очков за этап серии заездов.
    */
-  calculateAndSetRacePoints = async ({
+  calculateAndSetRacePoints = ({
     results,
     importanceLevel,
   }: {
     results: TStageResult[];
     importanceLevel?: TImportanceCoefficientsLevels;
-  }) => {
+  }): TStageResult[] => {
     const ridersInCategories = this.pointsCalculator.calculateRidersInStageCategories(results);
 
-    const updateQuery = [] as { _id: string; query: { points: TStageResultPoints } }[];
-
-    for (const result of results) {
+    const resultsWithPoints = results.map((result) => {
       // Если у райдера категория null то коэффициент равен 0.
       const massCoefficient = result.category
         ? this.pointsCalculator.getMassCoefficient(ridersInCategories[result.category])
@@ -46,9 +50,9 @@ export class PointsWithStageResults {
         ? { ...result.points, zpruFinishPoints: zpruPoints }
         : { zpruFinishPoints: zpruPoints };
 
-      updateQuery.push({ _id: result._id!.toString(), query: { points } });
-    }
+      return { ...result, points };
+    });
 
-    await this.stageResultRepository.updateMany(updateQuery);
+    return resultsWithPoints;
   };
 }

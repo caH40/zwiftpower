@@ -8,6 +8,7 @@ import { StageResultRepository } from '../../repositories/StageResult.js';
 import { GCProviderFactory } from './GCProviderFactory.js';
 import { StageRanker } from './StageRanker.js';
 import { countFinishersForStageResults } from '../../utils/countFinishers.js';
+import { StageRacePointsService } from './points/StageRacePointsService.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
@@ -48,7 +49,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
    * @param {number} stageOrder - Номер этапа (order) в серии заездов.
    */
   public async buildStageProtocol(stageOrder: number): Promise<{ seriesType: TSeriesType }> {
-    const { stages: stagesFromSeries, type } = await this.getSeriesData();
+    const { stages: stagesFromSeries, type, importanceLevel } = await this.getSeriesData();
 
     // Создание массива заездов, если в этапе несколько заездов.
     const stages = stagesFromSeries
@@ -96,11 +97,18 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       },
     });
 
+    // Добавление очков за этап серии заездов.
+    const stageRacePointsService = new StageRacePointsService();
+    const resultsWithPoints = stageRacePointsService.calculateAndSetRacePoints({
+      results: resultsWithRank,
+      importanceLevel,
+    });
+
     // Удаление всех старых результатов текущего этапа серии.
     await this.deleteOutdatedStageResults(stageOrder);
 
     // Сохранение результатов в БД.
-    await StageResultModel.create(resultsWithRank);
+    await StageResultModel.create(resultsWithPoints);
 
     // Изменение  hasResults и resultsUpdatedAt даты обновления результатов в данных этапа серии.
     await NSeriesModel.findOneAndUpdate(
@@ -108,7 +116,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       {
         $set: {
           'stages.$.resultsUpdatedAt': new Date(),
-          'stages.$.hasResults': resultsWithRank.length > 0,
+          'stages.$.hasResults': resultsWithPoints.length > 0,
         },
       }
     );
@@ -117,15 +125,17 @@ export class SeriesStageProtocolManager extends HandlerSeries {
   }
 
   /**
-   * Пересчёт протокола этапа после правок результатов модератором.
+   * Пересчёт протоколов этапов серии после изменения категории, внесении штрафа,
+   * дисквалификации участнику(ам).
    */
   public async recalculateStageProtocol(seriesId: string): Promise<void> {
-    const { type } = await this.getSeriesData();
+    const { type, importanceLevel } = await this.getSeriesData();
 
     // Получение всех результатов этапов серии seriesId.
     const allStageResults = await this.stageResultRepository.getAllStageResultsBySeriesId(
       seriesId
     );
+
     // Группировка результатов по этапам.
     const resultsByStageOrderMap: Map<number, TStageResult[]> = new Map();
 
@@ -150,8 +160,18 @@ export class SeriesStageProtocolManager extends HandlerSeries {
         },
       });
 
+      // Добавление очков за этап серии заездов.
+      const stageRacePointsService = new StageRacePointsService();
+      const resultsWithPoints = stageRacePointsService.calculateAndSetRacePoints({
+        results: resultsWithRank,
+        importanceLevel,
+      });
+
+      // Удаление старых результатов этапа серии.
       await StageResultModel.deleteMany({ series: seriesId, order });
-      await StageResultModel.insertMany(resultsWithRank);
+
+      // Сохранение обновленных результатов этапа серии.
+      await StageResultModel.insertMany(resultsWithPoints);
     }
   }
 }

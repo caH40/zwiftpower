@@ -14,6 +14,7 @@ import {
   TSeriesStage,
   TSeriesType,
 } from '../types/model.interface';
+import { IMPORTANCE_COEFFICIENTS_LEVELS } from '../assets/racePoints.js';
 
 export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   scoringAlgorithms: TScoringAlgorithm;
@@ -54,6 +55,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   type: { type: String, enum: SERIES_TYPES, required: true },
   urlSlug: { type: String, required: true, unique: true },
   gcResultsUpdatedAt: { type: Date },
+  importanceLevel: { type: String, enum: IMPORTANCE_COEFFICIENTS_LEVELS, default: 'standard' },
 });
 
 export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);

@@ -40,8 +40,20 @@ export const usefulLinksWithIcon = [
   },
   {
     id: 1,
-    name: 'KOM-on инфо',
-    href: 'https://t.me/komon_race_info',
+    name: 'KOM-on группа',
+    href: 'https://t.me/komon_zwift',
+    icon: <IconTelegram squareSize={20} />,
+  },
+  {
+    id: 2,
+    name: 'Zwift MTBtraining',
+    href: 'https://t.me/ZwiftMTBtraining',
+    icon: <IconTelegram squareSize={20} />,
+  },
+  {
+    id: 3,
+    name: 'ETALON team',
+    href: 'https://t.me/etalonteam',
     icon: <IconTelegram squareSize={20} />,
   },
 ];

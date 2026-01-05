@@ -694,6 +694,7 @@ export type TSeries = {
   type: TSeriesType; // Тип серии.
   urlSlug: string; // Уникальный URL-идентификатор (например, для генерации ссылки "/series/my-series").
   gcResultsUpdatedAt?: Date; // Обновление результатов генеральной классификации.
+  importanceLevel?: TImportanceCoefficientsLevels; // Уровень важности серии для расчета очков.
 };
 
 /**

@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { ZwiftEvent } from '../Model/ZwiftEvent.js';
-import { TSeries, TSeriesStage } from '../types/model.interface.js';
+import { TSeries, TSeriesStage, ZwiftEventSchema } from '../types/model.interface.js';
 import { TImportanceCoefficientsLevels } from '../types/points.types.js';
 import { MongooseUtils } from '../utils/MongooseUtils.js';
 import { EventWithSubgroupAndSeries, TZwiftCategory } from '../types/types.interface.js';
@@ -30,6 +30,7 @@ export class EventRepository {
    * Все Эвенты в которых есть подгруппы subgroupsId
    * @param subgroupsIds - массив _id подгрупп эвента из БД.
    */
+
   async getEventIds(subgroupsIds: Types.ObjectId[]): Promise<GetEventIdsReturn> {
     return await ZwiftEvent.find(
       {
@@ -149,6 +150,10 @@ export class EventRepository {
         select: ['-_id', 'useStageResults', 'name', 'urlSlug', 'stages'],
       })
       .lean();
+  }
+
+  async getEventBySeriesId(seriesId: string): Promise<ZwiftEventSchema | null> {
+    return ZwiftEvent.findOne({ seriesId }).lean();
   }
 }
 

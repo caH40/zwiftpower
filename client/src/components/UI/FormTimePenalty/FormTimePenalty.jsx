@@ -145,7 +145,6 @@ export default function FormTimePenalty({
           id={'penaltySeconds-FormCategoryForm'}
           loading={isLoading}
           step={1}
-          required={true}
           min={0}
         />
 
