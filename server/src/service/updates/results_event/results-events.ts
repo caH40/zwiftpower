@@ -7,7 +7,7 @@ import { getTokenForEvent } from '../../zwift/token.js';
 
 // types
 import { EventWithSubgroup } from '../../../types/types.interface.js';
-import { TeamScoreAggregator } from '../../TeamScoreAggregator.js';
+import { TeamScoreAggregator } from '../../TeamScoreAggregator/TeamScoreAggregator.js';
 import { getSeasonPeriod } from '../../../utils/season.js';
 
 /**

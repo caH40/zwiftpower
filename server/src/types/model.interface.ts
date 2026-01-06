@@ -1085,6 +1085,7 @@ export type TTeamSeasonRating = {
   rank: number; // Место команды в таблице рейтинга.
   points: number; // Командные очки за сезон.
   eventsIds: Types.ObjectId[]; // _id Эвентов в БД;
+  seriesIds: Types.ObjectId[]; // _id Серий в БД;
   createdAt: Date; // Дата создания записи.
   updatedAt: Date; // Дата обновления записи.
 };

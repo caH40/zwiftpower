@@ -5,7 +5,7 @@ import { updateResultsEvent } from '../updates/results_event/result-event.js';
 // types
 import { EventWithSubgroup } from '../../types/types.interface.js';
 import { getTokenForEvent } from '../zwift/token.js';
-import { TeamScoreAggregator } from '../TeamScoreAggregator.js';
+import { TeamScoreAggregator } from '../TeamScoreAggregator/TeamScoreAggregator.js';
 
 /**
  * Ручное обновление результатов Эвента по запросу модератора

@@ -12,6 +12,7 @@ const TeamSeasonRatingSchema = new Schema<TeamSeasonRatingDocument>(
     rank: { type: Number, required: true, min: 1 },
     points: { type: Number, required: true, min: 0 },
     eventsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent' }],
+    seriesIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'NSeries' }],
   },
   { timestamps: true }
 );

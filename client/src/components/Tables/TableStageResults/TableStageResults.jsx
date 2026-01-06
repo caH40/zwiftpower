@@ -197,6 +197,8 @@ function TableStageResults({
                     />
                   </td>
                 )}
+
+                {/* <td>{result.points?.zpruFinishPoints || null}</td> */}
               </tr>
             );
           }

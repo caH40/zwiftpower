@@ -145,6 +145,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       resultsByStageOrderMap.set(result.order, resultsInMap);
     }
 
+    // Пересчёт протоколов этапов серии.
     for (const [order, resultsInStage] of resultsByStageOrderMap.entries()) {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
       const resultsWithRank = this.stageRanker.calculateRanking(resultsInStage, type);

@@ -89,7 +89,13 @@ export class EventRepository {
   async getRated(
     start: Date,
     end: Date
-  ): Promise<{ _id: Types.ObjectId; id: number; seriesId?: { useStageResults?: boolean } }[]> {
+  ): Promise<
+    {
+      _id: Types.ObjectId;
+      id: number;
+      seriesId?: { _id: Types.ObjectId; useStageResults?: boolean };
+    }[]
+  > {
     return ZwiftEvent.find(
       {
         eventStart: {
@@ -100,9 +106,9 @@ export class EventRepository {
       },
       { _id: 1, seriesId: 1, id: 1 }
     )
-      .populate<{ seriesId?: { useStageResults?: boolean } }>({
+      .populate<{ seriesId?: { _id: Types.ObjectId; useStageResults?: boolean } }>({
         path: 'seriesId',
-        select: ['-_id', 'useStageResults'],
+        select: ['useStageResults'],
       })
       .lean();
   }

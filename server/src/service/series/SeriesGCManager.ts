@@ -6,6 +6,8 @@ import { handleAndLogError } from '../../errors/error.js';
 // types
 import { TSeriesType } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { getSeasonPeriod } from '../../utils/season.js';
+import { TeamScoreAggregator } from '../TeamScoreAggregator/TeamScoreAggregator.js';
 
 /**
  * Класс работы с генеральными классификациями серий и туров.
@@ -21,8 +23,8 @@ export class SeriesGCManager {
     // Получем тип серии заездов.
     const seriesDB = await NSeriesModel.findOne(
       { _id: this.seriesId },
-      { _id: false, type: true }
-    ).lean<{ type: TSeriesType }>();
+      { _id: false, type: true, dateStart: true }
+    ).lean<{ type: TSeriesType; dateStart: Date }>();
 
     if (!seriesDB) {
       throw new Error(`Не найдена серия с _id:${this.seriesId}`);
@@ -30,6 +32,10 @@ export class SeriesGCManager {
 
     const gcProvider = new GCProviderFactory(this.seriesId);
     const gcHandler = gcProvider.getHandler(seriesDB.type);
+
+    // Пересчет командного рейтинга сезона после изменения результатов этапов серии
+    // и пересчете ГК.
+    await this.recalculateTeamSeasonRating(seriesDB.dateStart);
 
     return await gcHandler.update();
   }
@@ -45,4 +51,21 @@ export class SeriesGCManager {
       handleAndLogError(error);
     }
   }
+
+  /**
+   * Обновление командного рейтинга сезона после изменения результатов этапов серии.
+   */
+  private recalculateTeamSeasonRating = async (dateStart: Date): Promise<void> => {
+    // Обновление таблицы рейтинга команд.
+    const season = getSeasonPeriod(new Date(dateStart));
+
+    if (season?.label) {
+      const service = new TeamScoreAggregator();
+      await service.recalculateTeamSeasonRating(season.label);
+    } else {
+      handleAndLogError(
+        new Error(`Не удалось определить сезон для даты ${dateStart.toISOString()}`)
+      );
+    }
+  };
 }
