@@ -101,7 +101,13 @@ export class TeamScoreAggregator {
 
   private getRanking(
     results: { teamId: string; points: number; eventIds: string[]; seriesIds: string[] }[]
-  ): { teamId: string; rank: number; points: number; eventIds: string[] }[] {
+  ): {
+    teamId: string;
+    rank: number;
+    points: number;
+    eventIds: string[];
+    seriesIds: string[];
+  }[] {
     const sorted = results.toSorted((a, b) => b.points - a.points);
 
     return sorted.map((res, index) => ({ ...res, rank: index + 1 }));

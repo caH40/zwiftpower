@@ -40,6 +40,7 @@ export class TeamSeasonRatingRepository {
       rank: number;
       points: number;
       eventIds: string[];
+      seriesIds: string[];
     }[],
     season: string
   ): Promise<void> {
@@ -57,6 +58,7 @@ export class TeamSeasonRatingRepository {
               rank: item.rank,
               points: item.points,
               eventsIds: item.eventIds.map((id) => new Types.ObjectId(id)),
+              seriesIds: item.seriesIds.map((id) => new Types.ObjectId(id)),
             },
           },
           upsert: true,
@@ -72,7 +74,7 @@ export class TeamSeasonRatingRepository {
   getResultEvents({ seasonLabel, teamId }: { seasonLabel: string; teamId: string }) {
     return TeamSeasonRatingModel.findOne(
       { season: seasonLabel, team: teamId },
-      { eventsIds: 1, _id: 0 }
-    ).lean<{ eventsIds: Types.ObjectId[] }>();
+      { eventsIds: 1, seriesIds: 1, _id: 0 }
+    ).lean<{ eventsIds: Types.ObjectId[]; seriesIds: Types.ObjectId[] }>();
   }
 }
