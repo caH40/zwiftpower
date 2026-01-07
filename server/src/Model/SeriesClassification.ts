@@ -6,6 +6,7 @@ import { gapsInCategoriesSchema } from './Schema/GapsInCategoriesSchema.js';
 
 // types
 import { TSeriesClassification } from '../types/model.interface';
+import { raceRankSchema } from './Schema/RaceRank.js';
 
 // Интерфейс для результата в генеральном зачете тура.
 export interface ISeriesClassification extends Omit<TSeriesClassification, '_id'>, Document {
@@ -24,6 +25,7 @@ const stageSchema = new Schema(
     // includeInTotal: { type: Boolean, default: true }, // Влияет ли этап на суммарные очки.
     finishPoints: { type: Number, default: 0 }, // Очки за этап (если есть).
     profileData: { type: profileDataSchema, default: null },
+    raceRank: { type: raceRankSchema }, // Место на этапе в категориях.
   },
   { _id: false }
 );

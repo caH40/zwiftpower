@@ -797,7 +797,7 @@ export type TStageResult = {
   profileData: ProfileDataInResult; // Данные райдера из заезда.
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
 
-  rank: TRank;
+  rank: TRaceRank;
   durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
@@ -833,7 +833,10 @@ export type TStageResult = {
   updatedAt: Date;
 };
 
-type TRank = {
+/**
+ * Тип, описывающий место райдера в разных категориях.
+ */
+export type TRaceRank = {
   category: number; // Место в категории.
   absolute: number; // Место в абсолюте.
 };
@@ -892,7 +895,7 @@ export type TGap = { toLeader: number | null; toPrev: number | null }; // null �
 export type TSeriesClassification = {
   _id?: Types.ObjectId; // MongoDB ID (опционально, если документ ещё не создан).
   seriesId: Types.ObjectId; // _id серии из БД.
-  rank: TRank | null; // Итоговое место в классификации.
+  rank: TRaceRank | null; // Итоговое место в классификации.
   profileId: number; // ZwiftId райдера.
   finalCategory: TRaceSeriesCategories | null; // Категория, по которой райдер участвует в зачёте и рассчитывается rank. Выставляется автоматически согласно правилам серии.
   totalFinishPoints: number; // Суммарные очки (для серии с подсчётом очков).
