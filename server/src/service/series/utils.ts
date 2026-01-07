@@ -58,6 +58,7 @@ export function createStagesForRider({
         distanceInMeters: stage.activityData.segmentDistanceInMeters || 0,
         elevationInMeters: stage.activityData.elevationInMeters || 0,
         calories: stage.activityData.calories || 0,
+        raceRank: stage.rank,
       };
     } else {
       // Создание пустых элементов в массиве этапов вместо тех, которые райдер не проехал или не финишировал (был дисквалифицирован).
@@ -70,6 +71,7 @@ export function createStagesForRider({
         distanceInMeters: 0,
         elevationInMeters: 0,
         calories: 0,
+        raceRank: null,
       };
     }
   });

@@ -1,5 +1,5 @@
 import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
-import { ProfileDataInResult } from './model.interface';
+import { ProfileDataInResult, TRaceRank } from './model.interface';
 
 // types
 import { TRaceSeriesCategories } from './types.interface';
@@ -80,6 +80,7 @@ export type TGCRiderStage = {
   finishPoints: number; // Заработанные финишные очки за этап.
   // includeInTotal: boolean; // Флаг, указывающий, влияет ли этап на суммарные очки.
   profileData: ProfileDataInResult | null; // Данные профиля райдера на этапе. null - райдер не финишировал на данном этапе.
+  raceRank: TRaceRank | null; // Место на этапе в категориях.
 };
 export type TEmptyGCRiderStage = {
   category: null;
@@ -90,4 +91,5 @@ export type TEmptyGCRiderStage = {
   distanceInMeters: number;
   elevationInMeters: number;
   calories: number;
+  raceRank: null;
 };

@@ -35,6 +35,7 @@ export function generalClassificationDto(
         elevationInMeters: s.elevationInMeters,
         calories: s.calories,
         finishPoints: s.finishPoints,
+        raceRank: s.raceRank,
       }));
 
       return { ...gc, _id: String(gc._id), stages: stagesWithProfileData };
