@@ -8,10 +8,17 @@ import IconCupRank from '../icons/IconCupRank';
  * @param {number} props.value - Значение ранка (место).
  * @param {{ status: boolean, reason: string, label: string }} [props.dsq] - Объект дисквалификации.
  */
-export default function Rank({ value, dsq }) {
+export default function Rank({ value, dsq, squareSize, tooltip }) {
   // Показываем иконку кубка за топ-3, если нет дисквалификации.
   if ([1, 2, 3].includes(value) && !dsq?.status) {
-    return <IconCupRank place={value} addCls="box__inline" />;
+    return (
+      <IconCupRank
+        place={value}
+        addCls="box__inline"
+        squareSize={squareSize}
+        tooltip={tooltip}
+      />
+    );
   }
 
   // Показываем метку дисквалификации.

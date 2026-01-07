@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
@@ -93,22 +92,38 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
               <TdGap gap={gaps?.toPrev} dsq={result.disqualification?.status} />
 
               {/* Столбцы с результатами этапов */}
-              {result.stages.map((stage, index) => (
-                <td
-                  key={stage.stageOrder}
-                  className={cx({
-                    'column--striped': index % 2 === 0,
-                  })}
-                >
-                  <Link className={styles.link} to={`stage/${stage.stageOrder}`}>
-                    <FinishTime
-                      time={secondesToTimeThousandths(stage.durationInMilliseconds)}
-                      dsq={stage.disqualification}
-                      hideMs={true}
-                    />
-                  </Link>
-                </td>
-              ))}
+              {result.stages.map((stage, index) => {
+                // Определение ранка на этапе (1, 2, 3) или null если вне топ-3
+                const top3RankRace = [1, 2, 3].includes(stage.raceRank?.category)
+                  ? stage.raceRank?.category
+                  : null;
+
+                return (
+                  <td
+                    key={stage.stageOrder}
+                    className={cx({
+                      'column--striped': index % 2 === 0,
+                    })}
+                  >
+                    <Link
+                      className={cx('link', 'timeWithRank')}
+                      to={`stage/${stage.stageOrder}`}
+                    >
+                      <FinishTime
+                        time={secondesToTimeThousandths(stage.durationInMilliseconds)}
+                        dsq={stage.disqualification}
+                        hideMs={true}
+                      />
+
+                      <Rank
+                        value={top3RankRace}
+                        squareSize={16}
+                        tooltip={`Занятое место на этапе: ${top3RankRace}`}
+                      />
+                    </Link>
+                  </td>
+                );
+              })}
             </tr>
           );
         })}

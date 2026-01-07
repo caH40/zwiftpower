@@ -88,7 +88,11 @@ tbody .current {
 .table td .td__name {
   white-space: normal;
 }
-
+.timeWithRank {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
 .onlyContent {
   width: 1%;
 }
