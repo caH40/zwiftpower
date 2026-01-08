@@ -18,5 +18,6 @@ export const raceResultsColumnsEnd = [
   { name: 'Вес', id: 13 },
   { name: 'Рост', id: 14 },
   { name: 'Возраст', id: 15 },
-  { name: 'Разное', id: 16 },
+  { name: 'ZPRU Очки', id: 16, tooltip: 'zpru рейтинговые очки' },
+  { name: 'Разное', id: 17 },
 ];

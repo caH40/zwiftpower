@@ -139,20 +139,15 @@ function TableRaceResults({ results, event, forDNF }) {
                 />
               </td>
 
-              {
-                <>
-                  <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
-                  <TdWeight
-                    weight={profile.weightInGrams.addition}
-                    zwiftId={result.profileId}
-                  />
-                  <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
-                  <td>{getAgeCategory(profile.age)}</td>
-                  <TdDifferent
-                    isPairedSteeringDevice={result.sensorData.pairedSteeringDevice}
-                  />
-                </>
-              }
+              <td>{tdHeartRate(result.sensorData.heartRateData.avgHeartRate.addition)}</td>
+              <TdWeight weight={profile.weightInGrams.addition} zwiftId={result.profileId} />
+              <td>{tdHeight(profile.heightInCentimeters.addition)}</td>
+              <td>{getAgeCategory(profile.age)}</td>
+
+              {/* zpruPoints */}
+              <td>{result.points?.zpruFinishPoints || null}</td>
+
+              <TdDifferent isPairedSteeringDevice={result.sensorData.pairedSteeringDevice} />
 
               {/* Модерация данных райдера */}
               {isAdmin && (

@@ -35,6 +35,7 @@ import IconScoreBased from '../../icons/IconScoreBased';
 import IconSeriesWorld from '../../icons/IconSeriesWorld';
 import IconParticipants from '../../icons/IconParticipants';
 import IconFire from '../../icons/IconFire';
+import IconZPoints from '../../icons/IconZPoints';
 
 const columnNameMap = new Map([
   ['Дата', IconDateTime],
@@ -78,6 +79,7 @@ const columnNameMap = new Map([
   ['Серия заездов', IconSeriesWorld],
   ['Участники', IconParticipants],
   ['Огонь', IconFire],
+  ['ZPRU Очки', IconZPoints],
 ]);
 
 export default function ColumnName({ columnName, tooltip, ...props }) {

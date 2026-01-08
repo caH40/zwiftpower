@@ -167,6 +167,10 @@ function TableStageResults({
                 <TdWeight weight={profile.weightInGrams} zwiftId={result.profileId} />
                 <td>{tdHeight(profile.heightInCentimeters)}</td>
                 <td>{getAgeCategory(profile.age)}</td>
+
+                {/* zpruPoints */}
+                <td>{result.points?.zpruFinishPoints || null}</td>
+
                 <td>
                   {category !== categoryInRace ? (
                     <CategoryChangeBox
@@ -197,8 +201,6 @@ function TableStageResults({
                     />
                   </td>
                 )}
-
-                {/* <td>{result.points?.zpruFinishPoints || null}</td> */}
               </tr>
             );
           }

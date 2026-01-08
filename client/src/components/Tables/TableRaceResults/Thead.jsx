@@ -64,7 +64,7 @@ function Thead({ columnsCP, showIndex, isAdmin }) {
         })}
         {raceResultsColumnsEnd.map((column) => (
           <th key={column.id}>
-            <ColumnName columnName={column.name} />
+            <ColumnName columnName={column.name} tooltip={column.tooltip} />
           </th>
         ))}
 

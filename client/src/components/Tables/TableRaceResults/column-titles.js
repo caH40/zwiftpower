@@ -26,7 +26,8 @@ export const raceResultsColumnsEnd = [
   { name: 'Вес', id: 23 },
   { name: 'Рост', id: 24 },
   { name: 'Возраст', id: 25 },
-  { name: 'Разное', id: 26 },
+  { name: 'ZPRU Очки', id: 26, tooltip: 'zpru рейтинговые очки' },
+  { name: 'Разное', id: 27 },
 ];
 
 export const raceResultsColumns = (setShowIndex) => {
