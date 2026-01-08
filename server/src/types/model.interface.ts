@@ -686,6 +686,11 @@ export type TSeries = {
   name: string; // Название серии заездов.
   organizer: mongoose.Schema.Types.ObjectId; // Организатор серии (ссылка на объект в базе).
   scoringTable: mongoose.Schema.Types.ObjectId; // Ссылка на документ с расчетом очков за места в протоколе.
+  finishTimeLimitOnStage?: {
+    percentageFromLeader: number; // Допустимое отставание от времени лидера в процентах.
+    enforcement: 'auto' | 'manual'; // Автоматическая или ручная дисквалификация.
+  };
+
   posterFileInfo?: TFileMetadataForCloud; // Объект с URL постера (разные размеры).
   prizes?: string; // Описание призов (если есть).
   rules?: string; // Описание правил серии (может быть ссылкой).

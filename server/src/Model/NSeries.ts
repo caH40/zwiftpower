@@ -56,6 +56,10 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   urlSlug: { type: String, required: true, unique: true },
   gcResultsUpdatedAt: { type: Date },
   importanceLevel: { type: String, enum: IMPORTANCE_COEFFICIENTS_LEVELS, default: 'standard' },
+  finishTimeLimitOnStage: {
+    percentageFromLeader: { type: Number, default: 0 },
+    enforcement: { type: String, enum: ['auto', 'manual'], default: 'manual' },
+  },
 });
 
 export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);
