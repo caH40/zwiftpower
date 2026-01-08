@@ -26,6 +26,8 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
   // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
   const filteredResult = useFilterGC(results);
 
+  const allCategories = filterCategory.name === 'All';
+
   return (
     <table className={cx('table')}>
       <caption className={cx('caption')}>
@@ -40,10 +42,9 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
       <tbody>
         {filteredResult?.map((result) => {
           // Объект с гэпами до лидера и до предыдущего райдера.
-          const gaps =
-            filterCategory.name === 'All'
-              ? result.gapsInCategories.absolute
-              : result.gapsInCategories.category;
+          const gaps = allCategories
+            ? result.gapsInCategories.absolute
+            : result.gapsInCategories.category;
 
           const { profileData } = result;
 
@@ -54,11 +55,7 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
             >
               <td className={styles.centerTd}>
                 <Rank
-                  value={
-                    filterCategory.name === 'All'
-                      ? result.rank?.absolute
-                      : result.rank?.category
-                  }
+                  value={allCategories ? result.rank?.absolute : result.rank?.category}
                   dsq={result.disqualification}
                 />
               </td>
@@ -115,11 +112,13 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
                         hideMs={true}
                       />
 
-                      <Rank
-                        value={top3RankRace}
-                        squareSize={16}
-                        tooltip={`Занятое место на этапе: ${top3RankRace}`}
-                      />
+                      {allCategories ? null : (
+                        <Rank
+                          value={top3RankRace}
+                          squareSize={16}
+                          tooltip={`Занятое место на этапе: ${top3RankRace}`}
+                        />
+                      )}
                     </Link>
                   </td>
                 );
