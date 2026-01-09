@@ -10,7 +10,11 @@ import {
 } from '../../../redux/features/api/series/fetchSeries';
 import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
-import { riderCategoryRuleOptions, seriesTypes } from '../../../assets/options';
+import {
+  finishTimeLimitOnStageOptions,
+  riderCategoryRuleOptions,
+  seriesTypes,
+} from '../../../assets/options';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
@@ -44,6 +48,7 @@ export default function FormOrganizerSeriesCreate({
     isFinished,
     riderCategoryRule,
     type,
+    finishTimeLimitOnStage,
     _id: seriesId,
   },
   loading,
@@ -85,8 +90,13 @@ export default function FormOrganizerSeriesCreate({
       isFinished,
       type,
       riderCategoryRule,
+      finishTimeLimitOnStage,
     },
-    defaultValues: { logoFile: null, posterFile: null },
+    defaultValues: {
+      logoFile: null,
+      posterFile: null,
+      finishTimeLimitOnStage: { percentageFromLeader: 0, enforcement: 'manual' },
+    },
   });
 
   // Следим за изменениями обеих дат.
@@ -273,6 +283,53 @@ export default function FormOrganizerSeriesCreate({
             validationText={errors.riderCategoryRule?.message || ''}
             id={'riderCategoryRule-FormOrganizerSeriesCreate'}
             options={riderCategoryRuleOptions}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          {/* Разрешенный лимит на финише этапов от лидера */}
+          <InputAuth
+            label="Процент разрешенного лимита финишного времени от лидера, %"
+            register={register('finishTimeLimitOnStage.percentageFromLeader', {
+              pattern: {
+                value: /^\d+$/,
+                message: 'Только целые числа без точки',
+              },
+              min: {
+                value: 0,
+                message: 'Минимальное значение: 0',
+              },
+              validate: {
+                noDecimal: (value) => {
+                  if (value && (value.includes('.') || value.includes(','))) {
+                    return 'Точки и запятые не допускаются';
+                  }
+                  return true;
+                },
+              },
+            })}
+            validationText={errors.finishTimeLimitOnStage?.percentageFromLeader?.message || ''}
+            placeholder="Проценты"
+            input={{
+              id: 'finishTimeLimitOnStage.percentageFromLeader-FormOrganizerSeriesCreate',
+              type: 'number',
+              min: 0,
+              step: 1,
+            }}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <SelectWithRHF
+            label={
+              'Метод установки дисквалификации при не попадании райдера в лимит финишного времени'
+            }
+            register={register('finishTimeLimitOnStage.enforcement')}
+            validationText={errors.finishTimeLimitOnStage?.enforcement?.message || ''}
+            id={'finishTimeLimitOnStage.enforcement-FormOrganizerSeriesCreate'}
+            options={finishTimeLimitOnStageOptions}
             loading={loading || loadingForm}
           />
         </div>

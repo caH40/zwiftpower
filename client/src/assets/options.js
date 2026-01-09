@@ -129,3 +129,19 @@ export const importanceCoefficients = [
     name: 'championship',
   },
 ];
+
+/**
+ * Метод установки дисквалификации при не попадании райдера в лимит времени.
+ */
+export const finishTimeLimitOnStageOptions = [
+  {
+    id: 1,
+    value: 'manual',
+    name: 'Ручной выбор дисквалификации',
+  },
+  {
+    id: 2,
+    value: 'auto',
+    name: 'Автоматическая дисквалификация',
+  },
+];

@@ -24,6 +24,7 @@
   overflow: hidden;
   min-width: 160px;
   width: 100%;
+  color: var(--color-text-minor);
 }
 .select.error {
   box-shadow: 0 0 2px 2px var(--error);

@@ -30,7 +30,7 @@ export function serializeOrganizerSeriesCreate(data) {
     .filter(([_, value]) => value !== undefined && value !== null)
     .forEach(([key, value]) => {
       // Преобразуем выбранные данные в строки.
-      if (['hasGeneral', 'hasTeams', 'isFinished'].includes(key)) {
+      if (['hasGeneral', 'hasTeams', 'isFinished', 'finishTimeLimitOnStage'].includes(key)) {
         formData.append(key, JSON.stringify(value));
       } else {
         formData.append(key, value);

@@ -31,7 +31,7 @@
 .box__checkbox,
 .wrapper__textarea,
 .wrapper__file {
-  padding: 10px 10px 17px;
+  padding: 10px;
   border-radius: 15px;
   transition: all 0.2s ease;
 }
