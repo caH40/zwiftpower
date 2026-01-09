@@ -93,3 +93,8 @@ export type TEmptyGCRiderStage = {
   calories: number;
   raceRank: null;
 };
+
+export type TFinishTimeLimitOnStage = {
+  percentageFromLeader: number; // Допустимое отставание от времени лидера в процентах.
+  enforcement: 'auto' | 'manual'; // Автоматическая или ручная дисквалификация.
+};

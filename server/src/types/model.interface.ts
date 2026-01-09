@@ -18,6 +18,7 @@ import { TServiceMessageType } from './service-message.types.js';
 import { DISQUALIFICATION_LABELS, SERIES_TYPES } from '../assets/constants.js';
 import {
   TCategoriesWithRange,
+  TFinishTimeLimitOnStage,
   TGCRiderStage,
   TRacingScoreRange,
   TRiderCategoryRuleType,
@@ -686,10 +687,6 @@ export type TSeries = {
   name: string; // Название серии заездов.
   organizer: mongoose.Schema.Types.ObjectId; // Организатор серии (ссылка на объект в базе).
   scoringTable: mongoose.Schema.Types.ObjectId; // Ссылка на документ с расчетом очков за места в протоколе.
-  finishTimeLimitOnStage?: {
-    percentageFromLeader: number; // Допустимое отставание от времени лидера в процентах.
-    enforcement: 'auto' | 'manual'; // Автоматическая или ручная дисквалификация.
-  };
 
   posterFileInfo?: TFileMetadataForCloud; // Объект с URL постера (разные размеры).
   prizes?: string; // Описание призов (если есть).
@@ -700,6 +697,7 @@ export type TSeries = {
   urlSlug: string; // Уникальный URL-идентификатор (например, для генерации ссылки "/series/my-series").
   gcResultsUpdatedAt?: Date; // Обновление результатов генеральной классификации.
   importanceLevel?: TImportanceCoefficientsLevels; // Уровень важности серии для расчета очков.
+  finishTimeLimitOnStage?: TFinishTimeLimitOnStage;
 };
 
 /**

@@ -3,6 +3,38 @@ import { z } from 'zod';
 import { safeJsonParse } from '../utils.js';
 import { RIDER_CATEGORIES_RULE_TYPES } from '../../../assets/constants.js';
 
+// types
+import { TFinishTimeLimitOnStage } from '../../../types/series.types.js';
+
+const finishTimeLimitOnStageSchema = z
+  .string()
+  .transform(safeJsonParse)
+  .refine((val): val is TFinishTimeLimitOnStage => val !== null, {
+    message: 'Невалидный JSON формат',
+  })
+  // Проверяем, что percentageFromLeader - это НЕ NaN (корректное число)
+  .refine(
+    (val) => {
+      // Преобразуем строку в число и проверяем, что это валидное число
+      const percentage = Number(val.percentageFromLeader);
+      return !isNaN(percentage) && percentage >= 0 && percentage <= 100;
+    },
+    {
+      message: 'percentageFromLeader должен быть числом от 0 до 100',
+    }
+  )
+  .transform((val) => ({ ...val, percentageFromLeader: Number(val.percentageFromLeader) }))
+  // Проверяем поле enforcement
+  .refine(
+    (val: { enforcement: 'manual' | 'auto' }) => {
+      return val.enforcement === 'manual' || val.enforcement === 'auto';
+    },
+    {
+      message: "enforcement должен быть 'manual' или 'auto'",
+    }
+  )
+  .describe('Параметры лимита времени на финише этапа');
+
 // Основная схема для данных Серии.
 export const SeriesDataZSchema = z
   .object({
@@ -113,6 +145,8 @@ export const SeriesDataZSchema = z
       .transform(safeJsonParse)
       .optional()
       .describe('_id редактируемой серии, если данные из формы редактирования.'),
+
+    finishTimeLimitOnStage: finishTimeLimitOnStageSchema,
   })
   .refine(
     (data) => {
