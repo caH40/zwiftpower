@@ -302,7 +302,8 @@ export default function FormOrganizerSeriesCreate({
               },
               validate: {
                 noDecimal: (value) => {
-                  if (value && (value.includes('.') || value.includes(','))) {
+                  const valueStr = String(value);
+                  if (value && (valueStr.includes('.') || valueStr.includes(','))) {
                     return 'Точки и запятые не допускаются';
                   }
                   return true;
