@@ -6,7 +6,7 @@ import { NSeriesModel } from '../../Model/NSeries.js';
 import { SeriesCategoryService } from './category/SeriesCategory.js';
 import { StageResultRepository } from '../../repositories/StageResult.js';
 import { GCProviderFactory } from './GCProviderFactory.js';
-import { StageRanker } from './StageRanker.js';
+import { StageRanker } from './stageRanker/StageRanker.js';
 import { countFinishersForStageResults } from '../../utils/countFinishers.js';
 import { StageRacePointsService } from './points/StageRacePointsService.js';
 

@@ -327,7 +327,9 @@ export default function FormOrganizerSeriesCreate({
             label={
               'Метод установки дисквалификации при не попадании райдера в лимит финишного времени'
             }
-            register={register('finishTimeLimitOnStage.enforcement')}
+            register={register('finishTimeLimitOnStage.enforcement', {
+              required: 'Обязательное поле',
+            })}
             validationText={errors.finishTimeLimitOnStage?.enforcement?.message || ''}
             id={'finishTimeLimitOnStage.enforcement-FormOrganizerSeriesCreate'}
             options={finishTimeLimitOnStageOptions}
