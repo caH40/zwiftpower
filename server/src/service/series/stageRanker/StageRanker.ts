@@ -5,7 +5,7 @@ import { TourStageRanking } from './TourRanking.js';
 // types
 import { TSeriesType, TStageResult } from '../../../types/model.interface.js';
 
-type THandler = (stageResults: TStageResult[]) => TStageResult[];
+type THandler = (stageResults: TStageResult[]) => Promise<TStageResult[]>;
 
 /**
  * Установка ранкинга в протоколе этапа.
@@ -25,10 +25,10 @@ export class StageRanker {
     ]);
   }
 
-  public calculateRanking = (
+  public calculateRanking = async (
     stageResults: TStageResult[],
     seriesType: TSeriesType
-  ): TStageResult[] => {
+  ): Promise<TStageResult[]> => {
     const handler = this.handlers.get(seriesType);
 
     if (!handler) {

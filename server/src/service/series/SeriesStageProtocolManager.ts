@@ -20,12 +20,11 @@ import { TResponseService } from '../../types/http.interface.js';
  * -перерасчет всех протоколов серии(тура) в зависимости от соответствующих настроек;
  */
 export class SeriesStageProtocolManager extends HandlerSeries {
-  stageResultRepository: StageResultRepository;
-  stageRanker: StageRanker = new StageRanker();
+  stageResultRepository = new StageResultRepository();
+  stageRanker = new StageRanker();
 
   constructor(public seriesId: string) {
     super(seriesId);
-    this.stageResultRepository = new StageResultRepository();
   }
 
   /**
@@ -83,7 +82,10 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     countFinishersForStageResults(resultsWithCategories);
 
     // Сортировка результатов и проставления ранкинга в каждой категории.
-    const resultsWithRank = this.stageRanker.calculateRanking(resultsWithCategories, type);
+    const resultsWithRank = await this.stageRanker.calculateRanking(
+      resultsWithCategories,
+      type
+    );
 
     // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
 
@@ -148,7 +150,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     // Пересчёт протоколов этапов серии.
     for (const [order, resultsInStage] of resultsByStageOrderMap.entries()) {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
-      const resultsWithRank = this.stageRanker.calculateRanking(resultsInStage, type);
+      const resultsWithRank = await this.stageRanker.calculateRanking(resultsInStage, type);
 
       // Установка финишных гэпов (разрывов между участниками).
       const finishGaps = new FinishGaps();

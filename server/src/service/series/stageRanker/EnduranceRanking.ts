@@ -13,7 +13,7 @@ export class EnduranceStageRanking {
    * FIXME: Необходима логика выявления участников заезда, которые ехали не из кармана,
    * а присоединились позже.
    */
-  set = (stageResults: TStageResult[]): TStageResult[] => {
+  set = async (stageResults: TStageResult[]): Promise<TStageResult[]> => {
     if (!stageResults.length) {
       return [];
     }
