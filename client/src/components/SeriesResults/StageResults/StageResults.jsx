@@ -47,14 +47,16 @@ export default function StageResults() {
     seriesPublicOne?.type === 'endurance'
       ? ['Место', 'Отставание от райдера впереди', 'Отставание от лидера']
       : [];
+
   // console.log(
   //   stageResults &&
   //     stageResults.results
-  //       .map(({ profileData, isOutsideFinishTimeLimit }) => ({
+  //       .map(({ category, profileData, finishTimeLimit }) => ({
   //         name: profileData.lastName,
-  //         isOutsideFinishTimeLimit,
+  //         category,
+  //         finishTimeLimit,
   //       }))
-  //       .filter((r) => r.isOutsideFinishTimeLimit)
+  //       .filter((r) => r.finishTimeLimit?.isOutside)
   // );
 
   return (

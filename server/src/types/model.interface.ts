@@ -832,7 +832,11 @@ export type TStageResult = {
     powerType?: 'POWER_METER' | string;
     trainerDifficulty?: number;
   };
-  isOutsideFinishTimeLimit: boolean; // Результат не уложился в лимит времени.
+  finishTimeLimit: {
+    isOutside: boolean; // Результат не уложился в лимит финишного времени.
+    exceededMilliseconds: number; // На сколько миллисекунд превышен лимит.
+  };
+
   createdAt: Date;
   updatedAt: Date;
 };

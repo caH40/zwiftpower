@@ -62,7 +62,10 @@ const stageResultSchema = new Schema<IStageResult>(
     timePenalty: { type: [timePenaltySchema], default: null },
     teamSquadAtRace: { type: mongoose.Schema.Types.ObjectId, ref: 'TeamSquad', default: null },
     finishersCount: { type: finishersCountSchema },
-    isOutsideFinishTimeLimit: { type: Boolean, default: false },
+    finishTimeLimit: {
+      isOutside: { type: Boolean, default: false },
+      exceededMilliseconds: { type: Number, default: 0 },
+    },
   },
   { timestamps: true }
 );

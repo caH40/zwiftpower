@@ -6,8 +6,8 @@ import { TStageResult } from '../../../types/model.interface.js';
 import { TRaceSeriesCategories } from '../../../types/types.interface.js';
 
 /**
- * Проверка результатов, которые не попали во временной лимит на этапе
- * и установка поля isOutsideFinishTimeLimit.
+ * Проверка результатов этапа на превышение временного лимита
+ * и установка поля finishTimeLimit.
  */
 export const setStageTimeLimit = async (
   seriesId: string,
@@ -33,34 +33,53 @@ export const setStageTimeLimit = async (
   return results.map((result) => {
     const riderCategory = result.category;
 
+    const resultWithInsideLimit = {
+      ...result,
+      finishTimeLimit: {
+        isOutside: false,
+        exceededMilliseconds: 0,
+      },
+    };
+
     if (!riderCategory) {
       handleAndLogError(
         new Error(
           `Не установлена категория для результата _id: "${result._id}" на этапе серии _id: "${result.series}"`
         )
       );
-      return result; // возвращаем исходный объект
+      return resultWithInsideLimit;
     }
 
     const resultTime =
       result.durationInMillisecondsWithPenalties ?? result.activityData.durationInMilliseconds;
 
-    // если лимит для категории ещё не установлен — первый результат → лидер
+    // Если лимит для категории ещё не установлен — первый результат → лидер.
     if (!categoryTimeLimits.has(riderCategory)) {
       const finishTimeLimitValue = resultTime + (resultTime * percentageFromLeader) / 100;
       categoryTimeLimits.set(riderCategory, finishTimeLimitValue);
 
-      return result; // лидер не за пределами лимита
+      return resultWithInsideLimit; // Лидер не за пределами лимита.
     }
 
     const limit = categoryTimeLimits.get(riderCategory)!;
 
-    // возвращаем новый объект с флагом, если превышен лимит
-    if (resultTime > limit) {
-      return { ...result, isOutsideFinishTimeLimit: true };
+    // Разность между финишным временем райдера и лимитом.
+    const rawExceededMilliseconds = resultTime - limit;
+
+    if (rawExceededMilliseconds > 0) {
+      // Любое превышение лимита = минимум 1 ms превышения.
+      const exceededMilliseconds = Math.ceil(rawExceededMilliseconds);
+
+      // Возвращаем новый объект с флагом, если превышен лимит.
+      return {
+        ...result,
+        finishTimeLimit: {
+          isOutside: true,
+          exceededMilliseconds,
+        },
+      };
     }
 
-    return result;
+    return resultWithInsideLimit;
   });
-  // console.log(seriesId, categoryTimeLimits);
 };
