@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 
@@ -25,6 +26,8 @@ const cx = classnames.bind(styles);
  * @returns
  */
 export default function TableTeamRiderResults({ results }) {
+  const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
+
   return (
     <table className={styles.table}>
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
@@ -35,7 +38,10 @@ export default function TableTeamRiderResults({ results }) {
           const dsqType = result.disqualification;
           const dsqDescription = result.disqualificationDescription;
           return (
-            <tr className={styles.hover} key={result._id}>
+            <tr
+              className={cx('hover', { current: zwiftId === result.profileId })}
+              key={result._id}
+            >
               <td>{getTimerLocal(result.eventStart, 'DDMMYY')}</td>
 
               <td className={styles.centerTd}>

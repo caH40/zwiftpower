@@ -9,10 +9,6 @@
   align-items: start;
   gap: 25px;
 }
-.main {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
 
 .aside {
   display: flex;

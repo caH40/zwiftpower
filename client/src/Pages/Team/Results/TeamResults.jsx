@@ -58,7 +58,7 @@ export default function TeamResultsPage() {
       </div>
 
       <>
-        <section className={styles.block__results}>
+        <section className={styles.wrapper__wide}>
           {/* Скелетон загрузки для Таблицы */}
           <SkeletonTable status={statusResults} rows={+docsOnPage} height={45} />
 
