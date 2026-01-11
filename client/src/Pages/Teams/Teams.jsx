@@ -54,24 +54,26 @@ export default function TeamsPublic() {
     <div className={styles.wrapper}>
       <HelmetComponent {...TEAM_HELMET_PROPS.TEAMS_PUBLIC} />
 
-      {/* Для отображения кнопки пользователь должен */}
-      {/* быть авторизован,не должен состоять ни в одной команде, к профилю должен быть привязан ZwiftId */}
-      {status && !userInTeam?.id && zwiftId && (
-        <div className={styles.control}>
-          <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
-        </div>
-      )}
+      <div className={styles.main}>
+        {/* Для отображения кнопки пользователь должен */}
+        {/* быть авторизован,не должен состоять ни в одной команде, к профилю должен быть привязан ZwiftId */}
+        {status && !userInTeam?.id && zwiftId && (
+          <div className={styles.control}>
+            <ButtonLocalUrl href="/moderation/teams/create">Создать команду</ButtonLocalUrl>
+          </div>
+        )}
 
-      <section className={styles.cards}>
-        {renderSkeletonCards({
-          count: 10,
-          SkeletonComponent: SkeletonTeamCard,
-          status: fetchTeamsStatus,
-        })}
+        <section className={styles.cards}>
+          {renderSkeletonCards({
+            count: 10,
+            SkeletonComponent: SkeletonTeamCard,
+            status: fetchTeamsStatus,
+          })}
 
-        {!!sortedTeams?.length &&
-          sortedTeams.map((team) => <CardTeam key={team._id} {...team} />)}
-      </section>
+          {!!sortedTeams?.length &&
+            sortedTeams.map((team) => <CardTeam key={team._id} {...team} />)}
+        </section>
+      </div>
 
       {/* Боковая панель. */}
       <aside className={styles.aside}>
