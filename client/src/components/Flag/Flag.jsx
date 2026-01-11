@@ -7,17 +7,23 @@ import styles from './Flag.module.css';
  * Отображение флага страны name.
  */
 function Flag({ name = '', width, height }) {
-  const nameShort = COUNTRY_CODE_MAP[name] ?? name.slice(0, 2);
+  const nameShort = name === 'null' ? 'null' : COUNTRY_CODE_MAP[name] ?? name.slice(0, 2);
 
   return (
-    <MyTooltip tooltip={name}>
-      <img
-        className={styles.box}
-        src={`/images/flags/${nameShort}.svg`}
-        alt={`flag-${name}`}
-        width={width}
-        height={height}
-      />
+    <MyTooltip tooltip={name !== 'null' ? name : 'not found'}>
+      {name === 'null' ? (
+        <div className={styles.nullFlag} style={{ width, height }}>
+          ?
+        </div>
+      ) : (
+        <img
+          className={styles.box}
+          src={`/images/flags/${nameShort}.svg`}
+          alt={`flag-${name}`}
+          width={width}
+          height={height}
+        />
+      )}
     </MyTooltip>
   );
 }

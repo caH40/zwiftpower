@@ -1,3 +1,9 @@
 .box {
   display: block;
 }
+.nullFlag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var (--color-bg-minor);
+}
