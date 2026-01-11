@@ -19,6 +19,7 @@ import TdCpWattsNew from '../Td/TdCpWattsNew';
 import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
 import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
+import TimeLimitBox from '../../TimeLimitBox/TimeLimitBox';
 
 import styles from '../Table.module.css';
 
@@ -37,6 +38,7 @@ function TableStageResults({
   stageStart,
   seriesCategories,
   urlSlug,
+  finishTimeLimitOnStage,
 }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
@@ -84,12 +86,22 @@ function TableStageResults({
                 {/* Столбец с названием Место */}
                 <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}>
                   <td className={styles.centerTd}>
-                    <TdRank
-                      value={isAbsolute ? result.rank.absolute : result.rank.category}
-                      // isDsq={forDNF ? true : isDsq}
-                      // dsqType={forDNF ? 'DNF' : dsqType}
-                      dsqDescription={dsqDescription}
-                    />
+                    <div className={styles.rankWithAdditionIcon}>
+                      <TdRank
+                        value={isAbsolute ? result.rank.absolute : result.rank.category}
+                        // isDsq={forDNF ? true : isDsq}
+                        // dsqType={forDNF ? 'DNF' : dsqType}
+                        dsqDescription={dsqDescription}
+                      />
+
+                      {/* Отображение иконки лимита при не попадании результата в лимит времени */}
+                      {result.finishTimeLimit?.isOutside ? (
+                        <TimeLimitBox
+                          finishTimeLimit={result.finishTimeLimit}
+                          finishTimeLimitOnStage={finishTimeLimitOnStage}
+                        />
+                      ) : null}
+                    </div>
                   </td>
                 </ShowColumn>
 

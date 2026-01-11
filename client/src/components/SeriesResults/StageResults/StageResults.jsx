@@ -48,17 +48,6 @@ export default function StageResults() {
       ? ['Место', 'Отставание от райдера впереди', 'Отставание от лидера']
       : [];
 
-  // console.log(
-  //   stageResults &&
-  //     stageResults.results
-  //       .map(({ category, profileData, finishTimeLimit }) => ({
-  //         name: profileData.lastName,
-  //         category,
-  //         finishTimeLimit,
-  //       }))
-  //       .filter((r) => r.finishTimeLimit?.isOutside)
-  // );
-
   return (
     <section className={styles.wrapper}>
       {stageResults?.results && stageData && (
@@ -86,6 +75,7 @@ export default function StageResults() {
               isSeriesCreator={isSeriesCreator}
               urlSlug={urlSlug}
               hiddenColumns={hiddenColumns}
+              finishTimeLimitOnStage={seriesPublicOne?.finishTimeLimitOnStage}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />
