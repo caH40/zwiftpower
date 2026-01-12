@@ -12,6 +12,7 @@ import { cpBestEffortsSchema } from './Schema/CpBestEffortsSchema.js';
 
 // types
 import { TStageResult } from '../types/model.interface.js';
+import { FinishTimeClassificationSchema } from './Schema/FinishTimeClassification.js';
 
 // Интерфейс для результата этапа
 export interface IStageResult extends Omit<TStageResult, '_id'>, Document {
@@ -26,7 +27,6 @@ const stageResultSchema = new Schema<IStageResult>(
     profileId: { type: Number, required: true },
     profileData: { type: profileDataSchema },
     cpBestEfforts: [cpBestEffortsSchema],
-    durationInMillisecondsWithPenalties: { type: Number },
     activityData: {
       durationInMilliseconds: { type: Number },
       subgroupLabel: { type: String, enum: ZWIFT_CATEGORIES },
@@ -66,6 +66,8 @@ const stageResultSchema = new Schema<IStageResult>(
       isOutside: { type: Boolean, default: false },
       exceededMilliseconds: { type: Number, default: 0 },
     },
+    durationInMillisecondsWithPenalties: { type: Number },
+    finishTimeClassification: { type: FinishTimeClassificationSchema, default: null },
   },
   { timestamps: true }
 );

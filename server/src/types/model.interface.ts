@@ -18,6 +18,7 @@ import { TServiceMessageType } from './service-message.types.js';
 import { DISQUALIFICATION_LABELS, SERIES_TYPES } from '../assets/constants.js';
 import {
   TCategoriesWithRange,
+  TFinishTimeClassification,
   TFinishTimeLimitOnStage,
   TGCRiderStage,
   TRacingScoreRange,
@@ -808,6 +809,7 @@ export type TStageResult = {
 
   rank: TRaceRank;
   durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
+  finishTimeClassification: TFinishTimeClassification | null; // Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     subgroupLabel: TZwiftCategory;
