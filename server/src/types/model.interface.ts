@@ -22,6 +22,7 @@ import {
   TGCRiderStage,
   TRacingScoreRange,
   TRiderCategoryRuleType,
+  TTimePenaltyApplication,
 } from './series.types.js';
 import { TPollOption } from './poll.types.js';
 import { TImportanceCoefficientsLevels } from './points.types.js';
@@ -697,8 +698,12 @@ export type TSeries = {
   urlSlug: string; // Уникальный URL-идентификатор (например, для генерации ссылки "/series/my-series").
   gcResultsUpdatedAt?: Date; // Обновление результатов генеральной классификации.
   importanceLevel?: TImportanceCoefficientsLevels; // Уровень важности серии для расчета очков.
-  finishTimeLimitOnStage?: TFinishTimeLimitOnStage;
+  finishTimeLimitOnStage?: TFinishTimeLimitOnStage; // Правило лимита финишного времени на этапе серии.
   timeGapThresholdSeconds: number; // Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише.
+  timePenaltyApplication: TTimePenaltyApplication;
+  // Определяет, к какому времени применяется временной штраф:
+  // 'raw' — к фактическому финишному времени (до применения правила группового финиша);
+  // 'classification' — к классификационному времени (после применения правила группового финиша).
 };
 
 /**

@@ -5,7 +5,11 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
-import { RIDER_CATEGORIES_RULE_TYPES, SERIES_TYPES } from '../assets/constants.js';
+import {
+  RIDER_CATEGORIES_RULE_TYPES,
+  SERIES_TYPES,
+  TIME_PENALTY_APPLICATION,
+} from '../assets/constants.js';
 
 // types
 import {
@@ -59,6 +63,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   importanceLevel: { type: String, enum: IMPORTANCE_COEFFICIENTS_LEVELS, default: 'standard' },
   finishTimeLimitOnStage: { type: FinishTimeLimitOnStageSchema },
   timeGapThresholdSeconds: { type: Number, default: 0 },
+  timePenaltyApplication: { type: String, enum: TIME_PENALTY_APPLICATION, default: 'raw' },
 });
 
 export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);
