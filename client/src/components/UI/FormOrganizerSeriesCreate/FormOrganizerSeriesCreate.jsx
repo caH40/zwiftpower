@@ -9,6 +9,7 @@ import {
   finishTimeLimitOnStageOptions,
   riderCategoryRuleOptions,
   seriesTypes,
+  timePenaltyApplicationOptions,
 } from '../../../assets/options';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
@@ -45,6 +46,7 @@ export default function FormOrganizerSeriesCreate({
     type,
     finishTimeLimitOnStage,
     timeGapThresholdSeconds,
+    timePenaltyApplication,
     _id: seriesId,
   },
   loading,
@@ -78,6 +80,7 @@ export default function FormOrganizerSeriesCreate({
       riderCategoryRule,
       finishTimeLimitOnStage,
       timeGapThresholdSeconds,
+      timePenaltyApplication,
     },
     defaultValues: {
       logoFile: null,
@@ -87,6 +90,7 @@ export default function FormOrganizerSeriesCreate({
         enforcement: 'manual',
       },
       timeGapThresholdSeconds: 0,
+      timePenaltyApplication: 'raw',
     },
   });
 
@@ -311,7 +315,7 @@ export default function FormOrganizerSeriesCreate({
         <div className={styles.wrapper__input}>
           {/* Разрешенный лимит на финише этапов от лидера */}
           <InputAuth
-            label="Пороговое значение разрыва для применения правила одинакового времени при групповом финише в сущность серия заездов, секунды"
+            label="Пороговое значение разрыва для применения правила одинакового времени при групповом финише, секунды"
             register={register('timeGapThresholdSeconds', {
               pattern: {
                 value: /^\d+$/,
@@ -339,6 +343,17 @@ export default function FormOrganizerSeriesCreate({
               min: 0,
               step: 1,
             }}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          <SelectWithRHF
+            label="К какому времени применяется временной штраф: к фактическому финишному времени или к классификационному (после выравнивания времени в группе)"
+            register={register('timePenaltyApplication', { required: 'Обязательное поле' })}
+            validationText={errors.timePenaltyApplication?.message || ''}
+            id={'timePenaltyApplication-FormOrganizerSeriesCreate'}
+            options={timePenaltyApplicationOptions}
             loading={loading || loadingForm}
           />
         </div>
