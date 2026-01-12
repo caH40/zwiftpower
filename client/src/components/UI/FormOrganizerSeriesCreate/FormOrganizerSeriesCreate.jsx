@@ -1,14 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
-import { getAlert } from '../../../redux/features/alertMessageSlice';
+import { useFormOrganizerSeries } from '../../../hook/useFormOrganizerSeries';
 import { getDateTimeStart } from '../../../utils/date-local';
-import {
-  fetchPostSeriesOrganizer,
-  fetchPutSeriesOrganizer,
-} from '../../../redux/features/api/series/fetchSeries';
-import { serializeOrganizerSeriesCreate } from '../../../utils/serialization/organizer-data';
 import { convertToKBytes, convertToMBytes } from '../../../utils/bytes';
 import {
   finishTimeLimitOnStageOptions,
@@ -49,21 +44,12 @@ export default function FormOrganizerSeriesCreate({
     riderCategoryRule,
     type,
     finishTimeLimitOnStage,
+    timeGapThresholdSeconds,
     _id: seriesId,
   },
   loading,
   setTrigger,
 }) {
-  const [resetImage, setResetImage] = useState(false);
-  // Статус загрузки текущей формы на сервер.
-  const [loadingForm, setLoadingForm] = useState(false);
-
-  // Ссылка на лого Организатора. Используется в форме редактирования, для отображения изображения с сервера.
-  const [logoSrcState, setLogoSrcState] = useState(logoUrls?.original);
-
-  // Ссылка на постер Организатора. Используется в форме редактирования, для отображения изображения с сервера.
-  const [posterSrcState, setPosterSrcState] = useState(posterUrls?.small);
-
   const dispatch = useDispatch();
 
   const {
@@ -91,12 +77,34 @@ export default function FormOrganizerSeriesCreate({
       type,
       riderCategoryRule,
       finishTimeLimitOnStage,
+      timeGapThresholdSeconds,
     },
     defaultValues: {
       logoFile: null,
       posterFile: null,
-      finishTimeLimitOnStage: { percentageFromLeader: 0, enforcement: 'manual' },
+      finishTimeLimitOnStage: {
+        percentageFromLeader: 0,
+        enforcement: 'manual',
+      },
+      timeGapThresholdSeconds: 0,
     },
+  });
+
+  const {
+    onSubmit,
+    resetImage,
+    loadingForm,
+    logoSrcState,
+    posterSrcState,
+    setLogoSrcState,
+    setPosterSrcState,
+  } = useFormOrganizerSeries({
+    isCreating,
+    seriesId,
+    reset,
+    setTrigger,
+    logoUrls,
+    posterUrls,
   });
 
   // Следим за изменениями обеих дат.
@@ -116,43 +124,6 @@ export default function FormOrganizerSeriesCreate({
       trigger('dateStart'); // Принудительно валидируем dateStart
     }
   }, [watchDateEnd, trigger]);
-
-  // Обработчик отправки формы на сервер.
-  const onSubmit = async (formData) => {
-    try {
-      setLoadingForm(true);
-      // console.log(stagesAdded);
-
-      // Сериализация данных перед отправкой на сервер.
-      const serializedSeriesData = serializeOrganizerSeriesCreate({
-        ...formData,
-        ...(!isCreating && { seriesId }),
-      });
-
-      const fetchHandler = isCreating ? fetchPostSeriesOrganizer : fetchPutSeriesOrganizer;
-
-      // .unwrap() возвращает промис, для работы с async/await
-      const data = await dispatch(fetchHandler(serializedSeriesData)).unwrap();
-
-      // Успешный результат.
-      dispatch(getAlert({ message: data.message, type: 'success', isOpened: true }));
-
-      if (isCreating) {
-        // Очистка полей формы
-        reset();
-        setResetImage((p) => !p);
-        setLogoSrcState(null);
-        setPosterSrcState(null);
-      } else {
-        // Триггер запускает запрос на получение обновлённых данных.
-        setTrigger((prev) => !prev);
-      }
-    } catch (error) {
-      console.log(error); // eslint-disable-line
-    } finally {
-      setLoadingForm(false);
-    }
-  };
 
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
@@ -333,6 +304,41 @@ export default function FormOrganizerSeriesCreate({
             validationText={errors.finishTimeLimitOnStage?.enforcement?.message || ''}
             id={'finishTimeLimitOnStage.enforcement-FormOrganizerSeriesCreate'}
             options={finishTimeLimitOnStageOptions}
+            loading={loading || loadingForm}
+          />
+        </div>
+
+        <div className={styles.wrapper__input}>
+          {/* Разрешенный лимит на финише этапов от лидера */}
+          <InputAuth
+            label="Пороговое значение разрыва для применения правила одинакового времени при групповом финише в сущность серия заездов, секунды"
+            register={register('timeGapThresholdSeconds', {
+              pattern: {
+                value: /^\d+$/,
+                message: 'Только целые числа без точки',
+              },
+              min: {
+                value: 0,
+                message: 'Минимальное значение: 0',
+              },
+              validate: {
+                noDecimal: (value) => {
+                  const valueStr = String(value);
+                  if (value && (valueStr.includes('.') || valueStr.includes(','))) {
+                    return 'Точки и запятые не допускаются';
+                  }
+                  return true;
+                },
+              },
+            })}
+            validationText={errors.timeGapThresholdSeconds?.message || ''}
+            placeholder="Секунды"
+            input={{
+              id: 'timeGapThresholdSeconds-FormOrganizerSeriesCreate',
+              type: 'number',
+              min: 0,
+              step: 1,
+            }}
             loading={loading || loadingForm}
           />
         </div>

@@ -149,7 +149,17 @@ export const SeriesDataZSchema = z
     finishTimeLimitOnStage: finishTimeLimitOnStageSchema,
 
     timeGapThresholdSeconds: z
-      .number()
+      .string()
+      .refine(
+        (val) => {
+          const num = Number(val);
+          return !isNaN(num) && num >= 0;
+        },
+        {
+          message: 'Порог разрыва должен быть неотрицательным числом (в секундах)',
+        }
+      )
+      .transform((val) => Number(val))
       .describe(
         'Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише'
       ),
