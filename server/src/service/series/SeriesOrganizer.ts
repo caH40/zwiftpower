@@ -167,6 +167,7 @@ export class SeriesOrganizerService {
     posterFile,
     riderCategoryRule,
     finishTimeLimitOnStage,
+    timeGapThresholdSeconds,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -203,6 +204,7 @@ export class SeriesOrganizerService {
       useStageResults,
       riderCategoryRule,
       finishTimeLimitOnStage,
+      timeGapThresholdSeconds,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),
@@ -241,6 +243,7 @@ export class SeriesOrganizerService {
     seriesId,
     riderCategoryRule,
     finishTimeLimitOnStage,
+    timeGapThresholdSeconds,
   }: SeriesDataFromClientForCreateFull): Promise<TResponseService<null>> {
     const { shortName } = await this.checkOrganizer(organizerId);
 
@@ -277,6 +280,7 @@ export class SeriesOrganizerService {
       dateEnd: setEndOfDay(dateEnd),
       riderCategoryRule,
       finishTimeLimitOnStage,
+      timeGapThresholdSeconds,
       ...(description && { description }),
       ...(mission && { mission }),
       ...(prizes && { prizes }),

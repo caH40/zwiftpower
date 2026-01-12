@@ -698,6 +698,7 @@ export type TSeries = {
   gcResultsUpdatedAt?: Date; // Обновление результатов генеральной классификации.
   importanceLevel?: TImportanceCoefficientsLevels; // Уровень важности серии для расчета очков.
   finishTimeLimitOnStage?: TFinishTimeLimitOnStage;
+  timeGapThresholdSeconds: number; // Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише.
 };
 
 /**

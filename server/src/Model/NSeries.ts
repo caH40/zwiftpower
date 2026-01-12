@@ -58,6 +58,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   gcResultsUpdatedAt: { type: Date },
   importanceLevel: { type: String, enum: IMPORTANCE_COEFFICIENTS_LEVELS, default: 'standard' },
   finishTimeLimitOnStage: { type: FinishTimeLimitOnStageSchema },
+  timeGapThresholdSeconds: { type: Number, default: 0 },
 });
 
 export const NSeriesModel = model<ISeriesDocument>('NSeries', NSeriesSchema);

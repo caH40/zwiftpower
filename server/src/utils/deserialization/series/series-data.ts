@@ -147,6 +147,12 @@ export const SeriesDataZSchema = z
       .describe('_id редактируемой серии, если данные из формы редактирования.'),
 
     finishTimeLimitOnStage: finishTimeLimitOnStageSchema,
+
+    timeGapThresholdSeconds: z
+      .number()
+      .describe(
+        'Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише'
+      ),
   })
   .refine(
     (data) => {
