@@ -62,12 +62,12 @@ export function getRouteDistanceInMeters({
   const metersInKilometer = 1000;
 
   // 1. Если задана дистанция - возвращаем её
-  if (distanceInMeters !== undefined && distanceInMeters !== null) {
+  if (distanceInMeters != null && distanceInMeters !== 0) {
     return distanceInMeters;
   }
 
   // 2. Если задано время - рассчитываем примерную дистанцию
-  if (durationInSeconds !== undefined && durationInSeconds !== null) {
+  if (durationInSeconds != null && durationInSeconds != 0) {
     const durationInHours = durationInSeconds / 3600;
     // Округляем до целых метров для порядка величин
     return Math.round(AVERAGE_SPEED_KMH * durationInHours * metersInKilometer);
