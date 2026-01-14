@@ -1,6 +1,4 @@
 import { baseRacePointsMap, importanceCoefficients } from '../../../assets/racePoints.js';
-import { EventRepository } from '../../../repositories/Event.js';
-import { StageResultRepository } from '../../../repositories/StageResult.js';
 import { PointsCalculator } from '../../RacePoints/PointsCalculator.js';
 
 // types
@@ -12,8 +10,6 @@ import { TImportanceCoefficientsLevels } from '../../../types/points.types.js';
  * @param results - Массив
  */
 export class StageRacePointsService {
-  private eventRepository = new EventRepository();
-  private stageResultRepository = new StageResultRepository();
   pointsCalculator = new PointsCalculator();
 
   /**

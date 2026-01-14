@@ -81,6 +81,8 @@ export class HandlerSeries {
         disqualification: null,
         timePenalty: null,
         teamSquadAtRace: null,
+        finishTimeClassification: null,
+        finishTimeLimit: { isOutside: false, exceededMilliseconds: 0 },
       } as TStageResult;
     });
 

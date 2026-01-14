@@ -9,6 +9,7 @@ import { GCProviderFactory } from './GCProviderFactory.js';
 import { StageRanker } from './stageRanker/StageRanker.js';
 import { countFinishersForStageResults } from '../../utils/countFinishers.js';
 import { StageRacePointsService } from './points/StageRacePointsService.js';
+import { FinishTimeClassification } from './FinishTimeClassification.js';
 
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
@@ -22,9 +23,11 @@ import { TResponseService } from '../../types/http.interface.js';
 export class SeriesStageProtocolManager extends HandlerSeries {
   stageResultRepository = new StageResultRepository();
   stageRanker = new StageRanker();
+  finishTimeClassification: FinishTimeClassification;
 
   constructor(public seriesId: string) {
     super(seriesId);
+    this.finishTimeClassification = new FinishTimeClassification(seriesId);
   }
 
   /**
@@ -87,11 +90,14 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       type
     );
 
-    // Добавление количества финишировавших в группе, где участвовал райдер и абсолюте.
+    // Добавление классификационного времени с учетом правила общее время на финише в определенном временном разрыве.
+    const resultsWithTimeClassification = await this.finishTimeClassification.set(
+      resultsWithRank
+    );
 
     // Установка финишных гэпов (разрывов между участниками).
     const finishGaps = new FinishGaps();
-    finishGaps.setGaps(resultsWithRank, {
+    finishGaps.setGaps(resultsWithTimeClassification, {
       getDuration: (r) => r.activityData.durationInMilliseconds,
       getCategory: (r) => r.category,
       setGaps: (r, gaps) => {
@@ -102,7 +108,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     // Добавление очков за этап серии заездов.
     const stageRacePointsService = new StageRacePointsService();
     const resultsWithPoints = stageRacePointsService.calculateAndSetRacePoints({
-      results: resultsWithRank,
+      results: resultsWithTimeClassification,
       importanceLevel,
     });
 
@@ -152,9 +158,14 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
       const resultsWithRank = await this.stageRanker.calculateRanking(resultsInStage, type);
 
+      // Добавление классификационного времени с учетом правила общее время на финише в определенном временном разрыве.
+      const resultsWithTimeClassification = await this.finishTimeClassification.set(
+        resultsWithRank
+      );
+
       // Установка финишных гэпов (разрывов между участниками).
       const finishGaps = new FinishGaps();
-      finishGaps.setGaps(resultsWithRank, {
+      finishGaps.setGaps(resultsWithTimeClassification, {
         getDuration: (r) =>
           r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds,
         getCategory: (r) => r.category,
@@ -166,7 +177,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       // Добавление очков за этап серии заездов.
       const stageRacePointsService = new StageRacePointsService();
       const resultsWithPoints = stageRacePointsService.calculateAndSetRacePoints({
-        results: resultsWithRank,
+        results: resultsWithTimeClassification,
         importanceLevel,
       });
 

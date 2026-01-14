@@ -109,7 +109,6 @@ export type TTimePenaltyApplication = (typeof TIME_PENALTY_APPLICATION)[number];
  * Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв.
  */
 export type TFinishTimeClassification = {
-  applied: boolean;
   timeInMilliseconds: number;
   gapToLeaderInMilliseconds: number;
 };

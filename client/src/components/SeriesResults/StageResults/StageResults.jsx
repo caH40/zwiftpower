@@ -19,6 +19,8 @@ export default function StageResults() {
   const { stageResults, seriesPublicOne } = useSelector((state) => state.seriesPublic);
   const { organizer } = useSelector((state) => state.checkAuth.value.user);
 
+  console.log(stageResults);
+
   // Отображается иконка управления серией только для организатора который создал серию.
   const isSeriesCreator =
     seriesPublicOne?.organizer?._id && seriesPublicOne?.organizer?._id === organizer;

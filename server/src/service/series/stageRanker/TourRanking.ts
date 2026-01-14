@@ -17,10 +17,12 @@ export class TourStageRanking {
       return [];
     }
 
+    // Сортировка результатов.
     const sortedResults = this.sort(stageResults);
 
     const seriesId = stageResults[0].series.toString();
 
+    // Проверка результатов этапа на превышение временного лимита и установка поля finishTimeLimit.
     const resultsWithTimeLimits = await setStageTimeLimit(seriesId, sortedResults);
 
     return setStageRank(resultsWithTimeLimits);
