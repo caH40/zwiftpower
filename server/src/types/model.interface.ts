@@ -809,7 +809,7 @@ export type TStageResult = {
 
   rank: TRaceRank;
   durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
-  finishTimeClassification: TFinishTimeClassification | null; // Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв.
+  finishTimeClassification: TFinishTimeClassification | null; // Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв. Расчет между участниками одной группы.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
     subgroupLabel: TZwiftCategory;

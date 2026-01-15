@@ -39,6 +39,7 @@ function TableStageResults({
   seriesCategories,
   urlSlug,
   finishTimeLimitOnStage,
+  timeGapThresholdEnabled,
 }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
@@ -49,7 +50,7 @@ function TableStageResults({
 
   // Сортировка и фильтрация таблицы в зависимости от включенных фильтров.
   const resultSortedAndFiltered = useSortStageResults(results, 'classicGroup');
-  const resultWithFinishTime = useFinishTime(resultSortedAndFiltered);
+  const resultWithFinishTime = useFinishTime(resultSortedAndFiltered, timeGapThresholdEnabled);
 
   return (
     <table className={cx('table')}>
@@ -124,6 +125,7 @@ function TableStageResults({
 
                 {/* Столбец с названием Место */}
                 <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}></ShowColumn>
+
                 <td>
                   <FinishTime time={result.finishTime} />
                 </td>
