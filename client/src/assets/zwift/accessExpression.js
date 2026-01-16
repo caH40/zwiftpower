@@ -206,7 +206,7 @@ export const accessExpressions = [
   {
     id: 101,
     name: 'EDFemaleETR',
-    label: 'D,E женские. EtR',
+    label: 'ETALON Team №1',
     value: `(powerCurves.category >= subgroup.label && powerCurves.category != 4 && powerCurves.category != 5) ||
 (subgroup.label <= 3 && (powerCurves.category == 4 || powerCurves.category == 5)) ||
 (subgroup.label == 4 && powerCurves.zFTPwkg <= 3.15) ||
@@ -218,6 +218,25 @@ subgroup.label == 5`,
       3: { from: 2.63, to: 3.35 },
       4: { from: 1, to: 3.15 },
       5: { from: 3.16, to: 6 },
+    },
+    categoryEnforcement: true,
+  },
+  {
+    id: 101,
+    name: 'EDFemaleETR_2',
+    label: 'ETALON Team №2',
+    value: `
+(subgroup.label == 5 && powerCurves.zFTPwkg >= 1.5 && powerCurves.zFTPwkg < 6) ||
+(subgroup.label == 1 && powerCurves.zFTPwkg < 4.6) ||
+(subgroup.label == 2 && powerCurves.zFTPwkg < 4.2) ||
+(subgroup.label == 3 && powerCurves.zFTPwkg >= 2 && powerCurves.zFTPwkg < 3.2)`,
+    description: 'ETALON Team. E - женская категория',
+    paceValues: {
+      1: { from: 4.2, to: 4.59 },
+      2: { from: 3.2, to: 4.19 },
+      3: { from: 2, to: 3.19 },
+      4: { from: 0, to: 0 },
+      5: { from: 1.5, to: 6 },
     },
     categoryEnforcement: true,
   },
