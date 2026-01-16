@@ -19,16 +19,8 @@ export default function StageResults() {
   const { stageResults, seriesPublicOne } = useSelector((state) => state.seriesPublic);
   const { organizer } = useSelector((state) => state.checkAuth.value.user);
 
-  // console.log(
-  //   stageResults?.results.map((r) => ({
-  //     finishTimeClassification: r.finishTimeClassification,
-  //     durationInMilliseconds: r.activityData.durationInMilliseconds,
-  //     rider: r.profileData.lastName,
-  //   }))
-  // );
-
   // Включено или нет правило общего времени группы в заданном временном разрыве на финише.
-  const timeGapThresholdEnabled = Boolean(seriesPublicOne.timeGapThresholdSeconds);
+  // const timeGapThresholdEnabled = Boolean(seriesPublicOne.timeGapThresholdSeconds);
 
   // Отображается иконка управления серией только для организатора который создал серию.
   const isSeriesCreator =
@@ -87,7 +79,6 @@ export default function StageResults() {
               urlSlug={urlSlug}
               hiddenColumns={hiddenColumns}
               finishTimeLimitOnStage={seriesPublicOne?.finishTimeLimitOnStage}
-              timeGapThresholdEnabled={timeGapThresholdEnabled}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />

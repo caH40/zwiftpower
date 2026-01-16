@@ -3,12 +3,7 @@ import { SeriesTimePenalty } from './SeriesTimePenalty.js';
 import { TStageResult } from '../../types/model.interface.js';
 
 export class FinalFinishTimeOnStage {
-  static set(results: TStageResult[], timeGapThresholdSeconds: number): TStageResult[] {
-    // Если правило общего времени выключено в серии.
-    if (!timeGapThresholdSeconds) {
-      return results;
-    }
-
+  static set(results: TStageResult[]): TStageResult[] {
     const seriesTimePenalty = new SeriesTimePenalty();
 
     return results.map(({ activityData, finishTimeClassification, ...result }) => {
