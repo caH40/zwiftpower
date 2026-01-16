@@ -5,14 +5,16 @@ import { secondesToTimeThousandths } from '../utils/date-convert';
  * @param {object} results - Результаты серии заездов.
  */
 export const useFinishTime = (results, timeGapThresholdEnabled) => {
+  // console.log(results.filter((r) => r.timePenalty));
+
   return results.map((r) => {
-    const rawFinishTime = timeGapThresholdEnabled
-      ? r.durationInMillisecondsWithPenalties || r.finishTimeClassification.timeInMilliseconds
-      : r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds;
+    // const rawFinishTime = timeGapThresholdEnabled
+    //   ? r.durationInMillisecondsWithPenalties || r.finishTimeClassification.timeInMilliseconds
+    //   : r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds;
 
     return {
       ...r,
-      finishTime: secondesToTimeThousandths(rawFinishTime),
+      finalDurationInMilliseconds: secondesToTimeThousandths(r.finalDurationInMilliseconds),
     };
   });
 };

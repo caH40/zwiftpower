@@ -14,6 +14,7 @@ import { FinishTimeClassification } from './FinishTimeClassification.js';
 // types
 import { TSeriesType, TStageResult } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { FinalFinishTimeOnStage } from './FinalFinishTimeOnStage.js';
 
 /**
  * Класс создания (обновления) протоколов серий и туров.
@@ -48,10 +49,30 @@ export class SeriesStageProtocolManager extends HandlerSeries {
    * Добавление дополнительных данных в результаты райдеров.
    * Запрос приходит от организатора или автоматически по расписанию обновлений результатов этапов.
    *
+   * Этапы:
+   * 1. Создается массив заездов (eventId) для запрашиваемого этапа stageOrder (На этапе может быть
+   * несколько заездов);
+   * 2. Из zwiftAPI запрашиваются протоколы для соответствующих заездов;
+   * 3. В каждый результат добавляются отсутствующие данные: флаг страны и возраст участника
+   * из регистрационных данных соответствующего райдера;
+   * 4. Установка категорий райдерам согласно правилам серии;
+   * 5. В каждый результат добавляются дополнительные данные: количество финишировавших
+   * в категории райдера и в абсолюте на соответствующем этапе.
+   * 6. Установка финального финишного времени с учетом правил: "общее время для финишной группы
+   * в разрешенном временном интервале";
+   * 7. Установка ранкинга участникам в финишном протоколе в группе и абсолюте;
+   * 8. Установка классификационного финишного времени с учетом правила "общее время для одной финишной группы";
+   * 9. Расчет и установка финального финишного времени finalDurationInMilliseconds
+   *
    * @param {number} stageOrder - Номер этапа (order) в серии заездов.
    */
   public async buildStageProtocol(stageOrder: number): Promise<{ seriesType: TSeriesType }> {
-    const { stages: stagesFromSeries, type, importanceLevel } = await this.getSeriesData();
+    const {
+      stages: stagesFromSeries,
+      type,
+      importanceLevel,
+      timeGapThresholdSeconds,
+    } = await this.getSeriesData();
 
     // Создание массива заездов, если в этапе несколько заездов.
     const stages = stagesFromSeries
@@ -90,15 +111,19 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       type
     );
 
-    // Добавление классификационного времени с учетом правила общее время на финише в определенном временном разрыве.
-    const resultsWithTimeClassification = await this.finishTimeClassification.set(
-      resultsWithRank
+    const resultsWithFinalTime = FinalFinishTimeOnStage.set(
+      resultsWithRank,
+      timeGapThresholdSeconds
     );
 
+    // Добавление классификационного времени с учетом правила общее время на финише в определенном временном разрыве.
+    const resultsWithTimeClassification = await this.finishTimeClassification.set(
+      resultsWithFinalTime
+    );
     // Установка финишных гэпов (разрывов между участниками).
     const finishGaps = new FinishGaps();
     finishGaps.setGaps(resultsWithTimeClassification, {
-      getDuration: (r) => r.activityData.durationInMilliseconds,
+      getDuration: (r) => r.finalDurationInMilliseconds,
       getCategory: (r) => r.category,
       setGaps: (r, gaps) => {
         r.gapsInCategories = gaps;
@@ -137,7 +162,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
    * дисквалификации участнику(ам).
    */
   public async recalculateStageProtocol(seriesId: string): Promise<void> {
-    const { type, importanceLevel } = await this.getSeriesData();
+    const { type, importanceLevel, timeGapThresholdSeconds } = await this.getSeriesData();
 
     // Получение всех результатов этапов серии seriesId.
     const allStageResults = await this.stageResultRepository.getAllStageResultsBySeriesId(
@@ -158,16 +183,20 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
       const resultsWithRank = await this.stageRanker.calculateRanking(resultsInStage, type);
 
+      const resultsWithFinalTime = FinalFinishTimeOnStage.set(
+        resultsWithRank,
+        timeGapThresholdSeconds
+      );
+
       // Добавление классификационного времени с учетом правила общее время на финише в определенном временном разрыве.
       const resultsWithTimeClassification = await this.finishTimeClassification.set(
-        resultsWithRank
+        resultsWithFinalTime
       );
 
       // Установка финишных гэпов (разрывов между участниками).
       const finishGaps = new FinishGaps();
       finishGaps.setGaps(resultsWithTimeClassification, {
-        getDuration: (r) =>
-          r.durationInMillisecondsWithPenalties || r.activityData.durationInMilliseconds,
+        getDuration: (r) => r.finalDurationInMilliseconds,
         getCategory: (r) => r.category,
         setGaps: (r, gaps) => {
           r.gapsInCategories = gaps;

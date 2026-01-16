@@ -23,7 +23,6 @@ import {
   TGCRiderStage,
   TRacingScoreRange,
   TRiderCategoryRuleType,
-  TTimePenaltyApplication,
 } from './series.types.js';
 import { TPollOption } from './poll.types.js';
 import { TImportanceCoefficientsLevels } from './points.types.js';
@@ -701,10 +700,6 @@ export type TSeries = {
   importanceLevel?: TImportanceCoefficientsLevels; // Уровень важности серии для расчета очков.
   finishTimeLimitOnStage?: TFinishTimeLimitOnStage; // Правило лимита финишного времени на этапе серии.
   timeGapThresholdSeconds: number; // Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише.
-  timePenaltyApplication: TTimePenaltyApplication;
-  // Определяет, к какому времени применяется временной штраф:
-  // 'raw' — к фактическому финишному времени (до применения правила группового финиша);
-  // 'classification' — к классификационному времени (после применения правила группового финиша).
 };
 
 /**
@@ -808,7 +803,7 @@ export type TStageResult = {
   cpBestEfforts: TCriticalPowerBestEfforts[]; // CP на интервалах.
 
   rank: TRaceRank;
-  durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
+  // durationInMillisecondsWithPenalties?: number; // Время с учетом штрафов.
   finishTimeClassification: TFinishTimeClassification | null; // Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв. Расчет между участниками одной группы.
   activityData: {
     durationInMilliseconds: number; // Финишный результат заезда.
@@ -844,7 +839,7 @@ export type TStageResult = {
     isOutside: boolean; // Результат не уложился в лимит финишного времени.
     exceededMilliseconds: number; // На сколько миллисекунд превышен лимит.
   };
-
+  finalDurationInMilliseconds: number; // Итоговое классификационное время с учетом всех модификаций.
   createdAt: Date;
   updatedAt: Date;
 };

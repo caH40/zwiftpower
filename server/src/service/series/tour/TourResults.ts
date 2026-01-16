@@ -7,6 +7,7 @@ import { StageResultsDto } from '../../../types/dto.interface.js';
 import { GetStageResultDB } from '../../../types/mongodb-response.types.js';
 import { StageResultRepository } from '../../../repositories/StageResult.js';
 import { addTeamAppearance } from '../../preparation/teamAppearance.js';
+import { SeriesTimePenalty } from '../SeriesTimePenalty.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour' для запросов от пользователей
@@ -53,12 +54,19 @@ export class TourResults extends HandlerSeries {
   private sortAndFilterResultsToutGroups = (
     results: GetStageResultDB[]
   ): GetStageResultDB[] => {
+    const seriesTimePenalty = new SeriesTimePenalty();
+
     // Сортируем все результаты по времени.
     const sortedResults = results.toSorted((a, b) => {
+      // При сортировке учитывается временной штраф.
       const aResult =
-        a.durationInMillisecondsWithPenalties || a.activityData.durationInMilliseconds;
+        seriesTimePenalty.getSumTimePenalty(a.timePenalty) +
+        a.activityData.durationInMilliseconds;
+
       const bResult =
-        b.durationInMillisecondsWithPenalties || b.activityData.durationInMilliseconds;
+        seriesTimePenalty.getSumTimePenalty(b.timePenalty) +
+        b.activityData.durationInMilliseconds;
+
       return aResult - bResult;
     });
 

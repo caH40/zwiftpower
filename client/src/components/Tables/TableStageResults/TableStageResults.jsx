@@ -127,7 +127,7 @@ function TableStageResults({
                 <ShowColumn columnName={'Место'} hiddenColumns={hiddenColumns}></ShowColumn>
 
                 <td>
-                  <FinishTime time={result.finishTime} />
+                  <FinishTime time={result.finalDurationInMilliseconds} />
                 </td>
 
                 {/* Столбец с названием Отставание от лидера */}

@@ -50,8 +50,8 @@ export const setStageTimeLimit = async (
       return resultWithInsideLimit;
     }
 
-    const resultTime =
-      result.durationInMillisecondsWithPenalties ?? result.activityData.durationInMilliseconds;
+    // TODO: Не учитывается временной штраф в данном расчете!
+    const resultTime = result.activityData.durationInMilliseconds;
 
     // Если лимит для категории ещё не установлен — первый результат → лидер.
     if (!categoryTimeLimits.has(riderCategory)) {

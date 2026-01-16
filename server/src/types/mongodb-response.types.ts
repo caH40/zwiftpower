@@ -221,6 +221,7 @@ export type GetStageResultDB = Omit<TStageResult, 'modifiedCategory' | 'timePena
     moderator?: { username: string };
     modifiedAt: Date;
     reason?: string;
+    timeInMilliseconds: number;
   };
   timePenalty:
     | {

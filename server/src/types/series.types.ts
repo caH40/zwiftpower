@@ -1,8 +1,4 @@
-import {
-  INTERVAL_IN_SECONDS,
-  RIDER_CATEGORIES_RULE_TYPES,
-  TIME_PENALTY_APPLICATION,
-} from '../assets/constants';
+import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
 import { ProfileDataInResult, TRaceRank } from './model.interface';
 
 // types
@@ -102,8 +98,6 @@ export type TFinishTimeLimitOnStage = {
   percentageFromLeader: number; // Допустимое отставание от времени лидера в процентах.
   enforcement: 'auto' | 'manual'; // Автоматическая или ручная дисквалификация.
 };
-
-export type TTimePenaltyApplication = (typeof TIME_PENALTY_APPLICATION)[number];
 
 /**
  * Финишное классификационное время у учетом правила общего времени при попадании в допустимый разрыв.

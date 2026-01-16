@@ -37,10 +37,7 @@ export class SeriesTimePenalty {
       throw new Error('Результат этапа серии не найден');
     }
 
-    const sumTimePenalties = timePenaltyFormatted.reduce(
-      (acc, penalty) => acc + penalty.timeInMilliseconds,
-      0
-    );
+    const sumTimePenalties = this.getSumTimePenalty(timePenaltyFormatted);
 
     // Новое время с учетом штрафа в результате этапа серии.
     const durationInMillisecondsWithPenalties =
@@ -64,5 +61,15 @@ export class SeriesTimePenalty {
     await tourGC.update();
 
     return { data: null, message: 'Временный штраф изменен' };
+  }
+
+  public getSumTimePenalty<T extends { timeInMilliseconds: number }>(
+    timePenalty: T[] | null
+  ): number {
+    if (!timePenalty) {
+      return 0;
+    }
+
+    return timePenalty.reduce((acc, penalty) => acc + penalty.timeInMilliseconds, 0);
   }
 }

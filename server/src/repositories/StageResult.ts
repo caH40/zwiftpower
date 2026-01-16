@@ -141,7 +141,10 @@ export class StageResultRepository {
   ): Promise<GetStageResultDB[]> {
     return StageResultModel.find({ series: seriesId, order: stageOrder })
       .populate({ path: 'modifiedCategory.moderator', select: ['-_id', 'username'] })
-      .populate({ path: 'timePenalty.moderator', select: ['_id', 'username'] })
+      .populate({
+        path: 'timePenalty.moderator',
+        select: ['_id', 'username', 'timeInMilliseconds'],
+      })
       .lean<GetStageResultDB[]>();
   }
 

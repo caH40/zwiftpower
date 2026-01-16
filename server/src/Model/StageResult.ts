@@ -66,7 +66,7 @@ const stageResultSchema = new Schema<IStageResult>(
       isOutside: { type: Boolean, default: false },
       exceededMilliseconds: { type: Number, default: 0 },
     },
-    durationInMillisecondsWithPenalties: { type: Number },
+    finalDurationInMilliseconds: { type: Number },
     finishTimeClassification: { type: FinishTimeClassificationSchema, default: null },
   },
   { timestamps: true }

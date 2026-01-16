@@ -1,10 +1,7 @@
 import { z } from 'zod';
 
 import { safeJsonParse } from '../utils.js';
-import {
-  RIDER_CATEGORIES_RULE_TYPES,
-  TIME_PENALTY_APPLICATION,
-} from '../../../assets/constants.js';
+import { RIDER_CATEGORIES_RULE_TYPES } from '../../../assets/constants.js';
 
 // types
 import { TFinishTimeLimitOnStage } from '../../../types/series.types.js';
@@ -165,12 +162,6 @@ export const SeriesDataZSchema = z
       .transform((val) => Number(val))
       .describe(
         'Пороговое значение разрыва (в секундах) для применения правила одинакового времени при групповом финише'
-      ),
-
-    timePenaltyApplication: z
-      .enum(TIME_PENALTY_APPLICATION)
-      .describe(
-        'К какому времени применяется временной штраф: к фактическому финишному времени или к классификационному (после выравнивания времени в группе)'
       ),
   })
   .refine(

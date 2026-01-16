@@ -4,6 +4,7 @@ import { getOrThrow } from '../../utils/getOrThrow.js';
 // types
 import { TStageResult } from '../../types/model.interface.js';
 import { TRaceSeriesCategories } from '../../types/types.interface.js';
+import { SeriesTimePenalty } from './SeriesTimePenalty.js';
 
 /**
  * Пороговое значение разрыва для правила одинакового времени при групповом финише.
@@ -43,6 +44,8 @@ export class FinishTimeClassification {
    *
    * При этом сохраняется реальный временной разрыв каждого райдера
    * относительно лидера своей группы.
+   *
+   * Если есть временной штраф, то для райдера перестает действовать правило общего времени. Штраф прибавляется к фактическому времени и он игнорируется в группах.
    */
   private setFinishTimeClassification(
     results: TStageResult[],
@@ -61,6 +64,8 @@ export class FinishTimeClassification {
       { leader: number; prev: number }
     >();
 
+    const seriesTimePenalty = new SeriesTimePenalty();
+
     for (const result of results) {
       const currentCategory = result.category;
 
@@ -72,6 +77,16 @@ export class FinishTimeClassification {
 
       // Время из текущего результата.
       const currentTime = result.activityData.durationInMilliseconds;
+
+      // Если есть временной штраф, то для райдера перестает действовать правило общего времени.
+      // Штраф прибавляется к фактическому времени и он игнорируется в группах
+      const sumTimePenalties = seriesTimePenalty.getSumTimePenalty(result.timePenalty);
+      if (!sumTimePenalties) {
+        result.finishTimeClassification = {
+          timeInMilliseconds: currentTime + sumTimePenalties,
+          gapToLeaderInMilliseconds: 0,
+        };
+      }
 
       if (!categoryTime) {
         // Если нет данных, то участник из результата является лидером и предыдущим участником для текущей группы.
@@ -119,16 +134,6 @@ export class FinishTimeClassification {
 
     return results;
   }
-  // const leadersInCategories = new Map<
-  //   TRaceSeriesCategories,
-  //   { leader: number; prev: number }
-  // >([[checkedCategory, { leader: firstGroupLeaderTime, prev: firstGroupLeaderTime }]]);
-
-  // Первый результат всегда является лидером своей группы.
-  // results[0].finishTimeClassification = {
-  //   timeInMilliseconds: firstGroupLeaderTime,
-  //   gapToLeaderInMilliseconds: 0,
-  // };
 
   private ensureCategory(
     category: TRaceSeriesCategories | null,
@@ -143,41 +148,19 @@ export class FinishTimeClassification {
   }
 }
 
-// for (let i = 1; i < results.length; i++) {
-//   const prevTime = results[i - 1].activityData.durationInMilliseconds;
-//   const currentTime = results[i].activityData.durationInMilliseconds;
-
-//   const currentCategory = results[i].category;
-
-//   // Проверка, что категория не null.
-//   const checkedCategory = this.ensureCategory(currentCategory, results[i]);
-
-//   let currentCategoryLeaderTime = leadersInCategories.get(checkedCategory);
-
-//   // Если лидера нет для данной категории, то текущий райдер лидер в данной категории.
-//   if (!currentCategoryLeaderTime) {
-//     currentCategoryLeaderTime = currentTime;
-//   }
-
-//   // Разрыв во времени между текущим райдером и предыдущим.
-//   const gapToPrev = currentTime - prevTime;
-
-//   if (gapToPrev < thresholdMs) {
-//     // Результат относится к текущей финишной группе.
-//     results[i].finishTimeClassification = {
-//       // Классификационное время равно времени лидера группы.
-//       timeInMilliseconds: groupLeaderTime,
-
-//       // Реальный разрыв считается относительно лидера группы.
-//       gapToLeaderInMilliseconds: currentTime - groupLeaderTime,
-//     };
-//   } else {
-//     // Начинается новая финишная группа.
-//     groupLeaderTime = currentTime;
-
-//     // Текущий райдер становится лидером новой группы.
-//     results[i].finishTimeClassification = {
-//       timeInMilliseconds: groupLeaderTime,
-//       gapToLeaderInMilliseconds: 0,
-//     };
-//   }
+// [Финиш гонщиков]
+//         ↓
+// [Точная фиксация T_raw для каждого]
+//         ↓
+// [Сортировка T_raw по возрастанию]
+//         ↓
+// [Применение правила: T_diff < 1.0 сек?] → Да → Включить в текущую группу
+//         |                                   |
+//         Нет                                ↓
+//         |                          [Сформировать новую группу]
+//         ↓                                   ↓
+// [Закрыть текущую группу] ←---------------+
+//         ↓
+// [Присвоить группе время её лидера]
+//         ↓
+// [Обновление генеральной классификации]
