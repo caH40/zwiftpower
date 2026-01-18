@@ -95,7 +95,7 @@ export async function getDNFRidersResults({
         activityData: {
           activityId: activity.id_str,
           calories: activity.calories,
-          durationInMilliseconds: activity.movingTimeInMs,
+          durationInMilliseconds: activity.movingTimeInMs ?? 0, // При баге movingTimeInMs может отсутствовать в активности!
           elevationInMeters: Math.round(activity.totalElevation),
           segmentDistanceInMeters: Math.round(activity.distanceInMeters),
           segmentDistanceInCentimeters: Math.round(activity.distanceInMeters) * 100,

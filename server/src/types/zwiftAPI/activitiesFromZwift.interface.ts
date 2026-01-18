@@ -21,7 +21,7 @@ export interface ActivitiesDataFromZwiftAPI {
   snapshotList: string[];
   calories: number;
   primaryImageUrl: string;
-  movingTimeInMs: number;
+  movingTimeInMs?: number; // При баге может отсутствовать.
   privacy: string;
   activityRideOns: [];
   avgHeartRate: number;
