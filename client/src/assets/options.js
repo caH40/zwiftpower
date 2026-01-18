@@ -131,24 +131,6 @@ export const importanceCoefficients = [
 ];
 
 /**
- * Определяет, к какому времени применяется временной штраф:
- * 'raw' — к фактическому финишному времени (до применения правила группового финиша);
- * 'classification' — к классификационному времени (после применения правила группового финиша).
- */
-export const timePenaltyApplicationOptions = [
-  {
-    id: 1,
-    value: 'raw',
-    name: 'Фактическое финишное время',
-  },
-  {
-    id: 2,
-    value: 'classification',
-    name: 'Классификационное время',
-  },
-];
-
-/**
  * Метод установки дисквалификации при не попадании райдера в лимит времени.
  */
 export const finishTimeLimitOnStageOptions = [

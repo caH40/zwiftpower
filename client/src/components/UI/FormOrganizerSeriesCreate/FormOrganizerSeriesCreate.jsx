@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 
 import { useFormOrganizerSeries } from '../../../hook/useFormOrganizerSeries';
@@ -9,7 +8,6 @@ import {
   finishTimeLimitOnStageOptions,
   riderCategoryRuleOptions,
   seriesTypes,
-  timePenaltyApplicationOptions,
 } from '../../../assets/options';
 import TextAreaRFH from '../TextArea/TextAreaRFH';
 import CheckboxRFH from '../Checkbox/CheckboxRFH';
@@ -46,14 +44,11 @@ export default function FormOrganizerSeriesCreate({
     type,
     finishTimeLimitOnStage,
     timeGapThresholdSeconds,
-    timePenaltyApplication,
     _id: seriesId,
   },
   loading,
   setTrigger,
 }) {
-  const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -80,7 +75,6 @@ export default function FormOrganizerSeriesCreate({
       riderCategoryRule,
       finishTimeLimitOnStage,
       timeGapThresholdSeconds,
-      timePenaltyApplication,
     },
     defaultValues: {
       logoFile: null,
@@ -90,7 +84,6 @@ export default function FormOrganizerSeriesCreate({
         enforcement: 'manual',
       },
       timeGapThresholdSeconds: 0,
-      timePenaltyApplication: 'raw',
     },
   });
 
@@ -343,17 +336,6 @@ export default function FormOrganizerSeriesCreate({
               min: 0,
               step: 1,
             }}
-            loading={loading || loadingForm}
-          />
-        </div>
-
-        <div className={styles.wrapper__input}>
-          <SelectWithRHF
-            label="К какому времени применяется временной штраф: к фактическому финишному времени или к классификационному (после выравнивания времени в группе)"
-            register={register('timePenaltyApplication', { required: 'Обязательное поле' })}
-            validationText={errors.timePenaltyApplication?.message || ''}
-            id={'timePenaltyApplication-FormOrganizerSeriesCreate'}
-            options={timePenaltyApplicationOptions}
             loading={loading || loadingForm}
           />
         </div>
