@@ -29,13 +29,21 @@ const FormStageSeries = forwardRef(({ stage, setTrigger, setStageForEdit, loadin
     defaultValues: { logoFile: null, posterFile: null },
   });
 
-  const onSubmit = async ({ stageId, order, label, includeResults, seriesId }) => {
+  const onSubmit = async ({
+    stageId,
+    order,
+    label,
+    includeResults,
+    seriesId,
+    disableTimeGapRule,
+  }) => {
     try {
       const stage = {
         event: stageId,
         order: +order,
         label: label,
         includeResults: includeResults,
+        disableTimeGapRule,
       };
       const res = await dispatch(fetchUpdateSeriesStage({ stage, seriesId })).unwrap();
 
@@ -81,6 +89,17 @@ const FormStageSeries = forwardRef(({ stage, setTrigger, setStageForEdit, loadin
           id={'includeResults-StageSeriesCard'}
           loading={loading}
           tooltip={'Учитывать результаты заезда в генеральном зачёте'}
+        />
+
+        <span className={styles.checkbox__text}>
+          Отключить правило разрыва времени для этого этапа:
+        </span>
+
+        <CheckboxRFH
+          id="disableTimeGapRule-StageSeriesCard"
+          register={register('disableTimeGapRule')}
+          loading={loading}
+          tooltip="Отключить применение правила одинакового времени для группового финиша на этом этапе"
         />
       </div>
 

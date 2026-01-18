@@ -149,20 +149,19 @@ export interface ResultSchema {
  * Общие данные данные райдера
  * Дополнительные данные (таблицы) для более оптимальных запросов данных для других таблиц
  */
-export interface RiderProfileSchema
-  extends Exclude<
-    ProfileZwiftAPI,
-    | 'firstName'
-    | 'lastName'
-    | 'male'
-    | 'eventCategory'
-    | 'imageSrc'
-    | 'countryAlpha3'
-    | 'age'
-    | 'height'
-    | 'weight'
-    | 'competitionMetrics'
-  > {
+export interface RiderProfileSchema extends Exclude<
+  ProfileZwiftAPI,
+  | 'firstName'
+  | 'lastName'
+  | 'male'
+  | 'eventCategory'
+  | 'imageSrc'
+  | 'countryAlpha3'
+  | 'age'
+  | 'height'
+  | 'weight'
+  | 'competitionMetrics'
+> {
   zwiftId: number;
   totalEvents: number; // общее количество заездов
   medals: {
@@ -727,6 +726,7 @@ export type TSeriesStage = {
   hasResults: boolean; // Есть хоть один результат этапа. Обновляется после запроса на создание результатов этапа.
   resultsUpdatedAt?: Date;
   includeResults: boolean; // Учитывать результаты этапа в серии.
+  disableTimeGapRule?: boolean; // Отключено правило общего времени для финишировавших райдеров, попавших в разрешенный временной разрыв.
 };
 
 /**

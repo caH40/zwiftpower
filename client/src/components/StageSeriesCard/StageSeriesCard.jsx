@@ -32,6 +32,7 @@ export default function StageSeriesCard({
   stageId,
   seriesId,
   connected,
+  disableTimeGapRule,
 }) {
   const stage = {
     name,
@@ -60,6 +61,9 @@ export default function StageSeriesCard({
       <div className={styles.box__checkbox}>
         <span>Результаты учитываются:</span>
         <CheckboxSimple loading={loading} checked={includeResults} disabled={true} />
+
+        <span>Отключено правило одинакового времени для группового финиша на этом этапе:</span>
+        <CheckboxSimple loading={loading} checked={disableTimeGapRule} disabled={true} />
       </div>
 
       {stageLabel && (

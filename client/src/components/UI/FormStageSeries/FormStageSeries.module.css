@@ -33,15 +33,13 @@
   top: 14px;
 }
 .box__checkbox {
-  display: flex;
-  align-items: end;
-  gap: 1rem;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
   max-width: 400px;
+  align-items: end;
 }
-.box__checkbox + .box__checkbox {
-  margin-top: 10px;
-}
+
 .stage__label {
   font-size: 20px;
 }

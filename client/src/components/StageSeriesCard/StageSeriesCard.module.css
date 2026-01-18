@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 14px 0px 14px 14px;
+  padding: 14px;
   background-color: var(--color-bg-minor);
   border-radius: 10px;
   border: 1px solid var(--color-border-minor);
@@ -33,14 +33,11 @@
   top: 14px;
 }
 .box__checkbox {
-  display: flex;
-  align-items: end;
-  gap: 1rem;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
   max-width: 400px;
-}
-.box__checkbox + .box__checkbox {
-  margin-top: 10px;
+  align-items: end;
 }
 .stage__label {
   font-size: 20px;
@@ -51,14 +48,18 @@
   right: 14px;
 }
 .title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
+  padding-right: 48px;
 }
 .subtitle {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   margin-bottom: 12px;
 }
 .box__field {
   margin-bottom: 12px;
+}
+/* ====================================================================== */
+@media (max-width: 576px) {
 }
