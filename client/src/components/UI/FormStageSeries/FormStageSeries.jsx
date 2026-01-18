@@ -19,6 +19,7 @@ import styles from './FormStageSeries.module.css';
  */
 const FormStageSeries = forwardRef(({ stage, setTrigger, setStageForEdit, loading }, ref) => {
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,

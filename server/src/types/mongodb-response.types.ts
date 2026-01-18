@@ -72,6 +72,7 @@ type TStage = {
   order: number;
   label?: string; // Название этапа, если нет номера или равен 0.
   includeResults: boolean; // Учитывать результаты этапа в серии.
+  disableTimeGapRule?: boolean;
 };
 
 /**

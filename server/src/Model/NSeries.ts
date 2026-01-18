@@ -30,6 +30,7 @@ const SeriesStageSchema = new Schema<TSeriesStage>(
     hasResults: { type: Boolean, default: false },
     resultsUpdatedAt: { type: Date },
     includeResults: { type: Boolean, default: true },
+    disableTimeGapRule: { type: Boolean, default: false },
   },
   { _id: false }
 );

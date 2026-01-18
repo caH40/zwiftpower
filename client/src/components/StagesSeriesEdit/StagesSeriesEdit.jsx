@@ -103,6 +103,7 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
             seriesId={seriesId}
             stageId={stage._id}
             connected={duplicateStageNumber.includes(stage.order)}
+            disableTimeGapRule={stage.disableTimeGapRule}
           />
         ))}
       </div>

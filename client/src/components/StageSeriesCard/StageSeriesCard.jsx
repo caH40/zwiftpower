@@ -42,7 +42,9 @@ export default function StageSeriesCard({
     stageId,
     label: stageLabel,
     seriesId,
+    disableTimeGapRule,
   };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.wrapper__top}>
