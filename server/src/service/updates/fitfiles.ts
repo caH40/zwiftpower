@@ -1,5 +1,5 @@
 import { FitFile } from '../../Model/FitFile.js';
-import { millisecondsIn90Days } from '../../assets/date.js';
+import { millisecondsIn60Days } from '../../assets/date.js';
 import { handleAndLogError } from '../../errors/error.js';
 
 /**
@@ -7,7 +7,7 @@ import { handleAndLogError } from '../../errors/error.js';
  */
 export const removeActivityFromFitFile = async (): Promise<void> => {
   try {
-    const currentPeriod = Date.now() - millisecondsIn90Days;
+    const currentPeriod = Date.now() - millisecondsIn60Days;
 
     // фитфайлы в которых есть активности старше 90 дней
     const fitFilesDB = await FitFile.find({
