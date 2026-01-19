@@ -8,6 +8,7 @@ import { TSeriesType } from '../../types/model.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
 import { getSeasonPeriod } from '../../utils/season.js';
 import { TeamScoreAggregator } from '../TeamScoreAggregator/TeamScoreAggregator.js';
+import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
 
 /**
  * Класс работы с генеральными классификациями серий и туров.
@@ -19,6 +20,9 @@ export class SeriesGCManager {
     this.seriesClassificationRepository = new SeriesClassificationRepository();
   }
 
+  /**
+   * Обновление результатов генеральной классификации.
+   */
   async update(): Promise<TResponseService<null>> {
     // Получем тип серии заездов.
     const seriesDB = await NSeriesModel.findOne(
@@ -38,6 +42,16 @@ export class SeriesGCManager {
     await this.recalculateTeamSeasonRating(seriesDB.dateStart);
 
     return await gcHandler.update();
+  }
+
+  /**
+   * Пересчет ГК и всех этапов.
+   */
+  async recalculateGCWithAllStages(): Promise<TResponseService<null>> {
+    const seriesStageProtocolManager = new SeriesStageProtocolManager(this.seriesId);
+    await seriesStageProtocolManager.recalculateStageProtocol(this.seriesId);
+
+    return this.update();
   }
 
   /**

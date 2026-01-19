@@ -530,7 +530,6 @@ export class SeriesOrganizerService {
     stageOrder: number
   ): Promise<void> => {
     try {
-
       const handlerSeries = new HandlerSeries(seriesId);
       await handlerSeries.deleteOutdatedStageResults(stageOrder);
     } catch (error) {

@@ -169,8 +169,12 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       resultsByStageOrderMap.set(result.order, resultsInMap);
     }
 
+    const resultsByStageOrder = [...resultsByStageOrderMap.entries()].sort(
+      (a, b) => a[0] - b[0]
+    );
+
     // Пересчёт протоколов этапов серии.
-    for (const [order, resultsInStage] of resultsByStageOrderMap.entries()) {
+    for (const [order, resultsInStage] of resultsByStageOrder) {
       // Сортировка результатов и проставления ранкинга в каждой категории для этапа.
       const resultsWithRank = await this.stageRanker.calculateRanking(resultsInStage, type);
 

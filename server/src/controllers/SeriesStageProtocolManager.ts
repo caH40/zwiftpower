@@ -54,7 +54,7 @@ export class SeriesStageProtocolManagerController {
       const { seriesId } = UpdateSeriesGCSchema.parse(req.body);
 
       const gCManager = new SeriesGCManager(seriesId);
-      const response = await gCManager.update();
+      const response = await gCManager.recalculateGCWithAllStages();
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
