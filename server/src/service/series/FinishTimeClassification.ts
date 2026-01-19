@@ -15,16 +15,37 @@ export class FinishTimeClassification {
   }
 
   async set(results: TStageResult[]): Promise<TStageResult[]> {
+    if (results.length === 0) {
+      return results;
+    }
+
     const seriesRepository = new SeriesRepository();
 
     // Получаем необходимые параметры из серии для расчета.
-    const { timeGapThresholdSeconds } = await getOrThrow(
+    const { timeGapThresholdSeconds, stages } = await getOrThrow(
       seriesRepository.getById(this.seriesId),
       `Не найдена серия с _id: "${this.seriesId}"`
     );
 
     // Если допустимый временной разрыв на финише не установлен или равен нулю в настройках серии.
     if (!timeGapThresholdSeconds) {
+      return results.map((r) => ({
+        ...r,
+        finishTimeClassification: null,
+      }));
+    }
+
+    const stageOrderFromResult = results[0].order;
+    const stage = stages.find(({ order }) => order === stageOrderFromResult);
+
+    if (!stage) {
+      throw new Error(
+        `Нет этапа в настройках Серии _id: "${this.seriesId}" с номером из результата stageOrderFromResult: ${stageOrderFromResult}`
+      );
+    }
+
+    // Если установлен disableTimeGapRule - отключено правило общего времени для группы.
+    if (stage.disableTimeGapRule) {
       return results.map((r) => ({
         ...r,
         finishTimeClassification: null,
@@ -51,10 +72,6 @@ export class FinishTimeClassification {
     results: TStageResult[],
     timeGapThresholdSeconds: number
   ): TStageResult[] {
-    if (results.length === 0) {
-      return results;
-    }
-
     // Порог временного разрыва переводится из секунд в миллисекунды.
     const thresholdMs = timeGapThresholdSeconds * 1000;
 
