@@ -28,6 +28,7 @@ import {
   entityForFileSuffix,
   TParamsSeriesServiceAddStage,
 } from '../../types/types.interface.js';
+import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
 
 /**
  * Класс работы с Серией заездов для Организаторов.
@@ -370,6 +371,10 @@ export class SeriesOrganizerService {
       await this.deleteOutdatedStageResults(seriesId, oldStageOrder);
     }
 
+    // Создание новых результатов для этапа в котором изменились параметры.
+    const seriesStageProtocolManager = new SeriesStageProtocolManager(seriesId);
+    await seriesStageProtocolManager.buildStageProtocol(stage.order);
+
     // Возвращаем успешный ответ.
     return {
       data: null,
@@ -525,6 +530,7 @@ export class SeriesOrganizerService {
     stageOrder: number
   ): Promise<void> => {
     try {
+
       const handlerSeries = new HandlerSeries(seriesId);
       await handlerSeries.deleteOutdatedStageResults(stageOrder);
     } catch (error) {
