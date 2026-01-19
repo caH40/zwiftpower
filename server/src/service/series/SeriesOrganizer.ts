@@ -362,18 +362,21 @@ export class SeriesOrganizerService {
 
     await this.deleteOutdatedStageResults(seriesId, stage.order);
 
-    // Если было изменение stageOrder, то удалять результаты прошлого и нового stageOrder
-    const oldStageOrder = seriesDB.stages.find((stage) =>
-      stage.event.equals(stage.event)
-    )?.order;
-
-    if (oldStageOrder !== undefined && stage.order !== oldStageOrder) {
-      await this.deleteOutdatedStageResults(seriesId, oldStageOrder);
-    }
-
     // Создание новых результатов для этапа в котором изменились параметры.
     const seriesStageProtocolManager = new SeriesStageProtocolManager(seriesId);
     await seriesStageProtocolManager.buildStageProtocol(stage.order);
+
+    // Если было изменение stageOrder, то удалять результаты прошлого и нового stageOrder
+    const oldStageOrder = seriesDB.stages.find((s) => {
+      return s.event.equals(stage.event);
+    })?.order;
+
+    const isOrderModified = oldStageOrder !== undefined && stage.order !== oldStageOrder;
+
+    if (isOrderModified) {
+      await this.deleteOutdatedStageResults(seriesId, oldStageOrder);
+      await seriesStageProtocolManager.buildStageProtocol(oldStageOrder);
+    }
 
     // Возвращаем успешный ответ.
     return {
