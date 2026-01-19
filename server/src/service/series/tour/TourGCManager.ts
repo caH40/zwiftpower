@@ -95,6 +95,17 @@ export class TourGCManager extends AbstractBaseGCManager {
 
       // Расчет данных totalFinishPoints, totalTimeInMilliseconds и определение пропущенных этапов: requiredStages .
       for (const result of results) {
+        const stageOrder = result.order;
+
+        // Если результаты этапа не учитываются в генеральной классификации.
+        const needCount = stageOrders.scoringStageOrders.includes(stageOrder);
+        if (!needCount) {
+          // Удаляем этап из обязательных, если он был пройден.
+          requiredStages.delete(stageOrder);
+
+          continue;
+        }
+
         // Суммируем очки за финиш.
         totalFinishPoints += result.points?.finishPoints || 0;
 
@@ -110,7 +121,7 @@ export class TourGCManager extends AbstractBaseGCManager {
         }
 
         // Удаляем этап из обязательных, если он был пройден.
-        requiredStages.delete(result.order);
+        requiredStages.delete(stageOrder);
       }
 
       // Создание списка этапов из серии заездов в которых участвовал райдер.
@@ -252,15 +263,15 @@ export class TourGCManager extends AbstractBaseGCManager {
    * Получение всех и обязательных для ГК номеров этапов.
    */
   private getStageOrders = (stages: TSeriesStage[]): TAllStageOrders => {
-    // Список всех и обязательных этапов для расчета генеральной классификации, отфильтрованный от дублей.
-    const { requiredStageOrders, allStageOrders } = stages.reduce<TAllStageOrders>(
+    // Список списка всех, обязательных этапов, этапов результаты которых учитываются для расчета генеральной классификации, отфильтрованный от дублей.
+    const { allStageOrders, scoringStageOrders } = stages.reduce<TAllStageOrders>(
       (acc, cur) => {
         if (
           cur.includeResults &&
-          !acc.requiredStageOrders.includes(cur.order) &&
+          !acc.scoringStageOrders.includes(cur.order) &&
           cur.hasResults
         ) {
-          acc.requiredStageOrders.push(cur.order);
+          acc.scoringStageOrders.push(cur.order);
         }
 
         if (!acc.allStageOrders.includes(cur.order)) {
@@ -269,11 +280,14 @@ export class TourGCManager extends AbstractBaseGCManager {
 
         return acc;
       },
-      { requiredStageOrders: [], allStageOrders: [] }
+      { requiredStageOrders: [], allStageOrders: [], scoringStageOrders: [] }
     );
+
+    // FIXME: Изменить: Все этапы по умолчанию обязательные.
+    const requiredStageOrders = [...allStageOrders];
 
     allStageOrders.sort((a, b) => a - b);
 
-    return { requiredStageOrders, allStageOrders };
+    return { requiredStageOrders, allStageOrders, scoringStageOrders };
   };
 }

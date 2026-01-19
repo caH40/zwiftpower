@@ -68,8 +68,10 @@ type PickedPropertyResultSeries =
   | 'profileData'
   | 'profileDataMain';
 
-export interface ResultSeries
-  extends Pick<ResultWithEventAndSubgroup, PickedPropertyResultSeries> {
+export interface ResultSeries extends Pick<
+  ResultWithEventAndSubgroup,
+  PickedPropertyResultSeries
+> {
   durationInMilliseconds: number;
   eventSubgroup: ZwiftEventSubgroupSchema;
   eventStart: number;
@@ -84,11 +86,10 @@ interface Additional {
   value: number;
   addition: string;
 }
-export interface UserResult
-  extends Omit<
-    ZwiftResultSchema,
-    'activityData' | 'profileData' | 'sensorData' | 'wattsPerKg' | 'cpBestEfforts'
-  > {
+export interface UserResult extends Omit<
+  ZwiftResultSchema,
+  'activityData' | 'profileData' | 'sensorData' | 'wattsPerKg' | 'cpBestEfforts'
+> {
   activityData: {
     activityId: string;
     sport: string;
@@ -473,11 +474,10 @@ export interface RiderMaxWattsPerKg extends Omit<RiderMaxWatt, 'watts'> {
 /**
  * Данные райдера с сервера ZwiftAPI, только необходимые параметры
  */
-export interface ZwiftProfileShort
-  extends Pick<
-    ProfileZwiftAPI,
-    'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryAlpha3'
-  > {}
+export interface ZwiftProfileShort extends Pick<
+  ProfileZwiftAPI,
+  'id' | 'firstName' | 'lastName' | 'male' | 'imageSrc' | 'countryAlpha3'
+> {}
 
 /**
  * Данные райдера с сервера ZwiftAPI, которые добавлены в профиль пользователя User
@@ -984,9 +984,10 @@ export type TFinishGapsGetters<T> = {
 };
 
 /**
- * Тип для списока всех и обязательных этапов для расчета генеральной классификации.
+ * Тип для списка всех, обязательных этапов, этапов результаты которых учитываются для расчета генеральной классификации.
  */
 export type TAllStageOrders = {
+  scoringStageOrders: number[]; // Номера этапов результаты которых учитываются в ГС.
   requiredStageOrders: number[]; // Номера обязательных этапов для ГС.
   allStageOrders: number[]; // Все номера этапов в Серии заездов.
 };
