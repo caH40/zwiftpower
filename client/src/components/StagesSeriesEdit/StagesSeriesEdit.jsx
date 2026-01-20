@@ -104,6 +104,7 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
             stageId={stage._id}
             connected={duplicateStageNumber.includes(stage.order)}
             disableTimeGapRule={stage.disableTimeGapRule}
+            requiredForGeneral={stage.requiredForGeneral}
           />
         ))}
       </div>
@@ -114,6 +115,7 @@ export default function StagesSeriesEdit({ setTrigger, stages, seriesId }) {
           stage={stageForEdit}
           setStageForEdit={setStageForEdit}
           loading={loading}
+          setLoading={setLoading}
           setTrigger={setTrigger}
           ref={formRef}
         />

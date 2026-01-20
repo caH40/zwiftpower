@@ -64,6 +64,7 @@ export function organizerSeriesOneDto(
       name: stage.event.name,
       order: stage.order,
       disableTimeGapRule: stage.disableTimeGapRule,
+      requiredForGeneral: stage.requiredForGeneral,
       label: stage.label,
       includeResults: stage.includeResults,
     }));

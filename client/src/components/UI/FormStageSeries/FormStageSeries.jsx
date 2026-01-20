@@ -17,99 +17,116 @@ import styles from './FormStageSeries.module.css';
  * @param {Object} props.stage - Данные этапа серии для редактирования.
  * @param {Boolean} props.loading - Дата старта Эвента.
  */
-const FormStageSeries = forwardRef(({ stage, setTrigger, setStageForEdit, loading }, ref) => {
-  const dispatch = useDispatch();
+const FormStageSeries = forwardRef(
+  ({ stage, setTrigger, setStageForEdit, loading, setLoading }, ref) => {
+    const dispatch = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'all',
-    values: stage,
-    defaultValues: { logoFile: null, posterFile: null },
-  });
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      mode: 'all',
+      values: stage,
+      defaultValues: { logoFile: null, posterFile: null, requiredForGeneral: true },
+    });
 
-  const onSubmit = async ({
-    stageId,
-    order,
-    label,
-    includeResults,
-    seriesId,
-    disableTimeGapRule,
-  }) => {
-    try {
-      const stage = {
-        event: stageId,
-        order: +order,
-        label: label,
-        includeResults: includeResults,
-        disableTimeGapRule,
-      };
-      const res = await dispatch(fetchUpdateSeriesStage({ stage, seriesId })).unwrap();
+    const onSubmit = async ({
+      stageId,
+      order,
+      label,
+      includeResults,
+      seriesId,
+      disableTimeGapRule,
+      requiredForGeneral,
+    }) => {
+      try {
+        setLoading(true);
 
-      dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
+        const stage = {
+          event: stageId,
+          order: +order,
+          label: label,
+          includeResults: includeResults,
+          disableTimeGapRule,
+          requiredForGeneral,
+        };
+        const res = await dispatch(fetchUpdateSeriesStage({ stage, seriesId })).unwrap();
 
-      setTrigger((prev) => !prev);
-      setStageForEdit(null);
-    } catch (error) {
-      console.log(error); // eslint-disable-line
-    }
-  };
+        dispatch(getAlert({ message: res.message, type: 'success', isOpened: true }));
 
-  return (
-    <form ref={ref} className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
-      <h3 className={styles.title}>{stage.name}</h3>
-      <h3 className={styles.subtitle}>{getTimerLocal(stage.eventStart, 'DDMMYYHm')}</h3>
+        setTrigger((prev) => !prev);
+        setStageForEdit(null);
+      } catch (error) {
+        console.log(error); // eslint-disable-line
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      <div className={styles.box__field}>
-        <InputAuth
-          label={'Номер этапа (0 не отображается)*'}
-          register={register('order', { required: 'Обязательное поле' })}
-          validationText={errors.order?.message || ''}
-          input={{ id: 'order-StageSeriesCard', type: 'number' }}
-          placeholder="Введите 0-100"
-          loading={loading}
-        />
-      </div>
+    return (
+      <form ref={ref} className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
+        <h3 className={styles.title}>{stage.name}</h3>
+        <h3 className={styles.subtitle}>{getTimerLocal(stage.eventStart, 'DDMMYYHm')}</h3>
 
-      <div className={styles.box__field}>
-        <InputAuth
-          label={'Название этапа'}
-          register={register('label')}
-          validationText={errors.label?.message || ''}
-          input={{ id: 'label-StageSeriesCard', type: 'text' }}
-          loading={loading}
-        />
-      </div>
+        <div className={styles.box__field}>
+          <InputAuth
+            label={'Номер этапа (0 не отображается)*'}
+            register={register('order', { required: 'Обязательное поле' })}
+            validationText={errors.order?.message || ''}
+            input={{ id: 'order-StageSeriesCard', type: 'number' }}
+            placeholder="Введите 0-100"
+            loading={loading}
+          />
+        </div>
 
-      <div className={styles.box__checkbox}>
-        <span>Учитывать результаты заезда в генеральном зачёте:</span>
-        <CheckboxRFH
-          register={register('includeResults')}
-          id={'includeResults-StageSeriesCard'}
-          loading={loading}
-          tooltip={'Учитывать результаты заезда в генеральном зачёте'}
-        />
+        <div className={styles.box__field}>
+          <InputAuth
+            label={'Название этапа'}
+            register={register('label')}
+            validationText={errors.label?.message || ''}
+            input={{ id: 'label-StageSeriesCard', type: 'text' }}
+            loading={loading}
+          />
+        </div>
 
-        <span className={styles.checkbox__text}>
-          Отключить правило разрыва времени для этого этапа:
-        </span>
+        <div className={styles.box__checkbox}>
+          <span>Обязательный этап для попадания в генеральный зачёт:</span>
+          <CheckboxRFH
+            register={register('requiredForGeneral')}
+            id={'requiredForGeneral-StageSeriesCard'}
+            loading={loading}
+            tooltip={
+              'Обязательно финишировать на этапе для попадания в генеральный зачёт. Очки/время могут не учитываться в ГК'
+            }
+          />
 
-        <CheckboxRFH
-          id="disableTimeGapRule-StageSeriesCard"
-          register={register('disableTimeGapRule')}
-          loading={loading}
-          tooltip="Отключить применение правила одинакового времени для группового финиша на этапе"
-        />
-      </div>
+          <span>Учитывать результаты заезда в генеральном зачёте:</span>
+          <CheckboxRFH
+            register={register('includeResults')}
+            id={'includeResults-StageSeriesCard'}
+            loading={loading}
+            tooltip={'Учитывать результаты заезда в генеральном зачёте'}
+          />
 
-      <div className={styles.spacer__btn}>
-        <Button>Сохранить</Button>
-      </div>
-    </form>
-  );
-});
+          <span className={styles.checkbox__text}>
+            Отключить правило разрыва времени для этого этапа:
+          </span>
+          <CheckboxRFH
+            id="disableTimeGapRule-StageSeriesCard"
+            register={register('disableTimeGapRule')}
+            loading={loading}
+            tooltip="Отключить применение правила одинакового времени для группового финиша на этапе"
+          />
+        </div>
+
+        <div className={styles.spacer__btn}>
+          <Button disabled={loading}>Сохранить</Button>
+        </div>
+      </form>
+    );
+  }
+);
 
 // Устанавливаем displayName для компонента
 FormStageSeries.displayName = 'FormStageSeries';

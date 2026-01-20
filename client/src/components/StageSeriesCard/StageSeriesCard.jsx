@@ -33,6 +33,7 @@ export default function StageSeriesCard({
   seriesId,
   connected,
   disableTimeGapRule,
+  requiredForGeneral,
 }) {
   const stage = {
     name,
@@ -43,6 +44,7 @@ export default function StageSeriesCard({
     label: stageLabel,
     seriesId,
     disableTimeGapRule,
+    requiredForGeneral,
   };
 
   return (
@@ -61,6 +63,9 @@ export default function StageSeriesCard({
       </div>
 
       <div className={styles.box__checkbox}>
+        <span>Обязательный этап для попадания в генеральный зачёт:</span>
+        <CheckboxSimple loading={loading} checked={requiredForGeneral} disabled={true} />
+
         <span>Результаты учитываются:</span>
         <CheckboxSimple loading={loading} checked={includeResults} disabled={true} />
 
