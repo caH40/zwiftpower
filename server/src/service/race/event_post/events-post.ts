@@ -71,6 +71,7 @@ export async function postEventService(eventParams: EventWithSubgroup, userId: s
           order: 0,
           includeResults: true,
           hasResults: false,
+          requiredForGeneral: true,
         },
         stages: seriesDB.stages,
         seriesId: String(eventParams.seriesId),

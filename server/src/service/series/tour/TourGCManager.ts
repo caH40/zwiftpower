@@ -264,27 +264,29 @@ export class TourGCManager extends AbstractBaseGCManager {
    */
   private getStageOrders = (stages: TSeriesStage[]): TAllStageOrders => {
     // Список списка всех, обязательных этапов, этапов результаты которых учитываются для расчета генеральной классификации, отфильтрованный от дублей.
-    const { allStageOrders, scoringStageOrders } = stages.reduce<TAllStageOrders>(
-      (acc, cur) => {
-        if (
-          cur.includeResults &&
-          !acc.scoringStageOrders.includes(cur.order) &&
-          cur.hasResults
-        ) {
-          acc.scoringStageOrders.push(cur.order);
-        }
+    const { allStageOrders, scoringStageOrders, requiredStageOrders } =
+      stages.reduce<TAllStageOrders>(
+        (acc, cur) => {
+          if (
+            cur.includeResults &&
+            !acc.scoringStageOrders.includes(cur.order) &&
+            cur.hasResults
+          ) {
+            acc.scoringStageOrders.push(cur.order);
+          }
 
-        if (!acc.allStageOrders.includes(cur.order)) {
-          acc.allStageOrders.push(cur.order);
-        }
+          if (!acc.allStageOrders.includes(cur.order)) {
+            acc.allStageOrders.push(cur.order);
+          }
 
-        return acc;
-      },
-      { requiredStageOrders: [], allStageOrders: [], scoringStageOrders: [] }
-    );
+          if (!acc.requiredStageOrders.includes(cur.order) && cur.requiredForGeneral) {
+            acc.requiredStageOrders.push(cur.order);
+          }
 
-    // FIXME: Изменить: Все этапы по умолчанию обязательные.
-    const requiredStageOrders = [...allStageOrders];
+          return acc;
+        },
+        { requiredStageOrders: [], allStageOrders: [], scoringStageOrders: [] }
+      );
 
     allStageOrders.sort((a, b) => a - b);
 

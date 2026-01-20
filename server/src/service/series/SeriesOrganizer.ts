@@ -29,6 +29,7 @@ import {
   TParamsSeriesServiceAddStage,
 } from '../../types/types.interface.js';
 import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
+import { GCProviderFactory } from './GCProviderFactory.js';
 
 /**
  * Класс работы с Серией заездов для Организаторов.
@@ -352,8 +353,8 @@ export class SeriesOrganizerService {
     const seriesDB = await NSeriesModel.findOneAndUpdate(
       { _id: seriesId, 'stages.event': stage.event },
       { $set: { 'stages.$': stage } },
-      { projection: { name: 1, stages: 1 }, new: false }
-    ).lean<Pick<TSeries, '_id' | 'name' | 'stages'>>();
+      { projection: { name: 1, stages: 1, type: 1 }, new: false }
+    ).lean<Pick<TSeries, '_id' | 'name' | 'stages' | 'type'>>();
 
     // Если серия не найдена, выбрасываем ошибку.
     if (!seriesDB) {
@@ -377,6 +378,11 @@ export class SeriesOrganizerService {
       await this.deleteOutdatedStageResults(seriesId, oldStageOrder);
       await seriesStageProtocolManager.buildStageProtocol(oldStageOrder);
     }
+
+    // Перечтет генеральной классификации.
+    const gcProvider = new GCProviderFactory(seriesId);
+    const gcHandler = gcProvider.getHandler(seriesDB.type);
+    await gcHandler.update();
 
     // Возвращаем успешный ответ.
     return {
