@@ -6,34 +6,17 @@ import mongoose, { Schema, model } from 'mongoose';
 
 import { FileMetadataSchema } from './Schema/FileMetadataSchema.js';
 import { RIDER_CATEGORIES_RULE_TYPES, SERIES_TYPES } from '../assets/constants.js';
-
-// types
-import {
-  TScoringAlgorithm,
-  TSeries,
-  TSeriesStage,
-  TSeriesType,
-} from '../types/model.interface';
 import { IMPORTANCE_COEFFICIENTS_LEVELS } from '../assets/racePoints.js';
 import { FinishTimeLimitOnStageSchema } from './Schema/FinishTimeLimitOnStage.js';
+import { seriesStageSchema } from './Schema/SeriesStageSchema.js';
+
+// types
+import { TScoringAlgorithm, TSeries, TSeriesType } from '../types/model.interface';
 
 export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   scoringAlgorithms: TScoringAlgorithm;
   type: TSeriesType;
 }
-
-const SeriesStageSchema = new Schema<TSeriesStage>(
-  {
-    event: { type: mongoose.Schema.Types.ObjectId, ref: 'ZwiftEvent', required: true },
-    order: { type: Number, default: 0 },
-    label: { type: String },
-    hasResults: { type: Boolean, default: false },
-    resultsUpdatedAt: { type: Date },
-    includeResults: { type: Boolean, default: true },
-    disableTimeGapRule: { type: Boolean, default: false },
-  },
-  { _id: false }
-);
 
 const NSeriesSchema = new Schema<ISeriesDocument>({
   useStageResults: { type: Boolean, default: false },
@@ -53,7 +36,7 @@ const NSeriesSchema = new Schema<ISeriesDocument>({
   prizes: { type: String },
   rules: { type: String },
   scoringAlgorithms: { type: mongoose.Schema.Types.ObjectId, ref: 'ScoringAlgorithm' },
-  stages: { type: [SeriesStageSchema] },
+  stages: { type: [seriesStageSchema] },
   type: { type: String, enum: SERIES_TYPES, required: true },
   urlSlug: { type: String, required: true, unique: true },
   gcResultsUpdatedAt: { type: Date },

@@ -64,7 +64,7 @@ export default function StageSeriesCard({
         <span>Результаты учитываются:</span>
         <CheckboxSimple loading={loading} checked={includeResults} disabled={true} />
 
-        <span>Отключено правило одинакового времени для группового финиша на этом этапе:</span>
+        <span>Отключено правило одинакового времени для группового финиша:</span>
         <CheckboxSimple loading={loading} checked={disableTimeGapRule} disabled={true} />
       </div>
 

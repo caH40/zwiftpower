@@ -100,7 +100,7 @@ const FormStageSeries = forwardRef(({ stage, setTrigger, setStageForEdit, loadin
           id="disableTimeGapRule-StageSeriesCard"
           register={register('disableTimeGapRule')}
           loading={loading}
-          tooltip="Отключить применение правила одинакового времени для группового финиша на этом этапе"
+          tooltip="Отключить применение правила одинакового времени для группового финиша на этапе"
         />
       </div>
 

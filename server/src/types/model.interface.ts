@@ -726,6 +726,7 @@ export type TSeriesStage = {
   hasResults: boolean; // Есть хоть один результат этапа. Обновляется после запроса на создание результатов этапа.
   resultsUpdatedAt?: Date;
   includeResults: boolean; // Учитывать результаты этапа в серии.
+  requiredForGeneral: boolean; // Обязателен для попадания в генеральную классификацию.
   disableTimeGapRule?: boolean; // Отключено правило общего времени для финишировавших райдеров, попавших в разрешенный временной разрыв.
 };
 
