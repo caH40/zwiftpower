@@ -8,6 +8,9 @@ import { resetStageResults } from '../../../redux/features/api/series/seriesPubl
 import TableStageResults from '../../Tables/TableStageResults/TableStageResults';
 import NavBarResultsRaceTable from '../../UI/NavBarResultsRaceTable/NavBarResultsRaceTable';
 import ServiceBox from '../../ServiceBox/ServiceBox';
+import Button from '../../UI/Button/Button';
+import { useUserRole } from '../../../hook/useUserRole';
+import { openPopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 
 import styles from './StageResults.module.css';
 
@@ -16,8 +19,11 @@ import styles from './StageResults.module.css';
  */
 export default function StageResults() {
   const { urlSlug, stageOrder } = useParams();
+  const { isAdmin } = useUserRole();
   const { stageResults, seriesPublicOne } = useSelector((state) => state.seriesPublic);
   const { organizer } = useSelector((state) => state.checkAuth.value.user);
+  const filterCategory = useSelector((state) => state.filterCategory.value);
+  const currentCategory = filterCategory.isActive ? filterCategory.name : null;
 
   // Включено или нет правило общего времени группы в заданном временном разрыве на финише.
   // const timeGapThresholdEnabled = Boolean(seriesPublicOne.timeGapThresholdSeconds);
@@ -76,12 +82,36 @@ export default function StageResults() {
               stageName={stageData.name}
               stageStart={stageData.eventStart}
               isSeriesCreator={isSeriesCreator}
+              isAdmin={isAdmin}
               urlSlug={urlSlug}
               hiddenColumns={hiddenColumns}
               finishTimeLimitOnStage={seriesPublicOne?.finishTimeLimitOnStage}
             />
 
             <ServiceBox updated={stageResults.resultsUpdatedAt} />
+
+            {/* Кнопка добавления результата в этап. Не отображается если выбраны абсолют по группам */}
+            {currentCategory !== 'All' && (isSeriesCreator || isAdmin) ? (
+              <div className={styles.btnContainer}>
+                <Button
+                  getClick={() =>
+                    dispatch(
+                      openPopupFormContainer({
+                        formType: 'addResult', // мапинг в компоненте PopupFormContainer
+                        formProps: {
+                          category: currentCategory,
+                          seriesId: seriesPublicOne?._id,
+                          urlSlug,
+                          stageOrder,
+                        },
+                      })
+                    )
+                  }
+                >
+                  Добавить результат
+                </Button>
+              </div>
+            ) : null}
           </section>
         </>
       )}

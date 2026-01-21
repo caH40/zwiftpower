@@ -1,0 +1,52 @@
+.box__btn {
+  text-align: right;
+}
+.title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+.fieldsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.fieldLabel {
+  color: var(--color-text-minor);
+  font-weight: 400;
+  font-size: 14px;
+}
+.fieldLabel::after {
+  content: ':';
+}
+.fieldContainer {
+  flex: 0 0 auto;
+  padding: 10px;
+  background: var(--color-bg-minor);
+  border: 1px solid var(--color-border-minor);
+  border-radius: 5px;
+}
+.box__rider {
+  display: flex;
+  gap: 15px 20px;
+  margin-top: 15px;
+  margin-bottom: 12px;
+}
+.box__img {
+  font-size: 30px;
+  flex: 0 0 100px;
+  height: 100px;
+  border-radius: 10%;
+  overflow: hidden;
+}
+.box__name {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+.box__name span {
+  margin-right: 5px;
+}
+/* ====================================================================== */
+@media (max-width: 576px) {
+}

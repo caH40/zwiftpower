@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
 import FormCategory from '../FormCategory/FormCategory';
 import FormPenalty from '../FormTimePenalty/FormTimePenalty';
+import FormAddStageResult from '../FormAddStageResult/FormAddStageResult';
 import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
 import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamParticipantRatingModal';
 import CloseButton from '../Buttons/Close/CloseButton';
@@ -33,6 +34,7 @@ export default function PopupFormContainer() {
   }, [dispatch]);
 
   const Form = {
+    addResult: <FormAddStageResult {...formProps} />,
     setCategory: <FormCategory {...formProps} />,
     setPenalty: <FormPenalty {...formProps} />,
     setDisqualification: <div>setDisqualification</div>,

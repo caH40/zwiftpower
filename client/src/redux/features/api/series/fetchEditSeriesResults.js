@@ -43,3 +43,23 @@ export const fetchPatchTimePenaltyInSeriesResult = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Ручное добавление результата райдера на этапа серии, который из-за бага не сохранился в протоколе api zwift.
+ */
+export const fetchPostStageResultInSeries = createAsyncThunk(
+  'categoryInSeriesResult/patch',
+  async (newResult, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stage/results/result`,
+        method: 'post',
+        data: newResult,
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);

@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { useSortStageResults } from '../../../hook/useSortResults';
-import { useUserRole } from '../../../hook/useUserRole';
 import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdWatts } from '../utils/td';
 import { useFinishTime } from '../../../hook/useFinishTime';
+import { openPopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
+import { useUserRole } from '../../../hook/useUserRole';
 import FinishTime from '../../FinishTime/FinishTime';
 import StageResultMenu from '../../StageResultMenu/StageResultMenu';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -20,6 +21,7 @@ import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
 import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 import TimeLimitBox from '../../TimeLimitBox/TimeLimitBox';
+import Button from '../../UI/Button/Button';
 
 import styles from '../Table.module.css';
 
@@ -32,6 +34,7 @@ const cx = classnames.bind(styles);
 function TableStageResults({
   results,
   isSeriesCreator,
+  isAdmin,
   hiddenColumns,
   stageOrder,
   stageName,
@@ -39,10 +42,11 @@ function TableStageResults({
   seriesCategories,
   urlSlug,
   finishTimeLimitOnStage,
+  seriesId,
 }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
-  const { isAdmin } = useUserRole();
+
   const columnsCP = useSelector((state) => state.columnsCP.value);
   const { zwiftId } = useSelector((state) => state.checkAuth.value.user);
   const filterCategory = useSelector((state) => state.filterCategory.value);
