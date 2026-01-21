@@ -18,4 +18,39 @@ export const AddStageResultZSchema = z.object({
   userId: z.string().refine((val) => mongooseUtils.checkValidObjectId(val), {
     message: 'Некорректный userId',
   }),
+
+  // Добавленные поля профиля райдера
+  firstName: z
+    .string()
+    .min(1, 'Имя обязательно для заполнения')
+    .max(100, 'Имя не может превышать 100 символов')
+    .describe('Имя райдера'),
+
+  lastName: z
+    .string()
+    .min(1, 'Фамилия обязательна для заполнения')
+    .max(100, 'Фамилия не может превышать 100 символов')
+    .describe('Фамилия райдера'),
+
+  gender: z.enum(['male', 'female']).describe('Пол райдера (male/female)'),
+
+  weightInGrams: z
+    .number()
+    .int()
+    .positive('Вес должен быть положительным числом')
+    .max(200000, 'Вес не может превышать 200 кг')
+    .describe('Вес райдера в граммах'),
+
+  heightInCentimeters: z
+    .number()
+    .positive('Рост должен быть положительным числом')
+    .max(2500, 'Рост не может превышать 250 см')
+    .describe('Рост райдера в сантиметрах'),
+
+  age: z
+    .number()
+    .int()
+    .positive('Возраст должен быть положительным числом')
+    .max(120, 'Возраст не может превышать 120 лет')
+    .describe('Возраст райдера'),
 });

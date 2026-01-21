@@ -9,8 +9,12 @@ import { RACE_SERIES_CATEGORIES } from '../../../assets/rule-category';
 import { seriesCategoryOptions } from '../../../assets/options';
 import { timeDetailsToMilliseconds } from '../../../utils/date-convert';
 import { fetchZwiftProfile } from '../../../redux/features/api/zwiftProfiles/fetchZwiftProfile';
-import { setZwiftId } from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
+import {
+  resetZwiftProfile,
+  setZwiftId,
+} from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
 import { fetchPostStageResultInSeries } from '../../../redux/features/api/series/fetchEditSeriesResults';
+import InputAuth from '../InputAuth/InputAuth';
 import Button from '../Button/Button';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
 import BlockInputsTime from '../../BlockInputsTime/BlockInputsTime';
@@ -41,7 +45,6 @@ export default function FormAddStageResult({
   seriesCategories = RACE_SERIES_CATEGORIES,
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [profile, setProfile] = useState({});
   const dispatch = useDispatch();
 
   // Данные получаются по zwiftId при запросе из данной формы.
@@ -57,7 +60,19 @@ export default function FormAddStageResult({
     formState: { errors },
   } = useForm({
     mode: 'all',
-    values: { category },
+    values: {
+      category,
+      profileData: zwiftProfile?.id
+        ? {
+            firstName: zwiftProfile.firstName,
+            lastName: zwiftProfile.lastName,
+            gender: zwiftProfile.male ? 'мужчина' : 'женщина',
+            weightInGrams: zwiftProfile.weight,
+            heightInCentimeters: zwiftProfile.height / 10,
+            age: zwiftProfile.age,
+          }
+        : null,
+    },
     defaultValues: {
       time: {
         hours: 0,
@@ -96,6 +111,15 @@ export default function FormAddStageResult({
 
     setIsLoading(true);
 
+    const profileData = {
+      firstName: formData.profileData.firstName,
+      lastName: formData.profileData.lastName,
+      gender: formData.profileData.gender === 'мужчина' ? 'male' : 'female',
+      weightInGrams: Number(formData.profileData.weightInGrams),
+      heightInCentimeters: Number(formData.profileData.heightInCentimeters),
+      age: Number(formData.profileData.age),
+    };
+
     try {
       const response = await dispatch(
         fetchPostStageResultInSeries({
@@ -103,9 +127,11 @@ export default function FormAddStageResult({
           seriesId,
           stageOrder: Number(stageOrder),
           profileId: zwiftProfile.id,
+          ...profileData,
         })
       ).unwrap();
       // Успешный результат.
+      dispatch(resetZwiftProfile());
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
       dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
       dispatch(closePopupFormContainer());
@@ -154,6 +180,71 @@ export default function FormAddStageResult({
             </>
           )}
         </div>
+
+        {/* Данные райдера */}
+        <InputAuth
+          label={'Имя'}
+          register={register('profileData.firstName')}
+          validationText={errors.profileData?.firstName?.message || ''}
+          input={{ id: 'profileData.firstName-FormTeamCreate', type: 'text' }}
+          placeholder="Имя райдера"
+          id={'profileData.firstName-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Фамилия'}
+          register={register('profileData.lastName')}
+          validationText={errors.profileData?.lastName?.message || ''}
+          input={{ id: 'profileData.lastName-FormTeamCreate', type: 'text' }}
+          placeholder="Фамилия райдера"
+          id={'profileData.lastName-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Пол'}
+          register={register('profileData.gender')}
+          validationText={errors.profileData?.gender?.message || ''}
+          input={{ id: 'profileData.gender-FormTeamCreate', type: 'text' }}
+          placeholder="male или female"
+          id={'profileData.gender-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Вес (в граммах)'}
+          register={register('profileData.weightInGrams')}
+          validationText={errors.profileData?.weightInGrams?.message || ''}
+          input={{ id: 'profileData.weightInGrams-FormTeamCreate', type: 'number' }}
+          placeholder="Вес в граммах"
+          id={'profileData.weightInGrams-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Рост (в сантиметрах)'}
+          register={register('profileData.heightInCentimeters')}
+          validationText={errors.profileData?.heightInCentimeters?.message || ''}
+          input={{
+            id: 'profileData.heightInCentimeters-FormTeamCreate',
+            type: 'number',
+            step: '0.1',
+          }}
+          placeholder="Рост в сантиметрах"
+          id={'profileData.heightInCentimeters-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Возраст'}
+          register={register('profileData.age')}
+          validationText={errors.profileData?.age?.message || ''}
+          input={{ id: 'profileData.age-FormTeamCreate', type: 'number' }}
+          placeholder="Возраст райдера"
+          id={'profileData.age-FormCategoryForm'}
+          loading={isLoading}
+        />
 
         <SelectWithRHF
           label={'Категория райдера'}

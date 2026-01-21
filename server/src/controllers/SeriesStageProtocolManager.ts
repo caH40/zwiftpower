@@ -163,9 +163,11 @@ export class SeriesStageProtocolManagerController {
       const seriesController = new SeriesOrganizerController();
       await seriesController.checkOrganizer(result.data.userId);
 
+      const { userId: moderatorId, ...newResult } = result.data;
+
       // Вызов сервиса.
       const seriesAddStageResult = new SeriesAddStageResult();
-      const response = await seriesAddStageResult.add(result.data);
+      const response = await seriesAddStageResult.add({ moderatorId, ...newResult });
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
