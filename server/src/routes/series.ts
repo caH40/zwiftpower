@@ -40,3 +40,8 @@ routerSeries.patch(
   checkAuth,
   protocolManagersController.modifyTimePenalty
 );
+routerSeries.post(
+  '/stage/results/result',
+  checkAuth,
+  protocolManagersController.addStageResult
+);

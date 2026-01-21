@@ -12,6 +12,9 @@ import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
 import { SeriesCategoryService } from '../service/series/category/SeriesCategory.js';
 import { TimePenaltyZSchema } from '../utils/deserialization/series/timePenalty.js';
 import { SeriesTimePenalty } from '../service/series/SeriesTimePenalty.js';
+import { AddStageResultZSchema } from '../utils/deserialization/series/addStageResult.js';
+import { SeriesAddStageResult } from '../service/series/SeriesAddStageResult.js';
+import { handleSafeParseErrors } from '../utils/zod.js';
 
 /**
  * Класс управления результатами серий.
@@ -131,6 +134,38 @@ export class SeriesStageProtocolManagerController {
         stageResultId,
         timePenalty,
       });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Изменение временного штрафа райдера в заезде.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public addStageResult = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const userId = req.user?.id;
+
+      const result = AddStageResultZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        return res.status(400).json({ message: handleSafeParseErrors(result.error) });
+      }
+
+      // Проверка, что запрос происходит от Организатора.
+      const seriesController = new SeriesOrganizerController();
+      await seriesController.checkOrganizer(result.data.userId);
+
+      // Вызов сервиса.
+      const seriesAddStageResult = new SeriesAddStageResult();
+      const response = await seriesAddStageResult.add(result.data);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
