@@ -2,18 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
-import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
-import { getAlert } from '../../../redux/features/alertMessageSlice';
-import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
+import { useAddStageResult } from '../../../hook/useAddStageResult';
 import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../../../assets/rule-category';
 import { seriesCategoryOptions } from '../../../assets/options';
-import { timeDetailsToMilliseconds } from '../../../utils/date-convert';
 import { fetchZwiftProfile } from '../../../redux/features/api/zwiftProfiles/fetchZwiftProfile';
-import {
-  resetZwiftProfile,
-  setZwiftId,
-} from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
-import { fetchPostStageResultInSeries } from '../../../redux/features/api/series/fetchEditSeriesResults';
+import { setZwiftId } from '../../../redux/features/api/zwiftProfiles/zwiftProfileSlice';
 import InputAuth from '../InputAuth/InputAuth';
 import Button from '../Button/Button';
 import SelectWithRHF from '../SelectWithRHF/SelectWithRHF';
@@ -88,70 +81,13 @@ export default function FormAddStageResult({
   });
 
   // Обработчик отправки формы на сервер.
-  const onSubmit = async (formData) => {
-    const durationInMilliseconds = timeDetailsToMilliseconds(formData.time);
-
-    if (durationInMilliseconds <= 0) {
-      dispatch(
-        getAlert({
-          message: 'Финишное время должно быть больше 0!',
-          type: 'error',
-          isOpened: true,
-        })
-      );
-      return;
-    }
-
-    if (!zwiftProfile?.id) {
-      dispatch(
-        getAlert({
-          message: 'Нет данных по райдеру!',
-          type: 'error',
-          isOpened: true,
-        })
-      );
-      return;
-    }
-
-    setIsLoading(true);
-
-    const profileData = {
-      firstName: formData.profileData.firstName,
-      lastName: formData.profileData.lastName,
-      gender: formData.profileData.gender === 'мужчина' ? 'male' : 'female',
-      weightInGrams: Number(formData.profileData.weight) * 1000,
-      heightInCentimeters: Number(formData.profileData.heightInCentimeters),
-      age: Number(formData.profileData.age),
-      imageSrc: zwiftProfile.imageSrc,
-      countryAlpha3: zwiftProfile.countryAlpha3,
-    };
-
-    try {
-      const response = await dispatch(
-        fetchPostStageResultInSeries({
-          category: formData.category,
-          subgroupLabel: formData.subgroupLabel,
-          durationInMilliseconds,
-          heartRateData: Number(formData.heartRateData),
-          avgWatts: Number(formData.avgWatts),
-          seriesId,
-          stageOrder: Number(stageOrder),
-          profileId: zwiftProfile.id,
-          ...profileData,
-        })
-      ).unwrap();
-
-      // Успешный результат.
-      dispatch(resetZwiftProfile());
-      dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
-      dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
-      dispatch(closePopupFormContainer());
-    } catch (error) {
-      console.error(error); // eslint-disable-line
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const onSubmit = useAddStageResult({
+    setIsLoading,
+    zwiftProfile,
+    seriesId,
+    stageOrder,
+    urlSlug,
+  });
 
   return (
     <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)}>
@@ -227,7 +163,7 @@ export default function FormAddStageResult({
           label={'Вес, кг'}
           register={register('profileData.weight')}
           validationText={errors.profileData?.weight?.message || ''}
-          input={{ id: 'profileData.weight-FormTeamCreate', type: 'number', step: 0.1 }}
+          input={{ id: 'profileData.weight-FormTeamCreate', type: 'number', step: 0.001 }}
           placeholder="Вес в килограммах"
           id={'profileData.weight-FormCategoryForm'}
           loading={isLoading}

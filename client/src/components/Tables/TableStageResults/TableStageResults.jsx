@@ -215,6 +215,7 @@ function TableStageResults({
                       stageResultId={result._id}
                       urlSlug={urlSlug}
                       stageOrder={stageOrder}
+                      addedByModerator={result.addedByModerator}
                     />
                   </td>
                 )}

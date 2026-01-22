@@ -1,7 +1,7 @@
 // types
 
-import { StageResultRepository } from '../../repositories/StageResult';
-import { getOrThrow } from '../../utils/getOrThrow';
+import { StageResultRepository } from '../../repositories/StageResult.js';
+import { getOrThrow } from '../../utils/getOrThrow.js';
 
 // types
 import { TResponseService } from '../../types/http.interface';
