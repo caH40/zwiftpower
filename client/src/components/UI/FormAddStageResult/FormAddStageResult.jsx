@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { fetchGetStageResults } from '../../../redux/features/api/series/fetchSeries';
 import { getAlert } from '../../../redux/features/alertMessageSlice';
 import { closePopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
-import { RACE_SERIES_CATEGORIES } from '../../../assets/rule-category';
+import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../../../assets/rule-category';
 import { seriesCategoryOptions } from '../../../assets/options';
 import { timeDetailsToMilliseconds } from '../../../utils/date-convert';
 import { fetchZwiftProfile } from '../../../redux/features/api/zwiftProfiles/fetchZwiftProfile';
@@ -43,6 +43,7 @@ export default function FormAddStageResult({
   stageOrder,
   category,
   seriesCategories = RACE_SERIES_CATEGORIES,
+  subgroupLabels = ZWIFT_CATEGORIES,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ export default function FormAddStageResult({
             firstName: zwiftProfile.firstName,
             lastName: zwiftProfile.lastName,
             gender: zwiftProfile.male ? 'мужчина' : 'женщина',
-            weightInGrams: zwiftProfile.weight,
+            weight: zwiftProfile.weight / 1000,
             heightInCentimeters: zwiftProfile.height / 10,
             age: zwiftProfile.age,
           }
@@ -82,6 +83,7 @@ export default function FormAddStageResult({
       },
       heartRateData: 0,
       avgWatts: 0,
+      subgroupLabel: 'A',
     },
   });
 
@@ -117,7 +119,7 @@ export default function FormAddStageResult({
       firstName: formData.profileData.firstName,
       lastName: formData.profileData.lastName,
       gender: formData.profileData.gender === 'мужчина' ? 'male' : 'female',
-      weightInGrams: Number(formData.profileData.weightInGrams),
+      weightInGrams: Number(formData.profileData.weight) * 1000,
       heightInCentimeters: Number(formData.profileData.heightInCentimeters),
       age: Number(formData.profileData.age),
       imageSrc: zwiftProfile.imageSrc,
@@ -127,6 +129,8 @@ export default function FormAddStageResult({
     try {
       const response = await dispatch(
         fetchPostStageResultInSeries({
+          category: formData.category,
+          subgroupLabel: formData.subgroupLabel,
           durationInMilliseconds,
           heartRateData: Number(formData.heartRateData),
           avgWatts: Number(formData.avgWatts),
@@ -136,6 +140,7 @@ export default function FormAddStageResult({
           ...profileData,
         })
       ).unwrap();
+
       // Успешный результат.
       dispatch(resetZwiftProfile());
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
@@ -219,12 +224,12 @@ export default function FormAddStageResult({
         />
 
         <InputAuth
-          label={'Вес (в граммах)'}
-          register={register('profileData.weightInGrams')}
-          validationText={errors.profileData?.weightInGrams?.message || ''}
-          input={{ id: 'profileData.weightInGrams-FormTeamCreate', type: 'number' }}
-          placeholder="Вес в граммах"
-          id={'profileData.weightInGrams-FormCategoryForm'}
+          label={'Вес, кг'}
+          register={register('profileData.weight')}
+          validationText={errors.profileData?.weight?.message || ''}
+          input={{ id: 'profileData.weight-FormTeamCreate', type: 'number', step: 0.1 }}
+          placeholder="Вес в килограммах"
+          id={'profileData.weight-FormCategoryForm'}
           loading={isLoading}
         />
 
@@ -258,6 +263,15 @@ export default function FormAddStageResult({
           validationText={errors.category?.message || ''}
           id={'category-FormCategoryForm'}
           options={seriesCategoryOptions(seriesCategories)}
+          loading={isLoading}
+        />
+
+        <SelectWithRHF
+          label={'Группа в которой ехал райдер'}
+          register={register('subgroupLabel')}
+          validationText={errors.subgroupLabel?.message || ''}
+          id={'subgroupLabel-FormCategoryForm'}
+          options={seriesCategoryOptions(subgroupLabels)}
           loading={isLoading}
         />
 

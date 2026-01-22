@@ -44,12 +44,11 @@ export class EventRepository {
    * Запрос основных данных подгрупп эвента.
    */
   async getSubgroupsMainInfo(eventId: string): Promise<{
-    eventSubgroups:
-      | {
-          _id: Types.ObjectId;
-          id: number;
-          subgroupLabel: TZwiftCategory;
-        }[];
+    eventSubgroups: {
+      _id: Types.ObjectId;
+      id: number;
+      subgroupLabel: TZwiftCategory;
+    }[];
   } | null> {
     return ZwiftEvent.findOne({ _id: eventId }, { _id: false, eventSubgroups: true })
       .populate<{
@@ -160,6 +159,10 @@ export class EventRepository {
 
   async getEventBySeriesId(seriesId: string): Promise<ZwiftEventSchema | null> {
     return ZwiftEvent.findOne({ seriesId }).lean();
+  }
+
+  async getEventById(eventId: string): Promise<ZwiftEventSchema | null> {
+    return ZwiftEvent.findById(eventId).lean();
   }
 }
 

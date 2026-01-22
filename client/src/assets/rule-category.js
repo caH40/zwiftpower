@@ -71,4 +71,5 @@ export const RACE_SERIES_CATEGORIES = [
   'WC',
   'WD',
 ];
+export const ZWIFT_CATEGORIES = ['A', 'B', 'C', 'D', 'E'];
 export const plusCategories = { APlus: 'A+', BPlus: 'B+' };

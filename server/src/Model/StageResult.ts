@@ -68,6 +68,7 @@ const stageResultSchema = new Schema<IStageResult>(
     },
     finalDurationInMilliseconds: { type: Number },
     finishTimeClassification: { type: FinishTimeClassificationSchema, default: null },
+    addedByModerator: { type: Boolean },
   },
   { timestamps: true }
 );

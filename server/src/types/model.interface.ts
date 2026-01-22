@@ -841,6 +841,7 @@ export type TStageResult = {
     exceededMilliseconds: number; // На сколько миллисекунд превышен лимит.
   };
   finalDurationInMilliseconds: number; // Итоговое классификационное время с учетом всех модификаций.
+  addedByModerator?: boolean; // Добавлено модератором.
   createdAt: Date;
   updatedAt: Date;
 };

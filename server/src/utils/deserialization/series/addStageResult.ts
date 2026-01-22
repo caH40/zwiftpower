@@ -1,10 +1,19 @@
 import { z } from 'zod';
 
 import { MongooseUtils } from '../../MongooseUtils.js';
+import { RACE_SERIES_CATEGORIES, ZWIFT_CATEGORIES } from '../../../assets/constants.js';
 
 const mongooseUtils = new MongooseUtils();
 
 export const AddStageResultZSchema = z.object({
+  category: z
+    .preprocess((val) => (val === '' ? null : val), z.enum(RACE_SERIES_CATEGORIES).nullable())
+    .describe('Значение категории в заезде'),
+
+  subgroupLabel: z
+    .preprocess((val) => (val === '' ? null : val), z.enum(ZWIFT_CATEGORIES).nullable())
+    .describe('Группа в которой ехал райдер'),
+
   durationInMilliseconds: z
     .number()
     .int()
