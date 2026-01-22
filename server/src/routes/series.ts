@@ -45,3 +45,8 @@ routerSeries.post(
   checkAuth,
   protocolManagersController.addStageResult
 );
+routerSeries.delete(
+  '/stage/results/result',
+  checkAuth,
+  protocolManagersController.deleteStageResult
+);

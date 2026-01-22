@@ -203,4 +203,11 @@ export class StageResultRepository {
   async exists(seriesId: string, stageOrder: number, profileId: number) {
     return StageResultModel.exists({ series: seriesId, order: stageOrder, profileId });
   }
+
+  /**
+   * Удаление результата райдера, который был добавлен модератором.
+   */
+  async delete(resultId: string) {
+    return StageResultModel.findByIdAndDelete(resultId);
+  }
 }

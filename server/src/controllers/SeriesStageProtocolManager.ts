@@ -15,6 +15,8 @@ import { SeriesTimePenalty } from '../service/series/SeriesTimePenalty.js';
 import { AddStageResultZSchema } from '../utils/deserialization/series/addStageResult.js';
 import { SeriesAddStageResult } from '../service/series/SeriesAddStageResult.js';
 import { handleSafeParseErrors } from '../utils/zod.js';
+import { SeriesDeleteStageResult } from '../service/series/SeriesDeleteStageResult.js';
+import { DeleteStageResultZSchema } from '../utils/deserialization/series/deleteStageResult.js';
 
 /**
  * Класс управления результатами серий.
@@ -168,6 +170,38 @@ export class SeriesStageProtocolManagerController {
       // Вызов сервиса.
       const seriesAddStageResult = new SeriesAddStageResult();
       const response = await seriesAddStageResult.add({ moderatorId, ...newResult });
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Изменение временного штрафа райдера в заезде.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  public deleteStageResult = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const userId = req.user?.id;
+
+      const result = DeleteStageResultZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        return res.status(400).json({ message: handleSafeParseErrors(result.error) });
+      }
+
+      // Проверка, что запрос происходит от Организатора.
+      const seriesController = new SeriesOrganizerController();
+      await seriesController.checkOrganizer(result.data.userId);
+
+      // Вызов сервиса.
+      const seriesAddStageResult = new SeriesDeleteStageResult();
+      const response = await seriesAddStageResult.delete(result.data.resultId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);
