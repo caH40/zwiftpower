@@ -196,4 +196,11 @@ export class StageResultRepository {
       }[]
     >();
   }
+
+  /**
+   * Проверка наличия результата райдера profileId на этапе stageOrder серии seriesId.
+   */
+  async exists(seriesId: string, stageOrder: number, profileId: number) {
+    return StageResultModel.exists({ series: seriesId, order: stageOrder, profileId });
+  }
 }

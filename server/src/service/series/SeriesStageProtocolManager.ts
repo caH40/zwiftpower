@@ -136,15 +136,7 @@ export class SeriesStageProtocolManager extends HandlerSeries {
     await StageResultModel.create(resultsWithPoints);
 
     // Изменение  hasResults и resultsUpdatedAt даты обновления результатов в данных этапа серии.
-    await NSeriesModel.findOneAndUpdate(
-      { _id: this.seriesId, 'stages.order': stageOrder },
-      {
-        $set: {
-          'stages.$.resultsUpdatedAt': new Date(),
-          'stages.$.hasResults': resultsWithPoints.length > 0,
-        },
-      }
-    );
+    await this.setResultsUpdateDateInSeries(stageOrder, resultsWithPoints.length > 0);
 
     return { seriesType: type };
   }
@@ -207,5 +199,26 @@ export class SeriesStageProtocolManager extends HandlerSeries {
       // Сохранение обновленных результатов этапа серии.
       await StageResultModel.insertMany(resultsWithPoints);
     }
+  }
+
+  /**
+   *
+   * @param stageOrder - Номер этапа.
+   * @param hasResults - Есть результаты на этапе.
+   */
+  public async setResultsUpdateDateInSeries(
+    stageOrder: number,
+    hasResults: boolean
+  ): Promise<void> {
+    // Изменение  hasResults и resultsUpdatedAt даты обновления результатов в данных этапа серии.
+    await NSeriesModel.findOneAndUpdate(
+      { _id: this.seriesId, 'stages.order': stageOrder },
+      {
+        $set: {
+          'stages.$.resultsUpdatedAt': new Date(),
+          'stages.$.hasResults': hasResults,
+        },
+      }
+    );
   }
 }

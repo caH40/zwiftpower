@@ -7,6 +7,10 @@ import { MongooseUtils } from '../../utils/MongooseUtils.js';
 // types
 import { TRaceSeriesCategories, TZwiftCategory } from '../../types/types.interface.js';
 import { TResponseService } from '../../types/http.interface.js';
+import { StageResultModel } from '../../Model/StageResult.js';
+import { StageResultRepository } from '../../repositories/StageResult.js';
+import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
+import { TourGCManager } from './tour/TourGCManager.js';
 
 type TRawData = {
   durationInMilliseconds: number;
@@ -23,10 +27,11 @@ type TRawData = {
 export class SeriesAddStageResult {
   private seriesRepository = new SeriesRepository();
   private eventRepository = new EventRepository();
+  private stageResultRepository = new StageResultRepository();
 
   /**
    * Проблема: сырой результат нельзя сохранить в БД, так как отсутствуют расчетные обязательные поля.
-   *
+   * 1. Проверь есть ли у даного райдера profileId результат в данном этапе
    * 1. Если несколько заездов на этапе, определить какой эвент главный, а какие перезаезды. Использовать _id главного эвента на этапе.
    *
    * 2.
@@ -36,6 +41,19 @@ export class SeriesAddStageResult {
       this.seriesRepository.getById(data.seriesId),
       `Серия с _id: ${data.seriesId} не найдена в базе данных.`
     );
+
+    // Проверка наличия результата у райдера profileId в текущем этапе stageOrder.
+    const existedResult = await this.stageResultRepository.exists(
+      data.seriesId,
+      data.stageOrder,
+      data.profileId
+    );
+
+    if (existedResult) {
+      throw new Error(
+        `Результат райдера "${data.lastName} ${data.firstName}" с zwiftId: "${data.profileId}"  уже есть в протоколе этапа №${data.stageOrder} серии "${seriesName}"`
+      );
+    }
 
     // для каждого эвента получить totalFinishedCount, у кого больше, тот главный эвент.
     const eventIdsInStage = stages
@@ -74,8 +92,17 @@ export class SeriesAddStageResult {
 
     const result = this.createStageResultEntity({ ...data, eventId: mainEvent.id });
 
-    console.log(result);
+    await StageResultModel.create({ ...result, addedByModerator: true });
 
+    const seriesStageProtocolManager = new SeriesStageProtocolManager(data.seriesId);
+    await seriesStageProtocolManager.recalculateStageProtocol(data.seriesId);
+
+    // Изменение  hasResults и resultsUpdatedAt даты обновления результатов в данных этапа серии.
+    await seriesStageProtocolManager.setResultsUpdateDateInSeries(data.stageOrder, true);
+
+    // Обновление генеральной классификации серии.
+    const tourGC = new TourGCManager(data.seriesId);
+    await tourGC.update();
     return {
       data: null,
       message: `Результат для райдера ${data.lastName} ${data.firstName} добавлен в этап №${data.stageOrder} серии ${seriesName}`,

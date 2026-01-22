@@ -7,11 +7,11 @@ const mongooseUtils = new MongooseUtils();
 
 export const AddStageResultZSchema = z.object({
   category: z
-    .preprocess((val) => (val === '' ? null : val), z.enum(RACE_SERIES_CATEGORIES).nullable())
+    .preprocess((val) => (val === '' ? null : val), z.enum(RACE_SERIES_CATEGORIES))
     .describe('Значение категории в заезде'),
 
   subgroupLabel: z
-    .preprocess((val) => (val === '' ? null : val), z.enum(ZWIFT_CATEGORIES).nullable())
+    .preprocess((val) => (val === '' ? null : val), z.enum(ZWIFT_CATEGORIES))
     .describe('Группа в которой ехал райдер'),
 
   durationInMilliseconds: z
