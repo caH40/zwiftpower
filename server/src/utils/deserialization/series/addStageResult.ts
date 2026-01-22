@@ -53,4 +53,19 @@ export const AddStageResultZSchema = z.object({
     .positive('Возраст должен быть положительным числом')
     .max(120, 'Возраст не может превышать 120 лет')
     .describe('Возраст райдера'),
+
+  avgWatts: z
+    .number()
+    .int()
+    .positive('Ватты должен быть положительным числом')
+    .describe('Средние ватты за заезд'),
+
+  heartRateData: z
+    .number()
+    .int()
+    .nonnegative('Средний пульс не может быть отрицательным числом')
+    .describe('Средний пульс за заезд'),
+
+  imageSrc: z.string().nullable().describe('Ссылка на лого райдера'),
+  countryAlpha3: z.string().describe('Код страны'),
 });

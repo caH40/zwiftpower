@@ -80,6 +80,8 @@ export default function FormAddStageResult({
         seconds: 0,
         milliseconds: 0,
       },
+      heartRateData: 0,
+      avgWatts: 0,
     },
   });
 
@@ -118,12 +120,16 @@ export default function FormAddStageResult({
       weightInGrams: Number(formData.profileData.weightInGrams),
       heightInCentimeters: Number(formData.profileData.heightInCentimeters),
       age: Number(formData.profileData.age),
+      imageSrc: zwiftProfile.imageSrc,
+      countryAlpha3: zwiftProfile.countryAlpha3,
     };
 
     try {
       const response = await dispatch(
         fetchPostStageResultInSeries({
           durationInMilliseconds,
+          heartRateData: Number(formData.heartRateData),
+          avgWatts: Number(formData.avgWatts),
           seriesId,
           stageOrder: Number(stageOrder),
           profileId: zwiftProfile.id,
@@ -252,6 +258,26 @@ export default function FormAddStageResult({
           validationText={errors.category?.message || ''}
           id={'category-FormCategoryForm'}
           options={seriesCategoryOptions(seriesCategories)}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Средние ватты за заезд'}
+          register={register('avgWatts', { required: 'Обязательное поле' })}
+          validationText={errors.avgWatts?.message || ''}
+          input={{ id: 'avgWatts-FormTeamCreate', type: 'number' }}
+          placeholder="Средние ватты"
+          id={'avgWatts-FormCategoryForm'}
+          loading={isLoading}
+        />
+
+        <InputAuth
+          label={'Средняя частота пульса за заезд'}
+          register={register('heartRateData')}
+          validationText={errors.heartRateData?.message || ''}
+          input={{ id: 'heartRateData-FormTeamCreate', type: 'number' }}
+          placeholder="Средняя частота пульса"
+          id={'heartRateData-FormCategoryForm'}
           loading={isLoading}
         />
 

@@ -8,6 +8,7 @@ import { sliceExcess } from './slice-excess.js';
 
 // types
 import { ResultEventAdditional } from '../../../../types/types.interface.js';
+import { handleAndLogError } from '../../../../errors/error.js';
 
 /**
  * Добавление CP (все интервалы) в результаты Эвента
@@ -43,7 +44,7 @@ export const addCriticalPowers = async (
     const powerInWatts: number[] = await getPowers(fullDataUrl);
 
     // сохранение фитфайла в БД
-    await saveFitFile({ powerInWatts, result, nameAndDate });
+    await saveFitFile({ powerInWatts, result, nameAndDate }).catch((e) => handleAndLogError(e));
 
     // обрезка заезда после завершения гонки
     const powerInWattsCorrect = sliceExcess(
