@@ -11,6 +11,7 @@ import { StageResultModel } from '../../Model/StageResult.js';
 import { StageResultRepository } from '../../repositories/StageResult.js';
 import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
 import { TourGCManager } from './tour/TourGCManager.js';
+import { TeamRepository } from '../../repositories/Team.js';
 
 type TRawData = {
   durationInMilliseconds: number;
@@ -92,6 +93,8 @@ export class SeriesAddStageResult {
 
     const result = this.createStageResultEntity({ ...data, eventId: mainEvent.id });
 
+    await this.addTeam(result);
+
     await StageResultModel.create({ ...result, addedByModerator: true });
 
     const seriesStageProtocolManager = new SeriesStageProtocolManager(data.seriesId);
@@ -107,6 +110,27 @@ export class SeriesAddStageResult {
       data: null,
       message: `Результат для райдера ${data.lastName} ${data.firstName} добавлен в этап №${data.stageOrder} серии ${seriesName}`,
     };
+  }
+
+  /**
+   * Добавление команды райдера.
+   */
+  async addTeam(result: TStageResult): Promise<TStageResult> {
+    const teamRepository = new TeamRepository();
+
+    const team = await teamRepository.getByTeamMemberZwiftId(result.profileId);
+
+    if (!team) {
+      return result;
+    }
+
+    result.profileData.team = {
+      name: team.name,
+      shortName: team.shortName,
+      urlSlug: team.urlSlug,
+    };
+
+    return result;
   }
 
   /**

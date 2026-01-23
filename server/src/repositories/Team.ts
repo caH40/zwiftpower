@@ -5,6 +5,8 @@ import { TeamModel } from '../Model/Team.js';
 import { TTeam } from '../types/model.interface.js';
 import { TTeamForListDB, TTeamPublicDB } from '../types/mongodb-response.types.js';
 import { TTeamAppearance } from '../types/team.types.js';
+import { User } from '../Model/User.js';
+import { TeamMemberModel } from '../Model/TeamMember.js';
 
 export class TeamRepository {
   constructor() {}
@@ -126,7 +128,28 @@ export class TeamRepository {
    * @param urlSlugs Массив строковых идентификаторов команд (urlSlug)
    * @returns Промис с массивом объектов, содержащих только поле _id команд
    */
-  getIdsByUrlSlugs(urlSlugs: string[]): Promise<{ _id: Types.ObjectId; urlSlug: string }[]> {
+  async getIdsByUrlSlugs(
+    urlSlugs: string[]
+  ): Promise<{ _id: Types.ObjectId; urlSlug: string }[]> {
     return TeamModel.find({ urlSlug: { $in: urlSlugs } }, { _id: 1, urlSlug: 1 }).lean();
+  }
+
+  /**
+   * Получение команды по участнику по его zwiftId.
+   */
+  async getByTeamMemberZwiftId(zwiftId: number): Promise<TTeam | null> {
+    const user = await User.findOne({ zwiftId }).lean();
+
+    if (!user) {
+      return null;
+    }
+
+    const teamMember = await TeamMemberModel.findOne({ user: user._id });
+
+    if (!teamMember) {
+      return null;
+    }
+
+    return TeamModel.findById(teamMember.team).lean();
   }
 }
