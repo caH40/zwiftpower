@@ -314,6 +314,10 @@ thead .wins {
   display: flex;
   align-items: center;
 }
+.othersContainer {
+  display: flex;
+  gap: 8px;
+}
 
 @media screen and (max-width: 992px) {
   .big {

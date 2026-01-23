@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { useSortStageResults } from '../../../hook/useSortResults';
 import { getAgeCategory } from '../../../utils/age';
 import { tdHeartRate, tdHeight, tdWatts } from '../utils/td';
 import { useFinishTime } from '../../../hook/useFinishTime';
-import { openPopupFormContainer } from '../../../redux/features/popupFormContainerSlice';
-import { useUserRole } from '../../../hook/useUserRole';
 import FinishTime from '../../FinishTime/FinishTime';
 import StageResultMenu from '../../StageResultMenu/StageResultMenu';
 import CategoryBox from '../../CategoryBox/CategoryBox';
@@ -21,7 +19,7 @@ import TdWeight from '../Td/TdWeight';
 import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
 import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 import TimeLimitBox from '../../TimeLimitBox/TimeLimitBox';
-import Button from '../../UI/Button/Button';
+import IconAddByModerator from '../../icons/IconAddByModerator';
 
 import styles from '../Table.module.css';
 
@@ -188,16 +186,30 @@ function TableStageResults({
                 {/* zpruPoints */}
                 <td>{result.points?.zpruFinishPoints || null}</td>
 
+                {/* Столбец Разное */}
                 <td>
-                  {category !== categoryInRace ? (
-                    <CategoryChangeBox
-                      PrevCategory={
-                        <CategoryBox showLabel={true} label={categoryInRace} circle={true} />
-                      }
-                      Category={<CategoryBox showLabel={true} label={category} circle={true} />}
-                      modifiedCategory={modifiedCategory}
-                    />
-                  ) : null}
+                  <div className={styles.othersContainer}>
+                    {/* Изменение категории райдера */}
+                    {category !== categoryInRace ? (
+                      <CategoryChangeBox
+                        PrevCategory={
+                          <CategoryBox showLabel={true} label={categoryInRace} circle={true} />
+                        }
+                        Category={
+                          <CategoryBox showLabel={true} label={category} circle={true} />
+                        }
+                        modifiedCategory={modifiedCategory}
+                      />
+                    ) : null}
+
+                    {/* Результат добавлен модератором */}
+                    {result.addedByModerator ? (
+                      <IconAddByModerator
+                        squareSize={26}
+                        tooltip="Результат добавлен модератором"
+                      />
+                    ) : null}
+                  </div>
                 </td>
 
                 {/* Модерация данных райдера */}
