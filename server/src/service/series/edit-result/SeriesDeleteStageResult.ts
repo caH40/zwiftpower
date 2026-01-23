@@ -1,10 +1,10 @@
 // types
 
-import { StageResultRepository } from '../../repositories/StageResult.js';
-import { getOrThrow } from '../../utils/getOrThrow.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
+import { getOrThrow } from '../../../utils/getOrThrow.js';
 
 // types
-import { TResponseService } from '../../types/http.interface';
+import { TResponseService } from '../../../types/http.interface.js';
 
 export class SeriesDeleteStageResult {
   private stageResultRepository = new StageResultRepository();

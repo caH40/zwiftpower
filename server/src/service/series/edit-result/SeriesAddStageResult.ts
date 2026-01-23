@@ -1,17 +1,17 @@
-import { EventRepository } from '../../repositories/Event.js';
-import { SeriesRepository } from '../../repositories/Series.js';
-import { ProfileDataInResult, TStageResult } from '../../types/model.interface.js';
-import { getOrThrow } from '../../utils/getOrThrow.js';
-import { MongooseUtils } from '../../utils/MongooseUtils.js';
+import { EventRepository } from '../../../repositories/Event.js';
+import { SeriesRepository } from '../../../repositories/Series.js';
+import { ProfileDataInResult, TStageResult } from '../../../types/model.interface.js';
+import { getOrThrow } from '../../../utils/getOrThrow.js';
+import { MongooseUtils } from '../../../utils/MongooseUtils.js';
 
 // types
-import { TRaceSeriesCategories, TZwiftCategory } from '../../types/types.interface.js';
-import { TResponseService } from '../../types/http.interface.js';
-import { StageResultModel } from '../../Model/StageResult.js';
-import { StageResultRepository } from '../../repositories/StageResult.js';
-import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
-import { TourGCManager } from './tour/TourGCManager.js';
-import { TeamRepository } from '../../repositories/Team.js';
+import { TRaceSeriesCategories, TZwiftCategory } from '../../../types/types.interface.js';
+import { TResponseService } from '../../../types/http.interface.js';
+import { StageResultModel } from '../../../Model/StageResult.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
+import { SeriesStageProtocolManager } from '../SeriesStageProtocolManager.js';
+import { TourGCManager } from '../tour/TourGCManager.js';
+import { TeamRepository } from '../../../repositories/Team.js';
 
 type TRawData = {
   durationInMilliseconds: number;

@@ -1,7 +1,7 @@
 import { QueryOptions, Types, UpdateQuery } from 'mongoose';
 import { StageResultModel } from '../Model/StageResult.js';
 import { FilterQuery } from 'mongoose';
-import { TStageResult } from '../types/model.interface.js';
+import { TDisqualification, TStageResult } from '../types/model.interface.js';
 import { TRaceSeriesCategories } from '../types/types.interface.js';
 import { GetStageResultDB, TStagesResultsForGC } from '../types/mongodb-response.types.js';
 
@@ -209,5 +209,33 @@ export class StageResultRepository {
    */
   async delete(resultId: string) {
     return StageResultModel.findByIdAndDelete(resultId);
+  }
+
+  /**
+   * Дисквалификация результата.
+   */
+  async setDisqualification({
+    resultId,
+    disqualification,
+  }: {
+    resultId: string;
+    disqualification: TDisqualification;
+  }): Promise<(Omit<TStageResult, 'series'> & { series: { name: string } }) | null> {
+    return StageResultModel.findByIdAndUpdate(resultId, { $set: { disqualification } })
+      .populate<{ series: { name: string } }>({ path: 'series', select: ['name', '-_id'] })
+      .lean();
+  }
+
+  /**
+   * Снятие дисквалификация результата.
+   */
+  async removeDisqualification(
+    resultId: string
+  ): Promise<(Omit<TStageResult, 'series'> & { series: { name: string } }) | null> {
+    return StageResultModel.findByIdAndUpdate(resultId, {
+      $set: { disqualification: null },
+    })
+      .populate<{ series: { name: string } }>({ path: 'series', select: ['name', '-_id'] })
+      .lean();
   }
 }

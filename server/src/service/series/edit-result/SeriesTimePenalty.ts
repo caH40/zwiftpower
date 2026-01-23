@@ -1,9 +1,9 @@
-import { SeriesStageProtocolManager } from './SeriesStageProtocolManager.js';
-import { TourGCManager } from './tour/TourGCManager.js';
+import { SeriesStageProtocolManager } from '../SeriesStageProtocolManager.js';
+import { TourGCManager } from '../tour/TourGCManager.js';
 
 // types
-import { TResponseService } from '../../types/http.interface.js';
-import { StageResultRepository } from '../../repositories/StageResult.js';
+import { TResponseService } from '../../../types/http.interface.js';
+import { StageResultRepository } from '../../../repositories/StageResult.js';
 
 /**
  * Сервис для работы с временными штрафами.

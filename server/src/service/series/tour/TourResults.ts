@@ -7,7 +7,7 @@ import { StageResultsDto } from '../../../types/dto.interface.js';
 import { GetStageResultDB } from '../../../types/mongodb-response.types.js';
 import { StageResultRepository } from '../../../repositories/StageResult.js';
 import { addTeamAppearance } from '../../preparation/teamAppearance.js';
-import { SeriesTimePenalty } from '../SeriesTimePenalty.js';
+import { SeriesTimePenalty } from '../edit-result/SeriesTimePenalty.js';
 
 /**
  * Класс работы с результатами Тура TSeriesType = 'tour' для запросов от пользователей

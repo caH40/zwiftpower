@@ -3,7 +3,7 @@ import { setStageTimeLimit } from './setStageTimeLimit.js';
 
 // types
 import { TStageResult } from '../../../types/model.interface.js';
-import { SeriesTimePenalty } from '../SeriesTimePenalty.js';
+import { SeriesTimePenalty } from '../edit-result/SeriesTimePenalty.js';
 
 /**
  * Установка мест в финишном протоколе для этапов тура.

@@ -50,3 +50,13 @@ routerSeries.delete(
   checkAuth,
   protocolManagersController.deleteStageResult
 );
+routerSeries.patch(
+  '/stage/results/disqualification/set',
+  checkAuth,
+  protocolManagersController.setDisqualification
+);
+routerSeries.patch(
+  '/stage/results/disqualification/remove',
+  checkAuth,
+  protocolManagersController.removeDisqualification
+);

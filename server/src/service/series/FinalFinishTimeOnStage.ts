@@ -1,4 +1,4 @@
-import { SeriesTimePenalty } from './SeriesTimePenalty.js';
+import { SeriesTimePenalty } from './edit-result/SeriesTimePenalty.js';
 // types
 import { TStageResult } from '../../types/model.interface.js';
 

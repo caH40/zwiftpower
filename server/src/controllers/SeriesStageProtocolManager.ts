@@ -11,12 +11,17 @@ import { SeriesStageProtocolManager } from '../service/series/SeriesStageProtoco
 import { SeriesGCManager } from '../service/series/SeriesGCManager.js';
 import { SeriesCategoryService } from '../service/series/category/SeriesCategory.js';
 import { TimePenaltyZSchema } from '../utils/deserialization/series/timePenalty.js';
-import { SeriesTimePenalty } from '../service/series/SeriesTimePenalty.js';
+import { SeriesTimePenalty } from '../service/series/edit-result/SeriesTimePenalty.js';
 import { AddStageResultZSchema } from '../utils/deserialization/series/addStageResult.js';
-import { SeriesAddStageResult } from '../service/series/SeriesAddStageResult.js';
+import { SeriesAddStageResult } from '../service/series/edit-result/SeriesAddStageResult.js';
 import { handleSafeParseErrors } from '../utils/zod.js';
-import { SeriesDeleteStageResult } from '../service/series/SeriesDeleteStageResult.js';
+import { SeriesDeleteStageResult } from '../service/series/edit-result/SeriesDeleteStageResult.js';
 import { DeleteStageResultZSchema } from '../utils/deserialization/series/deleteStageResult.js';
+import {
+  RemoveDisqualificationZSchema,
+  SetDisqualificationZSchema,
+} from '../utils/deserialization/series/disqualification.js';
+import { SeriesDisqualification } from '../service/series/edit-result/SeriesDisqualification.js';
 
 /**
  * Класс управления результатами серий.
@@ -202,6 +207,70 @@ export class SeriesStageProtocolManagerController {
       // Вызов сервиса.
       const seriesAddStageResult = new SeriesDeleteStageResult();
       const response = await seriesAddStageResult.delete(result.data.resultId);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Установка дисквалификации.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  setDisqualification = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const userId = req.user?.id;
+
+      const result = SetDisqualificationZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        return res.status(400).json({ message: handleSafeParseErrors(result.error) });
+      }
+
+      // Проверка, что запрос происходит от Организатора.
+      const seriesController = new SeriesOrganizerController();
+      await seriesController.checkOrganizer(result.data.userId);
+
+      // Вызов сервиса.
+      const seriesDisqualification = new SeriesDisqualification();
+      const response = await seriesDisqualification.set(result.data);
+
+      // Возврат успешного ответа.
+      return res.status(200).json(response);
+    } catch (error) {
+      handleErrorInController(res, error);
+    }
+  };
+
+  /**
+   * Снятие дисквалификации.
+   * @param {Request} req - Запрос Express.
+   * @param {Response} res - Ответ Express.
+   * @returns {Promise<Response>} JSON-ответ с сериями.
+   */
+  removeDisqualification = async (req: Request, res: Response): Promise<Response | void> => {
+    try {
+      // id авторизованного пользователя, который делает запрос.
+      const userId = req.user?.id;
+
+      const result = RemoveDisqualificationZSchema.safeParse({ ...req.body, userId });
+
+      if (!result.success) {
+        return res.status(400).json({ message: handleSafeParseErrors(result.error) });
+      }
+
+      // Проверка, что запрос происходит от Организатора.
+      const seriesController = new SeriesOrganizerController();
+      await seriesController.checkOrganizer(result.data.userId);
+
+      // Вызов сервиса.
+      const seriesDisqualification = new SeriesDisqualification();
+      const response = await seriesDisqualification.remove(result.data.resultId);
 
       // Возврат успешного ответа.
       return res.status(200).json(response);

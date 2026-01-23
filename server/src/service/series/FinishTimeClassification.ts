@@ -4,7 +4,7 @@ import { getOrThrow } from '../../utils/getOrThrow.js';
 // types
 import { TStageResult } from '../../types/model.interface.js';
 import { TRaceSeriesCategories } from '../../types/types.interface.js';
-import { SeriesTimePenalty } from './SeriesTimePenalty.js';
+import { SeriesTimePenalty } from './edit-result/SeriesTimePenalty.js';
 
 /**
  * Пороговое значение разрыва для правила одинакового времени при групповом финише.
