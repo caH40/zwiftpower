@@ -31,6 +31,17 @@ routerSeries.get('/stages/:urlSlug/:status', seriesPublicController.getStages);
 routerSeries.get('/:urlSlug', seriesPublicController.get);
 
 routerSeries.patch(
+  '/stage/results/result/disqualification/set',
+  checkAuth,
+  protocolManagersController.setDisqualification
+);
+routerSeries.patch(
+  '/stage/results/result/disqualification/remove',
+  checkAuth,
+  protocolManagersController.removeDisqualification
+);
+
+routerSeries.patch(
   '/stage/results/category',
   checkAuth,
   protocolManagersController.modifyCategory
@@ -40,6 +51,7 @@ routerSeries.patch(
   checkAuth,
   protocolManagersController.modifyTimePenalty
 );
+
 routerSeries.post(
   '/stage/results/result',
   checkAuth,
@@ -49,14 +61,4 @@ routerSeries.delete(
   '/stage/results/result',
   checkAuth,
   protocolManagersController.deleteStageResult
-);
-routerSeries.patch(
-  '/stage/results/disqualification/set',
-  checkAuth,
-  protocolManagersController.setDisqualification
-);
-routerSeries.patch(
-  '/stage/results/disqualification/remove',
-  checkAuth,
-  protocolManagersController.removeDisqualification
 );

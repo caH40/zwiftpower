@@ -64,7 +64,18 @@ function PopupMenuTableStageResult({
             <li
               className={styles.item}
               onClick={() =>
-                dispatch(openPopupFormContainer({ formType: 'setDisqualification' }))
+                dispatch(
+                  openPopupFormContainer({
+                    formType: 'setDisqualification',
+                    formProps: {
+                      stageResultId,
+                      urlSlug,
+                      profile,
+                      stageOrder,
+                      disqualification,
+                    },
+                  })
+                )
               }
             >
               <DSQBox>DSQ</DSQBox>

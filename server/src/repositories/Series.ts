@@ -8,6 +8,8 @@ import {
   TSeriesOnePublicResponseDB,
   TStagesPublicResponseDB,
 } from '../types/mongodb-response.types.js';
+import { StageResultModel } from '../Model/StageResult.js';
+import { getOrThrow } from '../utils/getOrThrow.js';
 
 export class SeriesRepository {
   /**
@@ -22,6 +24,15 @@ export class SeriesRepository {
 
   getById = async (seriesId: string) => {
     return NSeriesModel.findById(seriesId).lean<TSeries>();
+  };
+
+  getByStageResultId = async (stageResultId: string) => {
+    const result = await getOrThrow(
+      StageResultModel.findById(stageResultId).lean(),
+      `Не найдена серия заездов в к которой принадлежит результат этапа _id: "${stageResultId}"`
+    );
+
+    return NSeriesModel.findById(result.series).lean<TSeries>();
   };
 
   updateResultModificationDate = async (seriesId: string): Promise<void> => {

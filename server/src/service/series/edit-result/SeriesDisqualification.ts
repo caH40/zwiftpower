@@ -1,7 +1,9 @@
+import { SeriesRepository } from '../../../repositories/Series.js';
 import { StageResultRepository } from '../../../repositories/StageResult.js';
 import { TResponseService } from '../../../types/http.interface.js';
 import { TDisqualification } from '../../../types/model.interface.js';
 import { getOrThrow } from '../../../utils/getOrThrow.js';
+import { SeriesGCManager } from '../SeriesGCManager.js';
 
 /**
  * Класс работы с дисквалификацией результатов в серии заездов.
@@ -34,6 +36,9 @@ export class SeriesDisqualification {
       `Не найден результат с _id: "${resultId}" для дисквалификации`
     );
 
+    // Пересчет ГК и всех этапов.
+    await this.recalculateAllStageResultsAndGC(resultId);
+
     return {
       data: null,
       message: `Установлена дисквалификация для результата райдера ${result.profileData.lastName} ${result.profileData.firstName} в серии ${result.series.name} на этапе №${result.order}!`,
@@ -53,5 +58,21 @@ export class SeriesDisqualification {
       data: null,
       message: `Снята дисквалификация для результата райдера ${result.profileData.lastName} ${result.profileData.firstName} в серии ${result.series.name} на этапе №${result.order}!`,
     };
+  }
+
+  /**
+   * Пересчет ГК и всех этапов
+   */
+  private async recalculateAllStageResultsAndGC(resultId: string): Promise<void> {
+    const seriesRepository = new SeriesRepository();
+
+    const { _id: seriesId } = await getOrThrow(
+      seriesRepository.getByStageResultId(resultId),
+      `Не найдена серия заездов в к которой принадлежит результат этапа _id: "${resultId}"`
+    );
+
+    const seriesGCManager = new SeriesGCManager(seriesId!.toString());
+
+    await seriesGCManager.recalculateGCWithAllStages();
   }
 }

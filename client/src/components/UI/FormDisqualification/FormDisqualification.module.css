@@ -1,0 +1,79 @@
+.wrapper__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+.box__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  max-width: 400px;
+}
+.error {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--error);
+}
+
+.riderContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.logoContainer {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.catInRace,
+.catCurrent {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 1rem;
+}
+.description {
+  margin-top: 5px;
+}
+.description p {
+  font-size: 0.75rem;
+}
+.categoriesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 1.5em;
+}
+.box__btn {
+  text-align: right;
+}
+.box__btn + .box__btn {
+  margin-top: 15px;
+}
+.subTitle {
+  font-weight: 400;
+  color: var(--color-text-minor);
+}
+.subTitle::after {
+  content: ':';
+}
+.penaltyItem {
+  margin-bottom: 10px;
+}
+.noPenalties {
+  font-size: small;
+  color: green;
+  font-style: italic;
+}

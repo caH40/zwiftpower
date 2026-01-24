@@ -83,3 +83,45 @@ export const fetchDeleteStageResultInSeries = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Установка дисквалификации результата.
+ */
+export const fetchSetDisqualificationStageResult = createAsyncThunk(
+  'setDisqualificationStageResult/patch',
+  async ({ resultId, disqualification }, thunkAPI) => {
+    console.log({ resultId, disqualification });
+
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stage/results/result/disqualification/set`,
+        method: 'patch',
+        data: { resultId, disqualification },
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);
+
+/**
+ * Снятие дисквалификации результата.
+ */
+export const fetchRemoveDisqualificationStageResult = createAsyncThunk(
+  'removeDisqualificationStageResult/patch',
+  async ({ resultId }, thunkAPI) => {
+    try {
+      const response = await myAxios({
+        url: `${serverExpress}/api/series/stage/results/result/disqualification/remove`,
+        method: 'patch',
+        data: { resultId },
+      });
+
+      return response.data;
+    } catch (error) {
+      return handlerErrorAsyncThunk({ error, thunkAPI });
+    }
+  }
+);

@@ -16,12 +16,9 @@ export const SetDisqualificationZSchema = z.object({
   }),
 
   disqualification: z.object({
-    status: z.boolean({ required_error: 'Поле status обязательно' }),
-    label: z
-      .enum(DISQUALIFICATION_LABELS, {
-        invalid_type_error: 'Недопустимый label дисквалификации',
-      })
-      .optional(),
+    label: z.enum(DISQUALIFICATION_LABELS, {
+      invalid_type_error: 'Недопустимый label дисквалификации',
+    }),
     reason: z
       .string({
         invalid_type_error: 'Поле reason должно быть строкой',

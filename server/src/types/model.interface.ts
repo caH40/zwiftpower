@@ -873,7 +873,7 @@ export type TDisqualificationLabel = (typeof DISQUALIFICATION_LABELS)[number];
  */
 
 export type TDisqualification = {
-  status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте
+  // status: boolean; // Флаг: активна ли дисквалификация/отсутствие в зачёте
   label?: TDisqualificationLabel; // Краткий код статуса (2–3 заглавные буквы).
   reason?: string; // Подробное описание причины
   moderator?: Types.ObjectId; // Если нет _id, значит автоматически, согласно правилам

@@ -221,7 +221,11 @@ export class StageResultRepository {
     resultId: string;
     disqualification: TDisqualification;
   }): Promise<(Omit<TStageResult, 'series'> & { series: { name: string } }) | null> {
-    return StageResultModel.findByIdAndUpdate(resultId, { $set: { disqualification } })
+    return StageResultModel.findByIdAndUpdate(
+      resultId,
+      { $set: { disqualification } },
+      { new: true }
+    )
       .populate<{ series: { name: string } }>({ path: 'series', select: ['name', '-_id'] })
       .lean();
   }
@@ -232,9 +236,13 @@ export class StageResultRepository {
   async removeDisqualification(
     resultId: string
   ): Promise<(Omit<TStageResult, 'series'> & { series: { name: string } }) | null> {
-    return StageResultModel.findByIdAndUpdate(resultId, {
-      $set: { disqualification: null },
-    })
+    return StageResultModel.findByIdAndUpdate(
+      resultId,
+      {
+        $set: { disqualification: null },
+      },
+      { new: true }
+    )
       .populate<{ series: { name: string } }>({ path: 'series', select: ['name', '-_id'] })
       .lean();
   }

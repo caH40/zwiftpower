@@ -10,6 +10,7 @@ import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamPar
 import CloseButton from '../Buttons/Close/CloseButton';
 
 import styles from './PopupFormContainer.module.css';
+import FormDisqualification from '../FormDisqualification/FormDisqualification';
 
 /**
  * Попап окно для формы из пропсов.
@@ -37,7 +38,7 @@ export default function PopupFormContainer() {
     addResult: <FormAddStageResult {...formProps} />,
     setCategory: <FormCategory {...formProps} />,
     setPenalty: <FormPenalty {...formProps} />,
-    setDisqualification: <div>setDisqualification</div>,
+    setDisqualification: <FormDisqualification {...formProps} />,
     viewPollResults: <PollResultsPopup {...formProps} />,
     teamParticipantRatingModal: <TeamParticipantRatingModal {...formProps} />,
   };
