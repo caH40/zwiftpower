@@ -74,8 +74,7 @@ function TableStageResults({
         {resultWithFinishTime?.map(
           ({ category, categoryInRace, modifiedCategory, ...result }) => {
             const profile = result.profileData;
-            const isDsq = result.isDisqualification;
-            const dsqType = result.disqualification;
+
             const dsqDescription = result.disqualificationDescription;
 
             const isAbsolute = filterCategory.name === 'All';
@@ -91,8 +90,7 @@ function TableStageResults({
                     <div className={styles.rankWithAdditionIcon}>
                       <TdRank
                         value={isAbsolute ? result.rank.absolute : result.rank.category}
-                        // isDsq={forDNF ? true : isDsq}
-                        // dsqType={forDNF ? 'DNF' : dsqType}
+                        disqualification={result.disqualification}
                         dsqDescription={dsqDescription}
                       />
 
@@ -139,7 +137,7 @@ function TableStageResults({
                         ? result.gapsInCategories.absolute?.toLeader
                         : result.gapsInCategories.category?.toLeader
                     }
-                    dsq={isDsq}
+                    dsq={!!result.disqualification}
                   />
                 </ShowColumn>
 
@@ -154,7 +152,7 @@ function TableStageResults({
                         ? result.gapsInCategories.absolute?.toPrev
                         : result.gapsInCategories.category?.toPrev
                     }
-                    dsq={isDsq}
+                    dsq={!!result.disqualification}
                   />
                 </ShowColumn>
 

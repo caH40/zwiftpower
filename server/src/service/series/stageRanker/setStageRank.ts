@@ -12,8 +12,17 @@ export const setStageRank = (results: TStageResult[]): TStageResult[] => {
   return results.map((result) => {
     const currentCategory = result.modifiedCategory?.value ?? result.category;
     // Если у райдера, показавшему результат, нет категории или результат был дисквалифицирован.
-    if (!currentCategory || result.disqualification?.status) {
-      result.rank.category = 0;
+    if (!currentCategory || result.disqualification) {
+      // console.log('stageOrder', result.order);
+
+      // console.log(currentCategory);
+      // console.log(result.disqualification);
+
+      // result.rank.category = 0;
+      // result.rank.absolute = 0;
+      // console.log(result.profileData.lastName, result.rank);
+      // console.log('============================================');
+
       return result;
     }
 

@@ -88,7 +88,7 @@ export class TourGCManager extends AbstractBaseGCManager {
       let totalDistanceInMeters = 0;
       let totalCalories = 0;
       let stagesCompleted = 0;
-      const disqualification: TDisqualification = { status: false };
+      const disqualification: Partial<TDisqualification> | null = {};
 
       // Коллекция обязательных этапов, в которых необходимо финишировать.
       const requiredStages = new Set(stageOrders.requiredStageOrders);
@@ -116,7 +116,7 @@ export class TourGCManager extends AbstractBaseGCManager {
         totalCalories += result.activityData.calories || 0;
 
         // Учитываем только завершённые этапы.
-        if (!result.disqualification?.status) {
+        if (!result.disqualification) {
           stagesCompleted++;
         }
 
@@ -133,7 +133,6 @@ export class TourGCManager extends AbstractBaseGCManager {
       // Если остались обязательные этапы, в которых не участвовали — дисквалификация.
       if (requiredStages.size > 0) {
         const sortedSkipped = [...requiredStages].sort((a, b) => a - b);
-        disqualification.status = true;
         disqualification.reason = `Не завершены обязательные этапы: ${sortedSkipped.join(
           ', '
         )}.`;
@@ -159,7 +158,9 @@ export class TourGCManager extends AbstractBaseGCManager {
         totalTimeInMilliseconds,
         stagesCompleted,
         totalDistanceInMeters,
-        disqualification,
+        disqualification: disqualification?.label
+          ? (disqualification as TDisqualification)
+          : null,
         totalElevationInMeters,
         totalCalories,
         teamSquadAtRace: null,
@@ -174,7 +175,7 @@ export class TourGCManager extends AbstractBaseGCManager {
     // Разделение результатов на не дисквалифицированные и дисквалифицированные.
     const { validResults, dsqResults } = gc.reduce(
       (acc, cur) => {
-        if (cur.disqualification.status) {
+        if (cur.disqualification) {
           acc.dsqResults.push(cur);
         } else {
           acc.validResults.push(cur);
@@ -210,13 +211,13 @@ export class TourGCManager extends AbstractBaseGCManager {
       if (!result.finalCategory) {
         result.rank = null;
 
-        let reason: undefined | string = undefined;
-
-        if (!result.disqualification?.status) {
-          reason = 'Не определена категория в Серии!';
+        if (!result.disqualification) {
+          result.disqualification = {
+            reason: 'Не определена категория в Серии!',
+            label: 'UNC',
+          };
         }
 
-        result.disqualification = { status: true, reason };
         return result;
       }
 

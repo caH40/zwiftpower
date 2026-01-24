@@ -243,7 +243,7 @@ export class PublicSeriesGCService {
         // Сортировка этапов внутри результата по возрастанию номера этапа в серии заездов.
         cur.stages.sort((a, b) => a.stageOrder - b.stageOrder);
 
-        if (cur.disqualification?.status) {
+        if (cur.disqualification) {
           acc.dsq.push(cur);
         } else {
           acc.valid.push(cur);

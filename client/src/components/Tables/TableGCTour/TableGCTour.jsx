@@ -84,9 +84,9 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
                 <FinishTime time={secondesToTimeThousandths(result.totalTimeInMilliseconds)} />
               </td>
 
-              <TdGap gap={gaps?.toLeader} dsq={result.disqualification?.status} />
+              <TdGap gap={gaps?.toLeader} dsq={result.disqualification} />
 
-              <TdGap gap={gaps?.toPrev} dsq={result.disqualification?.status} />
+              <TdGap gap={gaps?.toPrev} dsq={result.disqualification} />
 
               {/* Столбцы с результатами этапов */}
               {result.stages.map((stage, index) => {

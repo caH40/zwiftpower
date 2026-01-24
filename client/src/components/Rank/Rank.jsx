@@ -10,7 +10,7 @@ import IconCupRank from '../icons/IconCupRank';
  */
 export default function Rank({ value, dsq, squareSize, tooltip }) {
   // Показываем иконку кубка за топ-3, если нет дисквалификации.
-  if ([1, 2, 3].includes(value) && !dsq?.status) {
+  if ([1, 2, 3].includes(value) && !dsq) {
     return (
       <IconCupRank
         place={value}
@@ -22,7 +22,7 @@ export default function Rank({ value, dsq, squareSize, tooltip }) {
   }
 
   // Показываем метку дисквалификации.
-  if (dsq?.status) {
+  if (dsq) {
     return (
       <DSQBox tooltip={dsq.reason} addCls="box__inline">
         {dsq.label ?? 'DSQ'}

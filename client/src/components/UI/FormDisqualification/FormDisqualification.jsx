@@ -79,7 +79,7 @@ export default function FormDisqualification({
 
       // Успешный результат.
       dispatch(getAlert({ message: response.message, type: 'success', isOpened: true }));
-      // dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
+      dispatch(fetchGetStageResults({ urlSlug, stageOrder }));
       dispatch(closePopupFormContainer());
     } catch (error) {
       console.error(error); // eslint-disable-line

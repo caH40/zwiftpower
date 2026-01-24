@@ -52,10 +52,8 @@ export class EnduranceResults extends HandlerSeries {
     const sortedResults = results.toSorted((a, b) => a.rank.absolute - b.rank.absolute);
 
     // Разделяем на две группы.
-    const validResults = sortedResults.filter((result) => !result.disqualification?.status);
-    const disqualifiedResults = sortedResults.filter(
-      (result) => result.disqualification?.status
-    );
+    const validResults = sortedResults.filter((result) => !result.disqualification);
+    const disqualifiedResults = sortedResults.filter((result) => result.disqualification);
 
     // Возвращаем: сначала валидные, потом дисквалифицированные.
     return [...validResults, ...disqualifiedResults];

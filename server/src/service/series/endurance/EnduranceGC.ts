@@ -69,7 +69,7 @@ export class EnduranceGC extends AbstractBaseGCManager {
         totalCalories: 0,
         stagesCompleted: 0,
       };
-      const disqualification: TDisqualification = { status: false };
+      const disqualification: TDisqualification | null = null;
 
       // Суммируем показатели за пройденные этапы.
       for (const result of results) {
@@ -154,13 +154,13 @@ export class EnduranceGC extends AbstractBaseGCManager {
       if (!result.finalCategory) {
         result.rank = null;
 
-        let reason: undefined | string = undefined;
-
-        if (!result.disqualification?.status) {
-          reason = 'Не определена категория в Серии!';
+        if (!result.disqualification) {
+          result.disqualification = {
+            reason: 'Не определена категория в Серии!',
+            label: 'UNC',
+          };
         }
 
-        result.disqualification = { status: true, reason };
         return result;
       }
 

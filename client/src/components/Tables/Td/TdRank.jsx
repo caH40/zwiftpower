@@ -4,9 +4,9 @@ import IconCupRank from '../../icons/IconCupRank';
 
 import styles from './Td.module.css';
 
-const TdRank = ({ value, isDsq, dsqType, dsqDescription }) => {
+const TdRank = ({ value, disqualification }) => {
   // первые 3 места
-  if ([1, 2, 3].includes(value) && !isDsq) {
+  if ([1, 2, 3].includes(value) && !disqualification) {
     return (
       <div className={styles.rank}>
         <IconCupRank place={value} />
@@ -15,14 +15,14 @@ const TdRank = ({ value, isDsq, dsqType, dsqDescription }) => {
   }
 
   // при ранке 0 должен быть дисквал(выставляется на сервере)
-  const dsqObject = dsqValues.find((elm) => elm.type === dsqType);
+  // const dsqObject = dsqValues.find((elm) => elm.type === dsqType);
   // для тех кто дисквалифицирован
-  if (isDsq) {
+  if (disqualification) {
     return (
       <>
-        {dsqObject ? (
+        {disqualification ? (
           <div className={styles.rank}>
-            <DSQBox tooltip={dsqDescription}>{dsqObject.label}</DSQBox>
+            <DSQBox tooltip={disqualification.reason}>{disqualification.label}</DSQBox>
           </div>
         ) : null}
       </>

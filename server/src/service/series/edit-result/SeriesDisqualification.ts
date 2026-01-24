@@ -54,6 +54,9 @@ export class SeriesDisqualification {
       `Не найден результат с _id: "${resultId}" для дисквалификации`
     );
 
+    // Пересчет ГК и всех этапов.
+    await this.recalculateAllStageResultsAndGC(resultId);
+
     return {
       data: null,
       message: `Снята дисквалификация для результата райдера ${result.profileData.lastName} ${result.profileData.firstName} в серии ${result.series.name} на этапе №${result.order}!`,
