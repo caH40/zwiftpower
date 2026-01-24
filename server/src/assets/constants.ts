@@ -140,7 +140,7 @@ export const DISQUALIFICATION_LABELS = [
   'DNF',
   'DNS',
   'OUT',
-  'CUT',
+  'LMT',
   'LAP',
   'NP',
   'MRS',

@@ -17,7 +17,7 @@ export const DISQUALIFICATION_LABELS = [
   'DNF',
   'DNS',
   'OUT',
-  'CUT',
+  'LMT',
   'LAP',
   'NP',
   'MRS',
@@ -30,7 +30,7 @@ export const DISQUALIFICATION_LABELS = [
  * DNF  Did Not Finish — Не финишировал.
  * DNS  Did Not Start — Не стартовал.
  * OUT  Out of Classification — Вне зачёта / Не выполнены условия.
- * CUT  Time Cut — Превышен лимит времени.
+ * LMT  Limit Time — Превышен лимит времени.
  * LAP  Lapped — Обогнан на круг / Снят с гонки.
  * NP   No Placement / Not Placed — Без места / Не имеет итогового места.
  * MRS  Missing Required Stage — Не завершён обязательный этап серии.
@@ -73,10 +73,10 @@ export const DISQUALIFICATION_OPTIONS = [
   },
   {
     id: 5,
-    value: 'CUT',
+    value: 'LMT',
     name: 'Превышен лимит времени',
-    description: 'CUT — Time Cut',
-    shortLabel: 'CUT',
+    description: 'LMT — Limit Time',
+    shortLabel: 'LMT',
   },
   {
     id: 6,

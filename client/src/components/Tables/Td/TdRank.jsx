@@ -22,7 +22,9 @@ const TdRank = ({ value, disqualification }) => {
       <>
         {disqualification ? (
           <div className={styles.rank}>
-            <DSQBox tooltip={disqualification.reason}>{disqualification.label}</DSQBox>
+            <DSQBox tooltip={`Дисквалификация: ${disqualification.reason}`}>
+              {disqualification.label}
+            </DSQBox>
           </div>
         ) : null}
       </>

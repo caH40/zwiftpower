@@ -863,7 +863,7 @@ export type TDisqualificationLabel = (typeof DISQUALIFICATION_LABELS)[number];
  * DNF  Did Not Finish — Не финишировал.
  * DNS  Did Not Start — Не стартовал.
  * OUT  Out of Classification — Вне зачёта / Не выполнены условия.
- * CUT  Time Cut — Превышен лимит времени.
+ * LMT  Limit Time — Превышен лимит времени.
  * LAP  Lapped — Обогнан на круг / Снят с гонки.
  * NP   No Placement / Not Placed — Без места / Не имеет итогового места.
  * MRS  Missing Required Stage — Не завершён обязательный этап серии.
