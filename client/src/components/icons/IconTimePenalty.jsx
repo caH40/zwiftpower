@@ -1,0 +1,38 @@
+import MyTooltip from '../../HOC/MyTooltip';
+
+import styles from './icon.module.css';
+
+/**
+ * Иконка для пенальти по времени.
+ */
+function IconTimePenalty({ squareSize = 24, tooltip }) {
+  return (
+    <MyTooltip tooltip={tooltip || 'Временной штраф'}>
+      <div className={styles.box__rules} style={{ width: squareSize, height: squareSize }}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 22C16.9706 22 21 17.9706 21 13C21 8.02944 16.9706 4 12 4C7.02944 4 3 8.02944 3 13C3 17.9706 7.02944 22 12 22Z"
+            stroke="#FF0000"
+            strokeWidth="2"
+          />
+          <path d="M12 2V5" stroke="#FF0000" strokeWidth="2" />
+          <path d="M9 1H15" stroke="#FF0000" strokeWidth="2" />
+          <path d="M12 7V13" stroke="#FF0000" strokeWidth="2" />
+          <path
+            d="M12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18Z"
+            stroke="#FF0000"
+            strokeWidth="2"
+          />
+        </svg>
+      </div>
+    </MyTooltip>
+  );
+}
+
+export default IconTimePenalty;

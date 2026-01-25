@@ -20,6 +20,8 @@ import CategoryChangeBox from '../../CategoryChangeBox/CategoryChangeBox';
 import TeamLogoBox from '../../TeamLogoBox/TeamLogoBox';
 import TimeLimitBox from '../../TimeLimitBox/TimeLimitBox';
 import IconAddByModerator from '../../icons/IconAddByModerator';
+import IconTimePenalty from '../../icons/IconTimePenalty';
+import { timePenaltyDescription } from '../../../utils/timePenalty';
 
 import styles from '../Table.module.css';
 
@@ -202,6 +204,14 @@ function TableStageResults({
                       <IconAddByModerator
                         squareSize={26}
                         tooltip="Результат добавлен модератором"
+                      />
+                    ) : null}
+
+                    {/* Пенальти по времени Time Penalty */}
+                    {result.timePenalty ? (
+                      <IconTimePenalty
+                        squareSize={26}
+                        tooltip={timePenaltyDescription(result.timePenalty)}
                       />
                     ) : null}
                   </div>
