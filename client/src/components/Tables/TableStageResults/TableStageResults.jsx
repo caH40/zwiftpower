@@ -75,8 +75,6 @@ function TableStageResults({
           ({ category, categoryInRace, modifiedCategory, ...result }) => {
             const profile = result.profileData;
 
-            const dsqDescription = result.disqualificationDescription;
-
             const isAbsolute = filterCategory.name === 'All';
 
             return (
@@ -91,7 +89,6 @@ function TableStageResults({
                       <TdRank
                         value={isAbsolute ? result.rank.absolute : result.rank.category}
                         disqualification={result.disqualification}
-                        dsqDescription={dsqDescription}
                       />
 
                       {/* Отображение иконки лимита при не попадании результата в лимит времени */}

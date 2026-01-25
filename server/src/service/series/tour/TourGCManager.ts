@@ -118,10 +118,13 @@ export class TourGCManager extends AbstractBaseGCManager {
         // Учитываем только завершённые этапы.
         if (!result.disqualification) {
           stagesCompleted++;
+          // Удаляем этап из обязательных, если он был пройден.
+          requiredStages.delete(stageOrder);
+        } else {
+          disqualification.label = result.disqualification.label;
+          disqualification.reason = `${result.disqualification.reason}. Установлена на ${result.order} этапе`;
+          disqualification.modifiedAt = result.disqualification.modifiedAt;
         }
-
-        // Удаляем этап из обязательных, если он был пройден.
-        requiredStages.delete(stageOrder);
       }
 
       // Создание списка этапов из серии заездов в которых участвовал райдер.
@@ -131,7 +134,7 @@ export class TourGCManager extends AbstractBaseGCManager {
       });
 
       // Если остались обязательные этапы, в которых не участвовали — дисквалификация.
-      if (requiredStages.size > 0) {
+      if (requiredStages.size > 0 && !disqualification?.label) {
         const sortedSkipped = [...requiredStages].sort((a, b) => a - b);
         disqualification.reason = `Не завершены обязательные этапы: ${sortedSkipped.join(
           ', '

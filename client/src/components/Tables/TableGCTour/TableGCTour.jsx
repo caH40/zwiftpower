@@ -56,9 +56,10 @@ function TableGCTour({ results, isSeriesCreator, orderedStages }) {
               <td className={styles.centerTd}>
                 <Rank
                   value={allCategories ? result.rank?.absolute : result.rank?.category}
-                  dsq={result.disqualification}
+                  disqualification={result.disqualification}
                 />
               </td>
+
               <td>
                 <CategoryBox showLabel={true} label={result.finalCategory} circle={true} />
               </td>
