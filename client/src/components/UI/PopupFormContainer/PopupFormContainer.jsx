@@ -8,9 +8,9 @@ import FormAddStageResult from '../FormAddStageResult/FormAddStageResult';
 import PollResultsPopup from '../../PollResultsPopup/PollResultsPopup';
 import TeamParticipantRatingModal from '../../TeamParticipantRatingModal/TeamParticipantRatingModal';
 import CloseButton from '../Buttons/Close/CloseButton';
+import FormDisqualification from '../FormDisqualification/FormDisqualification';
 
 import styles from './PopupFormContainer.module.css';
-import FormDisqualification from '../FormDisqualification/FormDisqualification';
 
 /**
  * Попап окно для формы из пропсов.

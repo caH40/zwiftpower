@@ -90,8 +90,6 @@ export const fetchDeleteStageResultInSeries = createAsyncThunk(
 export const fetchSetDisqualificationStageResult = createAsyncThunk(
   'setDisqualificationStageResult/patch',
   async ({ resultId, disqualification }, thunkAPI) => {
-    console.log({ resultId, disqualification });
-
     try {
       const response = await myAxios({
         url: `${serverExpress}/api/series/stage/results/result/disqualification/set`,
