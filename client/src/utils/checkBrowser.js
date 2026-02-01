@@ -4,7 +4,6 @@
  */
 export function isSafari() {
   const ua = navigator.userAgent;
-  console.log(ua);
 
   return (
     ua.includes('Safari') &&
