@@ -131,8 +131,9 @@ export async function getZwiftRider(req: Request, res: Response) {
  */
 export async function getZwiftEventResults(req: Request, res: Response) {
   try {
+    const { authorization } = req.headers;
     const { eventId } = req.params;
-    const { results } = await getZwiftEventResultsService(eventId);
+    const { results } = await getZwiftEventResultsService(eventId, authorization);
 
     res.send(results);
   } catch (error) {

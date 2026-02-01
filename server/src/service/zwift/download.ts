@@ -5,11 +5,15 @@ import { getTokenForEvent } from './token.js';
 
 // types
 import { EventWithSubgroup, ResultEventAdditional } from '../../types/types.interface.js';
+import { verifyAdminOrModeratorAccess } from '../../utils/verifyRole.js';
 
 /**
- * Получение результатов Эвента для скачивания
+ * Получение результатов Эвента для скачивания.
  */
-export async function getZwiftEventResultsService(eventId: string) {
+export async function getZwiftEventResultsService(
+  eventId: string,
+  authorization?: string
+): Promise<{ results: ResultEventAdditional[] }> {
   const eventDB = await ZwiftEvent.findOne({ id: eventId })
     .populate('eventSubgroups')
     .lean<EventWithSubgroup>();
@@ -33,6 +37,12 @@ export async function getZwiftEventResultsService(eventId: string) {
       token,
     });
     resultsTotal.push(...resultsSubgroup);
+  }
+
+  // Не для модераторов клубов и не для админов отправляются результаты без возраста и флага.
+  const isModeratorClub = verifyAdminOrModeratorAccess(authorization);
+  if (!isModeratorClub) {
+    return { results: resultsTotal };
   }
 
   // добавление данных страны и возраста в результаты райдеров

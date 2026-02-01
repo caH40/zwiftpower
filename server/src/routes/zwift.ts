@@ -9,6 +9,7 @@ import {
   postZwiftEvent,
   getEventZwiftForEdit,
 } from '../controllers/zwift.js';
+import { checkAuth } from '../middleware/auth.js';
 
 export const routerZwift = Router();
 
@@ -17,4 +18,4 @@ routerZwift.get('/events/:eventId/:organizerId', authModeratorClub, getEventZwif
 routerZwift.put('/events', authModeratorClub, putEventZwift);
 routerZwift.post('/events', authModeratorClub, postZwiftEvent);
 routerZwift.get('/rider/:zwiftId', getZwiftRider);
-routerZwift.get('/download/event-results/:eventId', authModeratorClub, getZwiftEventResults);
+routerZwift.get('/download/event-results/:eventId', checkAuth, getZwiftEventResults);

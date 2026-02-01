@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { useRaceRoute } from '../../../hook/useRaceRoute';
@@ -22,8 +22,7 @@ import Thead from './Thead';
 const cx = classnames.bind(styles);
 
 function TableResults({ events, updateResults, removeEvent, updateEventAndSinged }) {
-  const { moderator } = useSelector((state) => state.checkAuth.value.user);
-  const { isClubModerator, isAdmin } = useUserRole();
+  const { isClubModerator, isAdmin, hasAuth } = useUserRole();
   const dispatch = useDispatch();
 
   const routeIds = useMemo(() => {
@@ -41,13 +40,13 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
       <caption className={cx('caption', 'hidden')}>
         Результаты заездов российского сообщества в Zwift (Звифт)
       </caption>
-      <Thead isModerator={isClubModerator || isAdmin} />
+      <Thead hasAuth={hasAuth} isModerator={isClubModerator || isAdmin} />
       <tbody>
         {events.map(({ organizerId, ...event }) => {
           // Проверка что текущий Эвент создан в клубе, который может модерировать пользователь.
-          const isAllowedModerate = moderator?.clubs.includes(
-            event.microserviceExternalResourceId
-          );
+          // const isAllowedModerate = moderator?.clubs.includes(
+          //   event.microserviceExternalResourceId
+          // );
           return (
             <tr className={cx('hover')} key={event._id}>
               <td>{getTimerLocal(event.eventStart, 'DDMMYY')}</td>
@@ -98,7 +97,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
               )}
               <td>{getDuration(event.eventSubgroups[0]?.durationInSeconds)}</td>
 
-              {isAllowedModerate || isAdmin ? (
+              {hasAuth ? (
                 <TdScheduleMenuTableResultList
                   event={event}
                   updateResults={updateResults}
@@ -106,7 +105,7 @@ function TableResults({ events, updateResults, removeEvent, updateEventAndSinged
                   removeEvent={removeEvent}
                 />
               ) : (
-                (isClubModerator || isAdmin) && <td></td>
+                hasAuth && <td></td>
               )}
             </tr>
           );

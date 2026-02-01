@@ -1,7 +1,9 @@
-// меню в таблице эвентов с результатами, модерирование каждого эвента
-import React from 'react';
+/**
+ * Меню в таблице эвентов с результатами, модерация каждого эвента.
+ */
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useUserRole } from '../../../hook/useUserRole';
 import { closeResultListMenu } from '../../../redux/features/popupTableResultsListSlice';
 import { fetchResultsJson } from '../../../redux/features/api/downloadResultsSlice';
 import IconRefresh from '../../icons/IconRefresh';
@@ -13,7 +15,7 @@ import styles from './PopupMenuTable.module.css';
 
 function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEventAndSinged }) {
   const { menus } = useSelector((state) => state.popupTableResultsList);
-
+  const { isAdmin } = useUserRole();
   const { moderator } = useSelector((state) => state.checkAuth.value.user);
   const isAllowedModerate = moderator?.clubs.includes(event.microserviceExternalResourceId);
 
@@ -49,12 +51,14 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
           onMouseLeave={() => dispatch(closeResultListMenu(event?.id))}
         >
           <ul className={styles.list}>
-            <li className={styles.item} onClick={clickUpdateResults}>
-              <IconRefresh />
-              <span className={styles.label}>Обновление результатов заезда (протокола)</span>
-            </li>
+            {isAllowedModerate && isAdmin && (
+              <li className={styles.item} onClick={clickUpdateResults}>
+                <IconRefresh />
+                <span className={styles.label}>Обновление результатов заезда (протокола)</span>
+              </li>
+            )}
 
-            {isAllowedModerate && (
+            {isAllowedModerate && isAdmin && (
               <li className={styles.item} onClick={clickRemoveEvent}>
                 <IconDelete squareSize={20} />
                 <span className={styles.label}>Удаление заезда и результатов заезда из БД</span>
@@ -63,22 +67,24 @@ function PopupMenuTableResultList({ event, updateResults, removeEvent, updateEve
 
             <li className={styles.item} onClick={clickDownloadJson}>
               <IconDownload />
-              <span className={styles.label}>Скачать результаты с Zwift в формате JSON</span>
+              <span className={styles.label}>Финишный протокол с ZwiftAPI в формате JSON</span>
             </li>
           </ul>
 
-          <MyTooltip
-            tooltip={
-              'Исправляет отсутствие флагов у некоторых райдеров в протоколе.После данного обновления необходимо запустить обновление результатов'
-            }
-          >
-            <li className={styles.item} onClick={clickUpdateEventAndSinged}>
-              <IconRefresh />
-              <span className={styles.label}>
-                Обновление данных заезда и зарегистрированных райдеров
-              </span>
-            </li>
-          </MyTooltip>
+          {isAllowedModerate && (
+            <MyTooltip
+              tooltip={
+                'Исправляет отсутствие флагов у некоторых райдеров в протоколе.После данного обновления необходимо запустить обновление результатов'
+              }
+            >
+              <li className={styles.item} onClick={clickUpdateEventAndSinged}>
+                <IconRefresh />
+                <span className={styles.label}>
+                  Обновление данных заезда и зарегистрированных райдеров
+                </span>
+              </li>
+            </MyTooltip>
+          )}
         </div>
       )}
     </>

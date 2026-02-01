@@ -2,7 +2,7 @@ import ColumnName from '../Th/ColumnName';
 
 import { resultsColumns } from './column-titles';
 
-function Thead({ isModerator }) {
+function Thead({ hasAuth }) {
   return (
     <thead>
       <tr>
@@ -11,7 +11,7 @@ function Thead({ isModerator }) {
             <ColumnName key={column.id} columnName={column.name} />
           </th>
         ))}
-        {isModerator && (
+        {hasAuth && (
           <th>
             <ColumnName columnName={'Управление'} />
           </th>
