@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { isSafari } from '../../utils/checkBrowser';
 
 import styles from './SignedRidersLinks.module.css';
 
@@ -11,37 +11,54 @@ export default function SignedRidersLinks({
   microserviceExternalResourceId,
   microserviceEventVisibility,
 }) {
+  const registrationHref = `https://www.zwift.com/eu/events/view/${eventId}`;
   return (
     <>
-      <a
-        className={styles.button__link}
-        href={`zwift://event/${eventId}`}
-        onClick={(e) => {
-          e.preventDefault();
+      {/* Для браузеров сафари без дипилнка */}
+      {isSafari() ? (
+        <a
+          className={styles.button__link}
+          href={registrationHref}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div>
+            <span className={styles.button__title}>Регистрация</span>
+            <span className={styles.button__additional}>{clubName}</span>
+          </div>
+        </a>
+      ) : (
+        <a
+          className={styles.button__link}
+          href={`zwift://event/${eventId}`}
+          onClick={(e) => {
+            e.preventDefault();
 
-          const timeout = setTimeout(() => {
-            window.location.href = `https://www.zwift.com/eu/events/view/${eventId}`;
-          }, 1000); // 1 секунда на открытие приложения
+            const timeout = setTimeout(() => {
+              window.location.href = registrationHref;
+            }, 1000); // 1 секунда на открытие приложения
 
-          // Попытка открыть приложение
-          window.location.href = `zwift://event/${eventId}`;
+            // Попытка открыть приложение
+            window.location.href = `zwift://event/${eventId}`;
 
-          // Очистка таймера, если вдруг сработал deep link
-          window.addEventListener('blur', () => {
-            clearTimeout(timeout);
-          });
-        }}
-        // rel="noreferrer"
-        // target="_blank"
-      >
-        <div>
-          <span className={styles.button__title}>Регистрация</span>
-          <span className={styles.button__additional}>
-            {microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' &&
-              `(только для участников клуба ${clubName})`}
-          </span>
-        </div>
-      </a>
+            // Очистка таймера, если вдруг сработал deep link
+            window.addEventListener('blur', () => {
+              clearTimeout(timeout);
+            });
+          }}
+          // rel="noreferrer"
+          // target="_blank"
+        >
+          <div>
+            <span className={styles.button__title}>Регистрация</span>
+            <span className={styles.button__additional}>
+              {microserviceEventVisibility === 'DEFINED_BY_RESOURCE_ID' &&
+                `(только для участников клуба ${clubName})`}
+            </span>
+          </div>
+        </a>
+      )}
+
       {/* javascript:window.open('https://zwift.com/events/view/4913266','join_zwift_event');return false */}
       <a
         className={styles.button__link}
