@@ -31,8 +31,8 @@ export default function SignedRidersLinks({
             clearTimeout(timeout);
           });
         }}
-        rel="noreferrer"
-        target="_blank"
+        // rel="noreferrer"
+        // target="_blank"
       >
         <div>
           <span className={styles.button__title}>Регистрация</span>
@@ -43,9 +43,9 @@ export default function SignedRidersLinks({
         </div>
       </a>
       {/* javascript:window.open('https://zwift.com/events/view/4913266','join_zwift_event');return false */}
-      <Link
+      <a
         className={styles.button__link}
-        to={`https://www.zwift.com/eu/clubs/${microserviceExternalResourceId}/join`}
+        href={`https://www.zwift.com/eu/clubs/${microserviceExternalResourceId}/join`}
         target="_blank"
         rel="noreferrer"
       >
@@ -53,7 +53,7 @@ export default function SignedRidersLinks({
           <span className={styles.button__title}>Вступить в клуб</span>
           <span className={styles.button__additional}>{clubName}</span>
         </div>
-      </Link>
+      </a>
     </>
   );
 }
