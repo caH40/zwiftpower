@@ -5,18 +5,32 @@
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
 }
+.main {
+  overflow-x: auto;
+}
 .container {
   position: relative;
   padding: 20px 13px 20px 63px;
   z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 25px;
 }
 
+/* ====================================================================== */
 @media screen and (max-width: 576px) {
   .container {
     padding: 10px 5px 10px 45px;
   }
 }
 
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: 100%;
+  }
+}
 @media screen and (min-width: 1650px) {
   .container {
     padding: 20px 136px 20px 186px;

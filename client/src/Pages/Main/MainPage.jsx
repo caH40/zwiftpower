@@ -9,64 +9,26 @@ import { lsPrefixStreams } from '../../constants/localstorage';
 import useBannerVisibility from '../../hook/useBannerVisibility';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
-import MainInfo from '../../components/MainInfo/MainInfo';
-import MainInfoDev from '../../components/MainInfo/MainInfoDev';
 import AdContainer from '../../components/AdContainer/AdContainer';
-import AdSeries from '../../components/AdSeries/AdSeries';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
 import BannerInformation from '../../components/BannerInformation/BannerInformation';
-import DonateBlock from '../../components/Donate/DonateBlock/DonateBlock';
-import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
-import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
-import Poll from '../../components/Poll/Poll';
-import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
-import { resetPoll } from '../../redux/features/api/poll/pollSlice';
-import { fetchTopTeamsLeaderboard } from '../../redux/features/api/team/fetchTeam';
-import { resetTopTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
-import TeamsRankingWidget from '../../components/TeamsRankingWidget/TeamsRankingWidget';
-import SkeletonTeamRankingWidget from '../../components/SkeletonLoading/SkeletonTeamRankingWidget/SkeletonTeamRankingWidget';
-import { renderSkeletonCards } from '../../utils/skeleton-cards';
 
 import styles from './MainPage.module.css';
 
 const storageKeyBanner = `${lsPrefixStreams}banner-organizer`;
 
 function MainPage() {
-  const { poll } = useSelector((state) => state.poll);
-
   const { eventsPreview, status: statusFetchEvents } = useSelector(
     (state) => state.fetchEvents
   );
-  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
-    (state) => state.seriesPublic
-  );
-  const { role, organizer } = useSelector((state) => state.checkAuth.value.user);
-  const { topTeamsLeaderboard, status: statusTopTeamsLeaderboard } = useSelector(
-    (state) => state.team
-  );
-  const isModerator = ['admin', 'moderator'].includes(role);
+
+  const { organizer } = useSelector((state) => state.checkAuth.value.user);
+
   const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchGetOngoingSeries());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchGetPoll({ pollId: '691c9016c52f70c6bca2771f' }));
-
-    return () => dispatch(resetPoll());
-  }, [dispatch]);
-
-  // top3 рейтинга команд
-  useEffect(() => {
-    dispatch(fetchTopTeamsLeaderboard());
-
-    return () => dispatch(resetTopTeamsLeaderboard());
-  }, [dispatch]);
 
   // Хук установки заголовка h1 для страницы.
   useTitle('Ближайшие заезды Zwift');
@@ -137,52 +99,6 @@ function MainPage() {
 
           {shouldRenderCard && renderCards(eventsPreview, 2)}
         </section>
-
-        <aside className={styles.wrapper__info}>
-          <h2 className={styles.title__info}>Информационный блок</h2>
-
-          <div className={styles.sidebar}>
-            <div className={styles.topTeamContainer}>
-              <SkeletonTeamRankingWidget status={statusTopTeamsLeaderboard} />
-              {topTeamsLeaderboard.length > 0 ? (
-                <TeamsRankingWidget teams={topTeamsLeaderboard} />
-              ) : null}
-            </div>
-
-            {/* Блок с голосованиями */}
-            {poll && <Poll {...poll} />}
-
-            {!ongoingSeriesPublic.length
-              ? renderSkeletonCards({
-                  count: 4,
-                  SkeletonComponent: SkeletonSeriesAd,
-                  status: fetchSeriesStatus,
-                })
-              : null}
-
-            {/* Рекламный блок текущих Серий */}
-            {ongoingSeriesPublic.map((s) => (
-              <AdSeries
-                key={s.urlSlug}
-                urlSlug={s.urlSlug}
-                posterUrls={s.posterUrls}
-                name={s.name}
-                dateStart={s.dateStart}
-                dateEnd={s.dateEnd}
-                isCard={true}
-                pageType="schedule"
-              />
-            ))}
-
-            <div className={styles.spacer__donate}>
-              <DonateBlock />
-            </div>
-
-            <MainInfo />
-
-            <MainInfoDev isModerator={isModerator} />
-          </div>
-        </aside>
       </div>
     </>
   );

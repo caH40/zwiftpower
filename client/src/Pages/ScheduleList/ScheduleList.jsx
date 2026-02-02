@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useResize } from '../../hook/use-resize';
 import { getAlert } from '../../redux/features/alertMessageSlice';
 import { fetchChangeEvent } from '../../redux/features/api/changeEventSlice';
 import { fetchEvents } from '../../redux/features/api/eventsSlice';
 import { createScheduleMenus } from '../../redux/features/popupTableScheduleSlice';
-// import { useAd } from '../../hook/useAd';
 import useTitle from '../../hook/useTitle';
 import TableSchedule from '../../components/Tables/TableSchedule/TableSchedule';
 import Pagination from '../../components/UI/Pagination/Pagination';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { SCHEDULE_HELMET_PROPS } from '../../assets/helmet-props';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
@@ -20,11 +17,6 @@ import { lsPrefixScheduleList } from '../../constants/localstorage';
 import styles from './ScheduleList.module.css';
 
 const notFound = 'К сожалению, заезды не найдены ... ((';
-
-// рекламные блоки на странице
-// const adOverFooter = 5;
-// const adUnderHeader = 10;
-// const adNumbers = [adUnderHeader, adOverFooter];
 
 const localStorageFilterKey = `${lsPrefixScheduleList}filter`;
 const localStoragePageSizeKey = `${lsPrefixScheduleList}pageSize`;
@@ -45,7 +37,6 @@ function ScheduleList() {
     quantityPages,
     status: statusFetchEvents,
   } = useSelector((state) => state.fetchEvents);
-  const { isScreenLg: isDesktop } = useResize();
   useTitle('Расписание заездов Zwift');
   const dispatch = useDispatch();
 
@@ -87,11 +78,10 @@ function ScheduleList() {
     );
   };
 
-  // useAd(adNumbers);
-
   return (
     <>
       <HelmetComponent {...SCHEDULE_HELMET_PROPS} />
+
       <section className={styles.wrapper}>
         <div className={styles.align__right}>
           {/* Блок фильтров для таблицы */}
@@ -120,18 +110,15 @@ function ScheduleList() {
             />
           </div>
         )}
+
         {quantityPages > 1 && (
           <Pagination quantityPages={quantityPages} page={page} setPage={setPage} />
         )}
+
         {!eventsSchedule?.[0] && statusFetchEvents === 'resolved' && (
           <div className={styles.title__notFound}>{notFound}</div>
         )}
       </section>
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }

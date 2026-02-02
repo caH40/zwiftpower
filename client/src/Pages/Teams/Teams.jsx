@@ -11,9 +11,6 @@ import { resetTeams } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
 import CardTeam from '../../components/CardTeam/CardTeam';
 import ButtonLocalUrl from '../../components/UI/ButtonUrl/ButtonLocalUrl';
-import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
-import AdSeries from '../../components/AdSeries/AdSeries';
-import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 
 import styles from './Teams.module.css';
 
@@ -28,10 +25,6 @@ export default function TeamsPublic() {
     user: { team: userInTeam, zwiftId },
   } = useSelector((state) => state.checkAuth.value);
 
-  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
-    (state) => state.seriesPublic
-  );
-
   // Данные организаторов из хранилища редакс.
   const { status: fetchTeamsStatus, teams } = useSelector((state) => state.team);
   const dispatch = useDispatch();
@@ -41,10 +34,6 @@ export default function TeamsPublic() {
     dispatch(fetchGetTeams());
 
     return () => dispatch(resetTeams());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   // Сначала команда пользователя, затем отсортированные по названию.
@@ -74,31 +63,6 @@ export default function TeamsPublic() {
             sortedTeams.map((team) => <CardTeam key={team._id} {...team} />)}
         </section>
       </div>
-
-      {/* Боковая панель. */}
-      <aside className={styles.aside}>
-        {!ongoingSeriesPublic.length
-          ? renderSkeletonCards({
-              count: 4,
-              SkeletonComponent: SkeletonSeriesAd,
-              status: fetchSeriesStatus,
-            })
-          : null}
-
-        {/* Рекламный блок текущих Серий */}
-        {ongoingSeriesPublic.map((s) => (
-          <AdSeries
-            key={s.urlSlug}
-            urlSlug={s.urlSlug}
-            posterUrls={s.posterUrls}
-            name={s.name}
-            dateStart={s.dateStart}
-            dateEnd={s.dateEnd}
-            isCard={true}
-            pageType="schedule"
-          />
-        ))}
-      </aside>
     </div>
   );
 }

@@ -5,12 +5,8 @@ import { Outlet, useParams } from 'react-router-dom';
 import { HelmetOrganizerPublic } from '../../components/Helmets/HelmetOrganizerPublic';
 import { fetchOrganizerPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizerPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
-import AdSeries from '../../components/AdSeries/AdSeries';
 import OrganizerHeader from '../../components/OrganizerHeader/OrganizerHeader';
-import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import NavBarOrganizerPublic from '../../components/UI/NavBarOrganizerPublic/NavBarOrganizerPublic';
-import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
-import { renderSkeletonCards } from '../../utils/skeleton-cards';
 import { LoadingPage } from '../LoadingPage/LoadingPage';
 
 import styles from './OrganizerPublicLayout.module.css';
@@ -19,9 +15,6 @@ import styles from './OrganizerPublicLayout.module.css';
  * Страница Организатора заездов.
  */
 export default function OrganizerPublicLayout() {
-  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
-    (state) => state.seriesPublic
-  );
   const { urlSlug } = useParams();
 
   // Данные организатора из хранилища редакс.
@@ -35,10 +28,6 @@ export default function OrganizerPublicLayout() {
 
     return () => dispatch(resetOrganizerPublic());
   }, [dispatch, urlSlug]);
-
-  useEffect(() => {
-    dispatch(fetchGetOngoingSeries());
-  }, [dispatch]);
 
   return (
     <>
@@ -61,32 +50,6 @@ export default function OrganizerPublicLayout() {
             </Suspense>
           </>
         </section>
-
-        {/* Боковая панель. */}
-
-        <aside className={styles.aside}>
-          {!ongoingSeriesPublic.length
-            ? renderSkeletonCards({
-                count: 4,
-                SkeletonComponent: SkeletonSeriesAd,
-                status: fetchSeriesStatus,
-              })
-            : null}
-
-          {/* Рекламный блок текущих Серий */}
-          {ongoingSeriesPublic.map((s) => (
-            <AdSeries
-              key={s.urlSlug}
-              urlSlug={s.urlSlug}
-              posterUrls={s.posterUrls}
-              name={s.name}
-              dateStart={s.dateStart}
-              dateEnd={s.dateEnd}
-              isCard={true}
-              pageType="schedule"
-            />
-          ))}
-        </aside>
       </div>
     </>
   );

@@ -11,9 +11,6 @@ import { NavBarTeamPublic } from '../../components/UI/NavBarTeamPublic/NavBarTea
 import TeamHeader from '../../components/TeamHeader/TeamHeader';
 import useTitle from '../../hook/useTitle';
 import { NavBarTeamControl } from '../../components/UI/NavBarTeamPublic/NavBarTeamControl';
-import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
-import AdSeries from '../../components/AdSeries/AdSeries';
-import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import { LoadingPage } from '../LoadingPage/LoadingPage';
 
 import styles from './TeamPageLayout.module.css';
@@ -27,15 +24,7 @@ export default function TeamPage() {
     user: { team: userInTeam },
   } = useSelector((state) => state.checkAuth.value);
 
-  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
-    (state) => state.seriesPublic
-  );
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGetOngoingSeries());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchGetTeam({ urlSlug }));
@@ -72,31 +61,6 @@ export default function TeamPage() {
           <Outlet />
         </Suspense>
       </section>
-
-      {/* Боковая панель. */}
-      <aside className={styles.aside}>
-        {!ongoingSeriesPublic.length
-          ? renderSkeletonCards({
-              count: 4,
-              SkeletonComponent: SkeletonSeriesAd,
-              status: fetchSeriesStatus,
-            })
-          : null}
-
-        {/* Рекламный блок текущих Серий */}
-        {ongoingSeriesPublic.map((s) => (
-          <AdSeries
-            key={s.urlSlug}
-            urlSlug={s.urlSlug}
-            posterUrls={s.posterUrls}
-            name={s.name}
-            dateStart={s.dateStart}
-            dateEnd={s.dateEnd}
-            isCard={true}
-            pageType="schedule"
-          />
-        ))}
-      </aside>
     </div>
   );
 }

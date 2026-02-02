@@ -7,12 +7,9 @@ import { shuffleArray } from '../../utils/shuffle';
 import { fetchOrganizersPublic } from '../../redux/features/api/organizer_public/fetchOrganizersPublic';
 import { resetOrganizersPublic } from '../../redux/features/api/organizer_public/organizersPublicSlice';
 import { SkeletonOrganizerCard } from '../../components/SkeletonLoading/SkeletonOrganizerCard/SkeletonOrganizerCard';
-import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
 import useTitle from '../../hook/useTitle';
 import CardOrganizer from '../../components/CardOrganizer/CardOrganizer';
-import SkeletonSeriesAd from '../../components/SkeletonLoading/SkeletonSeriesAd/SkeletonSeriesAd';
-import AdSeries from '../../components/AdSeries/AdSeries';
 
 import styles from './OrganizersPublic.module.css';
 
@@ -25,9 +22,6 @@ function OrganizersPublic() {
   // Данные организаторов из хранилища редакс.
   const { organizers, status: fetchOrganizersStatus } = useSelector(
     (state) => state.organizersPublic
-  );
-  const { ongoingSeriesPublic, status: fetchSeriesStatus } = useSelector(
-    (state) => state.seriesPublic
   );
 
   // Случайная перестановка организаторов в массиве для изменения последовательности отображения карточек Организаторов.
@@ -42,10 +36,6 @@ function OrganizersPublic() {
     dispatch(fetchOrganizersPublic());
 
     return () => dispatch(resetOrganizersPublic());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchGetOngoingSeries());
   }, [dispatch]);
 
   return (
@@ -69,31 +59,6 @@ function OrganizersPublic() {
             />
           ))}
         </section>
-
-        {/* Боковая панель. */}
-        <aside className={styles.aside}>
-          {!ongoingSeriesPublic.length
-            ? renderSkeletonCards({
-                count: 4,
-                SkeletonComponent: SkeletonSeriesAd,
-                status: fetchSeriesStatus,
-              })
-            : null}
-
-          {/* Рекламный блок текущих Серий */}
-          {ongoingSeriesPublic.map((s) => (
-            <AdSeries
-              key={s.urlSlug}
-              urlSlug={s.urlSlug}
-              posterUrls={s.posterUrls}
-              name={s.name}
-              dateStart={s.dateStart}
-              dateEnd={s.dateEnd}
-              isCard={true}
-              pageType="schedule"
-            />
-          ))}
-        </aside>
       </div>
     </>
   );
