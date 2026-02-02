@@ -27,6 +27,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/MapMyRide2025_thumb.png',
   },
   {
+    id: 20770543,
+    name: 'Rhinestone Rider',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/BigSpinRhinestoneRider2026_thumb.png',
+  },
+  {
     id: 27953592,
     name: 'Off the Maap 2021 Kit',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/OffTheMaap2021_thumb.png',
@@ -218,7 +223,7 @@ export const jerseys = [
   },
   {
     id: 162720319,
-    name: 'LOC_CYCLING_JERSEY_DODDIEAID2024',
+    name: 'Doddie Aid',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/DoddieAid2024_thumb.png',
   },
   {
@@ -380,6 +385,11 @@ export const jerseys = [
     id: 265525555,
     name: 'LGBTQ Zwifters',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/LGBTQZwifters2024_thumb.png',
+  },
+  {
+    id: 269139365,
+    name: 'LOC_CYCLING_JERSEY_ASIINACYCLING2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/AsiinaCycling2026_thumb.png',
   },
   {
     id: 273275384,
@@ -2785,6 +2795,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Astana2020_thumb.png',
   },
   {
+    id: 1970378170,
+    name: 'Zwift United',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftUnited2025_thumb.png',
+  },
+  {
     id: 1975933102,
     name: 'Movistar 2024',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Movistar2024_thumb.png',
@@ -2903,6 +2918,11 @@ export const jerseys = [
     id: 2095486697,
     name: 'Liv AlUla Jayco 2024',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/LivAlUla2024_thumb.png',
+  },
+  {
+    id: 2098895232,
+    name: 'LOC_CYCLING_JERSEY_SWEDISHOUTBREAKS2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/SwedishOutbreaks2026_thumb.png',
   },
   {
     id: 2099251947,
@@ -3055,6 +3075,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/FemmeCycleCollab2025_thumb.png',
   },
   {
+    id: 2226004459,
+    name: 'LOC_CYCLING_JERSEY_BIGSPINTITANSGROVE2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/BigSpinTitansGrove2026_thumb.png',
+  },
+  {
     id: 2237514524,
     name: 'Alpecin Kit',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/AlpecinDeceuninck2025_thumb.png',
@@ -3201,6 +3226,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/UtsunomiyaBlitzen2019_thumb.png',
   },
   {
+    id: 2344658551,
+    name: 'Zwift Games 2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/ZwiftGames2026_thumb.png',
+  },
+  {
     id: 2344969429,
     name: 'Collins Cup Internationals',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/CollinsCupYellow2020_thumb.png',
@@ -3319,6 +3349,11 @@ export const jerseys = [
     id: 2422819298,
     name: 'Eolo Kometa',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/EoloKometa2021_thumb.png',
+  },
+  {
+    id: 2423261483,
+    name: 'LOC_CYCLING_JERSEY_IRWMS2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/IRWMS2026_thumb.png',
   },
   {
     id: 2426765558,
@@ -3447,6 +3482,16 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/FDJWomensWTT2022_thumb.png',
   },
   {
+    id: 2527073566,
+    name: 'LOC_CYCLING_JERSEY_DIRTYMITTENRACINGLEAGUE2026',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/DirtyMittenRacingLeague2026_thumb.png',
+  },
+  {
+    id: 2540856623,
+    name: 'Velux',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Velux2026_thumb.png',
+  },
+  {
     id: 2543336057,
     name: 'Super League Tri Arena Games - Grey Jersey',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/SLT2022grey_thumb.png',
@@ -3555,6 +3600,11 @@ export const jerseys = [
     id: 2644587674,
     name: 'FreeSpeed',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/FreeSpeed2015_thumb.png',
+  },
+  {
+    id: 2652254467,
+    name: 'OverTheEdge',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/OverTheEdge2025_thumb.png',
   },
   {
     id: 2654375510,
@@ -4516,7 +4566,7 @@ export const jerseys = [
   },
   {
     id: 3347131272,
-    name: 'Castelli Stratus Cycling Kit',
+    name: 'Castelli Stratus',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/CastelliStratus2025_thumb.png',
   },
   {
@@ -4665,6 +4715,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/SansegoTri2022_thumb.png',
   },
   {
+    id: 3416790379,
+    name: 'MSR der Club',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/MSRderClub2025_thumb.png',
+  },
+  {
     id: 3419241775,
     name: 'Agowatt',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/Agowatt2021_thumb.png',
@@ -4805,6 +4860,11 @@ export const jerseys = [
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TodaysPlan_thumb.png',
   },
   {
+    id: 3502000593,
+    name: 'Mayan Camo',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/BigSpin2026MayanCamoKit_thumb.png',
+  },
+  {
     id: 3502306062,
     name: 'Doddie Aid',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/DoddieAid2023_thumb.png',
@@ -4891,13 +4951,18 @@ export const jerseys = [
   },
   {
     id: 3580960314,
-    name: 'LOC_CYCLING_JERSEY_GTR2025',
+    name: 'GTR 2025',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/GTR2025_thumb.png',
   },
   {
     id: 3581804427,
     name: 'Pushing Limits 2021 Kit',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/PushingLimits2021_thumb.png',
+  },
+  {
+    id: 3583187887,
+    name: 'Rad Race',
+    imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/RadRace2026_thumb.png',
   },
   {
     id: 3584804543,
@@ -5898,7 +5963,7 @@ export const jerseys = [
   },
   {
     id: 4212242732,
-    name: 'LOC_CYCLING_JERSEY_TEAMGIANT2025',
+    name: 'Team Giant 2025',
     imageUrl: 'https://cdn.zwift.com/static/zc/JERSEYS/TeamGiant2025_thumb.png',
   },
   {

@@ -62,3 +62,39 @@ export const addCriticalPowers = async (
 
   return resultsWithCP;
 };
+
+/**
+ * Изменение основных CP (15, 60, 300, 1200) в массиве powerInWatts на данные из результата zwiftAPI.
+ */
+// function changeMainCPsInPowerInWatts() {
+//   // Подмена CP 15s, 1, 5, 20 на данные из протокола с zwiftAPI.
+//   if (cPFromResult && cPFromResult.length > 0) {
+//     for (const duration of durationsFromZwiftAPIResult) {
+//       const cPIntervalFromResult = cPFromResult.find(
+//         (cp) => cp.watts && cp.duration === duration
+//       );
+//       // console.log(duration, cPIntervalFromResult);
+
+//       if (
+//         cPIntervalFromResult &&
+//         cPIntervalFromResult.watts != null &&
+//         cPIntervalFromResult.wattsKg !== null
+//       ) {
+//         const { watts, wattsKg, cpLabel, duration } = cPIntervalFromResult;
+//         if (result.profileData.lastName === 'Bulo4ka') {
+//           console.log('From protocol', cpLabel, { watts, wattsKg, cpLabel, duration });
+
+//           cpBestEfforts;
+//           console.log(
+//             'From fitFile',
+//             cpLabel,
+//             cpBestEfforts.find((cp) => cp.watts && cp.duration === duration)
+//           );
+//           console.log('=============================');
+//         }
+//         cpBestEfforts = cpBestEfforts.filter((cp) => cp.cpLabel !== cpLabel);
+//         cpBestEfforts.push({ watts, wattsKg, cpLabel, duration });
+//       }
+//     }
+//   }
+// }
