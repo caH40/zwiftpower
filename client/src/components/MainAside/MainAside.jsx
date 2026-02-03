@@ -26,9 +26,19 @@ import styles from './MainAside.module.css';
 // ];
 
 /**
+ * @param {object} props
+ * @param {
+ *   paths: string[],        // Список путей, к которым применяется конфиг
+ *   showAside: boolean,     // Показывать ли боковую панель на странице
+ *   includeChildren: boolean,   // Применимо ко всем вложенным страницам
+ *   widgets: string[],     // Список виджетов для отображения в aside
+ *   ads: string[],         // Список рекламных блоков для отображения в aside
+ * } props.config
  * Боковая панель страниц с виджетами и рекламой.
  */
-export default function MainAside() {
+export default function MainAside({ config }) {
+  const showWidget = (widgetName) => config.widgets.includes(widgetName);
+
   const dispatch = useDispatch();
   const { poll } = useSelector((state) => state.poll);
 
@@ -63,45 +73,52 @@ export default function MainAside() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topTeamContainer}>
-        <SkeletonTeamRankingWidget status={statusTopTeamsLeaderboard} />
-        {topTeamsLeaderboard.length > 0 ? (
-          <TeamsRankingWidget teams={topTeamsLeaderboard} />
-        ) : null}
-      </div>
-
-      {/* Блок с голосованиями */}
-      {poll && <Poll {...poll} />}
-
-      {!ongoingSeriesPublic.length
-        ? renderSkeletonCards({
-            count: 4,
-            SkeletonComponent: SkeletonSeriesAd,
-            status: fetchSeriesStatus,
-          })
-        : null}
+      {showWidget('teamsRanking') && (
+        <div className={styles.topTeamContainer}>
+          <SkeletonTeamRankingWidget status={statusTopTeamsLeaderboard} />
+          {topTeamsLeaderboard.length > 0 ? (
+            <TeamsRankingWidget teams={topTeamsLeaderboard} />
+          ) : null}
+        </div>
+      )}
 
       {/* Рекламный блок текущих Серий */}
-      {ongoingSeriesPublic.map((s) => (
-        <AdSeries
-          key={s.urlSlug}
-          urlSlug={s.urlSlug}
-          posterUrls={s.posterUrls}
-          name={s.name}
-          dateStart={s.dateStart}
-          dateEnd={s.dateEnd}
-          isCard={true}
-          pageType="schedule"
-        />
-      ))}
+      {showWidget('ongoingSeries') && (
+        <>
+          {ongoingSeriesPublic.map((s) => (
+            <AdSeries
+              key={s.urlSlug}
+              urlSlug={s.urlSlug}
+              posterUrls={s.posterUrls}
+              name={s.name}
+              dateStart={s.dateStart}
+              dateEnd={s.dateEnd}
+              isCard={true}
+              pageType="schedule"
+            />
+          ))}
 
-      <div className={styles.spacer__donate}>
-        <DonateBlock />
-      </div>
+          {!ongoingSeriesPublic.length
+            ? renderSkeletonCards({
+                count: 4,
+                SkeletonComponent: SkeletonSeriesAd,
+                status: fetchSeriesStatus,
+              })
+            : null}
+        </>
+      )}
 
-      <MainInfo />
+      {/* Блок с голосованиями */}
+      {showWidget('poll') && poll && <Poll {...poll} />}
 
-      <MainInfoDev isModerator={isModerator} />
+      {showWidget('donateBlock') && (
+        <div className={styles.spacer__donate}>
+          <DonateBlock />
+        </div>
+      )}
+      {showWidget('siteInfo') && <MainInfo />}
+
+      {showWidget('devInfo') && <MainInfoDev isModerator={isModerator} />}
     </div>
   );
 }

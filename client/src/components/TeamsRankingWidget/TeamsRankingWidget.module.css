@@ -164,7 +164,6 @@
   font-weight: 600;
   margin: 0 0 4px 0;
   color: var(--color-text-primary);
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.2s ease;

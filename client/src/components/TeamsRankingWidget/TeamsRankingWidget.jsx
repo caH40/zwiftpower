@@ -62,11 +62,6 @@ function TeamCard({ team }) {
           <h3 className={styles.teamName}>{name}</h3>
           {/* {shortName && <div className={styles.teamShortName}>{shortName}</div>} */}
         </div>
-        {/* 
-        <div className={styles.teamRating}>
-          <div className={styles.ratingLabel}>Рейтинг</div>
-          <div className={styles.ratingValue}>{rank || '—'}</div>
-        </div> */}
       </div>
     </Link>
   );

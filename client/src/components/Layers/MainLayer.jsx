@@ -13,7 +13,7 @@ import Header from './Header/Header';
 
 function MainLayer() {
   return (
-    <div className="wrapper">
+    <div>
       <CustomizedSnackbars>
         <Header />
         <Body>

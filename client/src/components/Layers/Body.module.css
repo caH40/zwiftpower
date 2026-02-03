@@ -10,15 +10,17 @@
 }
 .container {
   position: relative;
-  padding: 20px 13px 20px 63px;
   z-index: 1;
+  padding: 20px 13px 20px 63px;
   display: grid;
-  grid-template-columns: 1fr 350px;
+  grid-template-columns: 1fr 320px;
   grid-template-rows: auto auto;
   align-items: start;
-  gap: 25px;
+  gap: 15px;
 }
-
+.container:not(:has(.aside)) {
+  grid-template-columns: 1fr;
+}
 /* ====================================================================== */
 @media screen and (max-width: 576px) {
   .container {
@@ -33,12 +35,12 @@
 }
 @media screen and (min-width: 1650px) {
   .container {
-    padding: 20px 136px 20px 186px;
+    padding: 20px 76px 20px 126px;
   }
 }
 
 @media screen and (min-width: 2000px) {
   .container {
-    padding: 20px 236px 20px 286px;
+    padding: 20px 206px 20px 236px;
   }
 }

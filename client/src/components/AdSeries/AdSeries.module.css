@@ -27,6 +27,7 @@
   background: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   z-index: 2;
+  max-width: 90%;
 }
 .title {
   font-size: 22px;
@@ -49,6 +50,7 @@
   transform: scale(1.05);
 }
 .description {
+  font-size: 13px;
   position: absolute;
   bottom: 14px;
   left: 14px;
@@ -56,4 +58,5 @@
   background: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   z-index: 2;
+  max-width: 90%;
 }
