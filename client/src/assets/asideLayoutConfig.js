@@ -14,7 +14,7 @@ export const asideLayoutConfigs = [
       '/teams',
       '/organizers',
       '/series',
-      '/race/statistics/main',
+      '/race/statistics',
       '/riders',
       '/profile',
       '/streams',
