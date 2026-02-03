@@ -18,13 +18,6 @@ import AdSeries from '../AdSeries/AdSeries';
 
 import styles from './MainAside.module.css';
 
-// const asideAdsConfig = [
-//   {
-//     pagePath: '/',
-//     ads: ['ad1', 'ad2'],
-//   },
-// ];
-
 /**
  * @param {object} props
  * @param {
