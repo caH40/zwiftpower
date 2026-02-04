@@ -29,8 +29,8 @@ export const asideLayoutConfigs = [
     paths: ['/zwift', '/organizer'],
     showAside: false,
     includeChildren: true,
-    widgets: ['ongoingSeries'],
-    ads: ['goprotect_1'],
+    widgets: [],
+    ads: [],
   },
   {
     paths: ['/admin'],

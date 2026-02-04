@@ -15,8 +15,10 @@ import MainInfoDev from '../MainInfo/MainInfoDev';
 import SkeletonTeamRankingWidget from '../SkeletonLoading/SkeletonTeamRankingWidget/SkeletonTeamRankingWidget';
 import TeamsRankingWidget from '../TeamsRankingWidget/TeamsRankingWidget';
 import AdSeries from '../AdSeries/AdSeries';
+import AdBannerContainer from '../AdBannerContainer/AdBannerContainer';
 
 import styles from './MainAside.module.css';
+import { adsConfig } from '../../assets/adsConfig';
 
 /**
  * @param {object} props
@@ -31,6 +33,8 @@ import styles from './MainAside.module.css';
  */
 export default function MainAside({ config }) {
   const showWidget = (widgetName) => config.widgets.includes(widgetName);
+
+  const adsProps = config?.ads.map((adName) => adsConfig[adName]).filter((ad) => ad);
 
   const dispatch = useDispatch();
   const { poll } = useSelector((state) => state.poll);
@@ -74,6 +78,10 @@ export default function MainAside({ config }) {
           ) : null}
         </div>
       )}
+
+      {adsProps.map((adProps) => (
+        <AdBannerContainer {...adProps} key={adProps.name} />
+      ))}
 
       {/* Рекламный блок текущих Серий */}
       {showWidget('ongoingSeries') && (

@@ -29,7 +29,8 @@ export function prepareData({
 
   // Установка значений в tags.
   const tagsRules = [...checkboxTags].filter((tag) => tag.checked).flatMap((tag) => tag.value);
-
+  // "starting_powerup=10",
+  //         "powerup_percent=\"10,100\"",
   const timestamp = `timestamp=${Date.now()}`;
 
   // Стандартные по умолчанию настройки, изменяются в  ручную.

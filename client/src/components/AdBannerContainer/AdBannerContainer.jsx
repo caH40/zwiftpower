@@ -11,8 +11,8 @@ const cx = cn.bind(styles);
  * @param {object} props
  * @param {string} props.imgSrc - URL изображения баннера.
  *
- * @param {{name: string, inn?: string, site?: string}} props.advertiserData
- *  - Данные рекламодателя (ФИО/ИП/ООО, ИНН по необходимости, сайт по желанию)
+ * @param {{name: string, inn?: string, erid:string, site?: string}} props.advertiserData
+ *  - Данные рекламодателя (ФИО/ИП/ООО, erid, ИНН по необходимости, сайт по желанию)
  *
  * @param {{name: string, inn?: string, ogrn?: string, site?: string}} props.distributorData
  *  - Данные рекламораспространителя (твоя информация – закон требует!)
@@ -80,6 +80,8 @@ export default function AdBannerContainer({
           <p className={styles.menuP}>Рекламодатель: {advertiserData.name}</p>
 
           {advertiserData.inn && <p className={styles.menuP}>ИНН: {advertiserData.inn}</p>}
+
+          {advertiserData.erid && <p className={styles.menuP}>erid: {advertiserData.erid}</p>}
 
           {advertiserData.site && (
             <a
