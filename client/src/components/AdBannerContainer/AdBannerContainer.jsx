@@ -42,7 +42,13 @@ export default function AdBannerContainer({
 
   return (
     <aside className={styles.wrapper} style={{ width, height }}>
-      <img src={imgSrc} className={cx(!content ? 'fullImg' : 'halfImage')} alt="" />
+      <img
+        src={imgSrc}
+        className={cx(!content ? 'fullImg' : 'halfImage')}
+        alt={`Рекламный баннер ${advertiserData.name}`}
+        width={159}
+        height={318}
+      />
 
       {/* Верхняя плашка */}
       <div className={styles.header}>
