@@ -46,8 +46,8 @@ export default function AdBannerContainer({
         src={imgSrc}
         className={cx(!content ? 'fullImg' : 'halfImage')}
         alt={`Рекламный баннер ${advertiserData.name}`}
-        width={159}
-        height={318}
+        width={318}
+        height={159}
       />
 
       {/* Верхняя плашка */}
