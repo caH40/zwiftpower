@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { adsConfig } from '../../assets/adsConfig';
 import { renderSkeletonCards } from '../../utils/skeleton-cards';
 import { fetchGetOngoingSeries } from '../../redux/features/api/series/fetchSeries';
 import { fetchGetPoll } from '../../redux/features/api/poll/fetchPoll';
@@ -18,7 +19,6 @@ import AdSeries from '../AdSeries/AdSeries';
 import AdBannerContainer from '../AdBannerContainer/AdBannerContainer';
 
 import styles from './MainAside.module.css';
-import { adsConfig } from '../../assets/adsConfig';
 
 /**
  * @param {object} props

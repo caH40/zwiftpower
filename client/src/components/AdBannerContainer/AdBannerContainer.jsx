@@ -65,7 +65,11 @@ export default function AdBannerContainer({
         <div className={styles.content}>
           <div className={styles.info}>
             <h5 className={styles.title}>{content.title}</h5>
-            <h6 className={styles.subtitle}>{content.text}</h6>
+            <h6 className={styles.subtitle}>
+              {content.text.map((t, i) => (
+                <p key={i}>{t}</p>
+              ))}
+            </h6>
           </div>
         </div>
       )}
