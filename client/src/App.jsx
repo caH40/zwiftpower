@@ -72,7 +72,11 @@ function App() {
         {OrganizersPublicRoute()}
         {TeamsRoute({ hasAuth, userInTeam: user.team })}
         {DocumentationRoute({ isAdmin, isOrganizer })}
-        <Route path="*" element={<Page404 />} />
+        <Route
+          path="*"
+          element={<Navigate to="/404" replace state={{ from: location.pathname }} />}
+        />
+        <Route path="/404" element={<Page404 />} />
       </Route>
     </Routes>
   );

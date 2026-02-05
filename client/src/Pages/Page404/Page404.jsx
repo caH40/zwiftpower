@@ -1,22 +1,24 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import useTitle from '../../hook/useTitle';
 import { serverFront } from '../../config/environment';
 import { setBackground } from '../../redux/features/backgroundSlice';
+import useTitle from '../../hook/useTitle';
 
 import styles from './Page404.module.css';
 
 function Page404() {
-  const { '*': wrongUrl } = useParams();
+  const location = useLocation();
+  const wrongUrl = location.state?.from || '';
+
   useTitle('404');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setBackground({ isActive: true, opacity: 0.7 }));
     return () => dispatch(setBackground({ isActive: false }));
-  }, []);
+  }, [dispatch]);
 
   return (
     <section className={styles.page404}>
