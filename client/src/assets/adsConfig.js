@@ -1,3 +1,7 @@
+const distributorData = {
+  name: 'Бережнев Александр Викторович',
+  inn: '263212036872',
+};
 /**
  * Конфигурация рекламных блоков сайта.
  */
@@ -19,10 +23,7 @@ export const adsConfig = {
       site: 'https://www.goprotect.ru',
       erid: '2VtzqxfBD9D',
     },
-    distributorData: {
-      name: 'Бережнев Александр Викторович',
-      inn: '263212036872',
-    },
+    distributorData,
     link: 'https://www.goprotect.ru/p10532?erid=2VtzqxfBD9D',
     ageRestriction: '18+',
   },
