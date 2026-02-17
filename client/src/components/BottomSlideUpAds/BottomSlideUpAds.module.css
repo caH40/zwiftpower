@@ -1,0 +1,124 @@
+/* BottomSlideUpAds.module.css */
+.wrapper {
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  max-height: 150px;
+  background-color: #eeeeeee5;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.closing {
+  transform: translateY(120%);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease-in-out;
+}
+
+.closed {
+  display: none;
+  pointer-events: none;
+}
+
+.closeElement {
+  position: absolute;
+  right: 5px;
+  top: -23px;
+  z-index: 10001;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.closeElement:hover .cross {
+  fill: var(--color-orange-main);
+}
+
+.closeElement:active {
+  transform: scale(0.95);
+}
+
+.closeElement:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Анимация появления */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.open {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Затемнение фона при открытии */
+.wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: rgba(0, 0, 0, 0.5); */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.open::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ====================================================================== */
+@media (max-width: 578px) {
+  .wrapper {
+    padding: 5px;
+    max-height: 120px;
+  }
+
+  .closeElement {
+    top: -20px;
+    right: 2px;
+  }
+
+  .closeElement svg {
+    width: 50px;
+    height: 20px;
+  }
+}
+
+/* Для темной темы */
+@media (prefers-color-scheme: dark) {
+  .closeElement .cross {
+    fill: #ffffff;
+  }
+}

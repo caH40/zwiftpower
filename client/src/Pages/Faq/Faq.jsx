@@ -1,6 +1,4 @@
-// import { useResize } from '../../hook/use-resize';
 import useTitle from '../../hook/useTitle';
-// import { useAd } from '../../hook/useAd';
 import FaqCategory from '../../components/FaqBlock/FaqCategory';
 import FaqIcons from '../../components/FaqBlock/FaqIcons';
 import FaqTypesRace from '../../components/FaqBlock/FaqTypesRace';
@@ -8,7 +6,6 @@ import FaqVarious from '../../components/FaqBlock/FaqVarious';
 import FaqJersey from '../../components/FaqJersey/FaqJersey';
 import FaqNPVI from '../../components/FaqBlock/FaqNPVI';
 import { HelmetFaq } from '../../components/Helmets/HelmetFaq';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import FaqCategoryRS from '../../components/FaqBlock/FaqCategoryRS';
 
 import styles from './Faq.module.css';
@@ -20,8 +17,6 @@ import styles from './Faq.module.css';
 
 function Faq() {
   useTitle('Часто задаваемые вопросы');
-  // const { isScreenLg: isDesktop } = useResize();
-  // useAd(adNumbers);
 
   return (
     <>
@@ -35,7 +30,6 @@ function Faq() {
         <FaqTypesRace />
         <FaqCategory />
       </section>
-      {/* <AdContainer number={adOverFooter} /> */}
     </>
   );
 }

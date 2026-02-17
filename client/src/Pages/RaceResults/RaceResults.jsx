@@ -62,8 +62,6 @@ function RaceResults() {
     }
   }, [eventData, dispatch]);
 
-  // useAd(adNumbers);
-
   return (
     <>
       <HelmetRaceResults
@@ -136,11 +134,6 @@ function RaceResults() {
           </>
         )}
       </section>
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }

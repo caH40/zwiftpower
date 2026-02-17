@@ -6,6 +6,7 @@ import PopupInput from '../UI/PopupInput/PopupInput';
 import PopupFormRelease from '../UI/PopupFormRelease/PopupFormRelease';
 import PopupFormContainer from '../UI/PopupFormContainer/PopupFormContainer';
 import { LoadingPage } from '../../Pages/LoadingPage/LoadingPage';
+// import BottomSlideUpAds from '../BottomSlideUpAds/BottomSlideUpAds';
 
 import Body from './Body';
 import Footer from './Footer/Footer';
@@ -14,6 +15,7 @@ import Header from './Header/Header';
 function MainLayer() {
   return (
     <div>
+      {/* <BottomSlideUpAds /> */}
       <CustomizedSnackbars>
         <Header />
         <Body>

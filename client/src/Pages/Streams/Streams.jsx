@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { useAd } from '../../hook/useAd';
 import { HelmetStreams } from '../../components/Helmets/HelmetStreams';
 import { fetchUsersEnabledStreams } from '../../redux/features/api/streams/fetchUsersEnabledStreams';
 import { resetStreams } from '../../redux/features/api/streams/usersEnabledStreamsSlice';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import useTitle from '../../hook/useTitle';
 import CardStream from '../../components/Streams/CardStream/CardStream';
 import SkeletonCardTwitchStream from '../../components/SkeletonLoading/SkeletonCardTwitchStream/SkeletonCardTwitchStream';
@@ -16,10 +14,6 @@ import { millisecondsInDay } from '../../assets/dates';
 import { useSeparateStreams } from '../../hook/useSeparateStreams';
 
 import styles from './Streams.module.css';
-
-// рекламные блоки на странице
-// const adOverFooter = 21;
-// const adNumbers = [adOverFooter];
 
 const storageKeyBanner = `${lsPrefixStreams}banner`;
 
@@ -48,8 +42,6 @@ export default function Streams() {
   // Разделение каналов на которых идет трансляция и которые находятся в офлайне.
   // Случайное перемешивание трансляций в массивах.
   const { streamsOnline, streamsOffline } = useSeparateStreams(streams);
-
-  // useAd(adNumbers);
 
   return (
     <>
@@ -90,8 +82,6 @@ export default function Streams() {
           </div>
         )}
       </section>
-
-      {/* <AdContainer number={adOverFooter} maxWidth={1105} /> */}
     </>
   );
 }

@@ -123,8 +123,6 @@ function Riders() {
           </div>
         )}
       </section>
-
-      {/* <AdContainer number={isDesktop ? adOverFooter : adUnderHeader} maxWidth={1105} /> */}
     </>
   );
 }

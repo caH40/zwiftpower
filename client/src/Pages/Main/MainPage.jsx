@@ -4,12 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { fetchEvents, resetEventsPreview } from '../../redux/features/api/eventsSlice';
 import { millisecondsIn90Days } from '../../assets/dates';
-import { useResize } from '../../hook/use-resize';
 import { lsPrefixStreams } from '../../constants/localstorage';
 import useBannerVisibility from '../../hook/useBannerVisibility';
 import useTitle from '../../hook/useTitle';
 import CardRacePreview from '../../components/CardRacePreview/CardRacePreview';
-import AdContainer from '../../components/AdContainer/AdContainer';
 import SkeletonCardRacePreview from '../../components/SkeletonLoading/SkeletonCardRacePreview/SkeletonCardRacePreview';
 import { HelmetComponent } from '../../components/Helmets/HelmetComponent';
 import { MAIN_HELMET_PROPS } from '../../assets/helmet-props';
@@ -26,7 +24,6 @@ function MainPage() {
 
   const { organizer } = useSelector((state) => state.checkAuth.value.user);
 
-  const { isScreenLg: isDesktop } = useResize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -94,8 +91,6 @@ function MainPage() {
           <SkeletonCardRacePreview status={statusFetchEvents} />
 
           {shouldRenderCard && renderCards(eventsPreview, 0, 2)}
-
-          {!isDesktop && <AdContainer number={9} maxHeight={400} />}
 
           {shouldRenderCard && renderCards(eventsPreview, 2)}
         </section>

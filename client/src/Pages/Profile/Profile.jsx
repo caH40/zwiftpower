@@ -5,10 +5,7 @@ import { Transition } from 'react-transition-group';
 import cn from 'classnames/bind';
 
 import useTitle from '../../hook/useTitle';
-import { useResize } from '../../hook/use-resize';
 import NavBarProfile from '../../components/UI/NavBarProfile/NavBarProfile';
-// import { useAd } from '../../hook/useAd';
-// import AdContainer from '../../components/AdContainer/AdContainer';
 import ProfileBlock from '../../components/ProfileBlock/ProfileBlock';
 import { fetchUserProfile, resetUserProfile } from '../../redux/features/api/userProfileSlice';
 import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfileBlock/SkeletonProfileBlock';
@@ -16,11 +13,6 @@ import SkeletonProfileBlock from '../../components/SkeletonLoading/SkeletonProfi
 import styles from './Profile.module.css';
 
 const cx = cn.bind(styles);
-
-// рекламные блоки на странице
-// const adOverFooter = 4;
-// const adUnderHeader = 14;
-// const adNumbers = [adUnderHeader, adOverFooter];
 
 /**
  * Лэйаут для страниц профиля с блоком изображения и основных данных райдера.
@@ -84,11 +76,6 @@ function Profile() {
 
         <Outlet />
       </section>
-      {/* {isDesktop ? (
-        <AdContainer number={adOverFooter} maxWidth={1105} />
-      ) : (
-        <AdContainer number={adUnderHeader} />
-      )} */}
     </>
   );
 }
