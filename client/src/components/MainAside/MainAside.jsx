@@ -56,7 +56,7 @@ export default function MainAside({ config }) {
 
   // Запрос данных для виджета голосования.
   useEffect(() => {
-    dispatch(fetchGetPoll({ pollId: '691c9016c52f70c6bca2771f' }));
+    dispatch(fetchGetPoll({ pollId: '6997f974e87f0f2094695c31' }));
 
     return () => dispatch(resetPoll());
   }, [dispatch]);

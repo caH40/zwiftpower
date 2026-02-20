@@ -6,12 +6,15 @@ export const asideLayoutConfigs = [
     widgets: ['poll', 'ongoingSeries', 'teamsRanking', 'donateBlock', 'siteInfo', 'devInfo'],
     ads: ['goprotect_1'],
   },
-
+  {
+    paths: ['/race/schedule', '/race/results', '/teams'],
+    showAside: true,
+    includeChildren: true,
+    widgets: ['poll', 'donateBlock'],
+    ads: ['goprotect_1'],
+  },
   {
     paths: [
-      '/race/schedule',
-      '/race/results',
-      '/teams',
       '/organizers',
       '/series',
       '/race/statistics',
@@ -22,7 +25,7 @@ export const asideLayoutConfigs = [
     ],
     showAside: true,
     includeChildren: true,
-    widgets: ['teamsRanking', 'ongoingSeries', 'donateBlock'],
+    widgets: ['teamsRanking', 'poll', 'ongoingSeries', 'donateBlock'],
     ads: ['goprotect_1'],
   },
   {
