@@ -32,25 +32,25 @@ function TableUserResults({ results }) {
   // id ячеек столбца на который наведен курсор мышки.
   const [columnActive, setColumnActive] = useState(false);
 
-  // const resultSortedAndFiltered = useSortUserResults(results);
-
   return (
     <table className={styles.table}>
       <caption className={cx('caption', 'hidden')}>{getCaption(results[0])}</caption>
       <Thead columnsCP={columnsCP} />
       <tbody>
         {results?.map((result) => {
-          const isDsq = result.isDisqualification;
-          const dsqType = result.disqualification;
-          const dsqDescription = result.disqualificationDescription;
           return (
             <tr className={styles.hover} key={result._id}>
               <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}
-                  isDsq={isDsq}
-                  dsqType={dsqType}
-                  dsqDescription={dsqDescription}
+                  disqualification={
+                    result.isDisqualification
+                      ? {
+                          reason: result.disqualificationDescription || '',
+                          label: result.disqualification,
+                        }
+                      : null
+                  }
                 />
               </td>
 

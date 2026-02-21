@@ -15,15 +15,20 @@ const TdRank = ({ value, disqualification }) => {
   }
 
   // при ранке 0 должен быть дисквал(выставляется на сервере)
-  // const dsqObject = dsqValues.find((elm) => elm.type === dsqType);
+  const dsqCustomLabel = dsqValues.find((elm) => elm.type === disqualification?.label)?.label;
+
   // для тех кто дисквалифицирован
   if (disqualification) {
     return (
       <>
         {disqualification ? (
           <div className={styles.rank}>
-            <DSQBox tooltip={`Дисквалификация: ${disqualification.reason}`}>
-              {disqualification.label}
+            <DSQBox
+              tooltip={
+                disqualification.reason ? `Дисквалификация: ${disqualification.reason}` : ''
+              }
+            >
+              {dsqCustomLabel ?? disqualification.label}
             </DSQBox>
           </div>
         ) : null}

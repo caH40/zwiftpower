@@ -124,7 +124,6 @@ function RaceResults() {
               <TableRaceResults
                 results={resultsPrepared.filter((result) => result.disqualification === 'DNF')}
                 event={eventData}
-                forDNF={true}
               />
               <ServiceBox
                 updated={eventData.updated}

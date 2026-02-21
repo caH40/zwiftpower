@@ -29,7 +29,7 @@ import { getCaption } from './utils';
 
 const cx = classnames.bind(styles);
 
-function TableRaceResults({ results, event, forDNF }) {
+function TableRaceResults({ results, event }) {
   const { role } = useSelector((state) => state.checkAuth.value.user);
   const isAdmin = ['admin'].includes(role);
   // показывать сквозную нумерацию в таблице
@@ -57,8 +57,6 @@ function TableRaceResults({ results, event, forDNF }) {
         {resultSortedAndFiltered?.map((result, index) => {
           const profile = result.profileData;
           const isDsq = result.isDisqualification;
-          const dsqType = result.disqualification;
-          const dsqDescription = result.disqualificationDescription;
 
           return (
             <tr
@@ -70,9 +68,7 @@ function TableRaceResults({ results, event, forDNF }) {
               <td className={styles.centerTd}>
                 <TdRank
                   value={result.rankEvent}
-                  isDsq={forDNF ? true : isDsq}
-                  dsqType={forDNF ? 'DNF' : dsqType}
-                  dsqDescription={dsqDescription}
+                  disqualification={isDsq ? { label: result.disqualification } : null}
                 />
               </td>
 
