@@ -99,8 +99,9 @@ export class TourGCManager extends AbstractBaseGCManager {
 
         // Если результаты этапа не учитываются в генеральной классификации.
         const needCount = stageOrders.scoringStageOrders.includes(stageOrder);
+
         if (!needCount) {
-          // Удаляем этап из обязательных, если он был пройден.
+          // Удаляем этап из списка обязательных, если он был пройден.
           requiredStages.delete(stageOrder);
 
           continue;
@@ -264,13 +265,16 @@ export class TourGCManager extends AbstractBaseGCManager {
   };
 
   /**
-   * Получение всех и обязательных для ГК номеров этапов.
+   * Получение всех и обязательных этапов для ГК номеров.
    */
   private getStageOrders = (stages: TSeriesStage[]): TAllStageOrders => {
-    // Список списка всех, обязательных этапов, этапов результаты которых учитываются для расчета генеральной классификации, отфильтрованный от дублей.
+    // Список всех обязательных этапов, результаты которых учитываются для расчета генеральной классификации, отфильтрованный от дублей.
     const { allStageOrders, scoringStageOrders, requiredStageOrders } =
       stages.reduce<TAllStageOrders>(
         (acc, cur) => {
+          // Этап обязательный
+          // Если уже не добавлен в scoringStageOrders
+          // Уже есть результаты этапа (хотя бы первых участников)
           if (
             cur.includeResults &&
             !acc.scoringStageOrders.includes(cur.order) &&
@@ -283,7 +287,11 @@ export class TourGCManager extends AbstractBaseGCManager {
             acc.allStageOrders.push(cur.order);
           }
 
-          if (!acc.requiredStageOrders.includes(cur.order) && cur.requiredForGeneral) {
+          if (
+            !acc.requiredStageOrders.includes(cur.order) &&
+            cur.requiredForGeneral &&
+            cur.hasResults
+          ) {
             acc.requiredStageOrders.push(cur.order);
           }
 
