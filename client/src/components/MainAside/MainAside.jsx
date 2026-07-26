@@ -112,11 +112,11 @@ export default function MainAside({ config }) {
       {/* Блок с голосованиями */}
       {showWidget('poll') && poll && <Poll {...poll} />}
 
-      {showWidget('donateBlock') && (
+      {/* {showWidget('donateBlock') && (
         <div className={styles.spacer__donate}>
           <DonateBlock />
         </div>
-      )}
+      )} */}
       {showWidget('siteInfo') && <MainInfo />}
 
       {showWidget('devInfo') && <MainInfoDev isModerator={isModerator} />}
