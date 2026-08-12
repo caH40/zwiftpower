@@ -137,7 +137,9 @@ export class SiteServicesService {
 
     const now = new Date();
 
-    return currentEntity.periodSlots.some((s) => s.endDate >= now);
+    return currentEntity.periodSlots.some(
+      (s) => s.startDate <= now && s.endDate >= now && !s.isPaused
+    );
   }
 
   /**
