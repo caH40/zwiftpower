@@ -136,7 +136,9 @@ export class PeriodSubscriptionService {
     entity: { periodSlots: TSubscriptionPeriodSlot[] },
     now: Date
   ): boolean {
-    return entity.periodSlots.some((s) => s.endDate >= now);
+    return entity.periodSlots.some(
+      (s) => s.startDate <= now && s.endDate >= now && !s.isPaused
+    );
   }
 
   /**
