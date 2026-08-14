@@ -148,6 +148,7 @@ export class SiteServicesService {
   public async getAll(userId: string): Promise<{
     expired: TSubscriptionPeriodSlotWithEntity[];
     active: TSubscriptionPeriodSlotWithEntity[];
+    upcoming: TSubscriptionPeriodSlotWithEntity[];
   }> {
     const servicesDB = await PaidSiteServiceAccessModel.findOne(
       { user: userId },
@@ -155,7 +156,7 @@ export class SiteServicesService {
     ).lean<{ services: TSiteService[] }>();
 
     if (!servicesDB) {
-      return { expired: [], active: [] };
+      return { expired: [], active: [], upcoming: [] };
     }
 
     const now = new Date();
@@ -174,13 +175,19 @@ export class SiteServicesService {
     const response = slots.reduce<{
       expired: TSubscriptionPeriodSlotWithEntity[];
       active: TSubscriptionPeriodSlotWithEntity[];
+      upcoming: TSubscriptionPeriodSlotWithEntity[];
     }>(
       (acc, cur) => {
-        cur.expired ? acc.expired.push(cur) : acc.active.push(cur);
+        if (cur.expired) {
+          acc.expired.push(cur);
+          return acc;
+        }
+
+        this.isSlotUpcoming(cur, now) ? acc.upcoming.push(cur) : acc.active.push(cur);
 
         return acc;
       },
-      { expired: [], active: [] }
+      { expired: [], active: [], upcoming: [] }
     );
 
     return response;
@@ -191,5 +198,12 @@ export class SiteServicesService {
    */
   private isSlotExpired(slot: TSubscriptionPeriodSlot, now: Date): boolean {
     return now > slot.endDate;
+  }
+
+  /**
+   * Проверяет, что слот еще не начался.
+   */
+  private isSlotUpcoming(slot: TSubscriptionPeriodSlot, now: Date): boolean {
+    return now < slot.startDate;
   }
 }

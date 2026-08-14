@@ -13,6 +13,9 @@
 .green {
   background: var(--gradient-green);
 }
+.swampy {
+  background: var(--gradient-swampy);
+}
 .red {
   background: var(--gradient-red);
 }

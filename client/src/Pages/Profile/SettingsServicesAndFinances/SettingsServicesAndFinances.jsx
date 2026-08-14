@@ -35,6 +35,17 @@ export default function SettingsServicesAndFinances() {
       </div>
 
       <div>
+        <h3 className={styles.title}>Ожидающие активации</h3>
+        {siteServices.upcoming?.length > 0 ? (
+          <SiteServicesBlock services={siteServices.upcoming} theme={'swampy'} />
+        ) : (
+          <div className={styles.wrapper__block}>
+            <div>Нет сервисов</div>
+          </div>
+        )}
+      </div>
+
+      <div>
         <h3 className={styles.title}>Пополнить или оплатить сервисы</h3>
 
         {zwiftIdAuth && (
