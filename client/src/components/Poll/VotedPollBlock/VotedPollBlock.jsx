@@ -5,8 +5,15 @@ import styles from './VotedPollBlock.module.css';
  * -название данного голоса;
  * -за данный блок проголосовал или нет пользователь, который видит данное голосование.
  */
-export default function VotedPollBlock({ title, percentages, isVoteMine, isUserAnswered }) {
-  const barWidth = percentages !== 0 ? percentages : 1;
+export default function VotedPollBlock({
+  title,
+  percentages,
+  maxPercent = 100,
+  isVoteMine,
+  isUserAnswered,
+}) {
+  const barWidth = percentages !== 0 ? (percentages / maxPercent) * 100 : 1;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.textContainer}>

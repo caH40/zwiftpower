@@ -81,6 +81,9 @@ export default function Poll({
 
   const sendAnswers = usePoll({ selectedOptionIds, pollId: _id });
 
+  const maxPollAnswers = Math.max(...pollAnswers.map((elm) => elm.total));
+  const maxPercent = Math.floor((maxPollAnswers * 100) / totalAnswers);
+
   return (
     <div className={styles.wrapper}>
       {isAuth && userHadLinkedZwiftId ? (
@@ -120,6 +123,7 @@ export default function Poll({
                   user.zwiftId && isVoteMine(user.zwiftId, pollAnswers, option.optionId)
                 }
                 percentages={Math.floor((currentAnswers * 100) / totalAnswers)}
+                maxPercent={maxPercent}
                 title={option.title}
                 isUserAnswered={isUserAnswered}
               />
