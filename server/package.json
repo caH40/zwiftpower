@@ -69,5 +69,9 @@
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "^5.3.3",
     "vitest": "^4.0.3"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true,
+    "sharp@0.33.5": true
   }
 }
