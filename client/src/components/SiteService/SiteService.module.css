@@ -36,3 +36,6 @@
 .title::after {
   content: ':';
 }
+.error {
+  color: var(--error);
+}

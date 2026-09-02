@@ -24,6 +24,13 @@ export default function SiteService({ service, theme }) {
       <dd className={styles.description}>
         {service.amount?.value} {service.amount?.currency}
       </dd>
+
+      {service.isPaused && (
+        <>
+          <dt className={styles.title}>Пауза</dt>
+          <dd className={cn(styles.description, styles.error)}>Активна</dd>
+        </>
+      )}
     </dl>
   );
 }
