@@ -17,7 +17,8 @@ import { getAlert } from '../../redux/features/alertMessageSlice';
 import styles from './Statistics.module.css';
 
 // Существует только один сезон.
-const seasonLabel = '2025-2026';
+// const seasonLabel = '2025-2026';
+const seasonLabel = '2026-2027';
 
 /**
  * Страница статистики команд.
