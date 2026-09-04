@@ -9,6 +9,7 @@ import backgroundSlice from '../features/backgroundSlice';
 import filterCategorySlice from '../features/filterCategorySlice';
 import filterGenderSlice from '../features/filterGenderSlice';
 import filterWattsSlice from '../features/filterWattsSlice';
+import filterSeasonSlice from '../features/filterSeason';
 import columnsCPSlice from '../features/columnsCPSlice';
 import eventsSlice from '../features/api/eventsSlice';
 import resultsUpdateSlice from '../features/api/resultsUpdateSlice';
@@ -70,6 +71,7 @@ export default configureStore({
     filterCategory: filterCategorySlice,
     filterGender: filterGenderSlice,
     filterWatts: filterWattsSlice,
+    filterSeason: filterSeasonSlice,
     columnsCP: columnsCPSlice,
     fetchEventResult: eventResultSlice,
     fetchEvents: eventsSlice,

@@ -7,18 +7,17 @@ import {
   fetchTeamParticipantRatingResults,
   fetchTeamsLeaderboard,
 } from '../../redux/features/api/team/fetchTeam';
-import { resetTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
 import useTitle from '../../hook/useTitle';
 import TableTeamRanking from '../../components/Tables/TableTeamRanking/TableTeamRanking';
 import SkeletonTable from '../../components/SkeletonLoading/SkeletonTable/SkeletonTable';
+import SimpleSelectFunction from '../../components/UI/SimpleSelect/SimpleSelectFunction';
+import { resetTeamsLeaderboard } from '../../redux/features/api/team/teamSlice';
 import { openPopupFormContainer } from '../../redux/features/popupFormContainerSlice';
 import { getAlert } from '../../redux/features/alertMessageSlice';
+import { setFilterSeason } from '../../redux/features/filterSeason';
+import { optionsSeasons } from '../../assets/options';
 
 import styles from './Statistics.module.css';
-
-// Существует только один сезон.
-// const seasonLabel = '2025-2026';
-const seasonLabel = '2026-2027';
 
 /**
  * Страница статистики команд.
@@ -26,6 +25,11 @@ const seasonLabel = '2026-2027';
 export default function TeamsStatistics() {
   useTitle('Рейтинг команд');
   const { status, teamsLeaderboard } = useSelector((state) => state.team);
+
+  const {
+    value: { seasonLabel },
+  } = useSelector((state) => state.filterSeason);
+
   const dispatch = useDispatch();
 
   const showResults = (results) =>
@@ -60,13 +64,22 @@ export default function TeamsStatistics() {
     return () => {
       dispatch(resetTeamsLeaderboard());
     };
-  }, [dispatch]);
+  }, [dispatch, seasonLabel]);
 
   return (
     <section className={styles.wrapper}>
       <HelmetComponent {...STATISTICS_HELMET_PROPS.TEAM_STATISTICS} />
 
       <article className={styles.block__table}>
+        <div className={styles.box__filter}>
+          <SimpleSelectFunction
+            reducer={(name) => dispatch(setFilterSeason({ name }))}
+            options={optionsSeasons}
+            value={seasonLabel}
+            closeEmptyOption={true}
+          />
+        </div>
+
         {/* Скелетон загрузки для Таблицы */}
         {teamsLeaderboard.length === 0 ? (
           <SkeletonTable status={status} rows={10} height={70} />

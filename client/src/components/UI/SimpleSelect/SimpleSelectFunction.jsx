@@ -14,6 +14,7 @@ function SimpleSelectFunction({ reducer, value, name, disabled, options, closeEm
 
       <div className={styles.wrapper__select}>
         <select
+          id={name}
           className={styles.select}
           value={value}
           onChange={(e) => reducer(e.target.value)}

@@ -2,6 +2,7 @@
  * Текущий сезон, указывается при первоначальном запросе для некоторых страниц: catchup
  */
 export const seasonCurrent = '2024';
+export const seasonCurrentLabel = '2026-2027';
 /**
  * Параметры для Variability Index
  * color - цвет отображения зоны
