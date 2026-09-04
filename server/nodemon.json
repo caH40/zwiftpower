@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/zp-server.ts"
+  "exec": "node_modules\\.bin\\tsx.cmd --no-warnings=ExperimentalWarning ./src/zp-server.ts"
 }
