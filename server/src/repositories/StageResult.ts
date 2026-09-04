@@ -1,4 +1,4 @@
-import { QueryOptions, Types, UpdateQuery } from 'mongoose';
+import { Types, UpdateQuery } from 'mongoose';
 import { StageResultModel } from '../Model/StageResult.js';
 import { FilterQuery } from 'mongoose';
 import { TDisqualification, TStageResult } from '../types/model.interface.js';
@@ -151,7 +151,7 @@ export class StageResultRepository {
   /**
    * Обновление результатов этапа.
    */
-  async updateMany(updates: { _id: string; query: QueryOptions<TStageResult> }[]) {
+  async updateMany(updates: { _id: string; query: Partial<TStageResult> }[]) {
     return StageResultModel.bulkWrite(
       updates.map((u) => ({
         updateOne: {

@@ -14,7 +14,7 @@ import {
 } from '../service/admin/club.js';
 
 // types
-import { ClubSchema, OrganizerSchema, TBanCode } from '../types/model.interface.js';
+import { ClubSchema, TBanCode, TOrganizer } from '../types/model.interface.js';
 import { ClubZwift } from '../types/zwiftAPI/clubFromZwift.interface.js';
 import {
   deleteOrganizersService,
@@ -231,7 +231,7 @@ export const deleteClubModerator = async (req: Request, res: Response) => {
  */
 export const getOrganizers = async (req: Request, res: Response) => {
   try {
-    const organizers: OrganizerSchema[] = await getOrganizersService();
+    const organizers: TOrganizer[] = await getOrganizersService();
 
     res.status(200).json(organizers);
   } catch (error) {

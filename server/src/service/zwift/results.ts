@@ -1,5 +1,4 @@
 import { getRequest } from './api/request-get.js';
-import { sleep } from '../sleep.js';
 
 // types
 import { GetResultsArg, ResultsEventAdditional } from '../../types/types.interface.js';
@@ -33,8 +32,8 @@ export async function getResults({ subgroupObj, subgroupLabel = 'E', token }: Ge
     start += 50; // увеличение стартового номера запроса результатов
     resultsQuantity = eventData.entries.length;
 
-    const apiRateLimitPauseMs = 600; // ~1.6 запроса/сек — с запасом под лимит 2 rps
-    await sleep(apiRateLimitPauseMs);
+    // const apiRateLimitPauseMs = 600; // ~1.6 запроса/сек — с запасом под лимит 2 rps
+    // await sleep(apiRateLimitPauseMs);
   }
   const results = convertArrayOfResults(resultsSubgroup);
   return results;

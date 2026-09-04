@@ -3,13 +3,13 @@ import slugify from 'slugify';
 import { Organizer } from '../../Model/Organizer.js';
 
 // types
-import { OrganizerSchema, TOrganizer } from '../../types/model.interface.js';
+import { TOrganizer } from '../../types/model.interface.js';
 import { handleAndLogError } from '../../errors/error.js';
 
 /**
  * Сервис получения всех Организаторов заезда
  */
-export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
+export const getOrganizersService = async (): Promise<TOrganizer[]> => {
   const organizersDB = await Organizer.find().populate('creator').lean();
 
   // Проверка на случай возможного удаления User из БД, который создавал Организатора.
@@ -25,7 +25,7 @@ export const getOrganizersService = async (): Promise<OrganizerSchema[]> => {
     }
   }
 
-  return organizersDB;
+  return organizersDB as unknown as TOrganizer[];
 };
 
 /**

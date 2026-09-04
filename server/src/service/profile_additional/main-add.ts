@@ -45,9 +45,5 @@ export const addMainProfileZwift = async ({
     age: profileMainZwiftAPI.age,
   };
 
-  await ZwiftResult.updateMany(
-    { profileId: zwiftIdAdditional },
-    { $set: { profileDataMain } },
-    { new: true }
-  );
+  await ZwiftResult.updateMany({ profileId: zwiftIdAdditional }, { $set: { profileDataMain } });
 };
