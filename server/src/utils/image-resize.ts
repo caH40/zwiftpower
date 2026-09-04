@@ -20,9 +20,13 @@ export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promi
       .webp({ quality: 80 }) // Конвертация в WebP с качеством 80
       .toBuffer();
 
-    return new File([webpBuffer], `${file.name.replace(/\.[^/.]+$/, '')}-${sizeKey}.webp`, {
-      type: 'image/webp',
-    });
+    return new File(
+      [new Uint8Array(webpBuffer)],
+      `${file.name.replace(/\.[^/.]+$/, '')}-${sizeKey}.webp`,
+      {
+        type: 'image/webp',
+      }
+    );
   }
 
   // Получаем параметры изменения размера
@@ -39,7 +43,7 @@ export async function convertToWebP(file: File, sizeKey: TAvailableSizes): Promi
 
   // Создание нового объекта File
   return new File(
-    [resizedWebPBuffer],
+    [new Uint8Array(resizedWebPBuffer)],
     `${file.name.replace(/\.[^/.]+$/, '')}-${sizeKey}.webp`,
     { type: 'image/webp' }
   );

@@ -18,7 +18,7 @@ export function convertMulterFileToWebFile({
 
   const fileName = newFileName || file.originalname;
 
-  return new File([file.buffer], fileName, {
+  return new File([new Uint8Array(file.buffer)], fileName, {
     type: file.mimetype,
   });
 }
