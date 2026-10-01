@@ -6,7 +6,7 @@ import { updateAllPowerCurve } from './updates/power-curve.js';
 import { scheduleResultsUpdate } from './updates/results_event/results-events.js';
 import { updateScheduleEvents } from './updates/schedule/events.js';
 import { updateStartInfo } from './updates/schedule/start.js';
-import { updateAccessToken } from './zwift/token.js';
+// import { updateAccessToken } from './zwift/token.js';
 import { handleAndLogError } from '../errors/error.js';
 import { createSitemap } from './sitemap/generate-sitemap.js';
 import {
@@ -66,7 +66,7 @@ export async function setTimers() {
       console.log(new Date().toLocaleString(), 'Обновление токенов и фитфайлов мощности'); // eslint-disable-line
       await removeActivityFromFitFile();
       await updateAllRidersProfiles();
-      await updateAccessToken();
+      // await updateAccessToken();
       await updateAllPowerCurve();
       await updateRidersDailyMetrics();
     },
