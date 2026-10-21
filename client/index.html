@@ -51,7 +51,24 @@
     </div>
   </noscript>
 
-  <div id="root"></div>
+  <div id="root">
+    <p style="padding:20px;font:14px Roboto,Arial,sans-serif">
+      Загрузка… Если сообщение не исчезло — включите cookie и обновите страницу.
+    </p>
+  </div>
+  <script>
+    window.addEventListener('error', function (e) {
+      document.body.insertAdjacentHTML(
+        'afterbegin',
+        '<pre style="position:fixed;top:0;left:0;right:0;z-index:99999;max-height:60vh;' +
+        'overflow:auto;white-space:pre-wrap;font:12px monospace;color:#b00020;' +
+        'background:#fff5f5;padding:12px;margin:0">' +
+        String((e.message || '') + ' ' + (e.filename || '') + ':' + (e.lineno || ''))
+          .replace(/[<>&]/g, '') +
+        '</pre>'
+      );
+    });
+  </script>
   <script type="module" src="/src/index.jsx"></script>
 </body>
 
