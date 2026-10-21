@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { lsNotificationVolume } from '../../constants/localstorage';
+import { getItem } from '../../utils/safeStorage';
 
-const dataFromLS = localStorage.getItem(lsNotificationVolume);
+const dataFromLS = getItem(lsNotificationVolume);
 
 const initialState = {
   volume: dataFromLS === null || isNaN(+dataFromLS) ? 0.2 : dataFromLS,

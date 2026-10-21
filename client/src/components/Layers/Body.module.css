@@ -21,6 +21,42 @@
 .container:not(:has(.aside)) {
   grid-template-columns: 1fr;
 }
+
+/**
+ * Плашка «в браузере отключены cookie».
+ * Закреплена снизу, чтобы не конфликтовать с фиксированным хедером (60px)
+ * и `margin-top: 60px` у Body — вёрстка страниц не сдвигается.
+ */
+.notice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 8px 16px calc(10px + env(safe-area-inset-bottom));
+  background-color: var(--color-yellow-5-transparent);
+  border-top: 2px solid var(--color-orange-main);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+
+  color: var(--color-orange-main);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media screen and (max-width: 576px) {
+  .notice {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    font-size: 9px;
+    line-height: 1.25;
+  }
+}
 /* ====================================================================== */
 @media screen and (max-width: 576px) {
   .container {

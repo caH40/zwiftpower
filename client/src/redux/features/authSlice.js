@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { serverExpress } from '../../config/environment';
 import { lsAccessToken } from '../../constants/localstorage';
+import { setItem } from '../../utils/safeStorage';
 
 export const checkAuth = createAsyncThunk('auth/getAuth', async () => {
   try {
@@ -82,16 +83,16 @@ const authSlice = createSlice({
       }
 
       state.value = { status: true, user: data.user };
-      localStorage.setItem(lsAccessToken, data.accessToken);
+      setItem(lsAccessToken, data.accessToken);
       state.error = null;
       state.status = 'resolved';
     });
 
     builder.addCase(checkAuth.rejected, (state, action) => {
-      state = { status: false, user: {} };
-      localStorage.setItem(lsAccessToken, '');
+      state.value = initialState.value; // было: state = { status: false, user: {} }
       state.status = 'rejected';
       state.error = action.payload;
+      setItem(lsAccessToken, '');
     });
   },
 });

@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const dataFromLocalStorage = JSON.parse(localStorage.getItem('columnsRaceResults'));
+import { getJSON, setJSON } from '../../utils/safeStorage';
+
+const dataFromLocalStorage = getJSON('columnsRaceResults');
+
 const initialState = {
   value: dataFromLocalStorage || [
     { id: 100, interval: 5, name: '5с', nameInMenu: '5 секунд', isVisible: true },
@@ -30,7 +33,7 @@ const columnsCPSlice = createSlice({
         return cp;
       });
       state.value = newColumns;
-      localStorage.setItem('columnsRaceResults', JSON.stringify(newColumns));
+      setJSON('columnsRaceResults', newColumns);
     },
   },
 });

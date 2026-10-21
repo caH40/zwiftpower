@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { serverExpress } from '../../config/environment';
 import { lsAccessToken } from '../../constants/localstorage';
+import { setItem } from '../../utils/safeStorage';
 
 export const myAxios = axios.create({
   // что бы куки цеплялись автоматически
@@ -26,7 +27,7 @@ myAxios.interceptors.response.use(
           url: 'http://localhost:5000/api/auth/refresh',
           withCredentials: true,
         });
-        localStorage.setItem(lsAccessToken, response.data.accessToken);
+        setItem(lsAccessToken, response.data.accessToken);
         return myAxios.request(originalRequest);
       } catch (error) {
         console.log('After refresh. Need auth.'); // eslint-disable-line no-console
