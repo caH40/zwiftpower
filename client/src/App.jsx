@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { sendMetrika } from './yandex/metrika.js';
+// import { sendMetrika } from './yandex/metrika.js';
 import { useUserRole } from './hook/useUserRole.js';
 import MainLayer from './components/Layers/MainLayer';
 import useFirstAuth from './hook/useFirstAuth';
@@ -39,7 +39,7 @@ function App() {
   const user = useSelector((state) => state.checkAuth.value.user);
 
   const location = useLocation();
-  sendMetrika('hit', location.pathname);
+  // sendMetrika('hit', location.pathname);
 
   // Пока не получен ответ от сервера авторизации (положительный или отрицательный) отображается загрузка
   if (status === 'loading' || status === 'idle') {
