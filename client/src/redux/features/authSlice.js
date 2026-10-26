@@ -9,10 +9,12 @@ export const checkAuth = createAsyncThunk('auth/getAuth', async () => {
   try {
     // запускается при первом запуске браузера, если refreshToken "живой" придет новый accessToken
     // и произойдет авторизация авторизация в браузере
+
     const response = await axios({
       method: 'post',
       url: `${serverExpress}/api/auth/refresh`,
       withCredentials: true,
+      timeout: 5000, // если сервер не ответил — не держим пользователя в вечной загрузке
     });
 
     return response.data;
