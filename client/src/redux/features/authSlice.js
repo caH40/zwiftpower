@@ -14,7 +14,7 @@ export const checkAuth = createAsyncThunk('auth/getAuth', async () => {
       method: 'post',
       url: `${serverExpress}/api/auth/refresh`,
       withCredentials: true,
-      timeout: 5000, // если сервер не ответил — не держим пользователя в вечной загрузке
+      timeout: 8000, // если сервер не ответил — не держим пользователя в вечной загрузке
     });
 
     return response.data;
