@@ -1,0 +1,924 @@
+Почему можно не открываться сайт https://zwiftpower.ru Хотя у других открывается. Пробовала
+всеми возможными способами-с впн и без, по мобильной и домашней сети, с телефона и компьютера.
+Да, тут уже похоже **не на обычную проблему телефона/браузера**. Я проверил сам `zwiftpower.ru`:
+сайт сейчас отвечает и доступен извне — главная страница у меня открывается.
+[Zwiftpower](https://zwiftpower.ru/?utm_source=chatgpt.com)
+
+А у тебя очень показательная картина:
+
+- не открывается **на телефоне и компьютере**;
+- не открывается **через домашний и мобильный интернет**;
+- пробовала **с VPN и без VPN**;
+- при этом у других сайт работает.
+
+Это сильно сужает круг причин.
+
+### Что я бы подозревал в первую очередь
+
+**1. Проблема с твоим IP/диапазоном IP или с защитой самого сайта.**
+
+Если сайт использует CDN/WAF/антибот-защиту, он может блокировать не устройство, а определённые
+IP или диапазоны. Тогда смена браузера не помогает. А если твой VPN-сервис выдаёт IP из
+диапазона, который тоже попал под блокировку, VPN тоже не спасает.
+
+**2. DNS — но менее вероятно.**
+
+Поскольку ты проверяла разные сети, обычная проблема DNS на домашнем роутере маловероятна. Но
+DNS можно проверить отдельно через `1.1.1.1` или `8.8.8.8`.
+
+**3. IPv6.**
+
+Вот это интересно. Бывает ситуация, когда домен имеет IPv4 и IPv6, а маршрут по IPv6 у
+конкретного пользователя сломан. Тогда браузер пытается идти по IPv6 и получает таймаут.
+Особенно интересно проверить, если **одновременно на компьютере и телефоне используется один и
+тот же тип подключения/оператор**.
+
+**4. Сайт мог заблокировать конкретный диапазон адресов.**
+
+Причём это не обязательно какая-то официальная блокировка. Серверная защита может сама решить,
+что определённые IP подозрительные.
+
+И ещё момент: у самого **ZwiftPower были проблемы 21–23 сентября 2026 года**, включая таймауты,
+но официальный статус Zwift сейчас показывает эти инциденты как устранённые.
+[Zwift Status](https://status.zwift.com/history?utm_source=chatgpt.com) Поэтому массовый сбой
+сейчас маловероятен.
+
+### Давай лучше не гадать, а за 2 минуты определим причину
+
+Мне от тебя нужен **текст ошибки**, который появляется при открытии `https://zwiftpower.ru`.
+
+Например:
+
+- `ERR_CONNECTION_TIMED_OUT`
+- `ERR_CONNECTION_RESET`
+- `ERR_CONNECTION_REFUSED`
+- `DNS_PROBE_FINISHED_NXDOMAIN`
+- `403 Forbidden`
+- просто бесконечно крутится загрузка
+- «Не удаётся получить доступ к сайту»
+
+**Скинь скрин этой ошибки** — по ней уже можно довольно точно понять, где именно рвётся
+соединение.
+
+И я могу дальше провести тебя буквально по шагам: **проверим DNS → IPv4/IPv6 → доступность порта
+→ выясним, видит ли сайт твой IP и где именно происходит обрыв**.
+
+Ошибку никакую не показывает. Просто чистая страница и всё. Попробовала сейчас другой браузер -
+тоже самое
+
+Ага, **чистая страница без ошибки** — это уже интереснее. И я сейчас перепроверил: сам
+`zwiftpower.ru` снаружи доступен, поисковый робот получает нормальную главную страницу.
+[Zwiftpower](https://zwiftpower.ru/?utm_source=chatgpt.com)
+
+При этом у **ZwiftPower действительно были проблемы 21–23 сентября 2026 года**, включая таймауты
+и повторное падение 23 сентября. Сейчас официальный статус Zwift показывает всё как
+восстановленное. [Zwift Status](https://status.zwift.com/?utm_source=chatgpt.com)
+
+Но твоя ситуация — **два устройства + две сети + VPN + разные браузеры + просто белая страница**
+— заставляет меня подозревать не сеть, а именно **что-то, что сайт отдаёт браузеру и что не
+исполняется/ломается у тебя**.
+
+### Давай сделаем один очень показательный тест
+
+На компьютере открой:
+
+**https://zwiftpower.ru/**
+
+и нажми:
+
+**Ctrl + Shift + R**
+
+Если опять белый экран — нажми **F12 → Console**.
+
+Там могут появиться красные сообщения. **Сфотографируй только окно Console и пришли мне.**
+Ничего специально там не меняй.
+
+Особенно интересуют сообщения вида:
+
+- `Failed to load resource`
+- `ERR_BLOCKED_BY_CLIENT`
+- `CORS`
+- `Content Security Policy`
+- `JavaScript`
+- `Uncaught...`
+- `403`
+- `500`
+
+### А ещё проще — проверим, загружается ли вообще HTML
+
+На компьютере нажми **Ctrl+U** (исходный код страницы).
+
+Если вместо исходного кода тоже будет пусто/ошибка — это одна история.
+
+Если **исходный код есть, а обычная страница белая**, то почти наверняка проблема в
+JavaScript/скриптах сайта. И тогда я уже смогу сказать, **что именно у тебя блокируется и как
+это исправить**.
+
+Кстати, я бы пока **не тратил время на смену VPN и браузеров** — ты уже сделала достаточно
+тестов, чтобы понять, что это не банальная проблема подключения.
+
+У меня сафари Тогда давай в Safari, всё по-русски 👍
+
+### 1. Сначала включаем меню «Разработка»
+
+В верхней строке Mac нажми:
+
+**Safari → Настройки → Дополнения**
+
+Внизу окна поставь галочку:
+
+**☑ Показывать функции для веб-разработчиков**
+
+После этого в верхней строке меню Safari появится пункт **«Разработка»**.
+
+### 2. Открываем консоль
+
+Зайди снова на `zwiftpower.ru`, затем в верхнем меню:
+
+**Разработка → Показать консоль JavaScript**
+
+Откроется окно с текстом.
+
+### 3. Обнови сайт
+
+Нажми **⌘ Command + R**.
+
+Если после обновления появятся **красные строки**, просто сделай скриншот и пришли мне.
+
+**Ничего там не исправляй и не вводи команды** — нам пока нужно только посмотреть, какую ошибку
+выдаёт сайт.
+
+Если хочешь, можешь сразу прислать скриншот консоли целиком — я сам разберу, что там происходит.
+
+При command r ничего не происходит Это нормально: если Safari уже считает страницу загруженной,
+`⌘R` просто обновляет её, а при белом экране визуально может казаться, что ничего не произошло.
+
+Давай вообще **не будем пока лезть в консоль**. Есть гораздо более простой тест.
+
+В Safari нажми в адресной строке:
+
+**⌘L** → введи:
+
+`https://zwiftpower.ru`
+
+→ **Enter**
+
+И подожди секунд 5–10.
+
+Если снова белая страница, попробуй открыть **не главную**, а, например:
+
+`https://zwiftpower.ru/login`
+
+Если и там белая страница — напиши мне. Тогда будем проверять уже сам ответ сервера.
+
+А ещё один очень полезный тест: **в Safari нажми ⌥⌘U**. Это «Показать исходный код страницы».
+
+👉 **Если после ⌥⌘U появится куча текста/кода — пришли скриншот.**  
+👉 **Если тоже будет совершенно пусто — тоже скажи.**
+
+По этому тесту я уже смогу понять, **сервер не отдаёт тебе содержимое или отдаёт его, но Safari
+не может отрисовать страницу**.
+
+Скриншот не прислать. Скопировала текст
+
+<!-- LOCALIZERS: Each localizable piece of the page is marked with a comment -->
+<html>
+<head>
+    <link rel=stylesheet type="text/css" href="page-load-errors.css">
+    <!-- LOCALIZERS: You might want to change the font family. You can also add styles to override sizes, etc. -->
+    <style>
+        body {font-family:'-apple-system-font';}
+    </style>
+    <title>Не удалось открыть страницу</title>
+</head>
+
+<body>
+    <div class="content-container">
+        <div class="error-container">
+            <div class="text-container">
+                <!-- Main title here. -->
+                <p class="error-title">Safari не может открыть страницу</p>
+            </div>
+            <div class="text-container">
+                <!-- Error message here. -->
+                <p class="error-message">Safari не может открыть страницу «https://zwiftpower.ru», так как сервер неожиданно отключился. Это может произойти, если сервер занят. Повторите попытку через несколько минут.</p>
+            </div>
+        </div>
+        <div class="action-container hidden">
+            <form class="suggestion-form" method=GET action='reload-error-pages:'>
+                <!-- Button to reload current webpage. -->
+                <input type=submit value="Перезагрузить веб-страницу">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+
+О, вот теперь у нас есть зацепка. И она довольно хорошая.
+
+Safari фактически говорит:
+
+> **«сервер неожиданно отключился»**
+
+То есть это **не проблема отображения страницы, не JavaScript и не кеш Safari**. Соединение
+устанавливается, но сервер/промежуточная защита **закрывает соединение до того, как отдаёт
+страницу**.
+
+А учитывая, что у тебя это происходит:
+
+- на Mac;
+- на телефоне;
+- через домашний интернет;
+- через мобильный интернет;
+- с VPN;
+- в разных браузерах,
+
+я бы сейчас проверял **не устройства, а то, почему именно твой трафик получает такой ответ**.
+
+### Давай сделаем один очень показательный тест
+
+На Mac открой **Терминал**:
+
+**⌘ Command + пробел → напиши «Терминал» → Enter.**
+
+И вставь туда:
+
+```text
+curl -I https://zwiftpower.ru
+```
+
+Нажми Enter.
+
+Там появится несколько строк. **Просто скопируй сюда весь результат**, как ты сделала с исходным
+кодом.
+
+Это абсолютно безопасная команда: она **ничего не меняет на компьютере**, а только спрашивает
+сервер: «ты вообще отвечаешь?».
+
+По результату я смогу понять, это:
+
+1. **блокировка/обрыв со стороны сервера**;
+2. проблема TLS/сертификата;
+3. проблема с IPv4/IPv6;
+4. CDN/WAF отбрасывает соединение;
+5. или что-то ещё по пути.
+
+И вот тогда уже можно будет не тыкать VPN и браузеры наугад, а найти конкретную причину.
+
+Ничего не произошло
+
+Тогда, скорее всего, команда либо **не была выполнена**, либо Терминал ждёт продолжения. Давай
+совсем просто.
+
+Открой **Терминал**. Там должна быть строка примерно такого вида:
+
+`olga@MacBook ~ %`
+
+После неё вставь **вот это**:
+
+```text
+curl -v https://zwiftpower.ru
+```
+
+И нажми **Enter**.
+
+Подожди секунд 10.
+
+Должно появиться довольно много текста, примерно такого:
+
+`* Trying ...`  
+`* Connected ...`  
+`* TLS ...`  
+`> GET / ...`  
+или сообщение об ошибке.
+
+**Скопируй сюда всё, что появится после команды.**
+
+Если **вообще ничего не появляется и снова возвращается приглашение `... %`**, тоже напиши
+именно это.
+
+Это будет гораздо информативнее, чем дальше экспериментировать с Safari.
+
+curl: (35) Recv failure: Operation timed out okovaleva@MacBook-Air-Olga-2 ~ %
+
+Вот! Теперь картина стала гораздо яснее.
+
+`curl` вернул:
+
+> `curl: (35) Recv failure: Operation timed out`
+
+То есть **Mac действительно не получает нормального ответа от `zwiftpower.ru`**. Это
+подтверждает сообщение Safari про «сервер неожиданно отключился». При этом сам сайт снаружи
+сейчас доступен: я могу получить его страницу, а официальный статус Zwift показывает ZwiftPower
+как работающий. [Zwiftpower](https://zwiftpower.ru/?utm_source=chatgpt.com)
+
+И самое интересное: у ZwiftPower **буквально 21–23 сентября были официальные проблемы с
+таймаутами и повторным падением**. То есть мы попали ровно в очень подозрительный момент.
+[Zwift Status](https://status.zwift.com/?utm_source=chatgpt.com)
+
+### Что это означает в твоём случае
+
+Я бы сейчас **не стал искать проблему в Mac или Safari**.
+
+У тебя одновременно:
+
+- Safari → таймаут;
+- другой браузер → то же;
+- Mac → то же;
+- телефон → то же;
+- домашний интернет → то же;
+- мобильный интернет → то же;
+- VPN → тоже не помогает.
+
+Это уже очень похоже на то, что **сервер zwiftpower.ru или его сетевой фильтр не принимает
+соединение от твоих текущих маршрутов/IP**, хотя с других точек сайт доступен.
+
+### И я предлагаю проверить одну вещь, которая сейчас наиболее показательна
+
+На Mac в Терминале выполни:
+
+```text
+curl -4 -I https://zwiftpower.ru
+```
+
+А потом:
+
+```text
+curl -6 -I https://zwiftpower.ru
+```
+
+И пришли **два результата**.
+
+Это проверит отдельно:
+
+- `-4` → подключение по **IPv4**
+- `-6` → подключение по **IPv6**
+
+Если, например, IPv4 ответит, а IPv6 зависнет — **мы нашли причину**.  
+Если оба зависнут — будем копать дальше, уже в сторону DNS/маршрутизации/блокировки на стороне
+сервера.
+
+И это последний раз, когда я заставляю тебя дружить с Терминалом 😄 Дальше уже будем понимать,
+**куда именно копать**.
+
+curl: (35) Recv failure: Operation timed out okovaleva@MacBook-Air-Olga-2 ~ %
+
+curl: (35) Recv failure: Operation timed out okovaleva@MacBook-Air-Olga-2 ~ %
+
+Вот, теперь это уже очень показательно: **и IPv4, и IPv6 заканчиваются таймаутом**. Значит, дело
+практически точно не в Safari, браузере или конкретно IPv6.
+
+Но есть важный момент: я бы не стал пока утверждать, что тебя блокирует сам ZwiftPower. Нужно
+проверить, **куда именно резолвится `zwiftpower.ru` у тебя и совпадает ли это с тем, что видит
+внешний интернет**.
+
+Сделаем ещё один, совсем короткий тест.
+
+В Терминале выполни:
+
+```bash
+nslookup zwiftpower.ru
+```
+
+И пришли результат целиком.
+
+После этого я смогу сравнить IP-адреса и понять, не попадаешь ли ты на какой-то проблемный
+адрес/сервер.
+
+**Пока ничего не меняй в DNS, VPN и настройках Mac.** У нас уже достаточно данных, чтобы не
+делать случайных движений.
+
+Server: 172.16.0.1 Address: 172.16.0.1#53
+
+Non-authoritative answer: Name: zwiftpower.ru Address: 5.35.86.5
+
+okovaleva@MacBook-Air-Olga-2 ~ %
+
+Вот теперь мы практически нашли место проблемы. 👍
+
+Твой DNS сообщает:
+
+**zwiftpower.ru → 5.35.86.5**
+
+И это выглядит нормально: этот адрес действительно принадлежит российскому хостингу **Beget
+(AS198610)**. [IPinfo](https://ipinfo.io/ips/5.35.86.0/24?utm_source=chatgpt.com)
+
+При этом сам `zwiftpower.ru` с внешней стороны сейчас отвечает и отдаёт страницу сайта.
+[Zwiftpower](https://zwiftpower.ru/?utm_source=chatgpt.com)
+
+А у тебя при обращении непосредственно к этому адресу:
+
+- IPv4 → таймаут;
+- IPv6 → таймаут;
+- Safari → «сервер неожиданно отключился»;
+- разные браузеры → одинаково;
+- разные устройства и сети → одинаково.
+
+### И вот что мне кажется особенно важным
+
+У тебя `nslookup` показывает DNS-сервер:
+
+**172.16.0.1**
+
+Это **локальный адрес твоей сети** — то есть запрос DNS обслуживает твой роутер/локальный DNS, а
+не непосредственно 8.8.8.8 или 1.1.1.1.
+
+Но сам результат `5.35.86.5` вполне правдоподобный, поэтому **DNS, скорее всего, ни при чём**.
+
+Теперь я хочу проверить одну вещь: **действительно ли проблема возникает при соединении именно с
+5.35.86.5**.
+
+В Терминале выполни:
+
+```bash
+curl -v --connect-timeout 5 https://5.35.86.5
+```
+
+Если попросит/выдаст ошибку сертификата — это нормально, нам важна первая часть вывода.
+
+Но ещё лучше — вот эта команда:
+
+```bash
+nc -vz -G 5 5.35.86.5 443
+```
+
+Она проверит буквально: **«можно ли с твоего Mac установить TCP-соединение с сервером на
+HTTPS-порту 443?»**
+
+Результат будет примерно один из двух:
+
+**если порт доступен:** `Connection to 5.35.86.5 port 443 [tcp/https] succeeded`
+
+**если соединение режется/не доходит:** `Operation timed out`
+
+👉 **Пришли результат второй команды.**
+
+Если там будет `timed out`, то это уже практически железное доказательство, что проблема
+находится **на сетевом маршруте между тобой и сервером Beget**, а не в Safari. И тогда я
+предложу способ обойти именно это, а не очередной «почистите кеш» 😄
+
+Вот ответ на первую команду
+
+Trying 5.35.86.5:443...
+
+- Connected to 5.35.86.5 (5.35.86.5) port 443
+- ALPN: curl offers h2,http/1.1
+- (304) (OUT), TLS handshake, Client hello (1):
+- CAfile: /etc/ssl/cert.pem
+- CApath: none
+- (304) (IN), TLS handshake, Server hello (2):
+- (304) (IN), TLS handshake, Unknown (8):
+- (304) (IN), TLS handshake, Certificate (11):
+- (304) (IN), TLS handshake, CERT verify (15):
+- (304) (IN), TLS handshake, Finished (20):
+- (304) (OUT), TLS handshake, Finished (20):
+- SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+- ALPN: server accepted http/1.1
+- Server certificate:
+- subject: CN=berezhnev.com
+- start date: Jul 29 17:40:02 2026 GMT
+- expire date: Oct 27 17:40:01 2026 GMT
+- subjectAltName does not match ipv4 address 5.35.86.5
+- SSL: no alternative certificate subject name matches target ipv4 address '5.35.86.5'
+- Closing connection curl: (60) SSL: no alternative certificate subject name matches target ipv4
+  address '5.35.86.5' More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not establish a secure
+connection to it. To learn more about this situation and how to fix it, please visit the web
+page mentioned above. okovaleva@MacBook-Air-Olga-2 ~ %
+
+А вот на вторую
+
+Connection to 5.35.86.5 port 443 [tcp/https] succeeded! okovaleva@MacBook-Air-Olga-2 ~ %
+
+О, вот теперь **самая важная часть диагностики**. И она меняет картину: сеть до сервера у тебя
+**отлично доходит**. Порт 443 открыт, TLS-соединение устанавливается. Значит, проблема не в том,
+что сервер недоступен.
+
+А вот здесь есть очень интересная деталь:
+
+> `subject: CN=berezhnev.com`
+
+Ты обратилась по IP `5.35.86.5`, а сервер предъявил сертификат **berezhnev.com**, а не
+`zwiftpower.ru`.
+
+Это само по себе не обязательно проблема: на одном IP может сидеть много сайтов. Но это говорит
+нам, что **5.35.86.5 — общий сервер**, и нужно проверить, что происходит именно при обращении к
+`zwiftpower.ru` с правильным именем хоста (SNI).
+
+### Теперь делаем один решающий тест
+
+В Терминале:
+
+```bash
+curl -v --connect-timeout 10 https://zwiftpower.ru/
+```
+
+Ты уже делала похожую команду, но теперь важно получить **полный вывод `-v`**.
+
+И особенно мне нужны последние ~20 строк перед ошибкой.
+
+**Не надо больше проверять IP вручную.** Нам надо увидеть, что происходит, когда Mac говорит
+серверу именно:
+
+> «Я хочу `zwiftpower.ru`»
+
+а не просто:
+
+> «Я хочу сервер `5.35.86.5`».
+
+### И ещё кое-что
+
+Твой результат:
+
+```text
+Connected to 5.35.86.5 port 443
+```
+
+и
+
+```text
+Connection ... succeeded!
+```
+
+означает, что **TCP-соединение работает**.
+
+TLS при обращении по IP тоже дошёл до стадии сертификата. Поэтому первоначальная гипотеза
+«маршрут до сервера полностью не работает» теперь отпадает.
+
+Сейчас наиболее интересны две версии:
+
+1. **Сервер по SNI `zwiftpower.ru` сам закрывает соединение**.
+2. **На сервере/прокси есть проблема с конфигурацией именно `zwiftpower.ru`**, хотя другие сайты
+   на том же IP работают.
+
+И это уже вполне может объяснить твою ситуацию: **у других открывается, а у тебя нет**, если
+серверная защита/прокси по-разному обрабатывает конкретные IP.
+
+Пришли вывод:
+
+```bash
+curl -v --connect-timeout 10 https://zwiftpower.ru/
+```
+
+и мы уже почти наверняка увидим, **на каком именно этапе всё ломается**.
+
+Host zwiftpower.ru:443 was resolved.
+
+- IPv6: (none)
+- IPv4: 5.35.86.5
+-   Trying 5.35.86.5:443...
+- Connected to zwiftpower.ru (5.35.86.5) port 443
+- ALPN: curl offers h2,http/1.1
+- (304) (OUT), TLS handshake, Client hello (1): *  CAfile: /etc/ssl/cert.pem *  CApath: none
+- (304) (IN), TLS handshake, Server hello (2):
+- (304) (IN), TLS handshake, Unknown (8):
+- (304) (IN), TLS handshake, Certificate (11):
+- (304) (IN), TLS handshake, CERT verify (15):
+- (304) (IN), TLS handshake, Finished (20):
+- (304) (OUT), TLS handshake, Finished (20):
+- SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+- ALPN: server accepted http/1.1
+- Server certificate: *  subject: CN=zwiftpower.ru *  start date: Aug 25 14:00:38 2026 GMT * 
+  expire date: Nov 23 14:00:37 2026 GMT *  subjectAltName: host "zwiftpower.ru" matched cert's
+  "zwiftpower.ru" *  issuer: C=US; O=Let's Encrypt; CN=YR1 *  SSL certificate verify ok.
+- using HTTP/1.x
+  > GET / HTTP/1.1 Host: zwiftpower.ru User-Agent: curl/8.7.1 Accept: _/_  
+- Request completely sent off < HTTP/1.1 200 OK < Server: nginx/1.18.0 (Ubuntu) < Date: Fri, 25
+  Sep 2026 05:55:48 GMT < Content-Type: text/html; charset=utf-8 < Content-Length: 3193 <
+  Connection: keep-alive < X-Powered-By: Express < Access-Control-Allow-Origin:
+  https://www.zwiftpower.ru < Vary: Origin, Accept-Encoding < Access-Control-Allow-Credentials:
+  true < ETag: W/"c79-6v29psD8BR06oLJp5/cesVKijK8" < 
+  <!DOCTYPE html>
+  <html lang="ru" prefix="og: https://ogp.me/ns#">
+
+<head>
+  <meta name="yandex-verification" content="19cc9b6477c0fd3e">
+  <meta charset="utf-8">
+  <title>Анонсы ближайших заездов в Zwift (Звифт) российского сообщества</title>
+  <meta name="description" content="Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах." data-rh="true" >
+  <link rel="canonical" href="https://zwiftpower.ru" data-rh="true" >
+  <meta property="og:title" content="Анонсы ближайших заездов в Zwift (Звифт) российского сообщества" data-rh="true" >
+  <meta property="og:description" content="Анонсы ближайших заездов в виртуальном мире Zwift (Звифт) на велотренажерах." data-rh="true" >
+  <meta property="og:url" content="https://zwiftpower.ru" data-rh="true" >
+  <meta property="og:image" content="https://zwiftpower.ru/images/open_graph/main.png" data-rh="true" >
+  <meta property="yandex_recommendations_tag" content="main" data-rh="true" >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:type" content="website">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <link rel="yandex-tableau-widget" href="/favicon/manifest.json">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <script>     (function (m, e, t, r, i, k, a) {       m[i] =         m[i]         function () {
+          (m[i].a = m[i].a []).push(arguments);         };       m[i].l = 1 \* new Date();      
+for (var j = 0; j < document.scripts.length; j++) {         if (document.scripts[j].src === r) {
+          return;         }       }       (k = e.createElement(t)),         (a =
+e.getElementsByTagName(t)[0]),         (k.async = 1),         (k.src = r),        
+a.parentNode.insertBefore(k, a);     })(window, document, 'script',
+'https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(93421903, 'init', {       clickmap: true,       trackLinks: true,      
+accurateTrackBounce: true,     });   </script>  
+
+<script type="module" crossorigin src="/assets/index-8cc316fb.js"></script>  
+<link rel="modulepreload" crossorigin href="/assets/vendor-3ab9afd8.js">  
+<link rel="modulepreload" crossorigin href="/assets/ui-48186be7.js">  
+<link rel="modulepreload" crossorigin href="/assets/utils-545988f5.js">  
+<link rel="stylesheet" href="/assets/index-12cec233.css">
+
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <noscript>
+    <div>
+      <img src="https://mc.yandex.ru/watch/93421903" style="position: absolute; left: -9999px" alt="">
+    </div>
+  </noscript>
+
+  <div id="root"></div>
+
+  
+
+</body>
+
+- Connection #0 to host zwiftpower.ru left intact
+</html>%                                                                                                                okovaleva@MacBook-Air-Olga-2 ~ %
+
+Вот теперь **точно понятно, что происходит**. И хорошая новость: **сервер ZwiftPower тебя не
+блокирует**.
+
+Твой `curl` получил от сайта полноценный:
+
+`HTTP/1.1 200 OK`
+
+и даже получил весь HTML главной страницы. Сертификат тоже корректный. То есть:
+
+**Mac → интернет → DNS → сервер ZwiftPower → HTTPS → сайт — всё работает.**
+
+А Safari при этом показывает «сервер неожиданно отключился». Значит, проблема возникает **после
+получения HTML**, скорее всего при загрузке одного из ресурсов сайта или при работе самого
+приложения.
+
+И вот здесь в HTML есть очень важная штука:
+
+```text
+<script type="module" crossorigin src="/assets/index-8cc316fb.js"></script>
+<link rel="modulepreload" crossorigin href="/assets/vendor-3ab9afd8.js">
+<link rel="modulepreload" crossorigin href="/assets/ui-48186be7.js">
+<link rel="modulepreload" crossorigin href="/assets/utils-545988f5.js">
+```
+
+Главная страница — это практически пустой контейнер:
+
+```text
+<div id="root"></div>
+```
+
+А **вся настоящая страница рисуется JavaScript-приложением**.
+
+Поэтому если Safari не может загрузить, например, `index-8cc316fb.js`, ты и получаешь **идеально
+белую страницу**, хотя сам сервер прекрасно отвечает.
+
+### И теперь я бы проверил именно это
+
+В Терминале выполни:
+
+```bash
+curl -I https://zwiftpower.ru/assets/index-8cc316fb.js
+```
+
+Потом:
+
+```bash
+curl -I https://zwiftpower.ru/assets/vendor-3ab9afd8.js
+```
+
+И ещё:
+
+```bash
+curl -I https://zwiftpower.ru/assets/index-12cec233.css
+```
+
+Нас интересует, получишь ли ты `HTTP/1.1 200 OK`.
+
+---
+
+### Но есть ещё более вероятный вариант
+
+У тебя **на телефоне тоже белая страница**, причём в разных сетях. Поэтому я подозреваю не
+Safari как таковой, а **какой-то внешний ресурс, который приложение ZwiftPower использует после
+загрузки**.
+
+И тут я бы сделал ещё один тест прямо сейчас:
+
+Открой в Safari:
+
+**https://zwiftpower.ru/assets/index-8cc316fb.js**
+
+Если вместо ошибки/белой страницы Safari покажет **огромную простыню JavaScript-кода**, значит
+этот файл нормально доступен.
+
+Если же **именно этот адрес не откроется**, мы практически поймали виновника.
+
+---
+
+И ещё важное: **не надо сейчас менять DNS, переустанавливать Safari, чистить Mac и прочую магию
+из серии «перезагрузите роутер»** 😄
+
+Мы уже доказали, что:
+
+- DNS работает;
+- IP правильный;
+- TCP 443 работает;
+- TLS работает;
+- сертификат `zwiftpower.ru` правильный;
+- сервер отдаёт `200 OK`;
+- HTML приходит полностью.
+
+Осталось выяснить, **какой именно JS/CSS/API-ресурс ломает отрисовку**. Это уже вполне
+конкретная задача.
+
+Сайт открыла, там простыня кода
+
+Вот ответы на три команды:
+
+HTTP/1.1 200 OK Server: nginx/1.18.0 (Ubuntu) Date: Fri, 25 Sep 2026 05:58:09 GMT Content-Type:
+application/javascript; charset=UTF-8 Content-Length: 386011 Connection: keep-alive
+X-Powered-By: Express Access-Control-Allow-Origin: https://www.zwiftpower.ru Vary: Origin,
+Accept-Encoding Access-Control-Allow-Credentials: true Accept-Ranges: bytes Cache-Control:
+public, max-age=0 Last-Modified: Fri, 04 Sep 2026 19:59:18 GMT ETag: W/"5e3db-1a06e011106"
+
+okovaleva@MacBook-Air-Olga-2 ~ %
+
+HTTP/1.1 200 OK Server: nginx/1.18.0 (Ubuntu) Date: Fri, 25 Sep 2026 05:58:29 GMT Content-Type:
+application/javascript; charset=UTF-8 Content-Length: 141466 Connection: keep-alive
+X-Powered-By: Express Access-Control-Allow-Origin: https://www.zwiftpower.ru Vary: Origin,
+Accept-Encoding Access-Control-Allow-Credentials: true Accept-Ranges: bytes Cache-Control:
+public, max-age=0 Last-Modified: Fri, 04 Sep 2026 19:59:18 GMT ETag: W/"2289a-1a06e0110ee"
+
+okovaleva@MacBook-Air-Olga-2 ~ %
+
+HTTP/1.1 200 OK Server: nginx/1.18.0 (Ubuntu) Date: Fri, 25 Sep 2026 05:58:55 GMT Content-Type:
+text/css; charset=UTF-8 Content-Length: 45804 Connection: keep-alive X-Powered-By: Express
+Access-Control-Allow-Origin: https://www.zwiftpower.ru Vary: Origin, Accept-Encoding
+Access-Control-Allow-Credentials: true Accept-Ranges: bytes Cache-Control: public, max-age=0
+Last-Modified: Fri, 04 Sep 2026 19:59:18 GMT ETag: W/"b2ec-1a06e0110be"
+
+okovaleva@MacBook-Air-Olga-2 ~ %
+
+О, отлично. Теперь мы можем **очень уверенно исключить ещё один большой кусок**.
+
+Все три ресурса (`JS`, `vendor JS`, `CSS`) отдаются нормально с `200 OK`. Значит:
+
+- сервер работает;
+- HTTPS работает;
+- HTML приходит;
+- JavaScript-файлы приходят;
+- CSS приходит;
+- сертификат нормальный.
+
+А браузер всё равно показывает белый экран.
+
+### Что остаётся
+
+Сайт — это React-приложение. В HTML есть только:
+
+```html
+<div id="root"></div>
+```
+
+А всё содержимое появляется после выполнения JavaScript.
+
+Поэтому наиболее вероятный сценарий сейчас такой:
+
+**страница и скрипты загружаются → JavaScript запускается → приложение делает ещё какие-то
+запросы → один из них зависает/падает → приложение не отрисовывается.**
+
+Причём это отлично объясняет, почему **curl работает**, а браузер показывает пустоту.
+
+И вот теперь нам нужна **консоль Safari**, потому что там будет конкретная ошибка JavaScript или
+сетевого запроса.
+
+### Давай включим её
+
+В Safari:
+
+**Safari → Настройки → Дополнения**
+
+Поставь галочку:
+
+**☑ Показывать функции для веб-разработчиков**
+
+После этого в верхнем меню Mac появится:
+
+**Разработка**
+
+Выбираешь:
+
+**Разработка → Показать консоль JavaScript**
+
+Откроется окно.
+
+Теперь **не нужно нажимать `⌘R`**. Просто снова введи в адресную строку:
+
+`https://zwiftpower.ru`
+
+и нажми Enter.
+
+Если белый экран появляется снова — посмотри в консоли.
+
+Мне особенно нужны **красные сообщения**. Можно не копировать всю простыню: просто скопируй сюда
+строки с `Error`, `Failed`, `Blocked`, `CORS`, `Network` или `Unhandled`.
+
+---
+
+### И есть ещё одна вещь, которую я хочу проверить
+
+Поскольку у тебя **и телефон, и Mac** ведут себя одинаково, я подозреваю, что сайт после
+загрузки обращается к отдельному API.
+
+В HTML мы уже видим:
+
+`Access-Control-Allow-Origin: https://www.zwiftpower.ru`
+
+Это намекает, что приложение довольно активно работает с API и CORS.
+
+Если API у тебя не отвечает, сайт вполне может выглядеть как **совершенно пустая страница**,
+хотя сам сервер и все JS-файлы исправны.
+
+Так что если в консоли увидишь что-то типа:
+
+> `Failed to fetch`
+
+> `NetworkError`
+
+> `CORS`
+
+> `ERR_CONNECTION...`
+
+> `api...`
+
+— **вот это будет прям золотая улика.**
+
+И, кстати, ты уже проделала почти всю неприятную часть диагностики 😄 Сейчас осталось поймать
+**один конкретный запрос**, на котором приложение спотыкается.
+
+В консоли пусто
+
+Тогда это тоже важная улика. **Пустая консоль не означает, что всё нормально** — скорее всего,
+Safari вообще не дошёл до выполнения приложения или DevTools не перехватил момент загрузки.
+
+Но у нас уже есть более сильный факт: **через `curl` сайт и все основные файлы отдаются
+нормально**. То есть сервер жив, а проблема возникает именно при работе браузера с приложением.
+
+Я бы сейчас сделал **не ещё одну команду**, а один очень показательный тест.
+
+### Открой в Safari приватное окно
+
+**Файл → Новое частное окно**  
+или `⌘⇧N`.
+
+В этом окне открой:
+
+`https://zwiftpower.ru`
+
+Если **там сайт внезапно заработает** — значит, виноваты данные сайта/куки/локальное хранилище
+или расширение.
+
+Если **опять белая страница** — это уже практически исключает обычный кеш и cookies.
+
+### И ещё один тест — очень важный
+
+Попробуй открыть:
+
+**https://www.zwiftpower.ru**
+
+Именно с `www`.
+
+У сайта в ответах сервера есть интересная деталь:
+
+```text
+Access-Control-Allow-Origin: https://www.zwiftpower.ru
+```
+
+а канонический адрес при этом:
+
+```text
+https://zwiftpower.ru
+```
+
+То есть приложение явно знает про `www`-версию. Возможно, после недавних изменений на сайте
+что-то не совсем аккуратно настроено между двумя вариантами домена.
+
+**Попробуй `https://www.zwiftpower.ru` и скажи, что происходит.**
+
+Если `www` откроется — всё, мы поймали проблему. Если нет — пойдём дальше уже по API.
+
+Никак не открылся

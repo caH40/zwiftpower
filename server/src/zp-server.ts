@@ -85,11 +85,17 @@ app.use('/api/assets', assetsRouter);
 app.use(
   express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
 );
-app.get('*', async (req, res) => {
-  // console.log(req.path);
 
-  const htmlContent = await setMetaTags(req.originalUrl);
-  res.send(htmlContent);
+app.get('*', async (req, res) => {
+  try {
+    const htmlContent = await setMetaTags(req.originalUrl);
+
+    res.set('Cache-Control', 'no-cache, must-revalidate');
+    res.send(htmlContent);
+  } catch (error) {
+    handleAndLogError(error);
+    res.status(500).send('Внутренняя ошибка сервера');
+  }
 });
 
 export const wsConnections: Map<string, Set<WebSocket>> = new Map();
