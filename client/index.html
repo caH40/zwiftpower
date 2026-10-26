@@ -28,17 +28,36 @@
   </div>
 
   <script>
-    window.addEventListener('error', function (e) {
-      document.body.insertAdjacentHTML(
-        'afterbegin',
-        '<pre style="position:fixed;top:0;left:0;right:0;z-index:99999;max-height:60vh;' +
-        'overflow:auto;white-space:pre-wrap;font:12px monospace;color:#b00020;' +
-        'background:#fff5f5;padding:12px;margin:0">' +
-        String((e.message || '') + ' ' + (e.filename || '') + ':' + (e.lineno || ''))
-          .replace(/[<>&]/g, '') +
-        '</pre>'
-      );
-    });
+    (function () {
+      function show(text) {
+        if (document.body.dataset.diagShown) return;
+        document.body.dataset.diagShown = '1';
+
+        var pre = document.createElement('pre');
+        pre.style.cssText =
+          'position:fixed;top:0;left:0;right:0;z-index:99999;max-height:60vh;overflow:auto;' +
+          'white-space:pre-wrap;font:12px/1.4 monospace;color:#b00020;' +
+          'background:#fff5f5;border-bottom:1px solid #f3c2c2;padding:12px;margin:0';
+        pre.textContent = text;
+        document.body.appendChild(pre);
+      }
+
+      window.addEventListener('error', function (event) {
+        // именно эта ветка ловит «скрипт не загрузился»
+        if (event.target && event.target.tagName === 'SCRIPT') {
+          show('Не загрузился скрипт: ' + (event.target.src || ''));
+          return;
+        }
+
+        show('Ошибка: ' + (event.message || '') +
+          '\n' + (event.filename || '') + ':' + (event.lineno || ''));
+      }, true);   // ← ключевое отличие: фаза перехвата
+
+      window.addEventListener('unhandledrejection', function (event) {
+        var reason = event.reason;
+        show('Promise: ' + (reason && (reason.message || reason.name || String(reason))));
+      });
+    })();
   </script>
 
   <script type="module" src="/src/index.jsx"></script>
