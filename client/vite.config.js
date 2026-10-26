@@ -37,6 +37,11 @@ export default defineConfig(({ mode }) => {
       sourcemap: isDevelopment, // Включает sourcemaps только для development
       rollupOptions: {
         output: {
+          // версионный префикс: старые кэшированные файлы больше не запрашиваются
+          entryFileNames: 'assets/v2-[name]-[hash].js',
+          chunkFileNames: 'assets/v2-[name]-[hash].js',
+          assetFileNames: 'assets/v2-[name]-[hash][extname]',
+
           manualChunks: {
             // Ручное разделение чанков для оптимизации
             vendor: ['react', 'react-dom'],
