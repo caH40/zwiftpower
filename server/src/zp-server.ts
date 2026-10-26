@@ -82,9 +82,22 @@ app.use('/api/service-messages', serviceMessageRouter);
 app.use('/api/poll', pollRouter);
 app.use('/api/assets', assetsRouter);
 
+// Каталог собранного клиента — тот же, что используется ниже.
+const clientBuildDir = path.resolve(__dirname, '..', '..', 'client', 'build');
+console.log('express.static путь:', clientBuildDir); // eslint-disable-line no-console
+
+// Хешированные ассеты: долгий кэш и честный 404 вместо index.html.
 app.use(
-  express.static(path.resolve(__dirname, '..', '..', 'client', 'build'), { index: false })
+  '/assets',
+  express.static(path.join(clientBuildDir, 'assets'), {
+    immutable: true,
+    maxAge: '1y',
+    fallthrough: false,
+  })
 );
+
+// Остальная статика: картинки, иконки, favicon.
+app.use(express.static(clientBuildDir, { index: false, maxAge: '7d' }));
 
 app.get('*', async (req, res) => {
   try {
