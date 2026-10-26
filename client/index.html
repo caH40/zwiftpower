@@ -29,33 +29,68 @@
 
   <script>
     (function () {
+      // Экранный блок включается только вручную: ?debug=1. Обычным посетителям не мешает.
+      var isDebug = window.location.search.indexOf('debug=1') !== -1;
+
       function show(text) {
-        if (document.body.dataset.diagShown) return;
-        document.body.dataset.diagShown = '1';
+        var pre = document.getElementById('diag-box');
 
-        var pre = document.createElement('pre');
-        pre.style.cssText =
-          'position:fixed;top:0;left:0;right:0;z-index:99999;max-height:60vh;overflow:auto;' +
-          'white-space:pre-wrap;font:12px/1.4 monospace;color:#b00020;' +
-          'background:#fff5f5;border-bottom:1px solid #f3c2c2;padding:12px;margin:0';
-        pre.textContent = text;
-        document.body.appendChild(pre);
-      }
-
-      window.addEventListener('error', function (event) {
-        // именно эта ветка ловит «скрипт не загрузился»
-        if (event.target && event.target.tagName === 'SCRIPT') {
-          show('Не загрузился скрипт: ' + (event.target.src || ''));
-          return;
+        if (!pre) {
+          pre = document.createElement('pre');
+          pre.id = 'diag-box';
+          pre.style.cssText =
+            'position:fixed;bottom:0;left:0;right:0;z-index:99999;max-height:40vh;overflow:auto;' +
+            'white-space:pre-wrap;font:12px/1.4 monospace;color:#b00020;' +
+            'background:#fff5f5;border-top:1px solid #f3c2c2;padding:10px;margin:0';
+          document.body.appendChild(pre);
         }
 
-        show('Ошибка: ' + (event.message || '') +
-          '\n' + (event.filename || '') + ':' + (event.lineno || ''));
-      }, true);   // ← ключевое отличие: фаза перехвата
+        pre.textContent += text + '\n';
+      }
+
+      function report(kind, text) {
+        console.error('[diag][' + kind + '] ' + text); // eslint-disable-line no-console
+
+        if (isDebug) {
+          show(kind + ': ' + text);
+        }
+      }
+
+      window.addEventListener(
+        'error',
+        function (event) {
+          var target = event.target;
+
+          // Ошибка загрузки ресурса: у неё нет message, а target — сам элемент
+          if (target && target !== window && target.tagName) {
+            var tag = target.tagName.toLowerCase();
+            var src = target.src || target.href || '';
+
+            if (tag === 'script') {
+              report('script', 'не загрузился ' + src);
+              return;
+            }
+
+            // Картинки, шрифты, CSS приложение не роняют — только предупреждение
+            console.warn('[diag][resource] не загрузился ' + tag + ': ' + src); // eslint-disable-line no-console
+            return;
+          }
+
+          report(
+            'error',
+            (event.message || 'нет сообщения') +
+            ' | ' + (event.filename || 'без файла') + ':' + (event.lineno || 0)
+          );
+        },
+        true
+      );
 
       window.addEventListener('unhandledrejection', function (event) {
         var reason = event.reason;
-        show('Promise: ' + (reason && (reason.message || reason.name || String(reason))));
+        var text =
+          (reason && (reason.message || reason.name || String(reason))) || 'промис отклонён без описания';
+
+        report('promise', text);
       });
     })();
   </script>
