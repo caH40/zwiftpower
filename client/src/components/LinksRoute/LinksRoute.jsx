@@ -3,13 +3,20 @@ import { useRaceRoute } from '../../hook/useRaceRoute';
 import styles from './LinksRoute.module.css';
 import LinkRouter from './LinkRouter';
 
-function LinksRoute({ routeId }) {
+function LinksRoute({ routeId, currentWorld }) {
   const routes = useRaceRoute([routeId]);
 
   const { zwifterBikesUrl, zwiftInsiderUrl, whatsOnZwiftUrl, stravaSegmentUrl } =
     routes[routeId] || {};
   return (
     <div className={styles.block}>
+      {currentWorld && (
+        <LinkRouter
+          link={currentWorld.imageUrl}
+          linkFavicon={'/images/z.svg'}
+          text={`Полная карта мира ${currentWorld.name}`}
+        />
+      )}
       <LinkRouter
         link={zwiftInsiderUrl}
         linkFavicon={'https://zwiftinsider.com/wp-content/uploads/2021/11/favicon.png'}

@@ -18,6 +18,7 @@ import RouteProfileAndMap from '../RouteProfileAndMap/RouteProfileAndMap';
 import AccessExpression from '../AccessExpression/AccessExpression';
 import { createHtml } from '../../utils/html';
 import SubgroupsDescription from '../SubgroupsDescription/SubgroupsDescription';
+import { worlds } from '../../assets/zwift/lib/esm/worlds';
 
 import styles from './DescriptionEventZwift.module.css';
 
@@ -45,6 +46,8 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
   // eslint-disable-next-line prefer-destructuring
   const { mapId, routeId, durationInSeconds, distanceInMeters, laps, distanceSummary } =
     event?.eventSubgroups?.[0] || [];
+
+  const currentWorld = worlds?.find((map) => map.id === mapId);
 
   return (
     <section className={styles.wrapper}>
@@ -122,7 +125,7 @@ function DescriptionEventZwift({ event, forSchedule, eventId }) {
         <section className={styles.block__text}>
           <RouteProfileAndMap routeId={event?.eventSubgroups[0].routeId} />
 
-          <LinksRoute routeId={event?.eventSubgroups[0].routeId} />
+          <LinksRoute routeId={event?.eventSubgroups[0].routeId} currentWorld={currentWorld} />
           <hr className={styles.hr} />
           <p
             className={styles.paragraph}
