@@ -59,6 +59,7 @@ export async function getProfileService(zwiftId: number): Promise<Profile> {
       bio: userDB.bio,
       racingScore: riderDB.competitionMetrics?.racingScore || 0,
       team: teamMemberDB?.team,
+      externalAccountServices: userDB.externalAccountServices,
     };
   }
 

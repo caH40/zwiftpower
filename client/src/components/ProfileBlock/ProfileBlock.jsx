@@ -79,6 +79,7 @@ function ProfileBlock({
       }
     });
   };
+  console.log(profile);
 
   return (
     <div className={styles.wrapper}>
@@ -102,7 +103,7 @@ function ProfileBlock({
           )}
 
           {/* сервисы трансляций и ссылки на дополнительные профили райдера */}
-          {!!(streamsEnabled?.length || externalProfiles.length) && (
+          {!!(streamsEnabled?.length || externalProfiles?.length) && (
             <div className={styles.platform}>
               {streamsEnabled?.map((stream) => (
                 <a href={stream.url} target="_blank" rel="noreferrer" key={stream.platform}>

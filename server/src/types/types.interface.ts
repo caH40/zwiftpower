@@ -141,6 +141,7 @@ export interface Profile {
   bio?: string;
   racingScore: number;
   team?: { name: string; shortName: string; urlSlug: string };
+  externalAccountServices?: TExternalAccountService[] | undefined;
 }
 
 export interface LoggingAdminArg {
