@@ -35,26 +35,36 @@ function ProfileBlock({
     externalAccountServices: ownAccountServices,
   } = useSelector((state) => state.checkAuth.value.user);
   const { zwiftId: zwiftIdPage } = useParams();
+  // Привязки, сохранённые в текущей сессии: слайс обновляется сразу после ответа сервера.
+  const savedServices = useSelector((state) => state.externalAccounts.externalAccounts);
 
   const isAdmin = ['admin'].includes(role);
 
   // Ссылки на дополнительные профили (Strava, Garmin Connect). Приходят в данных профиля райдера,
   // а для своей страницы, если сервер их ещё не отдал, берём из привязанных сервисов аккаунта.
+  const isOwnProfile = zwiftId == zwiftIdPage;
   let accountServices = externalAccountServices || [];
 
-  if (!accountServices.length && zwiftId == zwiftIdPage) {
+  if (!accountServices.length && isOwnProfile) {
     accountServices = ownAccountServices || [];
   }
 
-  const externalProfiles = accountServices
-    .map((item) => ({
-      service: item.service,
-      icon: EXTERNAL_SERVICE_ICONS[item.service],
-      url: item.accountId
-        ? EXTERNAL_SERVICE_URLS[item.service]?.replace(
-            '{id}',
-            encodeURIComponent(item.accountId)
-          )
+  // Сохранённые в текущей сессии привязки перекрывают данные профиля, поэтому иконки обновляются
+  // сразу после успешного ответа сервера, без повторного запроса профиля райдера.
+  const servicesMap = new Map(accountServices.map((item) => [item.service, item.accountId]));
+
+  if (isOwnProfile) {
+    Object.entries(savedServices || {}).forEach(([service, accountId]) => {
+      servicesMap.set(service, accountId);
+    });
+  }
+
+  const externalProfiles = [...servicesMap]
+    .map(([service, accountId]) => ({
+      service,
+      icon: EXTERNAL_SERVICE_ICONS[service],
+      url: accountId
+        ? EXTERNAL_SERVICE_URLS[service]?.replace('{id}', encodeURIComponent(accountId))
         : '',
     }))
     .filter((item) => item.icon && item.url);
