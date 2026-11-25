@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import ExternalAccountCard from './ExternalAccountCard';
 import { EXTERNAL_SERVICES } from './services';
 
@@ -5,27 +7,36 @@ import styles from './ExternalAccounts.module.css';
 
 /**
  * Блок привязки сторонних приложений (Strava, Garmin Connect) в настройках аккаунта.
- * На этом шаге ссылка хранится только в состоянии компонента: сохранение на сервере — следующий шаг.
+ * Хранится только ID аккаунта, ссылка на профиль собирается по шаблону сервиса.
  *
  * @param {Object} props - Пропсы компонента.
- * @param {Record<string, string | { url: string }>} [props.externalAccounts] - Привязанные аккаунты
- * из профиля пользователя, например `{ strava: 'https://www.strava.com/athletes/1' }`.
- * @param {(payload: { service: string, url: string }) => void} [props.onSave] - Обработчик сохранения ссылки.
+ * @param {Record<string, string | { accountId?: string, id?: string }>} [props.externalAccounts] - Привязанные
+ * аккаунты из профиля пользователя, например `{ strava: '12345678' }`.
+ * @param {(payload: { service: string, accountId: string }) => void} [props.onSave] - Обработчик сохранения ID.
  */
 export default function ExternalAccounts({ externalAccounts = {}, onSave }) {
+  const savedIds = useSelector((state) => state.externalAccounts.externalAccounts);
+
   /**
-   * Достаёт ссылку из значения `externalAccounts`, поддерживая и строку, и объект `{ url }`.
+   * Достаёт ID аккаунта: сначала сохранённый в Redux, затем из профиля пользователя.
+   * Поддерживает строку, объект `{ accountId }` и объект `{ id }`.
    * @param {string} serviceId - Идентификатор сервиса.
-   * @returns {string} Ссылка на профиль или пустая строка.
+   * @returns {string} ID аккаунта или пустая строка.
    */
-  const getLink = (serviceId) => {
+  const getAccountId = (serviceId) => {
+    const savedId = savedIds?.[serviceId];
+
+    if (savedId) {
+      return savedId;
+    }
+
     const account = externalAccounts?.[serviceId];
 
     if (typeof account === 'string') {
       return account;
     }
 
-    return account?.url || '';
+    return account?.accountId || account?.id || '';
   };
 
   return (
@@ -35,7 +46,7 @@ export default function ExternalAccounts({ externalAccounts = {}, onSave }) {
           <ExternalAccountCard
             key={service.id}
             service={service}
-            initialValue={getLink(service.id)}
+            initialValue={getAccountId(service.id)}
             onSave={onSave}
           />
         ))}

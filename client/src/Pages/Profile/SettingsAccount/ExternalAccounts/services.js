@@ -1,6 +1,6 @@
 /**
  * Сторонние приложения, аккаунт которых можно привязать в настройках профиля.
- * Пока сохраняется только ссылка на профиль сервиса (без OAuth).
+ * Хранится и передаётся только ID аккаунта: ссылка на профиль собирается из `urlTemplate`.
  */
 
 /**
@@ -10,9 +10,12 @@
  * @property {string} monogram - Буква для бейджа, если иконка сервиса недоступна.
  * @property {string} icon - Иконка сервиса из `public/images`.
  * @property {'strava' | 'garmin'} theme - Тема бейджа (класс в `ExternalAccountCard.module.css`).
- * @property {string[]} domains - Домены, ссылки на которые считаются корректными.
- * @property {string} hint - Подсказка рядом с полем ввода.
- * @property {string} placeholder - Пример ссылки в поле ввода.
+ * @property {string} hint - Подсказка, откуда взять ID аккаунта.
+ * @property {string} placeholder - Пример ID в поле ввода.
+ * @property {'numeric' | 'text'} inputMode - Подсказка клавиатуре для поля ID.
+ * @property {RegExp} idPattern - Допустимый формат ID аккаунта.
+ * @property {string} idError - Текст ошибки для неверного формата ID.
+ * @property {string} urlTemplate - Шаблон ссылки на профиль, `{id}` заменяется на ID аккаунта.
  */
 
 /** @type {ExternalService[]} */
@@ -23,9 +26,12 @@ export const EXTERNAL_SERVICES = [
     monogram: 'S',
     icon: '/images/strava-favicon.png',
     theme: 'strava',
-    domains: ['strava.com'],
-    hint: 'Ссылка на профиль райдера в Strava',
-    placeholder: 'https://www.strava.com/athletes/12345678',
+    hint: 'ID райдера из ссылки strava.com/athletes/<ID>',
+    placeholder: '12345678',
+    inputMode: 'numeric',
+    idPattern: /^\d{3,20}$/,
+    idError: 'ID в Strava — только цифры',
+    urlTemplate: 'https://www.strava.com/athletes/{id}',
   },
   {
     id: 'garmin',
@@ -33,45 +39,47 @@ export const EXTERNAL_SERVICES = [
     monogram: 'G',
     icon: '/images/garmin-favicon.png',
     theme: 'garmin',
-    domains: ['garmin.com', 'connect.garmin.com'],
-    hint: 'Ссылка на профиль в Garmin Connect',
-    placeholder: 'https://connect.garmin.com/modern/profile/12345678',
+    hint: 'ID профиля из ссылки connect.garmin.com/modern/profile/<ID>',
+    placeholder: '1234567',
+    inputMode: 'text',
+    idPattern: /^[A-Za-z0-9-]{3,40}$/,
+    idError: 'ID в Garmin Connect — цифры, латинские буквы и дефис',
+    urlTemplate: 'https://connect.garmin.com/modern/profile/{id}',
   },
 ];
 
 /**
- * Проверяет, что введённая ссылка ведёт на профиль нужного сервиса.
- * @param {string} value - Ссылка, введённая пользователем.
+ * Проверяет формат ID аккаунта в стороннем сервисе.
+ * @param {string} value - ID, введённый пользователем.
  * @param {ExternalService} service - Сервис, к которому привязывается аккаунт.
- * @returns {string} Текст ошибки; пустая строка, если ссылка корректна.
+ * @returns {string} Текст ошибки; пустая строка, если ID корректен.
  */
-export function validateExternalLink(value, service) {
-  const link = value?.trim();
+export function validateExternalAccountId(value, service) {
+  const accountId = value?.trim();
 
-  if (!link) {
-    return 'Укажите ссылку на профиль';
+  if (!accountId) {
+    return 'Укажите ID аккаунта';
   }
 
-  let url;
-
-  try {
-    url = new URL(link);
-  } catch {
-    return 'Ссылка должна начинаться с https://';
-  }
-
-  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
-    return 'Допустимы только http- и https-ссылки';
-  }
-
-  const host = url.hostname.replace(/^www\./, '').toLowerCase();
-  const isServiceHost = service.domains.some(
-    (domain) => host === domain || host.endsWith(`.${domain}`)
-  );
-
-  if (!isServiceHost) {
-    return `Ссылка должна вести на ${service.domains[0]}`;
+  if (!service.idPattern.test(accountId)) {
+    return service.idError;
   }
 
   return '';
+}
+
+/**
+ * Собирает ссылку на профиль в сервисе по ID аккаунта.
+ * @param {ExternalService} service - Сервис.
+ * @param {string} accountId - ID аккаунта.
+ * @returns {string} Ссылка на профиль или пустая строка, если ID не задан.
+ */
+export function getExternalAccountUrl(service, accountId) {
+  const id = accountId?.trim();
+
+  if (!id) {
+    return '';
+  }
+
+  return service.urlTemplate.replace('{id}', encodeURIComponent(id));
 }
