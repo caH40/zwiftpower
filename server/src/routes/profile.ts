@@ -14,6 +14,7 @@ import {
   putUserStreams,
   getUserSettings,
   putUsername,
+  putExternalAccount,
 } from '../controllers/profile.js';
 
 import { checkAuth } from '../middleware/auth.js';
@@ -33,3 +34,4 @@ routerProfile.put('/notifications', checkAuth, putNotifications);
 routerProfile.put('/streams', checkAuth, putUserStreams);
 routerProfile.get('/settings/:zwiftId', checkAuth, getUserSettings);
 routerProfile.put('/username', checkAuth, putUsername);
+routerProfile.put('/external-accounts/:service', checkAuth, putExternalAccount);

@@ -210,3 +210,5 @@ export const RACE_CUSTOM_TYPES = [
 ] as const;
 
 export const GROUP_PROTOCOL_EVENT_TYPES = ['classicGroup', 'newbies'];
+
+export const EXTERNAL_SERVICES = ['strava', 'garmin'] as const;

@@ -21,6 +21,8 @@ import { putUsernameService, updateProfileService } from '../service/profile/rid
 import { userResultsZSchema } from '../utils/deserialization/userResults.js';
 import { handleZodError } from '../errors/handleZodError.js';
 import { ZwiftIdZSchema } from '../utils/deserialization/zwiftid.js';
+import { putExternalAccountService } from '../service/profile/externalAccount.js';
+import { ExternalAccountZSchema } from '../utils/deserialization/profile.js';
 
 /**
  * Контролер получения всех результатов райдера
@@ -389,5 +391,31 @@ export async function putUserStreams(req: Request, res: Response) {
     handleAndLogError(error);
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return res.status(400).json({ message });
+  }
+}
+
+/**
+ * Контроллер сохранения ID аккаунта райдера в стороннем сервисе (Strava, Garmin Connect).
+ */
+export async function putExternalAccount(req: Request, res: Response) {
+  try {
+    const { service, userId } = req.params;
+
+    const result = ExternalAccountZSchema.safeParse({ ...req.body, service, userId });
+
+    if (!result.success) {
+      const { fieldErrors, formErrors } = result.error.flatten();
+
+      return res.status(400).json({
+        message: 'Ошибка валидации',
+        errors: { ...fieldErrors, formErrors },
+      });
+    }
+
+    const response = await putExternalAccountService(result.data);
+
+    return res.status(200).json(response);
+  } catch (error) {
+    handleErrorInController(res, error);
   }
 }

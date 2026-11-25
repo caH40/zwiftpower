@@ -34,6 +34,7 @@ import {
 import { TCurrency, TPurchaseMetadata, TPurchaseUnit } from './payment.types.js';
 import {
   DOCUMENTATION_TYPES,
+  EXTERNAL_SERVICES,
   RACE_CUSTOM_TYPES,
   RACE_SERIES_CATEGORIES,
   SERIES_STATUS,
@@ -1074,3 +1075,6 @@ export type TTeamParticipantRatingResult = {
   resultPath: string | null; // Относительный путь к таблице результатов.
   profileData: ProfileDataInResult; // Данные райдера, полученные из результатов заезда.
 };
+
+// Сторонние аккаунты (спортивные) пользователя
+export type TExternalService = (typeof EXTERNAL_SERVICES)[number];
