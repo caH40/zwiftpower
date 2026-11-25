@@ -139,9 +139,9 @@ export default function ExternalAccountCard({ service, initialValue = '', onSave
             </Button>
           </div>
           {Boolean(savedId) && (
-            <button className={styles.cancel} type="button" onClick={handleCancel}>
+            <Button type="button" addCls="back" getClick={handleCancel}>
               Отменить
-            </button>
+            </Button>
           )}
         </form>
       ) : (
@@ -151,13 +151,12 @@ export default function ExternalAccountCard({ service, initialValue = '', onSave
             href={profileUrl}
             target="_blank"
             rel="noreferrer noopener"
-            title={profileUrl}
           >
-            ID {savedId}
+            {profileUrl}
           </a>
-          <button className={styles.edit} type="button" onClick={handleEdit}>
+          <Button type="button" getClick={handleEdit}>
             Изменить
-          </button>
+          </Button>
         </div>
       )}
     </article>

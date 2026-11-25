@@ -78,3 +78,9 @@ export const getCategoryStats = (categories) => [
   { cat: 'D', count: categories.D || 0, label: 'Cat D' },
   { cat: 'E', count: categories.E || 0, label: 'Cat E' },
 ];
+
+// Сторонние сервисы: шаблоны ссылок на профиль. Вместо {id} подставляется ID аккаунта.
+export const EXTERNAL_SERVICE_URLS = {
+  strava: 'https://www.strava.com/athletes/{id}',
+  garmin: 'https://connect.garmin.com/modern/profile/{id}',
+};

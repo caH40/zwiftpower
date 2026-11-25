@@ -1,6 +1,9 @@
+import { EXTERNAL_SERVICE_URLS } from '../../../../assets/constants';
+
 /**
  * Сторонние приложения, аккаунт которых можно привязать в настройках профиля.
- * Хранится и передаётся только ID аккаунта: ссылка на профиль собирается из `urlTemplate`.
+ * Хранится и передаётся только ID аккаунта: ссылка на профиль собирается из `EXTERNAL_SERVICE_URLS`
+ * (`src/assets/constants.js`).
  */
 
 /**
@@ -31,7 +34,7 @@ export const EXTERNAL_SERVICES = [
     inputMode: 'numeric',
     idPattern: /^\d{3,20}$/,
     idError: 'ID в Strava — только цифры',
-    urlTemplate: 'https://www.strava.com/athletes/{id}',
+    urlTemplate: EXTERNAL_SERVICE_URLS.strava,
   },
   {
     id: 'garmin',
@@ -44,7 +47,7 @@ export const EXTERNAL_SERVICES = [
     inputMode: 'text',
     idPattern: /^[A-Za-z0-9-]{3,40}$/,
     idError: 'ID в Garmin Connect — цифры, латинские буквы и дефис',
-    urlTemplate: 'https://connect.garmin.com/modern/profile/{id}',
+    urlTemplate: EXTERNAL_SERVICE_URLS.garmin,
   },
 ];
 

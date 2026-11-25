@@ -15,7 +15,6 @@ import ExternalAccounts from './ExternalAccounts/ExternalAccounts';
  */
 export default function SettingsAccount() {
   const { user } = useSelector((state) => state.checkAuth.value);
-  console.log(user);
 
   // Если username или email начинается с temp_ значит они созданы автоматически
   // при регистрации через сторонние сервисы аутентификации (VK ID и т.д.)
