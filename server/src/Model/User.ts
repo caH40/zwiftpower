@@ -6,6 +6,8 @@ import {
   TUserStreams,
   UserSchema,
 } from '../types/model.interface.js';
+import { TExternalAccountService } from '../types/types.interface.js';
+import { EXTERNAL_SERVICES } from '../assets/constants.js';
 
 const notificationsSchema = new Schema<TNotifications>(
   {
@@ -46,6 +48,18 @@ const externalAccountsSchema = new Schema<{ vk?: TExternalAccountVk }>({
   },
 });
 
+const externalAccountServiceSchema = new Schema<TExternalAccountService>(
+  {
+    service: {
+      type: String,
+      enum: EXTERNAL_SERVICES,
+      required: true,
+    },
+    accountId: { type: String, required: true },
+  },
+  { _id: false }
+);
+
 const userSchema = new Schema<UserSchema>({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
@@ -80,6 +94,10 @@ const userSchema = new Schema<UserSchema>({
     }),
   },
   externalAccounts: { type: externalAccountsSchema },
+  externalAccountServices: {
+    type: [externalAccountServiceSchema],
+    default: [],
+  },
 });
 
 export const User = model('User', userSchema);

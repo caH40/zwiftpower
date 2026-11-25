@@ -11,14 +11,5 @@ export const ExternalAccountZSchema = z.object({
 
   service: z.enum(EXTERNAL_SERVICES).describe('Сервис внешнего аккаунта'),
 
-  accountId: z
-    .union([z.string(), z.number()])
-    .refine((value) => !Number.isNaN(Number(value)), {
-      message: 'accountId должен быть числом',
-    })
-    .transform((value) => Number(value))
-    .refine((value) => Number.isInteger(value) && value >= 3, {
-      message: 'accountId должен быть целым числом >= 3',
-    })
-    .describe('ID аккаунта'),
+  accountId: z.string().describe('ID аккаунта'),
 });

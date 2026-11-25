@@ -1078,3 +1078,4 @@ export type TTeamParticipantRatingResult = {
 
 // Сторонние аккаунты (спортивные) пользователя
 export type TExternalService = (typeof EXTERNAL_SERVICES)[number];
+export type TExternalAccountService = { service: TExternalService; accountId: string };

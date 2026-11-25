@@ -9,6 +9,7 @@ import {
   TTeamForProfile,
   TFinishersCount,
   TZwiftCategory,
+  TExternalAccountService,
 } from './types.interface.js';
 import { ProfileZwiftAPI } from './zwiftAPI/profileFromZwift.interface.js';
 import { bans } from '../assets/ban.js';
@@ -316,6 +317,7 @@ export type UserSchema = {
 
   // Внешние аккаунты: VK, Yandex и т.д.
   externalAccounts?: { vk?: TExternalAccountVk };
+  externalAccountServices?: TExternalAccountService[];
 };
 
 export type TExternalAccountVk = {
