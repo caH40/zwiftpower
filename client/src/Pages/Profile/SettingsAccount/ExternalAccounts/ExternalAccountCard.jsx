@@ -64,8 +64,9 @@ export default function ExternalAccountCard({ service, initialValue = '', onSave
     const accountId = value.trim();
 
     try {
-      await dispatch(putExternalAccount({ service: service.id, accountId })).unwrap();
+      const result = await dispatch(putExternalAccount({ service: service.id, accountId })).unwrap();
 
+      // Режим просмотра и уведомление — только после успешного ответа сервера.
       setSavedId(accountId);
       setValue(accountId);
       setError('');
@@ -73,7 +74,8 @@ export default function ExternalAccountCard({ service, initialValue = '', onSave
 
       dispatch(
         getAlert({
-          message: `ID аккаунта ${service.name} сохранён`,
+          // Текст берём из ответа сервера, свой — только если сервер его не прислал.
+          message: result?.message || `ID аккаунта ${service.name} сохранён`,
           type: 'success',
           isOpened: true,
         })
