@@ -1,4 +1,4 @@
-import { User } from '../../Model/User';
+import { User } from '../../Model/User.js';
 import { TResponseService } from '../../types/http.interface';
 
 // types
