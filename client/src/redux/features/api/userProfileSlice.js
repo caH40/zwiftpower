@@ -32,6 +32,7 @@ const userProfileSlice = createSlice({
     powerCurve: {},
     quantityRace: null,
     streamsEnabled: null,
+    externalAccountServices: [],
 
     status: null,
     error: null,
@@ -41,6 +42,7 @@ const userProfileSlice = createSlice({
       state.profile = {};
       state.powerCurve = {};
       state.quantityRace = null;
+      state.externalAccountServices = [];
     },
   },
   extraReducers: (builder) => {
@@ -55,6 +57,8 @@ const userProfileSlice = createSlice({
       state.powerCurve = action.payload.powerCurve;
       state.quantityRace = action.payload.quantityRace;
       state.streamsEnabled = action.payload.streams;
+      state.externalAccountServices =
+        action.payload.externalAccountServices || action.payload.profile?.externalAccountServices || [];
     });
     builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.status = 'rejected';

@@ -1,4 +1,4 @@
-import { EXTERNAL_SERVICE_URLS } from '../../../../assets/constants';
+import { EXTERNAL_SERVICE_ICONS, EXTERNAL_SERVICE_URLS } from '../../../../assets/constants';
 
 /**
  * Сторонние приложения, аккаунт которых можно привязать в настройках профиля.
@@ -27,7 +27,7 @@ export const EXTERNAL_SERVICES = [
     id: 'strava',
     name: 'Strava',
     monogram: 'S',
-    icon: '/images/strava-favicon.png',
+    icon: EXTERNAL_SERVICE_ICONS.strava,
     theme: 'strava',
     hint: 'ID райдера из ссылки strava.com/athletes/<ID>',
     placeholder: '12345678',
@@ -40,9 +40,9 @@ export const EXTERNAL_SERVICES = [
     id: 'garmin',
     name: 'Garmin Connect',
     monogram: 'G',
-    icon: '/images/garmin-favicon.png',
+    icon: EXTERNAL_SERVICE_ICONS.garmin,
     theme: 'garmin',
-    hint: 'ID профиля из ссылки connect.garmin.com/modern/profile/<ID>',
+    hint: 'ID профиля из ссылки connect.garmin.com/app/profile/<ID>',
     placeholder: '1234567',
     inputMode: 'text',
     idPattern: /^[A-Za-z0-9-]{3,40}$/,

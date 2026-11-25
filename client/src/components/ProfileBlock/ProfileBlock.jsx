@@ -6,6 +6,7 @@ import { fetchProfileRefresh } from '../../redux/features/api/profileRefreshSlic
 import { fetchUserProfile } from '../../redux/features/api/userProfileSlice';
 import { getWeightStr } from '../../utils/event';
 import { getAgeCategory } from '../../utils/age';
+import { EXTERNAL_SERVICE_ICONS, EXTERNAL_SERVICE_URLS } from '../../assets/constants';
 import LogoRider from '../LogoRider/LogoRider';
 import IconEdit from '../icons/IconEdit';
 import MyTooltip from '../../HOC/MyTooltip';
@@ -21,11 +22,42 @@ const platformIcons = {
   youtube: '/images/youtube_icon.svg',
 };
 
-function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
-  const { role, zwiftId } = useSelector((state) => state.checkAuth.value.user);
+function ProfileBlock({
+  quantityRace,
+  profile,
+  enlargeLogo,
+  streamsEnabled,
+  externalAccountServices,
+}) {
+  const {
+    role,
+    zwiftId,
+    externalAccountServices: ownAccountServices,
+  } = useSelector((state) => state.checkAuth.value.user);
   const { zwiftId: zwiftIdPage } = useParams();
 
   const isAdmin = ['admin'].includes(role);
+
+  // Ссылки на дополнительные профили (Strava, Garmin Connect). Приходят в данных профиля райдера,
+  // а для своей страницы, если сервер их ещё не отдал, берём из привязанных сервисов аккаунта.
+  let accountServices = externalAccountServices || [];
+
+  if (!accountServices.length && zwiftId == zwiftIdPage) {
+    accountServices = ownAccountServices || [];
+  }
+
+  const externalProfiles = accountServices
+    .map((item) => ({
+      service: item.service,
+      icon: EXTERNAL_SERVICE_ICONS[item.service],
+      url: item.accountId
+        ? EXTERNAL_SERVICE_URLS[item.service]?.replace(
+            '{id}',
+            encodeURIComponent(item.accountId)
+          )
+        : '',
+    }))
+    .filter((item) => item.icon && item.url);
 
   const dispatch = useDispatch();
 
@@ -59,14 +91,23 @@ function ProfileBlock({ quantityRace, profile, enlargeLogo, streamsEnabled }) {
             </button>
           )}
 
-          {/* блок отображение сервисов трансляций которые подключил пользователь */}
-          {!!streamsEnabled?.length && (
+          {/* сервисы трансляций и ссылки на дополнительные профили райдера */}
+          {!!(streamsEnabled?.length || externalProfiles.length) && (
             <div className={styles.platform}>
-              {streamsEnabled.map((stream) => (
+              {streamsEnabled?.map((stream) => (
                 <a href={stream.url} target="_blank" rel="noreferrer" key={stream.platform}>
                   <img
                     src={platformIcons[stream.platform]}
                     alt={'stream platform'}
+                    className={styles.icon__platform}
+                  />
+                </a>
+              ))}
+              {externalProfiles.map((item) => (
+                <a href={item.url} target="_blank" rel="noreferrer" key={item.service}>
+                  <img
+                    src={item.icon}
+                    alt={`${item.service} profile`}
                     className={styles.icon__platform}
                   />
                 </a>

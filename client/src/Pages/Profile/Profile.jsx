@@ -24,6 +24,7 @@ function Profile() {
     profile,
     quantityRace,
     streamsEnabled,
+    externalAccountServices,
     status: statusProfile,
   } = useSelector((state) => state.fetchUserProfile);
   const [source, setSource] = useState('');
@@ -70,6 +71,7 @@ function Profile() {
             profile={profile}
             enlargeLogo={enlargeLogo}
             streamsEnabled={streamsEnabled}
+            externalAccountServices={externalAccountServices}
             quantityRace={quantityRace || 0}
           />
         )}

@@ -82,5 +82,10 @@ export const getCategoryStats = (categories) => [
 // Сторонние сервисы: шаблоны ссылок на профиль. Вместо {id} подставляется ID аккаунта.
 export const EXTERNAL_SERVICE_URLS = {
   strava: 'https://www.strava.com/athletes/{id}',
-  garmin: 'https://connect.garmin.com/modern/profile/{id}',
+  garmin: 'https://connect.garmin.com/app/profile/{id}',
+};
+// Иконки сторонних сервисов из `public/images`.
+export const EXTERNAL_SERVICE_ICONS = {
+  strava: '/images/strava-favicon.png',
+  garmin: '/images/garmin-favicon.png',
 };
