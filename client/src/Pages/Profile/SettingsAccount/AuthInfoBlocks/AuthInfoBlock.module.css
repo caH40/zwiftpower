@@ -7,7 +7,7 @@
 .box__subtitle {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   margin-bottom: 10px;
 }
 .subtitle {
@@ -41,7 +41,7 @@
   object-fit: cover;
 }
 .icon__service {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   object-fit: cover;
 }

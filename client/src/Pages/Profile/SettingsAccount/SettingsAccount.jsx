@@ -8,6 +8,7 @@ import OAuth from '../../../components/UI/OAuth/OAuth';
 import styles from './SettingsAccount.module.css';
 import VkIdAuthInfoBlock from './AuthInfoBlocks/Vk';
 import CredentialAuthInfoBlock from './AuthInfoBlocks/Credential';
+import ExternalAccounts from './ExternalAccounts/ExternalAccounts';
 
 /**
  * Страница настройки аккаунта.
@@ -56,6 +57,9 @@ export default function SettingsAccount() {
           <OAuth mode="link" />
         )}
       </div>
+
+      <h3 className={styles.title}>Привязка сторонних приложений</h3>
+      <ExternalAccounts externalAccounts={user?.externalAccounts} />
 
       {/* <JSONBlock json={user} /> */}
     </div>
