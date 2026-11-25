@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 // types
-import { TScoringEntry, TScoringTable } from '../types/model.interface';
+import { TScoringEntry, TScoringTable } from '../types/model.interface.js';
 
 /**
  * Интерфейс документа, объединяющий `TScoringTable` с `Document`.

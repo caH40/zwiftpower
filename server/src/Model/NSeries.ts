@@ -11,7 +11,7 @@ import { FinishTimeLimitOnStageSchema } from './Schema/FinishTimeLimitOnStage.js
 import { seriesStageSchema } from './Schema/SeriesStageSchema.js';
 
 // types
-import { TScoringAlgorithm, TSeries, TSeriesType } from '../types/model.interface';
+import { TScoringAlgorithm, TSeries, TSeriesType } from '../types/model.interface.js';
 
 export interface ISeriesDocument extends Omit<TSeries, '_id'>, Document {
   scoringAlgorithms: TScoringAlgorithm;

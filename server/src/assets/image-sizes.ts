@@ -1,4 +1,4 @@
-import { TAvailableSizes } from '../types/model.interface';
+import { TAvailableSizes } from '../types/model.interface.js';
 
 /**
  * Соответствие размеров изображений в пикселях и названий.

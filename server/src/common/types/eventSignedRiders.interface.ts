@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { TTeamForProfile } from '../../types/types.interface';
+import { TTeamForProfile } from '../../types/types.interface.js';
 
 /**
  *  Event (описание) и зарегистрировавшиеся райдеры

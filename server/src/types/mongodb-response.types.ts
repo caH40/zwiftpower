@@ -15,8 +15,8 @@ import {
   TTeamMember,
   ZwiftEventSchema,
   ZwiftEventSubgroupSchema,
-} from './model.interface';
-import { TRaceSeriesCategories } from './types.interface';
+} from './model.interface.js';
+import { TRaceSeriesCategories } from './types.interface.js';
 
 export type NextWeekRacesResponseDB = {
   _id: Types.ObjectId;

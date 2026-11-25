@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { TStageResultPoints } from '../../types/model.interface';
+import { TStageResultPoints } from '../../types/model.interface.js';
 
 // Схема очков сегментов
 const pointsResultSchema = new Schema(

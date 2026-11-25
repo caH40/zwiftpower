@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // types
-import { TDocumentationTypes } from '../types/types.interface';
+import { TDocumentationTypes } from '../types/types.interface.js';
 
 /**
  * Класс работы с файлами документов markdown.

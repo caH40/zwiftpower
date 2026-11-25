@@ -1,9 +1,9 @@
-import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants';
-import { ProfileDataInResult, TRaceRank } from './model.interface';
+import { INTERVAL_IN_SECONDS, RIDER_CATEGORIES_RULE_TYPES } from '../assets/constants.js';
+import { ProfileDataInResult, TRaceRank } from './model.interface.js';
 
 // types
-import { TRaceSeriesCategories } from './types.interface';
-import { TStagesResultsForGC } from './mongodb-response.types';
+import { TRaceSeriesCategories } from './types.interface.js';
+import { TStagesResultsForGC } from './mongodb-response.types.js';
 
 /**
  * Типы правил пересчета таблиц, если изменилась категория радера после первого этапа (в последующих) серии.

@@ -1,7 +1,7 @@
 // types
 import { Types } from 'mongoose';
-import { TPaymentNotification } from '../types/payment.types';
-import { TPaymentNotificationDto } from '../types/dto.interface';
+import { TPaymentNotification } from '../types/payment.types.js';
+import { TPaymentNotificationDto } from '../types/dto.interface.js';
 
 export function paymentNotificationDto(
   notification: TPaymentNotification & { _id: Types.ObjectId }

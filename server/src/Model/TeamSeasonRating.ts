@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, model } from 'mongoose';
 
 // types
-import { TTeamSeasonRating } from '../types/model.interface';
+import { TTeamSeasonRating } from '../types/model.interface.js';
 
 type TeamSeasonRatingDocument = Omit<TTeamSeasonRating, '_id'> & Document;
 

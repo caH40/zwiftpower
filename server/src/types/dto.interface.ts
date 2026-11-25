@@ -11,7 +11,7 @@ import {
   TTeam,
   TTeamMember,
   ZwiftEventSubgroupSchema,
-} from './model.interface';
+} from './model.interface.js';
 import {
   TEventForMailingPreviewDB,
   TEventsForSeriesResponseDB,
@@ -19,11 +19,11 @@ import {
   TOrganizerSeriesAllResponseDB,
   TSeriesAllPublicResponseDB,
   TSeriesOnePublicResponseDB,
-} from './mongodb-response.types';
-import { TPaymentNotification } from './payment.types';
-import { TUserAnonymized, TUserWithFLLZ } from './poll.types';
-import { TTeamLeaderboard } from './team.types';
-import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface';
+} from './mongodb-response.types.js';
+import { TPaymentNotification } from './payment.types.js';
+import { TUserAnonymized, TUserWithFLLZ } from './poll.types.js';
+import { TTeamLeaderboard } from './team.types.js';
+import { EventWithSubgroup, TRaceSeriesCategories } from './types.interface.js';
 
 /**
  * Данные Организатора основные и модерируемые клубы для клиента.

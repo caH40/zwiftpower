@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TOrganizerBotZwift } from '../../types/model.interface';
+import { TOrganizerBotZwift } from '../../types/model.interface.js';
 
 export const BotZwiftSchema = new Schema<TOrganizerBotZwift>(
   {

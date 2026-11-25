@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 // types
-import { TStageTimePenalty } from '../../types/model.interface';
+import { TStageTimePenalty } from '../../types/model.interface.js';
 
 /**
  *  Схема штрафа в виде добавления времени к результату этапа.

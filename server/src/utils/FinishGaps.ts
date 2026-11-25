@@ -1,6 +1,6 @@
 // types
-import { TGapsInCategories } from '../types/model.interface';
-import { TRaceSeriesCategories, TFinishGapsGetters } from '../types/types.interface';
+import { TGapsInCategories } from '../types/model.interface.js';
+import { TRaceSeriesCategories, TFinishGapsGetters } from '../types/types.interface.js';
 
 /**
  * Класс расчета временных отставаний (гэпов) в абсолютном и категорийном зачётах.

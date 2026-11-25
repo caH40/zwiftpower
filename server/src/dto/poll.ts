@@ -1,7 +1,7 @@
 //types
-import { TPollWithAnswersDto } from '../types/dto.interface';
-import { TPoll } from '../types/model.interface';
-import { TUserAnonymized, TUserWithFLLZ } from '../types/poll.types';
+import { TPollWithAnswersDto } from '../types/dto.interface.js';
+import { TPoll } from '../types/model.interface.js';
+import { TUserAnonymized, TUserWithFLLZ } from '../types/poll.types.js';
 
 export function pollWithAnswersDto(
   poll: TPoll,

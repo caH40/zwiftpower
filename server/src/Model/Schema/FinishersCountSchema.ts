@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TFinishersCount } from '../../types/types.interface';
+import { TFinishersCount } from '../../types/types.interface.js';
 
 /**
  * Сущность в результате заезда или этапа, количество финишировавших в группе в которой участвовал райдер и в абсолютном зачете.

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { getSeasonPeriod } from './season';
+import { getSeasonPeriod } from './season.js';
 
 describe('getSeasonPeriod', () => {
   it('возвращает правильный сезон для даты внутри сезона', () => {

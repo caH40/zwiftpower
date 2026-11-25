@@ -1,4 +1,4 @@
-import { SERVICE_MESSAGE_TYPE } from '../assets/service_message/constants';
+import { SERVICE_MESSAGE_TYPE } from '../assets/service_message/constants.js';
 
 /**
  * Типы сообщений внутри сайта.

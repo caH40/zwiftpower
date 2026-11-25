@@ -1,7 +1,7 @@
 // types
-import { TCriticalPowerBestEfforts } from '../types/model.interface';
-import { TCategoriesWithRange, TCategoryRange, TFtpData } from '../types/series.types';
-import { TRaceSeriesCategories } from '../types/types.interface';
+import { TCriticalPowerBestEfforts } from '../types/model.interface.js';
+import { TCategoriesWithRange, TCategoryRange, TFtpData } from '../types/series.types.js';
+import { TRaceSeriesCategories } from '../types/types.interface.js';
 
 /**
  * Функция определения категории.

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 // types
-import { TSeriesStage } from '../../types/model.interface';
+import { TSeriesStage } from '../../types/model.interface.js';
 
 /**
  * Схема этапа серии (Stage) для Mongoose.

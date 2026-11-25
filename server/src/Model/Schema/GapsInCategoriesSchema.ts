@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TGapsInCategories } from '../../types/model.interface';
+import { TGapsInCategories } from '../../types/model.interface.js';
 
 // Отрывы между участником результата и лидером, предыдущим в абсолюте и категориях.
 export const gapsInCategoriesSchema = new Schema<TGapsInCategories>(

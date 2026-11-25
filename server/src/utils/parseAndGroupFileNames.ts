@@ -1,4 +1,4 @@
-import { TAvailableSizes, TFileMetadataForCloud } from '../types/model.interface';
+import { TAvailableSizes, TFileMetadataForCloud } from '../types/model.interface.js';
 
 /**
  * Парсит массив названий файлов и возвращает объект TFileMetadataForCloud.

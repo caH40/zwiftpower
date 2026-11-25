@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TSocialLinks } from '../../types/model.interface';
+import { TSocialLinks } from '../../types/model.interface.js';
 
 export const SocialLinksSchema = new Schema<TSocialLinks>(
   {

@@ -1,4 +1,4 @@
-import { TRaceSeriesCategories, TZwiftCategory } from '../types/types.interface';
+import { TRaceSeriesCategories, TZwiftCategory } from '../types/types.interface.js';
 
 /**
  * Правила категорий по zwiftpower

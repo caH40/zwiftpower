@@ -1,5 +1,5 @@
 // types
-import { TAvailableSizes } from '../types/model.interface';
+import { TAvailableSizes } from '../types/model.interface.js';
 
 /**
  * Создает имя файла для сохранения в облаке.

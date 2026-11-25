@@ -1,5 +1,5 @@
-import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants';
-import { TCurrency } from './payment.types';
+import { ENTITY_NAME_SLOTS, SLOT_ORIGIN } from '../assets/constants.js';
+import { TCurrency } from './payment.types.js';
 
 /**
  * Сервис с учетом доступных слотов и истории их использования.

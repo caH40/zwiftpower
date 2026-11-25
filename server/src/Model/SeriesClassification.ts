@@ -5,7 +5,7 @@ import { gapsInCategoriesSchema } from './Schema/GapsInCategoriesSchema.js';
 import { stageSchema } from './Schema/StageInGC.js';
 
 // types
-import { TSeriesClassification } from '../types/model.interface';
+import { TSeriesClassification } from '../types/model.interface.js';
 
 // Интерфейс для результата в генеральном зачете тура.
 export interface ISeriesClassification extends Omit<TSeriesClassification, '_id'>, Document {

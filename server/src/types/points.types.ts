@@ -1,4 +1,4 @@
-import { IMPORTANCE_COEFFICIENTS_LEVELS } from '../assets/racePoints';
+import { IMPORTANCE_COEFFICIENTS_LEVELS } from '../assets/racePoints.js';
 
 /**
  * Правило начисления очков за конкретное место.

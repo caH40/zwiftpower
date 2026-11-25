@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
-import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants';
+import { TEAM_ROLES, TEAM_SPECIALIZATIONS } from '../assets/constants.js';
 
 // types
-import { RiderProfileSchema, TFileMetadataForCloud, TTeam } from './model.interface';
-import { TTeamMembersPublicDB } from './mongodb-response.types';
-import { TZwiftCategory } from './types.interface';
+import { RiderProfileSchema, TFileMetadataForCloud, TTeam } from './model.interface.js';
+import { TTeamMembersPublicDB } from './mongodb-response.types.js';
+import { TZwiftCategory } from './types.interface.js';
 
 /**
  * Специализация райдера.

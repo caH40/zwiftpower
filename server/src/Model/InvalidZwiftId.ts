@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 // types
-import { TInvalidZwiftIdDocument } from '../types/model.interface';
+import { TInvalidZwiftIdDocument } from '../types/model.interface.js';
 
 const InvalidZwiftIdSchema = new Schema<TInvalidZwiftIdDocument>({
   zwiftId: { type: Number, required: true, unique: true },

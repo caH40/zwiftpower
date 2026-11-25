@@ -1,4 +1,4 @@
-import { TImportanceLevel, TMassCoefficient, TRacePointsRule } from '../types/points.types';
+import { TImportanceLevel, TMassCoefficient, TRacePointsRule } from '../types/points.types.js';
 
 /**
  * Базовое распределение очков за занятое место в рейтинге zpru.

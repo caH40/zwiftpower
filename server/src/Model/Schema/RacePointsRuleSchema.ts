@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TRacePointsRule } from '../../types/points.types';
+import { TRacePointsRule } from '../../types/points.types.js';
 
 export const RacePointsRuleSchema = new Schema<TRacePointsRule>(
   {

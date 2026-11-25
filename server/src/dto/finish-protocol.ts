@@ -1,6 +1,6 @@
 // types
-import { TFinishProtocolConfigDto } from '../types/dto.interface';
-import { TFinishProtocolConfigResponseDB } from '../types/mongodb-response.types';
+import { TFinishProtocolConfigDto } from '../types/dto.interface.js';
+import { TFinishProtocolConfigResponseDB } from '../types/mongodb-response.types.js';
 
 /**
  * DTO данных конфигурации финишного протокола.

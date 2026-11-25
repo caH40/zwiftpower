@@ -1,8 +1,8 @@
 import { createUrlsToFileCloud } from '../utils/url.js';
 
 // types
-import { TTeamLeaderboard } from '../types/team.types';
-import { TTeamLeaderboardDto, TTeamTopLeaderboardDto } from '../types/dto.interface';
+import { TTeamLeaderboard } from '../types/team.types.js';
+import { TTeamLeaderboardDto, TTeamTopLeaderboardDto } from '../types/dto.interface.js';
 import { TTeam, TTeamSeasonRating } from '../types/model.interface.js';
 
 export function teamLeaderboardDto(teams: TTeamLeaderboard[]): TTeamLeaderboardDto[] {

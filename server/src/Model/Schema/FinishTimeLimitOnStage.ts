@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TFinishTimeLimitOnStage } from '../../types/series.types';
+import { TFinishTimeLimitOnStage } from '../../types/series.types.js';
 
 export const FinishTimeLimitOnStageSchema = new Schema<TFinishTimeLimitOnStage>(
   {

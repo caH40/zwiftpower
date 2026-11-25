@@ -59,7 +59,7 @@ vi.mock('../Model/Team.ts', () => ({
   },
 }));
 
-import { getMetaTags } from './handler';
+import { getMetaTags } from './handler.js';
 import {
   getHomeMeta,
   getResultListMeta,
@@ -81,7 +81,7 @@ import {
   getOrganizersPublicMeta,
   getStreamsMeta,
   getTeamRankingMeta,
-} from './tags';
+} from './tags.js';
 import {
   getOrganizerPublicMeta,
   getProfileResultsMeta,
@@ -93,7 +93,7 @@ import {
   getTeamRiderResultsMeta,
   getTeamMembersMeta,
   getTeamAchievementsMeta,
-} from './tags-async';
+} from './tags-async.js';
 
 import { MetaTags } from '../types/types.interface.js';
 

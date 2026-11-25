@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TCriticalPowerBestEfforts } from '../../types/model.interface';
+import { TCriticalPowerBestEfforts } from '../../types/model.interface.js';
 
 /**
  * Схема CP Best Efforts

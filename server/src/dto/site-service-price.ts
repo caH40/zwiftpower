@@ -1,5 +1,5 @@
-import { TSiteServicePriceDto } from '../types/dto.interface';
-import { TSiteServicePrice } from '../types/model.interface';
+import { TSiteServicePriceDto } from '../types/dto.interface.js';
+import { TSiteServicePrice } from '../types/model.interface.js';
 
 export function dtoTSiteServicePrice(entity: TSiteServicePrice): TSiteServicePriceDto {
   const _id = entity._id.toString();

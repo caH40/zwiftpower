@@ -1,7 +1,7 @@
 // types
 
-import { TGetAllServiceMessagesForUserDto } from '../types/dto.interface';
-import { TServiceMessage } from '../types/model.interface';
+import { TGetAllServiceMessagesForUserDto } from '../types/dto.interface.js';
+import { TServiceMessage } from '../types/model.interface.js';
 
 export function getAllServiceMessageForUserDto({
   text,

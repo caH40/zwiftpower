@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 // types
-import { TTelegram } from '../../types/model.interface';
+import { TTelegram } from '../../types/model.interface.js';
 
 export const TelegramSchema = new Schema<TTelegram>(
   {

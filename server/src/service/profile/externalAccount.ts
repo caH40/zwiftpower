@@ -1,8 +1,8 @@
 import { User } from '../../Model/User.js';
-import { TResponseService } from '../../types/http.interface';
+import { TResponseService } from '../../types/http.interface.js';
 
 // types
-import { TExternalService } from '../../types/types.interface';
+import { TExternalService } from '../../types/types.interface.js';
 
 type Params = {
   userId: string;

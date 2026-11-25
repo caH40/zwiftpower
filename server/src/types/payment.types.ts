@@ -1,7 +1,7 @@
 import { ICreatePayment } from '@a2seven/yoo-checkout';
-import { TEntityNameForSlot } from './site-service.type';
+import { TEntityNameForSlot } from './site-service.type.js';
 import mongoose from 'mongoose';
-import { CURRENCY, PURCHASE_UNITS } from '../assets/constants';
+import { CURRENCY, PURCHASE_UNITS } from '../assets/constants.js';
 
 export type TCreatePaymentWithMeta = Omit<ICreatePayment, 'metadata'> & {
   id: string;

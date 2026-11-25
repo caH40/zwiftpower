@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-import { TTeam } from '../../types/model.interface';
+import { TTeam } from '../../types/model.interface.js';
 
 type TBannedRider = NonNullable<TTeam['bannedRiders']>[number];
 

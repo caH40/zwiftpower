@@ -1,4 +1,4 @@
-import { TZwiftCategory } from '../types.interface';
+import { TZwiftCategory } from '../types.interface.js';
 
 /**
  * Данные по результатам райдеров в Event получаемы с API Zwift

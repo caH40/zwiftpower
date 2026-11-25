@@ -1,4 +1,4 @@
-import { CpBestEffortsAdditional } from '../types/types.interface';
+import { CpBestEffortsAdditional } from '../types/types.interface.js';
 
 /**
  * Универсальная сортировка результатов по критериям Critical Power (CP).

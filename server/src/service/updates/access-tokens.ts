@@ -1,7 +1,7 @@
-// import { ZwiftToken } from '../../Model/ZwiftToken';
+// import { ZwiftToken } from '../../Model/ZwiftToken.js';
 
 // // types
-// import { TZwiftToken } from '../../types/model.interface';
+// import { TZwiftToken } from '../../types/model.interface.js';
 
 // /**
 //  * Проверка на актуальность токена доступа звифта ботов организаторов (служебных ботов),

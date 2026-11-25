@@ -1,4 +1,4 @@
-import { TZwiftCategory } from '../types.interface';
+import { TZwiftCategory } from '../types.interface.js';
 
 /**
  * данные полученные с API Zwift по запросу `events/${eventId}?skip_cache=boolean`

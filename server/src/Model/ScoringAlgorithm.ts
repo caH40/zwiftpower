@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { TScoringAlgorithm } from '../types/model.interface';
+import { TScoringAlgorithm } from '../types/model.interface.js';
 
 export interface IScoringAlgorithm extends Omit<TScoringAlgorithm, '_id'>, mongoose.Document {}
 

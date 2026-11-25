@@ -1,4 +1,4 @@
-import { TTypesRaceCustom } from '../types/types.interface';
+import { TTypesRaceCustom } from '../types/types.interface.js';
 
 export const raceTypes: { id: number; name: string; label: string; value: TTypesRaceCustom }[] =
   [

@@ -1,4 +1,4 @@
-import { TPollAnswer } from './model.interface';
+import { TPollAnswer } from './model.interface.js';
 
 export type TPollOption = {
   optionId: number; // Локальный ID варианта внутри опроса.

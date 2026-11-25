@@ -1,7 +1,7 @@
 import { Document, Schema } from 'mongoose';
 
 // types
-import { TTeamForProfile } from '../../types/types.interface';
+import { TTeamForProfile } from '../../types/types.interface.js';
 
 type TTeamForProfileDocument = TTeamForProfile & Document;
 
