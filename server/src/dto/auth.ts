@@ -38,6 +38,7 @@ export function dtoProfileDataForClient({
     externalAccounts: {
       vk,
     },
+    externalAccountServices: user.externalAccountServices,
     ...(organizerId && { organizer: String(organizerId) }),
   };
 }

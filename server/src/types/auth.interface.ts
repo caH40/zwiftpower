@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { TExternalAccountVk } from './model.interface.js';
+import { TExternalAccountService } from './types.interface.js';
 
 export interface GenerateToken {
   username: string;
@@ -18,6 +19,7 @@ export interface GenerateToken {
   externalAccounts?: {
     vk?: Pick<TExternalAccountVk, 'firstName' | 'lastName' | 'avatarSrc'>;
   };
+  externalAccountServices?: TExternalAccountService[];
   organizer?: string;
 }
 

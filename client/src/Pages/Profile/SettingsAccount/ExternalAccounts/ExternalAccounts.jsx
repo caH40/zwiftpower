@@ -7,19 +7,21 @@ import styles from './ExternalAccounts.module.css';
 
 /**
  * Блок привязки сторонних приложений (Strava, Garmin Connect) в настройках аккаунта.
- * Хранится только ID аккаунта, ссылка на профиль собирается по шаблону сервиса.
+ * Привязанные аккаунты приходят с сервера в `user.externalAccountServices`
+ * массивом `{ service, accountId }`; сохранённые за текущую сессию ID берутся из Redux.
  *
  * @param {Object} props - Пропсы компонента.
- * @param {Record<string, string | { accountId?: string, id?: string }>} [props.externalAccounts] - Привязанные
- * аккаунты из профиля пользователя, например `{ strava: '12345678' }`.
+ * @param {Array<{ service: string, accountId: string }>} [props.externalAccountServices] - Привязанные
+ * аккаунты из профиля пользователя, например `[{ service: 'strava', accountId: '43545' }]`.
  * @param {(payload: { service: string, accountId: string }) => void} [props.onSave] - Обработчик сохранения ID.
  */
-export default function ExternalAccounts({ externalAccounts = {}, onSave }) {
+export default function ExternalAccounts({ externalAccountServices = [], onSave }) {
   const savedIds = useSelector((state) => state.externalAccounts.externalAccounts);
+  // Приводим ответ сервера к массиву: поле может не прийти или прийти как null.
+  const linkedServices = Array.isArray(externalAccountServices) ? externalAccountServices : [];
 
   /**
    * Достаёт ID аккаунта: сначала сохранённый в Redux, затем из профиля пользователя.
-   * Поддерживает строку, объект `{ accountId }` и объект `{ id }`.
    * @param {string} serviceId - Идентификатор сервиса.
    * @returns {string} ID аккаунта или пустая строка.
    */
@@ -30,13 +32,9 @@ export default function ExternalAccounts({ externalAccounts = {}, onSave }) {
       return savedId;
     }
 
-    const account = externalAccounts?.[serviceId];
+    const account = linkedServices.find((item) => item.service === serviceId);
 
-    if (typeof account === 'string') {
-      return account;
-    }
-
-    return account?.accountId || account?.id || '';
+    return account?.accountId ? String(account.accountId) : '';
   };
 
   return (
